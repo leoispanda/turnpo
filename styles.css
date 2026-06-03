@@ -256,6 +256,7 @@ h1 {
   width: 100%;
   aspect-ratio: 1.32;
   object-fit: cover;
+  object-position: center 28%;
   filter: saturate(0.76) contrast(1.05);
 }
 
