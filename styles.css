@@ -78,6 +78,19 @@ a {
   letter-spacing: 0;
 }
 
+.version-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border: 1px solid rgba(216, 177, 95, 0.26);
+  border-radius: 999px;
+  color: var(--gold);
+  background: rgba(216, 177, 95, 0.08);
+  font-size: 12px;
+  font-weight: 720;
+}
+
 .brand-mark {
   width: 28px;
   height: 28px;
