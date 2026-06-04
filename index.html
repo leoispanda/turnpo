@@ -11,7 +11,7 @@
     <meta property="og:url" content="https://www.turnpo.com" />
     <link rel="icon" href="/assets/turnpo-logo-full.png" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.29" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.31" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -19,7 +19,7 @@
       <a class="brand" href="/" aria-label="Turnpo home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Turnpo</span>
-        <span class="version-badge">v0.1.29</span>
+        <span class="version-badge">v0.1.31</span>
       </a>
       <div class="top-actions profile-only">
         <button class="ghost-btn" id="backToSearch" type="button">Back to search</button>
@@ -224,20 +224,20 @@
       <form class="event-form auth-form" id="authForm">
         <div class="form-head">
           <div>
-            <p class="eyebrow">Demo owner access</p>
-            <h2>Edit a Turnpo profile</h2>
+            <p class="eyebrow">Owner access</p>
+            <h2>Email code login</h2>
           </div>
           <button class="icon-btn" id="closeAuth" type="button" title="Close">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
           </button>
         </div>
-        <label><span>Account</span><input id="ownerAccount" autocomplete="username" value="leo" /></label>
-        <label><span>Password</span><input id="ownerPassword" autocomplete="current-password" type="password" /></label>
-        <p class="auth-note" id="authNote">Founder mode is reserved for the profile owner. This is not real backend authentication.</p>
-        <button class="submit-btn" type="submit">Enter owner mode</button>
+        <label><span>Approved email</span><input id="ownerEmail" autocomplete="email" inputmode="email" placeholder="you@example.com" type="email" /></label>
+        <label id="ownerCodeRow" hidden><span>6-digit code</span><input id="ownerCode" autocomplete="one-time-code" inputmode="numeric" maxlength="6" placeholder="123456" /></label>
+        <p class="auth-note" id="authNote">Only approved owner emails can enter founder mode. If your email is approved, Turnpo will send a one-time code.</p>
+        <button class="submit-btn" id="authSubmit" type="submit">Send login code</button>
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.29"></script>
+    <script src="/script.js?v=0.1.31"></script>
   </body>
 </html>

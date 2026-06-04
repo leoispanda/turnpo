@@ -1,4 +1,3 @@
-const DEMO_OWNER_PASSWORD = "turnpo-owner";
 const ACTIVE_PROFILE_KEY = "turnpo:active-profile";
 const LOCAL_PREFIX = "turnpo:profile:";
 const SOURCE_PREFIX = "turnpo:source:";
@@ -171,6 +170,8 @@ let activeUsername = "leo";
 let ownerMode = false;
 let editingRef = null;
 let activeEditorType = "story";
+let pendingOwnerEmail = "";
+let authCodeRequested = false;
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -499,7 +500,8 @@ function setOwnerMode(enabled) {
     unloadOwnerProfile(activeUsername);
   }
   body.classList.toggle("owner-mode", enabled);
-  renderProfile();
+  if (body.classList.contains("profile-open")) renderProfile();
+  else renderHome($("#personSearch").value);
 }
 
 function openEditor(type, id = "") {
@@ -627,6 +629,95 @@ function deleteCurrentContent() {
 function setAuthDrawer(open) {
   $("#authDrawer").classList.toggle("open", open);
   $("#authDrawer").setAttribute("aria-hidden", String(!open));
+  if (open && !authCodeRequested) $("#ownerEmail").focus();
+}
+
+async function authRequest(path, payload) {
+  const response = await fetch(path, {
+    method: payload ? "POST" : "GET",
+    headers: payload ? { "content-type": "application/json" } : {},
+    credentials: "same-origin",
+    body: payload ? JSON.stringify(payload) : undefined
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error || "Turnpo auth is not available yet.");
+  return data;
+}
+
+function resetAuthForm(message = "Only approved owner emails can enter founder mode. If your email is approved, Turnpo will send a one-time code.") {
+  authCodeRequested = false;
+  pendingOwnerEmail = "";
+  $("#ownerCodeRow").hidden = true;
+  $("#ownerCode").value = "";
+  $("#authSubmit").textContent = "Send login code";
+  $("#authNote").textContent = message;
+}
+
+async function requestLoginCode() {
+  const email = $("#ownerEmail").value.trim().toLowerCase();
+  if (!email) {
+    $("#authNote").textContent = "Enter your approved owner email first.";
+    return;
+  }
+  $("#authSubmit").disabled = true;
+  $("#authNote").textContent = "Sending a one-time login code...";
+  try {
+    await authRequest("/api/auth/request-code", { email });
+    pendingOwnerEmail = email;
+    authCodeRequested = true;
+    $("#ownerCodeRow").hidden = false;
+    $("#authSubmit").textContent = "Verify code";
+    $("#authNote").textContent = "If this email is approved, a 6-digit code has been sent. Codes expire after 10 minutes.";
+    $("#ownerCode").focus();
+  } catch (error) {
+    $("#authNote").textContent = error.message;
+  } finally {
+    $("#authSubmit").disabled = false;
+  }
+}
+
+async function verifyLoginCode() {
+  const code = $("#ownerCode").value.trim();
+  if (!pendingOwnerEmail || !code) {
+    $("#authNote").textContent = "Enter the 6-digit code from your email.";
+    return;
+  }
+  $("#authSubmit").disabled = true;
+  $("#authNote").textContent = "Verifying code...";
+  try {
+    const session = await authRequest("/api/auth/verify-code", { email: pendingOwnerEmail, code });
+    if (session.profile && profiles[session.profile]) activeUsername = session.profile;
+    setOwnerMode(true);
+    setAuthDrawer(false);
+    setRoute(activeUsername);
+    resetAuthForm("Owner mode is active.");
+  } catch (error) {
+    $("#authNote").textContent = error.message;
+  } finally {
+    $("#authSubmit").disabled = false;
+  }
+}
+
+async function checkOwnerSession() {
+  try {
+    const session = await authRequest("/api/auth/session");
+    if (session.authenticated && session.profile && profiles[session.profile]) {
+      activeUsername = session.profile;
+      setOwnerMode(true);
+    }
+  } catch {
+    setOwnerMode(false);
+  }
+}
+
+async function logoutOwner() {
+  try {
+    await authRequest("/api/auth/logout", {});
+  } catch {
+    // Local static previews may not have the auth function available yet.
+  }
+  setOwnerMode(false);
+  resetAuthForm("You have exited owner mode.");
 }
 
 function copyAiProfile() {
@@ -698,7 +789,7 @@ $("#contentType").addEventListener("change", (event) => toggleWorkFields(event.t
 $("#contentForm").addEventListener("submit", upsertContent);
 $("#deleteContent").addEventListener("click", deleteCurrentContent);
 $("#homeOwnerLogin").addEventListener("click", () => setAuthDrawer(true));
-$("#ownerLogout").addEventListener("click", () => setOwnerMode(false));
+$("#ownerLogout").addEventListener("click", logoutOwner);
 $("#backToSearch").addEventListener("click", () => setRoute("home"));
 $("#closeAuth").addEventListener("click", () => setAuthDrawer(false));
 $("#authBackdrop").addEventListener("click", () => setAuthDrawer(false));
@@ -710,24 +801,14 @@ $("#saveSource").addEventListener("click", () => {
   $("#sourceStatus").textContent = "Saved as owner-only local source material. It is not included in the public AI profile.";
 });
 
-$("#authForm").addEventListener("submit", (event) => {
+$("#authForm").addEventListener("submit", async (event) => {
   event.preventDefault();
-  const account = $("#ownerAccount").value.trim().toLowerCase();
-  const password = $("#ownerPassword").value;
-  if (profiles[account] && password === DEMO_OWNER_PASSWORD) {
-    activeUsername = account;
-    setOwnerMode(true);
-    setAuthDrawer(false);
-    setRoute(account);
-    $("#ownerPassword").value = "";
-    $("#authNote").textContent = "Demo owner mode is active in this browser. This is not backend authentication.";
-  } else {
-    $("#authNote").textContent = "Demo account or password is incorrect.";
-  }
+  if (authCodeRequested) await verifyLoginCode();
+  else await requestLoginCode();
 });
 
 window.addEventListener("popstate", () => setRoute(routeFromLocation()));
 
 renderHome();
-setOwnerMode(ownerMode);
 setRoute(routeFromLocation());
+checkOwnerSession();

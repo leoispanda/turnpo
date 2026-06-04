@@ -8,7 +8,30 @@ Turnpo can stay on Cloudflare Pages while moving writes into a real backend.
 - Cloudflare Worker for `/api/*`.
 - Cloudflare D1 for profiles, timeline moments, markdown context, tags, and visibility.
 - Cloudflare R2 for uploaded photos.
-- Cloudflare Access or a passkey provider for owner authentication.
+- Cloudflare Pages Functions + KV + Resend for owner email-code authentication.
+
+## Owner login MVP
+
+Turnpo now uses an email-code login path for owner mode:
+
+- `POST /api/auth/request-code` requests a 6-digit one-time code.
+- `POST /api/auth/verify-code` verifies the code and sets an `HttpOnly`, `Secure`, `SameSite=Lax` session cookie.
+- `GET /api/auth/session` restores owner mode when the session cookie is valid.
+- `POST /api/auth/logout` deletes the server session and clears the cookie.
+
+Only approved owner emails can receive a working code. Approval is handled through Cloudflare environment variables, not public frontend code.
+
+Cloudflare Pages configuration needed:
+
+- KV binding: `AUTH_KV`
+- Secret: `TURNPO_AUTH_SECRET`
+- Secret: `RESEND_API_KEY`
+- Variable: `TURNPO_AUTH_FROM_EMAIL`, for example `Turnpo <login@turnpo.com>`
+- Variable: `TURNPO_APPROVED_OWNER_EMAILS`, comma-separated approved emails
+- Optional variable: `TURNPO_DEFAULT_OWNER_PROFILE`, defaults to `leo`
+- Optional variable: `TURNPO_OWNER_EMAIL_PROFILES`, comma-separated `email:profile` mappings for future multi-owner profiles
+
+Do not commit real API keys, login secrets, or private owner email lists.
 
 ## Data model
 
