@@ -6,60 +6,66 @@ const OWNER_KEY = "turnpo:owner-mode";
 const seedEvents = [
   {
     year: "2026",
-    count: "3 selected moments",
     items: [
       {
+        id: "mapkai-2026",
         title: "Co-creating MapKAI",
         date: "May 2026 - Eindhoven",
-        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+        images: ["https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80"],
         note: "An early-stage exploration of knowledge mapping, AI-assisted reflection, and AI-native decision systems.",
-        tags: ["MapKAI", "AI", "knowledge"]
+        tags: ["MapKAI", "AI", "knowledge"],
+        visibility: "public"
       },
       {
+        id: "asml-learning-2026",
         title: "Designing learning and knowledge solutions at ASML",
         date: "2026 - ASML Academy",
-        image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
+        images: ["https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80"],
         note: "Working between people, systems, and performance to make expert knowledge easier to access and apply.",
-        tags: ["ASML", "learning", "performance"]
+        tags: ["ASML", "learning", "performance"],
+        visibility: "public"
       }
     ]
   },
   {
     year: "2023",
-    count: "1 selected moment",
     items: [
       {
+        id: "solution-designer-2023",
         title: "Became L&KM Solution Designer",
         date: "July 2023 - Eindhoven",
-        image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80",
+        images: ["https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80"],
         note: "Moved into a role focused on scalable learning, knowledge sharing, and capability-building solutions.",
-        tags: ["ASML", "role shift", "knowledge management"]
+        tags: ["ASML", "role shift", "knowledge management"],
+        visibility: "public"
       }
     ]
   },
   {
     year: "2018",
-    count: "1 selected moment",
     items: [
       {
+        id: "technical-instructor-2018",
         title: "Started at ASML as Technical Instructor/Developer",
         date: "August 2018 - Shanghai",
-        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
+        images: ["https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80"],
         note: "Delivered technical training, led projects, and began turning engineering knowledge into reusable learning.",
-        tags: ["technical training", "ASML", "China"]
+        tags: ["technical training", "ASML", "China"],
+        visibility: "public"
       }
     ]
   },
   {
     year: "2012",
-    count: "1 selected moment",
     items: [
       {
+        id: "aircraft-engineering-2012",
         title: "Began engineering work in aircraft engines",
         date: "August 2012 - Harbin",
-        image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+        images: ["https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"],
         note: "Worked on equipment installation, commissioning, maintenance, and internal technical training programs.",
-        tags: ["engineering", "aircraft engines", "origin"]
+        tags: ["engineering", "aircraft engines", "origin"],
+        visibility: "public"
       }
     ]
   }
@@ -67,6 +73,7 @@ const seedEvents = [
 
 let events = loadEvents();
 let ownerMode = localStorage.getItem(OWNER_KEY) === "true";
+let editingRef = null;
 
 const body = document.body;
 const entryView = document.querySelector("#entryView");
@@ -77,21 +84,45 @@ const authDrawer = document.querySelector("#authDrawer");
 const copyStatus = document.querySelector("#copyStatus");
 const markdown = document.querySelector("#aiMarkdown");
 const searchResults = document.querySelector("#searchResults");
+const eventForm = document.querySelector("#eventForm");
 
 function loadEvents() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || structuredClone(seedEvents);
+    return normalizeEvents(JSON.parse(localStorage.getItem(STORAGE_KEY)) || structuredClone(seedEvents));
   } catch {
-    return structuredClone(seedEvents);
+    return normalizeEvents(structuredClone(seedEvents));
   }
+}
+
+function normalizeEvents(groups) {
+  return groups.map((group) => {
+    const items = (group.items || []).map((item) => ({
+      id: item.id || crypto.randomUUID(),
+      title: item.title || "Untitled moment",
+      date: item.date || "",
+      images: item.images?.length ? item.images : [item.image].filter(Boolean),
+      note: item.note || "",
+      tags: Array.isArray(item.tags) ? item.tags : [],
+      visibility: item.visibility || "public"
+    }));
+    return { year: String(group.year), items, count: countLabel(items.length) };
+  }).sort((a, b) => Number(b.year) - Number(a.year));
+}
+
+function countLabel(count) {
+  return `${count} selected moment${count === 1 ? "" : "s"}`;
 }
 
 function saveEvents() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
 }
 
+function visibleItems(group) {
+  return ownerMode ? group.items : group.items.filter((item) => item.visibility !== "private");
+}
+
 function syncCount(group) {
-  group.count = `${group.items.length} selected moment${group.items.length === 1 ? "" : "s"}`;
+  group.count = countLabel(visibleItems(group).length);
 }
 
 function setRoute(route) {
@@ -114,15 +145,23 @@ function setOwnerMode(enabled) {
   localStorage.setItem(OWNER_KEY, String(enabled));
   body.classList.toggle("owner-mode", enabled);
   document.querySelector("#openAdd").dataset.locked = String(!enabled);
+  renderTimeline();
 }
 
-function setDrawer(open) {
+function setDrawer(open, mode = "add") {
   if (!ownerMode && open) {
     setAuthDrawer(true);
     return;
   }
   drawer.classList.toggle("open", open);
   drawer.setAttribute("aria-hidden", String(!open));
+  if (!open) {
+    editingRef = null;
+    resetEventForm();
+  } else {
+    document.querySelector("#eventModeLabel").textContent = mode === "edit" ? "Edit moment" : "New moment";
+    document.querySelector("#eventFormTitle").textContent = mode === "edit" ? "Update this moment" : "Add to the road";
+  }
 }
 
 function setAuthDrawer(open) {
@@ -130,28 +169,56 @@ function setAuthDrawer(open) {
   authDrawer.setAttribute("aria-hidden", String(!open));
 }
 
+function mediaMarkup(item) {
+  const images = item.images?.length ? item.images : [];
+  if (!images.length) {
+    return `<div class="event-media empty-media"></div>`;
+  }
+
+  return `
+    <div class="event-media ${images.length > 1 ? "multi-media" : ""}">
+      <img class="event-main-image" src="${images[0]}" alt="${item.title}" />
+      ${images.length > 1 ? `
+        <div class="media-strip">
+          ${images.slice(1, 5).map((image, index) => `<img src="${image}" alt="${item.title} photo ${index + 2}" />`).join("")}
+          ${images.length > 5 ? `<span>+${images.length - 5}</span>` : ""}
+        </div>
+      ` : ""}
+    </div>
+  `;
+}
+
 function renderTimeline() {
-  timelineList.innerHTML = events.map((group) => `
-    <article class="year-block">
-      <div class="year-label">${group.year}</div>
-      <div class="year-title">${group.year}<span>${group.count}</span></div>
-      <div class="event-stack">
-        ${group.items.map((item) => `
-          <article class="event-card">
-            <img src="${item.image}" alt="${item.title}" />
-            <div>
-              <div class="event-date">${item.date}</div>
-              <h3>${item.title}</h3>
-              <p>${item.note}</p>
-              <div class="tag-row">
-                ${item.tags.map((tag) => `<span class="timeline-tag">${tag}</span>`).join("")}
+  timelineList.innerHTML = events.map((group) => {
+    const items = visibleItems(group);
+    return `
+      <article class="year-block">
+        <div class="year-label">${group.year}</div>
+        <div class="year-title">${group.year}<span>${countLabel(items.length)}</span></div>
+        <div class="event-stack">
+          ${items.map((item) => `
+            <article class="event-card ${item.visibility === "private" ? "private-card" : ""}">
+              ${mediaMarkup(item)}
+              <div>
+                <div class="event-card-head">
+                  <div class="event-date">${item.date}</div>
+                  <div class="event-actions owner-only">
+                    <span class="visibility-pill">${item.visibility}</span>
+                    <button class="small-action" type="button" data-edit-id="${item.id}">Edit</button>
+                  </div>
+                </div>
+                <h3>${item.title}</h3>
+                <p>${item.note}</p>
+                <div class="tag-row">
+                  ${item.tags.map((tag) => `<span class="timeline-tag">${tag}</span>`).join("")}
+                </div>
               </div>
-            </div>
-          </article>
-        `).join("")}
-      </div>
-    </article>
-  `).join("");
+            </article>
+          `).join("")}
+        </div>
+      </article>
+    `;
+  }).join("");
 }
 
 function renderSearch(query = "") {
@@ -174,17 +241,68 @@ function renderSearch(query = "") {
   searchResults.innerHTML = `<p class="empty-result">No public Turnpo profile found yet.</p>`;
 }
 
-function readUploadedFile(file) {
-  return new Promise((resolve, reject) => {
-    if (!file) {
-      resolve("");
-      return;
-    }
+function readUploadedFiles(files) {
+  return Promise.all(Array.from(files || []).map((file) => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(String(reader.result));
     reader.onerror = reject;
     reader.readAsDataURL(file);
-  });
+  })));
+}
+
+function parseTags(value) {
+  return value.split(",").map((tag) => tag.trim()).filter(Boolean);
+}
+
+function imageFields() {
+  return [
+    document.querySelector("#eventImage").value.trim(),
+    ...document.querySelector("#eventImageList").value.split("\n").map((line) => line.trim())
+  ].filter(Boolean);
+}
+
+function resetEventForm() {
+  eventForm.reset();
+  document.querySelector("#eventTitle").value = "A quiet turning point";
+  document.querySelector("#eventYear").value = "2026";
+  document.querySelector("#eventDate").value = "June 2026";
+  document.querySelector("#eventImage").value = "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80";
+  document.querySelector("#eventTags").value = "turning point, selected";
+  document.querySelector("#eventNote").value = "The kind of moment that does not ask for an audience, but changes the direction of the work.";
+  document.querySelector("#eventVisibility").value = "public";
+  document.querySelector("#eventImageList").value = "";
+}
+
+function findEventById(id) {
+  for (const group of events) {
+    const index = group.items.findIndex((item) => item.id === id);
+    if (index >= 0) {
+      return { group, index, item: group.items[index] };
+    }
+  }
+  return null;
+}
+
+function openEditEvent(id) {
+  const found = findEventById(id);
+  if (!found) {
+    return;
+  }
+
+  editingRef = { id, originalYear: found.group.year };
+  document.querySelector("#eventTitle").value = found.item.title;
+  document.querySelector("#eventYear").value = found.group.year;
+  document.querySelector("#eventDate").value = found.item.date;
+  document.querySelector("#eventImage").value = found.item.images[0] || "";
+  document.querySelector("#eventImageList").value = found.item.images.slice(1).join("\n");
+  document.querySelector("#eventNote").value = found.item.note;
+  document.querySelector("#eventTags").value = found.item.tags.join(", ");
+  document.querySelector("#eventVisibility").value = found.item.visibility;
+  setDrawer(true, "edit");
+}
+
+function removeEmptyGroups() {
+  events = events.filter((group) => group.items.length);
 }
 
 document.querySelector("#searchForm").addEventListener("submit", (event) => {
@@ -204,6 +322,13 @@ searchResults.addEventListener("click", (event) => {
   }
 });
 
+timelineList.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-edit-id]");
+  if (button && ownerMode) {
+    openEditEvent(button.dataset.editId);
+  }
+});
+
 document.querySelectorAll(".toggle-btn").forEach((button) => {
   button.addEventListener("click", () => {
     document.querySelectorAll(".toggle-btn").forEach((item) => item.classList.remove("active"));
@@ -218,7 +343,10 @@ document.querySelector(".brand").addEventListener("click", (event) => {
   setRoute("home");
 });
 
-document.querySelector("#openAdd").addEventListener("click", () => setDrawer(true));
+document.querySelector("#openAdd").addEventListener("click", () => {
+  resetEventForm();
+  setDrawer(true, "add");
+});
 document.querySelector("#closeAdd").addEventListener("click", () => setDrawer(false));
 document.querySelector("#closeBackdrop").addEventListener("click", () => setDrawer(false));
 document.querySelector("#ownerLogin").addEventListener("click", () => setAuthDrawer(true));
@@ -249,7 +377,7 @@ document.querySelector("#copyMd").addEventListener("click", async () => {
   }, 2400);
 });
 
-document.querySelector("#eventForm").addEventListener("submit", async (event) => {
+eventForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (!ownerMode) {
     setAuthDrawer(true);
@@ -257,14 +385,24 @@ document.querySelector("#eventForm").addEventListener("submit", async (event) =>
   }
 
   const year = document.querySelector("#eventYear").value.trim() || "2026";
-  const uploadedImage = await readUploadedFile(document.querySelector("#eventFile").files[0]);
+  const uploadedImages = await readUploadedFiles(document.querySelector("#eventFile").files);
+  const images = [...imageFields(), ...uploadedImages];
   const item = {
+    id: editingRef?.id || crypto.randomUUID(),
     title: document.querySelector("#eventTitle").value.trim(),
     date: document.querySelector("#eventDate").value.trim(),
-    image: uploadedImage || document.querySelector("#eventImage").value.trim(),
+    images,
     note: document.querySelector("#eventNote").value.trim(),
-    tags: ["new", "selected", "owner added"]
+    tags: parseTags(document.querySelector("#eventTags").value),
+    visibility: document.querySelector("#eventVisibility").value
   };
+
+  if (editingRef) {
+    const found = findEventById(editingRef.id);
+    if (found) {
+      found.group.items.splice(found.index, 1);
+    }
+  }
 
   let group = events.find((entry) => entry.year === year);
   if (!group) {
@@ -272,12 +410,12 @@ document.querySelector("#eventForm").addEventListener("submit", async (event) =>
     events.unshift(group);
   }
   group.items.unshift(item);
-  syncCount(group);
+  events.forEach(syncCount);
+  removeEmptyGroups();
   events.sort((a, b) => Number(b.year) - Number(a.year));
   saveEvents();
   renderTimeline();
   setDrawer(false);
-  event.target.reset();
 });
 
 renderSearch();

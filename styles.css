@@ -127,6 +127,10 @@ body:not(.owner-mode) .owner-only {
   display: none;
 }
 
+body.owner-mode #ownerLogin {
+  display: none;
+}
+
 body:not(.owner-mode) #openAdd {
   opacity: 0.55;
 }
@@ -586,12 +590,89 @@ h1 {
   background: rgba(255, 255, 255, 0.035);
 }
 
-.event-card img {
+.event-card.private-card {
+  border-color: rgba(216, 177, 95, 0.28);
+  background: rgba(216, 177, 95, 0.055);
+}
+
+.event-media {
+  display: grid;
+  gap: 8px;
+  align-self: start;
+}
+
+.event-media img {
   width: 100%;
-  height: 150px;
   border-radius: 6px;
   object-fit: cover;
   filter: saturate(0.82) contrast(1.05);
+}
+
+.event-main-image {
+  height: 150px;
+}
+
+.empty-media {
+  min-height: 150px;
+  border: 1px dashed var(--line-soft);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.media-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.media-strip img,
+.media-strip span {
+  height: 38px;
+  border-radius: 5px;
+}
+
+.media-strip span {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(216, 177, 95, 0.24);
+  color: var(--gold);
+  background: rgba(216, 177, 95, 0.08);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.event-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.event-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.visibility-pill,
+.small-action {
+  min-height: 28px;
+  padding: 0 9px;
+  border: 1px solid rgba(216, 177, 95, 0.22);
+  border-radius: 999px;
+  color: var(--gold);
+  background: rgba(216, 177, 95, 0.07);
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.small-action {
+  cursor: pointer;
+}
+
+.small-action:hover {
+  border-color: rgba(216, 177, 95, 0.5);
 }
 
 .event-card h3 {
@@ -601,7 +682,6 @@ h1 {
 }
 
 .event-date {
-  margin-bottom: 10px;
   color: var(--gold);
   font-size: 13px;
 }
@@ -640,7 +720,7 @@ h1 {
   grid-template-columns: 1fr;
 }
 
-.timeline.horizontal .event-card img {
+.timeline.horizontal .event-main-image {
   height: 190px;
 }
 
@@ -739,6 +819,7 @@ label {
 }
 
 input,
+select,
 .event-form textarea {
   width: 100%;
   border: 1px solid var(--line-soft);
