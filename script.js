@@ -693,6 +693,7 @@ $("#contentType").addEventListener("change", (event) => toggleWorkFields(event.t
 $("#contentForm").addEventListener("submit", upsertContent);
 $("#deleteContent").addEventListener("click", deleteCurrentContent);
 $("#ownerLogin").addEventListener("click", () => setAuthDrawer(true));
+$("#homeOwnerLogin").addEventListener("click", () => setAuthDrawer(true));
 $("#ownerLogout").addEventListener("click", () => setOwnerMode(false));
 $("#closeAuth").addEventListener("click", () => setAuthDrawer(false));
 $("#authBackdrop").addEventListener("click", () => setAuthDrawer(false));

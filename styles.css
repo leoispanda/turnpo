@@ -312,9 +312,65 @@ main {
 }
 
 .mini-profile-card p,
-.legal-copy p {
+.legal-copy p,
+.trust-summary p,
+.site-footer p {
   color: var(--muted);
   line-height: 1.55;
+}
+
+.trust-summary {
+  align-self: center;
+  max-width: 760px;
+  padding: 22px;
+  border: 1px solid rgba(216, 177, 95, 0.18);
+  border-radius: var(--radius);
+  background: rgba(216, 177, 95, 0.055);
+}
+
+.trust-summary p {
+  margin-bottom: 0;
+  color: #d9d1c3;
+  font-size: clamp(20px, 2.4vw, 30px);
+  line-height: 1.22;
+}
+
+.site-footer {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 18px;
+  align-items: start;
+  margin: 0 clamp(18px, 5vw, 72px) 34px;
+  padding: 22px 0 0;
+  border-top: 1px solid var(--line-soft);
+  color: var(--muted);
+}
+
+.site-footer strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.site-footer details {
+  max-width: 360px;
+  color: var(--muted);
+}
+
+.site-footer summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 720;
+}
+
+.site-footer details p {
+  margin: 12px 0 0;
+  font-size: 13px;
+}
+
+.site-footer .ghost-btn {
+  margin-top: 12px;
 }
 
 .person-result {
@@ -1144,6 +1200,10 @@ select,
   }
 
   .example-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer {
     grid-template-columns: 1fr;
   }
 

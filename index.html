@@ -11,7 +11,7 @@
     <meta property="og:url" content="https://www.turnpo.com" />
     <link rel="icon" href="/assets/turnpo-logo-full.png" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.16" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.19" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -19,13 +19,13 @@
       <a class="brand" href="/" aria-label="Turnpo home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Turnpo</span>
-        <span class="version-badge">v0.1.16</span>
+        <span class="version-badge">v0.1.19</span>
       </a>
       <nav class="nav-links profile-only" aria-label="Profile navigation">
         <a href="#timeline">Timeline</a>
         <a href="#ai-works">AI Works</a>
         <a href="#ai-profile">AI Profile</a>
-        <a href="#workspace">Workspace</a>
+        <a class="owner-only" href="#workspace">Workspace</a>
         <a href="#trust">Trust</a>
       </nav>
       <div class="top-actions profile-only">
@@ -48,7 +48,7 @@
           <span>AI work</span>
         </button>
         <button class="ghost-btn owner-only" id="exportProfile" type="button">Export JSON</button>
-        <button class="ghost-btn" id="ownerLogin" type="button">Owner sign in</button>
+        <button class="ghost-btn" id="ownerLogin" type="button">Founder mode</button>
         <button class="ghost-btn owner-only" id="ownerLogout" type="button">Exit owner mode</button>
       </div>
     </header>
@@ -75,10 +75,18 @@
         </aside>
       </section>
 
-      <section class="home-band home-only" id="aboutTurnpo">
+      <section class="home-band home-only" id="examples">
         <div>
-          <p class="eyebrow">About Turnpo</p>
-          <h2>What shaped you? What are you building?</h2>
+          <p class="eyebrow">Example profiles</p>
+          <h2>Search is driven by profile data.</h2>
+        </div>
+        <div class="example-grid" id="exampleProfiles"></div>
+      </section>
+
+      <section class="home-band home-only" id="product">
+        <div>
+          <p class="eyebrow">Product explanation</p>
+          <h2>Human-readable profiles. AI-readable context.</h2>
         </div>
         <div class="rule-grid">
           <article><span>01</span><h3>Story profile</h3><p>Show defining moments and formative experiences beyond job titles.</p></article>
@@ -87,12 +95,15 @@
         </div>
       </section>
 
-      <section class="home-band home-only" id="examples">
+      <section class="home-band home-only" id="aboutTurnpo">
         <div>
-          <p class="eyebrow">Example profiles</p>
-          <h2>Search is driven by profile data.</h2>
+          <p class="eyebrow">About Turnpo</p>
+          <h2>What shaped you? What are you building?</h2>
         </div>
-        <div class="example-grid" id="exampleProfiles"></div>
+        <div class="legal-copy">
+          <p>Turnpo is a personal story and AI work profile platform. It helps people introduce themselves through turning points, defining stories, values, and the work they are building in the AI era.</p>
+          <p>It is not a social feed, a LinkedIn clone, or a private diary. It is a curated public profile that people can read and AI tools can understand from approved context.</p>
+        </div>
       </section>
 
       <section class="profile-shell profile-content" aria-label="Personal profile" hidden>
@@ -196,30 +207,33 @@
         </div>
       </section>
 
-      <section class="backend-band home-only" id="invite">
+      <section class="home-band home-only" id="trustSummary">
         <div>
-          <p class="eyebrow">Private beta</p>
-          <h2>Invite-based creation is coming soon.</h2>
-          <p>Turnpo will start with founder invites, not open registration. Future invite URLs will look like /invite/abc123.</p>
+          <p class="eyebrow">Trust / Privacy</p>
+          <h2>You control what becomes public.</h2>
         </div>
-        <div class="backend-grid">
-          <article><span>01</span><h3>Founder invite</h3><p>Leo invites a friend to create a Turnpo profile.</p></article>
-          <article><span>02</span><h3>Owner account</h3><p>The invited person owns and edits their own profile.</p></article>
-          <article><span>03</span><h3>Published only</h3><p>Visitors see only approved published content.</p></article>
+        <div class="trust-summary">
+          <p>You control what becomes public. Unpublished content is only visible to you in owner mode. Published content may be copied, indexed, or analyzed by others.</p>
         </div>
       </section>
 
-      <section class="home-band home-only" id="legal">
+      <footer class="site-footer home-only" id="footer">
         <div>
-          <p class="eyebrow">Legal / Privacy / AI Disclaimer</p>
-          <h2>No fake backend security claims.</h2>
+          <strong>Turnpo</strong>
+          <p>Personal story profiles for the AI era.</p>
         </div>
-        <div class="legal-copy">
-          <p>Turnpo separates unpublished source material from published profile content. This static prototype uses demo/local owner mode and localStorage; it is not real backend authentication.</p>
+        <details>
+          <summary>Legal / Privacy / AI Disclaimer</summary>
+          <p>Turnpo separates unpublished source material from published profile content. This static prototype uses demo/local owner mode and browser storage; it is not real backend authentication.</p>
           <p>Please do not upload highly sensitive information such as passwords, government IDs, medical records, financial secrets, confidential company materials, or detailed private addresses.</p>
           <p>Turnpo AI assistance is coming soon. AI calls must be server-side in a real backend, and AI output must remain draft-only until user approval.</p>
-        </div>
-      </section>
+        </details>
+        <details>
+          <summary>Founder mode</summary>
+          <p>Owner tools are kept out of the public landing experience.</p>
+          <button class="ghost-btn" id="homeOwnerLogin" type="button">Open founder sign in</button>
+        </details>
+      </footer>
     </main>
 
     <div class="drawer" id="contentDrawer" aria-hidden="true">
@@ -281,11 +295,11 @@
         </div>
         <label><span>Account</span><input id="ownerAccount" autocomplete="username" value="leo" /></label>
         <label><span>Password</span><input id="ownerPassword" autocomplete="current-password" type="password" /></label>
-        <p class="auth-note" id="authNote">Demo password: turnpo-owner. This is not real backend authentication.</p>
+        <p class="auth-note" id="authNote">Founder mode is reserved for the profile owner. This is not real backend authentication.</p>
         <button class="submit-btn" type="submit">Enter owner mode</button>
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.16"></script>
+    <script src="/script.js?v=0.1.19"></script>
   </body>
 </html>
