@@ -85,6 +85,8 @@ const copyStatus = document.querySelector("#copyStatus");
 const markdown = document.querySelector("#aiMarkdown");
 const searchResults = document.querySelector("#searchResults");
 const eventForm = document.querySelector("#eventForm");
+const eventStatus = document.querySelector("#eventStatus");
+const deleteEventButton = document.querySelector("#deleteEvent");
 
 function loadEvents() {
   try {
@@ -117,6 +119,22 @@ function saveEvents() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
 }
 
+function downloadEvents() {
+  const payload = {
+    profile: "leo",
+    exportedAt: new Date().toISOString(),
+    storage: "localStorage prototype",
+    events
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "turnpo-leo-events-local.json";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 function visibleItems(group) {
   return ownerMode ? group.items : group.items.filter((item) => item.visibility !== "private");
 }
@@ -145,6 +163,7 @@ function setOwnerMode(enabled) {
   localStorage.setItem(OWNER_KEY, String(enabled));
   body.classList.toggle("owner-mode", enabled);
   document.querySelector("#openAdd").dataset.locked = String(!enabled);
+  document.querySelector("#exportEvents").hidden = !enabled;
   renderTimeline();
 }
 
@@ -161,6 +180,10 @@ function setDrawer(open, mode = "add") {
   } else {
     document.querySelector("#eventModeLabel").textContent = mode === "edit" ? "Edit moment" : "New moment";
     document.querySelector("#eventFormTitle").textContent = mode === "edit" ? "Update this moment" : "Add to the road";
+    deleteEventButton.hidden = mode !== "edit";
+    eventStatus.textContent = mode === "edit"
+      ? "Editing an existing local draft. Backend persistence is planned next."
+      : "Draft changes stay local until the backend is connected.";
   }
 }
 
@@ -271,6 +294,8 @@ function resetEventForm() {
   document.querySelector("#eventNote").value = "The kind of moment that does not ask for an audience, but changes the direction of the work.";
   document.querySelector("#eventVisibility").value = "public";
   document.querySelector("#eventImageList").value = "";
+  deleteEventButton.hidden = true;
+  eventStatus.textContent = "Draft changes stay local until the backend is connected.";
 }
 
 function findEventById(id) {
@@ -303,6 +328,21 @@ function openEditEvent(id) {
 
 function removeEmptyGroups() {
   events = events.filter((group) => group.items.length);
+}
+
+function deleteEditingEvent() {
+  if (!editingRef) {
+    return;
+  }
+  const found = findEventById(editingRef.id);
+  if (found) {
+    found.group.items.splice(found.index, 1);
+    removeEmptyGroups();
+    events.forEach(syncCount);
+    saveEvents();
+    renderTimeline();
+  }
+  setDrawer(false);
 }
 
 document.querySelector("#searchForm").addEventListener("submit", (event) => {
@@ -351,6 +391,13 @@ document.querySelector("#closeAdd").addEventListener("click", () => setDrawer(fa
 document.querySelector("#closeBackdrop").addEventListener("click", () => setDrawer(false));
 document.querySelector("#ownerLogin").addEventListener("click", () => setAuthDrawer(true));
 document.querySelector("#ownerLogout").addEventListener("click", () => setOwnerMode(false));
+document.querySelector("#exportEvents").addEventListener("click", downloadEvents);
+document.querySelector("#restoreSeed").addEventListener("click", () => {
+  events = normalizeEvents(structuredClone(seedEvents));
+  saveEvents();
+  renderTimeline();
+});
+deleteEventButton.addEventListener("click", deleteEditingEvent);
 document.querySelector("#closeAuth").addEventListener("click", () => setAuthDrawer(false));
 document.querySelector("#authBackdrop").addEventListener("click", () => setAuthDrawer(false));
 
@@ -397,6 +444,11 @@ eventForm.addEventListener("submit", async (event) => {
     visibility: document.querySelector("#eventVisibility").value
   };
 
+  if (!item.title || !item.note) {
+    eventStatus.textContent = "Title and description are required for a durable moment.";
+    return;
+  }
+
   if (editingRef) {
     const found = findEventById(editingRef.id);
     if (found) {
@@ -415,6 +467,7 @@ eventForm.addEventListener("submit", async (event) => {
   events.sort((a, b) => Number(b.year) - Number(a.year));
   saveEvents();
   renderTimeline();
+  eventStatus.textContent = "Saved in this browser.";
   setDrawer(false);
 });
 

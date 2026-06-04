@@ -6,18 +6,19 @@
     <title>Turnpo - Life Timeline</title>
     <link rel="icon" href="assets/turnpo-logo-full.png" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="styles.css?v=0.1.7" />
+    <link rel="stylesheet" href="styles.css?v=0.1.10" />
   </head>
   <body>
     <header class="topbar">
       <a class="brand" href="#" aria-label="Turnpo home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Turnpo</span>
-        <span class="version-badge">v0.1.7</span>
+        <span class="version-badge">v0.1.10</span>
       </a>
       <nav class="nav-links profile-only" aria-label="Primary navigation">
         <a href="#timeline">Timeline</a>
         <a href="#ai-context">AI Context</a>
+        <a href="#backend">MVP backend</a>
         <a href="#archive">Archive</a>
       </nav>
       <div class="top-actions profile-only">
@@ -35,6 +36,7 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
           <span>Add moment</span>
         </button>
+        <button class="ghost-btn owner-only" id="exportEvents" type="button">Export JSON</button>
         <button class="ghost-btn" id="ownerLogin" type="button">Owner sign in</button>
         <button class="ghost-btn owner-only" id="ownerLogout" type="button">Exit owner mode</button>
       </div>
@@ -72,6 +74,7 @@
             <span>Eindhoven</span>
             <span>ASML Academy</span>
             <span>MapKAI</span>
+            <span>Public MVP prototype</span>
           </div>
         </div>
         <div class="portrait-card" aria-label="Profile snapshot">
@@ -120,6 +123,9 @@ I am building products around memory, identity, and AI-readable personal context
               <p class="eyebrow">Timeline</p>
               <h2>From now, back through the road that led here.</h2>
             </div>
+            <div class="timeline-tools owner-only">
+              <button class="ghost-btn" id="restoreSeed" type="button">Restore seed</button>
+            </div>
             <div class="year-jump" aria-label="Year filters">
               <button type="button">2026</button>
               <button type="button">2024</button>
@@ -129,6 +135,32 @@ I am building products around memory, identity, and AI-readable personal context
           </div>
           <div class="timeline vertical" id="timelineList"></div>
         </section>
+      </section>
+
+      <section class="backend-band profile-content" id="backend">
+        <div>
+          <p class="eyebrow">MVP backend path</p>
+          <h2>Static today. Worker-backed next.</h2>
+          <p>Owner edits are still stored in this browser, but the product now has a clear path to real accounts, saved events, image uploads, and public/private access rules.</p>
+        </div>
+        <div class="backend-grid">
+          <article>
+            <span>01</span>
+            <h3>Cloudflare Access</h3>
+            <p>Protect owner routes with email or passkey login before any write request reaches the API.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Worker + D1</h3>
+            <p>Store profiles, moments, markdown context, tags, and visibility in D1 with owner-scoped writes.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>R2 photos</h3>
+            <p>Upload original images to R2 and save generated public image URLs on each timeline moment.</p>
+          </article>
+        </div>
+        <a class="doc-link" href="docs/mvp-backend.md">Read implementation plan</a>
       </section>
 
       <section class="archive-band profile-content" id="archive">
@@ -209,7 +241,11 @@ I am building products around memory, identity, and AI-readable personal context
           <span>Tags</span>
           <input id="eventTags" value="turning point, selected" />
         </label>
-        <button class="submit-btn" type="submit">Save moment</button>
+        <p class="form-status" id="eventStatus">Draft changes stay local until the backend is connected.</p>
+        <div class="form-actions">
+          <button class="danger-btn" id="deleteEvent" type="button">Delete</button>
+          <button class="submit-btn" type="submit">Save moment</button>
+        </div>
       </form>
     </div>
 
@@ -238,6 +274,6 @@ I am building products around memory, identity, and AI-readable personal context
       </form>
     </div>
 
-    <script src="script.js?v=0.1.7"></script>
+    <script src="script.js?v=0.1.10"></script>
   </body>
 </html>
