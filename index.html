@@ -11,7 +11,7 @@
     <meta property="og:url" content="https://www.turnpo.com" />
     <link rel="icon" href="/assets/turnpo-logo-full.png" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.25" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.27" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -19,7 +19,7 @@
       <a class="brand" href="/" aria-label="Turnpo home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Turnpo</span>
-        <span class="version-badge">v0.1.25</span>
+        <span class="version-badge">v0.1.27</span>
       </a>
       <div class="top-actions profile-only">
         <button class="ghost-btn" id="backToSearch" type="button">Back to search</button>
@@ -54,29 +54,6 @@
           <h2>Search is driven by profile data.</h2>
         </div>
         <div class="example-grid" id="exampleProfiles"></div>
-      </section>
-
-      <section class="home-band home-only" id="product">
-        <div>
-          <p class="eyebrow">Product explanation</p>
-          <h2>Human-readable profiles. AI-readable context.</h2>
-        </div>
-        <div class="rule-grid">
-          <article><span>01</span><h3>Story profile</h3><p>Show defining moments and formative experiences beyond job titles.</p></article>
-          <article><span>02</span><h3>AI works</h3><p>Show what you create with AI and what role you played in the work.</p></article>
-          <article><span>03</span><h3>Approved context</h3><p>Generate a public AI-readable profile from published content only.</p></article>
-        </div>
-      </section>
-
-      <section class="home-band home-only" id="aboutTurnpo">
-        <div>
-          <p class="eyebrow">About Turnpo</p>
-          <h2>What shaped you? What are you building?</h2>
-        </div>
-        <div class="legal-copy">
-          <p>Turnpo is a personal story and AI work profile platform. It helps people introduce themselves through turning points, defining stories, values, and the work they are building in the AI era.</p>
-          <p>It is not a social feed, a LinkedIn clone, or a private diary. It is a curated public profile that people can read and AI tools can understand from approved context.</p>
-        </div>
       </section>
 
       <section class="profile-shell profile-content" aria-label="Personal profile" hidden>
@@ -165,21 +142,17 @@
         </section>
       </section>
 
-      <section class="home-band home-only" id="trustSummary">
-        <div>
-          <p class="eyebrow">Trust / Privacy</p>
-          <h2>You control what becomes public.</h2>
-        </div>
-        <div class="trust-summary">
-          <p>You control what becomes public. Unpublished content is only visible to you in owner mode. Published content may be copied, indexed, or analyzed by others.</p>
-        </div>
-      </section>
-
       <footer class="site-footer" id="footer">
         <div>
           <strong>Turnpo</strong>
           <p>Personal story profiles for the AI era.</p>
         </div>
+        <details>
+          <summary>About</summary>
+          <p>Turnpo is a personal story and AI work profile platform. It helps people introduce themselves through turning points, defining stories, values, and the work they are building in the AI era.</p>
+          <p>Human-readable profiles. AI-readable context.</p>
+          <p>You control what becomes public. Unpublished content is only visible to you in owner mode. Published content may be copied, indexed, or analyzed by others.</p>
+        </details>
         <details>
           <summary>Legal / Privacy / AI Disclaimer</summary>
           <p>Turnpo separates unpublished source material from published profile content. This static prototype uses demo/local owner mode and browser storage; it is not real backend authentication.</p>
@@ -265,6 +238,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.25"></script>
+    <script src="/script.js?v=0.1.27"></script>
   </body>
 </html>
