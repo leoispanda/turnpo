@@ -1,7 +1,7 @@
 const DEMO_OWNER_PASSWORD = "turnpo-owner";
-const OWNER_KEY = "turnpo:owner-mode";
 const ACTIVE_PROFILE_KEY = "turnpo:active-profile";
 const LOCAL_PREFIX = "turnpo:profile:";
+const SOURCE_PREFIX = "turnpo:source:";
 const STATUSES = ["published", "draft", "deleted"];
 
 const seedProfiles = {
@@ -19,8 +19,6 @@ const seedProfiles = {
     ],
     values: ["clarity", "long-term memory", "human agency", "AI-readable context"],
     themes: ["AI products", "knowledge systems", "learning design", "personal archives"],
-    sourceMode: "manual",
-    aiContextMarkdown: "# Leo Yang\n\nI am building products around memory, identity, and AI-readable personal context.\n\n## Current focus\n- Turnpo: personal story profiles for the AI era\n- MapKAI: AI-assisted knowledge mapping and reflection\n- Learning and knowledge solution design at ASML\n\n## Product philosophy\nUser provides the truth. AI helps shape the story. Humans see the curated profile. External AI can read the approved context.",
     lifeStories: [
       {
         id: "story-mapkai-2026",
@@ -119,8 +117,6 @@ const seedProfiles = {
     links: [{ label: "Profile", url: "https://www.turnpo.com/u/cindy" }],
     values: ["craft", "care", "agency"],
     themes: ["design", "AI tools", "creative systems"],
-    sourceMode: "manual",
-    aiContextMarkdown: "# Cindy Chen\n\nExample profile used to demonstrate Turnpo multi-profile search.",
     lifeStories: [
       {
         id: "story-cindy-2025",
@@ -165,8 +161,6 @@ const seedProfiles = {
     links: [{ label: "Invite coming soon", url: "#invite" }],
     values: ["ownership", "consent", "curation"],
     themes: ["private beta", "future profile"],
-    sourceMode: "manual",
-    aiContextMarkdown: "# Demo Friend\n\nPlaceholder profile for invite-based growth.",
     lifeStories: [],
     aiWorks: []
   }
@@ -174,7 +168,7 @@ const seedProfiles = {
 
 let profiles = loadProfiles();
 let activeUsername = "leo";
-let ownerMode = localStorage.getItem(OWNER_KEY) === "true";
+let ownerMode = false;
 let editingRef = null;
 let activeEditorType = "story";
 
@@ -189,17 +183,29 @@ function localKey(username) {
   return `${LOCAL_PREFIX}${username}`;
 }
 
+function sourceKey(username) {
+  return `${SOURCE_PREFIX}${username}`;
+}
+
 function loadProfiles() {
   const next = clone(seedProfiles);
   Object.keys(next).forEach((username) => {
-    try {
-      const saved = JSON.parse(localStorage.getItem(localKey(username)));
-      if (saved) next[username] = normalizeProfile(saved);
-    } catch {
-      next[username] = normalizeProfile(next[username]);
-    }
+    next[username] = normalizeProfile(next[username]);
   });
   return next;
+}
+
+function loadOwnerProfile(username) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(localKey(username)));
+    profiles[username] = normalizeProfile(saved || seedProfiles[username]);
+  } catch {
+    profiles[username] = normalizeProfile(clone(seedProfiles[username]));
+  }
+}
+
+function unloadOwnerProfile(username) {
+  profiles[username] = normalizeProfile(clone(seedProfiles[username]));
 }
 
 function normalizeProfile(profile) {
@@ -461,7 +467,7 @@ Only published and user-approved Turnpo content is included in this AI-readable 
 
 function renderOwnerWorkspace() {
   const profile = currentProfile();
-  $("#sourceWorkspace").value = profile.aiContextMarkdown || "";
+  $("#sourceWorkspace").value = ownerMode ? localStorage.getItem(sourceKey(activeUsername)) || "" : "";
   $("#previewSummary").innerHTML = `
     <h3>${escapeHtml(profile.displayName)}</h3>
     <p>${escapeHtml(profile.oneLineIntro)}</p>
@@ -488,7 +494,11 @@ function renderJsonLd(profile) {
 
 function setOwnerMode(enabled) {
   ownerMode = enabled;
-  localStorage.setItem(OWNER_KEY, String(enabled));
+  if (enabled) {
+    loadOwnerProfile(activeUsername);
+  } else {
+    unloadOwnerProfile(activeUsername);
+  }
   body.classList.toggle("owner-mode", enabled);
   renderProfile();
 }
@@ -690,9 +700,7 @@ $("#exportProfile").addEventListener("click", exportProfile);
 $("#restoreSeed").addEventListener("click", resetActiveProfile);
 $("#copyMd").addEventListener("click", copyAiProfile);
 $("#saveSource").addEventListener("click", () => {
-  currentProfile().aiContextMarkdown = $("#sourceWorkspace").value;
-  currentProfile().sourceMode = document.querySelector("[name='sourceMode']:checked").value;
-  saveActiveProfile();
+  localStorage.setItem(sourceKey(activeUsername), $("#sourceWorkspace").value);
   $("#sourceStatus").textContent = "Saved as owner-only local source material. It is not included in the public AI profile.";
 });
 
