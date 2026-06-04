@@ -741,6 +741,20 @@ h1 {
   background: rgba(255, 255, 255, 0.035);
 }
 
+body.owner-mode #timelineList {
+  cursor: copy;
+}
+
+body.owner-mode .event-card {
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+body.owner-mode .event-card:hover {
+  border-color: rgba(216, 177, 95, 0.38);
+  background: rgba(216, 177, 95, 0.07);
+}
+
 .event-card.private-card {
   border-color: rgba(216, 177, 95, 0.28);
   background: rgba(216, 177, 95, 0.055);

@@ -391,7 +391,7 @@ function renderTimeline() {
       <div class="year-title">${escapeHtml(year)}<span>${groups[year].filter(isPublished).length} published highlight${groups[year].filter(isPublished).length === 1 ? "" : "s"}</span></div>
       <div class="event-stack">
         ${groups[year].map((story) => `
-          <article class="event-card ${story.status !== "published" ? "private-card" : ""}">
+          <article class="event-card ${story.status !== "published" ? "private-card" : ""}" data-story-id="${escapeHtml(story.id)}">
             <div class="event-media"><img class="event-main-image" src="${escapeHtml(story.image || "/assets/turnpo-logo-full.png")}" alt="${escapeHtml(story.title)}" /></div>
             <div>
               <div class="event-card-head">
@@ -668,6 +668,12 @@ $("#exampleProfiles").addEventListener("click", (event) => {
 document.addEventListener("click", (event) => {
   const editButton = event.target.closest("[data-edit-id]");
   if (editButton) openEditor(editButton.dataset.editType, editButton.dataset.editId);
+});
+
+$("#timelineList").addEventListener("click", (event) => {
+  if (!ownerMode || event.target.closest("button, a, input, textarea, select")) return;
+  const storyCard = event.target.closest("[data-story-id]");
+  openEditor("story", storyCard ? storyCard.dataset.storyId : "");
 });
 
 document.querySelectorAll(".toggle-btn").forEach((button) => {
