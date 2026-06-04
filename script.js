@@ -341,7 +341,7 @@ function renderHome(query = "") {
       <div>
         <h3>${escapeHtml(profile.displayName)}</h3>
         <p>${escapeHtml(profile.oneLineIntro)}</p>
-        <button class="small-action" type="button" data-profile="${profile.username}">Open /u/${escapeHtml(profile.username)}</button>
+        <button class="small-action" type="button" data-profile="${profile.username}">View profile</button>
       </div>
     </article>
   `).join("");
@@ -692,9 +692,9 @@ $("#closeBackdrop").addEventListener("click", closeEditor);
 $("#contentType").addEventListener("change", (event) => toggleWorkFields(event.target.value));
 $("#contentForm").addEventListener("submit", upsertContent);
 $("#deleteContent").addEventListener("click", deleteCurrentContent);
-$("#ownerLogin").addEventListener("click", () => setAuthDrawer(true));
 $("#homeOwnerLogin").addEventListener("click", () => setAuthDrawer(true));
 $("#ownerLogout").addEventListener("click", () => setOwnerMode(false));
+$("#backToSearch").addEventListener("click", () => setRoute("home"));
 $("#closeAuth").addEventListener("click", () => setAuthDrawer(false));
 $("#authBackdrop").addEventListener("click", () => setAuthDrawer(false));
 $("#exportProfile").addEventListener("click", exportProfile);

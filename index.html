@@ -11,7 +11,7 @@
     <meta property="og:url" content="https://www.turnpo.com" />
     <link rel="icon" href="/assets/turnpo-logo-full.png" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.19" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.21" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -19,37 +19,10 @@
       <a class="brand" href="/" aria-label="Turnpo home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Turnpo</span>
-        <span class="version-badge">v0.1.19</span>
+        <span class="version-badge">v0.1.21</span>
       </a>
-      <nav class="nav-links profile-only" aria-label="Profile navigation">
-        <a href="#timeline">Timeline</a>
-        <a href="#ai-works">AI Works</a>
-        <a href="#ai-profile">AI Profile</a>
-        <a class="owner-only" href="#workspace">Workspace</a>
-        <a href="#trust">Trust</a>
-      </nav>
       <div class="top-actions profile-only">
-        <div class="view-toggle" aria-label="Timeline view">
-          <button class="toggle-btn active" data-view="vertical" type="button" title="Vertical timeline">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M8 7h8M8 12h8M8 17h8"/></svg>
-            <span>Vertical</span>
-          </button>
-          <button class="toggle-btn" data-view="horizontal" type="button" title="Horizontal timeline">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M7 8v8M12 8v8M17 8v8"/></svg>
-            <span>Horizontal</span>
-          </button>
-        </div>
-        <button class="gold-btn owner-only" id="openStory" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          <span>Story</span>
-        </button>
-        <button class="gold-btn owner-only" id="openWork" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          <span>AI work</span>
-        </button>
-        <button class="ghost-btn owner-only" id="exportProfile" type="button">Export JSON</button>
-        <button class="ghost-btn" id="ownerLogin" type="button">Founder mode</button>
-        <button class="ghost-btn owner-only" id="ownerLogout" type="button">Exit owner mode</button>
+        <button class="ghost-btn" id="backToSearch" type="button">Back to search</button>
       </div>
     </header>
 
@@ -131,8 +104,9 @@
               <p class="eyebrow">AI-readable profile</p>
               <h2>Copy approved context</h2>
             </div>
-            <button class="icon-btn" id="copyMd" type="button" title="Copy AI Profile">
+            <button class="ghost-btn copy-profile-btn" id="copyMd" type="button" title="Copy AI Profile">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h11v11H8z"/><path d="M5 16H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+              <span>Copy AI Profile</span>
             </button>
           </div>
           <textarea id="aiMarkdown" spellcheck="false"></textarea>
@@ -144,9 +118,6 @@
             <div>
               <p class="eyebrow">Life timeline</p>
               <h2>Curated stories, not a feed.</h2>
-            </div>
-            <div class="timeline-tools owner-only">
-              <button class="ghost-btn" id="restoreSeed" type="button">Restore seed</button>
             </div>
             <div class="year-jump" id="yearFilters" aria-label="Year filters"></div>
           </div>
@@ -197,13 +168,11 @@
 
       <section class="archive-band profile-content" id="trust" hidden>
         <div>
-          <p class="eyebrow">Privacy and consent</p>
+          <p class="eyebrow">Trust</p>
           <h2>You decide what becomes public.</h2>
         </div>
-        <div class="rule-grid">
-          <article><span>01</span><h3>Unpublished</h3><p>Unpublished content is owner-only and must not appear in public profiles, AI profiles, sitemap, llms.txt, JSON-LD, or public search.</p></article>
-          <article><span>02</span><h3>Published</h3><p>Published content may be viewed, copied, indexed, cached, analyzed, or saved by others.</p></article>
-          <article><span>03</span><h3>Deleted</h3><p>Deleted content is removed from active Turnpo displays, but external copies may already exist outside Turnpo.</p></article>
+        <div class="trust-summary">
+          <p>You control what becomes public. Unpublished content is only visible to you in owner mode. Published content may be copied, indexed, or analyzed by others.</p>
         </div>
       </section>
 
@@ -217,7 +186,7 @@
         </div>
       </section>
 
-      <footer class="site-footer home-only" id="footer">
+      <footer class="site-footer" id="footer">
         <div>
           <strong>Turnpo</strong>
           <p>Personal story profiles for the AI era.</p>
@@ -229,9 +198,16 @@
           <p>Turnpo AI assistance is coming soon. AI calls must be server-side in a real backend, and AI output must remain draft-only until user approval.</p>
         </details>
         <details>
-          <summary>Founder mode</summary>
-          <p>Owner tools are kept out of the public landing experience.</p>
+          <summary>Owner tools</summary>
+          <p>Owner tools are kept out of the public browsing path.</p>
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Open founder sign in</button>
+          <div class="owner-tool-grid owner-only">
+            <button class="gold-btn" id="openStory" type="button">Add story</button>
+            <button class="gold-btn" id="openWork" type="button">Add AI work</button>
+            <button class="ghost-btn" id="exportProfile" type="button">Export JSON</button>
+            <button class="ghost-btn" id="restoreSeed" type="button">Restore seed</button>
+            <button class="ghost-btn" id="ownerLogout" type="button">Exit owner mode</button>
+          </div>
         </details>
       </footer>
     </main>
@@ -300,6 +276,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.19"></script>
+    <script src="/script.js?v=0.1.21"></script>
   </body>
 </html>

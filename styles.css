@@ -122,6 +122,7 @@ a {
 
 .top-actions {
   gap: 10px;
+  justify-self: end;
 }
 
 body:not(.profile-open) .profile-only,
@@ -130,7 +131,7 @@ body:not(.owner-mode) .owner-only {
   display: none;
 }
 
-body.owner-mode #ownerLogin {
+body.owner-mode #homeOwnerLogin {
   display: none;
 }
 
@@ -208,6 +209,11 @@ svg {
 
 .ghost-btn:hover {
   border-color: rgba(216, 177, 95, 0.35);
+  color: var(--gold-strong);
+}
+
+.copy-profile-btn {
+  gap: 8px;
   color: var(--gold-strong);
 }
 
@@ -371,6 +377,22 @@ main {
 
 .site-footer .ghost-btn {
   margin-top: 12px;
+}
+
+.owner-tool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.owner-tool-grid .gold-btn,
+.owner-tool-grid .ghost-btn {
+  width: 100%;
+  min-height: 36px;
+  margin-top: 0;
+  padding: 0 10px;
+  font-size: 13px;
 }
 
 .person-result {
@@ -1016,12 +1038,14 @@ h1 {
   z-index: 50;
   pointer-events: none;
   opacity: 0;
+  visibility: hidden;
   transition: opacity 180ms ease;
 }
 
 .drawer.open {
   pointer-events: auto;
   opacity: 1;
+  visibility: visible;
 }
 
 .drawer-backdrop {
