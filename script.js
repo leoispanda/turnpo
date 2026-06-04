@@ -1,476 +1,719 @@
-const OWNER_ACCOUNT = "leo";
-const OWNER_PASSWORD = "turnpo-owner";
-const STORAGE_KEY = "turnpo:leo:events";
+const DEMO_OWNER_PASSWORD = "turnpo-owner";
 const OWNER_KEY = "turnpo:owner-mode";
+const ACTIVE_PROFILE_KEY = "turnpo:active-profile";
+const LOCAL_PREFIX = "turnpo:profile:";
+const STATUSES = ["published", "draft", "deleted"];
 
-const seedEvents = [
-  {
-    year: "2026",
-    items: [
+const seedProfiles = {
+  leo: {
+    id: "profile-leo",
+    username: "leo",
+    displayName: "Leo Yang",
+    oneLineIntro: "L&KM Solution Designer @ ASML. Co-creator of MapKAI. Building AI-era tools for memory, knowledge, and reflection.",
+    currentChapter: "Exploring how AI can help people map knowledge, reflect better, and make more intentional decisions.",
+    location: "Eindhoven / Amsterdam",
+    avatar: "/assets/leo-profile.png",
+    links: [
+      { label: "Turnpo", url: "https://www.turnpo.com/u/leo" },
+      { label: "MapKAI", url: "https://www.turnpo.com" }
+    ],
+    values: ["clarity", "long-term memory", "human agency", "AI-readable context"],
+    themes: ["AI products", "knowledge systems", "learning design", "personal archives"],
+    sourceMode: "manual",
+    aiContextMarkdown: "# Leo Yang\n\nI am building products around memory, identity, and AI-readable personal context.\n\n## Current focus\n- Turnpo: personal story profiles for the AI era\n- MapKAI: AI-assisted knowledge mapping and reflection\n- Learning and knowledge solution design at ASML\n\n## Product philosophy\nUser provides the truth. AI helps shape the story. Humans see the curated profile. External AI can read the approved context.",
+    lifeStories: [
       {
-        id: "mapkai-2026",
+        id: "story-mapkai-2026",
+        year: "2026",
+        date: "May 2026",
         title: "Co-creating MapKAI",
-        date: "May 2026 - Eindhoven",
-        images: ["https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80"],
-        note: "An early-stage exploration of knowledge mapping, AI-assisted reflection, and AI-native decision systems.",
+        location: "Eindhoven",
+        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+        publicSummary: "An early-stage exploration of knowledge mapping, AI-assisted reflection, and AI-native decision systems.",
+        whyItMatters: "It turned scattered thinking into a product direction.",
         tags: ["MapKAI", "AI", "knowledge"],
-        visibility: "public"
+        status: "published",
+        userApproved: true
       },
       {
-        id: "asml-learning-2026",
+        id: "story-asml-2026",
+        year: "2026",
+        date: "2026",
         title: "Designing learning and knowledge solutions at ASML",
-        date: "2026 - ASML Academy",
-        images: ["https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80"],
-        note: "Working between people, systems, and performance to make expert knowledge easier to access and apply.",
+        location: "ASML Academy",
+        image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
+        publicSummary: "Working between people, systems, and performance to make expert knowledge easier to access and apply.",
+        whyItMatters: "It shaped a systems view of how people learn at scale.",
         tags: ["ASML", "learning", "performance"],
-        visibility: "public"
-      }
-    ]
-  },
-  {
-    year: "2023",
-    items: [
+        status: "published",
+        userApproved: true
+      },
       {
-        id: "solution-designer-2023",
+        id: "story-solution-designer-2023",
+        year: "2023",
+        date: "July 2023",
         title: "Became L&KM Solution Designer",
-        date: "July 2023 - Eindhoven",
-        images: ["https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80"],
-        note: "Moved into a role focused on scalable learning, knowledge sharing, and capability-building solutions.",
-        tags: ["ASML", "role shift", "knowledge management"],
-        visibility: "public"
-      }
-    ]
-  },
-  {
-    year: "2018",
-    items: [
+        location: "Eindhoven",
+        image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80",
+        publicSummary: "Moved into a role focused on scalable learning, knowledge sharing, and capability-building solutions.",
+        whyItMatters: "It connected technical training, knowledge management, and product thinking.",
+        tags: ["role shift", "knowledge management", "ASML"],
+        status: "published",
+        userApproved: true
+      },
       {
-        id: "technical-instructor-2018",
+        id: "story-technical-instructor-2018",
+        year: "2018",
+        date: "August 2018",
         title: "Started at ASML as Technical Instructor/Developer",
-        date: "August 2018 - Shanghai",
-        images: ["https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80"],
-        note: "Delivered technical training, led projects, and began turning engineering knowledge into reusable learning.",
-        tags: ["technical training", "ASML", "China"],
-        visibility: "public"
+        location: "Shanghai",
+        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
+        publicSummary: "Delivered technical training, led projects, and began turning engineering knowledge into reusable learning.",
+        whyItMatters: "It was the bridge from engineering work into learning systems.",
+        tags: ["technical training", "China", "ASML"],
+        status: "published",
+        userApproved: true
+      }
+    ],
+    aiWorks: [
+      {
+        id: "work-turnpo",
+        title: "Turnpo",
+        type: "Personal story profile platform",
+        publicSummary: "A shareable personal story and AI work profile for the AI era.",
+        whyMade: "To help people explain what shaped them beyond job titles.",
+        toolsUsed: ["HTML/CSS/JS", "Cloudflare Pages", "AI-assisted product design"],
+        humanRole: "Product direction, story curation, privacy rules, taste.",
+        aiRole: "Drafting, structure, code assistance, scenario exploration.",
+        result: "A searchable founder prototype with published-only AI profile generation.",
+        link: "https://www.turnpo.com",
+        tags: ["identity", "AI profile", "privacy"],
+        status: "published",
+        userApproved: true
+      },
+      {
+        id: "work-mapkai",
+        title: "MapKAI",
+        type: "AI knowledge mapping concept",
+        publicSummary: "A product exploration around AI-assisted reflection, knowledge maps, and decision support.",
+        whyMade: "To make complex knowledge easier to navigate and revisit.",
+        toolsUsed: ["AI prototyping", "knowledge mapping", "product thinking"],
+        humanRole: "Problem framing and product judgment.",
+        aiRole: "Idea expansion and interface exploration.",
+        result: "A clearer direction for AI-native personal and organizational knowledge tools.",
+        link: "",
+        tags: ["knowledge", "reflection", "AI"],
+        status: "published",
+        userApproved: true
       }
     ]
   },
-  {
-    year: "2012",
-    items: [
+  cindy: {
+    id: "profile-cindy",
+    username: "cindy",
+    displayName: "Cindy Chen",
+    oneLineIntro: "Example invited profile for a designer shaping humane AI products.",
+    currentChapter: "Designing thoughtful interfaces for AI-assisted creative work.",
+    location: "Amsterdam",
+    avatar: "/assets/turnpo-logo-full.png",
+    links: [{ label: "Profile", url: "https://www.turnpo.com/u/cindy" }],
+    values: ["craft", "care", "agency"],
+    themes: ["design", "AI tools", "creative systems"],
+    sourceMode: "manual",
+    aiContextMarkdown: "# Cindy Chen\n\nExample profile used to demonstrate Turnpo multi-profile search.",
+    lifeStories: [
       {
-        id: "aircraft-engineering-2012",
-        title: "Began engineering work in aircraft engines",
-        date: "August 2012 - Harbin",
-        images: ["https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"],
-        note: "Worked on equipment installation, commissioning, maintenance, and internal technical training programs.",
-        tags: ["engineering", "aircraft engines", "origin"],
-        visibility: "public"
+        id: "story-cindy-2025",
+        year: "2025",
+        date: "2025",
+        title: "Started designing AI-native creative workflows",
+        location: "Amsterdam",
+        image: "https://images.unsplash.com/photo-1497366672149-e5e4b4d34eb3?auto=format&fit=crop&w=900&q=80",
+        publicSummary: "An example public story showing how Turnpo can support invited profiles.",
+        whyItMatters: "It demonstrates that search and routing are profile-data driven.",
+        tags: ["design", "AI", "workflow"],
+        status: "published",
+        userApproved: true
+      }
+    ],
+    aiWorks: [
+      {
+        id: "work-cindy-studio",
+        title: "AI Studio Notes",
+        type: "Creative workflow archive",
+        publicSummary: "A sample AI work entry for the private beta profile model.",
+        whyMade: "To test AI work search and public profile structure.",
+        toolsUsed: ["Figma", "AI writing tools"],
+        humanRole: "Design judgment and curation.",
+        aiRole: "Drafting and variation.",
+        result: "A concise example work page section.",
+        link: "",
+        tags: ["design", "prototype"],
+        status: "published",
+        userApproved: true
       }
     ]
+  },
+  "demo-friend": {
+    id: "profile-demo-friend",
+    username: "demo-friend",
+    displayName: "Demo Friend",
+    oneLineIntro: "Invite-based creation placeholder for future Turnpo profiles.",
+    currentChapter: "Waiting for a founder invite to create a real profile.",
+    location: "Private beta",
+    avatar: "/assets/turnpo-logo-full.png",
+    links: [{ label: "Invite coming soon", url: "#invite" }],
+    values: ["ownership", "consent", "curation"],
+    themes: ["private beta", "future profile"],
+    sourceMode: "manual",
+    aiContextMarkdown: "# Demo Friend\n\nPlaceholder profile for invite-based growth.",
+    lifeStories: [],
+    aiWorks: []
   }
-];
+};
 
-let events = loadEvents();
+let profiles = loadProfiles();
+let activeUsername = "leo";
 let ownerMode = localStorage.getItem(OWNER_KEY) === "true";
 let editingRef = null;
+let activeEditorType = "story";
 
+const $ = (selector) => document.querySelector(selector);
 const body = document.body;
-const entryView = document.querySelector("#entryView");
-const profileContent = document.querySelectorAll(".profile-content");
-const timelineList = document.querySelector("#timelineList");
-const drawer = document.querySelector("#drawer");
-const authDrawer = document.querySelector("#authDrawer");
-const copyStatus = document.querySelector("#copyStatus");
-const markdown = document.querySelector("#aiMarkdown");
-const searchResults = document.querySelector("#searchResults");
-const eventForm = document.querySelector("#eventForm");
-const eventStatus = document.querySelector("#eventStatus");
-const deleteEventButton = document.querySelector("#deleteEvent");
 
-function loadEvents() {
-  try {
-    return normalizeEvents(JSON.parse(localStorage.getItem(STORAGE_KEY)) || structuredClone(seedEvents));
-  } catch {
-    return normalizeEvents(structuredClone(seedEvents));
-  }
+function clone(value) {
+  return structuredClone(value);
 }
 
-function normalizeEvents(groups) {
-  return groups.map((group) => {
-    const items = (group.items || []).map((item) => ({
-      id: item.id || crypto.randomUUID(),
-      title: item.title || "Untitled moment",
-      date: item.date || "",
-      images: item.images?.length ? item.images : [item.image].filter(Boolean),
-      note: item.note || "",
-      tags: Array.isArray(item.tags) ? item.tags : [],
-      visibility: item.visibility || "public"
-    }));
-    return { year: String(group.year), items, count: countLabel(items.length) };
-  }).sort((a, b) => Number(b.year) - Number(a.year));
+function localKey(username) {
+  return `${LOCAL_PREFIX}${username}`;
 }
 
-function countLabel(count) {
-  return `${count} selected moment${count === 1 ? "" : "s"}`;
+function loadProfiles() {
+  const next = clone(seedProfiles);
+  Object.keys(next).forEach((username) => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(localKey(username)));
+      if (saved) next[username] = normalizeProfile(saved);
+    } catch {
+      next[username] = normalizeProfile(next[username]);
+    }
+  });
+  return next;
 }
 
-function saveEvents() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
-}
-
-function downloadEvents() {
-  const payload = {
-    profile: "leo",
-    exportedAt: new Date().toISOString(),
-    storage: "localStorage prototype",
-    events
+function normalizeProfile(profile) {
+  return {
+    ...profile,
+    lifeStories: (profile.lifeStories || []).map((item) => normalizeContent(item, "story")),
+    aiWorks: (profile.aiWorks || []).map((item) => normalizeContent(item, "work")),
+    values: profile.values || [],
+    themes: profile.themes || [],
+    links: profile.links || []
   };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "turnpo-leo-events-local.json";
-  link.click();
-  URL.revokeObjectURL(url);
 }
 
-function visibleItems(group) {
-  return ownerMode ? group.items : group.items.filter((item) => item.visibility !== "private");
+function normalizeContent(item, type) {
+  const now = new Date().toISOString();
+  return {
+    id: item.id || `${type}-${crypto.randomUUID()}`,
+    status: STATUSES.includes(item.status) ? item.status : "draft",
+    userApproved: Boolean(item.userApproved),
+    createdAt: item.createdAt || now,
+    updatedAt: item.updatedAt || now,
+    publishedAt: item.publishedAt || (item.status === "published" ? now : ""),
+    unpublishedAt: item.unpublishedAt || "",
+    deletedAt: item.deletedAt || "",
+    ...item
+  };
 }
 
-function syncCount(group) {
-  group.count = countLabel(visibleItems(group).length);
+function saveActiveProfile() {
+  localStorage.setItem(localKey(activeUsername), JSON.stringify(profiles[activeUsername]));
+}
+
+function currentProfile() {
+  return profiles[activeUsername] || profiles.leo;
+}
+
+function isPublished(item) {
+  return item.status === "published" && item.userApproved !== false;
+}
+
+function publicStories(profile = currentProfile()) {
+  return profile.lifeStories.filter(isPublished).sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
+}
+
+function publicWorks(profile = currentProfile()) {
+  return profile.aiWorks.filter(isPublished);
+}
+
+function ownerItems(collection) {
+  return ownerMode ? collection.filter((item) => item.status !== "deleted") : collection.filter(isPublished);
+}
+
+function escapeHtml(value = "") {
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  }[char]));
+}
+
+function parseList(value) {
+  return value.split(",").map((item) => item.trim()).filter(Boolean);
 }
 
 function setRoute(route) {
-  const isProfile = route === "leo";
-  entryView.hidden = isProfile;
-  profileContent.forEach((section) => {
-    section.hidden = !isProfile;
-  });
-  body.classList.toggle("profile-open", isProfile);
-  if (isProfile) {
-    location.hash = "leo";
-    renderTimeline();
-  } else {
-    history.replaceState(null, "", location.pathname);
+  if (route === "home") {
+    body.classList.remove("profile-open");
+    $("#entryView").hidden = false;
+    document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = true; });
+    history.pushState(null, "", "/");
+    renderHome();
+    window.scrollTo({ top: 0, behavior: "auto" });
+    return;
   }
+
+  activeUsername = profiles[route] ? route : "leo";
+  localStorage.setItem(ACTIVE_PROFILE_KEY, activeUsername);
+  body.classList.add("profile-open");
+  $("#entryView").hidden = true;
+  document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = false; });
+  history.pushState(null, "", `/u/${activeUsername}`);
+  renderProfile();
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+function routeFromLocation() {
+  const pathMatch = location.pathname.match(/^\/u\/([^/]+)/);
+  if (pathMatch) return decodeURIComponent(pathMatch[1]);
+  const hashMatch = location.hash.match(/^#\/u\/([^/]+)/);
+  if (hashMatch) return decodeURIComponent(hashMatch[1]);
+  if (location.hash === "#leo") return "leo";
+  return "home";
+}
+
+function profileSearchText(profile) {
+  return [
+    profile.displayName,
+    profile.username,
+    profile.oneLineIntro,
+    profile.currentChapter,
+    profile.location,
+    ...profile.values,
+    ...profile.themes,
+    ...publicStories(profile).flatMap((story) => [story.title, story.location, story.publicSummary, ...(story.tags || [])]),
+    ...publicWorks(profile).flatMap((work) => [work.title, work.type, work.publicSummary, ...(work.tags || []), ...(work.toolsUsed || [])])
+  ].join(" ").toLowerCase();
+}
+
+function searchProfiles(query = "") {
+  const normalized = query.trim().toLowerCase();
+  const all = Object.values(profiles);
+  if (!normalized) return all;
+  return all.filter((profile) => profileSearchText(profile).includes(normalized));
+}
+
+function renderHome(query = "") {
+  const results = searchProfiles(query);
+  $("#searchResults").innerHTML = results.length ? results.map((profile) => `
+    <button class="person-result" type="button" data-profile="${profile.username}">
+      <img src="${escapeHtml(profile.avatar)}" alt="${escapeHtml(profile.displayName)}" />
+      <span>
+        <strong>${escapeHtml(profile.displayName)}</strong>
+        <small>@${escapeHtml(profile.username)} · ${escapeHtml(profile.location)} · ${escapeHtml(profile.themes.slice(0, 3).join(", "))}</small>
+      </span>
+    </button>
+  `).join("") : `<p class="empty-result">No published Turnpo profile matched that search.</p>`;
+
+  $("#exampleProfiles").innerHTML = Object.values(profiles).map((profile) => `
+    <article class="mini-profile-card">
+      <img src="${escapeHtml(profile.avatar)}" alt="${escapeHtml(profile.displayName)}" />
+      <div>
+        <h3>${escapeHtml(profile.displayName)}</h3>
+        <p>${escapeHtml(profile.oneLineIntro)}</p>
+        <button class="small-action" type="button" data-profile="${profile.username}">Open /u/${escapeHtml(profile.username)}</button>
+      </div>
+    </article>
+  `).join("");
+}
+
+function renderProfile() {
+  const profile = currentProfile();
+  document.title = `${profile.displayName} - Turnpo`;
+  $("#metaDescription").setAttribute("content", `${profile.displayName} on Turnpo: ${profile.oneLineIntro}`);
+  $("#ogTitle").setAttribute("content", `${profile.displayName} - Turnpo`);
+  $("#ogDescription").setAttribute("content", profile.oneLineIntro);
+  $("#profileName").textContent = profile.displayName;
+  $("#profileUsername").textContent = `@${profile.username}`;
+  $("#profileIntro").textContent = profile.oneLineIntro;
+  $("#profileChapter").textContent = profile.currentChapter;
+  $("#profileLocation").textContent = profile.location;
+  $("#profileAvatar").src = profile.avatar;
+  $("#profileAvatar").alt = `${profile.displayName} portrait`;
+  $("#profileLinks").innerHTML = profile.links.map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("");
+  $("#profileThemes").innerHTML = [...profile.values, ...profile.themes].map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+  $("#aiMarkdown").value = generateAiProfile(profile);
+  renderTimeline();
+  renderAiWorks();
+  renderOwnerWorkspace();
+  renderJsonLd(profile);
+}
+
+function groupedStories(profile = currentProfile()) {
+  return ownerItems(profile.lifeStories).reduce((groups, story) => {
+    const year = story.year || "Undated";
+    if (!groups[year]) groups[year] = [];
+    groups[year].push(story);
+    return groups;
+  }, {});
+}
+
+function statusPill(item) {
+  return ownerMode ? `<span class="visibility-pill">${escapeHtml(item.status)}</span>` : "";
+}
+
+function renderTimeline() {
+  const groups = groupedStories();
+  const years = Object.keys(groups).sort((a, b) => Number(b) - Number(a));
+  $("#yearFilters").innerHTML = years.map((year) => `<button type="button" data-year="${year}">${year}</button>`).join("");
+  $("#timelineList").innerHTML = years.length ? years.map((year) => `
+    <article class="year-block">
+      <div class="year-label">${escapeHtml(year)}</div>
+      <div class="year-title">${escapeHtml(year)}<span>${groups[year].filter(isPublished).length} published highlight${groups[year].filter(isPublished).length === 1 ? "" : "s"}</span></div>
+      <div class="event-stack">
+        ${groups[year].map((story) => `
+          <article class="event-card ${story.status !== "published" ? "private-card" : ""}">
+            <div class="event-media"><img class="event-main-image" src="${escapeHtml(story.image || "/assets/turnpo-logo-full.png")}" alt="${escapeHtml(story.title)}" /></div>
+            <div>
+              <div class="event-card-head">
+                <div class="event-date">${escapeHtml([story.date, story.location].filter(Boolean).join(" - "))}</div>
+                <div class="event-actions owner-only">${statusPill(story)}<button class="small-action" type="button" data-edit-type="story" data-edit-id="${story.id}">Edit</button></div>
+              </div>
+              <h3>${escapeHtml(story.title)}</h3>
+              <p>${escapeHtml(story.publicSummary)}</p>
+              ${story.whyItMatters ? `<p class="why-line">${escapeHtml(story.whyItMatters)}</p>` : ""}
+              <div class="tag-row">${(story.tags || []).slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>
+            </div>
+          </article>
+        `).join("")}
+      </div>
+    </article>
+  `).join("") : `<p class="empty-result">No published stories yet.</p>`;
+}
+
+function renderAiWorks() {
+  const works = ownerItems(currentProfile().aiWorks);
+  $("#aiWorksList").innerHTML = works.length ? works.map((work) => `
+    <article class="work-card ${work.status !== "published" ? "private-card" : ""}">
+      <div class="work-card-head">
+        <div><p class="event-date">${escapeHtml(work.type || "AI work")}</p><h3>${escapeHtml(work.title)}</h3></div>
+        <div class="event-actions owner-only">${statusPill(work)}<button class="small-action" type="button" data-edit-type="work" data-edit-id="${work.id}">Edit</button></div>
+      </div>
+      <p>${escapeHtml(work.publicSummary)}</p>
+      <dl>
+        <div><dt>Human role</dt><dd>${escapeHtml(work.humanRole || "Curated by the profile owner.")}</dd></div>
+        <div><dt>AI role</dt><dd>${escapeHtml(work.aiRole || "Not specified.")}</dd></div>
+        <div><dt>Result</dt><dd>${escapeHtml(work.result || "Draft result.")}</dd></div>
+      </dl>
+      <div class="tag-row">${(work.tags || []).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>
+      ${work.link ? `<a class="doc-link" href="${escapeHtml(work.link)}">Open work</a>` : ""}
+    </article>
+  `).join("") : `<p class="empty-result">No published AI works yet.</p>`;
+}
+
+function generateAiProfile(profile) {
+  const stories = publicStories(profile);
+  const works = publicWorks(profile);
+  return `# ${profile.displayName}
+
+Username: @${profile.username}
+Location: ${profile.location}
+
+## One-line summary
+${profile.oneLineIntro}
+
+## Current chapter
+${profile.currentChapter}
+
+## Values and themes
+${[...profile.values, ...profile.themes].map((item) => `- ${item}`).join("\n")}
+
+## Public timeline highlights
+${stories.length ? stories.map((story) => `- ${story.year}: ${story.title} (${story.location || "location not specified"}) - ${story.publicSummary}${story.whyItMatters ? ` Why it matters: ${story.whyItMatters}` : ""}`).join("\n") : "- No published stories yet."}
+
+## Public AI works
+${works.length ? works.map((work) => `- ${work.title} (${work.type}) - ${work.publicSummary} Human role: ${work.humanRole} AI role: ${work.aiRole} Result: ${work.result}`).join("\n") : "- No published AI works yet."}
+
+## Public links
+${profile.links.length ? profile.links.map((link) => `- [${link.label}](${link.url})`).join("\n") : "- No public links yet."}
+
+## Suggested questions for AI-assisted review
+- What shaped this person beyond their job title?
+- What are they building in the AI era?
+- Which values and themes appear across their public stories?
+
+Only published and user-approved Turnpo content is included in this AI-readable profile.`;
+}
+
+function renderOwnerWorkspace() {
+  const profile = currentProfile();
+  $("#sourceWorkspace").value = profile.aiContextMarkdown || "";
+  $("#previewSummary").innerHTML = `
+    <h3>${escapeHtml(profile.displayName)}</h3>
+    <p>${escapeHtml(profile.oneLineIntro)}</p>
+    <p>${publicStories(profile).length} published stories · ${publicWorks(profile).length} published AI works</p>
+  `;
+}
+
+function renderJsonLd(profile) {
+  const graph = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.displayName,
+    url: `https://www.turnpo.com/u/${profile.username}`,
+    description: profile.oneLineIntro,
+    knowsAbout: [...profile.values, ...profile.themes],
+    sameAs: profile.links.map((link) => link.url),
+    subjectOf: [
+      ...publicStories(profile).map((story) => ({ "@type": "CreativeWork", name: story.title, dateCreated: String(story.year), description: story.publicSummary })),
+      ...publicWorks(profile).map((work) => ({ "@type": "CreativeWork", name: work.title, description: work.publicSummary }))
+    ]
+  };
+  $("#jsonLd").textContent = JSON.stringify(graph, null, 2);
 }
 
 function setOwnerMode(enabled) {
   ownerMode = enabled;
   localStorage.setItem(OWNER_KEY, String(enabled));
   body.classList.toggle("owner-mode", enabled);
-  document.querySelector("#openAdd").dataset.locked = String(!enabled);
-  document.querySelector("#exportEvents").hidden = !enabled;
-  renderTimeline();
+  renderProfile();
 }
 
-function setDrawer(open, mode = "add") {
-  if (!ownerMode && open) {
+function openEditor(type, id = "") {
+  if (!ownerMode) {
     setAuthDrawer(true);
     return;
   }
-  drawer.classList.toggle("open", open);
-  drawer.setAttribute("aria-hidden", String(!open));
-  if (!open) {
-    editingRef = null;
-    resetEventForm();
-  } else {
-    document.querySelector("#eventModeLabel").textContent = mode === "edit" ? "Edit moment" : "New moment";
-    document.querySelector("#eventFormTitle").textContent = mode === "edit" ? "Update this moment" : "Add to the road";
-    deleteEventButton.hidden = mode !== "edit";
-    eventStatus.textContent = mode === "edit"
-      ? "Editing an existing local draft. Backend persistence is planned next."
-      : "Draft changes stay local until the backend is connected.";
+  activeEditorType = type;
+  editingRef = id ? { type, id } : null;
+  const item = id ? findContent(type, id) : null;
+  $("#contentModeLabel").textContent = item ? `Edit ${type}` : `New ${type}`;
+  $("#contentFormTitle").textContent = item ? "Update content" : type === "story" ? "Add life story" : "Add AI work";
+  $("#contentType").value = type;
+  $("#contentTitle").value = item?.title || "";
+  $("#contentYear").value = item?.year || "";
+  $("#contentDate").value = item?.date || "";
+  $("#contentLocation").value = item?.location || "";
+  $("#contentImage").value = item?.image || "";
+  $("#contentStatus").value = item?.status || "draft";
+  $("#contentSummary").value = item?.publicSummary || "";
+  $("#contentWhy").value = item?.whyItMatters || item?.whyMade || "";
+  $("#contentTags").value = (item?.tags || []).join(", ");
+  $("#workType").value = item?.type || "";
+  $("#workTools").value = (item?.toolsUsed || []).join(", ");
+  $("#humanRole").value = item?.humanRole || "";
+  $("#aiRole").value = item?.aiRole || "";
+  $("#workResult").value = item?.result || "";
+  $("#workLink").value = item?.link || "";
+  $("#consentUpload").checked = false;
+  $("#consentPublish").checked = false;
+  $("#consentAiProfile").checked = false;
+  $("#deleteContent").hidden = !item;
+  $("#contentStatusNote").textContent = "Draft content is owner-only in this local prototype. Published content appears in the public page and AI profile.";
+  $("#contentDrawer").classList.add("open");
+  $("#contentDrawer").setAttribute("aria-hidden", "false");
+  toggleWorkFields(type);
+}
+
+function closeEditor() {
+  $("#contentDrawer").classList.remove("open");
+  $("#contentDrawer").setAttribute("aria-hidden", "true");
+  editingRef = null;
+}
+
+function toggleWorkFields(type) {
+  document.querySelectorAll(".work-only").forEach((node) => { node.hidden = type !== "work"; });
+  document.querySelectorAll(".story-only").forEach((node) => { node.hidden = type !== "story"; });
+}
+
+function findContent(type, id) {
+  const collection = type === "work" ? currentProfile().aiWorks : currentProfile().lifeStories;
+  return collection.find((item) => item.id === id);
+}
+
+function upsertContent(event) {
+  event.preventDefault();
+  const type = $("#contentType").value;
+  const status = $("#contentStatus").value;
+  const wantsPublish = status === "published";
+  if (!$("#consentUpload").checked) {
+    $("#contentStatusNote").textContent = "Please confirm upload rights before saving.";
+    return;
   }
+  if (wantsPublish && (!$("#consentPublish").checked || !$("#consentAiProfile").checked)) {
+    $("#contentStatusNote").textContent = "Publishing requires public and AI profile consent.";
+    return;
+  }
+  const now = new Date().toISOString();
+  const base = normalizeContent({
+    id: editingRef?.id || `${type}-${crypto.randomUUID()}`,
+    title: $("#contentTitle").value.trim(),
+    year: $("#contentYear").value.trim(),
+    date: $("#contentDate").value.trim(),
+    location: $("#contentLocation").value.trim(),
+    image: $("#contentImage").value.trim(),
+    publicSummary: $("#contentSummary").value.trim(),
+    tags: parseList($("#contentTags").value),
+    status,
+    userApproved: wantsPublish,
+    updatedAt: now,
+    publishedAt: wantsPublish ? now : "",
+    unpublishedAt: status === "draft" ? now : "",
+    deletedAt: status === "deleted" ? now : ""
+  }, type);
+  if (!base.title || !base.publicSummary) {
+    $("#contentStatusNote").textContent = "Title and public summary are required.";
+    return;
+  }
+  const collection = type === "work" ? currentProfile().aiWorks : currentProfile().lifeStories;
+  const existingIndex = collection.findIndex((item) => item.id === base.id);
+  const nextItem = type === "work" ? {
+    ...base,
+    type: $("#workType").value.trim(),
+    whyMade: $("#contentWhy").value.trim(),
+    toolsUsed: parseList($("#workTools").value),
+    humanRole: $("#humanRole").value.trim(),
+    aiRole: $("#aiRole").value.trim(),
+    result: $("#workResult").value.trim(),
+    link: $("#workLink").value.trim()
+  } : {
+    ...base,
+    whyItMatters: $("#contentWhy").value.trim()
+  };
+  if (existingIndex >= 0) collection[existingIndex] = nextItem;
+  else collection.unshift(nextItem);
+  saveActiveProfile();
+  renderProfile();
+  closeEditor();
+}
+
+function deleteCurrentContent() {
+  if (!editingRef) return;
+  const item = findContent(editingRef.type, editingRef.id);
+  if (item) {
+    item.status = "deleted";
+    item.userApproved = false;
+    item.deletedAt = new Date().toISOString();
+    item.updatedAt = item.deletedAt;
+  }
+  saveActiveProfile();
+  renderProfile();
+  closeEditor();
 }
 
 function setAuthDrawer(open) {
-  authDrawer.classList.toggle("open", open);
-  authDrawer.setAttribute("aria-hidden", String(!open));
+  $("#authDrawer").classList.toggle("open", open);
+  $("#authDrawer").setAttribute("aria-hidden", String(!open));
 }
 
-function mediaMarkup(item) {
-  const images = item.images?.length ? item.images : [];
-  if (!images.length) {
-    return `<div class="event-media empty-media"></div>`;
-  }
-
-  return `
-    <div class="event-media ${images.length > 1 ? "multi-media" : ""}">
-      <img class="event-main-image" src="${images[0]}" alt="${item.title}" />
-      ${images.length > 1 ? `
-        <div class="media-strip">
-          ${images.slice(1, 5).map((image, index) => `<img src="${image}" alt="${item.title} photo ${index + 2}" />`).join("")}
-          ${images.length > 5 ? `<span>+${images.length - 5}</span>` : ""}
-        </div>
-      ` : ""}
-    </div>
-  `;
+function copyAiProfile() {
+  navigator.clipboard.writeText($("#aiMarkdown").value);
+  $("#copyStatus").textContent = "Copied published-only AI Profile Markdown.";
+  setTimeout(() => { $("#copyStatus").textContent = "Ready to copy into any AI chat."; }, 2400);
 }
 
-function renderTimeline() {
-  timelineList.innerHTML = events.map((group) => {
-    const items = visibleItems(group);
-    return `
-      <article class="year-block">
-        <div class="year-label">${group.year}</div>
-        <div class="year-title">${group.year}<span>${countLabel(items.length)}</span></div>
-        <div class="event-stack">
-          ${items.map((item) => `
-            <article class="event-card ${item.visibility === "private" ? "private-card" : ""}">
-              ${mediaMarkup(item)}
-              <div>
-                <div class="event-card-head">
-                  <div class="event-date">${item.date}</div>
-                  <div class="event-actions owner-only">
-                    <span class="visibility-pill">${item.visibility}</span>
-                    <button class="small-action" type="button" data-edit-id="${item.id}">Edit</button>
-                  </div>
-                </div>
-                <h3>${item.title}</h3>
-                <p>${item.note}</p>
-                <div class="tag-row">
-                  ${item.tags.map((tag) => `<span class="timeline-tag">${tag}</span>`).join("")}
-                </div>
-              </div>
-            </article>
-          `).join("")}
-        </div>
-      </article>
-    `;
-  }).join("");
+function exportProfile() {
+  const blob = new Blob([JSON.stringify({ profile: currentProfile(), exportedAt: new Date().toISOString(), note: "Local prototype export. Do not treat this as backend storage." }, null, 2)], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `turnpo-${activeUsername}-local-profile.json`;
+  link.click();
+  URL.revokeObjectURL(link.href);
 }
 
-function renderSearch(query = "") {
-  const normalized = query.trim().toLowerCase();
-  if (!normalized) {
-    searchResults.innerHTML = `
-      <button class="person-result" type="button" data-person="leo">
-        <img src="assets/leo-profile.png" alt="Leo Yang" />
-        <span><strong>Leo Yang</strong><small>L&KM Solution Designer @ ASML · Co-creator of MapKAI</small></span>
-      </button>
-    `;
-    return;
-  }
-
-  if ("leo yang".includes(normalized) || "leo".includes(normalized) || "yang".includes(normalized)) {
-    renderSearch("");
-    return;
-  }
-
-  searchResults.innerHTML = `<p class="empty-result">No public Turnpo profile found yet.</p>`;
+function resetActiveProfile() {
+  localStorage.removeItem(localKey(activeUsername));
+  profiles[activeUsername] = normalizeProfile(clone(seedProfiles[activeUsername]));
+  renderProfile();
 }
 
-function readUploadedFiles(files) {
-  return Promise.all(Array.from(files || []).map((file) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result));
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  })));
-}
-
-function parseTags(value) {
-  return value.split(",").map((tag) => tag.trim()).filter(Boolean);
-}
-
-function imageFields() {
-  return [
-    document.querySelector("#eventImage").value.trim(),
-    ...document.querySelector("#eventImageList").value.split("\n").map((line) => line.trim())
-  ].filter(Boolean);
-}
-
-function resetEventForm() {
-  eventForm.reset();
-  document.querySelector("#eventTitle").value = "A quiet turning point";
-  document.querySelector("#eventYear").value = "2026";
-  document.querySelector("#eventDate").value = "June 2026";
-  document.querySelector("#eventImage").value = "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80";
-  document.querySelector("#eventTags").value = "turning point, selected";
-  document.querySelector("#eventNote").value = "The kind of moment that does not ask for an audience, but changes the direction of the work.";
-  document.querySelector("#eventVisibility").value = "public";
-  document.querySelector("#eventImageList").value = "";
-  deleteEventButton.hidden = true;
-  eventStatus.textContent = "Draft changes stay local until the backend is connected.";
-}
-
-function findEventById(id) {
-  for (const group of events) {
-    const index = group.items.findIndex((item) => item.id === id);
-    if (index >= 0) {
-      return { group, index, item: group.items[index] };
-    }
-  }
-  return null;
-}
-
-function openEditEvent(id) {
-  const found = findEventById(id);
-  if (!found) {
-    return;
-  }
-
-  editingRef = { id, originalYear: found.group.year };
-  document.querySelector("#eventTitle").value = found.item.title;
-  document.querySelector("#eventYear").value = found.group.year;
-  document.querySelector("#eventDate").value = found.item.date;
-  document.querySelector("#eventImage").value = found.item.images[0] || "";
-  document.querySelector("#eventImageList").value = found.item.images.slice(1).join("\n");
-  document.querySelector("#eventNote").value = found.item.note;
-  document.querySelector("#eventTags").value = found.item.tags.join(", ");
-  document.querySelector("#eventVisibility").value = found.item.visibility;
-  setDrawer(true, "edit");
-}
-
-function removeEmptyGroups() {
-  events = events.filter((group) => group.items.length);
-}
-
-function deleteEditingEvent() {
-  if (!editingRef) {
-    return;
-  }
-  const found = findEventById(editingRef.id);
-  if (found) {
-    found.group.items.splice(found.index, 1);
-    removeEmptyGroups();
-    events.forEach(syncCount);
-    saveEvents();
-    renderTimeline();
-  }
-  setDrawer(false);
-}
-
-document.querySelector("#searchForm").addEventListener("submit", (event) => {
+$("#searchForm").addEventListener("submit", (event) => {
   event.preventDefault();
-  const query = document.querySelector("#personSearch").value;
-  if (query.trim().toLowerCase().includes("leo")) {
-    setRoute("leo");
-  } else {
-    renderSearch(query);
-  }
+  renderHome($("#personSearch").value);
 });
 
-searchResults.addEventListener("click", (event) => {
-  const result = event.target.closest("[data-person='leo']");
-  if (result) {
-    setRoute("leo");
-  }
+$("#searchResults").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-profile]");
+  if (button) setRoute(button.dataset.profile);
 });
 
-timelineList.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-edit-id]");
-  if (button && ownerMode) {
-    openEditEvent(button.dataset.editId);
-  }
+$("#exampleProfiles").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-profile]");
+  if (button) setRoute(button.dataset.profile);
+});
+
+document.addEventListener("click", (event) => {
+  const editButton = event.target.closest("[data-edit-id]");
+  if (editButton) openEditor(editButton.dataset.editType, editButton.dataset.editId);
 });
 
 document.querySelectorAll(".toggle-btn").forEach((button) => {
   button.addEventListener("click", () => {
     document.querySelectorAll(".toggle-btn").forEach((item) => item.classList.remove("active"));
     button.classList.add("active");
-    timelineList.classList.toggle("horizontal", button.dataset.view === "horizontal");
-    timelineList.classList.toggle("vertical", button.dataset.view !== "horizontal");
+    $("#timelineList").classList.toggle("horizontal", button.dataset.view === "horizontal");
+    $("#timelineList").classList.toggle("vertical", button.dataset.view !== "horizontal");
   });
 });
 
-document.querySelector(".brand").addEventListener("click", (event) => {
+$(".brand").addEventListener("click", (event) => {
   event.preventDefault();
   setRoute("home");
 });
 
-document.querySelector("#openAdd").addEventListener("click", () => {
-  resetEventForm();
-  setDrawer(true, "add");
+$("#openStory").addEventListener("click", () => openEditor("story"));
+$("#openWork").addEventListener("click", () => openEditor("work"));
+$("#closeContent").addEventListener("click", closeEditor);
+$("#closeBackdrop").addEventListener("click", closeEditor);
+$("#contentType").addEventListener("change", (event) => toggleWorkFields(event.target.value));
+$("#contentForm").addEventListener("submit", upsertContent);
+$("#deleteContent").addEventListener("click", deleteCurrentContent);
+$("#ownerLogin").addEventListener("click", () => setAuthDrawer(true));
+$("#ownerLogout").addEventListener("click", () => setOwnerMode(false));
+$("#closeAuth").addEventListener("click", () => setAuthDrawer(false));
+$("#authBackdrop").addEventListener("click", () => setAuthDrawer(false));
+$("#exportProfile").addEventListener("click", exportProfile);
+$("#restoreSeed").addEventListener("click", resetActiveProfile);
+$("#copyMd").addEventListener("click", copyAiProfile);
+$("#saveSource").addEventListener("click", () => {
+  currentProfile().aiContextMarkdown = $("#sourceWorkspace").value;
+  currentProfile().sourceMode = document.querySelector("[name='sourceMode']:checked").value;
+  saveActiveProfile();
+  $("#sourceStatus").textContent = "Saved as owner-only local source material. It is not included in the public AI profile.";
 });
-document.querySelector("#closeAdd").addEventListener("click", () => setDrawer(false));
-document.querySelector("#closeBackdrop").addEventListener("click", () => setDrawer(false));
-document.querySelector("#ownerLogin").addEventListener("click", () => setAuthDrawer(true));
-document.querySelector("#ownerLogout").addEventListener("click", () => setOwnerMode(false));
-document.querySelector("#exportEvents").addEventListener("click", downloadEvents);
-document.querySelector("#restoreSeed").addEventListener("click", () => {
-  events = normalizeEvents(structuredClone(seedEvents));
-  saveEvents();
-  renderTimeline();
-});
-deleteEventButton.addEventListener("click", deleteEditingEvent);
-document.querySelector("#closeAuth").addEventListener("click", () => setAuthDrawer(false));
-document.querySelector("#authBackdrop").addEventListener("click", () => setAuthDrawer(false));
 
-document.querySelector("#authForm").addEventListener("submit", (event) => {
+$("#authForm").addEventListener("submit", (event) => {
   event.preventDefault();
-  const account = document.querySelector("#ownerAccount").value.trim().toLowerCase();
-  const password = document.querySelector("#ownerPassword").value;
-  const authNote = document.querySelector("#authNote");
-  if (account === OWNER_ACCOUNT && password === OWNER_PASSWORD) {
+  const account = $("#ownerAccount").value.trim().toLowerCase();
+  const password = $("#ownerPassword").value;
+  if (profiles[account] && password === DEMO_OWNER_PASSWORD) {
+    activeUsername = account;
     setOwnerMode(true);
     setAuthDrawer(false);
-    authNote.textContent = "Owner mode is active in this browser.";
-    document.querySelector("#ownerPassword").value = "";
+    setRoute(account);
+    $("#ownerPassword").value = "";
+    $("#authNote").textContent = "Demo owner mode is active in this browser. This is not backend authentication.";
   } else {
-    authNote.textContent = "Account or password is incorrect.";
+    $("#authNote").textContent = "Demo account or password is incorrect.";
   }
 });
 
-document.querySelector("#copyMd").addEventListener("click", async () => {
-  await navigator.clipboard.writeText(markdown.value);
-  copyStatus.textContent = "Copied. Paste it into ChatGPT, Claude, Gemini, or any AI chat.";
-  setTimeout(() => {
-    copyStatus.textContent = "Ready to copy into any AI chat.";
-  }, 2400);
-});
+window.addEventListener("popstate", () => setRoute(routeFromLocation()));
 
-eventForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  if (!ownerMode) {
-    setAuthDrawer(true);
-    return;
-  }
-
-  const year = document.querySelector("#eventYear").value.trim() || "2026";
-  const uploadedImages = await readUploadedFiles(document.querySelector("#eventFile").files);
-  const images = [...imageFields(), ...uploadedImages];
-  const item = {
-    id: editingRef?.id || crypto.randomUUID(),
-    title: document.querySelector("#eventTitle").value.trim(),
-    date: document.querySelector("#eventDate").value.trim(),
-    images,
-    note: document.querySelector("#eventNote").value.trim(),
-    tags: parseTags(document.querySelector("#eventTags").value),
-    visibility: document.querySelector("#eventVisibility").value
-  };
-
-  if (!item.title || !item.note) {
-    eventStatus.textContent = "Title and description are required for a durable moment.";
-    return;
-  }
-
-  if (editingRef) {
-    const found = findEventById(editingRef.id);
-    if (found) {
-      found.group.items.splice(found.index, 1);
-    }
-  }
-
-  let group = events.find((entry) => entry.year === year);
-  if (!group) {
-    group = { year, count: "1 selected moment", items: [] };
-    events.unshift(group);
-  }
-  group.items.unshift(item);
-  events.forEach(syncCount);
-  removeEmptyGroups();
-  events.sort((a, b) => Number(b.year) - Number(a.year));
-  saveEvents();
-  renderTimeline();
-  eventStatus.textContent = "Saved in this browser.";
-  setDrawer(false);
-});
-
-renderSearch();
+renderHome();
 setOwnerMode(ownerMode);
-setRoute(location.hash === "#leo" ? "leo" : "home");
+setRoute(routeFromLocation());

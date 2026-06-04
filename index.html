@@ -3,23 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Turnpo - Life Timeline</title>
-    <link rel="icon" href="assets/turnpo-logo-full.png" />
+    <title>Turnpo - Personal Story Profiles for the AI Era</title>
+    <meta id="metaDescription" name="description" content="Turnpo helps people introduce themselves through the moments that shaped them and the AI-era work they are building." />
+    <meta property="og:type" content="profile" />
+    <meta id="ogTitle" property="og:title" content="Turnpo - Personal Story Profiles for the AI Era" />
+    <meta id="ogDescription" property="og:description" content="Human-readable profiles. AI-readable context." />
+    <meta property="og:url" content="https://www.turnpo.com" />
+    <link rel="icon" href="/assets/turnpo-logo-full.png" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="styles.css?v=0.1.10" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.14" />
+    <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="#" aria-label="Turnpo home">
+      <a class="brand" href="/" aria-label="Turnpo home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Turnpo</span>
-        <span class="version-badge">v0.1.10</span>
+        <span class="version-badge">v0.1.14</span>
       </a>
-      <nav class="nav-links profile-only" aria-label="Primary navigation">
+      <nav class="nav-links profile-only" aria-label="Profile navigation">
         <a href="#timeline">Timeline</a>
-        <a href="#ai-context">AI Context</a>
-        <a href="#backend">MVP backend</a>
-        <a href="#archive">Archive</a>
+        <a href="#ai-works">AI Works</a>
+        <a href="#ai-profile">AI Profile</a>
+        <a href="#workspace">Workspace</a>
+        <a href="#trust">Trust</a>
       </nav>
       <div class="top-actions profile-only">
         <div class="view-toggle" aria-label="Timeline view">
@@ -32,11 +39,15 @@
             <span>Horizontal</span>
           </button>
         </div>
-        <button class="gold-btn" id="openAdd" type="button">
+        <button class="gold-btn owner-only" id="openStory" type="button">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          <span>Add moment</span>
+          <span>Story</span>
         </button>
-        <button class="ghost-btn owner-only" id="exportEvents" type="button">Export JSON</button>
+        <button class="gold-btn owner-only" id="openWork" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <span>AI work</span>
+        </button>
+        <button class="ghost-btn owner-only" id="exportProfile" type="button">Export JSON</button>
         <button class="ghost-btn" id="ownerLogin" type="button">Owner sign in</button>
         <button class="ghost-btn owner-only" id="ownerLogout" type="button">Exit owner mode</button>
       </div>
@@ -45,206 +56,213 @@
     <main>
       <section class="search-home" id="entryView" aria-label="Turnpo search">
         <div class="search-copy">
-          <p class="timestamp">Turnpo directory</p>
-          <h1>Find the road that led here.</h1>
-          <p class="headline">Search a person, open their public timeline, and read the moments that shaped who they became.</p>
+          <h1>Personal story profiles for the AI era.</h1>
+          <p class="headline">Search a person to discover the turning points, stories, values, and AI works that shaped them.</p>
           <form class="search-box" id="searchForm">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.8 18.4a7.6 7.6 0 1 1 0-15.2 7.6 7.6 0 0 1 0 15.2zM16.4 16.4 21 21"/></svg>
-            <input id="personSearch" autocomplete="off" placeholder="Search Leo Yang" />
+            <input id="personSearch" autocomplete="off" placeholder="Search by name, AI work, location, theme" />
             <button class="gold-btn" type="submit">Search</button>
           </form>
           <div class="search-results" id="searchResults" aria-live="polite"></div>
         </div>
         <aside class="directory-card">
-          <img src="assets/turnpo-logo-full.png" alt="Turnpo logo" />
+          <img src="/assets/turnpo-logo-full.png" alt="Turnpo logo" />
           <div>
-            <p class="eyebrow">Public by default</p>
-            <h2>Visitors can view. Owners can edit.</h2>
-            <p>Turnpo profiles are readable personal archives. Editing stays behind owner mode.</p>
+            <p class="eyebrow">Human-readable. AI-readable.</p>
+            <h2>Turnpo helps people introduce themselves through the moments that shaped them.</h2>
+            <p>Not a feed, not a LinkedIn clone, and not a private diary. Turnpo is a curated profile for stories, values, and AI-era work.</p>
           </div>
         </aside>
       </section>
 
-      <section class="profile-shell profile-content" aria-label="Personal profile">
+      <section class="home-band home-only" id="aboutTurnpo">
+        <div>
+          <p class="eyebrow">About Turnpo</p>
+          <h2>What shaped you? What are you building?</h2>
+        </div>
+        <div class="rule-grid">
+          <article><span>01</span><h3>Story profile</h3><p>Show defining moments and formative experiences beyond job titles.</p></article>
+          <article><span>02</span><h3>AI works</h3><p>Show what you create with AI and what role you played in the work.</p></article>
+          <article><span>03</span><h3>Approved context</h3><p>Generate a public AI-readable profile from published content only.</p></article>
+        </div>
+      </section>
+
+      <section class="home-band home-only" id="examples">
+        <div>
+          <p class="eyebrow">Example profiles</p>
+          <h2>Search is driven by profile data.</h2>
+        </div>
+        <div class="example-grid" id="exampleProfiles"></div>
+      </section>
+
+      <section class="profile-shell profile-content" aria-label="Personal profile" hidden>
         <div class="profile-copy">
-          <p class="timestamp">Present day</p>
-          <h1>Leo Yang</h1>
-          <p class="headline">L&KM Solution Designer @ ASML. Co-creator of MapKAI. Exploring knowledge, systems, and reflection in the AI era.</p>
-          <div class="profile-meta">
-            <span>Eindhoven</span>
-            <span>ASML Academy</span>
-            <span>MapKAI</span>
-            <span>Public MVP prototype</span>
-          </div>
+          <p class="timestamp" id="profileUsername">@username</p>
+          <h1 id="profileName">Turnpo Profile</h1>
+          <p class="headline" id="profileIntro"></p>
+          <div class="profile-meta" id="profileThemes"></div>
+          <div class="profile-links" id="profileLinks"></div>
         </div>
         <div class="portrait-card" aria-label="Profile snapshot">
-          <img src="assets/leo-profile.png" alt="Portrait of Leo Yang" />
+          <img id="profileAvatar" src="/assets/turnpo-logo-full.png" alt="Profile portrait" />
           <div>
             <strong>Current chapter</strong>
-            <span>Exploring how AI can help people map knowledge, reflect better, and make more intentional decisions.</span>
+            <span id="profileChapter"></span>
+            <small id="profileLocation"></small>
           </div>
         </div>
       </section>
 
-      <section class="workspace-grid profile-content">
-        <aside class="ai-panel" id="ai-context" aria-label="AI readable profile">
+      <section class="workspace-grid profile-content" hidden>
+        <aside class="ai-panel" id="ai-profile" aria-label="AI readable profile">
           <div class="panel-head">
             <div>
-              <p class="eyebrow">AI-readable context</p>
-              <h2>Portable profile.md</h2>
+              <p class="eyebrow">AI-readable profile</p>
+              <h2>Copy approved context</h2>
             </div>
-            <button class="icon-btn" id="copyMd" type="button" title="Copy markdown">
+            <button class="icon-btn" id="copyMd" type="button" title="Copy AI Profile">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h11v11H8z"/><path d="M5 16H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
             </button>
           </div>
-          <textarea id="aiMarkdown" spellcheck="false"># Leo Yang
-
-I am building products around memory, identity, and AI-readable personal context.
-
-## Current focus
-- A premium life timeline that starts from the present and moves into the past
-- Yearly curation over daily sharing
-- Personal pages that feel meaningful, quiet, and portable
-
-## How to understand me
-- I care about tools that make people legible without flattening them
-- I prefer elegant systems with emotional depth
-- I like black, gold, minimal, high-signal interfaces
-
-## Useful context
-- Location: Amsterdam
-- Themes: AI products, founder work, personal archives, long-term storytelling</textarea>
+          <textarea id="aiMarkdown" spellcheck="false"></textarea>
           <div class="copy-status" id="copyStatus">Ready to copy into any AI chat.</div>
         </aside>
 
         <section class="timeline-section" id="timeline" aria-label="Life timeline">
           <div class="section-head">
             <div>
-              <p class="eyebrow">Timeline</p>
-              <h2>From now, back through the road that led here.</h2>
+              <p class="eyebrow">Life timeline</p>
+              <h2>Curated stories, not a feed.</h2>
             </div>
             <div class="timeline-tools owner-only">
               <button class="ghost-btn" id="restoreSeed" type="button">Restore seed</button>
             </div>
-            <div class="year-jump" aria-label="Year filters">
-              <button type="button">2026</button>
-              <button type="button">2024</button>
-              <button type="button">2021</button>
-              <button type="button">2018</button>
-            </div>
+            <div class="year-jump" id="yearFilters" aria-label="Year filters"></div>
           </div>
           <div class="timeline vertical" id="timelineList"></div>
         </section>
       </section>
 
-      <section class="backend-band profile-content" id="backend">
+      <section class="backend-band profile-content" id="ai-works" hidden>
         <div>
-          <p class="eyebrow">MVP backend path</p>
-          <h2>Static today. Worker-backed next.</h2>
-          <p>Owner edits are still stored in this browser, but the product now has a clear path to real accounts, saved events, image uploads, and public/private access rules.</p>
+          <p class="eyebrow">AI works</p>
+          <h2>What this person is building with AI.</h2>
+          <p>Each work separates human role, AI role, tools, result, and publication state.</p>
         </div>
-        <div class="backend-grid">
-          <article>
-            <span>01</span>
-            <h3>Cloudflare Access</h3>
-            <p>Protect owner routes with email or passkey login before any write request reaches the API.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>Worker + D1</h3>
-            <p>Store profiles, moments, markdown context, tags, and visibility in D1 with owner-scoped writes.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>R2 photos</h3>
-            <p>Upload original images to R2 and save generated public image URLs on each timeline moment.</p>
-          </article>
-        </div>
-        <a class="doc-link" href="docs/mvp-backend.md">Read implementation plan</a>
+        <div class="work-grid" id="aiWorksList"></div>
       </section>
 
-      <section class="archive-band profile-content" id="archive">
+      <section class="workspace-grid profile-content owner-only" id="workspace" hidden>
+        <aside class="ai-panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">AI Context Workspace</p>
+              <h2>Owner-only source material</h2>
+            </div>
+            <button class="ghost-btn" id="saveSource" type="button">Save source</button>
+          </div>
+          <div class="source-modes">
+            <label><input type="radio" name="sourceMode" value="manual" checked /> I already have my AI Profile</label>
+            <label><input type="radio" name="sourceMode" value="assisted" /> Help me build one</label>
+          </div>
+          <textarea id="sourceWorkspace" spellcheck="false"></textarea>
+          <p class="auth-note" id="sourceStatus">Turnpo AI assistance is coming soon. AI output will be draft-only until owner approval.</p>
+        </aside>
+        <section class="timeline-section">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Public preview</p>
+              <h2>Visitors see the curated layer.</h2>
+            </div>
+          </div>
+          <div class="preview-summary" id="previewSummary"></div>
+          <div class="trust-list">
+            <p><strong>You control what becomes public.</strong></p>
+            <p>Unpublished content is only visible to you in this local owner workspace.</p>
+            <p>AI drafts are never published without your approval.</p>
+          </div>
+        </section>
+      </section>
+
+      <section class="archive-band profile-content" id="trust" hidden>
         <div>
-          <p class="eyebrow">Archive rules</p>
-          <h2>Five to ten moments per year. Enough to remember, never enough to perform.</h2>
+          <p class="eyebrow">Privacy and consent</p>
+          <h2>You decide what becomes public.</h2>
         </div>
         <div class="rule-grid">
-          <article>
-            <span>01</span>
-            <h3>Curated years</h3>
-            <p>Each year has a small number of chosen moments, keeping the page closer to memoir than feed.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>Flexible time</h3>
-            <p>Use exact dates, seasons, or remembered periods when life is less precise than a calendar.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>AI context</h3>
-            <p>The markdown block lets anyone copy the owner’s core context into their own assistant.</p>
-          </article>
+          <article><span>01</span><h3>Unpublished</h3><p>Unpublished content is owner-only and must not appear in public profiles, AI profiles, sitemap, llms.txt, JSON-LD, or public search.</p></article>
+          <article><span>02</span><h3>Published</h3><p>Published content may be viewed, copied, indexed, cached, analyzed, or saved by others.</p></article>
+          <article><span>03</span><h3>Deleted</h3><p>Deleted content is removed from active Turnpo displays, but external copies may already exist outside Turnpo.</p></article>
+        </div>
+      </section>
+
+      <section class="backend-band home-only" id="invite">
+        <div>
+          <p class="eyebrow">Private beta</p>
+          <h2>Invite-based creation is coming soon.</h2>
+          <p>Turnpo will start with founder invites, not open registration. Future invite URLs will look like /invite/abc123.</p>
+        </div>
+        <div class="backend-grid">
+          <article><span>01</span><h3>Founder invite</h3><p>Leo invites a friend to create a Turnpo profile.</p></article>
+          <article><span>02</span><h3>Owner account</h3><p>The invited person owns and edits their own profile.</p></article>
+          <article><span>03</span><h3>Published only</h3><p>Visitors see only approved published content.</p></article>
+        </div>
+      </section>
+
+      <section class="home-band home-only" id="legal">
+        <div>
+          <p class="eyebrow">Legal / Privacy / AI Disclaimer</p>
+          <h2>No fake backend security claims.</h2>
+        </div>
+        <div class="legal-copy">
+          <p>Turnpo separates unpublished source material from published profile content. This static prototype uses demo/local owner mode and localStorage; it is not real backend authentication.</p>
+          <p>Please do not upload highly sensitive information such as passwords, government IDs, medical records, financial secrets, confidential company materials, or detailed private addresses.</p>
+          <p>Turnpo AI assistance is coming soon. AI calls must be server-side in a real backend, and AI output must remain draft-only until user approval.</p>
         </div>
       </section>
     </main>
 
-    <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer" id="contentDrawer" aria-hidden="true">
       <div class="drawer-backdrop" id="closeBackdrop"></div>
-      <form class="event-form" id="eventForm">
+      <form class="event-form" id="contentForm">
         <div class="form-head">
           <div>
-            <p class="eyebrow" id="eventModeLabel">New moment</p>
-            <h2 id="eventFormTitle">Add to the road</h2>
+            <p class="eyebrow" id="contentModeLabel">New content</p>
+            <h2 id="contentFormTitle">Add content</h2>
           </div>
-          <button class="icon-btn" id="closeAdd" type="button" title="Close">
+          <button class="icon-btn" id="closeContent" type="button" title="Close">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
           </button>
         </div>
-        <label>
-          <span>Title</span>
-          <input id="eventTitle" required value="A quiet turning point" />
-        </label>
-        <label>
-          <span>Visibility</span>
-          <select id="eventVisibility">
-            <option value="public">Public</option>
-            <option value="private">Private</option>
-          </select>
-        </label>
         <div class="form-row">
-          <label>
-            <span>Year</span>
-            <input id="eventYear" required inputmode="numeric" value="2026" />
-          </label>
-          <label>
-            <span>Date</span>
-            <input id="eventDate" value="June 2026" />
-          </label>
+          <label><span>Type</span><select id="contentType"><option value="story">Life story</option><option value="work">AI work</option></select></label>
+          <label><span>Status</span><select id="contentStatus"><option value="draft">Unpublished / Draft</option><option value="published">Published</option><option value="deleted">Deleted</option></select></label>
         </div>
-        <label>
-          <span>Photo URLs</span>
-          <input id="eventImage" value="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80" />
-        </label>
-        <label>
-          <span>More photo URLs</span>
-          <textarea id="eventImageList" placeholder="One image URL per line"></textarea>
-        </label>
-        <label>
-          <span>Or upload photos</span>
-          <input id="eventFile" type="file" accept="image/*" multiple />
-        </label>
-        <label>
-          <span>Description</span>
-          <textarea id="eventNote">The kind of moment that does not ask for an audience, but changes the direction of the work.</textarea>
-        </label>
-        <label>
-          <span>Tags</span>
-          <input id="eventTags" value="turning point, selected" />
-        </label>
-        <p class="form-status" id="eventStatus">Draft changes stay local until the backend is connected.</p>
+        <label><span>Title</span><input id="contentTitle" required /></label>
+        <div class="form-row story-only">
+          <label><span>Year</span><input id="contentYear" inputmode="numeric" /></label>
+          <label><span>Date</span><input id="contentDate" /></label>
+        </div>
+        <label class="story-only"><span>Location</span><input id="contentLocation" /></label>
+        <label class="story-only"><span>Image URL</span><input id="contentImage" /></label>
+        <label class="work-only"><span>Work type</span><input id="workType" placeholder="AI app, research, prototype..." /></label>
+        <label><span>Public summary</span><textarea id="contentSummary" required></textarea></label>
+        <label><span class="story-only">Why it matters</span><span class="work-only">Why I made it</span><textarea id="contentWhy"></textarea></label>
+        <label class="work-only"><span>Tools used</span><input id="workTools" placeholder="Comma separated" /></label>
+        <label class="work-only"><span>Human role</span><textarea id="humanRole"></textarea></label>
+        <label class="work-only"><span>AI role</span><textarea id="aiRole"></textarea></label>
+        <label class="work-only"><span>Result</span><textarea id="workResult"></textarea></label>
+        <label class="work-only"><span>Link</span><input id="workLink" /></label>
+        <label><span>Tags</span><input id="contentTags" placeholder="Comma separated" /></label>
+        <div class="consent-stack">
+          <label><input id="consentUpload" type="checkbox" /> I confirm that I own or have the right to use the information, images, and files I upload.</label>
+          <label><input id="consentPublish" type="checkbox" /> I understand that published content may be viewed, copied, indexed, cached, analyzed, or saved by others.</label>
+          <label><input id="consentAiProfile" type="checkbox" /> I understand that the public AI-readable profile is designed to be copied into external AI tools.</label>
+        </div>
+        <p class="form-status" id="contentStatusNote">Draft content is owner-only in this local prototype.</p>
         <div class="form-actions">
-          <button class="danger-btn" id="deleteEvent" type="button">Delete</button>
-          <button class="submit-btn" type="submit">Save moment</button>
+          <button class="danger-btn" id="deleteContent" type="button">Delete</button>
+          <button class="submit-btn" type="submit">Save content</button>
         </div>
       </form>
     </div>
@@ -254,26 +272,20 @@ I am building products around memory, identity, and AI-readable personal context
       <form class="event-form auth-form" id="authForm">
         <div class="form-head">
           <div>
-            <p class="eyebrow">Owner access</p>
-            <h2>Edit Leo's timeline</h2>
+            <p class="eyebrow">Demo owner access</p>
+            <h2>Edit a Turnpo profile</h2>
           </div>
           <button class="icon-btn" id="closeAuth" type="button" title="Close">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
           </button>
         </div>
-        <label>
-          <span>Account</span>
-          <input id="ownerAccount" autocomplete="username" value="leo" />
-        </label>
-        <label>
-          <span>Password</span>
-          <input id="ownerPassword" autocomplete="current-password" type="password" />
-        </label>
-        <p class="auth-note" id="authNote">Owner mode is a static prototype until a real backend is connected.</p>
+        <label><span>Account</span><input id="ownerAccount" autocomplete="username" value="leo" /></label>
+        <label><span>Password</span><input id="ownerPassword" autocomplete="current-password" type="password" /></label>
+        <p class="auth-note" id="authNote">Demo password: turnpo-owner. This is not real backend authentication.</p>
         <button class="submit-btn" type="submit">Enter owner mode</button>
       </form>
     </div>
 
-    <script src="script.js?v=0.1.10"></script>
+    <script src="/script.js?v=0.1.14"></script>
   </body>
 </html>

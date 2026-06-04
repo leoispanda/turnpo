@@ -1,0 +1,17 @@
+# Turnpo
+
+Turnpo is a personal story and AI work profile platform for the AI era.
+
+Public pages:
+- https://www.turnpo.com/
+- https://www.turnpo.com/u/leo
+- https://www.turnpo.com/u/cindy
+- https://www.turnpo.com/u/demo-friend
+
+Principles:
+- Human-readable profiles. AI-readable context.
+- Published profile content is intended to be readable by people and AI tools.
+- Unpublished source material, owner drafts, and deleted content must not be included in public AI-readable context.
+
+Reliable fallback:
+- Use each profile's "Copy AI Profile" button to copy published-approved Markdown context.
