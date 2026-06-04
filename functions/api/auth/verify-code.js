@@ -22,7 +22,7 @@ export async function onRequestPost({ request, env }) {
   const code = String(rawCode || "").trim();
   if (!email || !code) return json({ error: "Email and code are required." }, { status: 400 });
 
-  const attempts = await incrementWindow(env, verifyKey(email), 15 * 60);
+  const attempts = await incrementWindow(env, verifyKey(email), 2 * 60);
   if (attempts > 8) return json({ error: "Too many verification attempts. Please request a new code later." }, { status: 429 });
 
   const stored = await env.AUTH_KV.get(codeKey(email), "json");

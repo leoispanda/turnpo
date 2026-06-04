@@ -21,7 +21,7 @@ export async function onRequestPost({ request, env }) {
   const email = normalizeEmail(rawEmail);
   if (!email || !email.includes("@")) return json({ error: "Enter a valid email address." }, { status: 400 });
 
-  const attempts = await incrementWindow(env, requestKey(email), 15 * 60);
+  const attempts = await incrementWindow(env, requestKey(email), 2 * 60);
   if (attempts > 5) return json({ error: "Too many code requests. Please try again later." }, { status: 429 });
 
   const profile = approvedProfileForEmail(env, email);
