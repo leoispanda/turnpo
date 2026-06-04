@@ -1,69 +1,134 @@
-const events = [
+const OWNER_ACCOUNT = "leo";
+const OWNER_PASSWORD = "turnpo-owner";
+const STORAGE_KEY = "turnpo:leo:events";
+const OWNER_KEY = "turnpo:owner-mode";
+
+const seedEvents = [
   {
     year: "2026",
     count: "3 selected moments",
     items: [
       {
-        title: "Buying the domain for a quieter personal web",
-        date: "June 2026 - Amsterdam",
+        title: "Co-creating MapKAI",
+        date: "May 2026 - Eindhoven",
         image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
-        note: "The idea became real enough to deserve an address: a place for the road so far, not another feed.",
-        tags: ["turning point", "product", "identity"]
+        note: "An early-stage exploration of knowledge mapping, AI-assisted reflection, and AI-native decision systems.",
+        tags: ["MapKAI", "AI", "knowledge"]
       },
       {
-        title: "The AI-readable profile becomes the homepage",
-        date: "Spring 2026 - Remote",
+        title: "Designing learning and knowledge solutions at ASML",
+        date: "2026 - ASML Academy",
         image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
-        note: "A profile that can be read by people and copied into an AI assistant as durable personal context.",
-        tags: ["AI context", "homepage", "portable"]
+        note: "Working between people, systems, and performance to make expert knowledge easier to access and apply.",
+        tags: ["ASML", "learning", "performance"]
       }
     ]
   },
   {
-    year: "2024",
-    count: "5 selected moments",
+    year: "2023",
+    count: "1 selected moment",
     items: [
       {
-        title: "Choosing annual memory over daily sharing",
-        date: "December 2024 - End of year",
-        image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80",
-        note: "A small archive of moments felt more honest than a stream that keeps asking for more.",
-        tags: ["archive", "memoir", "focus"]
-      }
-    ]
-  },
-  {
-    year: "2021",
-    count: "4 selected moments",
-    items: [
-      {
-        title: "A move that changed the scale of ambition",
-        date: "September 2021 - New chapter",
-        image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
-        note: "The geography changed, but the larger shift was learning to think in longer arcs.",
-        tags: ["move", "chapter", "growth"]
+        title: "Became L&KM Solution Designer",
+        date: "July 2023 - Eindhoven",
+        image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80",
+        note: "Moved into a role focused on scalable learning, knowledge sharing, and capability-building solutions.",
+        tags: ["ASML", "role shift", "knowledge management"]
       }
     ]
   },
   {
     year: "2018",
-    count: "2 selected moments",
+    count: "1 selected moment",
     items: [
       {
-        title: "First proof that making things could be a life",
-        date: "May 2018 - Early work",
+        title: "Started at ASML as Technical Instructor/Developer",
+        date: "August 2018 - Shanghai",
         image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
-        note: "Not a polished beginning, but a beginning that stayed with everything after it.",
-        tags: ["origin", "work", "craft"]
+        note: "Delivered technical training, led projects, and began turning engineering knowledge into reusable learning.",
+        tags: ["technical training", "ASML", "China"]
+      }
+    ]
+  },
+  {
+    year: "2012",
+    count: "1 selected moment",
+    items: [
+      {
+        title: "Began engineering work in aircraft engines",
+        date: "August 2012 - Harbin",
+        image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+        note: "Worked on equipment installation, commissioning, maintenance, and internal technical training programs.",
+        tags: ["engineering", "aircraft engines", "origin"]
       }
     ]
   }
 ];
 
+let events = loadEvents();
+let ownerMode = localStorage.getItem(OWNER_KEY) === "true";
+
+const body = document.body;
+const entryView = document.querySelector("#entryView");
+const profileContent = document.querySelectorAll(".profile-content");
 const timelineList = document.querySelector("#timelineList");
 const drawer = document.querySelector("#drawer");
+const authDrawer = document.querySelector("#authDrawer");
 const copyStatus = document.querySelector("#copyStatus");
 const markdown = document.querySelector("#aiMarkdown");
+const searchResults = document.querySelector("#searchResults");
+
+function loadEvents() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || structuredClone(seedEvents);
+  } catch {
+    return structuredClone(seedEvents);
+  }
+}
+
+function saveEvents() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+}
+
+function syncCount(group) {
+  group.count = `${group.items.length} selected moment${group.items.length === 1 ? "" : "s"}`;
+}
+
+function setRoute(route) {
+  const isProfile = route === "leo";
+  entryView.hidden = isProfile;
+  profileContent.forEach((section) => {
+    section.hidden = !isProfile;
+  });
+  body.classList.toggle("profile-open", isProfile);
+  if (isProfile) {
+    location.hash = "leo";
+    renderTimeline();
+  } else {
+    history.replaceState(null, "", location.pathname);
+  }
+}
+
+function setOwnerMode(enabled) {
+  ownerMode = enabled;
+  localStorage.setItem(OWNER_KEY, String(enabled));
+  body.classList.toggle("owner-mode", enabled);
+  document.querySelector("#openAdd").dataset.locked = String(!enabled);
+}
+
+function setDrawer(open) {
+  if (!ownerMode && open) {
+    setAuthDrawer(true);
+    return;
+  }
+  drawer.classList.toggle("open", open);
+  drawer.setAttribute("aria-hidden", String(!open));
+}
+
+function setAuthDrawer(open) {
+  authDrawer.classList.toggle("open", open);
+  authDrawer.setAttribute("aria-hidden", String(!open));
+}
 
 function renderTimeline() {
   timelineList.innerHTML = events.map((group) => `
@@ -89,10 +154,55 @@ function renderTimeline() {
   `).join("");
 }
 
-function setDrawer(open) {
-  drawer.classList.toggle("open", open);
-  drawer.setAttribute("aria-hidden", String(!open));
+function renderSearch(query = "") {
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) {
+    searchResults.innerHTML = `
+      <button class="person-result" type="button" data-person="leo">
+        <img src="assets/leo-profile.png" alt="Leo Yang" />
+        <span><strong>Leo Yang</strong><small>L&KM Solution Designer @ ASML · Co-creator of MapKAI</small></span>
+      </button>
+    `;
+    return;
+  }
+
+  if ("leo yang".includes(normalized) || "leo".includes(normalized) || "yang".includes(normalized)) {
+    renderSearch("");
+    return;
+  }
+
+  searchResults.innerHTML = `<p class="empty-result">No public Turnpo profile found yet.</p>`;
 }
+
+function readUploadedFile(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      resolve("");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+document.querySelector("#searchForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const query = document.querySelector("#personSearch").value;
+  if (query.trim().toLowerCase().includes("leo")) {
+    setRoute("leo");
+  } else {
+    renderSearch(query);
+  }
+});
+
+searchResults.addEventListener("click", (event) => {
+  const result = event.target.closest("[data-person='leo']");
+  if (result) {
+    setRoute("leo");
+  }
+});
 
 document.querySelectorAll(".toggle-btn").forEach((button) => {
   button.addEventListener("click", () => {
@@ -103,9 +213,33 @@ document.querySelectorAll(".toggle-btn").forEach((button) => {
   });
 });
 
+document.querySelector(".brand").addEventListener("click", (event) => {
+  event.preventDefault();
+  setRoute("home");
+});
+
 document.querySelector("#openAdd").addEventListener("click", () => setDrawer(true));
 document.querySelector("#closeAdd").addEventListener("click", () => setDrawer(false));
 document.querySelector("#closeBackdrop").addEventListener("click", () => setDrawer(false));
+document.querySelector("#ownerLogin").addEventListener("click", () => setAuthDrawer(true));
+document.querySelector("#ownerLogout").addEventListener("click", () => setOwnerMode(false));
+document.querySelector("#closeAuth").addEventListener("click", () => setAuthDrawer(false));
+document.querySelector("#authBackdrop").addEventListener("click", () => setAuthDrawer(false));
+
+document.querySelector("#authForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const account = document.querySelector("#ownerAccount").value.trim().toLowerCase();
+  const password = document.querySelector("#ownerPassword").value;
+  const authNote = document.querySelector("#authNote");
+  if (account === OWNER_ACCOUNT && password === OWNER_PASSWORD) {
+    setOwnerMode(true);
+    setAuthDrawer(false);
+    authNote.textContent = "Owner mode is active in this browser.";
+    document.querySelector("#ownerPassword").value = "";
+  } else {
+    authNote.textContent = "Account or password is incorrect.";
+  }
+});
 
 document.querySelector("#copyMd").addEventListener("click", async () => {
   await navigator.clipboard.writeText(markdown.value);
@@ -115,26 +249,37 @@ document.querySelector("#copyMd").addEventListener("click", async () => {
   }, 2400);
 });
 
-document.querySelector("#eventForm").addEventListener("submit", (event) => {
+document.querySelector("#eventForm").addEventListener("submit", async (event) => {
   event.preventDefault();
+  if (!ownerMode) {
+    setAuthDrawer(true);
+    return;
+  }
+
   const year = document.querySelector("#eventYear").value.trim() || "2026";
+  const uploadedImage = await readUploadedFile(document.querySelector("#eventFile").files[0]);
   const item = {
     title: document.querySelector("#eventTitle").value.trim(),
     date: document.querySelector("#eventDate").value.trim(),
-    image: document.querySelector("#eventImage").value.trim(),
+    image: uploadedImage || document.querySelector("#eventImage").value.trim(),
     note: document.querySelector("#eventNote").value.trim(),
-    tags: ["new", "selected", "private draft"]
+    tags: ["new", "selected", "owner added"]
   };
+
   let group = events.find((entry) => entry.year === year);
   if (!group) {
     group = { year, count: "1 selected moment", items: [] };
     events.unshift(group);
   }
   group.items.unshift(item);
-  group.count = `${group.items.length} selected moment${group.items.length === 1 ? "" : "s"}`;
+  syncCount(group);
   events.sort((a, b) => Number(b.year) - Number(a.year));
+  saveEvents();
   renderTimeline();
   setDrawer(false);
+  event.target.reset();
 });
 
-renderTimeline();
+renderSearch();
+setOwnerMode(ownerMode);
+setRoute(location.hash === "#leo" ? "leo" : "home");
