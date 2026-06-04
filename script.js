@@ -9,7 +9,7 @@ const seedProfiles = {
     id: "profile-leo",
     username: "leo",
     displayName: "Leo Yang",
-    oneLineIntro: "L&KM Solution Designer @ ASML. Co-creator of MapKAI. Building AI-era tools for memory, knowledge, and reflection.",
+    oneLineIntro: "L&KM Solution Designer @ ASML | Co-creator of MapKAI | AI products, knowledge systems, and personal context",
     currentChapter: "Exploring how AI can help people map knowledge, reflect better, and make more intentional decisions.",
     location: "Eindhoven / Amsterdam",
     avatar: "/assets/leo-profile.png",
@@ -361,7 +361,6 @@ function renderProfile() {
   $("#profileAvatar").src = profile.avatar;
   $("#profileAvatar").alt = `${profile.displayName} portrait`;
   $("#profileLinks").innerHTML = profile.links.map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("");
-  $("#profileThemes").innerHTML = [...profile.values, ...profile.themes].map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
   $("#aiMarkdown").value = generateAiProfile(profile);
   renderTimeline();
   renderAiWorks();
