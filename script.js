@@ -442,12 +442,12 @@ function renderHome(query = "") {
         <small>@${escapeHtml(profile.username)} · ${escapeHtml(profile.location)} · ${escapeHtml(profile.themes.slice(0, 3).join(", "))}</small>
       </span>
     </button>
-  `).join("") : `<p class="empty-result">No published Turnpo profile matched that search.</p>`;
+  `).join("") : `<p class="empty-result">No published Turnpo profile matched that search</p>`;
 
   $("#exampleProfiles").innerHTML = [
-    ["Real story", "Meet someone through the moments that changed their direction."],
-    ["AI-readable context", "A structured profile designed for AI tools to read, copy, and understand."],
-    ["Beyond the resume", "The story behind the title, career path, and work."]
+    ["Real story", "Meet someone through the moments that changed their direction"],
+    ["AI-readable context", "A structured profile designed for AI tools to read, copy, and understand"],
+    ["Beyond the resume", "The story behind the title, career path, and work"]
   ].map(([title, summary]) => `
     <article class="mini-profile-card">
       <span class="mini-profile-icon" aria-hidden="true"></span>
@@ -517,7 +517,7 @@ function renderTimeline() {
         `).join("")}
       </div>
     </article>
-  `).join("") : `<p class="empty-result">No published stories yet.</p>`;
+  `).join("") : `<p class="empty-result">No published stories yet</p>`;
 }
 
 function renderAiWorks() {
@@ -530,14 +530,14 @@ function renderAiWorks() {
       </div>
       <p>${escapeHtml(work.publicSummary)}</p>
       <dl>
-        <div><dt>Human role</dt><dd>${escapeHtml(work.humanRole || "Curated by the profile owner.")}</dd></div>
-        <div><dt>AI role</dt><dd>${escapeHtml(work.aiRole || "Not specified.")}</dd></div>
-        <div><dt>Result</dt><dd>${escapeHtml(work.result || "Draft result.")}</dd></div>
+        <div><dt>Human role</dt><dd>${escapeHtml(work.humanRole || "Curated by the profile owner")}</dd></div>
+        <div><dt>AI role</dt><dd>${escapeHtml(work.aiRole || "Not specified")}</dd></div>
+        <div><dt>Result</dt><dd>${escapeHtml(work.result || "Draft result")}</dd></div>
       </dl>
       <div class="tag-row">${(work.tags || []).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>
       ${work.link ? `<a class="doc-link" href="${escapeHtml(work.link)}">Open work</a>` : ""}
     </article>
-  `).join("") : `<p class="empty-result">No published AI works yet.</p>`;
+  `).join("") : `<p class="empty-result">No published AI works yet</p>`;
 }
 
 function generateAiProfile(profile) {
@@ -558,13 +558,13 @@ ${profile.currentChapter}
 ${[...profile.values, ...profile.themes].map((item) => `- ${item}`).join("\n")}
 
 ## Public timeline highlights
-${stories.length ? stories.map((story) => `- ${story.year}: ${story.title} (${story.location || "location not specified"}) - ${story.publicSummary}${story.whyItMatters ? ` Why it matters: ${story.whyItMatters}` : ""}`).join("\n") : "- No published stories yet."}
+${stories.length ? stories.map((story) => `- ${story.year}: ${story.title} (${story.location || "location not specified"}) - ${story.publicSummary}${story.whyItMatters ? ` Why it matters: ${story.whyItMatters}` : ""}`).join("\n") : "- No published stories yet"}
 
 ## Public AI works
-${works.length ? works.map((work) => `- ${work.title} (${work.type}) - ${work.publicSummary} Human role: ${work.humanRole} AI role: ${work.aiRole} Result: ${work.result}`).join("\n") : "- No published AI works yet."}
+${works.length ? works.map((work) => `- ${work.title} (${work.type}) - ${work.publicSummary} Human role: ${work.humanRole} AI role: ${work.aiRole} Result: ${work.result}`).join("\n") : "- No published AI works yet"}
 
 ## Public links
-${profile.links.length ? profile.links.map((link) => `- [${link.label}](${link.url})`).join("\n") : "- No public links yet."}
+${profile.links.length ? profile.links.map((link) => `- [${link.label}](${link.url})`).join("\n") : "- No public links yet"}
 
 ## Suggested questions for AI-assisted review
 - What shaped this person beyond their job title?
@@ -831,8 +831,8 @@ async function logoutOwner() {
 
 function copyAiProfile() {
   navigator.clipboard.writeText($("#aiMarkdown").value);
-  $("#copyStatus").textContent = "Copied published-only AI Profile Markdown.";
-  setTimeout(() => { $("#copyStatus").textContent = "Ready to copy into any AI chat."; }, 2400);
+  $("#copyStatus").textContent = "Copied published-only AI Profile Markdown";
+  setTimeout(() => { $("#copyStatus").textContent = "Ready to copy into any AI chat"; }, 2400);
 }
 
 function exportProfile() {
