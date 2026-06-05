@@ -219,6 +219,11 @@ svg {
   color: var(--gold-strong);
 }
 
+.copy-profile-btn.is-copied {
+  border-color: rgba(216, 177, 95, 0.52);
+  background: rgba(216, 177, 95, 0.14);
+}
+
 main {
   width: min(1440px, 100%);
   margin: 0 auto;
@@ -576,9 +581,9 @@ h1 {
 .portrait-card img {
   display: block;
   width: 100%;
-  aspect-ratio: 1.32;
+  aspect-ratio: 1.08;
   object-fit: cover;
-  object-position: center 28%;
+  object-position: center 24%;
   filter: saturate(0.76) contrast(1.05);
 }
 
@@ -976,10 +981,20 @@ body.owner-mode .event-card:hover {
 }
 
 .work-card {
+  display: block;
   padding: 18px;
   border: 1px solid var(--line-soft);
   border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.035);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+a.work-card:hover {
+  border-color: rgba(216, 177, 95, 0.4);
+  background: rgba(216, 177, 95, 0.07);
+  transform: translateY(-1px);
 }
 
 .work-card-head {

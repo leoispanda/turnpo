@@ -9,7 +9,7 @@ const seedProfiles = {
     username: "leo",
     displayName: "Leo Yang",
     oneLineIntro: "L&KM Solution Designer @ ASML | Co-creator of MapKAI | Exploring knowledge, systems, and reflection in the AI era",
-    currentChapter: "Building and testing AI-native approaches to knowledge mapping, reflection, decision-making, and learning systems.",
+    currentChapter: "Turning ASML learning-system experience and MapKAI experiments into AI-readable knowledge maps, decision councils, and practical learning workflows people can actually use.",
     location: "Eindhoven, Netherlands",
     avatar: "/assets/leo-profile.png",
     links: [
@@ -502,7 +502,7 @@ function renderTimeline() {
       <div class="event-stack">
         ${groups[year].map((story) => `
           <article class="event-card ${story.status !== "published" ? "private-card" : ""}" data-story-id="${escapeHtml(story.id)}">
-            <div class="event-media"><img class="event-main-image" src="${escapeHtml(story.image || "/assets/turnpo-logo-full.png")}" alt="${escapeHtml(story.title)}" /></div>
+            <div class="event-media">${story.image ? `<img class="event-main-image" src="${escapeHtml(story.image)}" alt="${escapeHtml(story.title)}" />` : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
             <div>
               <div class="event-card-head">
                 <div class="event-date">${escapeHtml([story.date, story.location].filter(Boolean).join(" - "))}</div>
@@ -522,13 +522,13 @@ function renderTimeline() {
 function renderAiWorks() {
   const works = ownerItems(currentProfile().aiWorks);
   $("#aiWorksList").innerHTML = works.length ? works.map((work) => `
-    <article class="work-card ${work.status !== "published" ? "private-card" : ""}">
+    <${work.link ? "a" : "article"} class="work-card ${work.status !== "published" ? "private-card" : ""}" ${work.link ? `href="${escapeHtml(work.link)}" target="_blank" rel="noopener"` : ""}>
       <div class="work-card-head">
         <div><h3>${escapeHtml(work.title)}</h3></div>
         <div class="event-actions owner-only">${statusPill(work)}<button class="small-action" type="button" data-edit-type="work" data-edit-id="${work.id}">Edit</button></div>
       </div>
       <p>${escapeHtml(work.publicSummary)}</p>
-    </article>
+    </${work.link ? "a" : "article"}>
   `).join("") : `<p class="empty-result">No published AI works yet</p>`;
 }
 
@@ -821,10 +821,33 @@ async function logoutOwner() {
   resetAuthForm("You have exited owner mode.");
 }
 
-function copyAiProfile() {
-  navigator.clipboard.writeText($("#aiMarkdown").value);
-  $("#copyStatus").textContent = "Copied published-only AI Profile Markdown";
-  setTimeout(() => { $("#copyStatus").textContent = "Ready to copy into any AI chat"; }, 2400);
+async function copyAiProfile() {
+  const button = $("#copyMd");
+  const original = button.innerHTML;
+  const markdown = $("#aiMarkdown");
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(markdown.value);
+    copied = true;
+  } catch {
+    markdown.focus();
+    markdown.select();
+    copied = document.execCommand("copy");
+    markdown.setSelectionRange(0, 0);
+  }
+  if (copied) {
+    button.classList.add("is-copied");
+    button.innerHTML = "Copied";
+    $("#copyStatus").textContent = "Copied published-only AI Profile Markdown";
+  } else {
+    button.innerHTML = "Copy failed";
+    $("#copyStatus").textContent = "Copy failed. Select the text and copy manually.";
+  }
+  setTimeout(() => {
+    button.classList.remove("is-copied");
+    button.innerHTML = original;
+    $("#copyStatus").textContent = "Ready to copy into any AI chat";
+  }, 2400);
 }
 
 function exportProfile() {
