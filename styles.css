@@ -91,10 +91,12 @@ a {
 
 .version-badge {
   display: block;
-  margin-top: 10px;
+  margin-top: 3px;
   color: rgba(238, 230, 216, 0.42);
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 620;
+  line-height: 1;
+  text-align: right;
 }
 
 .brand-mark {
@@ -240,7 +242,7 @@ main {
 
 .search-copy .headline {
   max-width: 680px;
-  margin-top: 16px;
+  margin-top: 30px;
   color: #d8d1c5;
   font-size: clamp(18px, 1.8vw, 24px);
   line-height: 1.28;
@@ -252,7 +254,7 @@ main {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 12px;
-  margin: 50px 0 18px;
+  margin: 58px 0 18px;
   padding: 8px;
   border: 1px solid rgba(216, 177, 95, 0.2);
   border-radius: var(--radius);
@@ -387,6 +389,8 @@ main {
 }
 
 .founder-tools {
+  display: grid;
+  justify-items: end;
   justify-self: end;
 }
 
@@ -472,12 +476,14 @@ main {
   gap: 12px;
 }
 
-.directory-brand-copy p {
+.directory-brand-copy p,
+.directory-brand-copy span {
   margin: 0;
   color: var(--gold);
   font-size: 11px;
   font-weight: 780;
   letter-spacing: 0;
+  line-height: 1;
 }
 
 .directory-card h2 {
@@ -488,10 +494,6 @@ main {
 
 .directory-brand-copy span {
   display: block;
-  color: var(--gold);
-  font-size: 14px;
-  line-height: 1.45;
-  font-weight: 520;
 }
 
 .profile-shell {
