@@ -9,7 +9,7 @@ const seedProfiles = {
     username: "leo",
     displayName: "Leo Yang",
     oneLineIntro: "L&KM Solution Designer @ ASML | Co-creator of MapKAI | Exploring knowledge, systems, and reflection in the AI era",
-    currentChapter: "Turning ASML learning-system experience and MapKAI experiments into AI-readable knowledge maps, decision councils, and practical learning workflows people can actually use.",
+    currentChapter: "Turning learning-system practice and MapKAI experiments into AI-readable knowledge maps, decision councils, and practical workflows people can actually use.",
     location: "Eindhoven, Netherlands",
     avatar: "/assets/leo-profile.png",
     links: [
