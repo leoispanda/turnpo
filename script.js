@@ -432,8 +432,9 @@ function searchProfiles(query = "") {
 }
 
 function renderHome(query = "") {
-  const results = searchProfiles(query);
-  $("#searchResults").innerHTML = results.length ? results.map((profile) => `
+  const normalizedQuery = query.trim();
+  const results = normalizedQuery ? searchProfiles(normalizedQuery) : [];
+  $("#searchResults").innerHTML = !normalizedQuery ? "" : results.length ? results.map((profile) => `
     <button class="person-result" type="button" data-profile="${profile.username}">
       <img src="${escapeHtml(profile.avatar)}" alt="${escapeHtml(profile.displayName)}" />
       <span>
@@ -443,14 +444,15 @@ function renderHome(query = "") {
     </button>
   `).join("") : `<p class="empty-result">No published Turnpo profile matched that search.</p>`;
 
-  $("#exampleProfiles").innerHTML = Object.values(profiles).map((profile) => `
+  $("#exampleProfiles").innerHTML = [
+    ["Turning points", "Map the chapters, decisions, places, and transitions that explain where someone is coming from."],
+    ["AI-readable context", "Copy a concise published profile into any AI chat so tools can understand background without oversharing."],
+    ["Curated work", "Connect personal stories with selected projects, values, themes, and contact links in one calm public profile."]
+  ].map(([title, summary]) => `
     <article class="mini-profile-card">
-      <img src="${escapeHtml(profile.avatar)}" alt="${escapeHtml(profile.displayName)}" />
-      <div>
-        <h3>${escapeHtml(profile.displayName)}</h3>
-        <p>${escapeHtml(profile.oneLineIntro)}</p>
-        <button class="small-action" type="button" data-profile="${profile.username}">View profile</button>
-      </div>
+      <span class="mini-profile-icon" aria-hidden="true"></span>
+      <h3>${title}</h3>
+      <p>${summary}</p>
     </article>
   `).join("");
 }
