@@ -496,7 +496,7 @@ function renderTimeline() {
   const years = Object.keys(groups).sort((a, b) => Number(b) - Number(a));
   $("#yearFilters").innerHTML = years.map((year) => `<button type="button" data-year="${year}">${year}</button>`).join("");
   $("#timelineList").innerHTML = years.length ? years.map((year) => `
-    <article class="year-block">
+    <article class="year-block" id="timeline-year-${escapeHtml(year)}" tabindex="-1">
       <div class="year-label">${escapeHtml(year)}</div>
       <div class="year-title">${escapeHtml(year)}<span>${groups[year].filter(isPublished).length} published highlight${groups[year].filter(isPublished).length === 1 ? "" : "s"}</span></div>
       <div class="event-stack">
@@ -510,7 +510,6 @@ function renderTimeline() {
               </div>
               <h3>${escapeHtml(story.title)}</h3>
               <p>${escapeHtml(story.publicSummary)}</p>
-              ${story.whyItMatters ? `<p class="why-line">${escapeHtml(story.whyItMatters)}</p>` : ""}
               <div class="tag-row">${(story.tags || []).slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>
             </div>
           </article>
@@ -525,17 +524,10 @@ function renderAiWorks() {
   $("#aiWorksList").innerHTML = works.length ? works.map((work) => `
     <article class="work-card ${work.status !== "published" ? "private-card" : ""}">
       <div class="work-card-head">
-        <div><p class="event-date">${escapeHtml(work.type || "AI work")}</p><h3>${escapeHtml(work.title)}</h3></div>
+        <div><h3>${escapeHtml(work.title)}</h3></div>
         <div class="event-actions owner-only">${statusPill(work)}<button class="small-action" type="button" data-edit-type="work" data-edit-id="${work.id}">Edit</button></div>
       </div>
       <p>${escapeHtml(work.publicSummary)}</p>
-      <dl>
-        <div><dt>Human role</dt><dd>${escapeHtml(work.humanRole || "Curated by the profile owner")}</dd></div>
-        <div><dt>AI role</dt><dd>${escapeHtml(work.aiRole || "Not specified")}</dd></div>
-        <div><dt>Result</dt><dd>${escapeHtml(work.result || "Draft result")}</dd></div>
-      </dl>
-      <div class="tag-row">${(work.tags || []).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>
-      ${work.link ? `<a class="doc-link" href="${escapeHtml(work.link)}">Open work</a>` : ""}
     </article>
   `).join("") : `<p class="empty-result">No published AI works yet</p>`;
 }
@@ -863,6 +855,15 @@ $("#searchResults").addEventListener("click", (event) => {
 $("#exampleProfiles").addEventListener("click", (event) => {
   const button = event.target.closest("[data-profile]");
   if (button) setRoute(button.dataset.profile);
+});
+
+$("#yearFilters").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-year]");
+  if (!button) return;
+  const target = document.getElementById(`timeline-year-${button.dataset.year}`);
+  if (!target) return;
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  target.focus({ preventScroll: true });
 });
 
 document.addEventListener("click", (event) => {

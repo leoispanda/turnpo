@@ -11,7 +11,7 @@
     <meta property="og:url" content="https://www.turnpo.com" />
     <link rel="icon" href="/assets/turnpo-logo-full.png" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.54" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.56" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -19,7 +19,6 @@
       <a class="brand" href="/" aria-label="Turnpo home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Turnpo</span>
-        <span class="version-badge">v0.1.54</span>
       </a>
       <div class="top-actions profile-only">
         <button class="ghost-btn" id="backToSearch" type="button">Back to search</button>
@@ -33,7 +32,7 @@
           <p class="headline">Beyond the title<br />Beyond the resume<br />The turning points that made you</p>
           <form class="search-box" id="searchForm">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.8 18.4a7.6 7.6 0 1 1 0-15.2 7.6 7.6 0 0 1 0 15.2zM16.4 16.4 21 21"/></svg>
-            <input id="personSearch" autocomplete="off" placeholder="Search a person" />
+            <input id="personSearch" autocomplete="off" placeholder="Type the name" />
             <button class="gold-btn" type="submit">Search</button>
           </form>
           <div class="search-results" id="searchResults" aria-live="polite"></div>
@@ -50,7 +49,7 @@
       <section class="home-band home-only" id="examples">
         <div>
           <p class="eyebrow">PRIVATE PREVIEW</p>
-          <h2>Not a resume<br />A life in turning points</h2>
+          <h2>Story, context, work</h2>
         </div>
         <div class="example-grid" id="exampleProfiles" aria-label="Turnpo profile capabilities"></div>
       </section>
@@ -102,9 +101,9 @@
 
       <section class="backend-band profile-content" id="ai-works" hidden>
         <div>
-          <p class="eyebrow">AI works</p>
-          <h2>What this person is building with AI</h2>
-          <p>Each work separates human role, AI role, tools, result, and publication state</p>
+          <p class="eyebrow">AI products</p>
+          <h2>My AI products</h2>
+          <p>Selected products I am building with AI</p>
         </div>
         <div class="work-grid" id="aiWorksList"></div>
       </section>
@@ -142,10 +141,6 @@
       </section>
 
       <footer class="site-footer" id="footer">
-        <div>
-          <strong>Turnpo</strong>
-          <p>Beyond the title · Beyond the resume</p>
-        </div>
         <details>
           <summary>About Turnpo</summary>
           <p>Turnpo is a personal story and AI work profile platform built around turning points.</p>
@@ -185,10 +180,9 @@
           <p>Turnpo cannot fully control copies made outside the platform.</p>
           <p>For this reason, please publish thoughtfully.</p>
         </details>
-        <details>
-          <summary>Owner tools</summary>
-          <p>Owner tools are kept out of the public browsing path</p>
-          <button class="ghost-btn" id="homeOwnerLogin" type="button">Open founder sign in</button>
+        <div class="founder-tools">
+          <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
+          <span class="version-badge">v0.1.56</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="openStory" type="button">Add story</button>
             <button class="gold-btn" id="openWork" type="button">Add AI work</button>
@@ -196,7 +190,7 @@
             <button class="ghost-btn" id="restoreSeed" type="button">Restore seed</button>
             <button class="ghost-btn" id="ownerLogout" type="button">Exit owner mode</button>
           </div>
-        </details>
+        </div>
       </footer>
     </main>
 
@@ -264,6 +258,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.54"></script>
+    <script src="/script.js?v=0.1.56"></script>
   </body>
 </html>
