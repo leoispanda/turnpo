@@ -445,9 +445,9 @@ function renderHome(query = "") {
   `).join("") : `<p class="empty-result">No published Turnpo profile matched that search.</p>`;
 
   $("#exampleProfiles").innerHTML = [
-    ["Turning points", "Map the chapters, decisions, places, and transitions that explain where someone is coming from."],
-    ["AI-readable context", "Copy a concise published profile into any AI chat so tools can understand background without oversharing."],
-    ["Curated work", "Connect personal stories with selected projects, values, themes, and contact links in one calm public profile."]
+    ["Real story", "Meet someone through the moments that changed their direction."],
+    ["AI-readable context", "A structured profile designed for AI tools to read, copy, and understand."],
+    ["Beyond the resume", "The story behind the title, career path, and work."]
   ].map(([title, summary]) => `
     <article class="mini-profile-card">
       <span class="mini-profile-icon" aria-hidden="true"></span>
