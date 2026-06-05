@@ -240,6 +240,7 @@ main {
 
 .search-copy .headline {
   max-width: 680px;
+  margin-top: 16px;
   color: #d8d1c5;
   font-size: clamp(18px, 1.8vw, 24px);
   line-height: 1.28;
@@ -251,7 +252,7 @@ main {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 12px;
-  margin: 38px 0 18px;
+  margin: 50px 0 18px;
   padding: 8px;
   border: 1px solid rgba(216, 177, 95, 0.2);
   border-radius: var(--radius);
@@ -280,6 +281,7 @@ main {
 .home-band {
   display: grid;
   grid-template-columns: 0.75fr 1.25fr;
+  align-items: center;
   gap: 26px;
   margin: 0 clamp(18px, 5vw, 72px) 42px;
   padding: 28px;
@@ -486,7 +488,7 @@ main {
 
 .directory-brand-copy span {
   display: block;
-  color: #d8d1c5;
+  color: var(--gold);
   font-size: 14px;
   line-height: 1.45;
   font-weight: 520;
