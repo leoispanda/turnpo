@@ -371,7 +371,7 @@ main {
 }
 
 .site-footer details {
-  max-width: 360px;
+  max-width: min(520px, 100%);
   color: var(--muted);
 }
 
