@@ -1,6 +1,7 @@
 const ACTIVE_PROFILE_KEY = "turnpo:active-profile";
 const LOCAL_PREFIX = "turnpo:profile:";
 const SOURCE_PREFIX = "turnpo:source:";
+const COLLAPSED_YEARS_PREFIX = "turnpo:collapsed-years:";
 const STATUSES = ["published", "draft", "deleted"];
 
 const seedProfiles = {
@@ -1536,6 +1537,36 @@ function groupedStories(profile = currentProfile()) {
   }, {});
 }
 
+function collapsedYearsKey(username = activeUsername) {
+  return `${COLLAPSED_YEARS_PREFIX}${username}`;
+}
+
+function loadCollapsedYears() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(collapsedYearsKey()) || "[]"));
+  } catch {
+    return new Set();
+  }
+}
+
+function saveCollapsedYears(collapsedYears) {
+  localStorage.setItem(collapsedYearsKey(), JSON.stringify([...collapsedYears]));
+}
+
+function setTimelineYearCollapsed(year, collapsed) {
+  const collapsedYears = loadCollapsedYears();
+  if (collapsed) collapsedYears.add(year);
+  else collapsedYears.delete(year);
+  saveCollapsedYears(collapsedYears);
+  renderTimeline();
+}
+
+function setAllTimelineYearsCollapsed(collapsed) {
+  const years = Object.keys(groupedStories()).sort((a, b) => Number(b) - Number(a));
+  saveCollapsedYears(collapsed ? new Set(years) : new Set());
+  renderTimeline();
+}
+
 function statusPill(item) {
   return ownerMode ? `<span class="visibility-pill">${escapeHtml(item.status)}</span>` : "";
 }
@@ -1543,12 +1574,17 @@ function statusPill(item) {
 function renderTimeline() {
   const groups = groupedStories();
   const years = Object.keys(groups).sort((a, b) => Number(b) - Number(a));
+  const collapsedYears = loadCollapsedYears();
   $("#yearFilters").innerHTML = years.map((year) => `<button type="button" data-year="${year}">${year}</button>`).join("");
   $("#timelineList").innerHTML = years.length ? years.map((year) => `
-    <article class="year-block" id="timeline-year-${escapeHtml(year)}" tabindex="-1">
+    <article class="year-block ${collapsedYears.has(year) ? "is-collapsed" : ""}" id="timeline-year-${escapeHtml(year)}" tabindex="-1" data-year-block="${escapeHtml(year)}">
       <div class="year-label">${escapeHtml(year)}</div>
-      <div class="year-title">${escapeHtml(year)}<span>${groups[year].filter(isPublished).length} published highlight${groups[year].filter(isPublished).length === 1 ? "" : "s"}</span></div>
-      <div class="event-stack">
+      <button class="year-title" type="button" data-toggle-year="${escapeHtml(year)}" aria-expanded="${collapsedYears.has(year) ? "false" : "true"}" aria-controls="timeline-events-${escapeHtml(year)}">
+        <span class="year-caret" aria-hidden="true"></span>
+        <strong>${escapeHtml(year)}</strong>
+        <span>${groups[year].filter(isPublished).length} published highlight${groups[year].filter(isPublished).length === 1 ? "" : "s"}</span>
+      </button>
+      <div class="event-stack" id="timeline-events-${escapeHtml(year)}">
         ${groups[year].map((story) => `
           <article class="event-card ${story.status !== "published" ? "private-card" : ""}" data-story-id="${escapeHtml(story.id)}">
             <div class="event-media">${story.image ? `<img class="event-main-image" src="${escapeHtml(story.image)}" alt="${escapeHtml(story.title)}" />` : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
@@ -1944,6 +1980,9 @@ $("#yearFilters").addEventListener("click", (event) => {
   target.focus({ preventScroll: true });
 });
 
+$("#expandTimeline").addEventListener("click", () => setAllTimelineYearsCollapsed(false));
+$("#collapseTimeline").addEventListener("click", () => setAllTimelineYearsCollapsed(true));
+
 document.addEventListener("click", (event) => {
   const deleteButton = event.target.closest("[data-delete-id]");
   if (deleteButton) {
@@ -1955,6 +1994,12 @@ document.addEventListener("click", (event) => {
 });
 
 $("#timelineList").addEventListener("click", (event) => {
+  const yearToggle = event.target.closest("[data-toggle-year]");
+  if (yearToggle) {
+    const yearBlock = yearToggle.closest("[data-year-block]");
+    setTimelineYearCollapsed(yearToggle.dataset.toggleYear, !yearBlock.classList.contains("is-collapsed"));
+    return;
+  }
   if (!ownerMode || event.target.closest("button, a, input, textarea, select")) return;
   const storyCard = event.target.closest("[data-story-id]");
   openEditor("story", storyCard ? storyCard.dataset.storyId : "");

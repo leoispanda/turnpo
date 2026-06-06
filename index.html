@@ -11,7 +11,7 @@
     <meta property="og:url" content="https://www.turnpo.com" />
     <link rel="icon" href="/assets/turnpo-logo-full.png" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.66" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.67" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -93,7 +93,13 @@
               <p class="eyebrow">Life timeline</p>
               <h2>The turning points that tell a life.</h2>
             </div>
-            <div class="year-jump" id="yearFilters" aria-label="Year filters"></div>
+            <div class="timeline-controls" aria-label="Timeline controls">
+              <div class="timeline-section-actions">
+                <button class="section-action" id="expandTimeline" type="button">Open all</button>
+                <button class="section-action" id="collapseTimeline" type="button">Close all</button>
+              </div>
+              <div class="year-jump" id="yearFilters" aria-label="Year filters"></div>
+            </div>
           </div>
           <div class="timeline vertical" id="timelineList"></div>
         </section>
@@ -182,7 +188,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.66</span>
+          <span class="version-badge">v0.1.67</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="openStory" type="button">Add story</button>
             <button class="gold-btn" id="openWork" type="button">Add AI work</button>
@@ -258,6 +264,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.66"></script>
+    <script src="/script.js?v=0.1.67"></script>
   </body>
 </html>
