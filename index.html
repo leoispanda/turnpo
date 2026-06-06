@@ -11,7 +11,7 @@
     <meta property="og:url" content="https://www.turnpo.com" />
     <link rel="icon" href="/assets/turnpo-logo-full.png" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.67" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.68" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -188,7 +188,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.67</span>
+          <span class="version-badge">v0.1.68</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="openStory" type="button">Add story</button>
             <button class="gold-btn" id="openWork" type="button">Add AI work</button>
@@ -222,7 +222,22 @@
           <label><span>Date</span><input id="contentDate" /></label>
         </div>
         <label class="story-only"><span>Location</span><input id="contentLocation" /></label>
-        <label class="story-only"><span>Image URL</span><input id="contentImage" /></label>
+        <div class="image-upload story-only">
+          <div class="image-upload-head">
+            <span>Image</span>
+            <button class="small-action" id="removeContentImage" type="button" hidden>Remove</button>
+          </div>
+          <input id="contentImage" type="hidden" />
+          <input id="contentImageFile" type="file" accept="image/*" hidden />
+          <button class="image-dropzone" id="contentImageDropzone" type="button">
+            <span class="image-preview" id="contentImagePreview" aria-hidden="true"></span>
+            <strong id="contentImageTitle">Drop, paste, or choose an image</strong>
+            <small id="contentImageHint">PNG, JPG, or WebP. The local prototype stores an optimized copy in this browser.</small>
+          </button>
+          <div class="image-upload-actions">
+            <button class="section-action" id="chooseContentImage" type="button">Choose file</button>
+          </div>
+        </div>
         <label class="work-only"><span>Work type</span><input id="workType" placeholder="AI app, research, prototype..." /></label>
         <label><span>Public summary</span><textarea id="contentSummary" required></textarea></label>
         <label><span class="story-only">Why it matters</span><span class="work-only">Why I made it</span><textarea id="contentWhy"></textarea></label>
@@ -264,6 +279,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.67"></script>
+    <script src="/script.js?v=0.1.68"></script>
   </body>
 </html>

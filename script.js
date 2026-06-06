@@ -1571,6 +1571,74 @@ function statusPill(item) {
   return ownerMode ? `<span class="visibility-pill">${escapeHtml(item.status)}</span>` : "";
 }
 
+function imageValueType(value) {
+  if (!value) return "";
+  if (value.startsWith("data:image/")) return "Uploaded image";
+  if (value.startsWith("/assets/")) return "Saved site image";
+  return "Linked image";
+}
+
+function renderImageUpload(value = "") {
+  $("#contentImage").value = value;
+  const preview = $("#contentImagePreview");
+  const title = $("#contentImageTitle");
+  const hint = $("#contentImageHint");
+  const removeButton = $("#removeContentImage");
+  preview.innerHTML = value ? `<img src="${escapeHtml(value)}" alt="" />` : "";
+  preview.classList.toggle("has-image", Boolean(value));
+  title.textContent = value ? imageValueType(value) : "Drop, paste, or choose an image";
+  hint.textContent = value ? "Use Remove to clear it, or drop/paste/choose a new image to replace it." : "PNG, JPG, or WebP. The local prototype stores an optimized copy in this browser.";
+  removeButton.hidden = !value;
+}
+
+function fileToImage(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const image = new Image();
+    image.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve(image);
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Could not read that image."));
+    };
+    image.src = url;
+  });
+}
+
+async function optimizeImageFile(file) {
+  if (!file || !file.type.startsWith("image/")) throw new Error("Please choose an image file.");
+  const image = await fileToImage(file);
+  const maxSide = 1400;
+  const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
+  const width = Math.max(1, Math.round(image.naturalWidth * scale));
+  const height = Math.max(1, Math.round(image.naturalHeight * scale));
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d");
+  context.drawImage(image, 0, 0, width, height);
+  return canvas.toDataURL("image/jpeg", 0.82);
+}
+
+async function useImageFile(file) {
+  try {
+    $("#contentStatusNote").textContent = "Preparing image...";
+    const imageData = await optimizeImageFile(file);
+    renderImageUpload(imageData);
+    $("#contentStatusNote").textContent = "Image ready. Remember to save content.";
+  } catch (error) {
+    $("#contentStatusNote").textContent = error.message;
+  }
+}
+
+function imageFileFromPaste(event) {
+  return [...(event.clipboardData?.items || [])]
+    .find((item) => item.kind === "file" && item.type.startsWith("image/"))
+    ?.getAsFile();
+}
+
 function renderTimeline() {
   const groups = groupedStories();
   const years = Object.keys(groups).sort((a, b) => Number(b) - Number(a));
@@ -1707,7 +1775,7 @@ function openEditor(type, id = "") {
   $("#contentYear").value = item?.year || "";
   $("#contentDate").value = item?.date || "";
   $("#contentLocation").value = item?.location || "";
-  $("#contentImage").value = item?.image || "";
+  renderImageUpload(item?.image || "");
   $("#contentStatus").value = item?.status || "draft";
   $("#contentSummary").value = item?.publicSummary || "";
   $("#contentWhy").value = item?.whyItMatters || item?.whyMade || "";
@@ -2026,6 +2094,43 @@ $("#closeBackdrop").addEventListener("click", closeEditor);
 $("#contentType").addEventListener("change", (event) => toggleWorkFields(event.target.value));
 $("#contentForm").addEventListener("submit", upsertContent);
 $("#deleteContent").addEventListener("click", deleteCurrentContent);
+$("#chooseContentImage").addEventListener("click", () => $("#contentImageFile").click());
+$("#contentImageFile").addEventListener("change", (event) => {
+  const file = event.target.files?.[0];
+  if (file) useImageFile(file);
+  event.target.value = "";
+});
+$("#removeContentImage").addEventListener("click", () => {
+  renderImageUpload("");
+  $("#contentStatusNote").textContent = "Image removed. Remember to save content.";
+});
+$("#contentImageDropzone").addEventListener("click", () => $("#contentImageFile").click());
+$("#contentImageDropzone").addEventListener("dragover", (event) => {
+  event.preventDefault();
+  $("#contentImageDropzone").classList.add("is-dragging");
+});
+$("#contentImageDropzone").addEventListener("dragleave", () => {
+  $("#contentImageDropzone").classList.remove("is-dragging");
+});
+$("#contentImageDropzone").addEventListener("drop", (event) => {
+  event.preventDefault();
+  $("#contentImageDropzone").classList.remove("is-dragging");
+  const file = event.dataTransfer?.files?.[0];
+  if (file) useImageFile(file);
+});
+$("#contentImageDropzone").addEventListener("paste", (event) => {
+  const file = imageFileFromPaste(event);
+  if (!file) return;
+  event.preventDefault();
+  useImageFile(file);
+});
+$("#contentForm").addEventListener("paste", (event) => {
+  if ($("#contentType").value !== "story") return;
+  const file = imageFileFromPaste(event);
+  if (!file) return;
+  event.preventDefault();
+  useImageFile(file);
+});
 $("#homeOwnerLogin").addEventListener("click", () => setAuthDrawer(true));
 $("#ownerLogout").addEventListener("click", logoutOwner);
 $("#backToSearch").addEventListener("click", () => setRoute("home"));
