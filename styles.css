@@ -506,8 +506,8 @@ main {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 420px;
   gap: clamp(26px, 5vw, 72px);
-  align-items: end;
-  padding: 82px clamp(18px, 5vw, 72px) 44px;
+  align-items: start;
+  padding: 48px clamp(18px, 5vw, 72px) 44px;
 }
 
 .timestamp,
@@ -1389,19 +1389,6 @@ select {
   font-size: 13px;
 }
 
-.preview-summary {
-  padding: 18px;
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.035);
-}
-
-.preview-summary p,
-.trust-list p {
-  color: var(--muted);
-  line-height: 1.55;
-}
-
 .work-only[hidden],
 .story-only[hidden] {
   display: none !important;
@@ -1412,6 +1399,10 @@ select {
   color: var(--dim);
   font-size: 13px;
   line-height: 1.45;
+}
+
+.form-status:empty {
+  display: none;
 }
 
 .form-actions {

@@ -11,7 +11,7 @@
     <meta property="og:url" content="https://www.turnpo.com" />
     <link rel="icon" href="/assets/turnpo-logo-full.png" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.69" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.70" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -130,20 +130,6 @@
           <textarea id="sourceWorkspace" spellcheck="false"></textarea>
           <p class="auth-note" id="sourceStatus">Turnpo AI assistance is coming soon. AI output will be draft-only until owner approval</p>
         </aside>
-        <section class="timeline-section">
-          <div class="section-head">
-            <div>
-              <p class="eyebrow">Public preview</p>
-              <h2>Visitors see the curated layer</h2>
-            </div>
-          </div>
-          <div class="preview-summary" id="previewSummary"></div>
-          <div class="trust-list">
-            <p><strong>You control what becomes public</strong></p>
-            <p>Unpublished content is only visible to you in this local owner workspace</p>
-            <p>AI drafts are never published without your approval</p>
-          </div>
-        </section>
       </section>
 
       <footer class="site-footer" id="footer">
@@ -188,8 +174,9 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.69</span>
+          <span class="version-badge">v0.1.70</span>
           <div class="owner-tool-grid owner-only">
+            <button class="gold-btn" id="openProfileEditor" type="button">Edit profile</button>
             <button class="gold-btn" id="openStory" type="button">Add story</button>
             <button class="gold-btn" id="openWork" type="button">Add AI work</button>
             <button class="ghost-btn" id="exportProfile" type="button">Export JSON</button>
@@ -240,18 +227,46 @@
           </div>
         </div>
         <label class="work-only"><span>Work type</span><input id="workType" placeholder="AI app, research, prototype..." /></label>
-        <label><span>Public summary</span><textarea id="contentSummary" required></textarea></label>
-        <label><span class="story-only">Why it matters</span><span class="work-only">Why I made it</span><textarea id="contentWhy"></textarea></label>
+        <label><span>Details</span><textarea id="contentSummary" required></textarea></label>
+        <label class="work-only"><span>Why I made it</span><textarea id="contentWhy"></textarea></label>
         <label class="work-only"><span>Tools used</span><input id="workTools" placeholder="Comma separated" /></label>
         <label class="work-only"><span>Human role</span><textarea id="humanRole"></textarea></label>
         <label class="work-only"><span>AI role</span><textarea id="aiRole"></textarea></label>
         <label class="work-only"><span>Result</span><textarea id="workResult"></textarea></label>
         <label class="work-only"><span>Link</span><input id="workLink" /></label>
         <label><span>Tags</span><input id="contentTags" placeholder="Comma separated" /></label>
-        <p class="form-status" id="contentStatusNote">Draft content is owner-only in this local prototype.</p>
+        <p class="form-status" id="contentStatusNote"></p>
         <div class="form-actions">
           <button class="danger-btn" id="deleteContent" type="button">Delete</button>
           <button class="submit-btn" type="submit">Save content</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="drawer" id="profileDrawer" aria-hidden="true">
+      <div class="drawer-backdrop" id="closeProfileBackdrop"></div>
+      <form class="event-form" id="profileForm">
+        <div class="form-head">
+          <div>
+            <p class="eyebrow">Owner profile</p>
+            <h2>Edit profile text</h2>
+          </div>
+          <button class="icon-btn" id="closeProfileEditor" type="button" title="Close">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+        <div class="form-row">
+          <label><span>Name</span><input id="profileEditName" required /></label>
+          <label><span>Username</span><input id="profileEditUsername" required /></label>
+        </div>
+        <label><span>Headline</span><textarea id="profileEditIntro" required></textarea></label>
+        <label><span>What I am building now</span><textarea id="profileEditChapter" required></textarea></label>
+        <label><span>Location</span><input id="profileEditLocation" list="locationOptions" /></label>
+        <label><span>Avatar URL</span><input id="profileEditAvatar" /></label>
+        <label><span>Links</span><textarea id="profileEditLinks" placeholder="Turnpo | https://www.turnpo.com/u/leo"></textarea></label>
+        <p class="form-status" id="profileStatusNote"></p>
+        <div class="form-actions">
+          <button class="submit-btn" type="submit">Save profile</button>
         </div>
       </form>
     </div>
@@ -275,6 +290,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.69"></script>
+    <script src="/script.js?v=0.1.70"></script>
   </body>
 </html>

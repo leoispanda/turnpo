@@ -1738,7 +1738,7 @@ ${profile.currentChapter}
 ${[...profile.values, ...profile.themes].map((item) => `- ${item}`).join("\n")}
 
 ## Public timeline highlights
-${stories.length ? stories.map((story) => `- ${story.year}: ${story.title} (${story.location || "location not specified"}) - ${story.publicSummary}${story.whyItMatters ? ` Why it matters: ${story.whyItMatters}` : ""}`).join("\n") : "- No published stories yet"}
+${stories.length ? stories.map((story) => `- ${story.year}: ${story.title} (${story.location || "location not specified"}) - ${story.publicSummary}`).join("\n") : "- No published stories yet"}
 
 ## Public AI works
 ${works.length ? works.map((work) => `- ${work.title} (${work.type}) - ${work.publicSummary} Human role: ${work.humanRole} AI role: ${work.aiRole} Result: ${work.result}`).join("\n") : "- No published AI works yet"}
@@ -1755,13 +1755,7 @@ Only published and user-approved Turnpo content is included in this AI-readable 
 }
 
 function renderOwnerWorkspace() {
-  const profile = currentProfile();
   $("#sourceWorkspace").value = ownerMode ? localStorage.getItem(sourceKey(activeUsername)) || "" : "";
-  $("#previewSummary").innerHTML = `
-    <h3>${escapeHtml(profile.displayName)}</h3>
-    <p>${escapeHtml(profile.oneLineIntro)}</p>
-    <p>${publicStories(profile).length} published stories · ${publicWorks(profile).length} published AI works</p>
-  `;
 }
 
 function renderJsonLd(profile) {
@@ -1869,7 +1863,7 @@ function openEditor(type, id = "") {
   $("#workResult").value = item?.result || "";
   $("#workLink").value = item?.link || "";
   $("#deleteContent").hidden = !item;
-  $("#contentStatusNote").textContent = "Draft content is owner-only in this local prototype. Published content appears in the public page and AI profile.";
+  $("#contentStatusNote").textContent = "";
   $("#contentDrawer").classList.add("open");
   $("#contentDrawer").setAttribute("aria-hidden", "false");
   toggleWorkFields(type);
@@ -1879,6 +1873,82 @@ function closeEditor() {
   $("#contentDrawer").classList.remove("open");
   $("#contentDrawer").setAttribute("aria-hidden", "true");
   editingRef = null;
+}
+
+function formatProfileLinks(links = []) {
+  return links.map((link) => `${link.label || ""} | ${link.url || ""}`).join("\n");
+}
+
+function parseProfileLinks(value = "") {
+  return value.split("\n").map((line) => {
+    const [label, ...urlParts] = line.split("|");
+    return {
+      label: label.trim(),
+      url: urlParts.join("|").trim()
+    };
+  }).filter((link) => link.label && link.url);
+}
+
+function openProfileEditor() {
+  if (!ownerMode) {
+    setAuthDrawer(true);
+    return;
+  }
+  const profile = currentProfile();
+  $("#profileEditName").value = profile.displayName || "";
+  $("#profileEditUsername").value = profile.username || "";
+  $("#profileEditIntro").value = profile.oneLineIntro || "";
+  $("#profileEditChapter").value = profile.currentChapter || "";
+  $("#profileEditLocation").value = profile.location || "";
+  $("#profileEditAvatar").value = profile.avatar || "";
+  $("#profileEditLinks").value = formatProfileLinks(profile.links);
+  $("#profileStatusNote").textContent = "";
+  renderLocationOptions();
+  $("#profileDrawer").classList.add("open");
+  $("#profileDrawer").setAttribute("aria-hidden", "false");
+}
+
+function closeProfileEditor() {
+  $("#profileDrawer").classList.remove("open");
+  $("#profileDrawer").setAttribute("aria-hidden", "true");
+}
+
+function saveProfileText(event) {
+  event.preventDefault();
+  const profile = currentProfile();
+  const nextUsername = $("#profileEditUsername").value.trim().replace(/^@/, "").toLowerCase();
+  const nextProfile = normalizeProfile({
+    ...profile,
+    username: nextUsername,
+    displayName: $("#profileEditName").value.trim(),
+    oneLineIntro: $("#profileEditIntro").value.trim(),
+    currentChapter: $("#profileEditChapter").value.trim(),
+    location: $("#profileEditLocation").value.trim(),
+    avatar: $("#profileEditAvatar").value.trim() || profile.avatar,
+    links: parseProfileLinks($("#profileEditLinks").value)
+  });
+  if (!nextProfile.displayName || !nextProfile.username || !nextProfile.oneLineIntro || !nextProfile.currentChapter) {
+    $("#profileStatusNote").textContent = "Name, username, headline, and current chapter are required.";
+    return;
+  }
+  const previousUsername = activeUsername;
+  if (nextProfile.username !== previousUsername && profiles[nextProfile.username]) {
+    $("#profileStatusNote").textContent = "That username already exists.";
+    return;
+  }
+  delete profiles[previousUsername];
+  profiles[nextProfile.username] = nextProfile;
+  activeUsername = nextProfile.username;
+  const previousSource = localStorage.getItem(sourceKey(previousUsername));
+  localStorage.removeItem(localKey(previousUsername));
+  if (previousSource !== null) {
+    localStorage.removeItem(sourceKey(previousUsername));
+    localStorage.setItem(sourceKey(activeUsername), previousSource);
+  }
+  saveActiveProfile();
+  localStorage.setItem(ACTIVE_PROFILE_KEY, activeUsername);
+  closeProfileEditor();
+  setRoute(activeUsername);
 }
 
 function toggleWorkFields(type) {
@@ -1914,7 +1984,7 @@ function upsertContent(event) {
     deletedAt: status === "deleted" ? now : ""
   }, type);
   if (!base.title || !base.publicSummary) {
-    $("#contentStatusNote").textContent = "Title and public summary are required.";
+    $("#contentStatusNote").textContent = "Title and details are required.";
     return;
   }
   const collection = type === "work" ? currentProfile().aiWorks : currentProfile().lifeStories;
@@ -1929,8 +1999,7 @@ function upsertContent(event) {
     result: $("#workResult").value.trim(),
     link: $("#workLink").value.trim()
   } : {
-    ...base,
-    whyItMatters: $("#contentWhy").value.trim()
+    ...base
   };
   if (existingIndex >= 0) collection[existingIndex] = nextItem;
   else collection.unshift(nextItem);
@@ -2162,10 +2231,14 @@ $(".brand").addEventListener("click", (event) => {
 
 $("#openStory").addEventListener("click", () => openEditor("story"));
 $("#openWork").addEventListener("click", () => openEditor("work"));
+$("#openProfileEditor").addEventListener("click", openProfileEditor);
 $("#closeContent").addEventListener("click", closeEditor);
 $("#closeBackdrop").addEventListener("click", closeEditor);
+$("#closeProfileEditor").addEventListener("click", closeProfileEditor);
+$("#closeProfileBackdrop").addEventListener("click", closeProfileEditor);
 $("#contentType").addEventListener("change", (event) => toggleWorkFields(event.target.value));
 $("#contentForm").addEventListener("submit", upsertContent);
+$("#profileForm").addEventListener("submit", saveProfileText);
 $("#deleteContent").addEventListener("click", deleteCurrentContent);
 $("#chooseContentImage").addEventListener("click", () => $("#contentImageFile").click());
 $("#contentImageFile").addEventListener("change", (event) => {
