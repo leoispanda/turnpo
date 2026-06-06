@@ -955,6 +955,8 @@ body.owner-mode .event-card.is-uploading .empty-media {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .visibility-pill,
@@ -985,6 +987,55 @@ body.owner-mode .event-card.is-uploading .empty-media {
 
 .danger-action:hover {
   border-color: rgba(255, 120, 104, 0.52);
+}
+
+.owner-timeline-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.owner-view-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid rgba(216, 177, 95, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.owner-view-tabs button {
+  min-height: 30px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--muted);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.owner-view-tabs button.active {
+  color: #0d0b07;
+  background: var(--gold-strong);
+}
+
+.status-hidden {
+  border-color: rgba(147, 167, 255, 0.32);
+  color: #c6d0ff;
+  background: rgba(147, 167, 255, 0.08);
+}
+
+.status-deleted {
+  border-color: rgba(255, 120, 104, 0.32);
+  color: #ffb3a7;
+  background: rgba(255, 120, 104, 0.08);
+}
+
+.event-card.status-deleted {
+  opacity: 0.78;
 }
 
 .event-card h3 {

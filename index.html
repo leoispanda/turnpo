@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.77" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.79" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -111,6 +111,14 @@
               <h2>The turning points that tell a life.</h2>
             </div>
             <div class="timeline-controls" aria-label="Timeline controls">
+              <div class="owner-timeline-controls owner-only" aria-label="Owner content filters">
+                <div class="owner-view-tabs" id="ownerContentView">
+                  <button class="active" type="button" data-owner-view="published">Visible</button>
+                  <button type="button" data-owner-view="hidden">Hidden</button>
+                  <button type="button" data-owner-view="deleted">Deleted</button>
+                </div>
+                <button class="section-action danger-action" id="emptyDeleted" type="button" hidden>Empty deleted</button>
+              </div>
               <div class="timeline-section-actions">
                 <button class="section-action" id="expandTimeline" type="button">Open all</button>
                 <button class="section-action" id="collapseTimeline" type="button">Close all</button>
@@ -145,7 +153,7 @@
             <label><input type="radio" name="sourceMode" value="assisted" /> Help me build one</label>
           </div>
           <textarea id="sourceWorkspace" spellcheck="false"></textarea>
-          <p class="auth-note" id="sourceStatus">Turnpo AI assistance is coming soon. AI output will be draft-only until owner approval</p>
+          <p class="auth-note" id="sourceStatus">Turnpo AI assistance is coming soon. Owner-only AI output can be hidden until you choose to publish it.</p>
         </aside>
       </section>
 
@@ -168,21 +176,21 @@
           <summary>Legal / Privacy / AI Disclaimer</summary>
           <p><strong>How content works</strong></p>
           <p>Turnpo uses three content states.</p>
-          <p><strong>Unpublished</strong></p>
-          <p>Unpublished content is only visible to the profile owner in owner mode. It is not shown on the public profile, not included in the public AI Profile, and not intended for search engines or AI crawlers.</p>
-          <p><strong>Published</strong></p>
+          <p><strong>Visible / Published</strong></p>
           <p>Published content appears on the public Turnpo profile. It may be viewed, copied, indexed by search engines, or analyzed by AI systems and visitors.</p>
+          <p><strong>Hidden</strong></p>
+          <p>Hidden content stays available to the profile owner in owner mode, but is not shown on the public profile, not included in the public AI Profile, and not intended for search engines or AI crawlers.</p>
           <p><strong>Deleted</strong></p>
-          <p>Deleted content is removed from Turnpo's active display and public outputs. If the content was previously published, Turnpo cannot fully control copies that may already exist outside the platform, such as screenshots, downloads, search caches, or external AI records.</p>
+          <p>Deleted content moves to an owner-only deleted area first, where it can be restored or permanently cleared. If the content was previously published, Turnpo cannot fully control copies that may already exist outside the platform, such as screenshots, downloads, search caches, or external AI records.</p>
           <p><strong>Trust & privacy</strong></p>
           <p>You control what becomes public.</p>
-          <p>Unpublished content is not shown on your public profile or public AI-readable profile. AI drafts are never meant to be published without user approval.</p>
+          <p>Hidden and deleted content are not shown on your public profile or public AI-readable profile.</p>
           <p>Published content is designed to be shared. Please only publish information you are comfortable making public and potentially discoverable by people, search engines, and AI systems.</p>
           <p>This prototype currently stores edited profile content in browser storage. Do not use it to store sensitive or confidential information.</p>
           <p>Please do not upload highly sensitive information such as passwords, government IDs, medical records, financial secrets, confidential company materials, private addresses, or information you do not have the right to share.</p>
           <p><strong>AI assistance</strong></p>
           <p>Turnpo AI assistance is coming soon.</p>
-          <p>In a real production version, AI processing must happen server-side, with proper authentication, user consent, and data protection. AI output should remain a draft until the profile owner reviews and approves it.</p>
+          <p>In a real production version, AI processing must happen server-side, with proper authentication, user consent, and data protection. AI output should stay hidden until the profile owner reviews and chooses to publish it.</p>
           <p>Turnpo should help shape a story, not define a person without their approval.</p>
           <p><strong>Deletion notice</strong></p>
           <p>If you delete content, Turnpo will remove it from the platform's active public display and public outputs. However, if that content was previously published, others may already have copied, cached, indexed, downloaded, screenshotted, or analyzed it outside Turnpo.</p>
@@ -191,7 +199,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.77</span>
+          <span class="version-badge">v0.1.79</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="openProfileEditor" type="button">Edit profile</button>
             <button class="gold-btn" id="openStory" type="button">Add story</button>
@@ -218,7 +226,7 @@
         </div>
         <div class="form-row">
           <label><span>Type</span><select id="contentType"><option value="story">Life story</option><option value="work">AI work</option></select></label>
-          <label><span>Status</span><select id="contentStatus"><option value="draft">Unpublished / Draft</option><option value="published">Published</option><option value="deleted">Deleted</option></select></label>
+          <label><span>Status</span><select id="contentStatus"><option value="published">Published</option><option value="hidden">Hidden</option><option value="deleted">Deleted</option></select></label>
         </div>
         <label><span>Title</span><input id="contentTitle" required /></label>
         <div class="form-row story-only">
@@ -308,6 +316,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.77"></script>
+    <script src="/script.js?v=0.1.79"></script>
   </body>
 </html>

@@ -2,7 +2,7 @@ const ACTIVE_PROFILE_KEY = "turnpo:active-profile";
 const LOCAL_PREFIX = "turnpo:profile:";
 const SOURCE_PREFIX = "turnpo:source:";
 const COLLAPSED_YEARS_PREFIX = "turnpo:collapsed-years:";
-const STATUSES = ["published", "draft", "deleted"];
+const STATUSES = ["published", "hidden", "deleted"];
 const SITE_URL = "https://www.turnpo.com";
 const BRAND_ASSETS = {
   logo: `${SITE_URL}/assets/icons/icon-512.png`,
@@ -1317,6 +1317,7 @@ let editingRef = null;
 let activeEditorType = "story";
 let pendingOwnerEmail = "";
 let authCodeRequested = false;
+let ownerTimelineView = "published";
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -1360,7 +1361,7 @@ function loadOwnerProfile(username) {
 function normalizeProfile(profile) {
   return {
     ...profile,
-    status: profile.status === "published" || profile.username === "leo" ? "published" : "draft",
+    status: profile.status === "published" || profile.username === "leo" ? "published" : "hidden",
     lifeStories: (profile.lifeStories || []).map((item) => normalizeContent(item, "story")),
     aiWorks: (profile.aiWorks || []).map((item) => normalizeContent(item, "work")),
     values: profile.values || [],
@@ -1373,16 +1374,18 @@ function normalizeContent(item, type) {
   const now = new Date().toISOString();
   const existingImages = Array.isArray(item.images) ? item.images : [];
   const images = type === "story" ? [...new Set([...existingImages, item.image].filter(Boolean))] : item.images;
+  const rawStatus = item.status === "draft" ? "hidden" : item.status;
+  const status = STATUSES.includes(rawStatus) ? rawStatus : "published";
   return {
+    ...item,
     id: item.id || `${type}-${crypto.randomUUID()}`,
-    status: STATUSES.includes(item.status) ? item.status : "draft",
-    userApproved: Boolean(item.userApproved),
+    status,
+    userApproved: status === "published" ? item.userApproved !== false : false,
     createdAt: item.createdAt || now,
     updatedAt: item.updatedAt || now,
-    publishedAt: item.publishedAt || (item.status === "published" ? now : ""),
+    publishedAt: item.publishedAt || (status === "published" ? now : ""),
     unpublishedAt: item.unpublishedAt || "",
     deletedAt: item.deletedAt || "",
-    ...item,
     ...(type === "story" ? { image: images[0] || "", images } : {})
   };
 }
@@ -1417,6 +1420,20 @@ function publicWorks(profile = currentProfile()) {
 
 function ownerItems(collection) {
   return ownerMode ? collection.filter((item) => item.status !== "deleted") : collection.filter(isPublished);
+}
+
+function timelineStories(profile = currentProfile()) {
+  if (!ownerMode) return publicStories(profile);
+  return profile.lifeStories
+    .filter((story) => story.status === ownerTimelineView)
+    .sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
+}
+
+function ownerStoryCounts(profile = currentProfile()) {
+  return profile.lifeStories.reduce((counts, story) => ({
+    ...counts,
+    [story.status]: (counts[story.status] || 0) + 1
+  }), { published: 0, hidden: 0, deleted: 0 });
 }
 
 function escapeHtml(value = "") {
@@ -1613,7 +1630,7 @@ function renderProfile() {
 }
 
 function groupedStories(profile = currentProfile()) {
-  return ownerItems(profile.lifeStories).reduce((groups, story) => {
+  return timelineStories(profile).reduce((groups, story) => {
     const year = story.year || "Undated";
     if (!groups[year]) groups[year] = [];
     groups[year].push(story);
@@ -1652,7 +1669,30 @@ function setAllTimelineYearsCollapsed(collapsed) {
 }
 
 function statusPill(item) {
-  return ownerMode ? `<span class="visibility-pill">${escapeHtml(item.status)}</span>` : "";
+  const labels = { published: "visible", hidden: "hidden", deleted: "deleted" };
+  return ownerMode ? `<span class="visibility-pill status-${escapeHtml(item.status)}">${escapeHtml(labels[item.status] || item.status)}</span>` : "";
+}
+
+function renderOwnerContentControls() {
+  if (!ownerMode) return;
+  const counts = ownerStoryCounts();
+  document.querySelectorAll("[data-owner-view]").forEach((button) => {
+    const view = button.dataset.ownerView;
+    button.classList.toggle("active", view === ownerTimelineView);
+    button.textContent = `${view === "published" ? "Visible" : view[0].toUpperCase() + view.slice(1)} ${counts[view] || 0}`;
+  });
+  $("#emptyDeleted").hidden = ownerTimelineView !== "deleted" || !counts.deleted;
+}
+
+function storyActions(story) {
+  if (!ownerMode) return "";
+  if (story.status === "deleted") {
+    return `${statusPill(story)}<button class="small-action" type="button" data-restore-type="story" data-restore-id="${escapeHtml(story.id)}">Restore</button><button class="small-action danger-action" type="button" data-permanent-delete-type="story" data-permanent-delete-id="${escapeHtml(story.id)}">Delete forever</button><button class="small-action" type="button" data-edit-type="story" data-edit-id="${escapeHtml(story.id)}">Edit</button>`;
+  }
+  const toggleAction = story.status === "published"
+    ? `<button class="small-action" type="button" data-hide-type="story" data-hide-id="${escapeHtml(story.id)}">Hide</button>`
+    : `<button class="small-action" type="button" data-publish-type="story" data-publish-id="${escapeHtml(story.id)}">Publish</button>`;
+  return `${statusPill(story)}${toggleAction}<button class="small-action danger-action" type="button" data-delete-type="story" data-delete-id="${escapeHtml(story.id)}">Delete</button><button class="small-action" type="button" data-edit-type="story" data-edit-id="${escapeHtml(story.id)}">Edit</button>`;
 }
 
 function imageValueType(value) {
@@ -1771,17 +1811,19 @@ function dragHasFiles(event) {
 }
 
 function renderTimeline() {
+  renderOwnerContentControls();
   const groups = groupedStories();
   const years = Object.keys(groups).sort((a, b) => Number(b) - Number(a));
   const collapsedYears = loadCollapsedYears();
   $("#yearFilters").innerHTML = years.map((year) => `<button type="button" data-year="${year}">${year}</button>`).join("");
+  const viewLabel = ownerMode ? ownerTimelineView : "published";
   $("#timelineList").innerHTML = years.length ? years.map((year) => `
     <article class="year-block ${collapsedYears.has(year) ? "is-collapsed" : ""}" id="timeline-year-${escapeHtml(year)}" tabindex="-1" data-year-block="${escapeHtml(year)}">
       <div class="year-label">${escapeHtml(year)}</div>
       <button class="year-title" type="button" data-toggle-year="${escapeHtml(year)}" aria-expanded="${collapsedYears.has(year) ? "false" : "true"}" aria-controls="timeline-events-${escapeHtml(year)}">
         <span class="year-caret" aria-hidden="true"></span>
         <strong>${escapeHtml(year)}</strong>
-        <span>${groups[year].filter(isPublished).length} published highlight${groups[year].filter(isPublished).length === 1 ? "" : "s"}</span>
+        <span>${groups[year].length} ${viewLabel === "published" ? "visible" : viewLabel} highlight${groups[year].length === 1 ? "" : "s"}</span>
       </button>
       <div class="event-stack" id="timeline-events-${escapeHtml(year)}">
         ${groups[year].map((story) => {
@@ -1789,12 +1831,12 @@ function renderTimeline() {
           const coverImage = storyImages[0] || "";
           const extraImages = storyImages.slice(1);
           return `
-          <article class="event-card ${story.status !== "published" ? "private-card" : ""}" data-story-id="${escapeHtml(story.id)}">
+          <article class="event-card ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-story-id="${escapeHtml(story.id)}">
             <div class="event-media">${coverImage ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(story.title)}" />` : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
             <div>
               <div class="event-card-head">
                 <div class="event-date">${escapeHtml([story.date, story.location].filter(Boolean).join(" - "))}</div>
-                <div class="event-actions owner-only">${statusPill(story)}<button class="small-action danger-action" type="button" data-delete-type="story" data-delete-id="${story.id}">Delete</button><button class="small-action" type="button" data-edit-type="story" data-edit-id="${story.id}">Edit</button></div>
+                <div class="event-actions owner-only">${storyActions(story)}</div>
               </div>
               <h3>${escapeHtml(story.title)}</h3>
               <p>${escapeHtml(story.publicSummary)}</p>
@@ -1807,7 +1849,7 @@ function renderTimeline() {
         `; }).join("")}
       </div>
     </article>
-  `).join("") : `<p class="empty-result">No published stories yet</p>`;
+  `).join("") : `<p class="empty-result">No ${ownerMode ? (ownerTimelineView === "published" ? "visible" : ownerTimelineView) : "published"} stories yet</p>`;
 }
 
 function renderAiWorks() {
@@ -1984,7 +2026,7 @@ function openEditor(type, id = "") {
   $("#contentLocation").value = item?.location || "";
   renderLocationOptions();
   renderImageUpload(item?.images || (item?.image ? [item.image] : []));
-  $("#contentStatus").value = item?.status || "draft";
+  $("#contentStatus").value = item?.status || "published";
   $("#contentSummary").value = item?.publicSummary || "";
   $("#contentWhy").value = item?.whyItMatters || item?.whyMade || "";
   $("#contentTags").value = (item?.tags || []).join(", ");
@@ -2113,7 +2155,7 @@ function upsertContent(event) {
     userApproved: wantsPublish,
     updatedAt: now,
     publishedAt: wantsPublish ? now : "",
-    unpublishedAt: status === "draft" ? now : "",
+    unpublishedAt: status === "hidden" ? now : "",
     deletedAt: status === "deleted" ? now : ""
   }, type);
   if (!base.title || !base.publicSummary) {
@@ -2150,11 +2192,48 @@ function deleteCurrentContent() {
 function deleteContentById(type, id) {
   const item = findContent(type, id);
   if (item) {
+    item.previousStatus = item.status === "deleted" ? item.previousStatus || "hidden" : item.status;
     item.status = "deleted";
     item.userApproved = false;
     item.deletedAt = new Date().toISOString();
     item.updatedAt = item.deletedAt;
   }
+  saveActiveProfile();
+  renderProfile();
+}
+
+function setContentStatus(type, id, status) {
+  const item = findContent(type, id);
+  if (!item || !STATUSES.includes(status)) return;
+  const now = new Date().toISOString();
+  item.status = status;
+  item.userApproved = status === "published";
+  item.updatedAt = now;
+  if (status === "published") item.publishedAt = now;
+  if (status === "hidden") item.unpublishedAt = now;
+  if (status !== "deleted") item.deletedAt = "";
+  saveActiveProfile();
+  renderProfile();
+}
+
+function restoreContentById(type, id) {
+  const item = findContent(type, id);
+  if (!item || item.status !== "deleted") return;
+  const restoreStatus = item.previousStatus === "published" ? "published" : "hidden";
+  delete item.previousStatus;
+  setContentStatus(type, id, restoreStatus);
+}
+
+function permanentlyDeleteContentById(type, id) {
+  const collection = type === "work" ? currentProfile().aiWorks : currentProfile().lifeStories;
+  const index = collection.findIndex((item) => item.id === id);
+  if (index >= 0) collection.splice(index, 1);
+  saveActiveProfile();
+  renderProfile();
+}
+
+function emptyDeletedStories() {
+  currentProfile().lifeStories = currentProfile().lifeStories.filter((story) => story.status !== "deleted");
   saveActiveProfile();
   renderProfile();
 }
@@ -2325,8 +2404,39 @@ $("#yearFilters").addEventListener("click", (event) => {
 
 $("#expandTimeline").addEventListener("click", () => setAllTimelineYearsCollapsed(false));
 $("#collapseTimeline").addEventListener("click", () => setAllTimelineYearsCollapsed(true));
+$("#ownerContentView").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-owner-view]");
+  if (!button) return;
+  ownerTimelineView = button.dataset.ownerView;
+  renderProfile();
+});
+$("#emptyDeleted").addEventListener("click", () => {
+  if (confirm("Permanently clear all deleted stories? This cannot be undone.")) emptyDeletedStories();
+});
 
 document.addEventListener("click", (event) => {
+  const hideButton = event.target.closest("[data-hide-id]");
+  if (hideButton) {
+    setContentStatus(hideButton.dataset.hideType, hideButton.dataset.hideId, "hidden");
+    return;
+  }
+  const publishButton = event.target.closest("[data-publish-id]");
+  if (publishButton) {
+    setContentStatus(publishButton.dataset.publishType, publishButton.dataset.publishId, "published");
+    return;
+  }
+  const restoreButton = event.target.closest("[data-restore-id]");
+  if (restoreButton) {
+    restoreContentById(restoreButton.dataset.restoreType, restoreButton.dataset.restoreId);
+    return;
+  }
+  const permanentDeleteButton = event.target.closest("[data-permanent-delete-id]");
+  if (permanentDeleteButton) {
+    if (confirm("Permanently delete this item? This cannot be undone.")) {
+      permanentlyDeleteContentById(permanentDeleteButton.dataset.permanentDeleteType, permanentDeleteButton.dataset.permanentDeleteId);
+    }
+    return;
+  }
   const deleteButton = event.target.closest("[data-delete-id]");
   if (deleteButton) {
     deleteContentById(deleteButton.dataset.deleteType, deleteButton.dataset.deleteId);
