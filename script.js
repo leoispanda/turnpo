@@ -2502,6 +2502,8 @@ $(".brand").addEventListener("click", (event) => {
 $("#openStory").addEventListener("click", () => openEditor("story"));
 $("#openWork").addEventListener("click", () => openEditor("work"));
 $("#openProfileEditor").addEventListener("click", openProfileEditor);
+$("#editHeroProfile").addEventListener("click", openProfileEditor);
+$("#editPortraitProfile").addEventListener("click", openProfileEditor);
 $("#closeContent").addEventListener("click", closeEditor);
 $("#closeBackdrop").addEventListener("click", closeEditor);
 $("#closeProfileEditor").addEventListener("click", closeProfileEditor);
