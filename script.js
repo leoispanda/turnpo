@@ -3,6 +3,12 @@ const LOCAL_PREFIX = "turnpo:profile:";
 const SOURCE_PREFIX = "turnpo:source:";
 const COLLAPSED_YEARS_PREFIX = "turnpo:collapsed-years:";
 const STATUSES = ["published", "draft", "deleted"];
+const SITE_URL = "https://www.turnpo.com";
+const HOME_SEO = {
+  title: "Turnpo - Life Profiles People Can Truly Understand",
+  description: "Turnpo helps people turn life moments into warm, searchable personal profiles that are easy for others and AI tools to understand.",
+  image: `${SITE_URL}/assets/turnpo-logo-full.png`
+};
 const MONTH_NAMES = [
   "January",
   "February",
@@ -40,6 +46,7 @@ const CITY_OPTIONS = [
 const seedProfiles = {
   leo: {
     id: "profile-leo",
+    status: "published",
     seedVersion: "linkedin-export-2026-06-04",
     username: "leo",
     displayName: "Leo Yang",
@@ -1292,64 +1299,6 @@ const seedProfiles = {
         userApproved: true
       }
     ]
-  },
-  cindy: {
-    id: "profile-cindy",
-    username: "cindy",
-    displayName: "Cindy Chen",
-    oneLineIntro: "Example invited profile for a designer shaping humane AI products.",
-    currentChapter: "Designing thoughtful interfaces for AI-assisted creative work.",
-    location: "Amsterdam",
-    avatar: "/assets/turnpo-logo-full.png",
-    links: [{ label: "Profile", url: "https://www.turnpo.com/u/cindy" }],
-    values: ["craft", "care", "agency"],
-    themes: ["design", "AI tools", "creative systems"],
-    lifeStories: [
-      {
-        id: "story-cindy-2025",
-        year: "2025",
-        date: "2025",
-        title: "Started designing AI-native creative workflows",
-        location: "Amsterdam",
-        image: "https://images.unsplash.com/photo-1497366672149-e5e4b4d34eb3?auto=format&fit=crop&w=900&q=80",
-        publicSummary: "An example public story showing how Turnpo can support invited profiles.",
-        whyItMatters: "It demonstrates that search and routing are profile-data driven.",
-        tags: ["design", "AI", "workflow"],
-        status: "published",
-        userApproved: true
-      }
-    ],
-    aiWorks: [
-      {
-        id: "work-cindy-studio",
-        title: "AI Studio Notes",
-        type: "Creative workflow archive",
-        publicSummary: "A sample AI work entry for the private beta profile model.",
-        whyMade: "To test AI work search and public profile structure.",
-        toolsUsed: ["Figma", "AI writing tools"],
-        humanRole: "Design judgment and curation.",
-        aiRole: "Drafting and variation.",
-        result: "A concise example work page section.",
-        link: "",
-        tags: ["design", "prototype"],
-        status: "published",
-        userApproved: true
-      }
-    ]
-  },
-  "demo-friend": {
-    id: "profile-demo-friend",
-    username: "demo-friend",
-    displayName: "Demo Friend",
-    oneLineIntro: "Invite-based creation placeholder for future Turnpo profiles.",
-    currentChapter: "Waiting for a founder invite to create a real profile.",
-    location: "Private beta",
-    avatar: "/assets/turnpo-logo-full.png",
-    links: [{ label: "Invite coming soon", url: "#invite" }],
-    values: ["ownership", "consent", "curation"],
-    themes: ["private beta", "future profile"],
-    lifeStories: [],
-    aiWorks: []
   }
 };
 
@@ -1402,6 +1351,7 @@ function unloadOwnerProfile(username) {
 function normalizeProfile(profile) {
   return {
     ...profile,
+    status: profile.status === "published" || profile.username === "leo" ? "published" : "draft",
     lifeStories: (profile.lifeStories || []).map((item) => normalizeContent(item, "story")),
     aiWorks: (profile.aiWorks || []).map((item) => normalizeContent(item, "work")),
     values: profile.values || [],
@@ -1412,6 +1362,8 @@ function normalizeProfile(profile) {
 
 function normalizeContent(item, type) {
   const now = new Date().toISOString();
+  const existingImages = Array.isArray(item.images) ? item.images : [];
+  const images = type === "story" ? [...new Set([...existingImages, item.image].filter(Boolean))] : item.images;
   return {
     id: item.id || `${type}-${crypto.randomUUID()}`,
     status: STATUSES.includes(item.status) ? item.status : "draft",
@@ -1421,7 +1373,8 @@ function normalizeContent(item, type) {
     publishedAt: item.publishedAt || (item.status === "published" ? now : ""),
     unpublishedAt: item.unpublishedAt || "",
     deletedAt: item.deletedAt || "",
-    ...item
+    ...item,
+    ...(type === "story" ? { image: images[0] || "", images } : {})
   };
 }
 
@@ -1435,6 +1388,14 @@ function currentProfile() {
 
 function isPublished(item) {
   return item.status === "published" && item.userApproved !== false;
+}
+
+function isPublicProfile(profile) {
+  return profile.status === "published";
+}
+
+function publishedProfiles() {
+  return Object.values(profiles).filter(isPublicProfile);
 }
 
 function publicStories(profile = currentProfile()) {
@@ -1463,18 +1424,71 @@ function parseList(value) {
   return value.split(",").map((item) => item.trim()).filter(Boolean);
 }
 
+function absoluteUrl(value = "") {
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  return `${SITE_URL}${value.startsWith("/") ? value : `/${value}`}`;
+}
+
+function setSeoMeta({ title, description, url, image = HOME_SEO.image, type = "website", robots = "index, follow" }) {
+  document.title = title;
+  $("#metaDescription").setAttribute("content", description);
+  $("#robotsMeta").setAttribute("content", robots);
+  $("#canonicalLink").setAttribute("href", url);
+  $("#ogType").setAttribute("content", type);
+  $("#ogTitle").setAttribute("content", title);
+  $("#ogDescription").setAttribute("content", description);
+  $("#ogUrl").setAttribute("content", url);
+  $("#ogImage").setAttribute("content", absoluteUrl(image));
+  $("#twitterTitle").setAttribute("content", title);
+  $("#twitterDescription").setAttribute("content", description);
+  $("#twitterImage").setAttribute("content", absoluteUrl(image));
+}
+
+function renderHomeJsonLd() {
+  const graph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: "Turnpo",
+        url: `${SITE_URL}/`,
+        description: HOME_SEO.description
+      },
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: "Turnpo",
+        url: `${SITE_URL}/`,
+        logo: HOME_SEO.image,
+        description: "Turnpo is a community for warm, real, owner-defined life profiles built from turning points, values, and meaningful work."
+      }
+    ]
+  };
+  $("#jsonLd").textContent = JSON.stringify(graph, null, 2);
+}
+
 function setRoute(route) {
   if (route === "home") {
     body.classList.remove("profile-open");
     $("#entryView").hidden = false;
     document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = true; });
     history.pushState(null, "", "/");
+    setSeoMeta({
+      title: HOME_SEO.title,
+      description: HOME_SEO.description,
+      url: `${SITE_URL}/`,
+      image: HOME_SEO.image,
+      type: "website"
+    });
+    renderHomeJsonLd();
     renderHome();
     window.scrollTo({ top: 0, behavior: "auto" });
     return;
   }
 
-  activeUsername = profiles[route] ? route : "leo";
+  activeUsername = profiles[route] && isPublicProfile(profiles[route]) ? route : "leo";
   localStorage.setItem(ACTIVE_PROFILE_KEY, activeUsername);
   body.classList.add("profile-open");
   $("#entryView").hidden = true;
@@ -1509,7 +1523,7 @@ function profileSearchText(profile) {
 
 function searchProfiles(query = "") {
   const normalized = query.trim().toLowerCase();
-  const all = Object.values(profiles);
+  const all = publishedProfiles();
   if (!normalized) return all;
   return all.filter((profile) => profileSearchText(profile).includes(normalized));
 }
@@ -1542,10 +1556,16 @@ function renderHome(query = "") {
 
 function renderProfile() {
   const profile = currentProfile();
-  document.title = `${profile.displayName} - Turnpo`;
-  $("#metaDescription").setAttribute("content", `${profile.displayName} on Turnpo: ${profile.oneLineIntro}`);
-  $("#ogTitle").setAttribute("content", `${profile.displayName} - Turnpo`);
-  $("#ogDescription").setAttribute("content", profile.oneLineIntro);
+  const profileUrl = `${SITE_URL}/u/${profile.username}`;
+  const profileTitle = `${profile.displayName} - Turning Point Profile | Turnpo`;
+  const profileDescription = `${profile.oneLineIntro} Explore the turning points, values, and public work ${profile.displayName} has chosen to share.`;
+  setSeoMeta({
+    title: profileTitle,
+    description: profileDescription,
+    url: profileUrl,
+    image: profile.avatar || HOME_SEO.image,
+    type: "profile"
+  });
   $("#profileName").textContent = profile.displayName;
   $("#profileUsername").textContent = `@${profile.username}`;
   $("#profileIntro").textContent = profile.oneLineIntro;
@@ -1611,17 +1631,36 @@ function imageValueType(value) {
   return "Linked image";
 }
 
-function renderImageUpload(value = "") {
-  $("#contentImage").value = value;
+function storyImagesFromValue(value = "") {
+  try {
+    const parsed = JSON.parse(value || "[]");
+    return Array.isArray(parsed) ? parsed.filter(Boolean) : [];
+  } catch {
+    return value ? [value] : [];
+  }
+}
+
+function renderImageUpload(value = []) {
+  const images = Array.isArray(value) ? value.filter(Boolean) : storyImagesFromValue(value);
+  $("#contentImage").value = JSON.stringify(images);
   const preview = $("#contentImagePreview");
   const title = $("#contentImageTitle");
   const hint = $("#contentImageHint");
   const removeButton = $("#removeContentImage");
-  preview.innerHTML = value ? `<img src="${escapeHtml(value)}" alt="" />` : "";
-  preview.classList.toggle("has-image", Boolean(value));
-  title.textContent = value ? imageValueType(value) : "Drop, paste, or choose an image";
-  hint.textContent = value ? "Use Remove to clear it, or drop/paste/choose a new image to replace it." : "PNG, JPG, or WebP. The local prototype stores an optimized copy in this browser.";
-  removeButton.hidden = !value;
+  const gallery = $("#contentImageGallery");
+  const cover = images[0] || "";
+  preview.innerHTML = cover ? `<img src="${escapeHtml(cover)}" alt="" />` : "";
+  preview.classList.toggle("has-image", Boolean(cover));
+  title.textContent = cover ? `${images.length} image${images.length === 1 ? "" : "s"} selected` : "Drop, paste, or choose images";
+  hint.textContent = cover ? "The first image is the cover. Drop, paste, or choose more images to add them." : "The first image becomes the cover. Other images appear after opening the story.";
+  removeButton.hidden = !images.length;
+  gallery.innerHTML = images.map((image, index) => `
+    <div class="image-thumb ${index === 0 ? "is-cover" : ""}">
+      <img src="${escapeHtml(image)}" alt="" />
+      <span>${index === 0 ? "Cover" : `Photo ${index + 1}`}</span>
+      <button class="small-action" type="button" data-remove-image="${index}">Remove</button>
+    </div>
+  `).join("");
 }
 
 function fileToImage(file) {
@@ -1655,12 +1694,14 @@ async function optimizeImageFile(file) {
   return canvas.toDataURL("image/jpeg", 0.82);
 }
 
-async function useImageFile(file) {
+async function useImageFiles(files) {
+  const imageFiles = [...files].filter((file) => file.type.startsWith("image/"));
+  if (!imageFiles.length) return;
   try {
-    $("#contentStatusNote").textContent = "Preparing image...";
-    const imageData = await optimizeImageFile(file);
-    renderImageUpload(imageData);
-    $("#contentStatusNote").textContent = "Image ready. Remember to save content.";
+    $("#contentStatusNote").textContent = imageFiles.length === 1 ? "Preparing image..." : "Preparing images...";
+    const imageData = await Promise.all(imageFiles.map((file) => optimizeImageFile(file)));
+    renderImageUpload([...storyImagesFromValue($("#contentImage").value), ...imageData]);
+    $("#contentStatusNote").textContent = "Images ready. Remember to save content.";
   } catch (error) {
     $("#contentStatusNote").textContent = error.message;
   }
@@ -1686,9 +1727,13 @@ function renderTimeline() {
         <span>${groups[year].filter(isPublished).length} published highlight${groups[year].filter(isPublished).length === 1 ? "" : "s"}</span>
       </button>
       <div class="event-stack" id="timeline-events-${escapeHtml(year)}">
-        ${groups[year].map((story) => `
+        ${groups[year].map((story) => {
+          const storyImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
+          const coverImage = storyImages[0] || "";
+          const extraImages = storyImages.slice(1);
+          return `
           <article class="event-card ${story.status !== "published" ? "private-card" : ""}" data-story-id="${escapeHtml(story.id)}">
-            <div class="event-media">${story.image ? `<img class="event-main-image" src="${escapeHtml(story.image)}" alt="${escapeHtml(story.title)}" />` : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
+            <div class="event-media">${coverImage ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(story.title)}" />` : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
             <div>
               <div class="event-card-head">
                 <div class="event-date">${escapeHtml([story.date, story.location].filter(Boolean).join(" - "))}</div>
@@ -1696,12 +1741,13 @@ function renderTimeline() {
               </div>
               <h3>${escapeHtml(story.title)}</h3>
               <p>${escapeHtml(story.publicSummary)}</p>
+              ${extraImages.length ? `<details class="event-gallery"><summary>View ${extraImages.length} more photo${extraImages.length === 1 ? "" : "s"}</summary><div>${extraImages.map((image, index) => `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${story.title} photo ${index + 2}`)}" />`).join("")}</div></details>` : ""}
               ${story.fullText ? `<details class="event-full-text"><summary>Full LinkedIn post</summary><p>${escapeHtml(story.fullText)}</p></details>` : ""}
               ${story.sourceUrl ? `<a class="source-link" href="${escapeHtml(story.sourceUrl)}" target="_blank" rel="noopener">Open LinkedIn source</a>` : ""}
               <div class="tag-row">${(story.tags || []).slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>
             </div>
           </article>
-        `).join("")}
+        `; }).join("")}
       </div>
     </article>
   `).join("") : `<p class="empty-result">No published stories yet</p>`;
@@ -1759,17 +1805,48 @@ function renderOwnerWorkspace() {
 }
 
 function renderJsonLd(profile) {
+  const profileUrl = `${SITE_URL}/u/${profile.username}`;
+  const stories = publicStories(profile);
+  const works = publicWorks(profile);
   const graph = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: profile.displayName,
-    url: `https://www.turnpo.com/u/${profile.username}`,
-    description: profile.oneLineIntro,
-    knowsAbout: [...profile.values, ...profile.themes],
-    sameAs: profile.links.map((link) => link.url),
-    subjectOf: [
-      ...publicStories(profile).map((story) => ({ "@type": "CreativeWork", name: story.title, dateCreated: String(story.year), description: story.publicSummary })),
-      ...publicWorks(profile).map((work) => ({ "@type": "CreativeWork", name: work.title, description: work.publicSummary }))
+    "@graph": [
+      {
+        "@type": "ProfilePage",
+        "@id": `${profileUrl}#profile-page`,
+        url: profileUrl,
+        name: `${profile.displayName} on Turnpo`,
+        description: `${profile.oneLineIntro} Turnpo profiles are owner-defined life profiles built from public turning points, values, and meaningful work.`,
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        mainEntity: { "@id": `${profileUrl}#person` }
+      },
+      {
+        "@type": "Person",
+        "@id": `${profileUrl}#person`,
+        name: profile.displayName,
+        alternateName: `@${profile.username}`,
+        url: profileUrl,
+        image: absoluteUrl(profile.avatar),
+        description: profile.oneLineIntro,
+        homeLocation: profile.location ? { "@type": "Place", name: profile.location } : undefined,
+        knowsAbout: [...profile.values, ...profile.themes],
+        sameAs: profile.links.map((link) => link.url),
+        subjectOf: [
+          ...stories.map((story) => ({
+            "@type": "CreativeWork",
+            name: story.title,
+            dateCreated: String(story.year),
+            description: story.publicSummary,
+            image: absoluteUrl(story.image || story.images?.[0] || "")
+          })),
+          ...works.map((work) => ({
+            "@type": "CreativeWork",
+            name: work.title,
+            description: work.publicSummary,
+            url: work.link || undefined
+          }))
+        ]
+      }
     ]
   };
   $("#jsonLd").textContent = JSON.stringify(graph, null, 2);
@@ -1851,7 +1928,7 @@ function openEditor(type, id = "") {
   $("#contentMonth").value = storyDate.month;
   $("#contentLocation").value = item?.location || "";
   renderLocationOptions();
-  renderImageUpload(item?.image || "");
+  renderImageUpload(item?.images || (item?.image ? [item.image] : []));
   $("#contentStatus").value = item?.status || "draft";
   $("#contentSummary").value = item?.publicSummary || "";
   $("#contentWhy").value = item?.whyItMatters || item?.whyMade || "";
@@ -1973,7 +2050,8 @@ function upsertContent(event) {
     year: $("#contentYear").value.trim(),
     date: storyDateValue($("#contentYear").value.trim(), $("#contentMonth").value.trim()),
     location: $("#contentLocation").value.trim(),
-    image: $("#contentImage").value.trim(),
+    image: storyImagesFromValue($("#contentImage").value)[0] || "",
+    images: storyImagesFromValue($("#contentImage").value),
     publicSummary: $("#contentSummary").value.trim(),
     tags: parseList($("#contentTags").value),
     status,
@@ -2210,7 +2288,7 @@ $("#timelineList").addEventListener("click", (event) => {
     setTimelineYearCollapsed(yearToggle.dataset.toggleYear, !yearBlock.classList.contains("is-collapsed"));
     return;
   }
-  if (!ownerMode || event.target.closest("button, a, input, textarea, select")) return;
+  if (!ownerMode || event.target.closest("button, a, input, textarea, select, details, summary")) return;
   const storyCard = event.target.closest("[data-story-id]");
   openEditor("story", storyCard ? storyCard.dataset.storyId : "");
 });
@@ -2242,12 +2320,19 @@ $("#profileForm").addEventListener("submit", saveProfileText);
 $("#deleteContent").addEventListener("click", deleteCurrentContent);
 $("#chooseContentImage").addEventListener("click", () => $("#contentImageFile").click());
 $("#contentImageFile").addEventListener("change", (event) => {
-  const file = event.target.files?.[0];
-  if (file) useImageFile(file);
+  if (event.target.files?.length) useImageFiles(event.target.files);
   event.target.value = "";
 });
 $("#removeContentImage").addEventListener("click", () => {
-  renderImageUpload("");
+  renderImageUpload([]);
+  $("#contentStatusNote").textContent = "Images removed. Remember to save content.";
+});
+$("#contentImageGallery").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-remove-image]");
+  if (!button) return;
+  const images = storyImagesFromValue($("#contentImage").value);
+  images.splice(Number(button.dataset.removeImage), 1);
+  renderImageUpload(images);
   $("#contentStatusNote").textContent = "Image removed. Remember to save content.";
 });
 $("#contentImageDropzone").addEventListener("click", () => $("#contentImageFile").click());
@@ -2261,21 +2346,20 @@ $("#contentImageDropzone").addEventListener("dragleave", () => {
 $("#contentImageDropzone").addEventListener("drop", (event) => {
   event.preventDefault();
   $("#contentImageDropzone").classList.remove("is-dragging");
-  const file = event.dataTransfer?.files?.[0];
-  if (file) useImageFile(file);
+  if (event.dataTransfer?.files?.length) useImageFiles(event.dataTransfer.files);
 });
 $("#contentImageDropzone").addEventListener("paste", (event) => {
   const file = imageFileFromPaste(event);
   if (!file) return;
   event.preventDefault();
-  useImageFile(file);
+  useImageFiles([file]);
 });
 $("#contentForm").addEventListener("paste", (event) => {
   if ($("#contentType").value !== "story") return;
   const file = imageFileFromPaste(event);
   if (!file) return;
   event.preventDefault();
-  useImageFile(file);
+  useImageFiles([file]);
 });
 $("#homeOwnerLogin").addEventListener("click", () => setAuthDrawer(true));
 $("#ownerLogout").addEventListener("click", logoutOwner);

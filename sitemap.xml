@@ -2,14 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.turnpo.com/</loc>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://www.turnpo.com/u/leo</loc>
-  </url>
-  <url>
-    <loc>https://www.turnpo.com/u/cindy</loc>
-  </url>
-  <url>
-    <loc>https://www.turnpo.com/u/demo-friend</loc>
+    <changefreq>weekly</changefreq>
   </url>
 </urlset>

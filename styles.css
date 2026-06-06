@@ -1004,6 +1004,32 @@ body.owner-mode .event-card:hover {
   white-space: pre-wrap;
 }
 
+.event-gallery {
+  margin-top: 14px;
+}
+
+.event-gallery summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 720;
+}
+
+.event-gallery div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.event-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+}
+
 .source-link {
   display: inline-flex;
   margin-top: 12px;
@@ -1371,6 +1397,39 @@ select {
 .image-dropzone small {
   color: var(--dim);
   line-height: 1.35;
+}
+
+.image-gallery-editor {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+  gap: 10px;
+}
+
+.image-thumb {
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.image-thumb img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.image-thumb span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.image-thumb.is-cover {
+  border-color: rgba(216, 177, 95, 0.38);
+  background: rgba(216, 177, 95, 0.055);
 }
 
 #sourceWorkspace {

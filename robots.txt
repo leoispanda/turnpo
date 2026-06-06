@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /owner/
+Disallow: /workspace/
+Disallow: /auth/
+Disallow: /*?owner=
+Disallow: /*?draft=
 
 Sitemap: https://www.turnpo.com/sitemap.xml

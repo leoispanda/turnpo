@@ -9,3 +9,15 @@
 
 /script.js
   Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+/api/*
+  X-Robots-Tag: noindex, nofollow
+
+/owner/*
+  X-Robots-Tag: noindex, nofollow
+
+/workspace/*
+  X-Robots-Tag: noindex, nofollow
+
+/auth/*
+  X-Robots-Tag: noindex, nofollow

@@ -3,15 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Turnpo - Personal Story Profiles for the AI Era</title>
-    <meta id="metaDescription" name="description" content="Turnpo helps people introduce themselves through the moments that shaped them and the AI-era work they are building." />
-    <meta property="og:type" content="profile" />
-    <meta id="ogTitle" property="og:title" content="Turnpo - Personal Story Profiles for the AI Era" />
-    <meta id="ogDescription" property="og:description" content="Human-readable profiles. AI-readable context." />
-    <meta property="og:url" content="https://www.turnpo.com" />
+    <title>Turnpo - Life Profiles People Can Truly Understand</title>
+    <meta id="metaDescription" name="description" content="Turnpo helps people turn life moments into warm, searchable personal profiles that are easy for others and AI tools to understand." />
+    <meta id="robotsMeta" name="robots" content="index, follow" />
+    <link id="canonicalLink" rel="canonical" href="https://www.turnpo.com/" />
+    <meta id="ogType" property="og:type" content="website" />
+    <meta id="ogTitle" property="og:title" content="Turnpo - Life Profiles People Can Truly Understand" />
+    <meta id="ogDescription" property="og:description" content="A community where people define their lives through turning points, values, and the work they are building." />
+    <meta id="ogUrl" property="og:url" content="https://www.turnpo.com/" />
+    <meta id="ogImage" property="og:image" content="https://www.turnpo.com/assets/turnpo-logo-full.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta id="twitterTitle" name="twitter:title" content="Turnpo - Life Profiles People Can Truly Understand" />
+    <meta id="twitterDescription" name="twitter:description" content="A community where people define their lives through turning points, values, and the work they are building." />
+    <meta id="twitterImage" name="twitter:image" content="https://www.turnpo.com/assets/turnpo-logo-full.png" />
     <link rel="icon" href="/assets/turnpo-logo-full.png" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.70" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.71" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -174,7 +181,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.70</span>
+          <span class="version-badge">v0.1.71</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="openProfileEditor" type="button">Edit profile</button>
             <button class="gold-btn" id="openStory" type="button">Add story</button>
@@ -212,18 +219,19 @@
         <datalist id="locationOptions"></datalist>
         <div class="image-upload story-only">
           <div class="image-upload-head">
-            <span>Image</span>
-            <button class="small-action" id="removeContentImage" type="button" hidden>Remove</button>
+            <span>Images</span>
+            <button class="small-action" id="removeContentImage" type="button" hidden>Remove all</button>
           </div>
           <input id="contentImage" type="hidden" />
-          <input id="contentImageFile" type="file" accept="image/*" hidden />
+          <input id="contentImageFile" type="file" accept="image/*" multiple hidden />
           <button class="image-dropzone" id="contentImageDropzone" type="button">
             <span class="image-preview" id="contentImagePreview" aria-hidden="true"></span>
-            <strong id="contentImageTitle">Drop, paste, or choose an image</strong>
-            <small id="contentImageHint">PNG, JPG, or WebP. The local prototype stores an optimized copy in this browser.</small>
+            <strong id="contentImageTitle">Drop, paste, or choose images</strong>
+            <small id="contentImageHint">The first image becomes the cover. Other images appear after opening the story.</small>
           </button>
+          <div class="image-gallery-editor" id="contentImageGallery"></div>
           <div class="image-upload-actions">
-            <button class="section-action" id="chooseContentImage" type="button">Choose file</button>
+            <button class="section-action" id="chooseContentImage" type="button">Choose files</button>
           </div>
         </div>
         <label class="work-only"><span>Work type</span><input id="workType" placeholder="AI app, research, prototype..." /></label>
@@ -290,6 +298,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.70"></script>
+    <script src="/script.js?v=0.1.71"></script>
   </body>
 </html>
