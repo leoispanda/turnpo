@@ -1737,10 +1737,36 @@ async function useImageFiles(files) {
   }
 }
 
+async function addImageFilesToStory(storyId, files) {
+  if (!ownerMode || !storyId) return;
+  const story = findContent("story", storyId);
+  const imageFiles = [...files].filter((file) => file.type.startsWith("image/"));
+  if (!story || !imageFiles.length) return;
+  const card = document.querySelector(`[data-story-id="${CSS.escape(storyId)}"]`);
+  try {
+    card?.classList.add("is-uploading");
+    const currentImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
+    const nextImages = [...currentImages, ...(await Promise.all(imageFiles.map((file) => optimizeImageFile(file))))];
+    story.images = nextImages;
+    story.image = nextImages[0] || "";
+    story.updatedAt = new Date().toISOString();
+    saveActiveProfile();
+    renderProfile();
+  } catch (error) {
+    card?.classList.remove("is-uploading");
+    openEditor("story", storyId);
+    $("#contentStatusNote").textContent = error.message;
+  }
+}
+
 function imageFileFromPaste(event) {
   return [...(event.clipboardData?.items || [])]
     .find((item) => item.kind === "file" && item.type.startsWith("image/"))
     ?.getAsFile();
+}
+
+function dragHasFiles(event) {
+  return [...(event.dataTransfer?.types || [])].includes("Files");
 }
 
 function renderTimeline() {
@@ -2321,6 +2347,33 @@ $("#timelineList").addEventListener("click", (event) => {
   if (!ownerMode || event.target.closest("button, a, input, textarea, select, details, summary")) return;
   const storyCard = event.target.closest("[data-story-id]");
   openEditor("story", storyCard ? storyCard.dataset.storyId : "");
+});
+
+$("#timelineList").addEventListener("dragover", (event) => {
+  if (!ownerMode || !dragHasFiles(event)) return;
+  const storyCard = event.target.closest("[data-story-id]");
+  if (!storyCard) return;
+  event.preventDefault();
+  event.dataTransfer.dropEffect = "copy";
+  document.querySelectorAll(".event-card.is-drop-target").forEach((card) => {
+    if (card !== storyCard) card.classList.remove("is-drop-target");
+  });
+  storyCard.classList.add("is-drop-target");
+});
+
+$("#timelineList").addEventListener("dragleave", (event) => {
+  const storyCard = event.target.closest("[data-story-id]");
+  if (!storyCard || storyCard.contains(event.relatedTarget)) return;
+  storyCard.classList.remove("is-drop-target");
+});
+
+$("#timelineList").addEventListener("drop", (event) => {
+  if (!ownerMode || !event.dataTransfer?.files?.length) return;
+  const storyCard = event.target.closest("[data-story-id]");
+  if (!storyCard) return;
+  event.preventDefault();
+  document.querySelectorAll(".event-card.is-drop-target").forEach((card) => card.classList.remove("is-drop-target"));
+  addImageFilesToStory(storyCard.dataset.storyId, event.dataTransfer.files);
 });
 
 document.querySelectorAll(".toggle-btn").forEach((button) => {

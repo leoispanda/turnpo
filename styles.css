@@ -869,6 +869,18 @@ body.owner-mode .event-card:hover {
   background: rgba(216, 177, 95, 0.07);
 }
 
+body.owner-mode .event-card.is-drop-target,
+body.owner-mode .event-card.is-uploading {
+  border-color: rgba(240, 207, 130, 0.82);
+  background: rgba(216, 177, 95, 0.11);
+  box-shadow: 0 0 0 1px rgba(216, 177, 95, 0.18), 0 18px 50px rgba(0, 0, 0, 0.22);
+}
+
+body.owner-mode .event-card.is-uploading {
+  cursor: wait;
+  opacity: 0.76;
+}
+
 .event-card.private-card {
   border-color: rgba(216, 177, 95, 0.28);
   background: rgba(216, 177, 95, 0.055);
@@ -901,6 +913,12 @@ body.owner-mode .event-card:hover {
   border: 1px dashed var(--line-soft);
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.025);
+}
+
+body.owner-mode .event-card.is-drop-target .empty-media,
+body.owner-mode .event-card.is-uploading .empty-media {
+  border-color: rgba(240, 207, 130, 0.72);
+  background: rgba(216, 177, 95, 0.09);
 }
 
 .media-strip {
