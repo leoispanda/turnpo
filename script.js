@@ -3,6 +3,39 @@ const LOCAL_PREFIX = "turnpo:profile:";
 const SOURCE_PREFIX = "turnpo:source:";
 const COLLAPSED_YEARS_PREFIX = "turnpo:collapsed-years:";
 const STATUSES = ["published", "draft", "deleted"];
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+const CITY_OPTIONS = [
+  "Amsterdam",
+  "Beijing",
+  "Berlin",
+  "Brussels",
+  "Dublin",
+  "Eindhoven",
+  "London",
+  "Munich",
+  "New York",
+  "Paris",
+  "San Francisco",
+  "Shanghai",
+  "Shenzhen",
+  "Singapore",
+  "Taipei",
+  "Tokyo",
+  "Veldhoven"
+];
 
 const seedProfiles = {
   leo: {
@@ -1760,6 +1793,53 @@ function setOwnerMode(enabled) {
   else renderHome($("#personSearch").value);
 }
 
+function defaultStoryDate() {
+  const today = new Date();
+  return {
+    year: String(today.getFullYear()),
+    month: MONTH_NAMES[today.getMonth()]
+  };
+}
+
+function parseStoryDate(item) {
+  const fallback = defaultStoryDate();
+  const year = String(item?.year || "").trim() || fallback.year;
+  const date = String(item?.date || "").trim();
+  const month = MONTH_NAMES.find((monthName) => new RegExp(`\\b${monthName}\\b`, "i").test(date)) || fallback.month;
+  return { year, month };
+}
+
+function storyDateValue(year, month) {
+  if (!year || !month) return "";
+  return `${month} ${year}`;
+}
+
+function renderContentDateOptions() {
+  const yearSelect = $("#contentYear");
+  const monthSelect = $("#contentMonth");
+  if (!yearSelect || !monthSelect) return;
+  const currentYear = new Date().getFullYear();
+  yearSelect.innerHTML = "";
+  for (let year = currentYear + 1; year >= 1990; year -= 1) {
+    const option = document.createElement("option");
+    option.value = String(year);
+    option.textContent = String(year);
+    yearSelect.appendChild(option);
+  }
+  monthSelect.innerHTML = MONTH_NAMES.map((month) => `<option value="${month}">${month}</option>`).join("");
+  const fallback = defaultStoryDate();
+  yearSelect.value = fallback.year;
+  monthSelect.value = fallback.month;
+}
+
+function renderLocationOptions() {
+  const list = $("#locationOptions");
+  if (!list) return;
+  const profileCities = currentProfile().lifeStories.map((story) => String(story.location || "").trim()).filter(Boolean);
+  const cities = [...new Set([...CITY_OPTIONS, ...profileCities])].sort((a, b) => a.localeCompare(b));
+  list.innerHTML = cities.map((city) => `<option value="${escapeHtml(city)}"></option>`).join("");
+}
+
 function openEditor(type, id = "") {
   if (!ownerMode) {
     setAuthDrawer(true);
@@ -1772,9 +1852,11 @@ function openEditor(type, id = "") {
   $("#contentFormTitle").textContent = item ? "Update content" : type === "story" ? "Add life story" : "Add AI work";
   $("#contentType").value = type;
   $("#contentTitle").value = item?.title || "";
-  $("#contentYear").value = item?.year || "";
-  $("#contentDate").value = item?.date || "";
+  const storyDate = parseStoryDate(item);
+  $("#contentYear").value = storyDate.year;
+  $("#contentMonth").value = storyDate.month;
   $("#contentLocation").value = item?.location || "";
+  renderLocationOptions();
   renderImageUpload(item?.image || "");
   $("#contentStatus").value = item?.status || "draft";
   $("#contentSummary").value = item?.publicSummary || "";
@@ -1786,9 +1868,6 @@ function openEditor(type, id = "") {
   $("#aiRole").value = item?.aiRole || "";
   $("#workResult").value = item?.result || "";
   $("#workLink").value = item?.link || "";
-  $("#consentUpload").checked = false;
-  $("#consentPublish").checked = false;
-  $("#consentAiProfile").checked = false;
   $("#deleteContent").hidden = !item;
   $("#contentStatusNote").textContent = "Draft content is owner-only in this local prototype. Published content appears in the public page and AI profile.";
   $("#contentDrawer").classList.add("open");
@@ -1817,20 +1896,12 @@ function upsertContent(event) {
   const type = $("#contentType").value;
   const status = $("#contentStatus").value;
   const wantsPublish = status === "published";
-  if (!$("#consentUpload").checked) {
-    $("#contentStatusNote").textContent = "Please confirm upload rights before saving.";
-    return;
-  }
-  if (wantsPublish && (!$("#consentPublish").checked || !$("#consentAiProfile").checked)) {
-    $("#contentStatusNote").textContent = "Publishing requires public and AI profile consent.";
-    return;
-  }
   const now = new Date().toISOString();
   const base = normalizeContent({
     id: editingRef?.id || `${type}-${crypto.randomUUID()}`,
     title: $("#contentTitle").value.trim(),
     year: $("#contentYear").value.trim(),
-    date: $("#contentDate").value.trim(),
+    date: storyDateValue($("#contentYear").value.trim(), $("#contentMonth").value.trim()),
     location: $("#contentLocation").value.trim(),
     image: $("#contentImage").value.trim(),
     publicSummary: $("#contentSummary").value.trim(),
@@ -1971,6 +2042,8 @@ async function checkOwnerSession() {
 }
 
 async function logoutOwner() {
+  const confirmed = window.confirm("Exit owner mode? Please confirm that your saved and published content uses information and media you have the right to share. Published content may be copied, indexed, cached, analyzed, or used with external AI tools.");
+  if (!confirmed) return;
   try {
     await authRequest("/api/auth/logout", {});
   } catch {
@@ -2152,6 +2225,8 @@ $("#authForm").addEventListener("submit", async (event) => {
 
 window.addEventListener("popstate", () => setRoute(routeFromLocation()));
 
+renderContentDateOptions();
+renderLocationOptions();
 renderHome();
 setRoute(routeFromLocation());
 checkOwnerSession();

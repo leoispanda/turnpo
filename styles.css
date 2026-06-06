@@ -39,6 +39,7 @@ body {
 
 button,
 input,
+select,
 textarea {
   font: inherit;
 }
@@ -1252,6 +1253,10 @@ select,
   padding: 12px;
 }
 
+select {
+  appearance: auto;
+}
+
 .event-form textarea {
   min-height: 140px;
   resize: vertical;
@@ -1262,15 +1267,13 @@ select,
 }
 
 .source-modes,
-.consent-stack,
 .trust-list {
   display: grid;
   gap: 10px;
   margin: 14px 0;
 }
 
-.source-modes label,
-.consent-stack label {
+.source-modes label {
   display: flex;
   grid-template-columns: none;
   align-items: flex-start;
@@ -1278,8 +1281,7 @@ select,
   line-height: 1.45;
 }
 
-.source-modes input,
-.consent-stack input {
+.source-modes input {
   width: auto;
   margin-top: 2px;
 }
