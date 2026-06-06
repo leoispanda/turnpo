@@ -4,10 +4,18 @@ const SOURCE_PREFIX = "turnpo:source:";
 const COLLAPSED_YEARS_PREFIX = "turnpo:collapsed-years:";
 const STATUSES = ["published", "draft", "deleted"];
 const SITE_URL = "https://www.turnpo.com";
+const BRAND_ASSETS = {
+  logo: `${SITE_URL}/assets/icons/icon-512.png`,
+  socialImage: `${SITE_URL}/assets/turnpo-og-image.png`,
+  favicon: `${SITE_URL}/assets/icons/favicon-48.png`
+};
 const HOME_SEO = {
   title: "Turnpo - Life Profiles People Can Truly Understand",
   description: "Turnpo helps people turn life moments into warm, searchable personal profiles that are easy for others and AI tools to understand.",
-  image: `${SITE_URL}/assets/turnpo-logo-full.png`
+  image: BRAND_ASSETS.socialImage,
+  imageAlt: "Turnpo logo - turning points shaping who you become",
+  imageWidth: "1200",
+  imageHeight: "630"
 };
 const MONTH_NAMES = [
   "January",
@@ -1430,7 +1438,17 @@ function absoluteUrl(value = "") {
   return `${SITE_URL}${value.startsWith("/") ? value : `/${value}`}`;
 }
 
-function setSeoMeta({ title, description, url, image = HOME_SEO.image, type = "website", robots = "index, follow" }) {
+function setSeoMeta({
+  title,
+  description,
+  url,
+  image = HOME_SEO.image,
+  imageAlt = HOME_SEO.imageAlt,
+  imageWidth = HOME_SEO.imageWidth,
+  imageHeight = HOME_SEO.imageHeight,
+  type = "website",
+  robots = "index, follow"
+}) {
   document.title = title;
   $("#metaDescription").setAttribute("content", description);
   $("#robotsMeta").setAttribute("content", robots);
@@ -1440,6 +1458,9 @@ function setSeoMeta({ title, description, url, image = HOME_SEO.image, type = "w
   $("#ogDescription").setAttribute("content", description);
   $("#ogUrl").setAttribute("content", url);
   $("#ogImage").setAttribute("content", absoluteUrl(image));
+  $("#ogImageAlt").setAttribute("content", imageAlt);
+  $("#ogImageWidth").setAttribute("content", imageWidth);
+  $("#ogImageHeight").setAttribute("content", imageHeight);
   $("#twitterTitle").setAttribute("content", title);
   $("#twitterDescription").setAttribute("content", description);
   $("#twitterImage").setAttribute("content", absoluteUrl(image));
@@ -1461,7 +1482,13 @@ function renderHomeJsonLd() {
         "@id": `${SITE_URL}/#organization`,
         name: "Turnpo",
         url: `${SITE_URL}/`,
-        logo: HOME_SEO.image,
+        logo: {
+          "@type": "ImageObject",
+          url: BRAND_ASSETS.logo,
+          width: 512,
+          height: 512
+        },
+        image: BRAND_ASSETS.socialImage,
         description: "Turnpo is a community for warm, real, owner-defined life profiles built from turning points, values, and meaningful work."
       }
     ]
@@ -1564,6 +1591,9 @@ function renderProfile() {
     description: profileDescription,
     url: profileUrl,
     image: profile.avatar || HOME_SEO.image,
+    imageAlt: `${profile.displayName} profile portrait on Turnpo`,
+    imageWidth: "1024",
+    imageHeight: "1536",
     type: "profile"
   });
   $("#profileName").textContent = profile.displayName;
