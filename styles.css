@@ -420,6 +420,14 @@ main {
   font-size: 13px;
 }
 
+.owner-save-status {
+  grid-column: 1 / -1;
+  min-height: 18px;
+  color: var(--dim);
+  font-size: 12px;
+  text-align: right;
+}
+
 .person-result {
   width: 100%;
   display: grid;

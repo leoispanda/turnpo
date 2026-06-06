@@ -1389,6 +1389,12 @@ function saveActiveProfile() {
   localStorage.setItem(localKey(activeUsername), JSON.stringify(profiles[activeUsername]));
 }
 
+function saveCurrentProfileState() {
+  saveActiveProfile();
+  const now = new Date();
+  $("#ownerSaveStatus").textContent = `Saved ${now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+}
+
 function currentProfile() {
   return profiles[activeUsername] || profiles.leo;
 }
@@ -2545,6 +2551,7 @@ $("#ownerLogout").addEventListener("click", logoutOwner);
 $("#backToSearch").addEventListener("click", () => setRoute("home"));
 $("#closeAuth").addEventListener("click", () => setAuthDrawer(false));
 $("#authBackdrop").addEventListener("click", () => setAuthDrawer(false));
+$("#saveProfileState").addEventListener("click", saveCurrentProfileState);
 $("#exportProfile").addEventListener("click", exportProfile);
 $("#restoreSeed").addEventListener("click", resetActiveProfile);
 $("#copyMd").addEventListener("click", copyAiProfile);
