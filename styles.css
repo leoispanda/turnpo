@@ -910,6 +910,33 @@ body.owner-mode .event-card:hover {
   line-height: 1.55;
 }
 
+.event-full-text {
+  margin-top: 12px;
+  color: var(--muted);
+}
+
+.event-full-text summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 720;
+}
+
+.event-full-text p {
+  max-height: 260px;
+  margin: 10px 0 0;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.source-link {
+  display: inline-flex;
+  margin-top: 12px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 720;
+}
+
 .tag-row {
   display: flex;
   flex-wrap: wrap;
@@ -1337,6 +1364,28 @@ select,
   .search-box input,
   .search-box .gold-btn {
     width: 100%;
+  }
+
+  .timeline.vertical {
+    padding-left: 28px;
+  }
+
+  .year-block,
+  .year-title,
+  .event-stack,
+  .event-card,
+  .event-card > div {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .event-card {
+    grid-template-columns: 1fr;
+  }
+
+  .event-main-image,
+  .empty-media {
+    height: 180px;
   }
 
   .nav-links {
