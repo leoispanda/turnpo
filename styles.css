@@ -1532,22 +1532,6 @@ select {
   background: rgba(216, 177, 95, 0.055);
 }
 
-#sourceWorkspace {
-  width: 100%;
-  min-height: 440px;
-  margin-top: 10px;
-  padding: 18px;
-  resize: vertical;
-  border: 1px solid rgba(216, 177, 95, 0.14);
-  border-radius: var(--radius);
-  outline: none;
-  background: #070707;
-  color: #e8ddc8;
-  line-height: 1.55;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  font-size: 13px;
-}
-
 .work-only[hidden],
 .story-only[hidden] {
   display: none !important;

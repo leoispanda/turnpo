@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.81" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.83" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -141,24 +141,6 @@
         <div class="work-grid" id="aiWorksList"></div>
       </section>
 
-      <section class="workspace-grid profile-content owner-only" id="workspace" hidden>
-        <aside class="ai-panel">
-          <div class="panel-head">
-            <div>
-              <p class="eyebrow">AI Context Workspace</p>
-              <h2>Owner-only source material</h2>
-            </div>
-            <button class="ghost-btn" id="saveSource" type="button">Save source</button>
-          </div>
-          <div class="source-modes">
-            <label><input type="radio" name="sourceMode" value="manual" checked /> I already have my AI Profile</label>
-            <label><input type="radio" name="sourceMode" value="assisted" /> Help me build one</label>
-          </div>
-          <textarea id="sourceWorkspace" spellcheck="false"></textarea>
-          <p class="auth-note" id="sourceStatus">Turnpo AI assistance is coming soon. Owner-only AI output can be hidden until you choose to publish it.</p>
-        </aside>
-      </section>
-
       <footer class="site-footer" id="footer">
         <details>
           <summary>About Turnpo</summary>
@@ -201,7 +183,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.81</span>
+          <span class="version-badge">v0.1.83</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="openProfileEditor" type="button">Edit profile</button>
             <button class="gold-btn" id="openStory" type="button">Add story</button>
@@ -318,6 +300,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.81"></script>
+    <script src="/script.js?v=0.1.83"></script>
   </body>
 </html>

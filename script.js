@@ -1,6 +1,5 @@
 const ACTIVE_PROFILE_KEY = "turnpo:active-profile";
 const LOCAL_PREFIX = "turnpo:profile:";
-const SOURCE_PREFIX = "turnpo:source:";
 const COLLAPSED_YEARS_PREFIX = "turnpo:collapsed-years:";
 const STATUSES = ["published", "hidden", "deleted"];
 const SITE_URL = "https://www.turnpo.com";
@@ -1330,10 +1329,6 @@ function localKey(username) {
   return `${LOCAL_PREFIX}${username}`;
 }
 
-function sourceKey(username) {
-  return `${SOURCE_PREFIX}${username}`;
-}
-
 function savedProfile(username) {
   try {
     const saved = JSON.parse(localStorage.getItem(localKey(username)));
@@ -1625,7 +1620,6 @@ function renderProfile() {
   $("#aiMarkdown").value = generateAiProfile(profile);
   renderTimeline();
   renderAiWorks();
-  renderOwnerWorkspace();
   renderJsonLd(profile);
 }
 
@@ -1899,10 +1893,6 @@ ${profile.links.length ? profile.links.map((link) => `- [${link.label}](${link.u
 Only published and user-approved Turnpo content is included in this AI-readable profile.`;
 }
 
-function renderOwnerWorkspace() {
-  $("#sourceWorkspace").value = ownerMode ? localStorage.getItem(sourceKey(activeUsername)) || "" : "";
-}
-
 function renderJsonLd(profile) {
   const profileUrl = `${SITE_URL}/u/${profile.username}`;
   const stories = publicStories(profile);
@@ -2113,12 +2103,7 @@ function saveProfileText(event) {
   delete profiles[previousUsername];
   profiles[nextProfile.username] = nextProfile;
   activeUsername = nextProfile.username;
-  const previousSource = localStorage.getItem(sourceKey(previousUsername));
   localStorage.removeItem(localKey(previousUsername));
-  if (previousSource !== null) {
-    localStorage.removeItem(sourceKey(previousUsername));
-    localStorage.setItem(sourceKey(activeUsername), previousSource);
-  }
   saveActiveProfile();
   localStorage.setItem(ACTIVE_PROFILE_KEY, activeUsername);
   closeProfileEditor();
@@ -2563,10 +2548,6 @@ $("#authBackdrop").addEventListener("click", () => setAuthDrawer(false));
 $("#exportProfile").addEventListener("click", exportProfile);
 $("#restoreSeed").addEventListener("click", resetActiveProfile);
 $("#copyMd").addEventListener("click", copyAiProfile);
-$("#saveSource").addEventListener("click", () => {
-  localStorage.setItem(sourceKey(activeUsername), $("#sourceWorkspace").value);
-  $("#sourceStatus").textContent = "Saved as owner-only local source material. It is not included in the public AI profile.";
-});
 
 $("#authForm").addEventListener("submit", async (event) => {
   event.preventDefault();
