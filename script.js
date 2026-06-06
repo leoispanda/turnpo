@@ -1333,27 +1333,28 @@ function sourceKey(username) {
   return `${SOURCE_PREFIX}${username}`;
 }
 
+function savedProfile(username) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(localKey(username)));
+    const seed = seedProfiles[username];
+    if (!saved) return null;
+    if (seed?.seedVersion && saved.seedVersion !== seed.seedVersion) return null;
+    return normalizeProfile(saved);
+  } catch {
+    return null;
+  }
+}
+
 function loadProfiles() {
   const next = clone(seedProfiles);
   Object.keys(next).forEach((username) => {
-    next[username] = normalizeProfile(next[username]);
+    next[username] = savedProfile(username) || normalizeProfile(next[username]);
   });
   return next;
 }
 
 function loadOwnerProfile(username) {
-  try {
-    const saved = JSON.parse(localStorage.getItem(localKey(username)));
-    const seed = clone(seedProfiles[username]);
-    const shouldUseSaved = saved && (!seed.seedVersion || saved.seedVersion === seed.seedVersion);
-    profiles[username] = normalizeProfile(shouldUseSaved ? saved : seed);
-  } catch {
-    profiles[username] = normalizeProfile(clone(seedProfiles[username]));
-  }
-}
-
-function unloadOwnerProfile(username) {
-  profiles[username] = normalizeProfile(clone(seedProfiles[username]));
+  profiles[username] = savedProfile(username) || normalizeProfile(clone(seedProfiles[username]));
 }
 
 function normalizeProfile(profile) {
@@ -1912,8 +1913,6 @@ function setOwnerMode(enabled) {
   ownerMode = enabled;
   if (enabled) {
     loadOwnerProfile(activeUsername);
-  } else {
-    unloadOwnerProfile(activeUsername);
   }
   body.classList.toggle("owner-mode", enabled);
   if (body.classList.contains("profile-open")) renderProfile();
