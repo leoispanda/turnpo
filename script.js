@@ -2731,7 +2731,7 @@ function renderTimeline() {
             <div>
               <div class="event-card-head">
                 <div class="event-date">${escapeHtml([story.date, story.location].filter(Boolean).join(" - "))}</div>
-                <div class="event-actions owner-only">${statusPill(story)}<button class="small-action" type="button" data-edit-type="story" data-edit-id="${story.id}">Edit</button></div>
+                <div class="event-actions owner-only">${statusPill(story)}<button class="small-action danger-action" type="button" data-delete-type="story" data-delete-id="${story.id}">Delete</button><button class="small-action" type="button" data-edit-type="story" data-edit-id="${story.id}">Edit</button></div>
               </div>
               <h3>${escapeHtml(story.title)}</h3>
               <p>${escapeHtml(story.publicSummary)}</p>
@@ -2942,7 +2942,12 @@ function upsertContent(event) {
 
 function deleteCurrentContent() {
   if (!editingRef) return;
-  const item = findContent(editingRef.type, editingRef.id);
+  deleteContentById(editingRef.type, editingRef.id);
+  closeEditor();
+}
+
+function deleteContentById(type, id) {
+  const item = findContent(type, id);
   if (item) {
     item.status = "deleted";
     item.userApproved = false;
@@ -2951,7 +2956,6 @@ function deleteCurrentContent() {
   }
   saveActiveProfile();
   renderProfile();
-  closeEditor();
 }
 
 function setAuthDrawer(open) {
@@ -3117,6 +3121,11 @@ $("#yearFilters").addEventListener("click", (event) => {
 });
 
 document.addEventListener("click", (event) => {
+  const deleteButton = event.target.closest("[data-delete-id]");
+  if (deleteButton) {
+    deleteContentById(deleteButton.dataset.deleteType, deleteButton.dataset.deleteId);
+    return;
+  }
   const editButton = event.target.closest("[data-edit-id]");
   if (editButton) openEditor(editButton.dataset.editType, editButton.dataset.editId);
 });

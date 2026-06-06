@@ -894,6 +894,16 @@ body.owner-mode .event-card:hover {
   border-color: rgba(216, 177, 95, 0.5);
 }
 
+.danger-action {
+  border-color: rgba(255, 120, 104, 0.28);
+  color: #ffb3a7;
+  background: rgba(255, 120, 104, 0.08);
+}
+
+.danger-action:hover {
+  border-color: rgba(255, 120, 104, 0.52);
+}
+
 .event-card h3 {
   margin-bottom: 8px;
   font-size: 22px;
