@@ -1829,6 +1829,9 @@ function renderTimeline() {
   const groups = groupedStories();
   const years = Object.keys(groups).sort((a, b) => Number(b) - Number(a));
   const collapsedYears = loadCollapsedYears();
+  if (!ownerMode && !localStorage.getItem(collapsedYearsKey())) {
+    years.slice(1).forEach((year) => collapsedYears.add(year));
+  }
   $("#yearFilters").innerHTML = years.map((year) => `<button type="button" data-year="${year}">${year}</button>`).join("");
   const viewLabel = ownerMode ? ownerTimelineView : "published";
   $("#timelineList").innerHTML = years.length ? years.map((year) => `
@@ -1845,7 +1848,7 @@ function renderTimeline() {
           const coverImage = storyImages[0] || "";
           const extraImages = storyImages.slice(1);
           return `
-          <article class="event-card ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-story-id="${escapeHtml(story.id)}">
+          <article class="event-card ${coverImage ? "has-media" : "no-media"} ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-story-id="${escapeHtml(story.id)}">
             <div class="event-media">${coverImage ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(story.title)}" />` : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
             <div>
               <div class="event-card-head">

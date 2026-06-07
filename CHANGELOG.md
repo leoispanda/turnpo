@@ -10,6 +10,35 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.93
+
+Commit: this commit - `Polish public profile UI`
+
+### Changed
+
+- Refined the public profile hero spacing, background depth, portrait card shadow, link chips, and headline scale for a calmer premium first impression.
+- Changed the public profile content flow so the timeline becomes the main story section and the AI-readable Markdown panel moves after it as supporting context.
+- Hid public-mode timeline bulk controls while keeping owner-mode management controls intact.
+- Added public-mode timeline defaults that expand only the newest year and collapse older years, preserving access while making the page easier to scan.
+- Removed empty media placeholders from public timeline cards that do not have images.
+- Polished public timeline cards with softer borders, cleaner spacing, and full-width text cards for no-media stories.
+- Reworked AI works into a curated three-card portfolio layout on desktop and a readable single-column layout on mobile.
+- Bumped frontend cache/version references to `v0.1.93`.
+
+### Verified
+
+- Captured before screenshots for desktop and mobile public profile.
+- Captured final screenshots for desktop hero, timeline, AI works/AI-readable area, and mobile.
+- Verified public owner/admin controls are not visible in public mode.
+- Verified desktop public profile has no horizontal overflow.
+- Verified mobile public profile has no horizontal overflow.
+- Verified public timeline defaults to 6 visible latest-year cards with 10 older years collapsed.
+- Verified no empty public timeline media placeholders remain visible.
+- Verified AI works render as 3 portfolio cards on desktop and 1 column on mobile.
+- Ran `node --check script.js`.
+- Checked browser console warnings/errors; none were reported.
+- Checked for Lighthouse CLI; it was not installed locally.
+
 ## 2026-06-07 - v0.1.91
 
 Commit: this commit - `Add Turnpo changelog`
