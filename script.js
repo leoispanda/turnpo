@@ -50,6 +50,25 @@ const CITY_OPTIONS = [
   "Tokyo",
   "Veldhoven"
 ];
+const CONTENT_CATEGORY = {
+  story: "life",
+  work: "work"
+};
+const CONTENT_TYPE = {
+  life: "story",
+  work: "work"
+};
+const CATEGORY_LABELS = {
+  all: "All",
+  life: "Life",
+  work: "Work"
+};
+const KNOWN_WORK_LINKS = {
+  "work-turnpo": "https://www.turnpo.com",
+  "work-mapkai": "https://www.mapkai.com",
+  "work-mapkai-pdc": "https://www.mapkai.com/pdc",
+  "work-dishkai": "https://www.dishkai.com"
+};
 
 const seedProfiles = {
   leo: {
@@ -1279,7 +1298,7 @@ const seedProfiles = {
         humanRole: "Product idea, direction, and curation.",
         aiRole: "Assisted with product shaping and implementation.",
         result: "An early public AI product experiment for dish-related use cases.",
-        link: "",
+        link: "https://www.dishkai.com",
         tags: ["AI product", "dish", "web"],
         status: "published",
         userApproved: true
@@ -1342,6 +1361,7 @@ let pendingOwnerEmail = "";
 let authCodeRequested = false;
 let ownerSessionProfile = "";
 let ownerTimelineView = "published";
+let activeCategoryFilter = "all";
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -1357,9 +1377,7 @@ function localKey(username) {
 function savedProfile(username) {
   try {
     const saved = JSON.parse(localStorage.getItem(localKey(username)));
-    const seed = seedProfiles[username];
     if (!saved) return null;
-    if (seed?.seedVersion && saved.seedVersion !== seed.seedVersion) return null;
     return normalizeProfile(saved);
   } catch {
     return null;
@@ -1383,12 +1401,17 @@ function loadOwnerProfile(username) {
 }
 
 function normalizeProfile(profile) {
+  const lifeStories = (profile.lifeStories || []).map((item) => normalizeContent(item, item.category === "work" ? "work" : "story"));
+  const existingIds = new Set(lifeStories.map((item) => item.id));
+  const migratedWorks = (profile.aiWorks || [])
+    .map((item) => normalizeContent(item, "work"))
+    .filter((item) => !existingIds.has(item.id));
   const normalized = {
     ...profile,
     status: profile.status === "published" ? "published" : "hidden",
     avatarPositionY: Number.isFinite(Number(profile.avatarPositionY)) ? Math.min(100, Math.max(0, Number(profile.avatarPositionY))) : 24,
-    lifeStories: (profile.lifeStories || []).map((item) => normalizeContent(item, "story")),
-    aiWorks: (profile.aiWorks || []).map((item) => normalizeContent(item, "work")),
+    lifeStories: [...lifeStories, ...migratedWorks],
+    aiWorks: [],
     values: profile.values || [],
     themes: profile.themes || [],
     links: profile.links || []
@@ -1401,12 +1424,16 @@ function normalizeProfile(profile) {
 function normalizeContent(item, type) {
   const now = new Date().toISOString();
   const existingImages = Array.isArray(item.images) ? item.images : [];
-  const images = type === "story" ? [...new Set([...existingImages, item.image].filter(Boolean))] : item.images;
+  const images = [...new Set([...existingImages, item.image].filter(Boolean))];
   const rawStatus = item.status === "draft" ? "hidden" : item.status;
   const status = STATUSES.includes(rawStatus) ? rawStatus : "hidden";
+  const category = inferContentCategory(item, type);
+  const link = String(item.link || "").trim() || (category === "work" ? KNOWN_WORK_LINKS[item.id] || "" : "");
   return {
     ...item,
     id: item.id || `${type}-${crypto.randomUUID()}`,
+    category,
+    link,
     status,
     userApproved: status === "published" ? item.userApproved === true : false,
     createdAt: item.createdAt || now,
@@ -1414,12 +1441,40 @@ function normalizeContent(item, type) {
     publishedAt: item.publishedAt || (status === "published" ? now : ""),
     unpublishedAt: item.unpublishedAt || "",
     deletedAt: item.deletedAt || "",
-    ...(type === "story" ? { image: images[0] || "", images } : {})
+    image: images[0] || "",
+    images
   };
 }
 
 function normalizeIdList(value) {
   return Array.isArray(value) ? value.map(String).filter(Boolean) : [];
+}
+
+function inferContentCategory(item, type) {
+  if (item.category === "life" || item.category === "work") return item.category;
+  if (type === "work") return "work";
+  const tags = Array.isArray(item.tags) ? item.tags.map((tag) => String(tag).toLowerCase()) : [];
+  if (String(item.id || "").startsWith("linkedin-position-") || tags.includes("experience")) return "work";
+  return "life";
+}
+
+function categoryForType(type) {
+  return CONTENT_CATEGORY[type] || type || "life";
+}
+
+function typeForContent(item) {
+  return CONTENT_TYPE[item?.category] || "story";
+}
+
+function contentCollection() {
+  return currentProfile().lifeStories;
+}
+
+function contentStateKeys(typeOrCategory) {
+  const category = categoryForType(typeOrCategory);
+  return category === "work"
+    ? { hiddenKey: "hiddenWorkIds", deletedKey: "deletedWorkIds" }
+    : { hiddenKey: "hiddenStoryIds", deletedKey: "deletedStoryIds" };
 }
 
 function applyContentState(collection, hiddenIds = [], deletedIds = []) {
@@ -1443,8 +1498,8 @@ function applyContentState(collection, hiddenIds = [], deletedIds = []) {
 
 function applyPublicState(profile) {
   const state = profile.publicState || {};
-  applyContentState(profile.lifeStories, state.hiddenStoryIds, state.deletedStoryIds);
-  applyContentState(profile.aiWorks, state.hiddenWorkIds, state.deletedWorkIds);
+  applyContentState(profile.lifeStories.filter((item) => item.category !== "work"), state.hiddenStoryIds, state.deletedStoryIds);
+  applyContentState(profile.lifeStories.filter((item) => item.category === "work"), state.hiddenWorkIds, state.deletedWorkIds);
 }
 
 function ensurePublicState(profile = currentProfile()) {
@@ -1457,8 +1512,10 @@ function ensurePublicState(profile = currentProfile()) {
 
 function syncPublicStateForItem(profile, type, item) {
   const state = ensurePublicState(profile);
-  const hiddenKey = type === "work" ? "hiddenWorkIds" : "hiddenStoryIds";
-  const deletedKey = type === "work" ? "deletedWorkIds" : "deletedStoryIds";
+  const { hiddenKey, deletedKey } = contentStateKeys(item?.category || type);
+  ["hiddenStoryIds", "deletedStoryIds", "hiddenWorkIds", "deletedWorkIds"].forEach((key) => {
+    state[key] = normalizeIdList(state[key]).filter((id) => id !== item.id);
+  });
   state[hiddenKey] = normalizeIdList(state[hiddenKey]).filter((id) => id !== item.id);
   state[deletedKey] = normalizeIdList(state[deletedKey]).filter((id) => id !== item.id);
   if (item.status === "hidden") state[hiddenKey].push(item.id);
@@ -1471,8 +1528,7 @@ function syncPublicStateFromContent(profile = currentProfile()) {
   state.deletedStoryIds = [];
   state.hiddenWorkIds = [];
   state.deletedWorkIds = [];
-  profile.lifeStories.forEach((story) => syncPublicStateForItem(profile, "story", story));
-  profile.aiWorks.forEach((work) => syncPublicStateForItem(profile, "work", work));
+  profile.lifeStories.forEach((item) => syncPublicStateForItem(profile, typeForContent(item), item));
 }
 
 function saveActiveProfile() {
@@ -1528,23 +1584,37 @@ function publishedProfiles() {
 
 function publicStories(profile = currentProfile()) {
   return profile.lifeStories
+    .filter((story) => story.category !== "work")
     .filter((story) => isPublicStoryContent(profile, story))
-    .sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
+    .sort((a, b) => yearSortValue(b.year) - yearSortValue(a.year));
 }
 
 function publicWorks(profile = currentProfile()) {
-  return profile.aiWorks.filter((work) => isPublicContent(profile, work, "hiddenWorkIds", "deletedWorkIds"));
+  return profile.lifeStories
+    .filter((work) => work.category === "work")
+    .filter((work) => isPublicContent(profile, work, "hiddenWorkIds", "deletedWorkIds"))
+    .sort((a, b) => yearSortValue(b.year) - yearSortValue(a.year));
+}
+
+function publicTimelineItems(profile = currentProfile()) {
+  return [...publicStories(profile), ...publicWorks(profile)]
+    .sort((a, b) => yearSortValue(b.year) - yearSortValue(a.year));
+}
+
+function categoryMatchesFilter(item, filter = activeCategoryFilter) {
+  return filter === "all" || (item.category || "life") === filter;
 }
 
 function timelineStories(profile = currentProfile()) {
-  if (!ownerMode) return publicStories(profile);
-  return profile.lifeStories
+  const items = ownerMode ? profile.lifeStories : publicTimelineItems(profile);
+  return items
+    .filter((item) => categoryMatchesFilter(item))
     .filter((story) => story.status === ownerTimelineView)
-    .sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
+    .sort((a, b) => yearSortValue(b.year) - yearSortValue(a.year));
 }
 
 function ownerStoryCounts(profile = currentProfile()) {
-  return profile.lifeStories.reduce((counts, story) => ({
+  return profile.lifeStories.filter((item) => categoryMatchesFilter(item)).reduce((counts, story) => ({
     ...counts,
     [story.status]: (counts[story.status] || 0) + 1
   }), { published: 0, hidden: 0, deleted: 0 });
@@ -1568,6 +1638,11 @@ function absoluteUrl(value = "") {
   if (!value) return "";
   if (/^https?:\/\//i.test(value)) return value;
   return `${SITE_URL}${value.startsWith("/") ? value : `/${value}`}`;
+}
+
+function yearSortValue(year) {
+  const value = Number(year || 0);
+  return Number.isFinite(value) ? value : -Infinity;
 }
 
 function setSeoMeta({
@@ -1744,7 +1819,7 @@ function renderProfile() {
   $("#publicAiMarkdown").value = aiProfile;
   $("#publicAiPreview").textContent = buildPublicAiPreview(profile);
   renderTimeline();
-  renderAiWorks();
+  $("#ai-works").hidden = true;
   renderJsonLd(profile);
 }
 
@@ -1762,7 +1837,7 @@ function buildPublicAiPreview(profile) {
     "## Timeline",
     ...(highlightedEvents.length ? highlightedEvents : ["- Public milestones available in profile"]),
     "",
-    `AI works: ${works.length ? works.join(" / ") : "curated projects"}`
+    `Work: ${works.length ? works.join(" / ") : "curated projects"}`
   ].join("\n");
 }
 
@@ -1821,7 +1896,7 @@ function setTimelineYearCollapsed(year, collapsed) {
 }
 
 function setAllTimelineYearsCollapsed(collapsed) {
-  const years = Object.keys(groupedStories()).sort((a, b) => Number(b) - Number(a));
+  const years = Object.keys(groupedStories()).sort((a, b) => yearSortValue(b) - yearSortValue(a));
   saveCollapsedYears(collapsed ? new Set(years) : new Set());
   renderTimeline();
 }
@@ -1852,6 +1927,14 @@ function renderOwnerContentControls() {
     button.textContent = `${view === "published" ? "Visible" : view[0].toUpperCase() + view.slice(1)} ${counts[view] || 0}`;
   });
   $("#emptyDeleted").hidden = ownerTimelineView !== "deleted" || !counts.deleted;
+}
+
+function renderCategoryControls() {
+  document.querySelectorAll("[data-category-filter]").forEach((button) => {
+    const filter = button.dataset.categoryFilter;
+    button.classList.toggle("active", filter === activeCategoryFilter);
+    button.setAttribute("aria-pressed", String(filter === activeCategoryFilter));
+  });
 }
 
 function storyActions(story) {
@@ -1961,10 +2044,10 @@ async function useImageFiles(files) {
 
 async function addImageFilesToStory(storyId, files) {
   if (!ownerMode || !storyId) return;
-  const story = findContent("story", storyId);
+  const card = document.querySelector(`[data-content-id="${CSS.escape(storyId)}"]`);
+  const story = findContent(card?.dataset.contentType || "story", storyId);
   const imageFiles = [...files].filter((file) => file.type.startsWith("image/"));
   if (!story || !imageFiles.length) return;
-  const card = document.querySelector(`[data-story-id="${CSS.escape(storyId)}"]`);
   try {
     card?.classList.add("is-uploading");
     const currentImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
@@ -1976,7 +2059,7 @@ async function addImageFilesToStory(storyId, files) {
     renderProfile();
   } catch (error) {
     card?.classList.remove("is-uploading");
-    openEditor("story", storyId);
+    openEditor(card?.dataset.contentType || "story", storyId);
     $("#contentStatusNote").textContent = error.message;
   }
 }
@@ -1992,9 +2075,10 @@ function dragHasFiles(event) {
 }
 
 function renderTimeline() {
+  renderCategoryControls();
   renderOwnerContentControls();
   const groups = groupedStories();
-  const years = Object.keys(groups).sort((a, b) => Number(b) - Number(a));
+  const years = Object.keys(groups).sort((a, b) => yearSortValue(b) - yearSortValue(a));
   const collapsedYears = syncDefaultCollapsedYears(years);
   $("#yearFilters").innerHTML = years.map((year) => `<button type="button" data-year="${year}">${year}</button>`).join("");
   const viewLabel = ownerMode ? ownerTimelineView : "published";
@@ -2004,26 +2088,30 @@ function renderTimeline() {
       <button class="year-title" type="button" data-toggle-year="${escapeHtml(year)}" aria-expanded="${collapsedYears.has(year) ? "false" : "true"}" aria-controls="timeline-events-${escapeHtml(year)}">
         <span class="year-caret" aria-hidden="true"></span>
         <strong>${escapeHtml(year)}</strong>
-        <span>${groups[year].length} ${viewLabel === "published" ? "visible" : viewLabel} highlight${groups[year].length === 1 ? "" : "s"}</span>
+        <span>${groups[year].length} ${viewLabel === "published" ? "visible" : viewLabel} item${groups[year].length === 1 ? "" : "s"}</span>
       </button>
       <div class="event-stack" id="timeline-events-${escapeHtml(year)}">
         ${groups[year].map((story) => {
+          const itemType = typeForContent(story);
+          const category = story.category || "life";
+          const categoryLabel = CATEGORY_LABELS[category] || "Life";
           const storyImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
           const coverImage = storyImages[0] || "";
           const extraImages = storyImages.slice(1);
           const summary = ownerMode ? story.publicSummary : publicStorySummary(story);
           return `
-          <article class="event-card ${coverImage ? "has-media" : "no-media"} ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-story-id="${escapeHtml(story.id)}">
+          <article class="event-card ${coverImage ? "has-media" : "no-media"} ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-content-id="${escapeHtml(story.id)}" data-content-type="${escapeHtml(itemType)}">
             <div class="event-media">${coverImage ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(story.title)}" />` : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
             <div>
               <div class="event-card-head">
-                <div class="event-date">${escapeHtml([story.date, story.location].filter(Boolean).join(" - "))}</div>
-                <div class="event-actions owner-only">${storyActions(story)}</div>
+                <div class="event-date">${escapeHtml([categoryLabel, story.date, story.location].filter(Boolean).join(" - "))}</div>
+                <div class="event-actions owner-only">${itemType === "work" ? workActions(story) : storyActions(story)}</div>
               </div>
               <h3>${escapeHtml(story.title)}</h3>
               ${summary ? `<p>${escapeHtml(summary)}</p>` : ""}
               ${extraImages.length ? `<details class="event-gallery"><summary>View ${extraImages.length} more photo${extraImages.length === 1 ? "" : "s"}</summary><div>${extraImages.map((image, index) => `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${story.title} photo ${index + 2}`)}" />`).join("")}</div></details>` : ""}
               ${ownerMode && story.fullText ? `<details class="event-full-text owner-only"><summary>Full source text</summary><p>${escapeHtml(story.fullText)}</p></details>` : ""}
+              ${story.link ? `<a class="source-link" href="${escapeHtml(story.link)}" target="_blank" rel="noopener">Open link</a>` : ""}
               ${ownerMode && story.sourceUrl ? `<a class="source-link owner-only" href="${escapeHtml(story.sourceUrl)}" target="_blank" rel="noopener">Open source</a>` : ""}
               ${ownerMode && story.tags?.length ? `<div class="tag-row owner-only">${story.tags.slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
             </div>
@@ -2031,21 +2119,7 @@ function renderTimeline() {
         `; }).join("")}
       </div>
     </article>
-  `).join("") : `<p class="empty-result">No ${ownerMode ? (ownerTimelineView === "published" ? "visible" : ownerTimelineView) : "published"} stories yet</p>`;
-}
-
-function renderAiWorks() {
-  const works = ownerMode ? currentProfile().aiWorks : publicWorks();
-  $("#aiWorksList").innerHTML = works.length ? works.map((work) => `
-    <article class="work-card ${work.status !== "published" ? "private-card" : ""}">
-      <div class="work-card-head">
-        <div><h3>${escapeHtml(work.title)}</h3></div>
-        <div class="event-actions owner-only">${workActions(work)}</div>
-      </div>
-      <p>${escapeHtml(work.publicSummary)}</p>
-      ${work.link ? `<a class="work-link-action" href="${escapeHtml(work.link)}" target="_blank" rel="noopener">Open work</a>` : ""}
-    </article>
-  `).join("") : `<p class="empty-result">No published AI works yet</p>`;
+  `).join("") : `<p class="empty-result">No ${activeCategoryFilter === "all" ? "" : `${CATEGORY_LABELS[activeCategoryFilter]} `}${ownerMode ? (ownerTimelineView === "published" ? "visible" : ownerTimelineView) : "published"} items yet</p>`;
 }
 
 function generateAiProfile(profile) {
@@ -2068,8 +2142,8 @@ ${[...profile.values, ...profile.themes].map((item) => `- ${item}`).join("\n")}
 ## Public timeline highlights
 ${stories.length ? stories.map((story) => `- ${story.year}: ${story.title} (${story.location || "location not specified"})${publicStorySummary(story) ? ` - ${publicStorySummary(story)}` : ""}`).join("\n") : "- No published stories yet"}
 
-## Public AI works
-${works.length ? works.map((work) => `- ${work.title} (${work.type}) - ${work.publicSummary} Human role: ${work.humanRole} AI role: ${work.aiRole} Result: ${work.result}`).join("\n") : "- No published AI works yet"}
+## Public work
+${works.length ? works.map((work) => `- ${work.year || "Undated"}: ${work.title}${work.location ? ` (${work.location})` : ""} - ${work.publicSummary}${work.link ? ` [Open link](${work.link})` : ""}`).join("\n") : "- No published work yet"}
 
 ## Public links
 ${profile.links.length ? profile.links.map((link) => `- [${link.label}](${link.url})`).join("\n") : "- No public links yet"}
@@ -2201,8 +2275,9 @@ function openEditor(type, id = "") {
   activeEditorType = type;
   editingRef = id ? { type, id } : null;
   const item = id ? findContent(type, id) : null;
-  $("#contentModeLabel").textContent = item ? `Edit ${type}` : `New ${type}`;
-  $("#contentFormTitle").textContent = item ? "Update content" : type === "story" ? "Add life story" : "Add AI work";
+  const categoryLabel = type === "work" ? "Work" : "Life";
+  $("#contentModeLabel").textContent = item ? `Edit ${categoryLabel}` : `New ${categoryLabel}`;
+  $("#contentFormTitle").textContent = item ? "Update content" : `Add ${categoryLabel}`;
   $("#contentType").value = type;
   $("#contentTitle").value = item?.title || "";
   const storyDate = parseStoryDate(item);
@@ -2308,13 +2383,13 @@ function saveProfileText(event) {
 }
 
 function toggleWorkFields(type) {
-  document.querySelectorAll(".work-only").forEach((node) => { node.hidden = type !== "work"; });
-  document.querySelectorAll(".story-only").forEach((node) => { node.hidden = type !== "story"; });
+  document.querySelectorAll(".work-only").forEach((node) => { node.hidden = true; });
+  document.querySelectorAll(".story-only").forEach((node) => { node.hidden = false; });
 }
 
 function findContent(type, id) {
-  const collection = type === "work" ? currentProfile().aiWorks : currentProfile().lifeStories;
-  return collection.find((item) => item.id === id);
+  const category = categoryForType(type);
+  return contentCollection().find((item) => item.id === id && (category === "work" ? item.category === "work" : item.category !== "work"));
 }
 
 function upsertContent(event) {
@@ -2323,14 +2398,18 @@ function upsertContent(event) {
   const status = $("#contentStatus").value;
   const wantsPublish = status === "published";
   const now = new Date().toISOString();
+  const existingItem = editingRef ? findContent(editingRef.type, editingRef.id) : null;
   const base = normalizeContent({
+    ...(existingItem || {}),
     id: editingRef?.id || `${type}-${crypto.randomUUID()}`,
+    category: CONTENT_CATEGORY[type],
     title: $("#contentTitle").value.trim(),
     year: $("#contentYear").value.trim(),
     date: storyDateValue($("#contentYear").value.trim(), $("#contentMonth").value.trim()),
     location: $("#contentLocation").value.trim(),
     image: storyImagesFromValue($("#contentImage").value)[0] || "",
     images: storyImagesFromValue($("#contentImage").value),
+    link: $("#workLink").value.trim(),
     publicSummary: $("#contentSummary").value.trim(),
     tags: parseList($("#contentTags").value),
     status,
@@ -2344,20 +2423,9 @@ function upsertContent(event) {
     $("#contentStatusNote").textContent = "Title and details are required.";
     return;
   }
-  const collection = type === "work" ? currentProfile().aiWorks : currentProfile().lifeStories;
+  const collection = contentCollection();
   const existingIndex = collection.findIndex((item) => item.id === base.id);
-  const nextItem = type === "work" ? {
-    ...base,
-    type: $("#workType").value.trim(),
-    whyMade: $("#contentWhy").value.trim(),
-    toolsUsed: parseList($("#workTools").value),
-    humanRole: $("#humanRole").value.trim(),
-    aiRole: $("#aiRole").value.trim(),
-    result: $("#workResult").value.trim(),
-    link: $("#workLink").value.trim()
-  } : {
-    ...base
-  };
+  const nextItem = { ...base };
   if (existingIndex >= 0) collection[existingIndex] = nextItem;
   else collection.unshift(nextItem);
   syncPublicStateForItem(currentProfile(), type, nextItem);
@@ -2410,7 +2478,7 @@ function restoreContentById(type, id) {
 }
 
 function permanentlyDeleteContentById(type, id) {
-  const collection = type === "work" ? currentProfile().aiWorks : currentProfile().lifeStories;
+  const collection = contentCollection();
   const index = collection.findIndex((item) => item.id === id);
   if (index >= 0) collection.splice(index, 1);
   syncPublicStateFromContent();
@@ -2626,6 +2694,12 @@ $("#ownerContentView").addEventListener("click", (event) => {
   ownerTimelineView = button.dataset.ownerView;
   renderProfile();
 });
+$("#categoryFilters").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-category-filter]");
+  if (!button) return;
+  activeCategoryFilter = button.dataset.categoryFilter;
+  renderProfile();
+});
 $("#emptyDeleted").addEventListener("click", () => {
   if (confirm("Permanently clear all deleted stories? This cannot be undone.")) emptyDeletedStories();
 });
@@ -2670,13 +2744,13 @@ $("#timelineList").addEventListener("click", (event) => {
     return;
   }
   if (!ownerMode || event.target.closest("button, a, input, textarea, select, details, summary")) return;
-  const storyCard = event.target.closest("[data-story-id]");
-  openEditor("story", storyCard ? storyCard.dataset.storyId : "");
+  const storyCard = event.target.closest("[data-content-id]");
+  openEditor(storyCard?.dataset.contentType || "story", storyCard ? storyCard.dataset.contentId : "");
 });
 
 $("#timelineList").addEventListener("dragover", (event) => {
   if (!ownerMode || !dragHasFiles(event)) return;
-  const storyCard = event.target.closest("[data-story-id]");
+  const storyCard = event.target.closest("[data-content-id]");
   if (!storyCard) return;
   event.preventDefault();
   event.dataTransfer.dropEffect = "copy";
@@ -2687,18 +2761,18 @@ $("#timelineList").addEventListener("dragover", (event) => {
 });
 
 $("#timelineList").addEventListener("dragleave", (event) => {
-  const storyCard = event.target.closest("[data-story-id]");
+  const storyCard = event.target.closest("[data-content-id]");
   if (!storyCard || storyCard.contains(event.relatedTarget)) return;
   storyCard.classList.remove("is-drop-target");
 });
 
 $("#timelineList").addEventListener("drop", (event) => {
   if (!ownerMode || !event.dataTransfer?.files?.length) return;
-  const storyCard = event.target.closest("[data-story-id]");
+  const storyCard = event.target.closest("[data-content-id]");
   if (!storyCard) return;
   event.preventDefault();
   document.querySelectorAll(".event-card.is-drop-target").forEach((card) => card.classList.remove("is-drop-target"));
-  addImageFilesToStory(storyCard.dataset.storyId, event.dataTransfer.files);
+  addImageFilesToStory(storyCard.dataset.contentId, event.dataTransfer.files);
 });
 
 document.querySelectorAll(".toggle-btn").forEach((button) => {
@@ -2768,7 +2842,6 @@ $("#contentImageDropzone").addEventListener("paste", (event) => {
   useImageFiles([file]);
 });
 $("#contentForm").addEventListener("paste", (event) => {
-  if ($("#contentType").value !== "story") return;
   const file = imageFileFromPaste(event);
   if (!file) return;
   event.preventDefault();

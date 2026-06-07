@@ -1241,7 +1241,8 @@ body.owner-mode .event-card.is-uploading .empty-media {
   flex-wrap: wrap;
 }
 
-.owner-view-tabs {
+.owner-view-tabs,
+.category-tabs {
   display: inline-flex;
   gap: 4px;
   padding: 4px;
@@ -1250,7 +1251,8 @@ body.owner-mode .event-card.is-uploading .empty-media {
   background: rgba(255, 255, 255, 0.035);
 }
 
-.owner-view-tabs button {
+.owner-view-tabs button,
+.category-tabs button {
   min-height: 30px;
   padding: 0 10px;
   border: 0;
@@ -1261,7 +1263,8 @@ body.owner-mode .event-card.is-uploading .empty-media {
   font-weight: 760;
 }
 
-.owner-view-tabs button.active {
+.owner-view-tabs button.active,
+.category-tabs button.active {
   color: #0d0b07;
   background: var(--gold-strong);
 }

@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.117" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.118" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -133,6 +133,11 @@
                 </div>
                 <button class="section-action danger-action" id="emptyDeleted" type="button" hidden>Empty deleted</button>
               </div>
+              <div class="category-tabs" id="categoryFilters" aria-label="Category filters">
+                <button class="active" type="button" data-category-filter="all">All</button>
+                <button type="button" data-category-filter="life">Life</button>
+                <button type="button" data-category-filter="work">Work</button>
+              </div>
               <div class="timeline-section-actions">
                 <button class="section-action" id="expandTimeline" type="button">Open all</button>
                 <button class="section-action" id="collapseTimeline" type="button">Close all</button>
@@ -195,13 +200,13 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.117</span>
+          <span class="version-badge">v0.1.118</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
             <button class="gold-btn" id="openProfileEditor" type="button">Edit profile</button>
-            <button class="gold-btn" id="openStory" type="button">Add story</button>
-            <button class="gold-btn" id="openWork" type="button">Add AI work</button>
+            <button class="gold-btn" id="openStory" type="button">Add Life</button>
+            <button class="gold-btn" id="openWork" type="button">Add Work</button>
             <button class="ghost-btn" id="exportProfile" type="button">Export JSON</button>
             <button class="ghost-btn" id="restoreSeed" type="button">Reset local draft / restore public seed</button>
             <button class="ghost-btn" id="ownerLogout" type="button">Exit owner mode</button>
@@ -224,7 +229,7 @@
           </button>
         </div>
         <div class="form-row">
-          <label><span>Type</span><select id="contentType"><option value="story">Life story</option><option value="work">AI work</option></select></label>
+          <label><span>Category</span><select id="contentType"><option value="story">Life</option><option value="work">Work</option></select></label>
           <label><span>Status</span><select id="contentStatus"><option value="published">Published</option><option value="hidden">Hidden</option><option value="deleted">Deleted</option></select></label>
         </div>
         <label><span>Title</span><input id="contentTitle" required /></label>
@@ -258,7 +263,7 @@
         <label class="work-only"><span>Human role</span><textarea id="humanRole"></textarea></label>
         <label class="work-only"><span>AI role</span><textarea id="aiRole"></textarea></label>
         <label class="work-only"><span>Result</span><textarea id="workResult"></textarea></label>
-        <label class="work-only"><span>Link</span><input id="workLink" /></label>
+        <label><span>Link</span><input id="workLink" /></label>
         <label><span>Tags</span><input id="contentTags" placeholder="Comma separated" /></label>
         <p class="form-status" id="contentStatusNote"></p>
         <div class="form-actions">
@@ -316,6 +321,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.117"></script>
+    <script src="/script.js?v=0.1.118"></script>
   </body>
 </html>
