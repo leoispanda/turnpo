@@ -1379,7 +1379,7 @@ function savedProfile(username) {
   try {
     const saved = JSON.parse(localStorage.getItem(localKey(username)));
     if (!saved) return null;
-    return normalizeProfile(saved);
+    return normalizeProfile(saved, { localDraft: true });
   } catch {
     return null;
   }
@@ -1401,9 +1401,10 @@ function loadOwnerProfile(username) {
   profiles[username] = savedProfile(username) || normalizeProfile(clone(seedProfiles[username]));
 }
 
-function normalizeProfile(profile) {
+function normalizeProfile(profile, options = {}) {
+  const seedStoryById = new Map((seedProfiles[profile.username]?.lifeStories || []).map((story) => [story.id, story]));
   const normalizedLifeStories = (profile.lifeStories || [])
-    .map((item) => normalizeContent(item, item.category === "work" ? "work" : "story"));
+    .map((item) => normalizeContent(markLocalDraftChange(item, seedStoryById.get(item.id), options), item.category === "work" ? "work" : "story"));
   const projectStories = normalizedLifeStories.filter((item) => isProjectWork(item));
   const lifeStories = normalizedLifeStories.filter((item) => !isProjectWork(item));
   const timelineIds = new Set(lifeStories.map((item) => item.id));
@@ -1456,6 +1457,15 @@ function normalizeIdList(value) {
 
 function isProjectWork(item) {
   return PROJECT_WORK_IDS.has(item?.id);
+}
+
+function markLocalDraftChange(item, seedItem, options = {}) {
+  if (!options.localDraft || !seedItem || item.ownerEdited || item.ownerReviewed) return item;
+  const changed = ["title", "year", "date", "location", "publicSummary", "fullText", "status", "link"]
+    .some((key) => String(item[key] || "") !== String(seedItem[key] || ""));
+  const tagsChanged = JSON.stringify(item.tags || []) !== JSON.stringify(seedItem.tags || []);
+  const imagesChanged = JSON.stringify(item.images || []) !== JSON.stringify(seedItem.images || []);
+  return changed || tagsChanged || imagesChanged ? { ...item, ownerEdited: true } : item;
 }
 
 function inferContentCategory(item, type) {
@@ -1600,6 +1610,7 @@ function isPublicContent(profile, item, hiddenKey, deletedKey) {
 }
 
 function isLowValueImportedStory(story) {
+  if (story.ownerEdited || story.ownerReviewed) return false;
   const title = String(story.title || "").trim();
   const summary = String(story.publicSummary || "").trim();
   const fullText = String(story.fullText || "").trim();
@@ -2478,6 +2489,8 @@ function upsertContent(event) {
     link: $("#workLink").value.trim(),
     publicSummary: $("#contentSummary").value.trim(),
     tags: parseList($("#contentTags").value),
+    ownerEdited: true,
+    ownerEditedAt: now,
     status,
     userApproved: wantsPublish,
     updatedAt: now,
@@ -2528,6 +2541,8 @@ function setContentStatus(type, id, status) {
   const now = new Date().toISOString();
   item.status = status;
   item.userApproved = status === "published";
+  item.ownerReviewed = true;
+  item.ownerReviewedAt = now;
   item.updatedAt = now;
   if (status === "published") item.publishedAt = now;
   if (status === "hidden") item.unpublishedAt = now;
