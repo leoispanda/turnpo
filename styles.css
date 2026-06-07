@@ -899,10 +899,6 @@ body:not(.owner-mode) .timeline-section {
   gap: 8px;
 }
 
-body:not(.owner-mode) .timeline-section-actions {
-  display: none;
-}
-
 body:not(.owner-mode) .timeline-controls,
 body:not(.owner-mode) .year-jump {
   justify-items: start;

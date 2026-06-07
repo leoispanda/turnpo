@@ -10,6 +10,24 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.104
+
+Commit: pending - `Restore public timeline controls`
+
+### Changed
+
+- Restored the public timeline `Open all` and `Close all` controls.
+- Kept owner-only timeline filters hidden from public visitors.
+- Bumped frontend cache/version references to `v0.1.104`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified `Open all` and `Close all` are visible in public profile mode.
+- Verified owner-only timeline filters remain hidden from public visitors.
+- Verified `Open all` expands all timeline years and `Close all` collapses all timeline years.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.102
 
 Commit: pending - `Enlarge public AI Markdown preview`
