@@ -622,13 +622,13 @@ h1 {
 }
 
 .public-ai-strip {
-  width: min(640px, 100%);
+  width: min(760px, 100%);
   display: grid;
-  grid-template-columns: auto minmax(150px, 1fr) minmax(190px, 260px);
-  gap: 10px;
+  grid-template-columns: auto minmax(160px, 0.55fr) minmax(360px, 1.55fr);
+  gap: 14px;
   align-items: center;
   margin-top: 28px;
-  padding: 9px 10px;
+  padding: 12px 14px;
   border: 1px solid rgba(216, 177, 95, 0.16);
   border-radius: 12px;
   background: linear-gradient(135deg, rgba(16, 15, 13, 0.78), rgba(7, 7, 6, 0.72));
@@ -700,19 +700,19 @@ h1 {
 
 #publicAiPreview {
   width: 100%;
-  height: 42px;
+  height: 64px;
   margin: 0;
-  padding: 8px 10px;
+  padding: 9px 11px;
   overflow: hidden;
   border: 1px solid rgba(216, 177, 95, 0.1);
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.26);
   color: rgba(244, 239, 228, 0.58);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  font-size: 7.5px;
-  line-height: 1.35;
-  white-space: pre;
-  mask-image: linear-gradient(to bottom, #000 68%, transparent);
+  font-size: 6px;
+  line-height: 1.32;
+  white-space: pre-wrap;
+  mask-image: linear-gradient(to bottom, #000 76%, transparent);
 }
 
 .public-ai-source {
@@ -2019,7 +2019,7 @@ select {
   }
 
   .public-ai-strip {
-    grid-template-columns: 42px minmax(86px, 1fr) minmax(132px, 42vw);
+    grid-template-columns: 42px minmax(70px, 0.5fr) minmax(150px, 1.5fr);
     gap: 10px;
     margin-top: 22px;
     padding: 10px;
@@ -2031,8 +2031,8 @@ select {
   }
 
   #publicAiPreview {
-    height: 42px;
-    font-size: 7px;
+    height: 58px;
+    font-size: 5.6px;
   }
 
   .public-ai-meta small {

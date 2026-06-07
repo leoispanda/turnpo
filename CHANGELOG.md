@@ -10,6 +10,25 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.102
+
+Commit: pending - `Enlarge public AI Markdown preview`
+
+### Changed
+
+- Enlarged the public AI-readable Markdown strip so the preview area can show more content.
+- Made the right-side Markdown preview wider and taller.
+- Reduced the preview font size so visitors can immediately recognize it contains dense Markdown text.
+- Bumped frontend cache/version references to `v0.1.102`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified the public AI-readable Markdown preview at 1280px, 599px, and 390px browser widths.
+- Verified the right-side Markdown preview is wider/taller and shows roughly seven visible lines.
+- Verified no horizontal overflow at tested widths.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.100
 
 Commit: this commit - `Persist public timeline state`
