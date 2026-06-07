@@ -10,6 +10,25 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.96
+
+Commit: this commit - `Polish public AI Markdown card`
+
+### Changed
+
+- Restyled the public AI-readable profile widget into a compact Markdown context card.
+- Added a clear `AI-readable Markdown` label, helper text, small copy button, and ultra-small structured preview.
+- Kept the full Markdown source available for copy behavior while hiding raw textarea UI from public visitors.
+- Bumped frontend cache/version references to `v0.1.96`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified public desktop and mobile layouts in browser.
+- Verified the copy button copies the full AI-readable Markdown.
+- Verified the full owner AI-readable panel remains hidden in public mode.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.95
 
 Commit: this commit - `Move public AI profile preview into hero`

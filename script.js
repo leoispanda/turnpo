@@ -1629,9 +1629,28 @@ function renderProfile() {
   const aiProfile = generateAiProfile(profile);
   $("#aiMarkdown").value = aiProfile;
   $("#publicAiMarkdown").value = aiProfile;
+  $("#publicAiPreview").textContent = buildPublicAiPreview(profile);
   renderTimeline();
   renderAiWorks();
   renderJsonLd(profile);
+}
+
+function buildPublicAiPreview(profile) {
+  const highlightedEvents = publicStories(profile)
+    .slice(0, 3)
+    .map((story) => `- ${story.year}: ${story.title}`);
+  const works = publicWorks(profile).slice(0, 2).map((work) => work.title);
+  return [
+    `# ${profile.displayName}`,
+    `@${profile.username} | ${profile.location}`,
+    "",
+    `> ${profile.oneLineIntro}`,
+    "",
+    "## Timeline",
+    ...(highlightedEvents.length ? highlightedEvents : ["- Public milestones available in profile"]),
+    "",
+    `AI works: ${works.length ? works.join(" / ") : "curated projects"}`
+  ].join("\n");
 }
 
 function groupedStories(profile = currentProfile()) {
@@ -2354,10 +2373,17 @@ async function copyProfileMarkdown({ button, markdown, status, readyMessage, cop
     await navigator.clipboard.writeText(markdown.value);
     copied = true;
   } catch {
-    markdown.focus();
-    markdown.select();
+    const fallbackCopySource = document.createElement("textarea");
+    fallbackCopySource.value = markdown.value;
+    fallbackCopySource.setAttribute("readonly", "");
+    fallbackCopySource.style.position = "fixed";
+    fallbackCopySource.style.left = "-9999px";
+    fallbackCopySource.style.top = "0";
+    document.body.appendChild(fallbackCopySource);
+    fallbackCopySource.focus();
+    fallbackCopySource.select();
     copied = document.execCommand("copy");
-    markdown.setSelectionRange(0, 0);
+    fallbackCopySource.remove();
   }
   if (copied) {
     button.classList.add("is-copied");
@@ -2390,7 +2416,7 @@ async function copyPublicAiProfile() {
     button: $("#copyPublicMd"),
     markdown: $("#publicAiMarkdown"),
     status: $("#publicCopyStatus"),
-    readyMessage: "Copy AI-readable profile for any AI chat",
+    readyMessage: "A compact context card for any AI chat.",
     copiedMessage: "Copied AI-readable profile",
     copiedHtml: copiedIcon
   });
