@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.114
+
+Commit: this commit - `Filter imported LinkedIn noise from public stories`
+
+### Changed
+
+- Added a public-only curated story gate on top of published/user-approved status.
+- Hid low-value LinkedIn imports from visitor-facing timeline, including `LinkedIn share`, `LinkedIn update`, source-only posts, hiring/job/career referrals, and ASML promo/link posts.
+- Kept these imported records available in owner mode for future editing, publishing decisions, or cleanup.
+- Bumped frontend cache/version references to `v0.1.114`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified public story count drops from 72 published records to 41 curated public stories.
+- Verified 2021 public timeline drops from 19 visible highlights to 4 curated highlights.
+- Verified 2020 no longer appears publicly because its remaining records are LinkedIn share/source-only imports.
+- Verified no hidden/deleted/private cards, source links, full source blocks, or LinkedIn noise terms render in public timeline.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.113
 
 Commit: this commit - `Keep public profiles out of owner mode`

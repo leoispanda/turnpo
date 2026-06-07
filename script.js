@@ -1497,6 +1497,23 @@ function isPublicContent(profile, item, hiddenKey, deletedKey) {
   return true;
 }
 
+function isLowValueImportedStory(story) {
+  const title = String(story.title || "").trim();
+  const summary = String(story.publicSummary || "").trim();
+  const fullText = String(story.fullText || "").trim();
+  const combined = `${title} ${summary} ${fullText}`;
+  return /^LinkedIn (share|update)$/i.test(title)
+    || isSourceOnlyText(title)
+    || isSourceOnlyText(summary)
+    || /\b(join us|we are hiring|hiring|job|career|careers|position|contact me|discover more|find out|want to be part|colleagues around the world|semiconductor industry|changing the world one nanometer|BePartOfProgress|lifeatasml)\b/i.test(combined)
+    || /职场内推联盟|内推|职位|热招|求职者/.test(combined);
+}
+
+function isPublicStoryContent(profile, story) {
+  return isPublicContent(profile, story, "hiddenStoryIds", "deletedStoryIds")
+    && !isLowValueImportedStory(story);
+}
+
 function isPublicProfile(profile) {
   return profile.status === "published";
 }
@@ -1507,7 +1524,7 @@ function publishedProfiles() {
 
 function publicStories(profile = currentProfile()) {
   return profile.lifeStories
-    .filter((story) => isPublicContent(profile, story, "hiddenStoryIds", "deletedStoryIds"))
+    .filter((story) => isPublicStoryContent(profile, story))
     .sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
 }
 
