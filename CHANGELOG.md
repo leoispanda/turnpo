@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.111
+
+Commit: this commit - `Harden public visibility filtering`
+
+### Changed
+
+- Centralized public visibility filtering so visitor-facing stories and AI works both require `published` status and user approval.
+- Synced hide, delete, publish, restore, and permanent-delete actions into `publicState` so hidden/deleted IDs stay excluded from public outputs.
+- Kept hidden and deleted content out of public timeline, public AI works, AI-readable Markdown, and structured data paths.
+- Bumped frontend cache/version references to `v0.1.111`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified public visitor timeline renders no hidden, deleted, or private cards on desktop.
+- Verified public AI works render no private cards.
+- Verified `Open all` / `Close all` timeline controls work in public visitor mode.
+- Verified mobile public visitor mode has no hidden, deleted, or private cards and no horizontal overflow.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.110
 
 Commit: pending - `Publish dishkai AI product`

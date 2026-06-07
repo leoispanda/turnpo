@@ -1388,6 +1388,7 @@ function normalizeProfile(profile) {
     themes: profile.themes || [],
     links: profile.links || []
   };
+  ensurePublicState(normalized);
   applyPublicState(normalized);
   return normalized;
 }
@@ -1441,6 +1442,34 @@ function applyPublicState(profile) {
   applyContentState(profile.aiWorks, state.hiddenWorkIds, state.deletedWorkIds);
 }
 
+function ensurePublicState(profile = currentProfile()) {
+  profile.publicState = profile.publicState || {};
+  ["hiddenStoryIds", "deletedStoryIds", "hiddenWorkIds", "deletedWorkIds", "collapsedYears"].forEach((key) => {
+    profile.publicState[key] = normalizeIdList(profile.publicState[key]);
+  });
+  return profile.publicState;
+}
+
+function syncPublicStateForItem(profile, type, item) {
+  const state = ensurePublicState(profile);
+  const hiddenKey = type === "work" ? "hiddenWorkIds" : "hiddenStoryIds";
+  const deletedKey = type === "work" ? "deletedWorkIds" : "deletedStoryIds";
+  state[hiddenKey] = normalizeIdList(state[hiddenKey]).filter((id) => id !== item.id);
+  state[deletedKey] = normalizeIdList(state[deletedKey]).filter((id) => id !== item.id);
+  if (item.status === "hidden") state[hiddenKey].push(item.id);
+  if (item.status === "deleted") state[deletedKey].push(item.id);
+}
+
+function syncPublicStateFromContent(profile = currentProfile()) {
+  const state = ensurePublicState(profile);
+  state.hiddenStoryIds = [];
+  state.deletedStoryIds = [];
+  state.hiddenWorkIds = [];
+  state.deletedWorkIds = [];
+  profile.lifeStories.forEach((story) => syncPublicStateForItem(profile, "story", story));
+  profile.aiWorks.forEach((work) => syncPublicStateForItem(profile, "work", work));
+}
+
 function saveActiveProfile() {
   localStorage.setItem(localKey(activeUsername), JSON.stringify(profiles[activeUsername]));
 }
@@ -1483,10 +1512,6 @@ function publicStories(profile = currentProfile()) {
 
 function publicWorks(profile = currentProfile()) {
   return profile.aiWorks.filter((work) => isPublicContent(profile, work, "hiddenWorkIds", "deletedWorkIds"));
-}
-
-function ownerItems(collection) {
-  return ownerMode ? collection : collection.filter(isPublished);
 }
 
 function timelineStories(profile = currentProfile()) {
@@ -1973,7 +1998,7 @@ function renderTimeline() {
 }
 
 function renderAiWorks() {
-  const works = ownerItems(currentProfile().aiWorks);
+  const works = ownerMode ? currentProfile().aiWorks : publicWorks();
   $("#aiWorksList").innerHTML = works.length ? works.map((work) => `
     <article class="work-card ${work.status !== "published" ? "private-card" : ""}">
       <div class="work-card-head">
@@ -2292,6 +2317,7 @@ function upsertContent(event) {
   };
   if (existingIndex >= 0) collection[existingIndex] = nextItem;
   else collection.unshift(nextItem);
+  syncPublicStateForItem(currentProfile(), type, nextItem);
   saveActiveProfile();
   renderProfile();
   closeEditor();
@@ -2311,6 +2337,7 @@ function deleteContentById(type, id) {
     item.userApproved = false;
     item.deletedAt = new Date().toISOString();
     item.updatedAt = item.deletedAt;
+    syncPublicStateForItem(currentProfile(), type, item);
   }
   saveActiveProfile();
   renderProfile();
@@ -2326,6 +2353,7 @@ function setContentStatus(type, id, status) {
   if (status === "published") item.publishedAt = now;
   if (status === "hidden") item.unpublishedAt = now;
   if (status !== "deleted") item.deletedAt = "";
+  syncPublicStateForItem(currentProfile(), type, item);
   saveActiveProfile();
   renderProfile();
 }
@@ -2342,12 +2370,14 @@ function permanentlyDeleteContentById(type, id) {
   const collection = type === "work" ? currentProfile().aiWorks : currentProfile().lifeStories;
   const index = collection.findIndex((item) => item.id === id);
   if (index >= 0) collection.splice(index, 1);
+  syncPublicStateFromContent();
   saveActiveProfile();
   renderProfile();
 }
 
 function emptyDeletedStories() {
   currentProfile().lifeStories = currentProfile().lifeStories.filter((story) => story.status !== "deleted");
+  syncPublicStateFromContent();
   saveActiveProfile();
   renderProfile();
 }
