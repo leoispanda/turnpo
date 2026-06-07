@@ -10,6 +10,27 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.106
+
+Commit: pending - `Restrict public profile to approved content`
+
+### Changed
+
+- Added explicit public allowlists for Leo's visitor-visible timeline stories and AI works.
+- Updated public timeline, AI-readable Markdown, search indexing, and AI works rendering to require both published status and public allowlist membership.
+- Kept hidden and deleted IDs excluded even if a seed item still carries a published status.
+- Bumped frontend cache/version references to `v0.1.106`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified public visitor mode renders only the six allowlisted published timeline stories.
+- Verified public visitor mode renders only the three allowlisted published AI works.
+- Verified no hidden, deleted, or private timeline cards render in public visitor mode.
+- Verified public AI-readable Markdown excludes non-allowlisted timeline years/content.
+- Verified owner-only controls remain hidden from public visitors.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.104
 
 Commit: pending - `Restore public timeline controls`
