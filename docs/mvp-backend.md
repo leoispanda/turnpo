@@ -24,6 +24,7 @@ Only approved owner emails can receive a working code. Approval is handled throu
 Cloudflare Pages configuration needed:
 
 - KV binding: `AUTH_KV`
+- Optional KV binding: `PROFILE_KV` for online profile draft/published JSON. If omitted, `AUTH_KV` is reused.
 - Secret: `TURNPO_AUTH_SECRET`
 - Secret: `RESEND_API_KEY`
 - Variable: `TURNPO_AUTH_FROM_EMAIL`, for example `Turnpo <login@turnpo.com>`
@@ -32,6 +33,17 @@ Cloudflare Pages configuration needed:
 - Optional variable: `TURNPO_OWNER_EMAIL_PROFILES`, comma-separated `email:profile` mappings for future multi-owner profiles
 
 Do not commit real API keys, login secrets, or private owner email lists.
+
+## Online profile persistence bridge
+
+Before the full D1/R2 backend exists, Turnpo stores the current full profile JSON in Cloudflare KV:
+
+- `GET /api/profiles/:username` returns the latest online published profile.
+- `GET /api/profiles/:username/draft` returns the authenticated owner's online draft.
+- `PUT /api/profiles/:username/draft` saves the authenticated owner's current profile as an online draft.
+- `POST /api/profiles/:username/publish` writes the authenticated owner's current profile to both online draft and online published storage.
+
+This makes saved/published owner edits visible across devices once they are published online. Browser `localStorage` remains as a fallback draft cache.
 
 ## Data model
 

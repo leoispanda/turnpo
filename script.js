@@ -1363,6 +1363,11 @@ let authCodeRequested = false;
 let ownerSessionProfile = "";
 let ownerTimelineView = "published";
 let activeCategoryFilter = "all";
+let onlineDraftAvailable = false;
+let onlinePublishedAvailable = false;
+let onlineSyncInFlight = false;
+let lastOnlineSavedAt = "";
+let lastOnlinePublishedAt = "";
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -1555,8 +1560,103 @@ function saveActiveProfile() {
   localStorage.setItem(localKey(activeUsername), JSON.stringify(profiles[activeUsername]));
 }
 
+async function profileApi(path, { method = "GET", body } = {}) {
+  const response = await fetch(path, {
+    method,
+    credentials: "same-origin",
+    headers: body ? { "content-type": "application/json" } : {},
+    body: body ? JSON.stringify(body) : undefined
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error || "Profile sync is not available.");
+  return data;
+}
+
+async function loadPublishedProfileOnline(username = activeUsername) {
+  try {
+    const data = await profileApi(`/api/profiles/${encodeURIComponent(username)}`);
+    if (!data.profile) return false;
+    profiles[username] = normalizeProfile(data.profile, { remote: true });
+    onlinePublishedAvailable = true;
+    lastOnlinePublishedAt = data.publishedAt || data.updatedAt || "";
+    if (!ownerMode && activeUsername === username && body.classList.contains("profile-open")) renderProfile();
+    return true;
+  } catch {
+    onlinePublishedAvailable = false;
+    return false;
+  }
+}
+
+async function loadDraftProfileOnline(username = activeUsername) {
+  if (!ownerMode) return false;
+  try {
+    const data = await profileApi(`/api/profiles/${encodeURIComponent(username)}/draft`);
+    if (!data.profile) return false;
+    profiles[username] = normalizeProfile(data.profile, { remote: true, localDraft: true });
+    saveActiveProfile();
+    onlineDraftAvailable = true;
+    lastOnlineSavedAt = data.savedAt || data.updatedAt || "";
+    if (activeUsername === username && body.classList.contains("profile-open")) renderProfile();
+    return true;
+  } catch {
+    onlineDraftAvailable = false;
+    return false;
+  }
+}
+
+async function saveProfileDraftOnline({ quiet = false } = {}) {
+  if (!ownerMode || !ownerSessionProfile) return false;
+  onlineSyncInFlight = true;
+  if (!quiet) setOwnerSaveStatus("Saving online draft...");
+  try {
+    const data = await profileApi(`/api/profiles/${encodeURIComponent(activeUsername)}/draft`, {
+      method: "PUT",
+      body: { profile: currentProfile() }
+    });
+    onlineDraftAvailable = true;
+    lastOnlineSavedAt = data.savedAt || new Date().toISOString();
+    onlineSyncInFlight = false;
+    if (!quiet) setOwnerSaveStatus(`Saved online draft ${formatTime(lastOnlineSavedAt)}. Not published online yet.`);
+    renderPersistenceStatus();
+    return true;
+  } catch (error) {
+    onlineSyncInFlight = false;
+    if (!quiet) setOwnerSaveStatus(`Saved locally, but online draft failed: ${error.message}`);
+    return false;
+  }
+}
+
+async function publishProfileOnline({ quiet = false } = {}) {
+  if (!ownerMode || !ownerSessionProfile) return false;
+  onlineSyncInFlight = true;
+  if (!quiet) setOwnerSaveStatus("Publishing online profile...");
+  try {
+    const data = await profileApi(`/api/profiles/${encodeURIComponent(activeUsername)}/publish`, {
+      method: "POST",
+      body: { profile: currentProfile() }
+    });
+    onlineDraftAvailable = true;
+    onlinePublishedAvailable = true;
+    lastOnlinePublishedAt = data.publishedAt || new Date().toISOString();
+    onlineSyncInFlight = false;
+    setOwnerSaveStatus(`Published online ${formatTime(lastOnlinePublishedAt)}. Other devices can now see published content.`);
+    renderPersistenceStatus();
+    return true;
+  } catch (error) {
+    onlineSyncInFlight = false;
+    if (!quiet) setOwnerSaveStatus(`Saved locally, but online publish failed: ${error.message}`);
+    return false;
+  }
+}
+
 function hasLocalDraft(username = activeUsername) {
   return Boolean(localStorage.getItem(localKey(username)));
+}
+
+function formatTime(value) {
+  const date = value ? new Date(value) : new Date();
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
 function setOwnerSaveStatus(message) {
@@ -1577,20 +1677,28 @@ function markProfileFormDirty() {
 
 function renderPersistenceStatus() {
   if (ownerMode) {
-    $("#dataModeStatus").textContent = "Owner mode: editing current profile data. This prototype saves to localStorage draft only, not server publish.";
+    const onlineState = onlinePublishedAvailable
+      ? `Online published${lastOnlinePublishedAt ? ` ${formatTime(lastOnlinePublishedAt)}` : ""}`
+      : onlineDraftAvailable
+        ? `Online draft${lastOnlineSavedAt ? ` ${formatTime(lastOnlineSavedAt)}` : ""}`
+        : "No online draft loaded";
+    $("#dataModeStatus").textContent = `Owner mode: editing current profile data. ${onlineState}. Local draft remains as fallback.`;
     if (!$("#ownerSaveStatus").textContent) {
-      setOwnerSaveStatus(hasLocalDraft() ? "Local draft loaded from this browser." : "Public seed loaded. No local draft saved yet.");
+      setOwnerSaveStatus(hasLocalDraft() ? "Local draft loaded from this browser. Use Save for online draft or Publish online for public." : "Public seed loaded. Use Save for online draft or Publish online for public.");
     }
     return;
   }
-  $("#dataModeStatus").textContent = "Viewing public published version";
+  $("#dataModeStatus").textContent = onlinePublishedAvailable
+    ? `Viewing online published version${lastOnlinePublishedAt ? ` from ${formatTime(lastOnlinePublishedAt)}` : ""}`
+    : "Viewing bundled public version";
   $("#ownerSaveStatus").textContent = "";
 }
 
 function saveCurrentProfileState() {
   saveActiveProfile();
   const now = new Date();
-  setOwnerSaveStatus(`Saved to local draft ${now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}. Server publishing is not enabled in this prototype.`);
+  setOwnerSaveStatus(`Saved local draft ${now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}. Saving online draft...`);
+  saveProfileDraftOnline({ quiet: false });
 }
 
 function currentProfile() {
@@ -1789,6 +1897,8 @@ function setRoute(route) {
   document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = false; });
   history.pushState(null, "", `/u/${activeUsername}`);
   renderProfile();
+  if (ownerMode) loadDraftProfileOnline(activeUsername);
+  else loadPublishedProfileOnline(activeUsername);
   window.scrollTo({ top: 0, behavior: "auto" });
 }
 
@@ -2118,6 +2228,7 @@ async function addImageFilesToStory(storyId, files) {
     saveActiveProfile();
     renderProfile();
     setOwnerSaveStatus("Images saved to current profile data and local draft.");
+    saveProfileDraftOnline({ quiet: true });
   } catch (error) {
     card?.classList.remove("is-uploading");
     openEditor(card?.dataset.contentType || "story", storyId);
@@ -2288,6 +2399,8 @@ function setOwnerMode(enabled) {
   body.classList.toggle("owner-mode", enabled);
   if (body.classList.contains("profile-open")) renderProfile();
   else renderHome($("#personSearch").value);
+  if (enabled) loadDraftProfileOnline(activeUsername);
+  else loadPublishedProfileOnline(activeUsername);
 }
 
 function enterOwnerMode(profileUsername = ownerSessionProfile || activeUsername) {
@@ -2456,7 +2569,8 @@ function saveProfileText(event) {
   localStorage.setItem(ACTIVE_PROFILE_KEY, activeUsername);
   closeProfileEditor();
   setRoute(activeUsername);
-  setOwnerSaveStatus("Profile text saved to current profile data and local draft. Server publishing is not enabled in this prototype.");
+  setOwnerSaveStatus("Profile text saved to current profile data and local draft. Saving online draft...");
+  saveProfileDraftOnline({ quiet: false });
 }
 
 function toggleWorkFields(type) {
@@ -2511,7 +2625,11 @@ function upsertContent(event) {
   saveActiveProfile();
   renderProfile();
   closeEditor();
-  setOwnerSaveStatus("Content saved to current profile data and local draft. Refresh will keep it in this browser.");
+  setOwnerSaveStatus("Content saved to current profile data and local draft. Saving online draft...");
+  saveProfileDraftOnline({ quiet: true }).then(() => {
+    if (nextItem.status === "published") publishProfileOnline({ quiet: false });
+    else setOwnerSaveStatus("Content saved to online draft. Use Publish online when ready for other devices.");
+  });
 }
 
 function deleteCurrentContent() {
@@ -2532,7 +2650,8 @@ function deleteContentById(type, id) {
   }
   saveActiveProfile();
   renderProfile();
-  setOwnerSaveStatus("Content moved to deleted state in current profile data and local draft.");
+  setOwnerSaveStatus("Content moved to deleted state. Updating online draft and published profile...");
+  saveProfileDraftOnline({ quiet: true }).then(() => publishProfileOnline({ quiet: false }));
 }
 
 function setContentStatus(type, id, status) {
@@ -2550,7 +2669,8 @@ function setContentStatus(type, id, status) {
   syncPublicStateForItem(currentProfile(), type, item);
   saveActiveProfile();
   renderProfile();
-  setOwnerSaveStatus("Content status saved to current profile data and local draft.");
+  setOwnerSaveStatus("Content status saved locally. Updating online draft and published profile...");
+  saveProfileDraftOnline({ quiet: true }).then(() => publishProfileOnline({ quiet: false }));
 }
 
 function restoreContentById(type, id) {
@@ -2568,7 +2688,8 @@ function permanentlyDeleteContentById(type, id) {
   syncPublicStateFromContent();
   saveActiveProfile();
   renderProfile();
-  setOwnerSaveStatus("Content permanently removed from current local draft.");
+  setOwnerSaveStatus("Content permanently removed locally. Updating online draft and published profile...");
+  saveProfileDraftOnline({ quiet: true }).then(() => publishProfileOnline({ quiet: false }));
 }
 
 function emptyDeletedStories() {
@@ -2576,7 +2697,8 @@ function emptyDeletedStories() {
   syncPublicStateFromContent();
   saveActiveProfile();
   renderProfile();
-  setOwnerSaveStatus("Deleted stories cleared from current local draft.");
+  setOwnerSaveStatus("Deleted stories cleared locally. Updating online draft and published profile...");
+  saveProfileDraftOnline({ quiet: true }).then(() => publishProfileOnline({ quiet: false }));
 }
 
 function setAuthDrawer(open) {
@@ -2946,6 +3068,10 @@ $("#backToSearch").addEventListener("click", () => setRoute("home"));
 $("#closeAuth").addEventListener("click", () => setAuthDrawer(false));
 $("#authBackdrop").addEventListener("click", () => setAuthDrawer(false));
 $("#saveProfileState").addEventListener("click", saveCurrentProfileState);
+$("#publishProfileOnline").addEventListener("click", () => {
+  saveActiveProfile();
+  publishProfileOnline({ quiet: false });
+});
 $("#exportProfile").addEventListener("click", exportProfile);
 $("#restoreSeed").addEventListener("click", resetActiveProfile);
 $("#copyMd").addEventListener("click", copyAiProfile);

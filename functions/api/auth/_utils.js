@@ -32,6 +32,15 @@ export function requireAuthConfig(env) {
   return "";
 }
 
+export function profileStore(env) {
+  return env.PROFILE_KV || env.AUTH_KV;
+}
+
+export function requireProfileStoreConfig(env) {
+  if (!profileStore(env)) return "Missing PROFILE_KV or AUTH_KV binding.";
+  return "";
+}
+
 export async function sha256(input) {
   const bytes = new TextEncoder().encode(input);
   const digest = await crypto.subtle.digest("SHA-256", bytes);
@@ -60,6 +69,14 @@ export function codeKey(email) {
 
 export function sessionKey(sessionId) {
   return `auth:session:${sessionId}`;
+}
+
+export function profileDraftKey(username) {
+  return `profile:draft:${username}`;
+}
+
+export function profilePublishedKey(username) {
+  return `profile:published:${username}`;
 }
 
 export function requestKey(email) {
@@ -97,6 +114,27 @@ export async function readJson(request) {
   } catch {
     return {};
   }
+}
+
+export async function ownerSession(request, env) {
+  const configError = requireAuthConfig(env);
+  if (configError) return { error: configError, status: 500 };
+
+  const sessionId = getSessionId(request);
+  if (!sessionId) return { error: "Owner login required.", status: 401 };
+
+  const session = await env.AUTH_KV.get(sessionKey(sessionId), "json");
+  if (!session) return { error: "Owner login required.", status: 401 };
+
+  return { session };
+}
+
+export function normalizeUsername(value = "") {
+  return String(value).trim().replace(/^@/, "").toLowerCase();
+}
+
+export function assertOwnerProfile(session, username) {
+  return session?.profile && normalizeUsername(session.profile) === normalizeUsername(username);
 }
 
 export async function sendLoginCode(env, email, code) {
