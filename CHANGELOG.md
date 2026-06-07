@@ -10,6 +10,29 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.95
+
+Commit: this commit - `Move public AI profile preview into hero`
+
+### Changed
+
+- Moved the public AI-readable profile preview into the left hero intro area below the profile links.
+- Replaced the standalone public AI panel with a compact horizontal strip.
+- Added a square icon-only copy button on the left and a long preview textbox on the right.
+- Kept the full AI-readable panel available only in owner/admin mode.
+- Bumped frontend cache/version references to `v0.1.95`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified public desktop strip is positioned under the hero links.
+- Verified public desktop strip is `760px` wide with a `54px` square copy button and `696px` preview box.
+- Verified public mobile strip is `336px` wide with a `48px` square copy button and `280px` preview box.
+- Verified full AI-readable panel is hidden in public mode.
+- Verified public owner/admin controls remain hidden.
+- Verified no horizontal overflow on desktop or mobile.
+- Checked browser console warnings/errors; none were reported.
+
 ## 2026-06-07 - v0.1.94
 
 Commit: this commit - `Shrink public AI profile panel`

@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.94" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.95" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -78,6 +78,13 @@
           <h1 id="profileName">Turnpo Profile</h1>
           <p class="headline" id="profileIntro"></p>
           <div class="profile-links" id="profileLinks"></div>
+          <div class="public-ai-strip public-only" aria-label="Copy AI-readable profile preview">
+            <button class="public-ai-copy" id="copyPublicMd" type="button" title="Copy AI Profile" aria-label="Copy AI Profile">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h11v11H8z"/><path d="M5 16H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+            </button>
+            <textarea id="publicAiMarkdown" readonly spellcheck="false" aria-label="AI-readable profile preview"></textarea>
+          </div>
+          <div class="public-ai-status public-only" id="publicCopyStatus">Copy AI-readable profile for any AI chat</div>
         </div>
         <div class="portrait-card" aria-label="Profile snapshot">
           <button class="profile-edit-btn owner-only portrait-edit-btn" id="editPortraitProfile" type="button">Edit card</button>
@@ -91,7 +98,7 @@
       </section>
 
       <section class="workspace-grid profile-content" hidden>
-        <aside class="ai-panel" id="ai-profile" aria-label="AI readable profile">
+        <aside class="ai-panel owner-only" id="ai-profile" aria-label="AI readable profile">
           <div class="panel-head">
             <div>
               <p class="eyebrow">AI-readable profile</p>
@@ -183,7 +190,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.94</span>
+          <span class="version-badge">v0.1.95</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
             <button class="gold-btn" id="openProfileEditor" type="button">Edit profile</button>
@@ -303,6 +310,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.94"></script>
+    <script src="/script.js?v=0.1.95"></script>
   </body>
 </html>

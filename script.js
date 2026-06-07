@@ -1626,7 +1626,9 @@ function renderProfile() {
   $("#profileAvatar").alt = `${profile.displayName} portrait`;
   $("#profileAvatar").style.setProperty("--avatar-y", `${profile.avatarPositionY}%`);
   $("#profileLinks").innerHTML = profile.links.map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("");
-  $("#aiMarkdown").value = generateAiProfile(profile);
+  const aiProfile = generateAiProfile(profile);
+  $("#aiMarkdown").value = aiProfile;
+  $("#publicAiMarkdown").value = aiProfile;
   renderTimeline();
   renderAiWorks();
   renderJsonLd(profile);
@@ -2345,10 +2347,8 @@ async function logoutOwner() {
   resetAuthForm("You have exited owner mode.");
 }
 
-async function copyAiProfile() {
-  const button = $("#copyMd");
+async function copyProfileMarkdown({ button, markdown, status, readyMessage, copiedMessage, copiedHtml = "Copied" }) {
   const original = button.innerHTML;
-  const markdown = $("#aiMarkdown");
   let copied = false;
   try {
     await navigator.clipboard.writeText(markdown.value);
@@ -2361,17 +2361,39 @@ async function copyAiProfile() {
   }
   if (copied) {
     button.classList.add("is-copied");
-    button.innerHTML = "Copied";
-    $("#copyStatus").textContent = "Copied published-only AI Profile Markdown";
+    button.innerHTML = copiedHtml;
+    status.textContent = copiedMessage;
   } else {
     button.innerHTML = "Copy failed";
-    $("#copyStatus").textContent = "Copy failed. Select the text and copy manually.";
+    status.textContent = "Copy failed. Select the text and copy manually.";
   }
   setTimeout(() => {
     button.classList.remove("is-copied");
     button.innerHTML = original;
-    $("#copyStatus").textContent = "Ready to copy into any AI chat";
+    status.textContent = readyMessage;
   }, 2400);
+}
+
+async function copyAiProfile() {
+  await copyProfileMarkdown({
+    button: $("#copyMd"),
+    markdown: $("#aiMarkdown"),
+    status: $("#copyStatus"),
+    readyMessage: "Ready to copy into any AI chat",
+    copiedMessage: "Copied published-only AI Profile Markdown"
+  });
+}
+
+async function copyPublicAiProfile() {
+  const copiedIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>`;
+  await copyProfileMarkdown({
+    button: $("#copyPublicMd"),
+    markdown: $("#publicAiMarkdown"),
+    status: $("#publicCopyStatus"),
+    readyMessage: "Copy AI-readable profile for any AI chat",
+    copiedMessage: "Copied AI-readable profile",
+    copiedHtml: copiedIcon
+  });
 }
 
 function exportProfile() {
@@ -2578,6 +2600,7 @@ $("#saveProfileState").addEventListener("click", saveCurrentProfileState);
 $("#exportProfile").addEventListener("click", exportProfile);
 $("#restoreSeed").addEventListener("click", resetActiveProfile);
 $("#copyMd").addEventListener("click", copyAiProfile);
+$("#copyPublicMd").addEventListener("click", copyPublicAiProfile);
 
 $("#authForm").addEventListener("submit", async (event) => {
   event.preventDefault();
