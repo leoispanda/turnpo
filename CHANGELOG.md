@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.94
+
+Commit: this commit - `Shrink public AI profile panel`
+
+### Changed
+
+- Reduced the public AI-readable profile panel from a large editor-like block into a compact copy/preview widget.
+- Kept the larger AI-readable panel behavior available for owner/admin mode.
+- Reduced public textarea height, font size, padding, copy button size, and panel width.
+- Bumped frontend cache/version references to `v0.1.94`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified public desktop AI panel is about `420px` wide and `257px` tall.
+- Verified public mobile AI panel is about `335px` wide and `262px` tall.
+- Verified public owner/admin controls remain hidden.
+- Verified no horizontal overflow on desktop or mobile.
+- Checked browser console warnings/errors; none were reported.
+
 ## 2026-06-07 - v0.1.93
 
 Commit: this commit - `Polish public profile UI`
