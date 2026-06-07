@@ -10,6 +10,25 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.110
+
+Commit: pending - `Publish dishkai AI product`
+
+### Changed
+
+- Added `dishkai` to the committed AI products seed data.
+- Marked `dishkai` as published and user-approved so it appears for public visitors.
+- Bumped frontend cache/version references to `v0.1.110`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified `dishkai` appears in public visitor AI products.
+- Verified public AI products render `dishkai`, `Turnpo`, `MapKAI`, and `MapKAI PDC`.
+- Verified public AI-readable Markdown includes `dishkai`.
+- Verified owner-only controls remain hidden from public visitors.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.108
 
 Commit: pending - `Restore published public timeline records`

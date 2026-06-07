@@ -1270,6 +1270,21 @@ const seedProfiles = {
     ],
     aiWorks: [
       {
+        id: "work-dishkai",
+        title: "dishkai",
+        type: "AI dish web product",
+        publicSummary: "A web for dish",
+        whyMade: "To explore a focused AI product experience around dishes.",
+        toolsUsed: ["AI-assisted product design", "web prototyping"],
+        humanRole: "Product idea, direction, and curation.",
+        aiRole: "Assisted with product shaping and implementation.",
+        result: "An early public AI product experiment for dish-related use cases.",
+        link: "",
+        tags: ["AI product", "dish", "web"],
+        status: "published",
+        userApproved: true
+      },
+      {
         id: "work-turnpo",
         title: "Turnpo",
         type: "Personal story profile platform",
