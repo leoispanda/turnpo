@@ -69,6 +69,7 @@ const KNOWN_WORK_LINKS = {
   "work-mapkai-pdc": "https://www.mapkai.com/pdc",
   "work-dishkai": "https://www.dishkai.com"
 };
+const PROJECT_WORK_IDS = new Set(Object.keys(KNOWN_WORK_LINKS));
 
 const seedProfiles = {
   leo: {
@@ -1401,17 +1402,20 @@ function loadOwnerProfile(username) {
 }
 
 function normalizeProfile(profile) {
-  const lifeStories = (profile.lifeStories || []).map((item) => normalizeContent(item, item.category === "work" ? "work" : "story"));
-  const existingIds = new Set(lifeStories.map((item) => item.id));
-  const migratedWorks = (profile.aiWorks || [])
+  const normalizedLifeStories = (profile.lifeStories || [])
+    .map((item) => normalizeContent(item, item.category === "work" ? "work" : "story"));
+  const projectStories = normalizedLifeStories.filter((item) => isProjectWork(item));
+  const lifeStories = normalizedLifeStories.filter((item) => !isProjectWork(item));
+  const timelineIds = new Set(lifeStories.map((item) => item.id));
+  const aiWorks = [...(profile.aiWorks || []), ...projectStories]
     .map((item) => normalizeContent(item, "work"))
-    .filter((item) => !existingIds.has(item.id));
+    .filter((item, index, items) => !timelineIds.has(item.id) && items.findIndex((candidate) => candidate.id === item.id) === index);
   const normalized = {
     ...profile,
     status: profile.status === "published" ? "published" : "hidden",
     avatarPositionY: Number.isFinite(Number(profile.avatarPositionY)) ? Math.min(100, Math.max(0, Number(profile.avatarPositionY))) : 24,
-    lifeStories: [...lifeStories, ...migratedWorks],
-    aiWorks: [],
+    lifeStories,
+    aiWorks,
     values: profile.values || [],
     themes: profile.themes || [],
     links: profile.links || []
@@ -1448,6 +1452,10 @@ function normalizeContent(item, type) {
 
 function normalizeIdList(value) {
   return Array.isArray(value) ? value.map(String).filter(Boolean) : [];
+}
+
+function isProjectWork(item) {
+  return PROJECT_WORK_IDS.has(item?.id);
 }
 
 function inferContentCategory(item, type) {
@@ -1500,6 +1508,7 @@ function applyPublicState(profile) {
   const state = profile.publicState || {};
   applyContentState(profile.lifeStories.filter((item) => item.category !== "work"), state.hiddenStoryIds, state.deletedStoryIds);
   applyContentState(profile.lifeStories.filter((item) => item.category === "work"), state.hiddenWorkIds, state.deletedWorkIds);
+  applyContentState(profile.aiWorks, state.hiddenWorkIds, state.deletedWorkIds);
 }
 
 function ensurePublicState(profile = currentProfile()) {
@@ -1529,16 +1538,49 @@ function syncPublicStateFromContent(profile = currentProfile()) {
   state.hiddenWorkIds = [];
   state.deletedWorkIds = [];
   profile.lifeStories.forEach((item) => syncPublicStateForItem(profile, typeForContent(item), item));
+  profile.aiWorks.forEach((item) => syncPublicStateForItem(profile, "work", item));
 }
 
 function saveActiveProfile() {
   localStorage.setItem(localKey(activeUsername), JSON.stringify(profiles[activeUsername]));
 }
 
+function hasLocalDraft(username = activeUsername) {
+  return Boolean(localStorage.getItem(localKey(username)));
+}
+
+function setOwnerSaveStatus(message) {
+  if (ownerMode) $("#ownerSaveStatus").textContent = message;
+}
+
+function markContentFormDirty() {
+  if (ownerMode && $("#contentDrawer").classList.contains("open")) {
+    setOwnerSaveStatus("Unsaved form edits. Click Save content to write them to current profile data and local draft.");
+  }
+}
+
+function markProfileFormDirty() {
+  if (ownerMode && $("#profileDrawer").classList.contains("open")) {
+    setOwnerSaveStatus("Unsaved profile edits. Click Save profile to write them to current profile data and local draft.");
+  }
+}
+
+function renderPersistenceStatus() {
+  if (ownerMode) {
+    $("#dataModeStatus").textContent = "Owner mode: editing current profile data. This prototype saves to localStorage draft only, not server publish.";
+    if (!$("#ownerSaveStatus").textContent) {
+      setOwnerSaveStatus(hasLocalDraft() ? "Local draft loaded from this browser." : "Public seed loaded. No local draft saved yet.");
+    }
+    return;
+  }
+  $("#dataModeStatus").textContent = "Viewing public published version";
+  $("#ownerSaveStatus").textContent = "";
+}
+
 function saveCurrentProfileState() {
   saveActiveProfile();
   const now = new Date();
-  $("#ownerSaveStatus").textContent = `Saved ${now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+  setOwnerSaveStatus(`Saved to local draft ${now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}. Server publishing is not enabled in this prototype.`);
 }
 
 function currentProfile() {
@@ -1589,15 +1631,21 @@ function publicStories(profile = currentProfile()) {
     .sort((a, b) => yearSortValue(b.year) - yearSortValue(a.year));
 }
 
-function publicWorks(profile = currentProfile()) {
+function publicTimelineWorks(profile = currentProfile()) {
   return profile.lifeStories
     .filter((work) => work.category === "work")
     .filter((work) => isPublicContent(profile, work, "hiddenWorkIds", "deletedWorkIds"))
     .sort((a, b) => yearSortValue(b.year) - yearSortValue(a.year));
 }
 
+function publicWorks(profile = currentProfile()) {
+  return profile.aiWorks
+    .filter((work) => isPublicContent(profile, work, "hiddenWorkIds", "deletedWorkIds"))
+    .sort((a, b) => yearSortValue(b.year) - yearSortValue(a.year));
+}
+
 function publicTimelineItems(profile = currentProfile()) {
-  return [...publicStories(profile), ...publicWorks(profile)]
+  return [...publicStories(profile), ...publicTimelineWorks(profile)]
     .sort((a, b) => yearSortValue(b.year) - yearSortValue(a.year));
 }
 
@@ -1752,6 +1800,7 @@ function profileSearchText(profile) {
     ...profile.values,
     ...profile.themes,
     ...publicStories(profile).flatMap((story) => [story.title, story.location, publicStorySummary(story)]),
+    ...publicTimelineWorks(profile).flatMap((work) => [work.title, work.location, work.publicSummary, ...(work.tags || [])]),
     ...publicWorks(profile).flatMap((work) => [work.title, work.type, work.publicSummary, ...(work.tags || []), ...(work.toolsUsed || [])])
   ].join(" ").toLowerCase();
 }
@@ -1812,19 +1861,19 @@ function renderProfile() {
   $("#profileAvatar").src = profile.avatar;
   $("#profileAvatar").alt = `${profile.displayName} portrait`;
   $("#profileAvatar").style.setProperty("--avatar-y", `${profile.avatarPositionY}%`);
-  $("#dataModeStatus").textContent = ownerMode ? "Viewing local owner draft" : "Viewing published public profile";
+  renderPersistenceStatus();
   $("#profileLinks").innerHTML = profile.links.map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("");
   const aiProfile = generateAiProfile(profile);
   $("#aiMarkdown").value = aiProfile;
   $("#publicAiMarkdown").value = aiProfile;
   $("#publicAiPreview").textContent = buildPublicAiPreview(profile);
   renderTimeline();
-  $("#ai-works").hidden = true;
+  renderWorkProjects();
   renderJsonLd(profile);
 }
 
 function buildPublicAiPreview(profile) {
-  const highlightedEvents = publicStories(profile)
+  const highlightedEvents = publicTimelineItems(profile)
     .slice(0, 3)
     .map((story) => `- ${story.year}: ${story.title}`);
   const works = publicWorks(profile).slice(0, 2).map((work) => work.title);
@@ -1837,7 +1886,7 @@ function buildPublicAiPreview(profile) {
     "## Timeline",
     ...(highlightedEvents.length ? highlightedEvents : ["- Public milestones available in profile"]),
     "",
-    `Work: ${works.length ? works.join(" / ") : "curated projects"}`
+    `Projects: ${works.length ? works.join(" / ") : "curated projects"}`
   ].join("\n");
 }
 
@@ -2057,6 +2106,7 @@ async function addImageFilesToStory(storyId, files) {
     story.updatedAt = new Date().toISOString();
     saveActiveProfile();
     renderProfile();
+    setOwnerSaveStatus("Images saved to current profile data and local draft.");
   } catch (error) {
     card?.classList.remove("is-uploading");
     openEditor(card?.dataset.contentType || "story", storyId);
@@ -2122,8 +2172,23 @@ function renderTimeline() {
   `).join("") : `<p class="empty-result">No ${activeCategoryFilter === "all" ? "" : `${CATEGORY_LABELS[activeCategoryFilter]} `}${ownerMode ? (ownerTimelineView === "published" ? "visible" : ownerTimelineView) : "published"} items yet</p>`;
 }
 
+function renderWorkProjects() {
+  const projects = ownerMode ? currentProfile().aiWorks : publicWorks();
+  $("#ai-works").hidden = !projects.length;
+  $("#aiWorksList").innerHTML = projects.length ? projects.map((work) => `
+    <article class="work-card ${work.status !== "published" ? "private-card" : ""}">
+      <div class="work-card-head">
+        <div><h3>${escapeHtml(work.title)}</h3></div>
+        ${ownerMode ? `<span class="visibility-pill status-${escapeHtml(work.status)}">${escapeHtml(work.status === "published" ? "visible" : work.status)}</span>` : ""}
+      </div>
+      <p>${escapeHtml(work.publicSummary)}</p>
+      ${work.link ? `<a class="work-link-action" href="${escapeHtml(work.link)}" target="_blank" rel="noopener">Open link</a>` : ""}
+    </article>
+  `).join("") : "";
+}
+
 function generateAiProfile(profile) {
-  const stories = publicStories(profile);
+  const stories = publicTimelineItems(profile);
   const works = publicWorks(profile);
   return `# ${profile.displayName}
 
@@ -2158,7 +2223,7 @@ Only published and user-approved Turnpo content is included in this AI-readable 
 
 function renderJsonLd(profile) {
   const profileUrl = `${SITE_URL}/u/${profile.username}`;
-  const stories = publicStories(profile);
+  const stories = publicTimelineItems(profile);
   const works = publicWorks(profile);
   const graph = {
     "@context": "https://schema.org",
@@ -2380,6 +2445,7 @@ function saveProfileText(event) {
   localStorage.setItem(ACTIVE_PROFILE_KEY, activeUsername);
   closeProfileEditor();
   setRoute(activeUsername);
+  setOwnerSaveStatus("Profile text saved to current profile data and local draft. Server publishing is not enabled in this prototype.");
 }
 
 function toggleWorkFields(type) {
@@ -2432,6 +2498,7 @@ function upsertContent(event) {
   saveActiveProfile();
   renderProfile();
   closeEditor();
+  setOwnerSaveStatus("Content saved to current profile data and local draft. Refresh will keep it in this browser.");
 }
 
 function deleteCurrentContent() {
@@ -2452,6 +2519,7 @@ function deleteContentById(type, id) {
   }
   saveActiveProfile();
   renderProfile();
+  setOwnerSaveStatus("Content moved to deleted state in current profile data and local draft.");
 }
 
 function setContentStatus(type, id, status) {
@@ -2467,6 +2535,7 @@ function setContentStatus(type, id, status) {
   syncPublicStateForItem(currentProfile(), type, item);
   saveActiveProfile();
   renderProfile();
+  setOwnerSaveStatus("Content status saved to current profile data and local draft.");
 }
 
 function restoreContentById(type, id) {
@@ -2484,6 +2553,7 @@ function permanentlyDeleteContentById(type, id) {
   syncPublicStateFromContent();
   saveActiveProfile();
   renderProfile();
+  setOwnerSaveStatus("Content permanently removed from current local draft.");
 }
 
 function emptyDeletedStories() {
@@ -2491,6 +2561,7 @@ function emptyDeletedStories() {
   syncPublicStateFromContent();
   saveActiveProfile();
   renderProfile();
+  setOwnerSaveStatus("Deleted stories cleared from current local draft.");
 }
 
 function setAuthDrawer(open) {
@@ -2800,7 +2871,11 @@ $("#closeProfileEditor").addEventListener("click", closeProfileEditor);
 $("#closeProfileBackdrop").addEventListener("click", closeProfileEditor);
 $("#contentType").addEventListener("change", (event) => toggleWorkFields(event.target.value));
 $("#contentForm").addEventListener("submit", upsertContent);
+$("#contentForm").addEventListener("input", markContentFormDirty);
+$("#contentForm").addEventListener("change", markContentFormDirty);
 $("#profileForm").addEventListener("submit", saveProfileText);
+$("#profileForm").addEventListener("input", markProfileFormDirty);
+$("#profileForm").addEventListener("change", markProfileFormDirty);
 $("#profileEditAvatarY").addEventListener("input", (event) => {
   $("#profileAvatar").style.setProperty("--avatar-y", `${event.target.value}%`);
 });
