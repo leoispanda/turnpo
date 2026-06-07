@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.108
+
+Commit: pending - `Restore published public timeline records`
+
+### Changed
+
+- Removed the public story/work allowlist that incorrectly hid older published timeline records.
+- Restored public rendering to show all content with `published` status and user approval.
+- Kept `hidden` and `deleted` content excluded from visitor-facing timeline, AI works, search, and AI-readable Markdown.
+- Bumped frontend cache/version references to `v0.1.108`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified public timeline records were restored across all published years.
+- Verified public timeline renders 72 published stories and all expected year filters.
+- Verified no private, hidden, or deleted cards render for visitors.
+- Verified owner-only controls remain hidden from public visitors.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.106
 
 Commit: pending - `Restrict public profile to approved content`

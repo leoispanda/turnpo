@@ -57,17 +57,8 @@ const seedProfiles = {
     status: "published",
     seedVersion: "linkedin-export-2026-06-04",
     publicState: {
-      publishedStoryIds: [
-        "linkedin-profile-summary",
-        "linkedin-skills",
-        "linkedin-position-mapkai-co-creator",
-        "linkedin-post-2026-05-25-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a74647675737258",
-        "linkedin-post-2026-05-16-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a74614852660300",
-        "linkedin-post-2026-05-14-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7460766622472052"
-      ],
       hiddenStoryIds: [],
       deletedStoryIds: [],
-      publishedWorkIds: ["work-turnpo", "work-mapkai", "work-mapkai-pdc"],
       hiddenWorkIds: [],
       deletedWorkIds: [],
       collapsedYears: ["2025", "2024", "2023", "2022", "2021", "2020", "2019", "2018", "2012", "2008"]
@@ -1453,13 +1444,12 @@ function isPublished(item) {
   return item.status === "published" && item.userApproved !== false;
 }
 
-function isExplicitlyPublic(profile, item, publishedKey, hiddenKey, deletedKey) {
+function isPublicContent(profile, item, hiddenKey, deletedKey) {
   const state = profile.publicState || {};
-  const publishedIds = normalizeIdList(state[publishedKey]);
   const hiddenIds = new Set(normalizeIdList(state[hiddenKey]));
   const deletedIds = new Set(normalizeIdList(state[deletedKey]));
   if (!isPublished(item) || hiddenIds.has(item.id) || deletedIds.has(item.id)) return false;
-  return publishedIds.length ? publishedIds.includes(item.id) : true;
+  return true;
 }
 
 function isPublicProfile(profile) {
@@ -1472,12 +1462,12 @@ function publishedProfiles() {
 
 function publicStories(profile = currentProfile()) {
   return profile.lifeStories
-    .filter((story) => isExplicitlyPublic(profile, story, "publishedStoryIds", "hiddenStoryIds", "deletedStoryIds"))
+    .filter((story) => isPublicContent(profile, story, "hiddenStoryIds", "deletedStoryIds"))
     .sort((a, b) => Number(b.year || 0) - Number(a.year || 0));
 }
 
 function publicWorks(profile = currentProfile()) {
-  return profile.aiWorks.filter((work) => isExplicitlyPublic(profile, work, "publishedWorkIds", "hiddenWorkIds", "deletedWorkIds"));
+  return profile.aiWorks.filter((work) => isPublicContent(profile, work, "hiddenWorkIds", "deletedWorkIds"));
 }
 
 function ownerItems(collection) {
