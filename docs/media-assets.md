@@ -14,7 +14,7 @@ Turnpo profile media should be stored under a profile-owned media namespace.
 
 When the backend upload flow is added, manually uploaded photos should use the same profile-owned logic:
 
-- Save the file to the site's controlled media storage, planned as Cloudflare R2.
+- Save the file to the site's controlled media storage, Cloudflare R2.
 - Store only the resulting Turnpo-controlled public URL in the profile or moment record.
 - Keep the current drag/drop/paste/choose-file editor UI, and replace only the storage implementation behind it.
 - Keep the source export files, raw LinkedIn archive, private messages, and private account data out of the repository.

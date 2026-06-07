@@ -25,6 +25,7 @@ Cloudflare Pages configuration needed:
 
 - KV binding: `AUTH_KV`
 - Optional KV binding: `PROFILE_KV` for online profile draft/published JSON. If omitted, `AUTH_KV` is reused.
+- R2 binding: `PROFILE_MEDIA_R2` for uploaded owner images. `MEDIA_R2` or `TURNPO_MEDIA_R2` also work as fallback binding names.
 - Secret: `TURNPO_AUTH_SECRET`
 - Secret: `RESEND_API_KEY`
 - Variable: `TURNPO_AUTH_FROM_EMAIL`, for example `Turnpo <login@turnpo.com>`
@@ -44,6 +45,13 @@ Before the full D1/R2 backend exists, Turnpo stores the current full profile JSO
 - `POST /api/profiles/:username/publish` writes the authenticated owner's current profile to both online draft and online published storage.
 
 This makes saved/published owner edits visible across devices once they are published online. Browser `localStorage` remains as a fallback draft cache.
+
+Uploaded owner images are stored in Cloudflare R2 through the authenticated upload endpoint:
+
+- `POST /api/profiles/:username/uploads` accepts a compressed image data URL from the authenticated owner, writes the image to R2, and returns a public app URL.
+- `GET /api/profiles/:username/media/:mediaId` reads the public image from R2.
+
+The profile JSON stores only the returned image URL. If R2 is not configured, the browser keeps using the local data URL fallback so editing does not break, but those fallback images remain inside the profile JSON and are not suitable for long-term online storage.
 
 ## Data model
 
@@ -86,7 +94,7 @@ Moment tags:
 - `POST /api/profiles/:slug/moments` creates a moment for the authenticated owner.
 - `PUT /api/moments/:id` updates title, date, year, note, tags, photos, and visibility.
 - `DELETE /api/moments/:id` deletes a moment for the authenticated owner.
-- `POST /api/uploads/sign` returns a short-lived R2 upload URL for the authenticated owner.
+- `POST /api/profiles/:slug/uploads` stores an authenticated owner image in R2 and returns the app media URL.
 
 ## Privacy rule
 

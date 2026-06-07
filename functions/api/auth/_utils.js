@@ -41,6 +41,15 @@ export function requireProfileStoreConfig(env) {
   return "";
 }
 
+export function mediaStore(env) {
+  return env.PROFILE_MEDIA_R2 || env.MEDIA_R2 || env.TURNPO_MEDIA_R2;
+}
+
+export function requireMediaStoreConfig(env) {
+  if (!mediaStore(env)) return "Missing PROFILE_MEDIA_R2, MEDIA_R2, or TURNPO_MEDIA_R2 binding.";
+  return "";
+}
+
 export async function sha256(input) {
   const bytes = new TextEncoder().encode(input);
   const digest = await crypto.subtle.digest("SHA-256", bytes);

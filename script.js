@@ -2132,6 +2132,7 @@ function workActions(work) {
 function imageValueType(value) {
   if (!value) return "";
   if (value.startsWith("data:image/")) return "Uploaded image";
+  if (value.startsWith("/api/profiles/") && value.includes("/media/")) return "Online media image";
   if (value.startsWith("/assets/")) return "Saved site image";
   return "Linked image";
 }
@@ -2199,14 +2200,42 @@ async function optimizeImageFile(file) {
   return canvas.toDataURL("image/jpeg", 0.82);
 }
 
+async function uploadImageToOnlineMedia(file) {
+  const dataUrl = await optimizeImageFile(file);
+  if (!ownerMode || !ownerSessionProfile) return { url: dataUrl, online: false };
+  try {
+    const data = await profileApi(`/api/profiles/${encodeURIComponent(activeUsername)}/uploads`, {
+      method: "POST",
+      body: {
+        filename: file.name || "",
+        contentType: "image/jpeg",
+        dataUrl
+      }
+    });
+    if (!data.url) throw new Error("Upload did not return an image URL.");
+    return { url: data.url, online: true };
+  } catch (error) {
+    return { url: dataUrl, online: false, error };
+  }
+}
+
+async function uploadImageFiles(files) {
+  const uploaded = await Promise.all(files.map((file) => uploadImageToOnlineMedia(file)));
+  return {
+    urls: uploaded.map((item) => item.url).filter(Boolean),
+    onlineCount: uploaded.filter((item) => item.online).length,
+    fallbackError: uploaded.find((item) => item.error)?.error
+  };
+}
+
 async function useImageFiles(files) {
   const imageFiles = [...files].filter((file) => file.type.startsWith("image/"));
   if (!imageFiles.length) return;
   try {
-    $("#contentStatusNote").textContent = imageFiles.length === 1 ? "Preparing image..." : "Preparing images...";
-    const imageData = await Promise.all(imageFiles.map((file) => optimizeImageFile(file)));
-    renderImageUpload([...storyImagesFromValue($("#contentImage").value), ...imageData]);
-    $("#contentStatusNote").textContent = "Images ready. Remember to save content.";
+    $("#contentStatusNote").textContent = imageFiles.length === 1 ? "Uploading image..." : "Uploading images...";
+    const result = await uploadImageFiles(imageFiles);
+    renderImageUpload([...storyImagesFromValue($("#contentImage").value), ...result.urls]);
+    $("#contentStatusNote").textContent = imageUploadStatusMessage(result, "Images ready. Remember to save content.");
   } catch (error) {
     $("#contentStatusNote").textContent = error.message;
   }
@@ -2221,19 +2250,27 @@ async function addImageFilesToStory(storyId, files) {
   try {
     card?.classList.add("is-uploading");
     const currentImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
-    const nextImages = [...currentImages, ...(await Promise.all(imageFiles.map((file) => optimizeImageFile(file))))];
+    const result = await uploadImageFiles(imageFiles);
+    const nextImages = [...currentImages, ...result.urls];
     story.images = nextImages;
     story.image = nextImages[0] || "";
     story.updatedAt = new Date().toISOString();
     saveActiveProfile();
     renderProfile();
-    setOwnerSaveStatus("Images saved to current profile data and local draft.");
+    setOwnerSaveStatus(imageUploadStatusMessage(result, "Images saved to current profile data and local draft."));
     saveProfileDraftOnline({ quiet: true });
   } catch (error) {
     card?.classList.remove("is-uploading");
     openEditor(card?.dataset.contentType || "story", storyId);
     $("#contentStatusNote").textContent = error.message;
   }
+}
+
+function imageUploadStatusMessage(result, successMessage) {
+  if (!result.urls.length) return result.fallbackError?.message || "Image upload failed.";
+  if (result.onlineCount === result.urls.length) return `${successMessage} Stored in online media storage.`;
+  if (result.onlineCount > 0) return `${successMessage} Some images used local fallback because online media storage was not available.`;
+  return `${successMessage} Local image fallback was used because online media storage was not available.`;
 }
 
 function imageFileFromPaste(event) {
