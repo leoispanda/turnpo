@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.112
+
+Commit: this commit - `Simplify public story cards`
+
+### Changed
+
+- Removed source links, raw source text expanders, and tag chips from visitor-facing story cards.
+- Hid source-only URL summaries in public story cards so LinkedIn feed links do not appear as story details.
+- Reused the cleaned story summary in public search, AI-readable Markdown, and structured data.
+- Kept owner-mode source text, source links, and tags available for management.
+- Bumped frontend cache/version references to `v0.1.112`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified desktop public visitor timeline renders no story source links, source text blocks, tag rows, or raw LinkedIn summary links.
+- Verified mobile public visitor timeline renders no story source links, source text blocks, tag rows, or raw LinkedIn summary links.
+- Verified published story count remains visible and hidden/deleted/private cards remain excluded.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.111
 
 Commit: this commit - `Harden public visibility filtering`

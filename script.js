@@ -1653,7 +1653,7 @@ function profileSearchText(profile) {
     profile.location,
     ...profile.values,
     ...profile.themes,
-    ...publicStories(profile).flatMap((story) => [story.title, story.location, story.publicSummary, ...(story.tags || [])]),
+    ...publicStories(profile).flatMap((story) => [story.title, story.location, publicStorySummary(story)]),
     ...publicWorks(profile).flatMap((work) => [work.title, work.type, work.publicSummary, ...(work.tags || []), ...(work.toolsUsed || [])])
   ].join(" ").toLowerCase();
 }
@@ -1805,6 +1805,18 @@ function setAllTimelineYearsCollapsed(collapsed) {
 function statusPill(item) {
   const labels = { published: "visible", hidden: "hidden", deleted: "deleted" };
   return ownerMode ? `<span class="visibility-pill status-${escapeHtml(item.status)}">${escapeHtml(labels[item.status] || item.status)}</span>` : "";
+}
+
+function isSourceOnlyText(value = "") {
+  const text = String(value).trim();
+  if (!text) return false;
+  return /^https?:\/\/(www\.)?linkedin\.com\/\S+$/i.test(text)
+    || /^https?:\/\/lnkd\.in\/\S+$/i.test(text)
+    || /^https?:\/\/\S+$/i.test(text);
+}
+
+function publicStorySummary(story) {
+  return isSourceOnlyText(story.publicSummary) ? "" : story.publicSummary;
 }
 
 function renderOwnerContentControls() {
@@ -1975,6 +1987,7 @@ function renderTimeline() {
           const storyImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
           const coverImage = storyImages[0] || "";
           const extraImages = storyImages.slice(1);
+          const summary = ownerMode ? story.publicSummary : publicStorySummary(story);
           return `
           <article class="event-card ${coverImage ? "has-media" : "no-media"} ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-story-id="${escapeHtml(story.id)}">
             <div class="event-media">${coverImage ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(story.title)}" />` : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
@@ -1984,11 +1997,11 @@ function renderTimeline() {
                 <div class="event-actions owner-only">${storyActions(story)}</div>
               </div>
               <h3>${escapeHtml(story.title)}</h3>
-              <p>${escapeHtml(story.publicSummary)}</p>
+              ${summary ? `<p>${escapeHtml(summary)}</p>` : ""}
               ${extraImages.length ? `<details class="event-gallery"><summary>View ${extraImages.length} more photo${extraImages.length === 1 ? "" : "s"}</summary><div>${extraImages.map((image, index) => `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${story.title} photo ${index + 2}`)}" />`).join("")}</div></details>` : ""}
-              ${story.fullText ? `<details class="event-full-text"><summary>Full LinkedIn post</summary><p>${escapeHtml(story.fullText)}</p></details>` : ""}
-              ${story.sourceUrl ? `<a class="source-link" href="${escapeHtml(story.sourceUrl)}" target="_blank" rel="noopener">Open LinkedIn source</a>` : ""}
-              <div class="tag-row">${(story.tags || []).slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>
+              ${ownerMode && story.fullText ? `<details class="event-full-text owner-only"><summary>Full source text</summary><p>${escapeHtml(story.fullText)}</p></details>` : ""}
+              ${ownerMode && story.sourceUrl ? `<a class="source-link owner-only" href="${escapeHtml(story.sourceUrl)}" target="_blank" rel="noopener">Open source</a>` : ""}
+              ${ownerMode && story.tags?.length ? `<div class="tag-row owner-only">${story.tags.slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
             </div>
           </article>
         `; }).join("")}
@@ -2029,7 +2042,7 @@ ${profile.currentChapter}
 ${[...profile.values, ...profile.themes].map((item) => `- ${item}`).join("\n")}
 
 ## Public timeline highlights
-${stories.length ? stories.map((story) => `- ${story.year}: ${story.title} (${story.location || "location not specified"}) - ${story.publicSummary}`).join("\n") : "- No published stories yet"}
+${stories.length ? stories.map((story) => `- ${story.year}: ${story.title} (${story.location || "location not specified"})${publicStorySummary(story) ? ` - ${publicStorySummary(story)}` : ""}`).join("\n") : "- No published stories yet"}
 
 ## Public AI works
 ${works.length ? works.map((work) => `- ${work.title} (${work.type}) - ${work.publicSummary} Human role: ${work.humanRole} AI role: ${work.aiRole} Result: ${work.result}`).join("\n") : "- No published AI works yet"}
@@ -2077,7 +2090,7 @@ function renderJsonLd(profile) {
             "@type": "CreativeWork",
             name: story.title,
             dateCreated: String(story.year),
-            description: story.publicSummary,
+            description: publicStorySummary(story) || undefined,
             image: absoluteUrl(story.image || story.images?.[0] || "")
           })),
           ...works.map((work) => ({
