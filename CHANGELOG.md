@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.117
+
+Commit: this commit - `Align public 2021 story count`
+
+### Changed
+
+- Tightened the public-only imported-story filter to exclude activity invite posts such as `welcome all` / `visit this AR booth`.
+- Removed the 2021 TCCN booth invite from public visitor timeline while keeping it available in owner mode.
+- Aligned public seed 2021 visible highlights with the owner draft count of 3.
+- Bumped frontend cache/version references to `v0.1.117`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified public seed now renders 40 curated public stories.
+- Verified public mode shows `2021 3 visible highlights`.
+- Verified the excluded TCCN invite no longer appears in public timeline.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.116
 
 Commit: this commit - `Separate public seed from owner draft`
