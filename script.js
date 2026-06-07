@@ -1381,7 +1381,7 @@ function loadOwnerProfile(username) {
 function normalizeProfile(profile) {
   const normalized = {
     ...profile,
-    status: profile.status === "published" || profile.username === "leo" ? "published" : "hidden",
+    status: profile.status === "published" ? "published" : "hidden",
     avatarPositionY: Number.isFinite(Number(profile.avatarPositionY)) ? Math.min(100, Math.max(0, Number(profile.avatarPositionY))) : 24,
     lifeStories: (profile.lifeStories || []).map((item) => normalizeContent(item, "story")),
     aiWorks: (profile.aiWorks || []).map((item) => normalizeContent(item, "work")),
@@ -1399,12 +1399,12 @@ function normalizeContent(item, type) {
   const existingImages = Array.isArray(item.images) ? item.images : [];
   const images = type === "story" ? [...new Set([...existingImages, item.image].filter(Boolean))] : item.images;
   const rawStatus = item.status === "draft" ? "hidden" : item.status;
-  const status = STATUSES.includes(rawStatus) ? rawStatus : "published";
+  const status = STATUSES.includes(rawStatus) ? rawStatus : "hidden";
   return {
     ...item,
     id: item.id || `${type}-${crypto.randomUUID()}`,
     status,
-    userApproved: status === "published" ? item.userApproved !== false : false,
+    userApproved: status === "published" ? item.userApproved === true : false,
     createdAt: item.createdAt || now,
     updatedAt: item.updatedAt || now,
     publishedAt: item.publishedAt || (status === "published" ? now : ""),
@@ -1486,7 +1486,7 @@ function currentProfile() {
 }
 
 function isPublished(item) {
-  return item.status === "published" && item.userApproved !== false;
+  return item.status === "published" && item.userApproved === true;
 }
 
 function isPublicContent(profile, item, hiddenKey, deletedKey) {
@@ -2206,7 +2206,7 @@ function openEditor(type, id = "") {
   $("#contentLocation").value = item?.location || "";
   renderLocationOptions();
   renderImageUpload(item?.images || (item?.image ? [item.image] : []));
-  $("#contentStatus").value = item?.status || "published";
+  $("#contentStatus").value = item?.status || "hidden";
   $("#contentSummary").value = item?.publicSummary || "";
   $("#contentWhy").value = item?.whyItMatters || item?.whyMade || "";
   $("#contentTags").value = (item?.tags || []).join(", ");

@@ -10,6 +10,27 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.115
+
+Commit: this commit - `Require explicit public approval`
+
+### Changed
+
+- Made public content deny-by-default: content only becomes public when `status` is explicitly `published` and `userApproved` is explicitly `true`.
+- Changed missing or unknown content status to normalize as `hidden` instead of `published`.
+- Changed published content without explicit approval to remain private.
+- Removed the profile normalization exception that made Leo public without an explicit published profile status.
+- Made new owner-created content default to `Hidden` so publishing requires an explicit status choice.
+- Bumped frontend cache/version references to `v0.1.115`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified missing `userApproved`, missing `status`, and draft content do not pass public checks.
+- Verified explicit `published + userApproved: true` story and AI work records pass public checks.
+- Verified public visitor profile still renders 41 curated stories and 4 AI works with no hidden/deleted/private cards.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.114
 
 Commit: this commit - `Filter imported LinkedIn noise from public stories`
