@@ -1,6 +1,7 @@
 const ACTIVE_PROFILE_KEY = "turnpo:active-profile";
 const LOCAL_PREFIX = "turnpo:profile:";
 const COLLAPSED_YEARS_PREFIX = "turnpo:collapsed-years:";
+const COLLAPSED_YEARS_DEFAULT_PREFIX = "turnpo:collapsed-years-default:";
 const STATUSES = ["published", "hidden", "deleted"];
 const SITE_URL = "https://www.turnpo.com";
 const BRAND_ASSETS = {
@@ -55,6 +56,13 @@ const seedProfiles = {
     id: "profile-leo",
     status: "published",
     seedVersion: "linkedin-export-2026-06-04",
+    publicState: {
+      hiddenStoryIds: [],
+      deletedStoryIds: [],
+      hiddenWorkIds: [],
+      deletedWorkIds: [],
+      collapsedYears: ["2025", "2024", "2023", "2022", "2021", "2020", "2019", "2018", "2012", "2008"]
+    },
     username: "leo",
     displayName: "Leo Yang",
     oneLineIntro: "L&KM Solution Designer @ ASML | Co-creator of MapKAI | Exploring knowledge, systems, and reflection in the AI era",
@@ -1355,7 +1363,7 @@ function loadOwnerProfile(username) {
 }
 
 function normalizeProfile(profile) {
-  return {
+  const normalized = {
     ...profile,
     status: profile.status === "published" || profile.username === "leo" ? "published" : "hidden",
     avatarPositionY: Number.isFinite(Number(profile.avatarPositionY)) ? Math.min(100, Math.max(0, Number(profile.avatarPositionY))) : 24,
@@ -1365,6 +1373,8 @@ function normalizeProfile(profile) {
     themes: profile.themes || [],
     links: profile.links || []
   };
+  applyPublicState(normalized);
+  return normalized;
 }
 
 function normalizeContent(item, type) {
@@ -1385,6 +1395,35 @@ function normalizeContent(item, type) {
     deletedAt: item.deletedAt || "",
     ...(type === "story" ? { image: images[0] || "", images } : {})
   };
+}
+
+function normalizeIdList(value) {
+  return Array.isArray(value) ? value.map(String).filter(Boolean) : [];
+}
+
+function applyContentState(collection, hiddenIds = [], deletedIds = []) {
+  const hidden = new Set(normalizeIdList(hiddenIds));
+  const deleted = new Set(normalizeIdList(deletedIds));
+  collection.forEach((item) => {
+    if (deleted.has(item.id)) {
+      item.previousStatus = item.previousStatus || (hidden.has(item.id) ? "hidden" : item.status);
+      item.status = "deleted";
+      item.userApproved = false;
+      item.deletedAt = item.deletedAt || new Date().toISOString();
+      return;
+    }
+    if (hidden.has(item.id)) {
+      item.status = "hidden";
+      item.userApproved = false;
+      item.unpublishedAt = item.unpublishedAt || new Date().toISOString();
+    }
+  });
+}
+
+function applyPublicState(profile) {
+  const state = profile.publicState || {};
+  applyContentState(profile.lifeStories, state.hiddenStoryIds, state.deletedStoryIds);
+  applyContentState(profile.aiWorks, state.hiddenWorkIds, state.deletedWorkIds);
 }
 
 function saveActiveProfile() {
@@ -1666,6 +1705,10 @@ function collapsedYearsKey(username = activeUsername) {
   return `${COLLAPSED_YEARS_PREFIX}${username}`;
 }
 
+function collapsedYearsDefaultKey(username = activeUsername) {
+  return `${COLLAPSED_YEARS_DEFAULT_PREFIX}${username}`;
+}
+
 function loadCollapsedYears() {
   try {
     return new Set(JSON.parse(localStorage.getItem(collapsedYearsKey()) || "[]"));
@@ -1676,6 +1719,23 @@ function loadCollapsedYears() {
 
 function saveCollapsedYears(collapsedYears) {
   localStorage.setItem(collapsedYearsKey(), JSON.stringify([...collapsedYears]));
+}
+
+function defaultCollapsedYears(years) {
+  const stateYears = normalizeIdList(currentProfile().publicState?.collapsedYears);
+  return new Set(stateYears.length ? stateYears : years.slice(1));
+}
+
+function syncDefaultCollapsedYears(years) {
+  if (ownerMode) return loadCollapsedYears();
+  const defaults = defaultCollapsedYears(years);
+  const signature = JSON.stringify([...defaults]);
+  if (localStorage.getItem(collapsedYearsDefaultKey()) !== signature) {
+    saveCollapsedYears(defaults);
+    localStorage.setItem(collapsedYearsDefaultKey(), signature);
+    return defaults;
+  }
+  return loadCollapsedYears();
 }
 
 function setTimelineYearCollapsed(year, collapsed) {
@@ -1849,10 +1909,7 @@ function renderTimeline() {
   renderOwnerContentControls();
   const groups = groupedStories();
   const years = Object.keys(groups).sort((a, b) => Number(b) - Number(a));
-  const collapsedYears = loadCollapsedYears();
-  if (!ownerMode && !localStorage.getItem(collapsedYearsKey())) {
-    years.slice(1).forEach((year) => collapsedYears.add(year));
-  }
+  const collapsedYears = syncDefaultCollapsedYears(years);
   $("#yearFilters").innerHTML = years.map((year) => `<button type="button" data-year="${year}">${year}</button>`).join("");
   const viewLabel = ownerMode ? ownerTimelineView : "published";
   $("#timelineList").innerHTML = years.length ? years.map((year) => `

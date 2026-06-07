@@ -10,6 +10,47 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.100
+
+Commit: this commit - `Persist public timeline state`
+
+### Changed
+
+- Added a committed `publicState` layer for profile visibility overrides so hidden/deleted public content can be preserved outside a single browser origin.
+- Applied `publicState` during profile normalization before public timeline, AI Markdown, and AI works rendering.
+- Persisted the default public timeline collapsed-year state the first time a profile is rendered.
+- Bumped frontend cache/version references to `v0.1.100`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified public timeline defaults to 2026 open with older years collapsed after reload.
+- Verified manual year open/collapse choices persist after reload once the default state has been applied.
+- Verified public timeline renders no hidden/deleted/private cards when content state marks items non-public.
+- Verified public owner/admin controls remain hidden.
+- Checked browser console warnings/errors.
+
+## 2026-06-07 - v0.1.97
+
+Commit: this commit - `Refine public AI Markdown strip`
+
+### Changed
+
+- Reworked the public AI-readable Markdown card into a slimmer horizontal strip.
+- Moved the copy control to the left as a compact icon button.
+- Kept the AI-readable label and helper text in the middle.
+- Moved the Markdown preview into a narrower document-style window on the right.
+- Bumped frontend cache/version references to `v0.1.97`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified the public AI-readable Markdown strip layout at 1280px, 599px, and 390px browser widths.
+- Verified the strip keeps the copy icon on the left, the AI-readable label/helper in the middle, and the Markdown preview window on the right.
+- Verified no horizontal overflow at tested widths.
+- Checked browser console warnings/errors.
+- Copy click could not be end-to-end verified in Browser comment mode because the Codex comment overlay intercepted pointer events; verified the hidden full Markdown source remains populated for the copy action.
+
 ## 2026-06-07 - v0.1.96
 
 Commit: this commit - `Polish public AI Markdown card`
