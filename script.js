@@ -1369,9 +1369,13 @@ function savedProfile(username) {
 function loadProfiles() {
   const next = clone(seedProfiles);
   Object.keys(next).forEach((username) => {
-    next[username] = savedProfile(username) || normalizeProfile(next[username]);
+    next[username] = normalizeProfile(next[username]);
   });
   return next;
+}
+
+function loadPublicProfile(username) {
+  profiles[username] = normalizeProfile(clone(seedProfiles[username]));
 }
 
 function loadOwnerProfile(username) {
@@ -1644,6 +1648,7 @@ function setRoute(route) {
   }
 
   activeUsername = profiles[route] && isPublicProfile(profiles[route]) ? route : "leo";
+  if (!ownerMode) loadPublicProfile(activeUsername);
   localStorage.setItem(ACTIVE_PROFILE_KEY, activeUsername);
   body.classList.add("profile-open");
   $("#entryView").hidden = true;
@@ -1732,6 +1737,7 @@ function renderProfile() {
   $("#profileAvatar").src = profile.avatar;
   $("#profileAvatar").alt = `${profile.displayName} portrait`;
   $("#profileAvatar").style.setProperty("--avatar-y", `${profile.avatarPositionY}%`);
+  $("#dataModeStatus").textContent = ownerMode ? "Viewing local owner draft" : "Viewing published public profile";
   $("#profileLinks").innerHTML = profile.links.map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("");
   const aiProfile = generateAiProfile(profile);
   $("#aiMarkdown").value = aiProfile;
@@ -2127,9 +2133,8 @@ function renderJsonLd(profile) {
 function setOwnerMode(enabled) {
   ownerMode = enabled;
   ownerTimelineView = "published";
-  if (enabled) {
-    loadOwnerProfile(activeUsername);
-  }
+  if (enabled) loadOwnerProfile(activeUsername);
+  else loadPublicProfile(activeUsername);
   body.classList.toggle("owner-mode", enabled);
   if (body.classList.contains("profile-open")) renderProfile();
   else renderHome($("#personSearch").value);
@@ -2583,8 +2588,10 @@ function exportProfile() {
 
 function resetActiveProfile() {
   localStorage.removeItem(localKey(activeUsername));
-  profiles[activeUsername] = normalizeProfile(clone(seedProfiles[activeUsername]));
+  if (ownerMode) loadOwnerProfile(activeUsername);
+  else loadPublicProfile(activeUsername);
   renderProfile();
+  $("#ownerSaveStatus").textContent = "Local draft reset. Viewing public seed.";
 }
 
 $("#searchForm").addEventListener("submit", (event) => {

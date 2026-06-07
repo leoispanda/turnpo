@@ -10,6 +10,29 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.116
+
+Commit: this commit - `Separate public seed from owner draft`
+
+### Changed
+
+- Separated visitor-facing public seed loading from owner localStorage draft loading.
+- Made public profile routes always reload the committed published seed instead of saved local owner drafts.
+- Made owner mode explicitly show `Viewing local owner draft`.
+- Made public mode explicitly show `Viewing published public profile`.
+- Renamed the owner-only reset action to `Reset local draft / restore public seed`.
+- Kept the reset action inside Owner tools only and made it span the tool grid for readability.
+- Bumped frontend cache/version references to `v0.1.116`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified public mode shows `Viewing published public profile`, hides Owner tools, renders 41 public story cards, and shows `2021 4 visible highlights`.
+- Verified the reset button remains inside the owner-only tool grid.
+- Reproduced the 2021 `4` vs `3` count difference: public seed has 4 curated 2021 stories, while a local owner draft with one 2021 story hidden would show 3 if public mode read localStorage.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.115
 
 Commit: this commit - `Require explicit public approval`
