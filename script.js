@@ -61,6 +61,7 @@ const seedProfiles = {
     currentChapter: "Exploring AI-native knowledge mapping, reflection, learning systems, and practical decision workflows through MapKAI and public experiments.",
     location: "Eindhoven, Netherlands",
     avatar: "/assets/leo-profile.png",
+    avatarPositionY: 8,
     links: [
       { label: "Turnpo", url: "https://www.turnpo.com/u/leo" },
       { label: "MapKAI", url: "https://www.mapkai.com" },
@@ -1357,6 +1358,7 @@ function normalizeProfile(profile) {
   return {
     ...profile,
     status: profile.status === "published" || profile.username === "leo" ? "published" : "hidden",
+    avatarPositionY: Number.isFinite(Number(profile.avatarPositionY)) ? Math.min(100, Math.max(0, Number(profile.avatarPositionY))) : 24,
     lifeStories: (profile.lifeStories || []).map((item) => normalizeContent(item, "story")),
     aiWorks: (profile.aiWorks || []).map((item) => normalizeContent(item, "work")),
     values: profile.values || [],
@@ -1420,7 +1422,7 @@ function publicWorks(profile = currentProfile()) {
 }
 
 function ownerItems(collection) {
-  return ownerMode ? collection.filter((item) => item.status !== "deleted") : collection.filter(isPublished);
+  return ownerMode ? collection : collection.filter(isPublished);
 }
 
 function timelineStories(profile = currentProfile()) {
@@ -1622,6 +1624,7 @@ function renderProfile() {
   $("#profileLocation").textContent = profile.location;
   $("#profileAvatar").src = profile.avatar;
   $("#profileAvatar").alt = `${profile.displayName} portrait`;
+  $("#profileAvatar").style.setProperty("--avatar-y", `${profile.avatarPositionY}%`);
   $("#profileLinks").innerHTML = profile.links.map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("");
   $("#aiMarkdown").value = generateAiProfile(profile);
   renderTimeline();
@@ -1693,6 +1696,17 @@ function storyActions(story) {
     ? `<button class="small-action" type="button" data-hide-type="story" data-hide-id="${escapeHtml(story.id)}">Hide</button>`
     : `<button class="small-action" type="button" data-publish-type="story" data-publish-id="${escapeHtml(story.id)}">Publish</button>`;
   return `${statusPill(story)}${toggleAction}<button class="small-action danger-action" type="button" data-delete-type="story" data-delete-id="${escapeHtml(story.id)}">Delete</button><button class="small-action" type="button" data-edit-type="story" data-edit-id="${escapeHtml(story.id)}">Edit</button>`;
+}
+
+function workActions(work) {
+  if (!ownerMode) return "";
+  if (work.status === "deleted") {
+    return `${statusPill(work)}<button class="small-action" type="button" data-restore-type="work" data-restore-id="${escapeHtml(work.id)}">Restore</button><button class="small-action danger-action" type="button" data-permanent-delete-type="work" data-permanent-delete-id="${escapeHtml(work.id)}">Delete forever</button><button class="small-action" type="button" data-edit-type="work" data-edit-id="${escapeHtml(work.id)}">Edit</button>`;
+  }
+  const toggleAction = work.status === "published"
+    ? `<button class="small-action" type="button" data-hide-type="work" data-hide-id="${escapeHtml(work.id)}">Hide</button>`
+    : `<button class="small-action" type="button" data-publish-type="work" data-publish-id="${escapeHtml(work.id)}">Publish</button>`;
+  return `${statusPill(work)}${toggleAction}<button class="small-action danger-action" type="button" data-delete-type="work" data-delete-id="${escapeHtml(work.id)}">Delete</button><button class="small-action" type="button" data-edit-type="work" data-edit-id="${escapeHtml(work.id)}">Edit</button>`;
 }
 
 function imageValueType(value) {
@@ -1855,13 +1869,14 @@ function renderTimeline() {
 function renderAiWorks() {
   const works = ownerItems(currentProfile().aiWorks);
   $("#aiWorksList").innerHTML = works.length ? works.map((work) => `
-    <${work.link ? "a" : "article"} class="work-card ${work.status !== "published" ? "private-card" : ""}" ${work.link ? `href="${escapeHtml(work.link)}" target="_blank" rel="noopener"` : ""}>
+    <article class="work-card ${work.status !== "published" ? "private-card" : ""}">
       <div class="work-card-head">
         <div><h3>${escapeHtml(work.title)}</h3></div>
-        <div class="event-actions owner-only">${statusPill(work)}<button class="small-action" type="button" data-edit-type="work" data-edit-id="${work.id}">Edit</button></div>
+        <div class="event-actions owner-only">${workActions(work)}</div>
       </div>
       <p>${escapeHtml(work.publicSummary)}</p>
-    </${work.link ? "a" : "article"}>
+      ${work.link ? `<a class="work-link-action" href="${escapeHtml(work.link)}" target="_blank" rel="noopener">Open work</a>` : ""}
+    </article>
   `).join("") : `<p class="empty-result">No published AI works yet</p>`;
 }
 
@@ -2071,6 +2086,7 @@ function openProfileEditor() {
   $("#profileEditChapter").value = profile.currentChapter || "";
   $("#profileEditLocation").value = profile.location || "";
   $("#profileEditAvatar").value = profile.avatar || "";
+  $("#profileEditAvatarY").value = profile.avatarPositionY ?? 24;
   $("#profileEditLinks").value = formatProfileLinks(profile.links);
   $("#profileStatusNote").textContent = "";
   renderLocationOptions();
@@ -2095,6 +2111,7 @@ function saveProfileText(event) {
     currentChapter: $("#profileEditChapter").value.trim(),
     location: $("#profileEditLocation").value.trim(),
     avatar: $("#profileEditAvatar").value.trim() || profile.avatar,
+    avatarPositionY: Number($("#profileEditAvatarY").value),
     links: parseProfileLinks($("#profileEditLinks").value)
   });
   if (!nextProfile.displayName || !nextProfile.username || !nextProfile.oneLineIntro || !nextProfile.currentChapter) {
@@ -2502,6 +2519,9 @@ $("#closeProfileBackdrop").addEventListener("click", closeProfileEditor);
 $("#contentType").addEventListener("change", (event) => toggleWorkFields(event.target.value));
 $("#contentForm").addEventListener("submit", upsertContent);
 $("#profileForm").addEventListener("submit", saveProfileText);
+$("#profileEditAvatarY").addEventListener("input", (event) => {
+  $("#profileAvatar").style.setProperty("--avatar-y", `${event.target.value}%`);
+});
 $("#deleteContent").addEventListener("click", deleteCurrentContent);
 $("#chooseContentImage").addEventListener("click", () => $("#contentImageFile").click());
 $("#contentImageFile").addEventListener("change", (event) => {

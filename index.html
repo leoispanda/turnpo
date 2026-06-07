@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.87" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.90" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -183,7 +183,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.87</span>
+          <span class="version-badge">v0.1.90</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
             <button class="gold-btn" id="openProfileEditor" type="button">Edit profile</button>
@@ -275,6 +275,7 @@
         <label><span>What I am building now</span><textarea id="profileEditChapter" required></textarea></label>
         <label><span>Location</span><input id="profileEditLocation" list="locationOptions" /></label>
         <label><span>Avatar URL</span><input id="profileEditAvatar" /></label>
+        <label class="range-field"><span>Avatar vertical position</span><input id="profileEditAvatarY" type="range" min="0" max="100" step="1" /></label>
         <label><span>Links</span><textarea id="profileEditLinks" placeholder="Turnpo | https://www.turnpo.com/u/leo"></textarea></label>
         <p class="form-status" id="profileStatusNote"></p>
         <div class="form-actions">
@@ -302,6 +303,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.87"></script>
+    <script src="/script.js?v=0.1.90"></script>
   </body>
 </html>

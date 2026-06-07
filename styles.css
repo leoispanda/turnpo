@@ -623,7 +623,7 @@ h1 {
   width: 100%;
   aspect-ratio: 1.08;
   object-fit: cover;
-  object-position: center 24%;
+  object-position: center var(--avatar-y, 24%);
   filter: saturate(0.76) contrast(1.05);
 }
 
@@ -1227,7 +1227,7 @@ body.owner-mode .event-card.is-uploading .empty-media {
   transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
 }
 
-a.work-card:hover {
+.work-card:hover {
   border-color: rgba(216, 177, 95, 0.4);
   background: rgba(216, 177, 95, 0.07);
   transform: translateY(-1px);
@@ -1248,6 +1248,25 @@ a.work-card:hover {
 .work-card p {
   color: var(--muted);
   line-height: 1.55;
+}
+
+.work-link-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  margin-top: 8px;
+  padding: 0 11px;
+  border: 1px solid rgba(216, 177, 95, 0.22);
+  border-radius: 999px;
+  color: var(--gold-strong);
+  background: rgba(216, 177, 95, 0.07);
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.work-link-action:hover {
+  border-color: rgba(216, 177, 95, 0.5);
+  background: rgba(216, 177, 95, 0.12);
 }
 
 .backend-grid article {
@@ -1385,6 +1404,15 @@ select,
   background: rgba(255, 255, 255, 0.045);
   color: var(--text);
   padding: 12px;
+}
+
+input[type="range"] {
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+.range-field input {
+  padding: 0;
 }
 
 select {
