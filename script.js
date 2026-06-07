@@ -1340,6 +1340,7 @@ let editingRef = null;
 let activeEditorType = "story";
 let pendingOwnerEmail = "";
 let authCodeRequested = false;
+let ownerSessionProfile = "";
 let ownerTimelineView = "published";
 
 const $ = (selector) => document.querySelector(selector);
@@ -2108,12 +2109,19 @@ function renderJsonLd(profile) {
 
 function setOwnerMode(enabled) {
   ownerMode = enabled;
+  ownerTimelineView = "published";
   if (enabled) {
     loadOwnerProfile(activeUsername);
   }
   body.classList.toggle("owner-mode", enabled);
   if (body.classList.contains("profile-open")) renderProfile();
   else renderHome($("#personSearch").value);
+}
+
+function enterOwnerMode(profileUsername = ownerSessionProfile || activeUsername) {
+  if (profiles[profileUsername]) activeUsername = profileUsername;
+  setOwnerMode(true);
+  setRoute(activeUsername);
 }
 
 function defaultStoryDate() {
@@ -2455,10 +2463,9 @@ async function verifyLoginCode() {
   $("#authNote").textContent = "Verifying code...";
   try {
     const session = await authRequest("/api/auth/verify-code", { email: pendingOwnerEmail, code });
-    if (session.profile && profiles[session.profile]) activeUsername = session.profile;
-    setOwnerMode(true);
+    if (session.profile && profiles[session.profile]) ownerSessionProfile = session.profile;
+    enterOwnerMode(ownerSessionProfile);
     setAuthDrawer(false);
-    setRoute(activeUsername);
     resetAuthForm("Owner mode is active.");
   } catch (error) {
     $("#authNote").textContent = error.message;
@@ -2471,10 +2478,10 @@ async function checkOwnerSession() {
   try {
     const session = await authRequest("/api/auth/session");
     if (session.authenticated && session.profile && profiles[session.profile]) {
-      activeUsername = session.profile;
-      setOwnerMode(true);
+      ownerSessionProfile = session.profile;
     }
   } catch {
+    ownerSessionProfile = "";
     setOwnerMode(false);
   }
 }
@@ -2487,6 +2494,7 @@ async function logoutOwner() {
   } catch {
     // Local static previews may not have the auth function available yet.
   }
+  ownerSessionProfile = "";
   setOwnerMode(false);
   resetAuthForm("You have exited owner mode.");
 }
@@ -2742,7 +2750,10 @@ $("#contentForm").addEventListener("paste", (event) => {
   event.preventDefault();
   useImageFiles([file]);
 });
-$("#homeOwnerLogin").addEventListener("click", () => setAuthDrawer(true));
+$("#homeOwnerLogin").addEventListener("click", () => {
+  if (ownerSessionProfile && profiles[ownerSessionProfile]) enterOwnerMode(ownerSessionProfile);
+  else setAuthDrawer(true);
+});
 $("#ownerLogout").addEventListener("click", logoutOwner);
 $("#backToSearch").addEventListener("click", () => setRoute("home"));
 $("#closeAuth").addEventListener("click", () => setAuthDrawer(false));

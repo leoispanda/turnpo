@@ -10,6 +10,24 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-07 - v0.1.113
+
+Commit: this commit - `Keep public profiles out of owner mode`
+
+### Changed
+
+- Stopped existing owner sessions from automatically switching public profile URLs into owner mode.
+- Kept direct `/u/<profile>` visits in visitor mode by default so only published stories render publicly.
+- Made owner mode reset to the Visible timeline filter when entered or exited, keeping Hidden and Deleted views owner-only and explicit.
+- Bumped frontend cache/version references to `v0.1.113`.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Verified desktop public profile opens with `ownerMode=false`, no hidden/deleted/private story cards, and no visible owner management controls.
+- Verified mobile public profile opens with `ownerMode=false`, no hidden/deleted/private story cards, no visible owner management controls, and no horizontal overflow.
+- Checked browser console warnings/errors.
+
 ## 2026-06-07 - v0.1.112
 
 Commit: this commit - `Simplify public story cards`
