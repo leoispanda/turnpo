@@ -32,6 +32,7 @@ Cloudflare Pages configuration needed:
 - Variable: `TURNPO_APPROVED_OWNER_EMAILS`, comma-separated approved emails
 - Optional variable: `TURNPO_DEFAULT_OWNER_PROFILE`, defaults to `leo`
 - Optional variable: `TURNPO_OWNER_EMAIL_PROFILES`, comma-separated `email:profile` mappings for future multi-owner profiles
+- Built-in owner mapping: `cxin7699nl23@gmail.com` logs into the `cindy` profile. Override or extend with `TURNPO_OWNER_EMAIL_PROFILES`.
 
 Do not commit real API keys, login secrets, or private owner email lists.
 

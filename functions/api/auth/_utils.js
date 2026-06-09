@@ -1,4 +1,7 @@
 const SESSION_COOKIE = "turnpo_owner_session";
+const DEFAULT_OWNER_EMAIL_PROFILES = {
+  "cxin7699nl23@gmail.com": "cindy"
+};
 const CODE_TTL_SECONDS = 10 * 60;
 const SESSION_TTL_SECONDS = 7 * 24 * 60 * 60;
 
@@ -18,7 +21,10 @@ export function normalizeEmail(email = "") {
 }
 
 export function approvedProfileForEmail(env, email) {
-  const mapped = parseEmailProfileMap(env.TURNPO_OWNER_EMAIL_PROFILES || env.OWNER_EMAIL_PROFILES || "");
+  const mapped = {
+    ...DEFAULT_OWNER_EMAIL_PROFILES,
+    ...parseEmailProfileMap(env.TURNPO_OWNER_EMAIL_PROFILES || env.OWNER_EMAIL_PROFILES || "")
+  };
   if (mapped[email]) return mapped[email];
 
   const approved = parseList(env.TURNPO_APPROVED_OWNER_EMAILS || env.APPROVED_OWNER_EMAILS || "");

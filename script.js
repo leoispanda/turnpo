@@ -1350,6 +1350,797 @@ const seedProfiles = {
         userApproved: true
       }
     ]
+  },
+  cindy: {
+      "id": "profile-cindy",
+      "status": "published",
+      "seedVersion": "linkedin-export-2026-06-09",
+      "publicState": {
+          "hiddenStoryIds": [],
+          "deletedStoryIds": [],
+          "hiddenWorkIds": [],
+          "deletedWorkIds": [],
+          "collapsedYears": [
+              "2025",
+              "2024",
+              "2023",
+              "2022",
+              "2021",
+              "2020",
+              "2019",
+              "2018",
+              "2012",
+              "2008"
+          ]
+      },
+      "username": "cindy",
+      "displayName": "Li (Cindy) Xin",
+      "oneLineIntro": "Digital Business Strategy | Digital & AI Transformation | Stakeholder Management | Data Analytics | AI-enhanced Operational Excellence| Dutch Work Permit",
+      "currentChapter": "Building MapKAI and exploring digital business strategy, AI transformation, UX writing, knowledge structuring, and data-informed operational excellence.",
+      "location": "Eindhoven, North Brabant, Netherlands",
+      "avatar": "/assets/turnpo-logo-full.png",
+      "avatarPositionY": 24,
+      "links": [
+          {
+              "label": "Turnpo",
+              "url": "https://www.turnpo.com/u/cindy"
+          },
+          {
+              "label": "MapKAI",
+              "url": "https://www.mapkai.com"
+          },
+          {
+              "label": "MiniGrowLab",
+              "url": "https://www.minigrowlab.com"
+          }
+      ],
+      "values": [
+          "learning by doing",
+          "digital transformation",
+          "strategic storytelling",
+          "stakeholder alignment",
+          "data-informed action",
+          "cross-cultural communication"
+      ],
+      "themes": [
+          "Vibe Coding",
+          "Lean Six Sigma",
+          "AI Agents",
+          "AI-Assisted Web Development",
+          "Learning Design",
+          "Generative AI for Web Developers",
+          "Digital Product Development",
+          "Product Thinking",
+          "Artificial Intelligence for Design",
+          "User Experience Writing",
+          "Web Development",
+          "Digital Transformation",
+          "Artificial Intelligence (AI)",
+          "DMAIC",
+          "AI-Enhanced Operational Excellence",
+          "Trade Shows",
+          "Cross-Cultural Communication Skills",
+          "Organizational Effectiveness"
+      ],
+      "lifeStories": [
+          {
+              "id": "linkedin-profile-summary",
+              "year": "2026",
+              "date": "LinkedIn profile",
+              "title": "LinkedIn profile summary",
+              "location": "Eindhoven, North Brabant, Netherlands",
+              "image": "",
+              "publicSummary": "Recently created and built MapKAI (www.mapkai.com) with a collaborator. It is an AI-assisted knowledge mapping website that reflects my hands-on interest and experience in AI-assisted development, product thinking, UX writing, and knowledge structuring.With ov...",
+              "fullText": "Recently created and built MapKAI (www.mapkai.com) with a collaborator. It is an AI-assisted knowledge mapping website that reflects my hands-on interest and experience in AI-assisted development, product thinking, UX writing, and knowledge structuring.With over 10 years of professional experience, I specialize in digital transformation, integrated marketing, and strategic storytelling. At AkzoNobel, Struers and AMETEK, I have contributed to global communication and digital transformation strategies, aligning digital media execution across multiple channels to enhance brand visibility and audience connection. My work integrates data-driven insights with creative narratives to optimize campaign performance and support global initiatives. My expertise lies in translating digital performance data into actionable strategies that balance innovation with measurable results. Passionate about leveraging digital transformation and AI to drive business outcomes, I am committed to enabling impactful communication and fostering organizational alignment in multinational environments.",
+              "sourceUrl": "https://www.linkedin.com/in/cindy-xin",
+              "tags": [
+                  "profile",
+                  "LinkedIn",
+                  "AI"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-skills",
+              "year": "2026",
+              "date": "LinkedIn skills",
+              "title": "LinkedIn skills",
+              "location": "",
+              "image": "",
+              "publicSummary": "Vibe Coding, Lean Six Sigma, AI Agents, AI-Assisted Web Development, Learning Design, Generative AI for Web Developers, Digital Product Development, Product Thinking, Artificial Intelligence for Design, User Experience Writing, Web Development, Digital Transformation, Artificial Intelligence (AI), DMAIC, AI-Enhanced Operational Excellence, Trade Shows, Cross-Cultural Communication Skills, Organizational Effectiveness, Public Administration, Brand Strategy, Intelligence Analysis, Localization, B2B Marketing Strategy, Integrated Marketing",
+              "fullText": "- Vibe Coding\n- Lean Six Sigma\n- AI Agents\n- AI-Assisted Web Development\n- Learning Design\n- Generative AI for Web Developers\n- Digital Product Development\n- Product Thinking\n- Artificial Intelligence for Design\n- User Experience Writing\n- Web Development\n- Digital Transformation\n- Artificial Intelligence (AI)\n- DMAIC\n- AI-Enhanced Operational Excellence\n- Trade Shows\n- Cross-Cultural Communication Skills\n- Organizational Effectiveness\n- Public Administration\n- Brand Strategy\n- Intelligence Analysis\n- Localization\n- B2B Marketing Strategy\n- Integrated Marketing\n- Presentation Skills\n- Digital Marketing\n- Communication\n- Organization Skills\n- Business-to-Business (B2B)\n- Project Management\n- Operational Planning\n- Stakeholder Management\n- Public Relations",
+              "sourceUrl": "https://www.linkedin.com/in/cindy-xin",
+              "tags": [
+                  "skills",
+                  "LinkedIn"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-position-mapkai-co-creator-and-builder",
+              "year": "2026",
+              "date": "May 2026 - May 2026",
+              "title": "Co-creator & Builder at MapKAI",
+              "location": "Netherlands",
+              "image": "",
+              "publicSummary": "• Built MapKAI (www.mapkai.com), supporting people in turning fragmented knowledge into clear learning paths and meaningful self-reflection in the AI era. Rather than defining or testing people, MapKAI aims to help users see their knowledge map with more clari...",
+              "fullText": "• Built MapKAI (www.mapkai.com), supporting people in turning fragmented knowledge into clear learning paths and meaningful self-reflection in the AI era. Rather than defining or testing people, MapKAI aims to help users see their knowledge map with more clarity and better understand what they know, what they are still exploring, and where they want to go next. • Led the concept development, knowledge structure, UX writing, quiz flow design, and website iteration from concept to launch. • Created and tested the MapKAI Partner Decision Council (PDC), an AI Agent Committee with distinct AI roles designed to support critical discussion, challenge assumptions, and improve structured decision-making. • Conducted self-directed research on AI-assisted learning and decision-making, gaining hands-on experience with different AI tools and advanced functions to clarify personal capabilities, growth direction, and future",
+              "sourceUrl": "https://www.linkedin.com/in/cindy-xin",
+              "tags": [
+                  "experience",
+                  "MapKAI",
+                  "AI",
+                  "Learning"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-position-akzonobel-digital-media-communication",
+              "year": "2024",
+              "date": "September 2024 - January 2025",
+              "title": "Digital Media Communication at AkzoNobel",
+              "location": "Amsterdam",
+              "image": "",
+              "publicSummary": "•Global brand and digital communication strategy within AkzoNobel Global Communications, contributing to flagship initiatives including Color of the Year (CF25), Paint the Future, and McLaren Formula 1 partnership. •Integrated digital media execution across mu...",
+              "fullText": "•Global brand and digital communication strategy within AkzoNobel Global Communications, contributing to flagship initiatives including Color of the Year (CF25), Paint the Future, and McLaren Formula 1 partnership. •Integrated digital media execution across multiple channels, aligning content, storytelling, and engagement objectives to strengthen brand visibility and audience connection. •Digital performance data into actionable insights, supporting campaign optimization and informed decision-making for global stakeholders. •Strategic storytelling that balanced creative narratives with measurable performance outcomes.",
+              "sourceUrl": "https://www.linkedin.com/in/cindy-xin",
+              "tags": [
+                  "experience",
+                  "AI",
+                  "AkzoNobel"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-position-struers-your-metallographic-specialist-digital-marketing",
+              "year": "2022",
+              "date": "February 2022 - August 2022",
+              "title": "Digital Marketing at Struers - your metallographic specialist",
+              "location": "Shanghai, China",
+              "image": "",
+              "publicSummary": "•Led the China marketing function, owning the end-to-end integrated marketing and B2B digital transformation agenda, and partnering closely with the Country Manager and HQ leadership in Denmark. •Drove the transformation of marketing from fragmented, activity-...",
+              "fullText": "•Led the China marketing function, owning the end-to-end integrated marketing and B2B digital transformation agenda, and partnering closely with the Country Manager and HQ leadership in Denmark. •Drove the transformation of marketing from fragmented, activity-based execution into a scalable, data-driven, and integrated operating model within a matrix organization. •Defined and executed the local digital strategy by translating global priorities into market-relevant initiatives, balancing global alignment with local impact. •Built and scaled a multi-channel digital ecosystem (website, LinkedIn, WeChat, mini-programs, webinars, live streaming), establishing a systematic engine for lead generation, demand creation, and customer engagement. •Established governance, workflows, and performance management frameworks, enhancing visibility, accountability, and data-driven decision-making across the marketing function. •Leveraged data (customer interactions, campaign performance, competitor insights, keyword analysis) to generate actionable insights and support commercial and strategic decisions. •Acted as a strategic bridge across marketing, sales, and HQ, aligning stakeholders, strengthening digital capabilities, and driving cross-functional collaboration. Tools & Platforms: CRM, Power BI, Adobe, e-mailing(A/B), e-commerce, paid search, marketing automation",
+              "sourceUrl": "https://www.linkedin.com/in/cindy-xin",
+              "tags": [
+                  "experience",
+                  "AI",
+                  "Digital Transformation",
+                  "Marketing",
+                  "Leadership"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-position-ametek-marketing-communication",
+              "year": "2018",
+              "date": "July 2018 - January 2022",
+              "title": "Marketing Communication at AMETEK",
+              "location": "Shanghai, China",
+              "image": "",
+              "publicSummary": "•Created and optimized effective campaigns (online & offline) to increase brand visibility, lead generation and product adoption in high-tech B2B markets. •Initiate and scaled digital transformation initiatives, including the setup of a Live Streaming Studio a...",
+              "fullText": "•Created and optimized effective campaigns (online & offline) to increase brand visibility, lead generation and product adoption in high-tech B2B markets. •Initiate and scaled digital transformation initiatives, including the setup of a Live Streaming Studio and the “COE Go Digital” strategy, accelerating digital engagement and internal capabilities. •Led cross-business unit collaboration and brand alliances, enhancing brand consistency and market impact across product lines. •Delivered market intelligence and competitive analysis to inform strategic planning, pricing discussions, and sales enablement. •Managed marketing budgets, agencies, and vendors, while working closely with sales teams to translate market insights into business decisions. •Acted as a bridge between HQ strategy and local execution, supporting organizational alignment and growth objectives. Systems & Tools: Salesforce CRM, ERP, Act-On, GoToWebinar, Bidding analysis, WeChat, email marketing",
+              "sourceUrl": "https://www.linkedin.com/in/cindy-xin",
+              "tags": [
+                  "experience",
+                  "AI",
+                  "Digital Transformation",
+                  "Marketing",
+                  "AMETEK"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-position-local-administrative-office-public-communication-staff",
+              "year": "2012",
+              "date": "November 2012 - April 2018",
+              "title": "Public Communication Staff at Local Administrative Office",
+              "location": "Harbin",
+              "image": "",
+              "publicSummary": "• Developed public communication strategies and media relations • Drove public engagement and communication impact • Managed cross-stakeholder coordination in large-scale initiatives • Led public projects, such as the National Civilized City Initiative and Pub...",
+              "fullText": "• Developed public communication strategies and media relations • Drove public engagement and communication impact • Managed cross-stakeholder coordination in large-scale initiatives • Led public projects, such as the National Civilized City Initiative and Public Legal Education Outreach Programs",
+              "sourceUrl": "https://www.linkedin.com/in/cindy-xin",
+              "tags": [
+                  "experience"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-education-university-of-amsterdam-amsterdam-business-school-msc-in-business-administration",
+              "year": "2025",
+              "date": "February 2025 - June 2026",
+              "title": "MSc in Business Administration at University of Amsterdam - Amsterdam Business School",
+              "location": "",
+              "image": "",
+              "publicSummary": "MSc in Business Administration at University of Amsterdam - Amsterdam Business School",
+              "fullText": "MSc in Business Administration at University of Amsterdam - Amsterdam Business School",
+              "sourceUrl": "https://www.linkedin.com/in/cindy-xin",
+              "tags": [
+                  "education",
+                  "LinkedIn"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-education-university-of-amsterdam-amsterdam-business-school-pre-master",
+              "year": "2024",
+              "date": "August 2024 - February 2025",
+              "title": "Pre-master at University of Amsterdam - Amsterdam Business School",
+              "location": "",
+              "image": "",
+              "publicSummary": "Pre-master at University of Amsterdam - Amsterdam Business School",
+              "fullText": "Pre-master at University of Amsterdam - Amsterdam Business School",
+              "sourceUrl": "https://www.linkedin.com/in/cindy-xin",
+              "tags": [
+                  "education",
+                  "LinkedIn"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-education-harbin-university-of-commerce-bachelor-of-commerce",
+              "year": "2008",
+              "date": "2008 - 2012",
+              "title": "Bachelor of Commerce at Harbin University of Commerce",
+              "location": "",
+              "image": "",
+              "publicSummary": "Bachelor of Commerce at Harbin University of Commerce; Outstanding Graduate Scholarship",
+              "fullText": "Bachelor of Commerce at Harbin University of Commerce; Outstanding Graduate Scholarship",
+              "sourceUrl": "https://www.linkedin.com/in/cindy-xin",
+              "tags": [
+                  "education",
+                  "LinkedIn"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2026-06-02-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7467582918698090499",
+              "year": "2026",
+              "date": "June 2026",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "AI is already a trend emerging from individual use. How to guide it responsibly and turn it into a real organisational capability is a topic worth thinking about. A great perspective from Sam Solaimani, PhD, on what it means to lead with integrity in the digit...",
+              "fullText": "AI is already a trend emerging from individual use. How to guide it responsibly and turn it into a real organisational capability is a topic worth thinking about. A great perspective from Sam Solaimani, PhD, on what it means to lead with integrity in the digital age.",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7467582918698090499",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2026-05-16-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7461513532157710336",
+              "year": "2026",
+              "date": "May 2026",
+              "title": "MapKAI launch reflection",
+              "location": "",
+              "image": "",
+              "publicSummary": "📽️ A small animation for MapKAI is ready. Warm welcome to take a look! This week, I explored more broadly what is possible with AI-assisted building. With limited time and AI credits, try to see what is possible when ideas, knowledge management, learning desig...",
+              "fullText": "📽️ A small animation for MapKAI is ready. Warm welcome to take a look! This week, I explored more broadly what is possible with AI-assisted building. With limited time and AI credits, try to see what is possible when ideas, knowledge management, learning design, and AI come together. Just now, I also created a short animation with AI, turning the idea into a more visual story: AI should not only help us find answers. It should also help us see our knowledge, reflect on ourselves, and find our next direction. Two days after launch, www.mapkai.com, has already received 400+ organic visits. 👏 Thank you to everyone who has shared suggestions, taken a look, or encouraged this small experiment. 🫶 This era we are living in, a time when ideas can move from imagination to something real much faster than before. Riding the wave, learning by doing, and becoming stronger navigators of our own paths. 💪 MapKAI #AI #GenerativeAI #VibeCoding #KnowledgeManagement #LearningInnovation #FutureOfLearning",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7461513532157710336",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "MapKAI",
+                  "AI",
+                  "Learning"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2026-05-08-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7458502113170694145",
+              "year": "2026",
+              "date": "May 2026",
+              "title": "First AI-assisted website launch",
+              "location": "",
+              "image": "",
+              "publicSummary": "Ta-da! ✨ Built my very first website with an AI coding agent. From prompting and pushing code on GitHub to buying and connecting a domain ➡️ www.minigrowlab.com is live now 🚀 Words can inspire, energize, and stay with us. Every revisit brings something new. If...",
+              "fullText": "Ta-da! ✨ Built my very first website with an AI coding agent. From prompting and pushing code on GitHub to buying and connecting a domain ➡️ www.minigrowlab.com is live now 🚀 Words can inspire, energize, and stay with us. Every revisit brings something new. If you’re interested, feel free to take a look 👏 I feel lucky to witness and experience this technological wave firsthand. This project reminded me that curiosity means nothing without action. Don’t simply wait to be ready. Jump in, build fast, learn faster. Real learning starts when you stop watching and start building. First AI-assisted web project… check! ✅ ➡️ www.minigrowlab.com OpenAI #Codex Cloudflare GitHub #AIcodingagent",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7458502113170694145",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "Learning"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2026-04-27-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7454503252844478465",
+              "year": "2026",
+              "date": "April 2026",
+              "title": "Lean Six Sigma Green Belt milestone",
+              "location": "",
+              "image": "",
+              "publicSummary": "So happy to share that I have completed and earned my Lean Six Sigma Green Belt (9.5/10). It has been a highly practical learning experience, allowing me to explore areas I had not previously engaged with in depth. The challenges along the way made the outcome...",
+              "fullText": "So happy to share that I have completed and earned my Lean Six Sigma Green Belt (9.5/10). It has been a highly practical learning experience, allowing me to explore areas I had not previously engaged with in depth. The challenges along the way made the outcome even more meaningful and further strengthened my approach to critical questioning. Currently, in the final stage of my Master’s in Business Management at the University of Amsterdam, where I am actively working on my thesis and preparing for the next step in my professional journey. 💪 I’m really enjoying the inspiring connections and the recent lovely sunny days. They’ve given me a great boost to stay motivated, keep learning, and continue improving! ☀️ 🧡 #AIenhancedOE #LeanSixSigma #LSS #GreenBelt #DMAIC #IBISUvA #criticalquestioning #professinaljourney",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7454503252844478465",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "Learning",
+                  "University of Amsterdam"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2025-11-23-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7398453458804244483",
+              "year": "2025",
+              "date": "November 2025",
+              "title": "University of Amsterdam learning milestone",
+              "location": "",
+              "image": "",
+              "publicSummary": "This Friday, I was so happy and honored to be the student representative for the “Designing Future-Proof Organisations” course of the University of Amsterdam. 😊 It was a great pleasure to share my opinions and experiences with the new prospective fellows and t...",
+              "fullText": "This Friday, I was so happy and honored to be the student representative for the “Designing Future-Proof Organisations” course of the University of Amsterdam. 😊 It was a great pleasure to share my opinions and experiences with the new prospective fellows and to help answer their questions and curiosities. 💡 The highlight of the day was meeting and co-presenting with Jeroen [yuh-roon] van Bree, who is the editor and author of the book Organization Design: Frameworks, Principles, and Approaches, a highly practical and thought-provoking resource, and also the lecturer who designed this course in such an applicable and inspiring way. 📚 Even better news: a new edition of the book is on the way, in 2026! Can't wait to discover the new insights it will bring. 🌟 Big thanks to my lecturer Bert Flier for making this course so engaging, enjoyable, memorable, and insightful. I learned a great deal and gained perspectives that will stay with me beyond the classroom. 🧡 On a personal note, my past experience in multinational companies, across HQ and subsidiaries, connecting with Asian and Western cultures, helped me link the theories with real organisational challenges, which made the course even more meaningful and attractive for me. I am quite satisfied with my studying performance as well (score 9/10). 💪 💪 💪 📚 🤩 Once again, I am looking forward to the second edition of Jeroen’s book Organization Design: Frameworks, Principles, and Approaches. Highly recommend if you’re interested in this area like me !!! 👏",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7398453458804244483",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "University of Amsterdam"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2025-10-08-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7381740700570161152",
+              "year": "2025",
+              "date": "October 2025",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "So happy about all the insights and new connections! Such an empowering session on leadership and growth! Feeling motivated, and energized! “Leadership is not a position, but a choice to be influential.” I am deeply grateful to Gerda Slagter for sharing her in...",
+              "fullText": "So happy about all the insights and new connections! Such an empowering session on leadership and growth! Feeling motivated, and energized! “Leadership is not a position, but a choice to be influential.” I am deeply grateful to Gerda Slagter for sharing her inspiring reflections on vision, influence, and authentic communication, and to Hilde de Vocht and the entire team for organizing such valuable initiatives as always. Always learning, always growing: self-awareness, life long learning, and meaningful connection with inspiring people. 🤩 🤩 🤩",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7381740700570161152",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "Learning",
+                  "Leadership"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2025-05-22-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7331376250516619268",
+              "year": "2025",
+              "date": "May 2025",
+              "title": "AkzoNobel digital communication milestone",
+              "location": "",
+              "image": "",
+              "publicSummary": "Sometimes, lectures are more than just information sharing, as they broaden your perspective and leave you curious and reflective. Last Friday was one of those moments — it was wonderful to see familiar faces again! This time, Joris Vollebergh and Navninder Si...",
+              "fullText": "Sometimes, lectures are more than just information sharing, as they broaden your perspective and leave you curious and reflective. Last Friday was one of those moments — it was wonderful to see familiar faces again! This time, Joris Vollebergh and Navninder Singh joined us as guest speakers. Thank you both, as always, for your engaging and insightful presentations! ✨ (BTW, I just finished refining and finalizing my upcoming assignment, the final presentation on a digital transformation plan. I’m really happy with it, and your insights about digital transformation gave me some great new ideas. 😉) Sometimes, classes are more than just knowledge acquisition, as they leave a lasting mark on how you think and make you eager to explore. Thank you, Zahra Kashanizadeh, for making yours one of them! It was a highlight of my entire learning journey. I feel so lucky to have a teacher who made this whole process fun and meaningful. 📚 #Digitalbusiness #Leadingdigitaltransformation #AkzoNobel #UvA",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7331376250516619268",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "AkzoNobel",
+                  "Digital Transformation",
+                  "Learning"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-12-04-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7270106030749937664",
+              "year": "2024",
+              "date": "December 2024",
+              "title": "AkzoNobel digital communication milestone",
+              "location": "",
+              "image": "",
+              "publicSummary": "What an amazing experience! 🌟 Trying out a VR spray gun simulator for yacht coating was such a thrill. Putting on the VR headset and holding the spray gun felt just like stepping into an immersive game—precision coating, smooth controls, and loads of fun! ✨ Wh...",
+              "fullText": "What an amazing experience! 🌟 Trying out a VR spray gun simulator for yacht coating was such a thrill. Putting on the VR headset and holding the spray gun felt just like stepping into an immersive game—precision coating, smooth controls, and loads of fun! ✨ When work can be as enjoyable as gaming, wouldn’t you want to give it a try? 😉 This experience not only sparks curiosity about technology but also showcases the endless possibilities of combining innovation with real-world applications. 🛳️✈️ A big thanks to the teammates Proma Basu & Maria Waters for sharing this experience together! ♥️ #VR #YachtCoatings #AkzoNobel #METSTRADE",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7270106030749937664",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AkzoNobel"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-11-14-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7262863140143386624",
+              "year": "2024",
+              "date": "November 2024",
+              "title": "University of Amsterdam learning milestone",
+              "location": "",
+              "image": "",
+              "publicSummary": "Many thanks to Rijksmuseum and AkzoNobel for the dedicated contributions to protecting this masterpiece! 🧡 I’ve visited the Rijksmuseum a couple of times last year, and each time, Night Watch stands quietly under its “glass casing”. 🖼️ Though I haven’t yet had...",
+              "fullText": "Many thanks to Rijksmuseum and AkzoNobel for the dedicated contributions to protecting this masterpiece! 🧡 I’ve visited the Rijksmuseum a couple of times last year, and each time, Night Watch stands quietly under its “glass casing”. 🖼️ Though I haven’t yet had the chance to see it without this barrier, its immense value and the significance of its preservation make all the waiting worthwhile. 👏",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7262863140143386624",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "AkzoNobel"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-10-13-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7251238114680090627",
+              "year": "2024",
+              "date": "October 2024",
+              "title": "Eindhoven marathon milestone",
+              "location": "",
+              "image": "",
+              "publicSummary": "✅I did it! I’m thrilled to have completed my first marathon in Eindhoven!🏃‍♀️🏅 This experience fills me with pride, not just for breaking through my limits and achieving a personal best, but for realizing that success begins with the courage to try. With the r...",
+              "fullText": "✅I did it! I’m thrilled to have completed my first marathon in Eindhoven!🏃‍♀️🏅 This experience fills me with pride, not just for breaking through my limits and achieving a personal best, but for realizing that success begins with the courage to try. With the right approach, you can both enjoy the journey and succeed. I’m feeling confident and excited to improve my performance in my next running! 💪 Before today, I never thought I could run such a long distance without discomfort or any intention of giving up, especially since I’d never run more than 5 kilometers during my usual exercise. But thanks to the running techniques I’ve learned and prepared, I focused on monitoring my heart rate and stride length.💓Although I didn’t run very fast, the 10.55 kilometers felt surprisingly manageable, and I enjoyed the whole process! 🤩 Long-distance running is no longer something I want to avoid! A special thanks to everyone who cheered for all the runners during the Marathon event!🥁📯🫶",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7251238114680090627",
+              "link": "",
+              "tags": [
+                  "LinkedIn"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-09-19-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7242600718430351360",
+              "year": "2024",
+              "date": "September 2024",
+              "title": "AkzoNobel digital communication milestone",
+              "location": "",
+              "image": "",
+              "publicSummary": "🌞🌞🌞 Cover me in sunshine~ 🎉🎉🎉Embrace me with joy~ Take a look at how AkzoNobel's 2025 Color of the Year can add a bit of sunshine to any space! 🌻 #TrueJoy #JustLeap #TeamJoy #COTY25 #CF25 #ColourFutures #AkzoNobel #Dulux #Flexa #PaintTheFuture🎨#WindowPainting",
+              "fullText": "🌞🌞🌞 Cover me in sunshine~ 🎉🎉🎉Embrace me with joy~ Take a look at how AkzoNobel's 2025 Color of the Year can add a bit of sunshine to any space! 🌻 #TrueJoy #JustLeap #TeamJoy #COTY25 #CF25 #ColourFutures #AkzoNobel #Dulux #Flexa #PaintTheFuture🎨#WindowPainting",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7242600718430351360",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "AkzoNobel"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-09-11-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7239525809571401728",
+              "year": "2024",
+              "date": "September 2024",
+              "title": "AkzoNobel digital communication milestone",
+              "location": "",
+              "image": "",
+              "publicSummary": "True Joy – AkzoNobel - Color of the Year 2025! ☀️ A sunny yellow shade that’s on a mission to fill our homes with optimism, pride and a splash of vibrant color, it’s bound to paint a smile on your face.😊 ⬆️Read more: https://akzo.no/CF25 #AkzoNobel #CF25 #True...",
+              "fullText": "True Joy – AkzoNobel - Color of the Year 2025! ☀️ A sunny yellow shade that’s on a mission to fill our homes with optimism, pride and a splash of vibrant color, it’s bound to paint a smile on your face.😊 ⬆️Read more: https://akzo.no/CF25 #AkzoNobel #CF25 #TrueJoy #coloroftheyear",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7239525809571401728",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "AkzoNobel"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-09-07-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7238144658365710338",
+              "year": "2024",
+              "date": "September 2024",
+              "title": "AkzoNobel digital communication milestone",
+              "location": "",
+              "image": "",
+              "publicSummary": "It’s truly awe-inspiring! What’s being protected is not just the architecture, but also humanity’s shared memory of the past and future.👏 #AkzoNobel #PassionForPaint",
+              "fullText": "It’s truly awe-inspiring! What’s being protected is not just the architecture, but also humanity’s shared memory of the past and future.👏 #AkzoNobel #PassionForPaint",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7238144658365710338",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "AkzoNobel"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-09-02-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7236449358278270976",
+              "year": "2024",
+              "date": "September 2024",
+              "title": "University of Amsterdam learning milestone",
+              "location": "",
+              "image": "",
+              "publicSummary": "This September has been truly remarkable and incredibly exciting for me! New Milestone Achieved! 🎉 I’m thrilled to share that I’ve started my first day at AkzoNobel as Digital Media Intern and am loving the company’s vibrant atmosphere. I’ve met many incredibl...",
+              "fullText": "This September has been truly remarkable and incredibly exciting for me! New Milestone Achieved! 🎉 I’m thrilled to share that I’ve started my first day at AkzoNobel as Digital Media Intern and am loving the company’s vibrant atmosphere. I’ve met many incredibly energetic and professional colleagues, and I’m grateful to everyone for the warm welcome! I’m eagerly looking forward to the journey ahead! 💫 Balancing my master’s studies with this internship will undoubtedly be challenging, but I see it as a fantastic opportunity for growth. I’m confident that I can thrive in both areas! 💪 A big thanks to AkzoNobel and my supervisor Adriana Mendoza for this incredible opportunity. It’s a valuable experience to continue advancing in the field I’m passionate about while gaining a more comprehensive perspective and empowering my professional development!🌟🚀",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7236449358278270976",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "AkzoNobel"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-08-30-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7235367872787591169",
+              "year": "2024",
+              "date": "August 2024",
+              "title": "University of Amsterdam learning milestone",
+              "location": "",
+              "image": "",
+              "publicSummary": "Amazing day with amazing people! 🥂 I’m thrilled to share that I’ve officially begun my journey at the University of Amsterdam, Amsterdam Business School. Today’s orientation was truly inspiring, and I’m deeply grateful for the opportunity to continue empowerin...",
+              "fullText": "Amazing day with amazing people! 🥂 I’m thrilled to share that I’ve officially begun my journey at the University of Amsterdam, Amsterdam Business School. Today’s orientation was truly inspiring, and I’m deeply grateful for the opportunity to continue empowering myself.💫 Studying in an international environment has long been a dream of mine. After years of working and gaining valuable experience, returning to academia required a leap of courage. This relocation to Netherlands means not only living, working, and studying in Europe but also immersing myself in a diverse environment that offers a broad perspective. I’m excited to gain new insights and experiences! I’m particularly excited about this master’s program, which brings together an exceptional group of professionals from various industries. Throughout the program, I’ll learn from esteemed professors and have the opportunity to collaborate with motivated peers from diverse nationalities and sectors. This dynamic mix of perspectives promises a unique and enriching learning experience.💪 I want to express my heartfelt thanks to my previous employers and colleagues. The rich experiences and profound case studies we shared have undoubtedly played a significant role in shaping my master’s journey and will greatly benefit my future.🫶 As I embark on this new chapter, I’m excited for the journey ahead and ready to embrace all the opportunities it brings!🚀🚀🚀",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7235367872787591169",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "Learning",
+                  "University of Amsterdam"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-08-06-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7226556050521362433",
+              "year": "2024",
+              "date": "August 2024",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "I’m happy to share that I’ve obtained a new certification: Agile Project Management from Google!",
+              "fullText": "I’m happy to share that I’ve obtained a new certification: Agile Project Management from Google!",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7226556050521362433",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-07-19-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7219977627648864257",
+              "year": "2024",
+              "date": "July 2024",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "This is so inspiring! Thanks for sharing! Karine Allouche Salanon (she,her) I truly love her perspective : “…You can view this change with apprehension, or embrace it with a growth mindset and a commitment to lifelong learning…” Additionally, thanks to Courser...",
+              "fullText": "This is so inspiring! Thanks for sharing! Karine Allouche Salanon (she,her) I truly love her perspective : “…You can view this change with apprehension, or embrace it with a growth mindset and a commitment to lifelong learning…” Additionally, thanks to Coursera, I have learned a lot on this online platform and look forward to continuing my learning journey to empower my professional development. 🤩",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7219977627648864257",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "Learning"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-07-18-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7219645435441750016",
+              "year": "2024",
+              "date": "July 2024",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "AI integration in marketing enhances businesses by providing precise insights into consumer demands and market trends, while also enhancing customer experiences through personalized recommendations and tailored services. 📈 Thanks for the Meet-Up and the opport...",
+              "fullText": "AI integration in marketing enhances businesses by providing precise insights into consumer demands and market trends, while also enhancing customer experiences through personalized recommendations and tailored services. 📈 Thanks for the Meet-Up and the opportunity to reflect on balancing AI's strengths with other technologies and human expertise. Simultaneously, focus on using effective tools and avoid relying too heavily on AI alone. 💡",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7219645435441750016",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "Marketing"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-06-27-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7212086172020322306",
+              "year": "2024",
+              "date": "June 2024",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "A successful annual Struers marketing conversion! Congratulations to everyone! What a wonderful team - filled with passion, collaboration, open-mindedness, and continuous input. I truly enjoyed working with all of you and fondly reminisce about my time with th...",
+              "fullText": "A successful annual Struers marketing conversion! Congratulations to everyone! What a wonderful team - filled with passion, collaboration, open-mindedness, and continuous input. I truly enjoyed working with all of you and fondly reminisce about my time with the team. It was truly worthwhile to join the team and be a part of you! Struers Life is a journey, not a destination. I see this relocation and gap year as a new beginning, not an endpoint. Embracing changes and evolving locations, I will always follow my heart. Seeing life from multiple perspectives is a gift, not a challenge. 🎁 🏆",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7212086172020322306",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "Marketing",
+                  "Struers"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-05-30-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7202060738725654528",
+              "year": "2024",
+              "date": "May 2024",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "Attending GM Eindhoven has been an incredibly enriching experience! 👏 From the introduction to the roundtable discussion, and to the presentations, I have gained valuable insights into the latest technological trends and developments, also networking in busine...",
+              "fullText": "Attending GM Eindhoven has been an incredibly enriching experience! 👏 From the introduction to the roundtable discussion, and to the presentations, I have gained valuable insights into the latest technological trends and developments, also networking in businesses. ( Special thanks to Gigi De Vries for the insightful coffee talk on branding & marketing strategies, and social networking ❤️ ) Moreover, I had the opportunity to connect with many innovative and like-minded individuals, which expanded my perspectives and opened my eyes to new possibilities. 🚀 What a worthwhile and unforgettable day! #emergingtechnologies #GMWorld!#Conference Center High Tech Campus",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7202060738725654528",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "Marketing"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-05-10-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7194658616170139648",
+              "year": "2024",
+              "date": "May 2024",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "A few months ago, I participated in a walking tour of Eindhoven for foreigners, where I had the pleasure of meeting people from diverse backgrounds. As someone new to Europe, I was eager to explore its wonders. During a conversation with a German friend, he re...",
+              "fullText": "A few months ago, I participated in a walking tour of Eindhoven for foreigners, where I had the pleasure of meeting people from diverse backgrounds. As someone new to Europe, I was eager to explore its wonders. During a conversation with a German friend, he recommended some German destinations 👏. Thankfully, during the golden months of April and May this year, I embarked on a road trip to these destinations, which exceeded all my expectations 🚘. Watching the sunset by the Rhine River was truly breathtaking 🌇. As the evening sun painted the sky with shades of orange and pink, I found myself fully immersed in the enchanting atmosphere, swaying to the rhythm of music from riverside bars. In Dresden, the magnificent architecture captured my imagination at every turn, each corner resembling a scene from a captivating storybook filled with unique and marvelous tales 📚. I am deeply grateful to the dedicated staff for organizing such engaging and meaningful activities. (Thanks for everything to Sandy Barkowsky😘) These initiatives provided newly arrived internationals like myself with structured opportunities to explore our new environment and connect with individuals from diverse backgrounds. Moreover, I am reminded that \"the journey of a thousand miles begins with a single step.\" I am thankful for the ongoing progress and evolution of human culture and civilization, which continuously enrich our lives with countless treasures to explore and contemplate ❤️. I eagerly anticipate future encounters with more friends and the exploration of my next trips and destinations. Holland Expat Center South👍 Gemeente Eindhoven👍",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7194658616170139648",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-04-19-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7186995505376243713",
+              "year": "2024",
+              "date": "April 2024",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "Not just technology, but also art...Like ❤️",
+              "fullText": "Not just technology, but also art...Like ❤️",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7186995505376243713",
+              "link": "",
+              "tags": [
+                  "LinkedIn"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-03-29-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7179591085466218496",
+              "year": "2024",
+              "date": "March 2024",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "During a relaxed city walk, a remarkable coincidence occurred – I unexpectedly had the pleasure of meeting Dutch Prime Minister Rutte today, Good Friday. Despite taking a break from my career, I found myself constantly thinking about communication, marketing s...",
+              "fullText": "During a relaxed city walk, a remarkable coincidence occurred – I unexpectedly had the pleasure of meeting Dutch Prime Minister Rutte today, Good Friday. Despite taking a break from my career, I found myself constantly thinking about communication, marketing strategies and business impacts, getting ideas from daily life, valuble experiences and journeys. This meeting inspired me even more, making me realize that working (eg. marketing for me) isn't just about professional skills; it's also about connecting with people, understanding their needs, and building emotional bonds. Looking back on my work experiences, I've learned that successful marketing and communication is more than just promoting products or services; it's about gaining trust and connecting with the audience. Therefore, I'm excited to continue learning and refining myself for future endeavors in this kind of field.",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7179591085466218496",
+              "link": "",
+              "tags": [
+                  "LinkedIn",
+                  "AI",
+                  "Marketing",
+                  "Learning"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2024-02-01-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7158799258018615297",
+              "year": "2024",
+              "date": "February 2024",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "A rewarding journey, which is enhancing my expertise and expanding my horizons, providing a robust platform for my personal and professional growth. # keep learning and keep growing # keep living and keep loving",
+              "fullText": "A rewarding journey, which is enhancing my expertise and expanding my horizons, providing a robust platform for my personal and professional growth. # keep learning and keep growing # keep living and keep loving",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7158799258018615297",
+              "link": "https://coursera.org/share/88e15e3916a90904685feb679261f807",
+              "tags": [
+                  "LinkedIn",
+                  "Learning"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2023-09-12-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7107355450777448448",
+              "year": "2023",
+              "date": "September 2023",
+              "title": "LinkedIn post",
+              "location": "",
+              "image": "",
+              "publicSummary": "I'm attending Live Insights: Emerging Markets – Sunny now, variable weather ahead. Join me!",
+              "fullText": "I'm attending Live Insights: Emerging Markets – Sunny now, variable weather ahead. Join me!",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7107355450777448448",
+              "link": "",
+              "tags": [
+                  "LinkedIn"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "linkedin-post-2021-12-17-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a6877632610282078208",
+              "year": "2021",
+              "date": "December 2021",
+              "title": "LinkedIn share",
+              "location": "",
+              "image": "",
+              "publicSummary": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A6877632610282078208",
+              "fullText": "",
+              "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A6877632610282078208",
+              "link": "",
+              "tags": [
+                  "LinkedIn"
+              ],
+              "status": "published",
+              "userApproved": true
+          }
+      ],
+      "aiWorks": [
+          {
+              "id": "work-cindy-mapkai",
+              "title": "MapKAI",
+              "type": "AI-assisted knowledge mapping product",
+              "publicSummary": "An AI-assisted knowledge mapping website that helps people turn fragmented knowledge into clearer learning paths and meaningful self-reflection.",
+              "whyMade": "To explore how AI can support knowledge structuring, reflection, learning path design, and better personal or team decision-making.",
+              "toolsUsed": [
+                  "AI-assisted development",
+                  "UX writing",
+                  "knowledge structure design",
+                  "quiz flow design",
+                  "web iteration"
+              ],
+              "humanRole": "Co-created the concept, shaped the knowledge structure, wrote UX content, designed quiz flows, and iterated the website from concept to launch.",
+              "aiRole": "Supported product exploration, structure generation, implementation assistance, and reflection design.",
+              "result": "A launched public website and Partner Decision Council demo exploring AI-assisted reflection and structured decision-making.",
+              "link": "https://www.mapkai.com",
+              "tags": [
+                  "AI",
+                  "knowledge mapping",
+                  "UX writing",
+                  "product thinking"
+              ],
+              "status": "published",
+              "userApproved": true
+          },
+          {
+              "id": "work-cindy-minigrowlab",
+              "title": "MiniGrowLab",
+              "type": "AI-assisted web project",
+              "publicSummary": "Cindy’s first AI-assisted website, built from prompting and code iteration through to domain launch.",
+              "whyMade": "To turn a personal idea into a real web experience and learn by building with AI coding tools.",
+              "toolsUsed": [
+                  "OpenAI Codex",
+                  "GitHub",
+                  "Cloudflare",
+                  "AI-assisted web development"
+              ],
+              "humanRole": "Prompted, curated, pushed code, connected the domain, and shaped the concept and writing.",
+              "aiRole": "Assisted with code generation, implementation details, and iteration.",
+              "result": "A live first AI-assisted website experiment at minigrowlab.com.",
+              "link": "https://www.minigrowlab.com",
+              "tags": [
+                  "AI-assisted web development",
+                  "vibe coding",
+                  "learning by doing"
+              ],
+              "status": "published",
+              "userApproved": true
+          }
+      ]
   }
 };
 
@@ -2319,9 +3110,7 @@ function renderTimeline() {
               <h3>${escapeHtml(story.title)}</h3>
               ${summary ? `<p>${escapeHtml(summary)}</p>` : ""}
               ${extraImages.length ? `<details class="event-gallery"><summary>View ${extraImages.length} more photo${extraImages.length === 1 ? "" : "s"}</summary><div>${extraImages.map((image, index) => `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${story.title} photo ${index + 2}`)}" />`).join("")}</div></details>` : ""}
-              ${ownerMode && story.fullText ? `<details class="event-full-text owner-only"><summary>Full source text</summary><p>${escapeHtml(story.fullText)}</p></details>` : ""}
               ${story.link ? `<a class="source-link" href="${escapeHtml(story.link)}" target="_blank" rel="noopener">Open link</a>` : ""}
-              ${ownerMode && story.sourceUrl ? `<a class="source-link owner-only" href="${escapeHtml(story.sourceUrl)}" target="_blank" rel="noopener">Open source</a>` : ""}
               ${ownerMode && story.tags?.length ? `<div class="tag-row owner-only">${story.tags.slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
             </div>
           </article>
