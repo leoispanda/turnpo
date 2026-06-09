@@ -1378,8 +1378,8 @@ const seedProfiles = {
       "oneLineIntro": "Digital Business Strategy | Digital & AI Transformation | Stakeholder Management | Data Analytics | AI-enhanced Operational Excellence| Dutch Work Permit",
       "currentChapter": "Building MapKAI and exploring digital business strategy, AI transformation, UX writing, knowledge structuring, and data-informed operational excellence.",
       "location": "Eindhoven, North Brabant, Netherlands",
-      "avatar": "/assets/turnpo-logo-full.png",
-      "avatarPositionY": 24,
+      "avatar": "/assets/profile-media/cindy/linkedin-2026-04-27-profile-photo-01.jpg",
+      "avatarPositionY": 30,
       "links": [
           {
               "label": "Turnpo",
@@ -1429,7 +1429,7 @@ const seedProfiles = {
               "date": "LinkedIn profile",
               "title": "LinkedIn profile summary",
               "location": "Eindhoven, North Brabant, Netherlands",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2026-05-19-photo-01.jpg",
               "publicSummary": "Recently created and built MapKAI (www.mapkai.com) with a collaborator. It is an AI-assisted knowledge mapping website that reflects my hands-on interest and experience in AI-assisted development, product thinking, UX writing, and knowledge structuring.With ov...",
               "fullText": "Recently created and built MapKAI (www.mapkai.com) with a collaborator. It is an AI-assisted knowledge mapping website that reflects my hands-on interest and experience in AI-assisted development, product thinking, UX writing, and knowledge structuring.With over 10 years of professional experience, I specialize in digital transformation, integrated marketing, and strategic storytelling. At AkzoNobel, Struers and AMETEK, I have contributed to global communication and digital transformation strategies, aligning digital media execution across multiple channels to enhance brand visibility and audience connection. My work integrates data-driven insights with creative narratives to optimize campaign performance and support global initiatives. My expertise lies in translating digital performance data into actionable strategies that balance innovation with measurable results. Passionate about leveraging digital transformation and AI to drive business outcomes, I am committed to enabling impactful communication and fostering organizational alignment in multinational environments.",
               "sourceUrl": "https://www.linkedin.com/in/cindy-xin",
@@ -1439,7 +1439,25 @@ const seedProfiles = {
                   "AI"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2026-05-19-photo-01.jpg",
+                  "/assets/profile-media/cindy/linkedin-2026-04-27-photo-02.jpg",
+                  "/assets/profile-media/cindy/linkedin-2026-04-27-profile-background-01.jpg",
+                  "/assets/profile-media/cindy/linkedin-2026-04-27-profile-background-02.jpg",
+                  "/assets/profile-media/cindy/linkedin-2026-04-27-photo-03.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-08-06-document-image-01.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-07-18-photo-04.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-07-17-article-cover-photo-01.png",
+                  "/assets/profile-media/cindy/linkedin-2024-06-22-photo-05.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-10-article-inline-photo-01.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-10-article-cover-photo-02.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-03-06-document-image-02.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-02-03-document-image-03.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-02-01-document-image-04.jpg",
+                  "/assets/profile-media/cindy/linkedin-2023-07-06-profile-background-03.jpg",
+                  "/assets/profile-media/cindy/linkedin-2023-07-06-profile-background-04.jpg"
+              ]
           },
           {
               "id": "linkedin-skills",
@@ -1646,7 +1664,7 @@ const seedProfiles = {
               "date": "May 2026",
               "title": "First AI-assisted website launch",
               "location": "",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2026-05-08-feed-photo-01.gif",
               "publicSummary": "Ta-da! ✨ Built my very first website with an AI coding agent. From prompting and pushing code on GitHub to buying and connecting a domain ➡️ www.minigrowlab.com is live now 🚀 Words can inspire, energize, and stay with us. Every revisit brings something new. If...",
               "fullText": "Ta-da! ✨ Built my very first website with an AI coding agent. From prompting and pushing code on GitHub to buying and connecting a domain ➡️ www.minigrowlab.com is live now 🚀 Words can inspire, energize, and stay with us. Every revisit brings something new. If you’re interested, feel free to take a look 👏 I feel lucky to witness and experience this technological wave firsthand. This project reminded me that curiosity means nothing without action. Don’t simply wait to be ready. Jump in, build fast, learn faster. Real learning starts when you stop watching and start building. First AI-assisted web project… check! ✅ ➡️ www.minigrowlab.com OpenAI #Codex Cloudflare GitHub #AIcodingagent",
               "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7458502113170694145",
@@ -1657,7 +1675,10 @@ const seedProfiles = {
                   "Learning"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2026-05-08-feed-photo-01.gif"
+              ]
           },
           {
               "id": "linkedin-post-2026-04-27-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7454503252844478465",
@@ -1665,7 +1686,7 @@ const seedProfiles = {
               "date": "April 2026",
               "title": "Lean Six Sigma Green Belt milestone",
               "location": "",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2026-04-27-feed-photo-02.jpg",
               "publicSummary": "So happy to share that I have completed and earned my Lean Six Sigma Green Belt (9.5/10). It has been a highly practical learning experience, allowing me to explore areas I had not previously engaged with in depth. The challenges along the way made the outcome...",
               "fullText": "So happy to share that I have completed and earned my Lean Six Sigma Green Belt (9.5/10). It has been a highly practical learning experience, allowing me to explore areas I had not previously engaged with in depth. The challenges along the way made the outcome even more meaningful and further strengthened my approach to critical questioning. Currently, in the final stage of my Master’s in Business Management at the University of Amsterdam, where I am actively working on my thesis and preparing for the next step in my professional journey. 💪 I’m really enjoying the inspiring connections and the recent lovely sunny days. They’ve given me a great boost to stay motivated, keep learning, and continue improving! ☀️ 🧡 #AIenhancedOE #LeanSixSigma #LSS #GreenBelt #DMAIC #IBISUvA #criticalquestioning #professinaljourney",
               "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7454503252844478465",
@@ -1677,7 +1698,10 @@ const seedProfiles = {
                   "University of Amsterdam"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2026-04-27-feed-photo-02.jpg"
+              ]
           },
           {
               "id": "linkedin-post-2025-11-23-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7398453458804244483",
@@ -1685,7 +1709,7 @@ const seedProfiles = {
               "date": "November 2025",
               "title": "University of Amsterdam learning milestone",
               "location": "",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2025-11-23-feed-photo-03.jpg",
               "publicSummary": "This Friday, I was so happy and honored to be the student representative for the “Designing Future-Proof Organisations” course of the University of Amsterdam. 😊 It was a great pleasure to share my opinions and experiences with the new prospective fellows and t...",
               "fullText": "This Friday, I was so happy and honored to be the student representative for the “Designing Future-Proof Organisations” course of the University of Amsterdam. 😊 It was a great pleasure to share my opinions and experiences with the new prospective fellows and to help answer their questions and curiosities. 💡 The highlight of the day was meeting and co-presenting with Jeroen [yuh-roon] van Bree, who is the editor and author of the book Organization Design: Frameworks, Principles, and Approaches, a highly practical and thought-provoking resource, and also the lecturer who designed this course in such an applicable and inspiring way. 📚 Even better news: a new edition of the book is on the way, in 2026! Can't wait to discover the new insights it will bring. 🌟 Big thanks to my lecturer Bert Flier for making this course so engaging, enjoyable, memorable, and insightful. I learned a great deal and gained perspectives that will stay with me beyond the classroom. 🧡 On a personal note, my past experience in multinational companies, across HQ and subsidiaries, connecting with Asian and Western cultures, helped me link the theories with real organisational challenges, which made the course even more meaningful and attractive for me. I am quite satisfied with my studying performance as well (score 9/10). 💪 💪 💪 📚 🤩 Once again, I am looking forward to the second edition of Jeroen’s book Organization Design: Frameworks, Principles, and Approaches. Highly recommend if you’re interested in this area like me !!! 👏",
               "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7398453458804244483",
@@ -1696,7 +1720,11 @@ const seedProfiles = {
                   "University of Amsterdam"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2025-11-23-feed-photo-03.jpg",
+                  "/assets/profile-media/cindy/linkedin-2025-11-23-feed-photo-04.jpg"
+              ]
           },
           {
               "id": "linkedin-post-2025-10-08-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7381740700570161152",
@@ -1723,7 +1751,7 @@ const seedProfiles = {
               "date": "May 2025",
               "title": "AkzoNobel digital communication milestone",
               "location": "",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2025-05-22-feed-photo-05.jpg",
               "publicSummary": "Sometimes, lectures are more than just information sharing, as they broaden your perspective and leave you curious and reflective. Last Friday was one of those moments — it was wonderful to see familiar faces again! This time, Joris Vollebergh and Navninder Si...",
               "fullText": "Sometimes, lectures are more than just information sharing, as they broaden your perspective and leave you curious and reflective. Last Friday was one of those moments — it was wonderful to see familiar faces again! This time, Joris Vollebergh and Navninder Singh joined us as guest speakers. Thank you both, as always, for your engaging and insightful presentations! ✨ (BTW, I just finished refining and finalizing my upcoming assignment, the final presentation on a digital transformation plan. I’m really happy with it, and your insights about digital transformation gave me some great new ideas. 😉) Sometimes, classes are more than just knowledge acquisition, as they leave a lasting mark on how you think and make you eager to explore. Thank you, Zahra Kashanizadeh, for making yours one of them! It was a highlight of my entire learning journey. I feel so lucky to have a teacher who made this whole process fun and meaningful. 📚 #Digitalbusiness #Leadingdigitaltransformation #AkzoNobel #UvA",
               "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7331376250516619268",
@@ -1736,7 +1764,10 @@ const seedProfiles = {
                   "Learning"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2025-05-22-feed-photo-05.jpg"
+              ]
           },
           {
               "id": "linkedin-post-2024-12-04-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7270106030749937664",
@@ -1781,7 +1812,7 @@ const seedProfiles = {
               "date": "October 2024",
               "title": "Eindhoven marathon milestone",
               "location": "",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2024-10-13-feed-photo-06.jpg",
               "publicSummary": "✅I did it! I’m thrilled to have completed my first marathon in Eindhoven!🏃‍♀️🏅 This experience fills me with pride, not just for breaking through my limits and achieving a personal best, but for realizing that success begins with the courage to try. With the r...",
               "fullText": "✅I did it! I’m thrilled to have completed my first marathon in Eindhoven!🏃‍♀️🏅 This experience fills me with pride, not just for breaking through my limits and achieving a personal best, but for realizing that success begins with the courage to try. With the right approach, you can both enjoy the journey and succeed. I’m feeling confident and excited to improve my performance in my next running! 💪 Before today, I never thought I could run such a long distance without discomfort or any intention of giving up, especially since I’d never run more than 5 kilometers during my usual exercise. But thanks to the running techniques I’ve learned and prepared, I focused on monitoring my heart rate and stride length.💓Although I didn’t run very fast, the 10.55 kilometers felt surprisingly manageable, and I enjoyed the whole process! 🤩 Long-distance running is no longer something I want to avoid! A special thanks to everyone who cheered for all the runners during the Marathon event!🥁📯🫶",
               "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7251238114680090627",
@@ -1790,7 +1821,13 @@ const seedProfiles = {
                   "LinkedIn"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2024-10-13-feed-photo-06.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-10-13-feed-photo-07.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-10-13-feed-photo-08.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-10-13-feed-photo-09.jpg"
+              ]
           },
           {
               "id": "linkedin-post-2024-09-19-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7242600718430351360",
@@ -1817,7 +1854,7 @@ const seedProfiles = {
               "date": "September 2024",
               "title": "AkzoNobel digital communication milestone",
               "location": "",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2024-09-11-feed-photo-10.jpg",
               "publicSummary": "True Joy – AkzoNobel - Color of the Year 2025! ☀️ A sunny yellow shade that’s on a mission to fill our homes with optimism, pride and a splash of vibrant color, it’s bound to paint a smile on your face.😊 ⬆️Read more: https://akzo.no/CF25 #AkzoNobel #CF25 #True...",
               "fullText": "True Joy – AkzoNobel - Color of the Year 2025! ☀️ A sunny yellow shade that’s on a mission to fill our homes with optimism, pride and a splash of vibrant color, it’s bound to paint a smile on your face.😊 ⬆️Read more: https://akzo.no/CF25 #AkzoNobel #CF25 #TrueJoy #coloroftheyear",
               "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7239525809571401728",
@@ -1828,7 +1865,14 @@ const seedProfiles = {
                   "AkzoNobel"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2024-09-11-feed-photo-10.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-09-11-feed-photo-11.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-09-11-feed-photo-12.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-09-11-feed-photo-13.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-09-11-feed-photo-14.jpg"
+              ]
           },
           {
               "id": "linkedin-post-2024-09-07-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7238144658365710338",
@@ -1855,7 +1899,7 @@ const seedProfiles = {
               "date": "September 2024",
               "title": "University of Amsterdam learning milestone",
               "location": "",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2024-09-02-feed-photo-15.jpg",
               "publicSummary": "This September has been truly remarkable and incredibly exciting for me! New Milestone Achieved! 🎉 I’m thrilled to share that I’ve started my first day at AkzoNobel as Digital Media Intern and am loving the company’s vibrant atmosphere. I’ve met many incredibl...",
               "fullText": "This September has been truly remarkable and incredibly exciting for me! New Milestone Achieved! 🎉 I’m thrilled to share that I’ve started my first day at AkzoNobel as Digital Media Intern and am loving the company’s vibrant atmosphere. I’ve met many incredibly energetic and professional colleagues, and I’m grateful to everyone for the warm welcome! I’m eagerly looking forward to the journey ahead! 💫 Balancing my master’s studies with this internship will undoubtedly be challenging, but I see it as a fantastic opportunity for growth. I’m confident that I can thrive in both areas! 💪 A big thanks to AkzoNobel and my supervisor Adriana Mendoza for this incredible opportunity. It’s a valuable experience to continue advancing in the field I’m passionate about while gaining a more comprehensive perspective and empowering my professional development!🌟🚀",
               "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7236449358278270976",
@@ -1866,7 +1910,10 @@ const seedProfiles = {
                   "AkzoNobel"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2024-09-02-feed-photo-15.jpg"
+              ]
           },
           {
               "id": "linkedin-post-2024-08-30-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7235367872787591169",
@@ -1874,7 +1921,7 @@ const seedProfiles = {
               "date": "August 2024",
               "title": "University of Amsterdam learning milestone",
               "location": "",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2024-08-30-feed-photo-16.jpg",
               "publicSummary": "Amazing day with amazing people! 🥂 I’m thrilled to share that I’ve officially begun my journey at the University of Amsterdam, Amsterdam Business School. Today’s orientation was truly inspiring, and I’m deeply grateful for the opportunity to continue empowerin...",
               "fullText": "Amazing day with amazing people! 🥂 I’m thrilled to share that I’ve officially begun my journey at the University of Amsterdam, Amsterdam Business School. Today’s orientation was truly inspiring, and I’m deeply grateful for the opportunity to continue empowering myself.💫 Studying in an international environment has long been a dream of mine. After years of working and gaining valuable experience, returning to academia required a leap of courage. This relocation to Netherlands means not only living, working, and studying in Europe but also immersing myself in a diverse environment that offers a broad perspective. I’m excited to gain new insights and experiences! I’m particularly excited about this master’s program, which brings together an exceptional group of professionals from various industries. Throughout the program, I’ll learn from esteemed professors and have the opportunity to collaborate with motivated peers from diverse nationalities and sectors. This dynamic mix of perspectives promises a unique and enriching learning experience.💪 I want to express my heartfelt thanks to my previous employers and colleagues. The rich experiences and profound case studies we shared have undoubtedly played a significant role in shaping my master’s journey and will greatly benefit my future.🫶 As I embark on this new chapter, I’m excited for the journey ahead and ready to embrace all the opportunities it brings!🚀🚀🚀",
               "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3Ashare%3A7235367872787591169",
@@ -1886,7 +1933,10 @@ const seedProfiles = {
                   "University of Amsterdam"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2024-08-30-feed-photo-16.jpg"
+              ]
           },
           {
               "id": "linkedin-post-2024-08-06-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7226556050521362433",
@@ -1968,7 +2018,7 @@ const seedProfiles = {
               "date": "May 2024",
               "title": "LinkedIn post",
               "location": "",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2024-05-30-feed-photo-17.jpg",
               "publicSummary": "Attending GM Eindhoven has been an incredibly enriching experience! 👏 From the introduction to the roundtable discussion, and to the presentations, I have gained valuable insights into the latest technological trends and developments, also networking in busine...",
               "fullText": "Attending GM Eindhoven has been an incredibly enriching experience! 👏 From the introduction to the roundtable discussion, and to the presentations, I have gained valuable insights into the latest technological trends and developments, also networking in businesses. ( Special thanks to Gigi De Vries for the insightful coffee talk on branding & marketing strategies, and social networking ❤️ ) Moreover, I had the opportunity to connect with many innovative and like-minded individuals, which expanded my perspectives and opened my eyes to new possibilities. 🚀 What a worthwhile and unforgettable day! #emergingtechnologies #GMWorld!#Conference Center High Tech Campus",
               "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7202060738725654528",
@@ -1979,7 +2029,16 @@ const seedProfiles = {
                   "Marketing"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2024-05-30-feed-photo-17.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-30-feed-photo-18.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-30-feed-photo-19.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-30-feed-photo-20.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-30-feed-photo-21.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-30-feed-photo-22.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-30-feed-photo-23.jpg"
+              ]
           },
           {
               "id": "linkedin-post-2024-05-10-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7194658616170139648",
@@ -1987,7 +2046,7 @@ const seedProfiles = {
               "date": "May 2024",
               "title": "LinkedIn post",
               "location": "",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2024-05-10-feed-photo-24.jpg",
               "publicSummary": "A few months ago, I participated in a walking tour of Eindhoven for foreigners, where I had the pleasure of meeting people from diverse backgrounds. As someone new to Europe, I was eager to explore its wonders. During a conversation with a German friend, he re...",
               "fullText": "A few months ago, I participated in a walking tour of Eindhoven for foreigners, where I had the pleasure of meeting people from diverse backgrounds. As someone new to Europe, I was eager to explore its wonders. During a conversation with a German friend, he recommended some German destinations 👏. Thankfully, during the golden months of April and May this year, I embarked on a road trip to these destinations, which exceeded all my expectations 🚘. Watching the sunset by the Rhine River was truly breathtaking 🌇. As the evening sun painted the sky with shades of orange and pink, I found myself fully immersed in the enchanting atmosphere, swaying to the rhythm of music from riverside bars. In Dresden, the magnificent architecture captured my imagination at every turn, each corner resembling a scene from a captivating storybook filled with unique and marvelous tales 📚. I am deeply grateful to the dedicated staff for organizing such engaging and meaningful activities. (Thanks for everything to Sandy Barkowsky😘) These initiatives provided newly arrived internationals like myself with structured opportunities to explore our new environment and connect with individuals from diverse backgrounds. Moreover, I am reminded that \"the journey of a thousand miles begins with a single step.\" I am thankful for the ongoing progress and evolution of human culture and civilization, which continuously enrich our lives with countless treasures to explore and contemplate ❤️. I eagerly anticipate future encounters with more friends and the exploration of my next trips and destinations. Holland Expat Center South👍 Gemeente Eindhoven👍",
               "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7194658616170139648",
@@ -1997,7 +2056,17 @@ const seedProfiles = {
                   "AI"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2024-05-10-feed-photo-24.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-10-feed-photo-25.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-10-feed-photo-26.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-10-feed-photo-27.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-10-feed-photo-28.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-10-feed-photo-29.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-10-feed-photo-30.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-05-10-feed-photo-31.jpg"
+              ]
           },
           {
               "id": "linkedin-post-2024-04-19-https-www-linkedin-com-feed-update-urn-3ali-3augcpost-3a7186995505376243713",
@@ -2022,7 +2091,7 @@ const seedProfiles = {
               "date": "March 2024",
               "title": "LinkedIn post",
               "location": "",
-              "image": "",
+              "image": "/assets/profile-media/cindy/linkedin-2024-03-29-feed-photo-32.jpg",
               "publicSummary": "During a relaxed city walk, a remarkable coincidence occurred – I unexpectedly had the pleasure of meeting Dutch Prime Minister Rutte today, Good Friday. Despite taking a break from my career, I found myself constantly thinking about communication, marketing s...",
               "fullText": "During a relaxed city walk, a remarkable coincidence occurred – I unexpectedly had the pleasure of meeting Dutch Prime Minister Rutte today, Good Friday. Despite taking a break from my career, I found myself constantly thinking about communication, marketing strategies and business impacts, getting ideas from daily life, valuble experiences and journeys. This meeting inspired me even more, making me realize that working (eg. marketing for me) isn't just about professional skills; it's also about connecting with people, understanding their needs, and building emotional bonds. Looking back on my work experiences, I've learned that successful marketing and communication is more than just promoting products or services; it's about gaining trust and connecting with the audience. Therefore, I'm excited to continue learning and refining myself for future endeavors in this kind of field.",
               "sourceUrl": "https://www.linkedin.com/feed/update/urn%3Ali%3AugcPost%3A7179591085466218496",
@@ -2034,7 +2103,12 @@ const seedProfiles = {
                   "Learning"
               ],
               "status": "published",
-              "userApproved": true
+              "userApproved": true,
+              "images": [
+                  "/assets/profile-media/cindy/linkedin-2024-03-29-feed-photo-32.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-03-29-feed-photo-33.jpg",
+                  "/assets/profile-media/cindy/linkedin-2024-03-29-feed-photo-34.jpg"
+              ]
           },
           {
               "id": "linkedin-post-2024-02-01-https-www-linkedin-com-feed-update-urn-3ali-3ashare-3a7158799258018615297",
