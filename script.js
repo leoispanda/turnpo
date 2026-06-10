@@ -3799,17 +3799,50 @@ function renderAiImportDraft(draft) {
   $("#aiImportOutput").hidden = false;
   $("#aiImportAnalysis").textContent = draft.analysis;
   $("#aiImportDraft").value = draft.copyText;
-  $("#aiImportNote").textContent = "Text document generated. Copy it, or add it as a hidden Life item. Images are added manually after review.";
+  $("#aiImportNote").textContent = draft.provider === "openai"
+    ? `AI text document generated with ${draft.model || "OpenAI"}. Copy it, or add it as a hidden Life item. Images are added manually after review.`
+    : "Text document generated locally. Copy it, or add it as a hidden Life item. Images are added manually after review.";
 }
 
-function prepareAiImport(event) {
+async function requestAiImportDraft(source) {
+  const response = await fetch("/api/ai/import-profile", {
+    method: "POST",
+    credentials: "same-origin",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      sourceText: source,
+      profileName: currentProfile().displayName || "",
+      username: currentProfile().username || ""
+    })
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error || "AI import is not available.");
+  return {
+    ...data.draft,
+    provider: data.provider,
+    model: data.model
+  };
+}
+
+async function prepareAiImport(event) {
   event.preventDefault();
   const source = $("#aiImportSource").value.trim();
   if (!source) {
     $("#aiImportNote").textContent = "Paste CV text, LinkedIn text, a written profile, or personal notes first.";
     return;
   }
-  renderAiImportDraft(generateAiImportDraft(source));
+  $("#aiImportSubmit").disabled = true;
+  $("#aiImportNote").textContent = "Calling AI to generate a text-only Turnpo document...";
+  try {
+    renderAiImportDraft(await requestAiImportDraft(source));
+  } catch (error) {
+    const fallbackDraft = generateAiImportDraft(source);
+    fallbackDraft.provider = "local";
+    renderAiImportDraft(fallbackDraft);
+    $("#aiImportNote").textContent = `AI API unavailable, so a local text draft was generated instead. ${error.message}`;
+  } finally {
+    $("#aiImportSubmit").disabled = false;
+  }
 }
 
 async function copyAiImportDraft() {
