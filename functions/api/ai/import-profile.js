@@ -27,6 +27,7 @@ function textDocumentFromDraft(draft) {
     `Title: ${draft.title}`,
     `Year: ${draft.year}`,
     `Month: ${draft.month}`,
+    `Location: ${draft.location}`,
     "Type: Life",
     `Summary: ${draft.publicSummary}`,
     `Why it matters: ${draft.whyItMatters}`,
@@ -45,10 +46,6 @@ function extractOutputText(data) {
   return content?.text || "";
 }
 
-function compactText(value = "") {
-  return String(value).replace(/\s+/g, "").replace(/[，。,.!?！？:：;；]/g, "").toLowerCase();
-}
-
 function extractMonth(value = "") {
   const englishMonth = MONTH_NAMES.find((month) => new RegExp(`\\b${month}\\b`, "i").test(value));
   if (englishMonth) return englishMonth;
@@ -63,21 +60,19 @@ function normalizeMonth(value = "", sourceText = "") {
   return extractMonth(sourceText) || extractMonth(value) || MONTH_NAMES[new Date().getMonth()];
 }
 
-function normalizeDraft(value = {}, sourceText = "") {
+function normalizeDraft(value = {}, sourceText = "", profileLocation = "") {
   const tags = Array.isArray(value.tags) ? value.tags.map(String).filter(Boolean).slice(0, 8) : [];
   const draft = {
     title: String(value.title || "Personal turning point").trim().slice(0, 120),
     year: String(value.year || new Date().getFullYear()).trim().slice(0, 12),
     month: normalizeMonth(value.month, sourceText),
+    location: String(value.location || profileLocation || "Unknown").trim().slice(0, 120),
     publicSummary: String(value.publicSummary || value.summary || "").trim().slice(0, 900),
     whyItMatters: String(value.whyItMatters || "").trim().slice(0, 700),
     tags: tags.length ? tags : ["AI draft"],
     analysis: String(value.analysis || "").trim().slice(0, 500)
   };
-  draft.copyText = String(value.copyText || value.profileDocument || textDocumentFromDraft(draft)).trim();
-  if (compactText(draft.copyText) === compactText(sourceText)) {
-    draft.copyText = textDocumentFromDraft(draft);
-  }
+  draft.copyText = textDocumentFromDraft(draft);
   return draft;
 }
 
@@ -88,7 +83,12 @@ export async function onRequestPost({ request, env }) {
   const apiKey = env.OPENAI_API_KEY;
   if (!apiKey) return json({ error: "Missing OPENAI_API_KEY." }, { status: 500 });
 
-  const { sourceText = "", profileName = "", username = "" } = await readJson(request);
+  const {
+    sourceText = "",
+    profileName = "",
+    profileLocation = "",
+    username = ""
+  } = await readJson(request);
   const text = String(sourceText || "").trim();
   if (text.length < 20) return json({ error: "Please provide more source text." }, { status: 400 });
 
@@ -106,17 +106,18 @@ export async function onRequestPost({ request, env }) {
       instructions: [
         "You generate Turnpo text-only profile drafts from user-provided personal material.",
         "Return only valid JSON matching the schema.",
-        "Write in the same primary language as the source text unless the source asks otherwise.",
+        "Write every generated field in natural English, regardless of the source language.",
+        "Translate non-English source material into concise, natural English suitable for the Turnpo website.",
         "Do not copy the source text verbatim as the generated document.",
         "Transform the source into a polished Turnpo draft with clear structure, owner-reviewed wording, and cautious interpretation.",
-        "The copyText field must be the actual generated Turnpo document, not the raw source text.",
-        "copyText must include these sections: Title, Year, Month, Type, Summary, Why it matters, Tags, Images, Review note.",
-        "For Chinese input, use Chinese section labels and Chinese prose.",
         "For very short input, produce a concise but meaningfully rewritten draft and mention what the owner may want to add during review.",
         "Do not invent images, image URLs, employers, degrees, dates, awards, or private facts.",
         "Extract the month explicitly stated or requested in the source text. For example, 7月 or July must return month as July; never replace it with the current month.",
         "Return month as a full English month name from January through December.",
         "Only use the current month when the source text contains no month at all.",
+        "Extract the location where the described event happened, not the profile owner's home location.",
+        "Translate or romanize non-English place names into the standard English place name used internationally.",
+        `If the source contains no event location, use this profile location as the fallback: ${String(profileLocation || "Unknown").slice(0, 120)}.`,
         "If details are unclear, keep the wording cautious.",
         "The result must be hidden draft content for owner review, not a published final profile.",
         "Always remind that images must be updated manually by the user."
@@ -146,7 +147,7 @@ export async function onRequestPost({ request, env }) {
           schema: {
             type: "object",
             additionalProperties: false,
-            required: ["title", "year", "month", "publicSummary", "whyItMatters", "tags", "analysis", "copyText"],
+            required: ["title", "year", "month", "location", "publicSummary", "whyItMatters", "tags", "analysis"],
             properties: {
               title: { type: "string" },
               year: { type: "string" },
@@ -154,14 +155,14 @@ export async function onRequestPost({ request, env }) {
                 type: "string",
                 enum: MONTH_NAMES
               },
+              location: { type: "string" },
               publicSummary: { type: "string" },
               whyItMatters: { type: "string" },
               tags: {
                 type: "array",
                 items: { type: "string" }
               },
-              analysis: { type: "string" },
-              copyText: { type: "string" }
+              analysis: { type: "string" }
             }
           }
         }
@@ -181,7 +182,7 @@ export async function onRequestPost({ request, env }) {
   try {
     return json({
       ok: true,
-      draft: normalizeDraft(JSON.parse(outputText), sourceTextForModel),
+      draft: normalizeDraft(JSON.parse(outputText), sourceTextForModel, profileLocation),
       provider: "openai",
       model
     });

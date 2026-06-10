@@ -3759,12 +3759,13 @@ function keywordSummary(source = "") {
   return keywords.filter(([, pattern]) => pattern.test(source)).map(([label]) => label);
 }
 
-function generateAiImportDraft(source = "") {
+function generateAiImportDraft(source = "", profileLocation = "") {
   const lines = meaningfulSourceLines(source);
   const keywords = keywordSummary(source);
   const title = pickDraftTitle(source);
   const year = pickDraftYear(source);
   const month = pickDraftMonth(source);
+  const location = profileLocation || "Unknown";
   const wordCount = source.trim().split(/\s+/).filter(Boolean).length;
   const characterCount = [...source.trim().replace(/\s+/g, "")].length;
   const summarySource = lines.slice(0, 3).join(" ");
@@ -3785,6 +3786,7 @@ function generateAiImportDraft(source = "") {
     `Title: ${title}`,
     `Year: ${year}`,
     `Month: ${month}`,
+    `Location: ${location}`,
     "Type: Life",
     `Summary: ${publicSummary}`,
     `Why it matters: ${whyItMatters}`,
@@ -3798,6 +3800,7 @@ function generateAiImportDraft(source = "") {
     title,
     year,
     month,
+    location,
     publicSummary,
     whyItMatters,
     tags,
@@ -3825,6 +3828,7 @@ async function requestAiImportDraft(source) {
     body: JSON.stringify({
       sourceText: source,
       profileName: currentProfile().displayName || "",
+      profileLocation: currentProfile().location || "",
       username: currentProfile().username || ""
     })
   });
@@ -3865,7 +3869,7 @@ function useLocalAiImportFallback() {
     $("#aiImportNote").textContent = "Paste source text before using local fallback.";
     return;
   }
-  const fallbackDraft = generateAiImportDraft(source);
+  const fallbackDraft = generateAiImportDraft(source, currentProfile().location || "");
   fallbackDraft.provider = "local";
   renderAiImportDraft(fallbackDraft);
 }
@@ -3903,7 +3907,7 @@ function addAiImportLifeDraft() {
     title: lastAiImportDraft.title,
     year: lastAiImportDraft.year,
     date: storyDateValue(lastAiImportDraft.year, lastAiImportDraft.month || defaultStoryDate().month),
-    location: currentProfile().location || "",
+    location: lastAiImportDraft.location || currentProfile().location || "",
     publicSummary: lastAiImportDraft.publicSummary,
     whyItMatters: lastAiImportDraft.whyItMatters,
     tags: lastAiImportDraft.tags,
