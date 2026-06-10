@@ -2233,7 +2233,7 @@ let onlinePublishedAvailable = false;
 let onlineSyncInFlight = false;
 let lastOnlineSavedAt = "";
 let lastOnlinePublishedAt = "";
-let lastAiImportDraft = null;
+let lastAiImportDrafts = [];
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -3809,15 +3809,23 @@ function generateAiImportDraft(source = "", profileLocation = "") {
   };
 }
 
-function renderAiImportDraft(draft) {
-  lastAiImportDraft = draft;
+function renderAiImportDrafts(drafts) {
+  lastAiImportDrafts = drafts;
+  const provider = drafts[0]?.provider;
+  const model = drafts[0]?.model;
+  const count = drafts.length;
   $("#aiImportOutput").hidden = false;
   $("#useLocalAiImportFallback").hidden = true;
-  $("#aiImportAnalysis").textContent = draft.analysis;
-  $("#aiImportDraft").value = draft.copyText;
-  $("#aiImportNote").textContent = draft.provider === "openai"
-    ? `AI text document generated with ${draft.model || "OpenAI"}. Copy it, or add it as a hidden Life item. Images are added manually after review.`
-    : "Text document generated locally. Copy it, or add it as a hidden Life item. Images are added manually after review.";
+  $("#aiImportAnalysis").textContent = count === 1
+    ? drafts[0].analysis
+    : `${count} separate Life drafts detected. ${drafts.map((draft, index) => `${index + 1}. ${draft.title}`).join(" · ")}`;
+  $("#aiImportDraft").value = drafts
+    .map((draft, index) => count > 1 ? `DRAFT ${index + 1} OF ${count}\n${draft.copyText}` : draft.copyText)
+    .join("\n\n------------------------------\n\n");
+  $("#addAiImportLife").textContent = count > 1 ? `Add ${count} hidden Life drafts` : "Add as hidden Life";
+  $("#aiImportNote").textContent = provider === "openai"
+    ? `${count} text ${count === 1 ? "draft" : "drafts"} generated with ${model || "OpenAI"}. Review before adding. Images are added manually.`
+    : "A local fallback draft was generated. Review it before adding. Images are added manually.";
 }
 
 async function requestAiImportDraft(source) {
@@ -3834,11 +3842,13 @@ async function requestAiImportDraft(source) {
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.error || "AI import is not available.");
-  return {
-    ...data.draft,
+  const drafts = Array.isArray(data.drafts) ? data.drafts : (data.draft ? [data.draft] : []);
+  if (!drafts.length) throw new Error("AI did not return any drafts.");
+  return drafts.map((draft) => ({
+    ...draft,
     provider: data.provider,
     model: data.model
-  };
+  }));
 }
 
 async function prepareAiImport(event) {
@@ -3853,9 +3863,9 @@ async function prepareAiImport(event) {
   $("#aiImportSubmit").disabled = true;
   $("#aiImportNote").textContent = "Calling AI to generate a text-only Turnpo document...";
   try {
-    renderAiImportDraft(await requestAiImportDraft(source));
+    renderAiImportDrafts(await requestAiImportDraft(source));
   } catch (error) {
-    lastAiImportDraft = null;
+    lastAiImportDrafts = [];
     $("#useLocalAiImportFallback").hidden = false;
     $("#aiImportNote").textContent = `AI API failed: ${error.message} You can retry, or use the local fallback draft.`;
   } finally {
@@ -3871,7 +3881,7 @@ function useLocalAiImportFallback() {
   }
   const fallbackDraft = generateAiImportDraft(source, currentProfile().location || "");
   fallbackDraft.provider = "local";
-  renderAiImportDraft(fallbackDraft);
+  renderAiImportDrafts([fallbackDraft]);
 }
 
 async function copyAiImportDraft() {
@@ -3896,32 +3906,32 @@ function addAiImportLifeDraft() {
     $("#aiImportNote").textContent = "Enter owner mode before adding draft content.";
     return;
   }
-  if (!lastAiImportDraft) {
+  if (!lastAiImportDrafts.length) {
     $("#aiImportNote").textContent = "Generate a text document before adding it.";
     return;
   }
   const now = new Date().toISOString();
-  const item = normalizeContent({
+  const items = lastAiImportDrafts.map((draft) => normalizeContent({
     id: `story-ai-import-${crypto.randomUUID()}`,
     category: "life",
-    title: lastAiImportDraft.title,
-    year: lastAiImportDraft.year,
-    date: storyDateValue(lastAiImportDraft.year, lastAiImportDraft.month || defaultStoryDate().month),
-    location: lastAiImportDraft.location || currentProfile().location || "",
-    publicSummary: lastAiImportDraft.publicSummary,
-    whyItMatters: lastAiImportDraft.whyItMatters,
-    tags: lastAiImportDraft.tags,
+    title: draft.title,
+    year: draft.year,
+    date: storyDateValue(draft.year, draft.month || defaultStoryDate().month),
+    location: draft.location || currentProfile().location || "",
+    publicSummary: draft.publicSummary,
+    whyItMatters: draft.whyItMatters,
+    tags: draft.tags,
     status: "hidden",
     userApproved: false,
     ownerEdited: true,
     ownerEditedAt: now,
     updatedAt: now
-  }, "story");
-  currentProfile().lifeStories.unshift(item);
-  syncPublicStateForItem(currentProfile(), "story", item);
+  }, "story"));
+  currentProfile().lifeStories.unshift(...items);
+  items.forEach((item) => syncPublicStateForItem(currentProfile(), "story", item));
   saveActiveProfile();
   renderProfile();
-  $("#aiImportNote").textContent = "Added as a hidden text-only Life draft. Review, edit, and add images manually before publishing.";
+  $("#aiImportNote").textContent = `Added ${items.length} hidden text-only Life ${items.length === 1 ? "draft" : "drafts"}. Review, edit, and add images manually before publishing.`;
   saveProfileDraftOnline({ quiet: true });
 }
 

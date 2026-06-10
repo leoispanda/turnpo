@@ -10,6 +10,113 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-10 - v0.1.136
+
+Commit: this commit - `Split AI imports into separate Life drafts`
+
+### Changed
+
+- Changed the AI import response from a single draft object to a `drafts` array with support for up to 20 Life drafts per import.
+- Instructed the AI to split source material when dates, locations, roles, events, headings, URLs, or topics indicate separate experiences.
+- Added a short source excerpt to each AI result so its month can be validated against the relevant source section instead of the full multi-event input.
+- Added multi-draft preview text, draft numbering, detected-title summaries, and a dynamic batch-add button.
+- Made one action create every detected experience as a separate hidden Life draft with its own title, date, location, summary, meaning, and tags.
+- Updated the AI import interface text to clarify that multiple posts, CV entries, notes, and experiences can be imported together.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Ran `node --check functions/api/ai/import-profile.js`.
+- Ran `git diff --check`.
+- Verified the server rejects an empty `drafts` collection and limits accepted results to 20.
+- Verified the frontend remains compatible with the previous single-draft response shape.
+
+## 2026-06-10 - v0.1.135
+
+Commit: `cef1cf8` - `Fix AI import location and language`
+
+### Changed
+
+- Added a structured `location` field to AI-generated Life drafts.
+- Made the AI extract the event location instead of always using the profile owner's home location.
+- Added the profile location as a fallback only when the source does not identify an event location.
+- Required non-English place names to be translated or romanized into their standard English names.
+- Changed generated titles, summaries, meaning, tags, analysis, and document labels to natural English regardless of source language.
+- Rebuilt the generated document from normalized structured fields so its location and date match the values saved to the Life draft.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Ran `node --check functions/api/ai/import-profile.js`.
+- Ran `git diff --check`.
+- Verified imported Life drafts use the AI-extracted location before the profile fallback.
+
+## 2026-06-10 - v0.1.134
+
+Commit: `7be03cd` - `Fix AI import month handling`
+
+### Changed
+
+- Added a required structured month field to AI import results.
+- Added deterministic English and Chinese month parsing so values such as `7月` are normalized to `July`.
+- Made the server prefer the month explicitly present in the user's source over an incorrect model response.
+- Saved imported Life dates as complete month-and-year values instead of storing the year alone.
+- Added the same month handling to the local fallback generator.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Ran `node --check functions/api/ai/import-profile.js`.
+- Ran `git diff --check`.
+- Verified an imported July event no longer falls back to the current month of June.
+
+## 2026-06-10 - v0.1.132
+
+Commit: `616a838` - `Clarify AI import fallback`
+
+### Changed
+
+- Kept the OpenAI-generated import as the primary workflow.
+- Made the local text generator an explicit fallback shown only after the AI API fails.
+- Clarified generated-document, hidden-draft, manual-image, and owner-review messaging.
+
+### Verified
+
+- Ran JavaScript syntax checks.
+- Verified the fallback action remains hidden during a successful AI import.
+
+## 2026-06-10 - v0.1.130
+
+Commit: `a224058` - `Connect AI text import API`
+
+### Changed
+
+- Added the authenticated `/api/ai/import-profile` endpoint backed by the OpenAI Responses API.
+- Added strict structured output for generated Turnpo Life draft fields.
+- Connected the owner interface to the API and preserved a local fallback path.
+- Kept imported content hidden until the owner reviews and explicitly publishes it.
+
+### Verified
+
+- Ran JavaScript syntax checks.
+- Verified API errors are surfaced in the owner interface without automatically publishing content.
+
+## 2026-06-10 - v0.1.128
+
+Commit: `de97491` - `Add AI text import drafts`
+
+### Changed
+
+- Added the owner-only AI text import drawer and source-text workflow.
+- Added generated document preview, copy, and hidden-Life-draft actions.
+- Added local text analysis and draft generation as the initial import implementation.
+- Kept image selection manual and required owner review before publishing.
+
+### Verified
+
+- Ran JavaScript syntax checks.
+- Verified generated imports are added as hidden Life content.
+
 ## 2026-06-07 - v0.1.117
 
 Commit: this commit - `Align public 2021 story count`

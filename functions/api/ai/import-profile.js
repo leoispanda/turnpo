@@ -108,7 +108,13 @@ export async function onRequestPost({ request, env }) {
         "Return only valid JSON matching the schema.",
         "Write every generated field in natural English, regardless of the source language.",
         "Translate non-English source material into concise, natural English suitable for the Turnpo website.",
-        "Do not copy the source text verbatim as the generated document.",
+        "Identify every distinct life event, post, role, course, trip, achievement, or turning point in the source.",
+        "Return each distinct item as a separate draft. Never merge unrelated items into one draft.",
+        "Use changes in date, location, role, event, heading, URL, or topic as evidence that a new draft should begin.",
+        "Preserve the source order. Return one draft only when the source genuinely describes one event.",
+        "Return no more than 20 drafts.",
+        "For each draft, include sourceExcerpt containing the exact short portion of source text used for that draft.",
+        "Except for sourceExcerpt, do not copy the source text verbatim into generated fields.",
         "Transform the source into a polished Turnpo draft with clear structure, owner-reviewed wording, and cautious interpretation.",
         "For very short input, produce a concise but meaningfully rewritten draft and mention what the owner may want to add during review.",
         "Do not invent images, image URLs, employers, degrees, dates, awards, or private facts.",
@@ -142,32 +148,43 @@ export async function onRequestPost({ request, env }) {
       text: {
         format: {
           type: "json_schema",
-          name: "turnpo_text_import_draft",
+          name: "turnpo_text_import_drafts",
           strict: true,
           schema: {
             type: "object",
             additionalProperties: false,
-            required: ["title", "year", "month", "location", "publicSummary", "whyItMatters", "tags", "analysis"],
+            required: ["drafts"],
             properties: {
-              title: { type: "string" },
-              year: { type: "string" },
-              month: {
-                type: "string",
-                enum: MONTH_NAMES
-              },
-              location: { type: "string" },
-              publicSummary: { type: "string" },
-              whyItMatters: { type: "string" },
-              tags: {
+              drafts: {
                 type: "array",
-                items: { type: "string" }
-              },
-              analysis: { type: "string" }
+                items: {
+                  type: "object",
+                  additionalProperties: false,
+                  required: ["sourceExcerpt", "title", "year", "month", "location", "publicSummary", "whyItMatters", "tags", "analysis"],
+                  properties: {
+                    sourceExcerpt: { type: "string" },
+                    title: { type: "string" },
+                    year: { type: "string" },
+                    month: {
+                      type: "string",
+                      enum: MONTH_NAMES
+                    },
+                    location: { type: "string" },
+                    publicSummary: { type: "string" },
+                    whyItMatters: { type: "string" },
+                    tags: {
+                      type: "array",
+                      items: { type: "string" }
+                    },
+                    analysis: { type: "string" }
+                  }
+                }
+              }
             }
           }
         }
       },
-      max_output_tokens: 1400
+      max_output_tokens: 8000
     })
   });
 
@@ -180,9 +197,16 @@ export async function onRequestPost({ request, env }) {
   if (!outputText) return json({ error: "OpenAI did not return a text draft." }, { status: 502 });
 
   try {
+    const parsed = JSON.parse(outputText);
+    const values = Array.isArray(parsed.drafts) ? parsed.drafts.slice(0, 20) : [];
+    if (!values.length) throw new Error("No drafts");
     return json({
       ok: true,
-      draft: normalizeDraft(JSON.parse(outputText), sourceTextForModel, profileLocation),
+      drafts: values.map((value) => normalizeDraft(
+        value,
+        String(value.sourceExcerpt || ""),
+        profileLocation
+      )),
       provider: "openai",
       model
     });
