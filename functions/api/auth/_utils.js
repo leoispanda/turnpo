@@ -2,6 +2,7 @@ const SESSION_COOKIE = "turnpo_owner_session";
 const DEFAULT_OWNER_EMAIL_PROFILES = {
   "cxin7699nl23@gmail.com": "cindy"
 };
+const RESERVED_USERNAMES = new Set(["admin", "api", "auth", "cindy", "founder", "home", "leo", "login", "profiles", "register", "settings", "turnpo", "u"]);
 const CODE_TTL_SECONDS = 10 * 60;
 const SESSION_TTL_SECONDS = 7 * 24 * 60 * 60;
 
@@ -30,6 +31,11 @@ export function approvedProfileForEmail(env, email) {
   const approved = parseList(env.TURNPO_APPROVED_OWNER_EMAILS || env.APPROVED_OWNER_EMAILS || "");
   if (!approved.includes(email)) return "";
   return env.TURNPO_DEFAULT_OWNER_PROFILE || env.OWNER_DEFAULT_PROFILE || "leo";
+}
+
+export async function ownerProfileForEmail(env, email) {
+  const stored = env.AUTH_KV ? await env.AUTH_KV.get(ownerProfileKey(email)) : "";
+  return stored || approvedProfileForEmail(env, email);
 }
 
 export function requireAuthConfig(env) {
@@ -94,6 +100,14 @@ export function profilePublishedKey(username) {
   return `profile:published:${username}`;
 }
 
+export function ownerProfileKey(email) {
+  return `auth:owner:${normalizeEmail(email)}`;
+}
+
+export function registeredUsernameKey(username) {
+  return `profile:username:${normalizeUsername(username)}`;
+}
+
 export function requestKey(email) {
   return `auth:request:${email}`;
 }
@@ -145,7 +159,21 @@ export async function ownerSession(request, env) {
 }
 
 export function normalizeUsername(value = "") {
-  return String(value).trim().replace(/^@/, "").toLowerCase();
+  return String(value)
+    .trim()
+    .replace(/^@/, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 32);
+}
+
+export function usernameFromName(name = "") {
+  return normalizeUsername(name) || `turnpo-${Math.floor(Date.now() / 1000)}`;
+}
+
+export function validUsername(username = "") {
+  return /^[a-z0-9](?:[a-z0-9-]{1,30}[a-z0-9])?$/.test(username) && !RESERVED_USERNAMES.has(username);
 }
 
 export function assertOwnerProfile(session, username) {

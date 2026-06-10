@@ -2264,11 +2264,17 @@ function loadProfiles() {
 }
 
 function loadPublicProfile(username) {
-  profiles[username] = normalizeProfile(clone(seedProfiles[username]));
+  if (seedProfiles[username]) {
+    profiles[username] = normalizeProfile(clone(seedProfiles[username]));
+  } else if (!profiles[username]) {
+    profiles[username] = starterProfile({ username, displayName: username });
+  }
 }
 
 function loadOwnerProfile(username) {
-  profiles[username] = savedProfile(username) || normalizeProfile(clone(seedProfiles[username]));
+  profiles[username] = savedProfile(username)
+    || (seedProfiles[username] ? normalizeProfile(clone(seedProfiles[username])) : profiles[username])
+    || starterProfile({ username, displayName: username });
 }
 
 function normalizeProfile(profile, options = {}) {
@@ -2628,6 +2634,12 @@ function publicWorks(profile = currentProfile()) {
     .sort((a, b) => yearSortValue(b.year) - yearSortValue(a.year));
 }
 
+function publicWorkLinks(profile = currentProfile()) {
+  return publicWorks(profile)
+    .filter((work) => work.link)
+    .map((work) => ({ label: work.title, url: work.link }));
+}
+
 function publicTimelineItems(profile = currentProfile()) {
   return [...publicStories(profile), ...publicTimelineWorks(profile)]
     .sort((a, b) => yearSortValue(b.year) - yearSortValue(a.year));
@@ -2664,6 +2676,44 @@ function escapeHtml(value = "") {
 
 function parseList(value) {
   return value.split(",").map((item) => item.trim()).filter(Boolean);
+}
+
+function normalizeUsername(value = "") {
+  return String(value)
+    .trim()
+    .replace(/^@/, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 32);
+}
+
+function starterProfile({ username, displayName, email = "" }) {
+  return normalizeProfile({
+    id: `profile-${username}`,
+    status: "published",
+    seedVersion: "local-starter",
+    username,
+    displayName,
+    ownerEmail: email,
+    oneLineIntro: `${displayName} is building a Turnpo profile in the AI era.`,
+    currentChapter: "Shaping a public profile through turning points, meaningful work, and owner-approved stories.",
+    location: "",
+    avatar: "/assets/turnpo-logo-full.png",
+    avatarPositionY: 24,
+    links: [],
+    values: [],
+    themes: [],
+    lifeStories: [],
+    aiWorks: [],
+    publicState: {
+      hiddenStoryIds: [],
+      deletedStoryIds: [],
+      hiddenWorkIds: [],
+      deletedWorkIds: [],
+      collapsedYears: []
+    }
+  });
 }
 
 function absoluteUrl(value = "") {
@@ -2754,7 +2804,10 @@ function setRoute(route) {
     return;
   }
 
-  activeUsername = profiles[route] && isPublicProfile(profiles[route]) ? route : "leo";
+  const normalizedRoute = normalizeUsername(route);
+  activeUsername = normalizedRoute && (profiles[normalizedRoute] || !seedProfiles[normalizedRoute])
+    ? normalizedRoute
+    : "leo";
   if (!ownerMode) loadPublicProfile(activeUsername);
   localStorage.setItem(ACTIVE_PROFILE_KEY, activeUsername);
   body.classList.add("profile-open");
@@ -2848,7 +2901,7 @@ function renderProfile() {
   $("#profileAvatar").alt = `${profile.displayName} portrait`;
   $("#profileAvatar").style.setProperty("--avatar-y", `${profile.avatarPositionY}%`);
   renderPersistenceStatus();
-  $("#profileLinks").innerHTML = profile.links.map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("");
+  $("#profileLinks").innerHTML = publicWorkLinks(profile).map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("");
   const aiProfile = generateAiProfile(profile);
   $("#aiMarkdown").value = aiProfile;
   $("#publicAiMarkdown").value = aiProfile;
@@ -3212,6 +3265,7 @@ function renderWorkProjects() {
 function generateAiProfile(profile) {
   const stories = publicTimelineItems(profile);
   const works = publicWorks(profile);
+  const workLinks = publicWorkLinks(profile);
   return `# ${profile.displayName}
 
 Username: @${profile.username}
@@ -3233,7 +3287,7 @@ ${stories.length ? stories.map((story) => `- ${story.year}: ${story.title} (${st
 ${works.length ? works.map((work) => `- ${work.year || "Undated"}: ${work.title}${work.location ? ` (${work.location})` : ""} - ${work.publicSummary}${work.link ? ` [Open link](${work.link})` : ""}`).join("\n") : "- No published work yet"}
 
 ## Public links
-${profile.links.length ? profile.links.map((link) => `- [${link.label}](${link.url})`).join("\n") : "- No public links yet"}
+${workLinks.length ? workLinks.map((link) => `- [${link.label}](${link.url})`).join("\n") : "- No public links yet"}
 
 ## Suggested questions for AI-assisted review
 - What shaped this person beyond their job title?
@@ -3247,6 +3301,7 @@ function renderJsonLd(profile) {
   const profileUrl = `${SITE_URL}/u/${profile.username}`;
   const stories = publicTimelineItems(profile);
   const works = publicWorks(profile);
+  const workLinks = publicWorkLinks(profile);
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
@@ -3269,7 +3324,7 @@ function renderJsonLd(profile) {
         description: profile.oneLineIntro,
         homeLocation: profile.location ? { "@type": "Place", name: profile.location } : undefined,
         knowsAbout: [...profile.values, ...profile.themes],
-        sameAs: profile.links.map((link) => link.url),
+        sameAs: workLinks.map((link) => link.url),
         subjectOf: [
           ...stories.map((story) => ({
             "@type": "CreativeWork",
@@ -3304,6 +3359,9 @@ function setOwnerMode(enabled) {
 }
 
 function enterOwnerMode(profileUsername = ownerSessionProfile || activeUsername) {
+  if (profileUsername && !profiles[profileUsername]) {
+    profiles[profileUsername] = starterProfile({ username: profileUsername, displayName: profileUsername });
+  }
   if (profiles[profileUsername]) activeUsername = profileUsername;
   setOwnerMode(true);
   setRoute(activeUsername);
@@ -3607,6 +3665,18 @@ function setAuthDrawer(open) {
   if (open && !authCodeRequested) $("#ownerEmail").focus();
 }
 
+function setRegistrationDrawer(open) {
+  $("#registrationDrawer").classList.toggle("open", open);
+  $("#registrationDrawer").setAttribute("aria-hidden", String(!open));
+  if (open) $("#registerName").focus();
+}
+
+function setAiImportDrawer(open) {
+  $("#aiImportDrawer").classList.toggle("open", open);
+  $("#aiImportDrawer").setAttribute("aria-hidden", String(!open));
+  if (open) $("#aiImportSource").focus();
+}
+
 async function authRequest(path, payload) {
   const response = await fetch(path, {
     method: payload ? "POST" : "GET",
@@ -3617,6 +3687,43 @@ async function authRequest(path, payload) {
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.error || "Turnpo auth is not available yet.");
   return data;
+}
+
+async function registerProfile(event) {
+  event.preventDefault();
+  const name = $("#registerName").value.trim();
+  const email = $("#registerEmail").value.trim().toLowerCase();
+  if (!name || !email) {
+    $("#registrationNote").textContent = "Enter your name and email to create your page.";
+    return;
+  }
+  $("#registrationSubmit").disabled = true;
+  $("#registrationNote").textContent = "Creating your Turnpo page...";
+  try {
+    const data = await authRequest("/api/auth/register", { name, email });
+    const username = data.profile;
+    profiles[username] = normalizeProfile(data.profileData || starterProfile({ username, displayName: name, email }));
+    activeUsername = username;
+    ownerSessionProfile = username;
+    saveActiveProfile();
+    localStorage.setItem(ACTIVE_PROFILE_KEY, username);
+    setRegistrationDrawer(false);
+    $("#registrationForm").reset();
+    enterOwnerMode(username);
+    setOwnerSaveStatus("Profile created. Add life stories, AI works, or use AI import when the API is connected.");
+  } catch (error) {
+    $("#registrationNote").textContent = error.message;
+  } finally {
+    $("#registrationSubmit").disabled = false;
+  }
+}
+
+function prepareAiImport(event) {
+  event.preventDefault();
+  const source = $("#aiImportSource").value.trim();
+  $("#aiImportNote").textContent = source
+    ? "AI import source saved in this form for now. Next step: connect the MapKAI or Turnpo AI API to turn it into hidden draft items."
+    : "Paste a profile link, CV text, LinkedIn summary, or notes first.";
 }
 
 function resetAuthForm(message = "Only approved owner emails can enter founder mode. If your email is approved, Turnpo will send a one-time code.") {
@@ -3661,7 +3768,7 @@ async function verifyLoginCode() {
   $("#authNote").textContent = "Verifying code...";
   try {
     const session = await authRequest("/api/auth/verify-code", { email: pendingOwnerEmail, code });
-    if (session.profile && profiles[session.profile]) ownerSessionProfile = session.profile;
+    if (session.profile) ownerSessionProfile = session.profile;
     enterOwnerMode(ownerSessionProfile);
     setAuthDrawer(false);
     resetAuthForm("Owner mode is active.");
@@ -3675,8 +3782,15 @@ async function verifyLoginCode() {
 async function checkOwnerSession() {
   try {
     const session = await authRequest("/api/auth/session");
-    if (session.authenticated && session.profile && profiles[session.profile]) {
+    if (session.authenticated && session.profile) {
       ownerSessionProfile = session.profile;
+      if (!profiles[ownerSessionProfile]) {
+        profiles[ownerSessionProfile] = starterProfile({
+          username: ownerSessionProfile,
+          displayName: ownerSessionProfile,
+          email: session.email || ""
+        });
+      }
     }
   } catch {
     ownerSessionProfile = "";
@@ -3960,13 +4074,19 @@ $("#contentForm").addEventListener("paste", (event) => {
   useImageFiles([file]);
 });
 $("#homeOwnerLogin").addEventListener("click", () => {
-  if (ownerSessionProfile && profiles[ownerSessionProfile]) enterOwnerMode(ownerSessionProfile);
+  if (ownerSessionProfile) enterOwnerMode(ownerSessionProfile);
   else setAuthDrawer(true);
 });
+$("#openRegistration").addEventListener("click", () => setRegistrationDrawer(true));
+$("#openAiImport").addEventListener("click", () => setAiImportDrawer(true));
 $("#ownerLogout").addEventListener("click", logoutOwner);
 $("#backToSearch").addEventListener("click", () => setRoute("home"));
 $("#closeAuth").addEventListener("click", () => setAuthDrawer(false));
 $("#authBackdrop").addEventListener("click", () => setAuthDrawer(false));
+$("#closeRegistration").addEventListener("click", () => setRegistrationDrawer(false));
+$("#registrationBackdrop").addEventListener("click", () => setRegistrationDrawer(false));
+$("#closeAiImport").addEventListener("click", () => setAiImportDrawer(false));
+$("#aiImportBackdrop").addEventListener("click", () => setAiImportDrawer(false));
 $("#saveProfileState").addEventListener("click", saveCurrentProfileState);
 $("#publishProfileOnline").addEventListener("click", () => {
   saveActiveProfile();
@@ -3982,6 +4102,8 @@ $("#authForm").addEventListener("submit", async (event) => {
   if (authCodeRequested) await verifyLoginCode();
   else await requestLoginCode();
 });
+$("#registrationForm").addEventListener("submit", registerProfile);
+$("#aiImportForm").addEventListener("submit", prepareAiImport);
 
 window.addEventListener("popstate", () => setRoute(routeFromLocation()));
 

@@ -1,11 +1,11 @@
 import {
   CODE_TTL_SECONDS,
-  approvedProfileForEmail,
   codeKey,
   hashCode,
   incrementWindow,
   json,
   normalizeEmail,
+  ownerProfileForEmail,
   randomCode,
   readJson,
   requestKey,
@@ -24,7 +24,7 @@ export async function onRequestPost({ request, env }) {
   const attempts = await incrementWindow(env, requestKey(email), 2 * 60);
   if (attempts > 5) return json({ error: "Too many code requests. Please try again later." }, { status: 429 });
 
-  const profile = approvedProfileForEmail(env, email);
+  const profile = await ownerProfileForEmail(env, email);
   if (!profile) {
     return json({ ok: true, message: "If this email is approved, a login code will be sent." });
   }
