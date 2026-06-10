@@ -3,6 +3,7 @@ const LOCAL_PREFIX = "turnpo:profile:";
 const COLLAPSED_YEARS_PREFIX = "turnpo:collapsed-years:";
 const COLLAPSED_YEARS_DEFAULT_PREFIX = "turnpo:collapsed-years-default:";
 const STATUSES = ["published", "hidden", "deleted"];
+const LEGAL_NOTICE_VERSION = "0.2";
 const SITE_URL = "https://www.turnpo.com";
 const BRAND_ASSETS = {
   logo: `${SITE_URL}/assets/icons/icon-512.png`,
@@ -2234,6 +2235,7 @@ let onlineSyncInFlight = false;
 let lastOnlineSavedAt = "";
 let lastOnlinePublishedAt = "";
 let lastAiImportDrafts = [];
+let publishConfirmationResolver = null;
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -3542,7 +3544,7 @@ function findContent(type, id) {
   return contentCollection().find((item) => item.id === id && (category === "work" ? item.category === "work" : item.category !== "work"));
 }
 
-function upsertContent(event) {
+async function upsertContent(event) {
   event.preventDefault();
   const type = $("#contentType").value;
   const status = $("#contentStatus").value;
@@ -3573,6 +3575,10 @@ function upsertContent(event) {
   }, type);
   if (!base.title || !base.publicSummary) {
     $("#contentStatusNote").textContent = "Title and details are required.";
+    return;
+  }
+  if (wantsPublish && !(await requestPublishConfirmation())) {
+    $("#contentStatusNote").textContent = "Publication cancelled. Choose Hidden to save without publishing.";
     return;
   }
   const collection = contentCollection();
@@ -3613,9 +3619,10 @@ function deleteContentById(type, id) {
   saveProfileDraftOnline({ quiet: true }).then(() => publishProfileOnline({ quiet: false }));
 }
 
-function setContentStatus(type, id, status) {
+async function setContentStatus(type, id, status) {
   const item = findContent(type, id);
   if (!item || !STATUSES.includes(status)) return;
+  if (status === "published" && !(await requestPublishConfirmation())) return;
   const now = new Date().toISOString();
   item.status = status;
   item.userApproved = status === "published";
@@ -3678,6 +3685,35 @@ function setAiImportDrawer(open) {
   if (open) $("#aiImportSource").focus();
 }
 
+function closePublishConfirmation(confirmed = false) {
+  $("#publishConfirmation").classList.remove("open");
+  $("#publishConfirmation").setAttribute("aria-hidden", "true");
+  $("#publishConfirmationConsent").checked = false;
+  $("#publishConfirmationNote").textContent = "";
+  const resolver = publishConfirmationResolver;
+  publishConfirmationResolver = null;
+  if (resolver) resolver(confirmed);
+}
+
+function requestPublishConfirmation() {
+  if (publishConfirmationResolver) closePublishConfirmation(false);
+  $("#publishConfirmation").classList.add("open");
+  $("#publishConfirmation").setAttribute("aria-hidden", "false");
+  $("#publishConfirmationConsent").focus();
+  return new Promise((resolve) => {
+    publishConfirmationResolver = resolve;
+  });
+}
+
+function recordPublicationAcknowledgement() {
+  const profile = currentProfile();
+  profile.publicationAcknowledgement = {
+    version: LEGAL_NOTICE_VERSION,
+    acceptedAt: new Date().toISOString()
+  };
+  saveActiveProfile();
+}
+
 async function authRequest(path, payload) {
   const response = await fetch(path, {
     method: payload ? "POST" : "GET",
@@ -3698,10 +3734,22 @@ async function registerProfile(event) {
     $("#registrationNote").textContent = "Enter your name and email to create your page.";
     return;
   }
+  const acknowledgements = {
+    publicProfile: $("#registerPublicProfileConsent").checked,
+    thirdPartyRisk: $("#registerThirdPartyRiskConsent").checked,
+    contentResponsibility: $("#registerContentResponsibilityConsent").checked,
+    sensitiveContent: $("#registerSensitiveContentConsent").checked,
+    aiReview: $("#registerAiReviewConsent").checked,
+    legalTerms: $("#registerLegalConsent").checked
+  };
+  if (!Object.values(acknowledgements).every(Boolean)) {
+    $("#registrationNote").textContent = "Accept every required public-profile acknowledgement before registering.";
+    return;
+  }
   $("#registrationSubmit").disabled = true;
   $("#registrationNote").textContent = "Creating your Turnpo page...";
   try {
-    const data = await authRequest("/api/auth/register", { name, email });
+    const data = await authRequest("/api/auth/register", { name, email, acknowledgements });
     const username = data.profile;
     profiles[username] = normalizeProfile(data.profileData || starterProfile({ username, displayName: name, email }));
     activeUsername = username;
@@ -3854,6 +3902,10 @@ async function requestAiImportDraft(source) {
 async function prepareAiImport(event) {
   event.preventDefault();
   const source = $("#aiImportSource").value.trim();
+  if (!$("#aiImportSafetyConsent").checked) {
+    $("#aiImportNote").textContent = "Confirm the AI import safety and review acknowledgement before submitting source text.";
+    return;
+  }
   if (!source) {
     $("#aiImportNote").textContent = "Paste CV text, LinkedIn text, a written profile, or personal notes first.";
     return;
@@ -4297,9 +4349,22 @@ $("#registrationBackdrop").addEventListener("click", () => setRegistrationDrawer
 $("#closeAiImport").addEventListener("click", () => setAiImportDrawer(false));
 $("#aiImportBackdrop").addEventListener("click", () => setAiImportDrawer(false));
 $("#saveProfileState").addEventListener("click", saveCurrentProfileState);
-$("#publishProfileOnline").addEventListener("click", () => {
+$("#publishProfileOnline").addEventListener("click", async () => {
+  if (!(await requestPublishConfirmation())) return;
   saveActiveProfile();
   publishProfileOnline({ quiet: false });
+});
+$("#closePublishConfirmation").addEventListener("click", () => closePublishConfirmation(false));
+$("#cancelPublishConfirmation").addEventListener("click", () => closePublishConfirmation(false));
+$("#publishConfirmationBackdrop").addEventListener("click", () => closePublishConfirmation(false));
+$("#publishConfirmationForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!$("#publishConfirmationConsent").checked) {
+    $("#publishConfirmationNote").textContent = "Review and check the public publication acknowledgement to continue.";
+    return;
+  }
+  recordPublicationAcknowledgement();
+  closePublishConfirmation(true);
 });
 $("#exportProfile").addEventListener("click", exportProfile);
 $("#restoreSeed").addEventListener("click", resetActiveProfile);

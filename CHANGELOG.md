@@ -10,6 +10,33 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-10 - v0.1.137
+
+Commit: this commit - `Add public profile consent gates`
+
+### Changed
+
+- Added `legal/docs/TURNPO_PUBLIC_PROFILE_TERMS_PRIVACY_DISCLAIMER_v0.2.md` as the Turnpo public-profile terms, privacy notice, and publication disclaimer.
+- Added six separate required registration acknowledgements covering public-profile visibility, third-party indexing and copying risk, user content responsibility, confidential and third-party content restrictions, AI import review responsibility, and agreement to the legal notice.
+- Enforced all registration acknowledgements in the registration API and recorded acceptance of legal notice version `0.2` with the new profile.
+- Added a required AI import safety acknowledgement before source text can be submitted.
+- Added an owner-only publish confirmation dialog with a required checkbox and the action text `Yes, publish publicly`.
+- Required confirmation before publishing the full profile, saving content directly as Published, restoring content to Published, or using an item-level Publish action.
+- Added a footer link to the legal notice and changed the remaining `PRIVATE PREVIEW` label to `PUBLIC PROFILES`.
+- Preserved the existing owner/admin visibility rule so public visitors cannot see owner-only controls.
+
+### Verified
+
+- Ran `node --check script.js`.
+- Ran `node --check functions/api/ai/import-profile.js`.
+- Ran `node --check functions/api/auth/register.js`.
+- Ran `git diff --check`.
+- Verified the registration drawer renders six required acknowledgement checkboxes on desktop and mobile.
+- Verified the AI import acknowledgement and publish confirmation checkbox are required and the publish button text is exact.
+- Verified public visitor mode renders zero visible `.owner-only` controls.
+- Verified the mobile registration drawer has no horizontal overflow.
+- Checked browser console warnings and errors.
+
 ## 2026-06-10 - v0.1.136
 
 Commit: this commit - `Split AI imports into separate Life drafts`

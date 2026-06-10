@@ -53,17 +53,33 @@ function profileFromRegistration({ name, username, email }) {
   };
 }
 
+const REQUIRED_ACKNOWLEDGEMENTS = [
+  "publicProfile",
+  "thirdPartyRisk",
+  "contentResponsibility",
+  "sensitiveContent",
+  "aiReview",
+  "legalTerms"
+];
+
 export async function onRequestPost({ request, env }) {
   const authError = requireAuthConfig(env);
   if (authError) return json({ error: "Auth is not configured." }, { status: 500 });
   const profileError = requireProfileStoreConfig(env);
   if (profileError) return json({ error: "Profile storage is not configured." }, { status: 500 });
 
-  const { name: rawName, email: rawEmail } = await readJson(request);
+  const {
+    name: rawName,
+    email: rawEmail,
+    acknowledgements = {}
+  } = await readJson(request);
   const name = String(rawName || "").trim().replace(/\s+/g, " ");
   const email = normalizeEmail(rawEmail);
   if (name.length < 2) return json({ error: "Enter your name." }, { status: 400 });
   if (!email || !email.includes("@")) return json({ error: "Enter a valid email address." }, { status: 400 });
+  if (!REQUIRED_ACKNOWLEDGEMENTS.every((key) => acknowledgements[key] === true)) {
+    return json({ error: "Accept every required public-profile acknowledgement before registering." }, { status: 400 });
+  }
 
   const existingProfile = await ownerProfileForEmail(env, email);
   if (existingProfile) return json({ error: "This email already has a Turnpo profile. Please use email code login." }, { status: 409 });
@@ -90,6 +106,11 @@ export async function onRequestPost({ request, env }) {
 
   const now = new Date().toISOString();
   const profile = profileFromRegistration({ name, username, email });
+  profile.legalAcknowledgement = {
+    version: "0.2",
+    acceptedAt: now,
+    acknowledgements: Object.fromEntries(REQUIRED_ACKNOWLEDGEMENTS.map((key) => [key, true]))
+  };
   const record = JSON.stringify({
     profile,
     createdAt: now,

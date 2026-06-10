@@ -1633,6 +1633,66 @@ body:not(.owner-mode) .work-link-action {
   min-height: 46px;
 }
 
+.public-design-notice {
+  padding: 14px 0;
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.public-design-notice strong {
+  color: var(--text);
+}
+
+.public-design-notice p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.consent-list {
+  display: grid;
+  gap: 12px;
+}
+
+.consent-check {
+  display: flex;
+  grid-template-columns: none;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.consent-check input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 17px;
+  height: 17px;
+  margin: 1px 0 0;
+  padding: 0;
+  accent-color: var(--gold);
+}
+
+.consent-check a,
+.site-footer a {
+  color: var(--gold);
+}
+
+.publish-confirmation .event-form {
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  width: min(520px, calc(100vw - 36px));
+  max-height: calc(100vh - 36px);
+  transform: translate(-50%, calc(-50% + 20px));
+}
+
+.publish-confirmation.open .event-form {
+  transform: translate(-50%, -50%);
+}
+
 .ai-import-output {
   display: grid;
   gap: 14px;

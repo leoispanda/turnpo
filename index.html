@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.136" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.137" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -68,7 +68,7 @@
 
       <section class="home-band home-only" id="examples">
         <div>
-          <p class="eyebrow">PRIVATE PREVIEW</p>
+          <p class="eyebrow">PUBLIC PROFILES</p>
           <h2>The turning points<br />that tell a life.</h2>
         </div>
         <div class="example-grid" id="exampleProfiles" aria-label="Turnpo profile capabilities"></div>
@@ -200,10 +200,11 @@
           <p>If you delete content, Turnpo will remove it from the platform's active public display and public outputs. However, if that content was previously published, others may already have copied, cached, indexed, downloaded, screenshotted, or analyzed it outside Turnpo.</p>
           <p>Turnpo cannot fully control copies made outside the platform.</p>
           <p>For this reason, please publish thoughtfully.</p>
+          <p><a href="/legal/docs/TURNPO_PUBLIC_PROFILE_TERMS_PRIVACY_DISCLAIMER_v0.2.md" target="_blank" rel="noopener">Read the Terms, Privacy Notice, and Public Content Disclaimer</a></p>
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.136</span>
+          <span class="version-badge">v0.1.137</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -340,8 +341,20 @@
         </div>
         <label><span>Your name</span><input id="registerName" autocomplete="name" required placeholder="Jane Chen" /></label>
         <label><span>Email</span><input id="registerEmail" autocomplete="email" inputmode="email" required placeholder="you@example.com" type="email" /></label>
-        <p class="auth-note" id="registrationNote">Turnpo will create a public starter page and open owner mode so you can edit before sharing.</p>
-        <button class="submit-btn" id="registrationSubmit" type="submit">Create profile</button>
+        <div class="public-design-notice">
+          <strong>Turnpo is public by design.</strong>
+          <p>Your new profile is intended for public display. Uploaded, imported, AI-generated, approved, or published content may become visible on the internet.</p>
+        </div>
+        <div class="consent-list" aria-label="Required registration acknowledgements">
+          <label class="consent-check"><input id="registerPublicProfileConsent" type="checkbox" required /><span>I understand that Turnpo is designed for public profiles and my profile and content may become visible on the internet.</span></label>
+          <label class="consent-check"><input id="registerThirdPartyRiskConsent" type="checkbox" required /><span>I understand that public content may be indexed, copied, cached, screenshotted, archived, downloaded, shared, or processed by AI systems, and Turnpo cannot guarantee removal from third-party copies.</span></label>
+          <label class="consent-check"><input id="registerContentResponsibilityConsent" type="checkbox" required /><span>I am responsible for content I upload, import, generate, approve, or publish and for ensuring it is accurate, lawful, and suitable for public display.</span></label>
+          <label class="consent-check"><input id="registerSensitiveContentConsent" type="checkbox" required /><span>I will not submit confidential, sensitive, private, or third-party content unless I have the right and permission to process and publish it.</span></label>
+          <label class="consent-check"><input id="registerAiReviewConsent" type="checkbox" required /><span>I understand AI imports may be inaccurate or incomplete and I must review and correct AI-generated drafts before publishing.</span></label>
+          <label class="consent-check"><input id="registerLegalConsent" type="checkbox" required /><span>I agree to the <a href="/legal/docs/TURNPO_PUBLIC_PROFILE_TERMS_PRIVACY_DISCLAIMER_v0.2.md" target="_blank" rel="noopener">Terms, Privacy Notice, and Public Content Disclaimer</a>.</span></label>
+        </div>
+        <p class="auth-note" id="registrationNote">Creating an account immediately creates a public starter profile. Use hidden or draft controls where available before adding content you are not ready to publish.</p>
+        <button class="submit-btn" id="registrationSubmit" type="submit">Create public profile</button>
       </form>
     </div>
 
@@ -357,7 +370,12 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
           </button>
         </div>
-        <label><span>Source text</span><textarea id="aiImportSource" placeholder="Paste one or multiple LinkedIn posts, CV entries, personal notes, or life experiences. Images are not imported here."></textarea></label>
+        <div class="public-design-notice">
+          <strong>Before you import content</strong>
+          <p>Do not paste confidential company information, private information about others, passwords, financial or medical data, internal workplace details, client information, trade secrets, or content you lack permission to use. AI drafts may be inaccurate and can become public if you later approve or publish them.</p>
+        </div>
+        <label class="consent-check"><input id="aiImportSafetyConsent" type="checkbox" required /><span>I have reviewed the source text, have permission to process it, and accept responsibility for reviewing every AI-generated draft before publication.</span></label>
+        <label><span>Source text</span><textarea id="aiImportSource" placeholder="Paste one or multiple LinkedIn posts, CV entries, personal notes, or life experiences. Images are not imported here." required></textarea></label>
         <div class="ai-import-output" id="aiImportOutput" hidden>
           <div>
             <span>Analysis</span>
@@ -375,6 +393,29 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.136"></script>
+    <div class="drawer publish-confirmation owner-only" id="publishConfirmation" aria-hidden="true">
+      <div class="drawer-backdrop" id="publishConfirmationBackdrop"></div>
+      <form class="event-form" id="publishConfirmationForm">
+        <div class="form-head">
+          <div>
+            <p class="eyebrow">Public publication</p>
+            <h2>Publish this content publicly?</h2>
+          </div>
+          <button class="icon-btn" id="closePublishConfirmation" type="button" title="Cancel publication">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+        <p class="auth-note">Turnpo is a public profile platform. Published content may be visible to anyone and may be indexed, copied, cached, screenshotted, archived, downloaded, shared, or processed by AI systems.</p>
+        <p class="auth-note">Turnpo cannot guarantee removal from search engines, web archives, screenshots, AI systems, third-party databases, or copies already made by others.</p>
+        <label class="consent-check"><input id="publishConfirmationConsent" type="checkbox" required /><span>I have reviewed this content, have the right to publish it, and understand it will become public.</span></label>
+        <p class="form-status" id="publishConfirmationNote"></p>
+        <div class="form-actions">
+          <button class="ghost-btn" id="cancelPublishConfirmation" type="button">Cancel</button>
+          <button class="submit-btn" type="submit">Yes, publish publicly</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="/script.js?v=0.1.137"></script>
   </body>
 </html>
