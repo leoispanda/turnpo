@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.126" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.128" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -203,7 +203,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.126</span>
+          <span class="version-badge">v0.1.128</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -350,19 +350,30 @@
       <form class="event-form" id="aiImportForm">
         <div class="form-head">
           <div>
-            <p class="eyebrow">AI import</p>
-            <h2>Import profile content</h2>
+            <p class="eyebrow">AI text import</p>
+            <h2>Generate text profile draft</h2>
           </div>
           <button class="icon-btn" id="closeAiImport" type="button" title="Close">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
           </button>
         </div>
-        <label><span>Source text or profile link</span><textarea id="aiImportSource" placeholder="Paste a LinkedIn summary, CV text, website link, or notes you want AI to turn into profile sections."></textarea></label>
-        <p class="auth-note" id="aiImportNote">AI import is ready as a workflow entry. Connect the MapKAI or Turnpo AI API next to generate hidden draft content for review.</p>
-        <button class="submit-btn" id="aiImportSubmit" type="submit">Prepare AI import</button>
+        <label><span>Source text</span><textarea id="aiImportSource" placeholder="Paste LinkedIn text, CV content, personal notes, or a written profile. Images are not imported here."></textarea></label>
+        <div class="ai-import-output" id="aiImportOutput" hidden>
+          <div>
+            <span>Analysis</span>
+            <p id="aiImportAnalysis"></p>
+          </div>
+          <label><span>Generated text document</span><textarea id="aiImportDraft" readonly spellcheck="false"></textarea></label>
+          <div class="form-actions ai-import-actions">
+            <button class="ghost-btn" id="copyAiImportDraft" type="button">Copy document</button>
+            <button class="gold-btn" id="addAiImportLife" type="button">Add as hidden Life</button>
+          </div>
+        </div>
+        <p class="auth-note" id="aiImportNote">Generate a text-only Turnpo document from the user's own material. Photos stay manual: the user updates images after reviewing the draft.</p>
+        <button class="submit-btn" id="aiImportSubmit" type="submit">Analyze text</button>
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.126"></script>
+    <script src="/script.js?v=0.1.128"></script>
   </body>
 </html>

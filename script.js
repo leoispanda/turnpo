@@ -2233,6 +2233,7 @@ let onlinePublishedAvailable = false;
 let onlineSyncInFlight = false;
 let lastOnlineSavedAt = "";
 let lastOnlinePublishedAt = "";
+let lastAiImportDraft = null;
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -3710,7 +3711,7 @@ async function registerProfile(event) {
     setRegistrationDrawer(false);
     $("#registrationForm").reset();
     enterOwnerMode(username);
-    setOwnerSaveStatus("Profile created. Add life stories, AI works, or use AI import when the API is connected.");
+    setOwnerSaveStatus("Profile created. Add life stories, AI works, or use AI text import for text-only drafts. Images can be updated manually.");
   } catch (error) {
     $("#registrationNote").textContent = error.message;
   } finally {
@@ -3718,12 +3719,148 @@ async function registerProfile(event) {
   }
 }
 
+function meaningfulSourceLines(source = "") {
+  return source
+    .split(/\n+/)
+    .map((line) => line.trim().replace(/\s+/g, " "))
+    .filter((line) => line.length > 24)
+    .filter((line) => !/^https?:\/\//i.test(line))
+    .slice(0, 8);
+}
+
+function pickDraftYear(source = "") {
+  const years = source.match(/\b(20\d{2}|19\d{2})\b/g) || [];
+  return years.length ? years[years.length - 1] : String(new Date().getFullYear());
+}
+
+function pickDraftTitle(source = "") {
+  const lines = meaningfulSourceLines(source);
+  const first = lines[0] || source.trim();
+  const sentence = first.split(/[.!?。！？]/).find((item) => item.trim().length > 10) || first;
+  return sentence.trim().slice(0, 88).replace(/[,;:，；：]$/, "") || "Personal turning point";
+}
+
+function keywordSummary(source = "") {
+  const keywords = [
+    ["AI", /\bAI\b|artificial intelligence|LLM|agent|automation/i],
+    ["learning", /learning|training|academy|course|education|knowledge/i],
+    ["product", /product|website|platform|prototype|launch|build|built/i],
+    ["leadership", /lead|managed|coordinated|stakeholder|team|strategy/i],
+    ["reflection", /reflection|growth|values|self|mindset|turning point/i],
+    ["communication", /marketing|story|communication|presentation|content/i]
+  ];
+  return keywords.filter(([, pattern]) => pattern.test(source)).map(([label]) => label);
+}
+
+function generateAiImportDraft(source = "") {
+  const lines = meaningfulSourceLines(source);
+  const keywords = keywordSummary(source);
+  const title = pickDraftTitle(source);
+  const year = pickDraftYear(source);
+  const summarySource = lines.slice(0, 3).join(" ");
+  const summary = summarySource
+    ? summarySource.slice(0, 520)
+    : source.trim().replace(/\s+/g, " ").slice(0, 520);
+  const tags = [...new Set(["AI draft", ...keywords])].slice(0, 6);
+  const analysis = [
+    `${source.trim().split(/\s+/).filter(Boolean).length} words`,
+    `${lines.length} useful source lines`,
+    keywords.length ? `themes: ${keywords.join(", ")}` : "themes: personal experience"
+  ].join(" · ");
+  const publicSummary = summary || "A personal experience draft generated from pasted source text.";
+  const whyItMatters = keywords.length
+    ? `This experience appears connected to ${keywords.join(", ")} and may be useful as a turning point after review.`
+    : "This experience may describe a meaningful turning point after the owner reviews and refines it.";
+  const copyText = [
+    `Title: ${title}`,
+    `Year: ${year}`,
+    "Type: Life",
+    `Summary: ${publicSummary}`,
+    `Why it matters: ${whyItMatters}`,
+    `Tags: ${tags.join(", ")}`,
+    "Images: User updates images manually after reviewing this text draft.",
+    "",
+    "Review note: This is a text-only draft. Keep it hidden until the profile owner edits, adds any images manually, approves, and chooses to publish it."
+  ].join("\n");
+
+  return {
+    title,
+    year,
+    publicSummary,
+    whyItMatters,
+    tags,
+    analysis,
+    copyText
+  };
+}
+
+function renderAiImportDraft(draft) {
+  lastAiImportDraft = draft;
+  $("#aiImportOutput").hidden = false;
+  $("#aiImportAnalysis").textContent = draft.analysis;
+  $("#aiImportDraft").value = draft.copyText;
+  $("#aiImportNote").textContent = "Text document generated. Copy it, or add it as a hidden Life item. Images are added manually after review.";
+}
+
 function prepareAiImport(event) {
   event.preventDefault();
   const source = $("#aiImportSource").value.trim();
-  $("#aiImportNote").textContent = source
-    ? "AI import source saved in this form for now. Next step: connect the MapKAI or Turnpo AI API to turn it into hidden draft items."
-    : "Paste a profile link, CV text, LinkedIn summary, or notes first.";
+  if (!source) {
+    $("#aiImportNote").textContent = "Paste CV text, LinkedIn text, a written profile, or personal notes first.";
+    return;
+  }
+  renderAiImportDraft(generateAiImportDraft(source));
+}
+
+async function copyAiImportDraft() {
+  const draft = $("#aiImportDraft").value.trim();
+  if (!draft) {
+    $("#aiImportNote").textContent = "Generate a text document before copying.";
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(draft);
+    $("#aiImportNote").textContent = "Generated text document copied.";
+  } catch {
+    $("#aiImportDraft").focus();
+    $("#aiImportDraft").select();
+    document.execCommand("copy");
+    $("#aiImportNote").textContent = "Generated text document selected and copied.";
+  }
+}
+
+function addAiImportLifeDraft() {
+  if (!ownerMode) {
+    $("#aiImportNote").textContent = "Enter owner mode before adding draft content.";
+    return;
+  }
+  if (!lastAiImportDraft) {
+    $("#aiImportNote").textContent = "Generate a text document before adding it.";
+    return;
+  }
+  const now = new Date().toISOString();
+  const item = normalizeContent({
+    id: `story-ai-import-${crypto.randomUUID()}`,
+    category: "life",
+    title: lastAiImportDraft.title,
+    year: lastAiImportDraft.year,
+    date: lastAiImportDraft.year,
+    location: currentProfile().location || "",
+    publicSummary: lastAiImportDraft.publicSummary,
+    whyItMatters: lastAiImportDraft.whyItMatters,
+    tags: lastAiImportDraft.tags,
+    status: "hidden",
+    userApproved: false,
+    ownerEdited: true,
+    ownerEditedAt: now,
+    updatedAt: now
+  }, "story");
+  currentProfile().lifeStories.unshift(item);
+  syncPublicStateForItem(currentProfile(), "story", item);
+  saveActiveProfile();
+  renderProfile();
+  $("#aiImportNote").textContent = "Added as a hidden text-only Life draft. Review, edit, and add images manually before publishing.";
+  saveProfileDraftOnline({ quiet: true });
 }
 
 function resetAuthForm(message = "Only approved owner emails can enter founder mode. If your email is approved, Turnpo will send a one-time code.") {
@@ -4104,6 +4241,8 @@ $("#authForm").addEventListener("submit", async (event) => {
 });
 $("#registrationForm").addEventListener("submit", registerProfile);
 $("#aiImportForm").addEventListener("submit", prepareAiImport);
+$("#copyAiImportDraft").addEventListener("click", copyAiImportDraft);
+$("#addAiImportLife").addEventListener("click", addAiImportLifeDraft);
 
 window.addEventListener("popstate", () => setRoute(routeFromLocation()));
 
