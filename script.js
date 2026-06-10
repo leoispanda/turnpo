@@ -3757,13 +3757,15 @@ function generateAiImportDraft(source = "") {
   const keywords = keywordSummary(source);
   const title = pickDraftTitle(source);
   const year = pickDraftYear(source);
+  const wordCount = source.trim().split(/\s+/).filter(Boolean).length;
+  const characterCount = [...source.trim().replace(/\s+/g, "")].length;
   const summarySource = lines.slice(0, 3).join(" ");
   const summary = summarySource
     ? summarySource.slice(0, 520)
     : source.trim().replace(/\s+/g, " ").slice(0, 520);
   const tags = [...new Set(["AI draft", ...keywords])].slice(0, 6);
   const analysis = [
-    `${source.trim().split(/\s+/).filter(Boolean).length} words`,
+    `${wordCount} words / ${characterCount} characters`,
     `${lines.length} useful source lines`,
     keywords.length ? `themes: ${keywords.join(", ")}` : "themes: personal experience"
   ].join(" · ");
@@ -3797,6 +3799,7 @@ function generateAiImportDraft(source = "") {
 function renderAiImportDraft(draft) {
   lastAiImportDraft = draft;
   $("#aiImportOutput").hidden = false;
+  $("#useLocalAiImportFallback").hidden = true;
   $("#aiImportAnalysis").textContent = draft.analysis;
   $("#aiImportDraft").value = draft.copyText;
   $("#aiImportNote").textContent = draft.provider === "openai"
@@ -3831,18 +3834,30 @@ async function prepareAiImport(event) {
     $("#aiImportNote").textContent = "Paste CV text, LinkedIn text, a written profile, or personal notes first.";
     return;
   }
+  $("#aiImportOutput").hidden = true;
+  $("#useLocalAiImportFallback").hidden = true;
   $("#aiImportSubmit").disabled = true;
   $("#aiImportNote").textContent = "Calling AI to generate a text-only Turnpo document...";
   try {
     renderAiImportDraft(await requestAiImportDraft(source));
   } catch (error) {
-    const fallbackDraft = generateAiImportDraft(source);
-    fallbackDraft.provider = "local";
-    renderAiImportDraft(fallbackDraft);
-    $("#aiImportNote").textContent = `AI API unavailable, so a local text draft was generated instead. ${error.message}`;
+    lastAiImportDraft = null;
+    $("#useLocalAiImportFallback").hidden = false;
+    $("#aiImportNote").textContent = `AI API failed: ${error.message} You can retry, or use the local fallback draft.`;
   } finally {
     $("#aiImportSubmit").disabled = false;
   }
+}
+
+function useLocalAiImportFallback() {
+  const source = $("#aiImportSource").value.trim();
+  if (!source) {
+    $("#aiImportNote").textContent = "Paste source text before using local fallback.";
+    return;
+  }
+  const fallbackDraft = generateAiImportDraft(source);
+  fallbackDraft.provider = "local";
+  renderAiImportDraft(fallbackDraft);
 }
 
 async function copyAiImportDraft() {
@@ -4274,6 +4289,7 @@ $("#authForm").addEventListener("submit", async (event) => {
 });
 $("#registrationForm").addEventListener("submit", registerProfile);
 $("#aiImportForm").addEventListener("submit", prepareAiImport);
+$("#useLocalAiImportFallback").addEventListener("click", useLocalAiImportFallback);
 $("#copyAiImportDraft").addEventListener("click", copyAiImportDraft);
 $("#addAiImportLife").addEventListener("click", addAiImportLifeDraft);
 

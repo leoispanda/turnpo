@@ -30,7 +30,11 @@ function extractOutputText(data) {
   return content?.text || "";
 }
 
-function normalizeDraft(value = {}) {
+function compactText(value = "") {
+  return String(value).replace(/\s+/g, "").replace(/[，。,.!?！？:：;；]/g, "").toLowerCase();
+}
+
+function normalizeDraft(value = {}, sourceText = "") {
   const tags = Array.isArray(value.tags) ? value.tags.map(String).filter(Boolean).slice(0, 8) : [];
   const draft = {
     title: String(value.title || "Personal turning point").trim().slice(0, 120),
@@ -41,6 +45,9 @@ function normalizeDraft(value = {}) {
     analysis: String(value.analysis || "").trim().slice(0, 500)
   };
   draft.copyText = String(value.copyText || value.profileDocument || textDocumentFromDraft(draft)).trim();
+  if (compactText(draft.copyText) === compactText(sourceText)) {
+    draft.copyText = textDocumentFromDraft(draft);
+  }
   return draft;
 }
 
@@ -69,6 +76,13 @@ export async function onRequestPost({ request, env }) {
       instructions: [
         "You generate Turnpo text-only profile drafts from user-provided personal material.",
         "Return only valid JSON matching the schema.",
+        "Write in the same primary language as the source text unless the source asks otherwise.",
+        "Do not copy the source text verbatim as the generated document.",
+        "Transform the source into a polished Turnpo draft with clear structure, owner-reviewed wording, and cautious interpretation.",
+        "The copyText field must be the actual generated Turnpo document, not the raw source text.",
+        "copyText must include these sections: Title, Year, Type, Summary, Why it matters, Tags, Images, Review note.",
+        "For Chinese input, use Chinese section labels and Chinese prose.",
+        "For very short input, produce a concise but meaningfully rewritten draft and mention what the owner may want to add during review.",
         "Do not invent images, image URLs, employers, degrees, dates, awards, or private facts.",
         "If details are unclear, keep the wording cautious.",
         "The result must be hidden draft content for owner review, not a published final profile.",
@@ -130,7 +144,7 @@ export async function onRequestPost({ request, env }) {
   try {
     return json({
       ok: true,
-      draft: normalizeDraft(JSON.parse(outputText)),
+      draft: normalizeDraft(JSON.parse(outputText), sourceTextForModel),
       provider: "openai",
       model
     });
