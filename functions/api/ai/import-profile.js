@@ -7,11 +7,26 @@ import {
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
 const DEFAULT_MODEL = "gpt-4o-mini";
 const MAX_SOURCE_CHARS = 12000;
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
 
 function textDocumentFromDraft(draft) {
   return [
     `Title: ${draft.title}`,
     `Year: ${draft.year}`,
+    `Month: ${draft.month}`,
     "Type: Life",
     `Summary: ${draft.publicSummary}`,
     `Why it matters: ${draft.whyItMatters}`,
@@ -34,11 +49,26 @@ function compactText(value = "") {
   return String(value).replace(/\s+/g, "").replace(/[，。,.!?！？:：;；]/g, "").toLowerCase();
 }
 
+function extractMonth(value = "") {
+  const englishMonth = MONTH_NAMES.find((month) => new RegExp(`\\b${month}\\b`, "i").test(value));
+  if (englishMonth) return englishMonth;
+
+  const numericMatch = String(value).match(/(?:^|[^\d])(1[0-2]|0?[1-9])\s*(?:月|月份|month\b)/i);
+  if (numericMatch) return MONTH_NAMES[Number(numericMatch[1]) - 1];
+
+  return "";
+}
+
+function normalizeMonth(value = "", sourceText = "") {
+  return extractMonth(sourceText) || extractMonth(value) || MONTH_NAMES[new Date().getMonth()];
+}
+
 function normalizeDraft(value = {}, sourceText = "") {
   const tags = Array.isArray(value.tags) ? value.tags.map(String).filter(Boolean).slice(0, 8) : [];
   const draft = {
     title: String(value.title || "Personal turning point").trim().slice(0, 120),
     year: String(value.year || new Date().getFullYear()).trim().slice(0, 12),
+    month: normalizeMonth(value.month, sourceText),
     publicSummary: String(value.publicSummary || value.summary || "").trim().slice(0, 900),
     whyItMatters: String(value.whyItMatters || "").trim().slice(0, 700),
     tags: tags.length ? tags : ["AI draft"],
@@ -80,10 +110,13 @@ export async function onRequestPost({ request, env }) {
         "Do not copy the source text verbatim as the generated document.",
         "Transform the source into a polished Turnpo draft with clear structure, owner-reviewed wording, and cautious interpretation.",
         "The copyText field must be the actual generated Turnpo document, not the raw source text.",
-        "copyText must include these sections: Title, Year, Type, Summary, Why it matters, Tags, Images, Review note.",
+        "copyText must include these sections: Title, Year, Month, Type, Summary, Why it matters, Tags, Images, Review note.",
         "For Chinese input, use Chinese section labels and Chinese prose.",
         "For very short input, produce a concise but meaningfully rewritten draft and mention what the owner may want to add during review.",
         "Do not invent images, image URLs, employers, degrees, dates, awards, or private facts.",
+        "Extract the month explicitly stated or requested in the source text. For example, 7月 or July must return month as July; never replace it with the current month.",
+        "Return month as a full English month name from January through December.",
+        "Only use the current month when the source text contains no month at all.",
         "If details are unclear, keep the wording cautious.",
         "The result must be hidden draft content for owner review, not a published final profile.",
         "Always remind that images must be updated manually by the user."
@@ -113,10 +146,14 @@ export async function onRequestPost({ request, env }) {
           schema: {
             type: "object",
             additionalProperties: false,
-            required: ["title", "year", "publicSummary", "whyItMatters", "tags", "analysis", "copyText"],
+            required: ["title", "year", "month", "publicSummary", "whyItMatters", "tags", "analysis", "copyText"],
             properties: {
               title: { type: "string" },
               year: { type: "string" },
+              month: {
+                type: "string",
+                enum: MONTH_NAMES
+              },
               publicSummary: { type: "string" },
               whyItMatters: { type: "string" },
               tags: {

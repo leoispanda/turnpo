@@ -3733,6 +3733,13 @@ function pickDraftYear(source = "") {
   return years.length ? years[years.length - 1] : String(new Date().getFullYear());
 }
 
+function pickDraftMonth(source = "") {
+  const englishMonth = MONTH_NAMES.find((month) => new RegExp(`\\b${month}\\b`, "i").test(source));
+  if (englishMonth) return englishMonth;
+  const numericMatch = source.match(/(?:^|[^\d])(1[0-2]|0?[1-9])\s*(?:月|月份|month\b)/i);
+  return numericMatch ? MONTH_NAMES[Number(numericMatch[1]) - 1] : defaultStoryDate().month;
+}
+
 function pickDraftTitle(source = "") {
   const lines = meaningfulSourceLines(source);
   const first = lines[0] || source.trim();
@@ -3757,6 +3764,7 @@ function generateAiImportDraft(source = "") {
   const keywords = keywordSummary(source);
   const title = pickDraftTitle(source);
   const year = pickDraftYear(source);
+  const month = pickDraftMonth(source);
   const wordCount = source.trim().split(/\s+/).filter(Boolean).length;
   const characterCount = [...source.trim().replace(/\s+/g, "")].length;
   const summarySource = lines.slice(0, 3).join(" ");
@@ -3776,6 +3784,7 @@ function generateAiImportDraft(source = "") {
   const copyText = [
     `Title: ${title}`,
     `Year: ${year}`,
+    `Month: ${month}`,
     "Type: Life",
     `Summary: ${publicSummary}`,
     `Why it matters: ${whyItMatters}`,
@@ -3788,6 +3797,7 @@ function generateAiImportDraft(source = "") {
   return {
     title,
     year,
+    month,
     publicSummary,
     whyItMatters,
     tags,
@@ -3892,7 +3902,7 @@ function addAiImportLifeDraft() {
     category: "life",
     title: lastAiImportDraft.title,
     year: lastAiImportDraft.year,
-    date: lastAiImportDraft.year,
+    date: storyDateValue(lastAiImportDraft.year, lastAiImportDraft.month || defaultStoryDate().month),
     location: currentProfile().location || "",
     publicSummary: lastAiImportDraft.publicSummary,
     whyItMatters: lastAiImportDraft.whyItMatters,
