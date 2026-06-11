@@ -258,7 +258,23 @@ export async function ownerSession(request, env) {
   const session = await env.AUTH_KV.get(sessionKey(sessionId), "json");
   if (!session) return { error: "Owner login required.", status: 401 };
 
-  return { session };
+  const user = session.userId
+    ? await userForId(env, session.userId)
+    : session.email
+      ? await userForEmail(env, session.email)
+      : null;
+  if (user?.status && user.status !== "active") return { error: "Account is not active.", status: 403 };
+  if (user?.profile && session.profile && normalizeUsername(user.profile) !== normalizeUsername(session.profile)) {
+    return { error: "Owner login required.", status: 401 };
+  }
+
+  return {
+    session: {
+      ...session,
+      userId: user?.id || session.userId || "",
+      role: user ? roleForEmail(env, user.email) : session.role
+    }
+  };
 }
 
 export function roleForEmail(env, email) {

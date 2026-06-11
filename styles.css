@@ -140,6 +140,52 @@ a {
   justify-self: end;
 }
 
+.top-actions .ghost-btn,
+.admin-head-actions .ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.top-actions .ghost-btn::before,
+.admin-head-actions .ghost-btn::before {
+  display: inline-grid;
+  place-items: center;
+  width: 14px;
+  height: 18px;
+  color: var(--gold-strong);
+  font-size: 12px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+#backToSearch::before {
+  content: "←";
+}
+
+#openRegistration::before {
+  content: "+";
+}
+
+#openOwnerProfile::before,
+#openAdminOwnerProfile::before {
+  content: "↩";
+}
+
+#openAdminDashboard::before {
+  content: "•";
+}
+
+#openLogin::before {
+  content: "→";
+}
+
+#refreshAdminDashboard::before {
+  content: "↻";
+}
+
 body:not(.profile-open) .profile-only,
 body.profile-open .home-only,
 body.admin-open .home-only,
@@ -237,11 +283,15 @@ svg {
   border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.04);
   color: var(--muted);
+  font-weight: 650;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
 .ghost-btn:hover {
   border-color: rgba(216, 177, 95, 0.35);
+  background: rgba(216, 177, 95, 0.07);
   color: var(--gold-strong);
+  transform: translateY(-1px);
 }
 
 .copy-profile-btn {
@@ -535,9 +585,21 @@ main {
   text-transform: uppercase;
 }
 
+.admin-table tbody tr {
+  transition: background 140ms ease;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(216, 177, 95, 0.045);
+}
+
 .admin-table td strong,
 .admin-table a {
   color: var(--text);
+}
+
+.admin-table td:last-child {
+  color: rgba(244, 239, 228, 0.72);
 }
 
 .site-footer {
@@ -2186,18 +2248,35 @@ select {
     font-size: 18px;
   }
 
-  .top-actions,
   .section-head,
   .form-actions,
   .archive-band {
     align-items: stretch;
   }
 
-  .top-actions,
   .search-box,
   .section-head,
   .form-row {
     flex-direction: column;
+  }
+
+  .top-actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .top-actions .ghost-btn {
+    min-height: 36px;
+    padding: 0 10px;
+    font-size: 13px;
+  }
+
+  .top-actions .ghost-btn::before,
+  .admin-head-actions .ghost-btn::before {
+    width: 13px;
+    height: 16px;
+    font-size: 11px;
   }
 
   .section-head {

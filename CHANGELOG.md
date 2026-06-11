@@ -10,9 +10,30 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
-## 2026-06-11 - next after v0.1.142
+## 2026-06-11 - next after v0.1.143
 
-Commit: pending - `Harden admin owner mode switch`
+Commit: pending - `Tighten owner session and polish controls`
+
+### Changed
+
+- Reviewed the current Turnpo page, owner/admin mode logic, and API permission boundaries.
+- Hardened owner-only API session checks so inactive/disabled user records cannot keep saving or publishing through an old owner session.
+- Added compact icons, stronger hover states, and consistent inline alignment to top-bar and Admin dashboard controls.
+- Improved mobile header controls so they wrap as compact action chips instead of tall stacked buttons.
+- Added a subtle hover state and clearer scope text treatment to the Admin user table.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check` across all `functions/api/**/*.js` files.
+- Ran `git diff --check`.
+- Verified inactive user records receive `403` from owner draft access instead of continuing through an old owner session.
+- Verified the local homepage and profile route render without console errors in the in-app browser.
+- Verified desktop and mobile header controls after the visual polish.
+
+## 2026-06-11 - v0.1.143
+
+Commit: `1a6913e` - `Harden admin owner mode switch`
 
 ### Changed
 
