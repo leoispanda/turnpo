@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.142" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.143" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -82,7 +82,10 @@
             <h1>Account overview</h1>
             <p>This read-only dashboard is for account statistics and moderation checks only. It does not expose private drafts or unpublished story content.</p>
           </div>
-          <button class="ghost-btn" id="refreshAdminDashboard" type="button">Refresh</button>
+          <div class="admin-head-actions">
+            <button class="ghost-btn" id="openAdminOwnerProfile" type="button">My profile</button>
+            <button class="ghost-btn" id="refreshAdminDashboard" type="button">Refresh</button>
+          </div>
         </div>
         <div class="admin-error" id="adminError" hidden></div>
         <div class="admin-access" id="adminAccess"></div>
@@ -238,7 +241,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.142</span>
+          <span class="version-badge">v0.1.143</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -451,6 +454,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.142"></script>
+    <script src="/script.js?v=0.1.143"></script>
   </body>
 </html>

@@ -2816,6 +2816,7 @@ function setRoute(route) {
   if (route === "admin") {
     body.classList.remove("profile-open");
     body.classList.add("admin-open");
+    body.classList.toggle("owner-session", Boolean(ownerSessionProfile));
     $("#entryView").hidden = true;
     $("#adminView").hidden = false;
     document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = true; });
@@ -4540,6 +4541,10 @@ $("#openLogin").addEventListener("click", () => {
   else setAuthDrawer(true);
 });
 $("#openOwnerProfile").addEventListener("click", () => {
+  if (ownerSessionProfile) enterOwnerMode(ownerSessionProfile);
+  else setAuthDrawer(true);
+});
+$("#openAdminOwnerProfile").addEventListener("click", () => {
   if (ownerSessionProfile) enterOwnerMode(ownerSessionProfile);
   else setAuthDrawer(true);
 });

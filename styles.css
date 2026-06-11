@@ -142,6 +142,8 @@ a {
 
 body:not(.profile-open) .profile-only,
 body.profile-open .home-only,
+body.admin-open .home-only,
+body.admin-open .owner-only,
 body:not(.owner-mode) .owner-only {
   display: none;
 }
@@ -158,6 +160,10 @@ body.owner-mode .public-only {
 }
 
 body.owner-mode #homeOwnerLogin {
+  display: none;
+}
+
+body.admin-open .founder-tools {
   display: none;
 }
 
@@ -396,6 +402,12 @@ main {
   gap: 18px;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--line-soft);
+}
+
+.admin-head-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
 }
 
 .admin-head h1 {
@@ -2318,6 +2330,14 @@ select {
 
   .admin-head {
     display: grid;
+  }
+
+  .admin-head-actions {
+    justify-content: stretch;
+  }
+
+  .admin-head-actions .ghost-btn {
+    width: 100%;
   }
 
   .admin-access {

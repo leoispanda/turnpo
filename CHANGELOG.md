@@ -10,9 +10,28 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
-## 2026-06-11 - next after v0.1.141
+## 2026-06-11 - next after v0.1.142
 
-Commit: pending - `Add admin owner mode switch`
+Commit: pending - `Harden admin owner mode switch`
+
+### Changed
+
+- Added a `My profile` action inside the Admin dashboard header so admins who own a profile can always return to owner edit mode from `/admin`.
+- Hid home-only and owner-only controls while the Admin dashboard is open.
+- Hid the footer founder tools on Admin pages so owner mode state cannot visually bleed into the dashboard.
+- Reinforced owner-session state when entering Admin mode.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check` across all `functions/api/**/*.js` files.
+- Ran `git diff --check`.
+- Verified the Admin dashboard contains the `openAdminOwnerProfile` owner-mode switch.
+- Verified Admin mode CSS hides home-only, owner-only, and footer founder tools.
+
+## 2026-06-11 - v0.1.142
+
+Commit: `e76cc0f` - `Add admin owner mode switch`
 
 ### Changed
 
