@@ -1,9 +1,11 @@
 import {
+  accessForRole,
   json,
   profilePublishedKey,
   profileStore,
   requireAdminSession,
-  requireProfileStoreConfig
+  requireProfileStoreConfig,
+  roleForEmail
 } from "../auth/_utils.js";
 
 const SITE_URL = "https://www.turnpo.com";
@@ -19,6 +21,7 @@ export async function onRequestGet({ request, env }) {
   const rows = await Promise.all(users.map(async (user) => {
     const username = user.username || user.profile || "";
     const published = username ? await store.get(profilePublishedKey(username), "json") : null;
+    const access = accessForRole(roleForEmail(env, user.email));
     return {
       id: user.id,
       email: user.email,
@@ -28,12 +31,16 @@ export async function onRequestGet({ request, env }) {
       lastLoginAt: user.lastLoginAt || "",
       publicProfileUrl: username ? `${SITE_URL}/u/${encodeURIComponent(username)}` : "",
       profileVisibility: published?.profile?.status || "draft/private",
-      role: user.role || "user",
+      role: access.role,
+      roleLabel: access.label,
+      scopes: access.scopes,
+      managementAreas: access.managementAreas,
       status: user.status || "active"
     };
   }));
 
   return json({
+    viewer: auth.access,
     users: rows.sort((a, b) => dateValue(b.createdAt) - dateValue(a.createdAt))
   });
 }

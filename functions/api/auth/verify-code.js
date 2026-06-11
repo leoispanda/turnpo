@@ -1,5 +1,6 @@
 import {
   SESSION_TTL_SECONDS,
+  accessForRole,
   codeKey,
   ensureUserForEmail,
   hashCode,
@@ -45,10 +46,15 @@ export async function onRequestPost({ request, env }) {
     createdAt: new Date().toISOString()
   }), { expirationTtl: SESSION_TTL_SECONDS });
 
+  const access = accessForRole(user.role);
   return json({
     ok: true,
     profile: stored.profile,
-    role: user.role
+    role: access.role,
+    roleLabel: access.label,
+    scopes: access.scopes,
+    managementAreas: access.managementAreas,
+    readOnly: access.readOnly
   }, {
     headers: {
       "set-cookie": sessionCookie(sessionId)

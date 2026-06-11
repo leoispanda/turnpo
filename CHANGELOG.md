@@ -10,9 +10,36 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-11 - next after v0.1.139
+
+Commit: pending - `Expand admin roles and scopes`
+
+### Changed
+
+- Added a server-side role model for `owner_admin`, `admin`, `moderator`, `support`, and `user`.
+- Added explicit management scopes including `admin:read`, `accounts:read`, `profiles:read`, `moderation:read`, `roles:read`, and `platform:owner`.
+- Made Cloudflare environment variables the source of truth for privileged access, so removing an email from a role list removes access without editing KV user records.
+- Extended auth session, login, registration, and admin API responses with role labels, scopes, management areas, and read-only status.
+- Made session restoration reject inactive/disabled user records instead of treating an old cookie as authenticated.
+- Updated the Admin dashboard to show the current viewer role, server scopes, and management range.
+- Updated the Admin user table to show each account's resolved role and concise management scope.
+- Adjusted admin profile counts to use user-linked profile usernames first, reducing confusing historical KV key over-counting.
+- Updated backend documentation with admin role variables and scope boundaries.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check` across all `functions/api/**/*.js` files.
+- Ran `git diff --check`.
+- Verified a normal user session receives `403` from `/api/admin/summary`.
+- Verified configured `admin`, `moderator`, and `support` emails resolve to the expected server-side scopes.
+- Verified inactive user records do not restore as authenticated sessions.
+- Verified the admin summary returns user-linked published profile counts and includes the current viewer role/scope payload.
+- Verified the admin user list returns resolved roles and management areas without exposing private draft content.
+
 ## 2026-06-11 - next after v0.1.138
 
-Commit: pending - `Add login and admin MVP`
+Commit: `c070250` - `Add login and admin MVP`
 
 ### Changed
 

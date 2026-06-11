@@ -417,6 +417,51 @@ main {
   background: rgba(235, 91, 91, 0.08);
 }
 
+.admin-access {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(260px, 1.6fr) minmax(220px, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.admin-access > div {
+  min-height: 96px;
+  padding: 16px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-access span,
+.admin-access small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.admin-access span {
+  font-weight: 720;
+  text-transform: uppercase;
+}
+
+.admin-access strong {
+  display: block;
+  margin: 10px 0 4px;
+  color: var(--text);
+  font-size: 20px;
+}
+
+.admin-access ul {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
 .admin-metrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -455,7 +500,7 @@ main {
 
 .admin-table {
   width: 100%;
-  min-width: 980px;
+  min-width: 1120px;
   border-collapse: collapse;
   background: rgba(255, 255, 255, 0.025);
 }
@@ -2271,6 +2316,10 @@ select {
 
   .admin-head {
     display: grid;
+  }
+
+  .admin-access {
+    grid-template-columns: 1fr;
   }
 
   .admin-metrics {

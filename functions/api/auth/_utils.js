@@ -6,6 +6,70 @@ const RESERVED_USERNAMES = new Set(["admin", "api", "auth", "cindy", "founder", 
 const CODE_TTL_SECONDS = 10 * 60;
 const SESSION_TTL_SECONDS = 7 * 24 * 60 * 60;
 const REGISTRATION_TTL_SECONDS = 20 * 60;
+const ROLE_DEFINITIONS = {
+  owner_admin: {
+    label: "Owner admin",
+    scopes: [
+      "admin:read",
+      "accounts:read",
+      "profiles:read",
+      "moderation:read",
+      "roles:read",
+      "platform:owner"
+    ],
+    areas: [
+      "Full read-only account overview",
+      "Public profile and visibility review",
+      "Moderation and status monitoring",
+      "Role and access audit",
+      "Platform owner configuration"
+    ]
+  },
+  admin: {
+    label: "Admin",
+    scopes: [
+      "admin:read",
+      "accounts:read",
+      "profiles:read",
+      "moderation:read",
+      "roles:read"
+    ],
+    areas: [
+      "Full read-only account overview",
+      "Public profile and visibility review",
+      "Moderation and status monitoring",
+      "Role and access audit"
+    ]
+  },
+  moderator: {
+    label: "Moderator",
+    scopes: [
+      "admin:read",
+      "profiles:read",
+      "moderation:read"
+    ],
+    areas: [
+      "Public profile and visibility review",
+      "Moderation and status monitoring"
+    ]
+  },
+  support: {
+    label: "Support",
+    scopes: [
+      "admin:read",
+      "accounts:read"
+    ],
+    areas: [
+      "Read-only account lookup",
+      "Login and ownership support"
+    ]
+  },
+  user: {
+    label: "User",
+    scopes: ["profile:own"],
+    areas: ["Own profile management"]
+  }
+};
 const PUBLIC_PROFILE_FIELDS = [
   "id",
   "seedVersion",
@@ -237,8 +301,35 @@ export async function ownerSession(request, env) {
 }
 
 export function roleForEmail(env, email) {
+  const normalizedEmail = normalizeEmail(email);
+  const ownerAdmins = parseList(env.TURNPO_OWNER_ADMIN_EMAILS || env.TURNPO_SUPER_ADMIN_EMAILS || env.OWNER_ADMIN_EMAILS || "");
   const admins = parseList(env.TURNPO_ADMIN_EMAILS || env.ADMIN_EMAILS || "");
-  return admins.includes(normalizeEmail(email)) ? "admin" : "user";
+  const moderators = parseList(env.TURNPO_MODERATOR_EMAILS || env.MODERATOR_EMAILS || "");
+  const support = parseList(env.TURNPO_SUPPORT_EMAILS || env.SUPPORT_EMAILS || "");
+  if (ownerAdmins.includes(normalizedEmail)) return "owner_admin";
+  if (admins.includes(normalizedEmail)) return "admin";
+  if (moderators.includes(normalizedEmail)) return "moderator";
+  if (support.includes(normalizedEmail)) return "support";
+  return "user";
+}
+
+export function accessForRole(role = "user") {
+  const definition = ROLE_DEFINITIONS[role] || ROLE_DEFINITIONS.user;
+  return {
+    role: ROLE_DEFINITIONS[role] ? role : "user",
+    label: definition.label,
+    scopes: [...definition.scopes],
+    managementAreas: [...definition.areas],
+    readOnly: true
+  };
+}
+
+export function accessForEmail(env, email) {
+  return accessForRole(roleForEmail(env, email));
+}
+
+export function hasScope(user, scope) {
+  return accessForRole(user?.role).scopes.includes(scope);
 }
 
 export async function userForEmail(env, email) {
@@ -320,13 +411,13 @@ export async function requireUserSession(request, env) {
     ...user,
     role: roleForEmail(env, user.email)
   };
-  return { session: auth.session, user };
+  return { session: auth.session, user, access: accessForRole(user.role) };
 }
 
-export async function requireAdminSession(request, env) {
+export async function requireAdminSession(request, env, requiredScope = "admin:read") {
   const auth = await requireUserSession(request, env);
   if (auth.error) return auth;
-  if (auth.user.role !== "admin") return { error: "Admin access required.", status: 403 };
+  if (!hasScope(auth.user, requiredScope)) return { error: "Admin access required.", status: 403 };
   return auth;
 }
 

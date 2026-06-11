@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.139" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.140" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -84,6 +84,7 @@
           <button class="ghost-btn" id="refreshAdminDashboard" type="button">Refresh</button>
         </div>
         <div class="admin-error" id="adminError" hidden></div>
+        <div class="admin-access" id="adminAccess"></div>
         <div class="admin-metrics" id="adminMetrics"></div>
         <div class="admin-table-wrap">
           <table class="admin-table">
@@ -98,6 +99,7 @@
                 <th>Profile</th>
                 <th>Visibility</th>
                 <th>Role</th>
+                <th>Scope</th>
               </tr>
             </thead>
             <tbody id="adminUsers"></tbody>
@@ -235,7 +237,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.139</span>
+          <span class="version-badge">v0.1.140</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -448,6 +450,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.139"></script>
+    <script src="/script.js?v=0.1.140"></script>
   </body>
 </html>

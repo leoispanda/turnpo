@@ -2230,6 +2230,7 @@ let registrationCodeRequested = false;
 let ownerSessionProfile = "";
 let userSessionRole = "";
 let userSessionEmail = "";
+let userSessionScopes = [];
 let ownerTimelineView = "published";
 let activeCategoryFilter = "all";
 let onlineDraftAvailable = false;
@@ -2971,10 +2972,12 @@ async function adminApi(path) {
 async function renderAdminDashboard() {
   if (!$("#adminView") || $("#adminView").hidden) return;
   const error = $("#adminError");
+  const accessPanel = $("#adminAccess");
   const metrics = $("#adminMetrics");
   const usersTable = $("#adminUsers");
   error.hidden = true;
   error.textContent = "";
+  accessPanel.innerHTML = "";
   metrics.innerHTML = `<div class="admin-metric"><span>Status</span><strong>Loading</strong></div>`;
   usersTable.innerHTML = "";
   try {
@@ -2982,6 +2985,7 @@ async function renderAdminDashboard() {
       adminApi("/api/admin/summary"),
       adminApi("/api/admin/users")
     ]);
+    renderAdminAccess(summary.viewer || usersData.viewer || {});
     const metricRows = [
       ["Total accounts", summary.totalAccounts],
       ["New today", summary.newAccountsToday],
@@ -3004,16 +3008,52 @@ async function renderAdminDashboard() {
         <td>${escapeHtml(formatDateTime(user.lastLoginAt))}</td>
         <td>${user.publicProfileUrl ? `<a href="${escapeHtml(user.publicProfileUrl)}" target="_blank" rel="noopener">Open</a>` : ""}</td>
         <td>${escapeHtml(user.profileVisibility || "")}</td>
-        <td>${escapeHtml(user.role || "user")}</td>
+        <td>${escapeHtml(user.roleLabel || user.role || "User")}</td>
+        <td>${escapeHtml(scopeSummary(user.managementAreas || user.scopes || []))}</td>
       </tr>
-    `).join("") : `<tr><td colspan="9">No user records yet. Accounts will appear after login or registration.</td></tr>`;
+    `).join("") : `<tr><td colspan="10">No user records yet. Accounts will appear after login or registration.</td></tr>`;
   } catch (adminError) {
+    accessPanel.innerHTML = "";
     metrics.innerHTML = "";
     error.hidden = false;
-    error.textContent = userSessionRole === "admin"
+    error.textContent = hasAdminAccess()
       ? adminError.message
       : `${adminError.message} Log in with an admin account to view this dashboard.`;
   }
+}
+
+function renderAdminAccess(viewer = {}) {
+  const accessPanel = $("#adminAccess");
+  if (!accessPanel) return;
+  const areas = Array.isArray(viewer.managementAreas) ? viewer.managementAreas : [];
+  const scopes = Array.isArray(viewer.scopes) ? viewer.scopes : [];
+  accessPanel.innerHTML = `
+    <div>
+      <span>Current role</span>
+      <strong>${escapeHtml(viewer.label || viewer.role || "Admin")}</strong>
+      <small>${viewer.readOnly === false ? "Write actions enabled" : "Read-only management"}</small>
+    </div>
+    <div>
+      <span>Management scope</span>
+      <ul>
+        ${(areas.length ? areas : ["Admin dashboard access"]).map((area) => `<li>${escapeHtml(area)}</li>`).join("")}
+      </ul>
+    </div>
+    <div>
+      <span>Server scopes</span>
+      <small>${escapeHtml(scopes.length ? scopes.join(" · ") : "admin:read")}</small>
+    </div>
+  `;
+}
+
+function scopeSummary(values = []) {
+  const list = Array.isArray(values) ? values.filter(Boolean) : [];
+  if (!list.length) return "Own profile";
+  return list.slice(0, 2).join(" / ") + (list.length > 2 ? ` +${list.length - 2}` : "");
+}
+
+function hasAdminAccess() {
+  return userSessionScopes.includes("admin:read") || ["owner_admin", "admin", "moderator", "support"].includes(userSessionRole);
 }
 
 function shortId(value = "") {
@@ -3465,8 +3505,9 @@ function setOwnerMode(enabled) {
 function setUserSessionState(session = {}) {
   userSessionRole = session.role || "";
   userSessionEmail = session.email || "";
+  userSessionScopes = Array.isArray(session.scopes) ? session.scopes : [];
   body.classList.toggle("authenticated", Boolean(session.authenticated || userSessionEmail));
-  body.classList.toggle("admin-session", userSessionRole === "admin");
+  body.classList.toggle("admin-session", hasAdminAccess());
 }
 
 function enterOwnerMode(profileUsername = ownerSessionProfile || activeUsername) {

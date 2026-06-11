@@ -26,7 +26,26 @@ Turnpo keeps the first account/admin model in Cloudflare KV, not D1, to avoid a 
 - `user:email:{email}` -> user id
 - `user:id:{id}` -> `{ id, email, username, displayName, profile, role, status, createdAt, updatedAt, lastLoginAt }`
 
-Admin permission is enforced server-side through `requireAdminSession()` in admin API routes. The frontend only hides or shows entry points for convenience.
+Privileged roles are resolved from Cloudflare environment variables on every request. This makes the environment the source of truth: removing an email from a privileged list removes access without editing KV.
+
+Role model:
+
+- `owner_admin`: platform owner read-only admin. Configure with `TURNPO_OWNER_ADMIN_EMAILS` or `TURNPO_SUPER_ADMIN_EMAILS`.
+- `admin`: full read-only account, profile, moderation, and role audit access. Configure with `TURNPO_ADMIN_EMAILS`.
+- `moderator`: read-only public profile and moderation status review. Configure with `TURNPO_MODERATOR_EMAILS`.
+- `support`: read-only account lookup and login/ownership support. Configure with `TURNPO_SUPPORT_EMAILS`.
+- `user`: own-profile access only.
+
+Management scopes:
+
+- `admin:read`: can enter the Admin dashboard.
+- `accounts:read`: can view account metadata, status, creation time, and last login time.
+- `profiles:read`: can view public profile links and visibility state.
+- `moderation:read`: can review moderation/status signals.
+- `roles:read`: can view resolved roles and access scopes.
+- `platform:owner`: owner-admin configuration scope for future platform controls.
+
+Admin permission is enforced server-side through `requireAdminSession(request, env, requiredScope)` in admin API routes. The frontend only hides or shows entry points for convenience.
 
 Cloudflare Pages configuration needed:
 
@@ -37,6 +56,9 @@ Cloudflare Pages configuration needed:
 - Secret: `RESEND_API_KEY`
 - Variable: `TURNPO_AUTH_FROM_EMAIL`, for example `Turnpo <login@turnpo.com>`
 - Variable: `TURNPO_ADMIN_EMAILS`, comma-separated admin account emails. Add Leo's login email here to make Leo admin.
+- Optional variable: `TURNPO_OWNER_ADMIN_EMAILS`, comma-separated owner-admin account emails.
+- Optional variable: `TURNPO_MODERATOR_EMAILS`, comma-separated moderator account emails.
+- Optional variable: `TURNPO_SUPPORT_EMAILS`, comma-separated support account emails.
 - Variable: `TURNPO_APPROVED_OWNER_EMAILS`, comma-separated approved emails
 - Optional variable: `TURNPO_DEFAULT_OWNER_PROFILE`, defaults to `leo`
 - Optional variable: `TURNPO_OWNER_EMAIL_PROFILES`, comma-separated `email:profile` mappings for future multi-owner profiles
@@ -52,7 +74,7 @@ The first admin dashboard is intentionally read-only:
 - API summary: `GET /api/admin/summary`
 - API user list: `GET /api/admin/users`
 
-Both admin APIs require a valid session whose resolved user has `role === "admin"`. The dashboard shows account statistics, profile counts, disabled/deleted account counts, and a basic user list. It does not expose private drafts or unpublished story content.
+Both admin APIs require a valid session whose resolved user has the required management scope. The dashboard shows the current viewer role, management scope, account statistics, profile counts, disabled/deleted account counts, and a basic user list. It does not expose private drafts or unpublished story content.
 
 To test admin access:
 

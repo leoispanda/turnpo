@@ -1,4 +1,4 @@
-import { getSessionId, json, requireAuthConfig, requireUserSession, sessionKey } from "./_utils.js";
+import { accessForRole, getSessionId, json, requireAuthConfig, requireUserSession, sessionKey } from "./_utils.js";
 
 export async function onRequestGet({ request, env }) {
   const configError = requireAuthConfig(env);
@@ -10,13 +10,19 @@ export async function onRequestGet({ request, env }) {
   let session = await env.AUTH_KV.get(sessionKey(sessionId), "json");
   if (!session) return json({ authenticated: false });
   const auth = await requireUserSession(request, env);
-  if (!auth.error) session = { ...session, userId: auth.user.id, role: auth.user.role };
+  if (auth.error) return json({ authenticated: false });
+  session = { ...session, userId: auth.user.id, role: auth.user.role };
+  const access = auth.access || accessForRole(session.role || "user");
 
   return json({
     authenticated: true,
     userId: session.userId || "",
     profile: session.profile,
     email: session.email,
-    role: session.role || "user"
+    role: access.role,
+    roleLabel: access.label,
+    scopes: access.scopes,
+    managementAreas: access.managementAreas,
+    readOnly: access.readOnly
   });
 }

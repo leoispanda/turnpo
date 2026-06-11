@@ -1,5 +1,7 @@
 import {
   json,
+  profileDraftKey,
+  profilePublishedKey,
   profileStore,
   requireAdminSession,
   requireProfileStoreConfig
@@ -12,6 +14,7 @@ export async function onRequestGet({ request, env }) {
   if (profileError) return json({ error: "Profile storage is not configured." }, { status: 500 });
 
   const users = await listUsers(env);
+  const profiles = await profileStats(env, users);
   const now = new Date();
   const startOfToday = new Date(now);
   startOfToday.setHours(0, 0, 0, 0);
@@ -19,12 +22,15 @@ export async function onRequestGet({ request, env }) {
   startOfWeek.setDate(now.getDate() - 7);
 
   return json({
+    viewer: auth.access,
     totalAccounts: users.length,
     newAccountsToday: users.filter((user) => dateValue(user.createdAt) >= startOfToday.getTime()).length,
     newAccountsThisWeek: users.filter((user) => dateValue(user.createdAt) >= startOfWeek.getTime()).length,
-    publishedProfilesCount: await countKeys(profileStore(env), "profile:published:"),
-    draftPrivateProfilesCount: await countKeys(profileStore(env), "profile:draft:"),
-    disabledDeletedAccounts: users.filter((user) => user.status && user.status !== "active").length
+    publishedProfilesCount: profiles.publishedProfilesCount,
+    draftPrivateProfilesCount: profiles.draftPrivateProfilesCount,
+    disabledDeletedAccounts: users.filter((user) => user.status && user.status !== "active").length,
+    storagePublishedRecords: profiles.storagePublishedRecords,
+    storageDraftRecords: profiles.storageDraftRecords
   });
 }
 
@@ -41,6 +47,34 @@ async function listUsers(env) {
     }
   } while (cursor);
   return records;
+}
+
+async function profileStats(env, users) {
+  const store = profileStore(env);
+  const usernames = [...new Set(users
+    .map((user) => user.username || user.profile || "")
+    .filter(Boolean))];
+  let publishedProfilesCount = 0;
+  let draftPrivateProfilesCount = 0;
+
+  await Promise.all(usernames.map(async (username) => {
+    const [published, draft] = await Promise.all([
+      store.get(profilePublishedKey(username), "json"),
+      store.get(profileDraftKey(username), "json")
+    ]);
+    if (published?.profile?.status === "published" || published) {
+      publishedProfilesCount += 1;
+      return;
+    }
+    if (draft) draftPrivateProfilesCount += 1;
+  }));
+
+  return {
+    publishedProfilesCount,
+    draftPrivateProfilesCount,
+    storagePublishedRecords: await countKeys(store, "profile:published:"),
+    storageDraftRecords: await countKeys(store, "profile:draft:")
+  };
 }
 
 async function countKeys(store, prefix) {
