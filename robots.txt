@@ -4,6 +4,7 @@ Disallow: /api/
 Disallow: /owner/
 Disallow: /workspace/
 Disallow: /auth/
+Disallow: /admin
 Disallow: /*?owner=
 Disallow: /*?draft=
 

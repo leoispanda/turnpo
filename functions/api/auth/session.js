@@ -1,4 +1,4 @@
-import { getSessionId, json, requireAuthConfig, sessionKey } from "./_utils.js";
+import { getSessionId, json, requireAuthConfig, requireUserSession, sessionKey } from "./_utils.js";
 
 export async function onRequestGet({ request, env }) {
   const configError = requireAuthConfig(env);
@@ -7,12 +7,16 @@ export async function onRequestGet({ request, env }) {
   const sessionId = getSessionId(request);
   if (!sessionId) return json({ authenticated: false });
 
-  const session = await env.AUTH_KV.get(sessionKey(sessionId), "json");
+  let session = await env.AUTH_KV.get(sessionKey(sessionId), "json");
   if (!session) return json({ authenticated: false });
+  const auth = await requireUserSession(request, env);
+  if (!auth.error) session = { ...session, userId: auth.user.id, role: auth.user.role };
 
   return json({
     authenticated: true,
+    userId: session.userId || "",
     profile: session.profile,
-    email: session.email
+    email: session.email,
+    role: session.role || "user"
   });
 }

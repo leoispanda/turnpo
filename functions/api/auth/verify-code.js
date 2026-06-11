@@ -1,12 +1,14 @@
 import {
   SESSION_TTL_SECONDS,
   codeKey,
+  ensureUserForEmail,
   hashCode,
   incrementWindow,
   json,
   normalizeEmail,
   randomId,
   readJson,
+  recordUserLogin,
   requireAuthConfig,
   sessionCookie,
   sessionKey,
@@ -33,19 +35,33 @@ export async function onRequestPost({ request, env }) {
 
   await env.AUTH_KV.delete(codeKey(email));
 
+  const user = await recordLoginUser(env, email, stored.profile);
   const sessionId = randomId();
   await env.AUTH_KV.put(sessionKey(sessionId), JSON.stringify({
+    userId: user.id,
     email,
     profile: stored.profile,
+    role: user.role,
     createdAt: new Date().toISOString()
   }), { expirationTtl: SESSION_TTL_SECONDS });
 
   return json({
     ok: true,
-    profile: stored.profile
+    profile: stored.profile,
+    role: user.role
   }, {
     headers: {
       "set-cookie": sessionCookie(sessionId)
     }
   });
+}
+
+async function recordLoginUser(env, email, profile) {
+  const user = await ensureUserForEmail(env, {
+    email,
+    profile,
+    username: profile,
+    displayName: profile
+  });
+  return await recordUserLogin(env, user);
 }

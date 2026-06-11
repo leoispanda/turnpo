@@ -2228,6 +2228,8 @@ let pendingOwnerEmail = "";
 let authCodeRequested = false;
 let registrationCodeRequested = false;
 let ownerSessionProfile = "";
+let userSessionRole = "";
+let userSessionEmail = "";
 let ownerTimelineView = "published";
 let activeCategoryFilter = "all";
 let onlineDraftAvailable = false;
@@ -2792,7 +2794,9 @@ function renderHomeJsonLd() {
 function setRoute(route) {
   if (route === "home") {
     body.classList.remove("profile-open");
+    body.classList.remove("admin-open");
     $("#entryView").hidden = false;
+    $("#adminView").hidden = true;
     document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = true; });
     history.pushState(null, "", "/");
     setSeoMeta({
@@ -2808,6 +2812,27 @@ function setRoute(route) {
     return;
   }
 
+  if (route === "admin") {
+    body.classList.remove("profile-open");
+    body.classList.add("admin-open");
+    $("#entryView").hidden = true;
+    $("#adminView").hidden = false;
+    document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = true; });
+    history.pushState(null, "", "/admin");
+    setSeoMeta({
+      title: "Admin Dashboard | Turnpo",
+      description: "Read-only Turnpo account statistics and moderation dashboard.",
+      url: `${SITE_URL}/admin`,
+      image: HOME_SEO.image,
+      type: "website",
+      robots: "noindex, nofollow"
+    });
+    $("#jsonLd").textContent = "{}";
+    renderAdminDashboard();
+    window.scrollTo({ top: 0, behavior: "auto" });
+    return;
+  }
+
   const normalizedRoute = normalizeUsername(route);
   activeUsername = normalizedRoute && (profiles[normalizedRoute] || !seedProfiles[normalizedRoute])
     ? normalizedRoute
@@ -2815,7 +2840,9 @@ function setRoute(route) {
   if (!ownerMode) loadPublicProfile(activeUsername);
   localStorage.setItem(ACTIVE_PROFILE_KEY, activeUsername);
   body.classList.add("profile-open");
+  body.classList.remove("admin-open");
   $("#entryView").hidden = true;
+  $("#adminView").hidden = true;
   document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = false; });
   history.pushState(null, "", `/u/${activeUsername}`);
   renderProfile();
@@ -2825,6 +2852,7 @@ function setRoute(route) {
 }
 
 function routeFromLocation() {
+  if (location.pathname === "/admin") return "admin";
   const pathMatch = location.pathname.match(/^\/u\/([^/]+)/);
   if (pathMatch) return decodeURIComponent(pathMatch[1]);
   const hashMatch = location.hash.match(/^#\/u\/([^/]+)/);
@@ -2931,6 +2959,78 @@ function buildPublicAiPreview(profile) {
     "",
     `Projects: ${works.length ? works.join(" / ") : "curated projects"}`
   ].join("\n");
+}
+
+async function adminApi(path) {
+  const response = await fetch(path, { credentials: "same-origin" });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error || "Admin access is not available.");
+  return data;
+}
+
+async function renderAdminDashboard() {
+  if (!$("#adminView") || $("#adminView").hidden) return;
+  const error = $("#adminError");
+  const metrics = $("#adminMetrics");
+  const usersTable = $("#adminUsers");
+  error.hidden = true;
+  error.textContent = "";
+  metrics.innerHTML = `<div class="admin-metric"><span>Status</span><strong>Loading</strong></div>`;
+  usersTable.innerHTML = "";
+  try {
+    const [summary, usersData] = await Promise.all([
+      adminApi("/api/admin/summary"),
+      adminApi("/api/admin/users")
+    ]);
+    const metricRows = [
+      ["Total accounts", summary.totalAccounts],
+      ["New today", summary.newAccountsToday],
+      ["New this week", summary.newAccountsThisWeek],
+      ["Published profiles", summary.publishedProfilesCount],
+      ["Draft/private profiles", summary.draftPrivateProfilesCount],
+      ["Disabled/deleted", summary.disabledDeletedAccounts]
+    ];
+    metrics.innerHTML = metricRows.map(([label, value]) => `
+      <div class="admin-metric"><span>${escapeHtml(label)}</span><strong>${escapeHtml(String(value ?? 0))}</strong></div>
+    `).join("");
+    const users = Array.isArray(usersData.users) ? usersData.users : [];
+    usersTable.innerHTML = users.length ? users.map((user) => `
+      <tr>
+        <td>${escapeHtml(shortId(user.id))}</td>
+        <td>${escapeHtml(user.email || "")}</td>
+        <td><strong>@${escapeHtml(user.username || "")}</strong></td>
+        <td>${escapeHtml(user.displayName || "")}</td>
+        <td>${escapeHtml(formatDateTime(user.createdAt))}</td>
+        <td>${escapeHtml(formatDateTime(user.lastLoginAt))}</td>
+        <td>${user.publicProfileUrl ? `<a href="${escapeHtml(user.publicProfileUrl)}" target="_blank" rel="noopener">Open</a>` : ""}</td>
+        <td>${escapeHtml(user.profileVisibility || "")}</td>
+        <td>${escapeHtml(user.role || "user")}</td>
+      </tr>
+    `).join("") : `<tr><td colspan="9">No user records yet. Accounts will appear after login or registration.</td></tr>`;
+  } catch (adminError) {
+    metrics.innerHTML = "";
+    error.hidden = false;
+    error.textContent = userSessionRole === "admin"
+      ? adminError.message
+      : `${adminError.message} Log in with an admin account to view this dashboard.`;
+  }
+}
+
+function shortId(value = "") {
+  return String(value || "").slice(0, 10);
+}
+
+function formatDateTime(value = "") {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleString([], {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
 }
 
 function groupedStories(profile = currentProfile()) {
@@ -3362,6 +3462,13 @@ function setOwnerMode(enabled) {
   else loadPublishedProfileOnline(activeUsername);
 }
 
+function setUserSessionState(session = {}) {
+  userSessionRole = session.role || "";
+  userSessionEmail = session.email || "";
+  body.classList.toggle("authenticated", Boolean(session.authenticated || userSessionEmail));
+  body.classList.toggle("admin-session", userSessionRole === "admin");
+}
+
 function enterOwnerMode(profileUsername = ownerSessionProfile || activeUsername) {
   if (profileUsername && !profiles[profileUsername]) {
     profiles[profileUsername] = starterProfile({ username: profileUsername, displayName: profileUsername });
@@ -3774,11 +3881,12 @@ async function registerProfile(event) {
       $("#registerCode").focus();
       return;
     }
-    const username = data.profile;
-    profiles[username] = normalizeProfile(data.profileData || starterProfile({ username, displayName: name, email }));
-    activeUsername = username;
-    ownerSessionProfile = username;
-    saveActiveProfile();
+	    const username = data.profile;
+	    profiles[username] = normalizeProfile(data.profileData || starterProfile({ username, displayName: name, email }));
+	    activeUsername = username;
+	    ownerSessionProfile = username;
+	    setUserSessionState({ authenticated: true, email, role: data.role || "user" });
+	    saveActiveProfile();
     localStorage.setItem(ACTIVE_PROFILE_KEY, username);
     setRegistrationDrawer(false);
     resetRegistrationForm();
@@ -4021,7 +4129,7 @@ function addAiImportLifeDraft() {
   saveProfileDraftOnline({ quiet: true });
 }
 
-function resetAuthForm(message = "Only approved owner emails can enter founder mode. If your email is approved, Turnpo will send a one-time code.") {
+function resetAuthForm(message = "Enter your Turnpo account email. If the account exists, Turnpo will send a one-time code.") {
   authCodeRequested = false;
   pendingOwnerEmail = "";
   $("#ownerCodeRow").hidden = true;
@@ -4033,7 +4141,7 @@ function resetAuthForm(message = "Only approved owner emails can enter founder m
 async function requestLoginCode() {
   const email = $("#ownerEmail").value.trim().toLowerCase();
   if (!email) {
-    $("#authNote").textContent = "Enter your approved owner email first.";
+    $("#authNote").textContent = "Enter your account email first.";
     return;
   }
   $("#authSubmit").disabled = true;
@@ -4044,7 +4152,7 @@ async function requestLoginCode() {
     authCodeRequested = true;
     $("#ownerCodeRow").hidden = false;
     $("#authSubmit").textContent = "Verify code";
-    $("#authNote").textContent = "If this email is approved, a 6-digit code has been sent. Codes expire after 10 minutes.";
+    $("#authNote").textContent = "If this account exists, a 6-digit code has been sent. Codes expire after 10 minutes.";
     $("#ownerCode").focus();
   } catch (error) {
     $("#authNote").textContent = error.message;
@@ -4064,6 +4172,7 @@ async function verifyLoginCode() {
   try {
     const session = await authRequest("/api/auth/verify-code", { email: pendingOwnerEmail, code });
     if (session.profile) ownerSessionProfile = session.profile;
+    setUserSessionState({ authenticated: true, email: pendingOwnerEmail, role: session.role || "user" });
     enterOwnerMode(ownerSessionProfile);
     setAuthDrawer(false);
     resetAuthForm("Owner mode is active.");
@@ -4079,16 +4188,21 @@ async function checkOwnerSession() {
     const session = await authRequest("/api/auth/session");
     if (session.authenticated && session.profile) {
       ownerSessionProfile = session.profile;
+      setUserSessionState(session);
       if (!profiles[ownerSessionProfile]) {
         profiles[ownerSessionProfile] = starterProfile({
           username: ownerSessionProfile,
           displayName: ownerSessionProfile,
           email: session.email || ""
         });
-      }
-    }
+	      }
+	      if (routeFromLocation() === "admin") renderAdminDashboard();
+	    } else {
+	      setUserSessionState({});
+	    }
   } catch {
     ownerSessionProfile = "";
+    setUserSessionState({});
     setOwnerMode(false);
   }
 }
@@ -4102,6 +4216,7 @@ async function logoutOwner() {
     // Local static previews may not have the auth function available yet.
   }
   ownerSessionProfile = "";
+  setUserSessionState({});
   setOwnerMode(false);
   resetAuthForm("You have exited owner mode.");
 }
@@ -4372,6 +4487,12 @@ $("#homeOwnerLogin").addEventListener("click", () => {
   if (ownerSessionProfile) enterOwnerMode(ownerSessionProfile);
   else setAuthDrawer(true);
 });
+$("#openLogin").addEventListener("click", () => {
+  if (ownerSessionProfile) enterOwnerMode(ownerSessionProfile);
+  else setAuthDrawer(true);
+});
+$("#openAdminDashboard").addEventListener("click", () => setRoute("admin"));
+$("#refreshAdminDashboard").addEventListener("click", renderAdminDashboard);
 $("#openRegistration").addEventListener("click", () => setRegistrationDrawer(true));
 $("#openAiImport").addEventListener("click", () => setAiImportDrawer(true));
 $("#ownerLogout").addEventListener("click", logoutOwner);

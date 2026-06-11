@@ -10,6 +10,32 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-11 - next after v0.1.138
+
+Commit: pending - `Add login and admin MVP`
+
+### Changed
+
+- Added a KV-backed user registry using `user:email:{email}` and `user:id:{id}` records so Turnpo can track normal users, profile owners, and admin roles without a D1 migration.
+- Extended email-code login sessions with `userId`, `email`, `profile`, and `role` while preserving existing profile owner access.
+- Added server-side admin role resolution through `TURNPO_ADMIN_EMAILS` and `requireAdminSession()`.
+- Added read-only admin APIs: `GET /api/admin/summary` and `GET /api/admin/users`.
+- Added a visible `Log in` button in the header and an admin-only `Admin` entry point for authenticated admin users.
+- Added a read-only `/admin` dashboard with account totals, new account counts, profile counts, disabled/deleted account count, and a basic user list.
+- Added `/admin` SPA routing, noindex headers, and robots exclusion.
+- Updated registration and login text to reflect the email-code account flow.
+- Updated backend documentation with the KV user registry, admin dashboard routes, and required `TURNPO_ADMIN_EMAILS` setup.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check` across all `functions/api/**/*.js` files.
+- Ran `git diff --check`.
+- Verified a normal user session receives `403` from `/api/admin/summary`.
+- Verified an admin email from `TURNPO_ADMIN_EMAILS` receives `200` from `/api/admin/summary` and can read `/api/admin/users`.
+- Verified admin summary returns account, profile, draft, and disabled/deleted counts from KV without exposing draft content.
+- Verified registration still requires email-code verification, creates a `user:id:*` record, returns role `user`, and stores only sanitized public profile data.
+
 ## 2026-06-10 - v0.1.137
 
 Commit: this commit - `Add public profile consent gates`

@@ -10,16 +10,23 @@ Turnpo can stay on Cloudflare Pages while moving writes into a real backend.
 - Cloudflare R2 for uploaded photos.
 - Cloudflare Pages Functions + KV + Resend for owner email-code authentication.
 
-## Owner login MVP
+## Login and admin MVP
 
-Turnpo now uses an email-code login path for owner mode:
+Turnpo uses an email-code login path for normal users, profile owners, and admins:
 
 - `POST /api/auth/request-code` requests a 6-digit one-time code.
 - `POST /api/auth/verify-code` verifies the code and sets an `HttpOnly`, `Secure`, `SameSite=Lax` session cookie.
-- `GET /api/auth/session` restores owner mode when the session cookie is valid.
+- `GET /api/auth/session` restores the logged-in account, profile ownership, and role when the session cookie is valid.
 - `POST /api/auth/logout` deletes the server session and clears the cookie.
 
-Only approved owner emails can receive a working code. Approval is handled through Cloudflare environment variables, not public frontend code.
+Registered Turnpo users can request a working code. Legacy approved owner emails can also receive a working code so existing owner access keeps working. Unknown emails receive the same generic response but no code is sent.
+
+Turnpo keeps the first account/admin model in Cloudflare KV, not D1, to avoid a large migration. User records are stored as:
+
+- `user:email:{email}` -> user id
+- `user:id:{id}` -> `{ id, email, username, displayName, profile, role, status, createdAt, updatedAt, lastLoginAt }`
+
+Admin permission is enforced server-side through `requireAdminSession()` in admin API routes. The frontend only hides or shows entry points for convenience.
 
 Cloudflare Pages configuration needed:
 
@@ -29,12 +36,30 @@ Cloudflare Pages configuration needed:
 - Secret: `TURNPO_AUTH_SECRET`
 - Secret: `RESEND_API_KEY`
 - Variable: `TURNPO_AUTH_FROM_EMAIL`, for example `Turnpo <login@turnpo.com>`
+- Variable: `TURNPO_ADMIN_EMAILS`, comma-separated admin account emails. Add Leo's login email here to make Leo admin.
 - Variable: `TURNPO_APPROVED_OWNER_EMAILS`, comma-separated approved emails
 - Optional variable: `TURNPO_DEFAULT_OWNER_PROFILE`, defaults to `leo`
 - Optional variable: `TURNPO_OWNER_EMAIL_PROFILES`, comma-separated `email:profile` mappings for future multi-owner profiles
 - Built-in owner mapping: `cxin7699nl23@gmail.com` logs into the `cindy` profile. Override or extend with `TURNPO_OWNER_EMAIL_PROFILES`.
 
 Do not commit real API keys, login secrets, or private owner email lists.
+
+## Read-only admin dashboard
+
+The first admin dashboard is intentionally read-only:
+
+- Frontend route: `/admin`
+- API summary: `GET /api/admin/summary`
+- API user list: `GET /api/admin/users`
+
+Both admin APIs require a valid session whose resolved user has `role === "admin"`. The dashboard shows account statistics, profile counts, disabled/deleted account counts, and a basic user list. It does not expose private drafts or unpublished story content.
+
+To test admin access:
+
+1. Configure `TURNPO_ADMIN_EMAILS` in Cloudflare with Leo's account email.
+2. Log in with that email through the visible `Log in` button.
+3. Open `/admin` or the `Admin` button.
+4. A non-admin logged-in user should receive `Admin access required.` from `/api/admin/*`.
 
 ## Online profile persistence bridge
 

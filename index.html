@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.138" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.139" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -37,11 +37,11 @@
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Turnpo</span>
       </a>
-      <div class="top-actions profile-only">
-        <button class="ghost-btn" id="backToSearch" type="button">Back to search</button>
-      </div>
-      <div class="top-actions home-only">
-        <button class="ghost-btn" id="openRegistration" type="button">Create profile</button>
+      <div class="top-actions">
+        <button class="ghost-btn profile-only" id="backToSearch" type="button">Back to search</button>
+        <button class="ghost-btn home-only" id="openRegistration" type="button">Create profile</button>
+        <button class="ghost-btn admin-session-only" id="openAdminDashboard" type="button">Admin</button>
+        <button class="ghost-btn logged-out-only" id="openLogin" type="button">Log in</button>
       </div>
     </header>
 
@@ -72,6 +72,37 @@
           <h2>The turning points<br />that tell a life.</h2>
         </div>
         <div class="example-grid" id="exampleProfiles" aria-label="Turnpo profile capabilities"></div>
+      </section>
+
+      <section class="admin-dashboard admin-content" id="adminView" aria-label="Admin dashboard" hidden>
+        <div class="admin-head">
+          <div>
+            <p class="eyebrow">Admin Dashboard</p>
+            <h1>Account overview</h1>
+            <p>This read-only dashboard is for account statistics and moderation checks only. It does not expose private drafts or unpublished story content.</p>
+          </div>
+          <button class="ghost-btn" id="refreshAdminDashboard" type="button">Refresh</button>
+        </div>
+        <div class="admin-error" id="adminError" hidden></div>
+        <div class="admin-metrics" id="adminMetrics"></div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>User id</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Created</th>
+                <th>Last login</th>
+                <th>Profile</th>
+                <th>Visibility</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody id="adminUsers"></tbody>
+          </table>
+        </div>
       </section>
 
       <section class="profile-shell profile-content" aria-label="Personal profile" hidden>
@@ -204,7 +235,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.138</span>
+          <span class="version-badge">v0.1.139</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -313,16 +344,16 @@
       <form class="event-form auth-form" id="authForm">
         <div class="form-head">
           <div>
-            <p class="eyebrow">Owner access</p>
-            <h2>Email code login</h2>
+            <p class="eyebrow">Turnpo access</p>
+            <h2>Log in with email</h2>
           </div>
           <button class="icon-btn" id="closeAuth" type="button" title="Close">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
           </button>
         </div>
-        <label><span>Approved email</span><input id="ownerEmail" autocomplete="email" inputmode="email" placeholder="you@example.com" type="email" /></label>
+        <label><span>Email</span><input id="ownerEmail" autocomplete="email" inputmode="email" placeholder="you@example.com" type="email" /></label>
         <label id="ownerCodeRow" hidden><span>6-digit code</span><input id="ownerCode" autocomplete="one-time-code" inputmode="numeric" maxlength="6" placeholder="123456" /></label>
-        <p class="auth-note" id="authNote">Only approved owner emails can enter founder mode. If your email is approved, Turnpo will send a one-time code.</p>
+        <p class="auth-note" id="authNote">Enter your Turnpo account email. If the account exists, Turnpo will send a one-time code.</p>
         <button class="submit-btn" id="authSubmit" type="submit">Send login code</button>
       </form>
     </div>
@@ -354,7 +385,7 @@
           <label class="consent-check"><input id="registerAiReviewConsent" type="checkbox" required /><span>I understand AI imports may be inaccurate or incomplete and I must review and correct AI-generated drafts before publishing.</span></label>
           <label class="consent-check"><input id="registerLegalConsent" type="checkbox" required /><span>I agree to the <a href="/legal/docs/TURNPO_PUBLIC_PROFILE_TERMS_PRIVACY_DISCLAIMER_v0.2.md" target="_blank" rel="noopener">Terms, Privacy Notice, and Public Content Disclaimer</a>.</span></label>
         </div>
-        <p class="auth-note" id="registrationNote">Creating an account immediately creates a public starter profile. Use hidden or draft controls where available before adding content you are not ready to publish.</p>
+        <p class="auth-note" id="registrationNote">Turnpo will email a verification code before creating your public starter profile. Use hidden or draft controls where available before adding content you are not ready to publish.</p>
         <button class="submit-btn" id="registrationSubmit" type="submit">Create public profile</button>
       </form>
     </div>
@@ -417,6 +448,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.138"></script>
+    <script src="/script.js?v=0.1.139"></script>
   </body>
 </html>

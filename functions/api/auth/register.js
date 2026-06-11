@@ -3,6 +3,7 @@ import {
   REGISTRATION_TTL_SECONDS,
   SESSION_TTL_SECONDS,
   codeKey,
+  ensureUserForEmail,
   hashCode,
   incrementWindow,
   json,
@@ -16,6 +17,7 @@ import {
   randomCode,
   randomId,
   readJson,
+  recordUserLogin,
   registrationKey,
   registeredUsernameKey,
   requestKey,
@@ -24,6 +26,7 @@ import {
   sendLoginCode,
   sessionCookie,
   sessionKey,
+  userForEmail,
   verifyKey,
   usernameFromName,
   validUsername
@@ -95,6 +98,8 @@ export async function onRequestPost({ request, env }) {
   }
 
   const existingProfile = await ownerProfileForEmail(env, email);
+  const existingUser = await userForEmail(env, email);
+  if (existingUser) return json({ error: "This email already has a Turnpo profile. Please use email code login." }, { status: 409 });
   if (existingProfile) return json({ error: "This email already has a Turnpo profile. Please use email code login." }, { status: 409 });
 
   if (!code) {
@@ -186,17 +191,27 @@ export async function onRequestPost({ request, env }) {
   await env.AUTH_KV.delete(registrationKey(email));
   await env.AUTH_KV.delete(codeKey(`register:${email}`));
 
-  const sessionId = randomId();
-  await env.AUTH_KV.put(sessionKey(sessionId), JSON.stringify({
+  const user = await recordUserLogin(env, await ensureUserForEmail(env, {
     email,
     profile: username,
+    username,
+    displayName: name,
+    now
+  }));
+  const sessionId = randomId();
+  await env.AUTH_KV.put(sessionKey(sessionId), JSON.stringify({
+    userId: user.id,
+    email,
+    profile: username,
+    role: user.role,
     createdAt: now
   }), { expirationTtl: SESSION_TTL_SECONDS });
 
   return json({
     ok: true,
     profile: username,
-    profileData: profile
+    profileData: profile,
+    role: user.role
   }, {
     headers: {
       "set-cookie": sessionCookie(sessionId)

@@ -170,6 +170,14 @@ export function ownerProfileKey(email) {
   return `auth:owner:${normalizeEmail(email)}`;
 }
 
+export function userEmailKey(email) {
+  return `user:email:${normalizeEmail(email)}`;
+}
+
+export function userKey(userId) {
+  return `user:id:${userId}`;
+}
+
 export function registeredUsernameKey(username) {
   return `profile:username:${normalizeUsername(username)}`;
 }
@@ -226,6 +234,100 @@ export async function ownerSession(request, env) {
   if (!session) return { error: "Owner login required.", status: 401 };
 
   return { session };
+}
+
+export function roleForEmail(env, email) {
+  const admins = parseList(env.TURNPO_ADMIN_EMAILS || env.ADMIN_EMAILS || "");
+  return admins.includes(normalizeEmail(email)) ? "admin" : "user";
+}
+
+export async function userForEmail(env, email) {
+  if (!env.AUTH_KV) return null;
+  const userId = await env.AUTH_KV.get(userEmailKey(email));
+  return userId ? await env.AUTH_KV.get(userKey(userId), "json") : null;
+}
+
+export async function userForId(env, userId) {
+  if (!env.AUTH_KV || !userId) return null;
+  return await env.AUTH_KV.get(userKey(userId), "json");
+}
+
+export async function ensureUserForEmail(env, {
+  email,
+  profile = "",
+  username = "",
+  displayName = "",
+  status = "active",
+  now = new Date().toISOString()
+}) {
+  const normalizedEmail = normalizeEmail(email);
+  if (!normalizedEmail) return null;
+  const existing = await userForEmail(env, normalizedEmail);
+  const role = roleForEmail(env, normalizedEmail);
+  const next = existing ? {
+    ...existing,
+    role,
+    profile: profile || existing.profile || "",
+    username: username || existing.username || existing.profile || profile || "",
+    displayName: displayName || existing.displayName || username || existing.username || "",
+    status: existing.status || status,
+    updatedAt: now
+  } : {
+    id: randomId(),
+    email: normalizedEmail,
+    username: username || profile || "",
+    displayName: displayName || username || profile || normalizedEmail,
+    profile: profile || username || "",
+    role,
+    status,
+    createdAt: now,
+    updatedAt: now,
+    lastLoginAt: ""
+  };
+  await env.AUTH_KV.put(userKey(next.id), JSON.stringify(next));
+  await env.AUTH_KV.put(userEmailKey(normalizedEmail), next.id);
+  return next;
+}
+
+export async function recordUserLogin(env, user) {
+  if (!user?.id) return user;
+  const now = new Date().toISOString();
+  const next = {
+    ...user,
+    role: roleForEmail(env, user.email),
+    lastLoginAt: now,
+    updatedAt: now
+  };
+  await env.AUTH_KV.put(userKey(next.id), JSON.stringify(next));
+  await env.AUTH_KV.put(userEmailKey(next.email), next.id);
+  return next;
+}
+
+export async function requireUserSession(request, env) {
+  const auth = await ownerSession(request, env);
+  if (auth.error) return auth;
+  let user = auth.session.userId ? await userForId(env, auth.session.userId) : null;
+  if (!user && auth.session.email) {
+    user = await ensureUserForEmail(env, {
+      email: auth.session.email,
+      profile: auth.session.profile || "",
+      username: auth.session.profile || ""
+    });
+  }
+  if (!user) return { error: "Login required.", status: 401 };
+  if (user.status && user.status !== "active") return { error: "Account is not active.", status: 403 };
+  user = {
+    ...user,
+    role: roleForEmail(env, user.email)
+  };
+  return { session: auth.session, user };
+}
+
+export async function requireAdminSession(request, env) {
+  const auth = await requireUserSession(request, env);
+  if (auth.error) return auth;
+  if (auth.user.role !== "admin") return { error: "Admin access required.", status: 403 };
+  return auth;
 }
 
 export function normalizeUsername(value = "") {

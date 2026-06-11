@@ -146,6 +146,11 @@ body:not(.owner-mode) .owner-only {
   display: none;
 }
 
+body.authenticated .logged-out-only,
+body:not(.admin-session) .admin-session-only {
+  display: none;
+}
+
 body.owner-mode .public-only {
   display: none;
 }
@@ -376,6 +381,104 @@ main {
   color: #d9d1c3;
   font-size: clamp(20px, 2.4vw, 30px);
   line-height: 1.22;
+}
+
+.admin-dashboard {
+  padding: clamp(28px, 5vw, 56px) clamp(18px, 5vw, 72px) 42px;
+}
+
+.admin-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.admin-head h1 {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 54px);
+  line-height: 1;
+}
+
+.admin-head p {
+  max-width: 760px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.admin-error {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid rgba(235, 91, 91, 0.35);
+  border-radius: var(--radius);
+  color: #f1c1b8;
+  background: rgba(235, 91, 91, 0.08);
+}
+
+.admin-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.admin-metric {
+  min-height: 104px;
+  padding: 16px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.admin-metric span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 720;
+  text-transform: uppercase;
+}
+
+.admin-metric strong {
+  display: block;
+  margin-top: 12px;
+  color: var(--gold-strong);
+  font-size: 30px;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+}
+
+.admin-table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--muted);
+  font-size: 13px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.admin-table th {
+  color: var(--gold);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.admin-table td strong,
+.admin-table a {
+  color: var(--text);
 }
 
 .site-footer {
@@ -2163,6 +2266,14 @@ select {
   }
 
   .backend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-head {
+    display: grid;
+  }
+
+  .admin-metrics {
     grid-template-columns: 1fr;
   }
 
