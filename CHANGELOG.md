@@ -10,9 +10,29 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
-## 2026-06-11 - next after v0.1.140
+## 2026-06-11 - next after v0.1.141
 
-Commit: pending - `Simplify admin role model`
+Commit: pending - `Add admin owner mode switch`
+
+### Changed
+
+- Added a persistent `My profile` header action for logged-in owner sessions.
+- Made admin users who also own a profile able to switch from Admin dashboard back into owner edit mode.
+- Added an `owner-session` UI state so profile ownership and admin access can coexist cleanly.
+- Kept the `Admin` action available for admin users so the same account can move between owner mode and admin mode.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check` across all `functions/api/**/*.js` files.
+- Ran `git diff --check`.
+- Verified the header contains the `My profile` owner-session action.
+- Verified owner-session state is applied from login/session/registration profile data and cleared on expired sessions.
+- Verified the local static page responds with `200 OK`.
+
+## 2026-06-11 - v0.1.141
+
+Commit: `88181dd` - `Simplify admin role model`
 
 ### Changed
 

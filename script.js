@@ -3506,7 +3506,9 @@ function setUserSessionState(session = {}) {
   userSessionRole = session.role || "";
   userSessionEmail = session.email || "";
   userSessionScopes = Array.isArray(session.scopes) ? session.scopes : [];
+  const sessionProfile = session.profile || ownerSessionProfile || "";
   body.classList.toggle("authenticated", Boolean(session.authenticated || userSessionEmail));
+  body.classList.toggle("owner-session", Boolean(sessionProfile));
   body.classList.toggle("admin-session", hasAdminAccess());
 }
 
@@ -3515,6 +3517,10 @@ function enterOwnerMode(profileUsername = ownerSessionProfile || activeUsername)
     profiles[profileUsername] = starterProfile({ username: profileUsername, displayName: profileUsername });
   }
   if (profiles[profileUsername]) activeUsername = profileUsername;
+  if (profileUsername) {
+    ownerSessionProfile = profileUsername;
+    body.classList.add("owner-session");
+  }
   setOwnerMode(true);
   setRoute(activeUsername);
 }
@@ -3926,7 +3932,7 @@ async function registerProfile(event) {
 	    profiles[username] = normalizeProfile(data.profileData || starterProfile({ username, displayName: name, email }));
 	    activeUsername = username;
 	    ownerSessionProfile = username;
-	    setUserSessionState({ authenticated: true, email, role: data.role || "user" });
+	    setUserSessionState({ authenticated: true, email, profile: username, role: data.role || "user", scopes: data.scopes || [] });
 	    saveActiveProfile();
     localStorage.setItem(ACTIVE_PROFILE_KEY, username);
     setRegistrationDrawer(false);
@@ -4213,7 +4219,7 @@ async function verifyLoginCode() {
   try {
     const session = await authRequest("/api/auth/verify-code", { email: pendingOwnerEmail, code });
     if (session.profile) ownerSessionProfile = session.profile;
-    setUserSessionState({ authenticated: true, email: pendingOwnerEmail, role: session.role || "user" });
+    setUserSessionState({ authenticated: true, email: pendingOwnerEmail, profile: session.profile || ownerSessionProfile, role: session.role || "user", scopes: session.scopes || [] });
     enterOwnerMode(ownerSessionProfile);
     setAuthDrawer(false);
     resetAuthForm("Owner mode is active.");
@@ -4239,6 +4245,7 @@ async function checkOwnerSession() {
 	      }
 	      if (routeFromLocation() === "admin") renderAdminDashboard();
 	    } else {
+	      ownerSessionProfile = "";
 	      setUserSessionState({});
 	    }
   } catch {
@@ -4529,6 +4536,10 @@ $("#homeOwnerLogin").addEventListener("click", () => {
   else setAuthDrawer(true);
 });
 $("#openLogin").addEventListener("click", () => {
+  if (ownerSessionProfile) enterOwnerMode(ownerSessionProfile);
+  else setAuthDrawer(true);
+});
+$("#openOwnerProfile").addEventListener("click", () => {
   if (ownerSessionProfile) enterOwnerMode(ownerSessionProfile);
   else setAuthDrawer(true);
 });

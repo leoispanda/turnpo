@@ -147,6 +147,8 @@ body:not(.owner-mode) .owner-only {
 }
 
 body.authenticated .logged-out-only,
+body:not(.owner-session) .owner-session-only,
+body.owner-mode.profile-open .owner-session-only,
 body:not(.admin-session) .admin-session-only {
   display: none;
 }
