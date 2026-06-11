@@ -7,8 +7,8 @@ const CODE_TTL_SECONDS = 10 * 60;
 const SESSION_TTL_SECONDS = 7 * 24 * 60 * 60;
 const REGISTRATION_TTL_SECONDS = 20 * 60;
 const ROLE_DEFINITIONS = {
-  owner_admin: {
-    label: "Owner admin",
+  admin: {
+    label: "Admin",
     scopes: [
       "admin:read",
       "accounts:read",
@@ -23,45 +23,6 @@ const ROLE_DEFINITIONS = {
       "Moderation and status monitoring",
       "Role and access audit",
       "Platform owner configuration"
-    ]
-  },
-  admin: {
-    label: "Admin",
-    scopes: [
-      "admin:read",
-      "accounts:read",
-      "profiles:read",
-      "moderation:read",
-      "roles:read"
-    ],
-    areas: [
-      "Full read-only account overview",
-      "Public profile and visibility review",
-      "Moderation and status monitoring",
-      "Role and access audit"
-    ]
-  },
-  moderator: {
-    label: "Moderator",
-    scopes: [
-      "admin:read",
-      "profiles:read",
-      "moderation:read"
-    ],
-    areas: [
-      "Public profile and visibility review",
-      "Moderation and status monitoring"
-    ]
-  },
-  support: {
-    label: "Support",
-    scopes: [
-      "admin:read",
-      "accounts:read"
-    ],
-    areas: [
-      "Read-only account lookup",
-      "Login and ownership support"
     ]
   },
   user: {
@@ -302,14 +263,8 @@ export async function ownerSession(request, env) {
 
 export function roleForEmail(env, email) {
   const normalizedEmail = normalizeEmail(email);
-  const ownerAdmins = parseList(env.TURNPO_OWNER_ADMIN_EMAILS || env.TURNPO_SUPER_ADMIN_EMAILS || env.OWNER_ADMIN_EMAILS || "");
   const admins = parseList(env.TURNPO_ADMIN_EMAILS || env.ADMIN_EMAILS || "");
-  const moderators = parseList(env.TURNPO_MODERATOR_EMAILS || env.MODERATOR_EMAILS || "");
-  const support = parseList(env.TURNPO_SUPPORT_EMAILS || env.SUPPORT_EMAILS || "");
-  if (ownerAdmins.includes(normalizedEmail)) return "owner_admin";
   if (admins.includes(normalizedEmail)) return "admin";
-  if (moderators.includes(normalizedEmail)) return "moderator";
-  if (support.includes(normalizedEmail)) return "support";
   return "user";
 }
 

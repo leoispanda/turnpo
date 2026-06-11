@@ -3053,7 +3053,7 @@ function scopeSummary(values = []) {
 }
 
 function hasAdminAccess() {
-  return userSessionScopes.includes("admin:read") || ["owner_admin", "admin", "moderator", "support"].includes(userSessionRole);
+  return userSessionScopes.includes("admin:read") || userSessionRole === "admin";
 }
 
 function shortId(value = "") {

@@ -10,9 +10,35 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
-## 2026-06-11 - next after v0.1.139
+## 2026-06-11 - next after v0.1.140
 
-Commit: pending - `Expand admin roles and scopes`
+Commit: pending - `Simplify admin role model`
+
+### Changed
+
+- Simplified Turnpo's active role model to two roles: `admin` and `user`.
+- Made `admin` the highest current role with all read-only management scopes, including account, profile, moderation, role audit, and future platform-owner scope.
+- Removed active `owner_admin`, `moderator`, and `support` role resolution from the product for now.
+- Kept the server-side scope structure so future admin sub-roles can be added later without changing the dashboard contract.
+- Updated the Admin dashboard access check to treat only `admin` or `admin:read` scope as privileged.
+- Updated backend documentation so Cloudflare setup only requires `TURNPO_ADMIN_EMAILS` for admin access.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check` across all `functions/api/**/*.js` files.
+- Ran `git diff --check`.
+- Verified a normal user session receives `403` from `/api/admin/summary`.
+- Verified only an email in `TURNPO_ADMIN_EMAILS` receives admin access.
+- Verified legacy `TURNPO_MODERATOR_EMAILS` and `TURNPO_SUPPORT_EMAILS` values no longer grant admin access.
+- Verified admin access includes the current highest management scope payload.
+- Verified inactive user records still do not restore as authenticated sessions.
+
+## 2026-06-11 - v0.1.140
+
+Commit: `3d49e59` - `Expand admin roles and scopes`
+
+Note: This commit added a broader role/scopes foundation. The following update simplified the active product model back to `admin` and `user` only, while keeping scopes for future expansion.
 
 ### Changed
 
