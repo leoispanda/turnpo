@@ -1,19 +1,30 @@
 import {
+  CODE_TTL_SECONDS,
+  REGISTRATION_TTL_SECONDS,
   SESSION_TTL_SECONDS,
+  codeKey,
+  hashCode,
+  incrementWindow,
   json,
   normalizeEmail,
   ownerProfileForEmail,
   ownerProfileKey,
+  publicProfile,
   profileDraftKey,
   profilePublishedKey,
   profileStore,
+  randomCode,
   randomId,
   readJson,
+  registrationKey,
   registeredUsernameKey,
+  requestKey,
   requireAuthConfig,
   requireProfileStoreConfig,
+  sendLoginCode,
   sessionCookie,
   sessionKey,
+  verifyKey,
   usernameFromName,
   validUsername
 } from "./_utils.js";
@@ -71,10 +82,12 @@ export async function onRequestPost({ request, env }) {
   const {
     name: rawName,
     email: rawEmail,
+    code: rawCode,
     acknowledgements = {}
   } = await readJson(request);
   const name = String(rawName || "").trim().replace(/\s+/g, " ");
   const email = normalizeEmail(rawEmail);
+  const code = String(rawCode || "").trim();
   if (name.length < 2) return json({ error: "Enter your name." }, { status: 400 });
   if (!email || !email.includes("@")) return json({ error: "Enter a valid email address." }, { status: 400 });
   if (!REQUIRED_ACKNOWLEDGEMENTS.every((key) => acknowledgements[key] === true)) {
@@ -83,6 +96,50 @@ export async function onRequestPost({ request, env }) {
 
   const existingProfile = await ownerProfileForEmail(env, email);
   if (existingProfile) return json({ error: "This email already has a Turnpo profile. Please use email code login." }, { status: 409 });
+
+  if (!code) {
+    const attempts = await incrementWindow(env, requestKey(`register:${email}`), 2 * 60);
+    if (attempts > 5) return json({ error: "Too many registration code requests. Please try again later." }, { status: 429 });
+
+    const verificationCode = randomCode();
+    const codeHash = await hashCode(env, email, verificationCode);
+    const pending = {
+      codeHash,
+      name,
+      email,
+      acknowledgements: Object.fromEntries(REQUIRED_ACKNOWLEDGEMENTS.map((key) => [key, true])),
+      createdAt: new Date().toISOString()
+    };
+    await env.AUTH_KV.put(registrationKey(email), JSON.stringify(pending), { expirationTtl: REGISTRATION_TTL_SECONDS });
+    await env.AUTH_KV.put(codeKey(`register:${email}`), JSON.stringify({
+      codeHash,
+      email,
+      profile: "",
+      createdAt: pending.createdAt
+    }), { expirationTtl: CODE_TTL_SECONDS });
+
+    const sent = await sendLoginCode(env, email, verificationCode);
+    if (!sent.ok) return json({ error: "Could not send registration code." }, { status: 502 });
+
+    return json({
+      ok: true,
+      verificationRequired: true,
+      message: "Check your email for a 6-digit registration code."
+    });
+  }
+
+  const verifyAttempts = await incrementWindow(env, verifyKey(`register:${email}`), 2 * 60);
+  if (verifyAttempts > 8) return json({ error: "Too many verification attempts. Please request a new code later." }, { status: 429 });
+
+  const pending = await env.AUTH_KV.get(registrationKey(email), "json");
+  if (!pending?.codeHash || pending.email !== email) {
+    return json({ error: "Registration code is expired or incorrect." }, { status: 401 });
+  }
+
+  const submittedHash = await hashCode(env, email, code);
+  if (submittedHash !== pending.codeHash) {
+    return json({ error: "Registration code is expired or incorrect." }, { status: 401 });
+  }
 
   let username = usernameFromName(name);
   if (!validUsername(username)) username = `turnpo-${randomId().slice(0, 8)}`;
@@ -122,11 +179,12 @@ export async function onRequestPost({ request, env }) {
   await env.AUTH_KV.put(registeredUsernameKey(username), email);
   await store.put(profileDraftKey(username), record);
   await store.put(profilePublishedKey(username), JSON.stringify({
-    profile,
+    profile: publicProfile(profile),
     publishedAt: now,
-    updatedAt: now,
-    updatedBy: email
+    updatedAt: now
   }));
+  await env.AUTH_KV.delete(registrationKey(email));
+  await env.AUTH_KV.delete(codeKey(`register:${email}`));
 
   const sessionId = randomId();
   await env.AUTH_KV.put(sessionKey(sessionId), JSON.stringify({

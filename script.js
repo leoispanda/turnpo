@@ -2226,6 +2226,7 @@ let editingRef = null;
 let activeEditorType = "story";
 let pendingOwnerEmail = "";
 let authCodeRequested = false;
+let registrationCodeRequested = false;
 let ownerSessionProfile = "";
 let ownerTimelineView = "published";
 let activeCategoryFilter = "all";
@@ -3501,7 +3502,7 @@ function closeProfileEditor() {
 function saveProfileText(event) {
   event.preventDefault();
   const profile = currentProfile();
-  const nextUsername = $("#profileEditUsername").value.trim().replace(/^@/, "").toLowerCase();
+  const nextUsername = profile.username;
   const nextProfile = normalizeProfile({
     ...profile,
     username: nextUsername,
@@ -3535,8 +3536,8 @@ function saveProfileText(event) {
 }
 
 function toggleWorkFields(type) {
-  document.querySelectorAll(".work-only").forEach((node) => { node.hidden = true; });
-  document.querySelectorAll(".story-only").forEach((node) => { node.hidden = false; });
+  document.querySelectorAll(".work-only").forEach((node) => { node.hidden = type !== "work"; });
+  document.querySelectorAll(".story-only").forEach((node) => { node.hidden = type === "work"; });
 }
 
 function findContent(type, id) {
@@ -3563,6 +3564,13 @@ async function upsertContent(event) {
     images: storyImagesFromValue($("#contentImage").value),
     link: $("#workLink").value.trim(),
     publicSummary: $("#contentSummary").value.trim(),
+    type: type === "work" ? $("#workType").value.trim() : "",
+    whyMade: type === "work" ? $("#contentWhy").value.trim() : "",
+    whyItMatters: type === "work" ? $("#contentWhy").value.trim() : "",
+    toolsUsed: type === "work" ? parseList($("#workTools").value) : [],
+    humanRole: type === "work" ? $("#humanRole").value.trim() : "",
+    aiRole: type === "work" ? $("#aiRole").value.trim() : "",
+    result: type === "work" ? $("#workResult").value.trim() : "",
     tags: parseList($("#contentTags").value),
     ownerEdited: true,
     ownerEditedAt: now,
@@ -3676,6 +3684,7 @@ function setAuthDrawer(open) {
 function setRegistrationDrawer(open) {
   $("#registrationDrawer").classList.toggle("open", open);
   $("#registrationDrawer").setAttribute("aria-hidden", String(!open));
+  if (!open) resetRegistrationForm();
   if (open) $("#registerName").focus();
 }
 
@@ -3746,10 +3755,25 @@ async function registerProfile(event) {
     $("#registrationNote").textContent = "Accept every required public-profile acknowledgement before registering.";
     return;
   }
+  const code = $("#registerCode").value.trim();
+  if (registrationCodeRequested && !code) {
+    $("#registrationNote").textContent = "Enter the 6-digit code from your email.";
+    return;
+  }
   $("#registrationSubmit").disabled = true;
-  $("#registrationNote").textContent = "Creating your Turnpo page...";
+  $("#registrationNote").textContent = registrationCodeRequested ? "Verifying code and creating your Turnpo page..." : "Sending a registration code...";
   try {
-    const data = await authRequest("/api/auth/register", { name, email, acknowledgements });
+    const data = await authRequest("/api/auth/register", { name, email, code: registrationCodeRequested ? code : "", acknowledgements });
+    if (data.verificationRequired) {
+      registrationCodeRequested = true;
+      $("#registerCodeRow").hidden = false;
+      $("#registerName").readOnly = true;
+      $("#registerEmail").readOnly = true;
+      $("#registrationSubmit").textContent = "Verify code and create profile";
+      $("#registrationNote").textContent = "Check your email for a 6-digit registration code. Codes expire after 20 minutes.";
+      $("#registerCode").focus();
+      return;
+    }
     const username = data.profile;
     profiles[username] = normalizeProfile(data.profileData || starterProfile({ username, displayName: name, email }));
     activeUsername = username;
@@ -3757,6 +3781,7 @@ async function registerProfile(event) {
     saveActiveProfile();
     localStorage.setItem(ACTIVE_PROFILE_KEY, username);
     setRegistrationDrawer(false);
+    resetRegistrationForm();
     $("#registrationForm").reset();
     enterOwnerMode(username);
     setOwnerSaveStatus("Profile created. Add life stories, AI works, or use AI text import for text-only drafts. Images can be updated manually.");
@@ -3765,6 +3790,15 @@ async function registerProfile(event) {
   } finally {
     $("#registrationSubmit").disabled = false;
   }
+}
+
+function resetRegistrationForm() {
+  registrationCodeRequested = false;
+  $("#registerCodeRow").hidden = true;
+  $("#registerCode").value = "";
+  $("#registerName").readOnly = false;
+  $("#registerEmail").readOnly = false;
+  $("#registrationSubmit").textContent = "Create public profile";
 }
 
 function meaningfulSourceLines(source = "") {

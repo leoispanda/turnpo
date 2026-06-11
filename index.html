@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.137" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.138" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -204,7 +204,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.137</span>
+          <span class="version-badge">v0.1.138</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -293,7 +293,7 @@
         </div>
         <div class="form-row">
           <label><span>Name</span><input id="profileEditName" required /></label>
-          <label><span>Username</span><input id="profileEditUsername" required /></label>
+          <label><span>Username</span><input id="profileEditUsername" required readonly /></label>
         </div>
         <label><span>Headline</span><textarea id="profileEditIntro" required></textarea></label>
         <label><span>What I am building now</span><textarea id="profileEditChapter" required></textarea></label>
@@ -341,6 +341,7 @@
         </div>
         <label><span>Your name</span><input id="registerName" autocomplete="name" required placeholder="Jane Chen" /></label>
         <label><span>Email</span><input id="registerEmail" autocomplete="email" inputmode="email" required placeholder="you@example.com" type="email" /></label>
+        <label id="registerCodeRow" hidden><span>6-digit code</span><input id="registerCode" autocomplete="one-time-code" inputmode="numeric" maxlength="6" placeholder="123456" /></label>
         <div class="public-design-notice">
           <strong>Turnpo is public by design.</strong>
           <p>Your new profile is intended for public display. Uploaded, imported, AI-generated, approved, or published content may become visible on the internet.</p>
@@ -416,6 +417,6 @@
       </form>
     </div>
 
-    <script src="/script.js?v=0.1.137"></script>
+    <script src="/script.js?v=0.1.138"></script>
   </body>
 </html>

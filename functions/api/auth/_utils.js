@@ -5,6 +5,45 @@ const DEFAULT_OWNER_EMAIL_PROFILES = {
 const RESERVED_USERNAMES = new Set(["admin", "api", "auth", "cindy", "founder", "home", "leo", "login", "profiles", "register", "settings", "turnpo", "u"]);
 const CODE_TTL_SECONDS = 10 * 60;
 const SESSION_TTL_SECONDS = 7 * 24 * 60 * 60;
+const REGISTRATION_TTL_SECONDS = 20 * 60;
+const PUBLIC_PROFILE_FIELDS = [
+  "id",
+  "seedVersion",
+  "username",
+  "displayName",
+  "oneLineIntro",
+  "currentChapter",
+  "location",
+  "avatar",
+  "avatarPositionY",
+  "links",
+  "values",
+  "themes",
+  "status"
+];
+const PUBLIC_CONTENT_FIELDS = [
+  "id",
+  "category",
+  "title",
+  "type",
+  "year",
+  "date",
+  "location",
+  "image",
+  "images",
+  "link",
+  "publicSummary",
+  "whyMade",
+  "whyItMatters",
+  "toolsUsed",
+  "humanRole",
+  "aiRole",
+  "result",
+  "tags",
+  "status",
+  "userApproved",
+  "publishedAt"
+];
 
 export function json(data, init = {}) {
   return new Response(JSON.stringify(data), {
@@ -19,6 +58,33 @@ export function json(data, init = {}) {
 
 export function normalizeEmail(email = "") {
   return String(email).trim().toLowerCase();
+}
+
+function normalizeIdList(value) {
+  return Array.isArray(value) ? value.map(String).filter(Boolean) : [];
+}
+
+function safePublicUrl(value = "") {
+  const url = String(value || "").trim();
+  if (!url) return "";
+  if (url.startsWith("/") && !url.startsWith("//")) return url;
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === "http:" || parsed.protocol === "https:" ? parsed.href : "";
+  } catch {
+    return "";
+  }
+}
+
+function cleanPublicLinks(links = []) {
+  return Array.isArray(links)
+    ? links
+      .map((link) => ({
+        label: String(link?.label || "").trim().slice(0, 120),
+        url: safePublicUrl(link?.url || "")
+      }))
+      .filter((link) => link.label && link.url)
+    : [];
 }
 
 export function approvedProfileForEmail(env, email) {
@@ -116,6 +182,10 @@ export function verifyKey(email) {
   return `auth:verify:${email}`;
 }
 
+export function registrationKey(email) {
+  return `auth:registration:${normalizeEmail(email)}`;
+}
+
 export async function incrementWindow(env, key, ttlSeconds) {
   const current = Number(await env.AUTH_KV.get(key) || "0");
   const next = current + 1;
@@ -180,6 +250,52 @@ export function assertOwnerProfile(session, username) {
   return session?.profile && normalizeUsername(session.profile) === normalizeUsername(username);
 }
 
+export function publicProfile(profile = {}) {
+  const publicState = profile.publicState || {};
+  const hiddenStoryIds = new Set(normalizeIdList(publicState.hiddenStoryIds));
+  const deletedStoryIds = new Set(normalizeIdList(publicState.deletedStoryIds));
+  const hiddenWorkIds = new Set(normalizeIdList(publicState.hiddenWorkIds));
+  const deletedWorkIds = new Set(normalizeIdList(publicState.deletedWorkIds));
+  const isPublicItem = (item, hiddenIds, deletedIds) => (
+    item?.status === "published"
+    && item.userApproved === true
+    && !hiddenIds.has(item.id)
+    && !deletedIds.has(item.id)
+  );
+  const pick = (source, fields) => fields.reduce((next, field) => {
+    if (source[field] !== undefined) next[field] = source[field];
+    return next;
+  }, {});
+  const cleanContent = (item) => {
+    const clean = pick(item, PUBLIC_CONTENT_FIELDS);
+    clean.link = safePublicUrl(clean.link);
+    clean.image = safePublicUrl(clean.image);
+    clean.images = Array.isArray(clean.images) ? clean.images.map(safePublicUrl).filter(Boolean) : [];
+    return clean;
+  };
+  const cleanProfile = pick(profile, PUBLIC_PROFILE_FIELDS);
+  cleanProfile.avatar = safePublicUrl(cleanProfile.avatar);
+
+  return {
+    ...cleanProfile,
+    status: "published",
+    links: cleanPublicLinks(profile.links),
+    values: Array.isArray(profile.values) ? profile.values : [],
+    themes: Array.isArray(profile.themes) ? profile.themes : [],
+    lifeStories: (Array.isArray(profile.lifeStories) ? profile.lifeStories : [])
+      .filter((item) => item?.category === "work"
+        ? isPublicItem(item, hiddenWorkIds, deletedWorkIds)
+        : isPublicItem(item, hiddenStoryIds, deletedStoryIds))
+      .map(cleanContent),
+    aiWorks: (Array.isArray(profile.aiWorks) ? profile.aiWorks : [])
+      .filter((item) => isPublicItem(item, hiddenWorkIds, deletedWorkIds))
+      .map(cleanContent),
+    publicState: {
+      collapsedYears: normalizeIdList(publicState.collapsedYears)
+    }
+  };
+}
+
 export async function sendLoginCode(env, email, code) {
   const apiKey = env.RESEND_API_KEY;
   const from = env.TURNPO_AUTH_FROM_EMAIL || "Turnpo <login@turnpo.com>";
@@ -216,4 +332,4 @@ function parseEmailProfileMap(value) {
   }, {});
 }
 
-export { CODE_TTL_SECONDS, SESSION_TTL_SECONDS };
+export { CODE_TTL_SECONDS, SESSION_TTL_SECONDS, REGISTRATION_TTL_SECONDS };

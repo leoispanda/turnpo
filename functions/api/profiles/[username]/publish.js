@@ -3,6 +3,7 @@ import {
   json,
   normalizeUsername,
   ownerSession,
+  publicProfile,
   profileDraftKey,
   profilePublishedKey,
   profileStore,
@@ -27,7 +28,7 @@ export async function onRequestPost({ request, env, params }) {
   }
 
   const now = new Date().toISOString();
-  const payload = JSON.stringify({
+  const draftPayload = JSON.stringify({
     profile: {
       ...profile,
       status: "published"
@@ -36,13 +37,21 @@ export async function onRequestPost({ request, env, params }) {
     updatedAt: now,
     updatedBy: auth.session.email || ""
   });
-  if (new TextEncoder().encode(payload).length > MAX_PROFILE_BYTES) {
+  const publishedPayload = JSON.stringify({
+    profile: publicProfile({
+      ...profile,
+      status: "published"
+    }),
+    publishedAt: now,
+    updatedAt: now
+  });
+  if (new TextEncoder().encode(draftPayload).length > MAX_PROFILE_BYTES) {
     return json({ error: "Profile is too large for online publishing." }, { status: 413 });
   }
 
   const store = profileStore(env);
-  await store.put(profileDraftKey(username), payload);
-  await store.put(profilePublishedKey(username), payload);
+  await store.put(profileDraftKey(username), draftPayload);
+  await store.put(profilePublishedKey(username), publishedPayload);
 
   return json({ ok: true, publishedAt: now });
 }

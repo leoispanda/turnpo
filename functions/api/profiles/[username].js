@@ -1,6 +1,7 @@
 import {
   json,
   normalizeUsername,
+  publicProfile,
   profilePublishedKey,
   profileStore,
   requireProfileStoreConfig
@@ -17,7 +18,7 @@ export async function onRequestGet({ env, params }) {
   if (!stored?.profile) return json({ error: "No published online profile." }, { status: 404 });
 
   return json({
-    profile: stored.profile,
+    profile: publicProfile(stored.profile),
     publishedAt: stored.publishedAt || "",
     updatedAt: stored.updatedAt || ""
   });
