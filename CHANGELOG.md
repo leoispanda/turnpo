@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-12 - v0.1.146
+
+Commit: `Fix owner work edits and timeline ordering`
+
+### Changed
+
+- Polished Cindy's starter profile copy across headline, current chapter, timeline cards, education, work history, and AI work entries.
+- Fixed timeline ordering so items inside each year are sorted by month/date instead of original import order.
+- Added an owner-only `Add Work` action directly in the Work / Projects section.
+- Saved newly added Work / Projects into the project data source used by the Work / Projects grid.
+- Added owner actions to Work / Projects cards so they can be edited, hidden, published, deleted, restored, or permanently deleted.
+- Fixed profile text saves so the freshly edited profile is re-rendered immediately and is not overwritten by an older online draft reload.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy and Leo timeline month ordering locally through the in-app browser.
+- Confirmed the local static page loads with the updated script.
+
 ## 2026-06-11 - next after v0.1.143
 
 Commit: pending - `Tighten owner session and polish controls`
