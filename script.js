@@ -3771,8 +3771,8 @@ function saveProfileText(event) {
 }
 
 function toggleWorkFields(type) {
-  document.querySelectorAll(".work-only").forEach((node) => { node.hidden = type !== "work"; });
-  document.querySelectorAll(".story-only").forEach((node) => { node.hidden = type === "work"; });
+  document.querySelectorAll(".work-only").forEach((node) => { node.hidden = true; });
+  document.querySelectorAll(".story-only").forEach((node) => { node.hidden = false; });
 }
 
 function findContent(type, id) {

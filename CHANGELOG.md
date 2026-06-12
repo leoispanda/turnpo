@@ -10,6 +10,21 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-12 - v0.1.147
+
+Commit: `Simplify work editor fields`
+
+### Changed
+
+- Simplified the Work editor so Work uses the same lightweight field set as Life.
+- Hid advanced project metadata fields from the Work form: Work type, Why I made it, Tools used, Human role, AI role, and Result.
+- Kept existing hidden metadata preserved in the saved data so older project records do not lose information.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+
 ## 2026-06-12 - v0.1.146
 
 Commit: `Fix owner work edits and timeline ordering`
