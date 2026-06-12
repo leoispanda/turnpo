@@ -10,6 +10,23 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.150
+
+Commit: `Add visited places map`
+
+### Changed
+
+- Added a Travel Map section to profile pages, placed between the profile intro and the Life timeline.
+- Automatically lights up known places from a profile's location, public timeline items, and public work locations.
+- Added a lightweight built-in world map visual with highlighted visited-place markers and a matching place list.
+- Added responsive styling for desktop and mobile, with dark and light theme support.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: the map renders, 5 places are lit up, desktop and mobile layouts fit, and console logs show no errors or warnings.
+
 ## 2026-06-12 - v0.1.149
 
 Commit: `Add public photo preview`

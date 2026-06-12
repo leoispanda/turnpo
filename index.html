@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.149" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.150" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -146,6 +146,18 @@
         </div>
       </section>
 
+      <section class="travel-map-section profile-content" id="travelMap" aria-label="Visited places map" hidden>
+        <div class="travel-map-copy">
+          <p class="eyebrow">Travel map</p>
+          <h2>Places visited</h2>
+          <p id="travelMapSummary">A living map of places that appear across this profile.</p>
+        </div>
+        <div class="travel-map-panel">
+          <div class="travel-map-canvas" id="travelMapCanvas"></div>
+          <div class="travel-place-list" id="travelPlaceList" aria-label="Visited places"></div>
+        </div>
+      </section>
+
       <section class="workspace-grid profile-content" hidden>
         <aside class="ai-panel owner-only" id="ai-profile" aria-label="AI readable profile">
           <div class="panel-head">
@@ -246,7 +258,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.149</span>
+          <span class="version-badge">v0.1.150</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -470,6 +482,6 @@
       </figure>
     </div>
 
-    <script src="/script.js?v=0.1.149"></script>
+    <script src="/script.js?v=0.1.150"></script>
   </body>
 </html>

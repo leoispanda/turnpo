@@ -60,6 +60,30 @@ const CITY_OPTIONS = [
   "Tokyo",
   "Veldhoven"
 ];
+const TRAVEL_PLACES = [
+  { id: "amsterdam", label: "Amsterdam", country: "Netherlands", lat: 52.3676, lng: 4.9041, type: "city", tokens: ["amsterdam"] },
+  { id: "eindhoven", label: "Eindhoven", country: "Netherlands", lat: 51.4416, lng: 5.4697, type: "city", tokens: ["eindhoven", "veldhoven", "north brabant"] },
+  { id: "netherlands", label: "Netherlands", country: "Netherlands", lat: 52.1326, lng: 5.2913, type: "country", tokens: ["netherlands", "holland", "dutch"] },
+  { id: "shanghai", label: "Shanghai", country: "China", lat: 31.2304, lng: 121.4737, type: "city", tokens: ["shanghai", "上海"] },
+  { id: "harbin", label: "Harbin", country: "China", lat: 45.8038, lng: 126.5349, type: "city", tokens: ["harbin", "哈尔滨"] },
+  { id: "beijing", label: "Beijing", country: "China", lat: 39.9042, lng: 116.4074, type: "city", tokens: ["beijing", "北京"] },
+  { id: "shenzhen", label: "Shenzhen", country: "China", lat: 22.5431, lng: 114.0579, type: "city", tokens: ["shenzhen", "深圳"] },
+  { id: "china", label: "China", country: "China", lat: 35.8617, lng: 104.1954, type: "country", tokens: ["china", "中国"] },
+  { id: "london", label: "London", country: "United Kingdom", lat: 51.5072, lng: -0.1276, type: "city", tokens: ["london"] },
+  { id: "paris", label: "Paris", country: "France", lat: 48.8566, lng: 2.3522, type: "city", tokens: ["paris"] },
+  { id: "berlin", label: "Berlin", country: "Germany", lat: 52.52, lng: 13.405, type: "city", tokens: ["berlin"] },
+  { id: "munich", label: "Munich", country: "Germany", lat: 48.1351, lng: 11.582, type: "city", tokens: ["munich"] },
+  { id: "dresden", label: "Dresden", country: "Germany", lat: 51.0504, lng: 13.7373, type: "city", tokens: ["dresden"] },
+  { id: "germany", label: "Germany", country: "Germany", lat: 51.1657, lng: 10.4515, type: "country", tokens: ["germany", "german", "rhine"] },
+  { id: "brussels", label: "Brussels", country: "Belgium", lat: 50.8476, lng: 4.3572, type: "city", tokens: ["brussels"] },
+  { id: "dublin", label: "Dublin", country: "Ireland", lat: 53.3498, lng: -6.2603, type: "city", tokens: ["dublin"] },
+  { id: "prague", label: "Prague", country: "Czechia", lat: 50.0755, lng: 14.4378, type: "city", tokens: ["prague"] },
+  { id: "new-york", label: "New York", country: "United States", lat: 40.7128, lng: -74.006, type: "city", tokens: ["new york", "nyc"] },
+  { id: "san-francisco", label: "San Francisco", country: "United States", lat: 37.7749, lng: -122.4194, type: "city", tokens: ["san francisco", "bay area"] },
+  { id: "singapore", label: "Singapore", country: "Singapore", lat: 1.3521, lng: 103.8198, type: "city", tokens: ["singapore"] },
+  { id: "taipei", label: "Taipei", country: "Taiwan", lat: 25.033, lng: 121.5654, type: "city", tokens: ["taipei", "台北"] },
+  { id: "tokyo", label: "Tokyo", country: "Japan", lat: 35.6762, lng: 139.6503, type: "city", tokens: ["tokyo", "東京", "东京"] }
+];
 const CONTENT_CATEGORY = {
   story: "life",
   work: "work"
@@ -2714,6 +2738,104 @@ function publicTimelineItems(profile = currentProfile()) {
     .sort(compareTimelineItems);
 }
 
+function normalizePlaceText(value = "") {
+  return String(value)
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function placeMatchesText(place, text) {
+  const normalizedText = normalizePlaceText(text);
+  if (!normalizedText) return false;
+  return place.tokens.some((token) => {
+    const normalizedToken = normalizePlaceText(token);
+    if (!normalizedToken) return false;
+    if (/^[\p{Script=Han}]+$/u.test(token)) return normalizedText.includes(normalizedToken);
+    return new RegExp(`(^|\\s)${normalizedToken.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(\\s|$)`, "i").test(normalizedText);
+  });
+}
+
+function travelSourceItems(profile = currentProfile()) {
+  const items = ownerMode ? [...profile.lifeStories, ...profile.aiWorks] : [...publicTimelineItems(profile), ...publicWorks(profile)];
+  return [
+    { title: "Current base", location: profile.location, publicSummary: profile.currentChapter },
+    ...items
+  ];
+}
+
+function visitedPlaces(profile = currentProfile()) {
+  const matches = new Map();
+  travelSourceItems(profile).forEach((item) => {
+    const source = [
+      item.location,
+      item.title,
+      item.publicSummary,
+      ownerMode ? item.fullText : ""
+    ].filter(Boolean).join(" ");
+    TRAVEL_PLACES.forEach((place) => {
+      if (!placeMatchesText(place, source)) return;
+      const existing = matches.get(place.id) || { ...place, count: 0, examples: [] };
+      existing.count += 1;
+      if (item.title && existing.examples.length < 2) existing.examples.push(item.title);
+      matches.set(place.id, existing);
+    });
+  });
+  const places = [...matches.values()];
+  const cityCountries = new Set(places.filter((place) => place.type === "city").map((place) => place.country));
+  return places
+    .filter((place) => place.type !== "country" || !cityCountries.has(place.country))
+    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+}
+
+function mapPoint(place) {
+  return {
+    x: ((place.lng + 180) / 360) * 1000,
+    y: ((90 - place.lat) / 180) * 520
+  };
+}
+
+function renderTravelMap() {
+  const places = visitedPlaces();
+  $("#travelMap").hidden = !places.length;
+  if (!places.length) {
+    $("#travelMapCanvas").innerHTML = "";
+    $("#travelPlaceList").innerHTML = "";
+    return;
+  }
+  $("#travelMapSummary").textContent = `${places.length} place${places.length === 1 ? "" : "s"} lit up from this profile's public locations and travel stories.`;
+  $("#travelMapCanvas").innerHTML = `
+    <svg class="world-map" viewBox="0 0 1000 520" role="img" aria-label="World map with visited places highlighted">
+      <path class="map-land" d="M118 150c38-44 108-57 166-43 35 9 73 31 84 66 8 26-5 50-27 64-31 20-78 17-104 45-23 25-15 67-43 86-32 22-83-5-100-42-20-43 16-82 2-120-8-22-2-41 22-56z"/>
+      <path class="map-land" d="M270 335c34-10 76 5 92 37 18 35-3 86-34 111-23 19-57 20-80 1-23-20-16-56-5-84 9-23 6-54 27-65z"/>
+      <path class="map-land" d="M455 126c34-28 92-33 134-16 32 13 47 43 84 47 42 5 77-29 119-19 42 10 75 53 66 94-9 44-61 56-91 86-25 24-27 67-62 82-39 17-73-22-111-22-39 0-74 39-112 22-32-15-19-58-35-87-18-31-62-37-75-72-16-41 47-82 83-115z"/>
+      <path class="map-land" d="M632 238c23-19 62-14 84 5 18 16 28 43 16 65-12 21-44 26-65 13-25-16-57-55-35-83z"/>
+      <path class="map-land" d="M798 316c38-12 87 1 109 36 20 32 5 75-28 92-35 19-84 5-106-28-24-35-17-87 25-100z"/>
+      <path class="map-line" d="M60 260h880M500 72v392M220 88c70 88 70 268 0 356M780 88c-70 88-70 268 0 356"/>
+      ${places.map((place) => {
+        const point = mapPoint(place);
+        return `
+          <g class="map-marker" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}`)}" style="--delay:${Math.min(place.count, 8) * 80}ms">
+            <title>${escapeHtml(`${place.label}, ${place.country}`)}</title>
+            <circle class="map-marker-glow" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${Math.min(18, 9 + place.count)}"></circle>
+            <circle class="map-marker-dot" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${Math.min(7, 4 + place.count * 0.35)}"></circle>
+          </g>`;
+      }).join("")}
+    </svg>`;
+  $("#travelPlaceList").innerHTML = places.map((place) => `
+    <article class="travel-place-card">
+      <span class="travel-place-dot" aria-hidden="true"></span>
+      <div>
+        <strong>${escapeHtml(place.label)}</strong>
+        <small>${escapeHtml(place.country)} · ${place.count} signal${place.count === 1 ? "" : "s"}</small>
+      </div>
+    </article>
+  `).join("");
+}
+
 function categoryMatchesFilter(item, filter = activeCategoryFilter) {
   return filter === "all" || (item.category || "life") === filter;
 }
@@ -3056,6 +3178,7 @@ function renderProfile() {
   $("#aiMarkdown").value = aiProfile;
   $("#publicAiMarkdown").value = aiProfile;
   $("#publicAiPreview").textContent = buildPublicAiPreview(profile);
+  renderTravelMap();
   renderTimeline();
   renderWorkProjects();
   renderJsonLd(profile);
