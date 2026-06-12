@@ -10,6 +10,23 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-12 - v0.1.148
+
+Commit: `Add light glass theme toggle`
+
+### Changed
+
+- Added a persistent theme toggle in the top bar so Turnpo can switch between the default dark interface and a new light interface.
+- Added a premium white frosted-glass theme with lighter panels, softer borders, refined shadows, and high-tech cool neutral surfaces.
+- Kept the current dark night interface as the default mood while preparing the UI for future black/white theme switching.
+- Made theme storage tolerant of environments where localStorage is unavailable.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Confirmed the local static server serves the updated theme HTML, CSS, and JS.
+
 ## 2026-06-12 - v0.1.147
 
 Commit: `Simplify work editor fields`

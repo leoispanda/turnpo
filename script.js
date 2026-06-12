@@ -1,4 +1,5 @@
 const ACTIVE_PROFILE_KEY = "turnpo:active-profile";
+const THEME_KEY = "turnpo:theme";
 const LOCAL_PREFIX = "turnpo:profile:";
 const COLLAPSED_YEARS_PREFIX = "turnpo:collapsed-years:";
 const COLLAPSED_YEARS_DEFAULT_PREFIX = "turnpo:collapsed-years-default:";
@@ -2252,6 +2253,41 @@ let publishConfirmationResolver = null;
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
+
+function storedTheme() {
+  try {
+    return localStorage.getItem(THEME_KEY) === "light" ? "light" : "dark";
+  } catch {
+    return "dark";
+  }
+}
+
+function applyTheme(theme = storedTheme()) {
+  const isLight = theme === "light";
+  body.classList.toggle("theme-light", isLight);
+  body.classList.toggle("theme-dark", !isLight);
+  document.documentElement.style.colorScheme = isLight ? "light" : "dark";
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", isLight ? "#f7f9fc" : "#d7b46a");
+
+  const themeToggle = $("#themeToggle");
+  const themeToggleLabel = $("#themeToggleLabel");
+  if (themeToggle) {
+    themeToggle.setAttribute("aria-pressed", String(isLight));
+    themeToggle.setAttribute("aria-label", isLight ? "Switch to dark theme" : "Switch to light theme");
+    themeToggle.title = isLight ? "Switch to dark theme" : "Switch to light theme";
+  }
+  if (themeToggleLabel) themeToggleLabel.textContent = isLight ? "Dark" : "Light";
+}
+
+function toggleTheme() {
+  const nextTheme = body.classList.contains("theme-light") ? "dark" : "light";
+  try {
+    localStorage.setItem(THEME_KEY, nextTheme);
+  } catch {
+    // Theme selection is a preference only; keep the UI usable if storage is unavailable.
+  }
+  applyTheme(nextTheme);
+}
 
 function clone(value) {
   return structuredClone(value);
@@ -4629,6 +4665,7 @@ $("#openAdminOwnerProfile").addEventListener("click", () => {
 });
 $("#openAdminDashboard").addEventListener("click", () => setRoute("admin"));
 $("#refreshAdminDashboard").addEventListener("click", renderAdminDashboard);
+$("#themeToggle").addEventListener("click", toggleTheme);
 $("#openRegistration").addEventListener("click", () => setRegistrationDrawer(true));
 $("#openAiImport").addEventListener("click", () => setAiImportDrawer(true));
 $("#ownerLogout").addEventListener("click", logoutOwner);
@@ -4675,6 +4712,7 @@ $("#addAiImportLife").addEventListener("click", addAiImportLifeDraft);
 
 window.addEventListener("popstate", () => setRoute(routeFromLocation()));
 
+applyTheme();
 renderContentDateOptions();
 renderLocationOptions();
 renderHome();
