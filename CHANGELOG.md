@@ -10,6 +10,23 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-12 - v0.1.149
+
+Commit: `Add public photo preview`
+
+### Changed
+
+- Kept secondary and additional Life photos as compact thumbnails so a second uploaded image does not stretch across the card.
+- Added public photo preview: visitors can click profile photos to open the original image in a focused lightbox.
+- Kept owner edit mode behavior unchanged so clicking a Life card still opens the editor.
+- Added lightbox close controls through the close button, backdrop, and Escape key.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: desktop extra thumbnails render around 116 by 82 pixels, mobile thumbnails around 102 by 74 pixels, the lightbox opens with the original photo, closes cleanly, and console logs show no errors or warnings.
+
 ## 2026-06-12 - v0.1.148
 
 Commit: `Add light glass theme toggle`

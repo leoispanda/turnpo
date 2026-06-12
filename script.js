@@ -3462,6 +3462,13 @@ function dragHasFiles(event) {
   return [...(event.dataTransfer?.types || [])].includes("Files");
 }
 
+function renderPublicPhotoButton(image, alt, imageClass = "") {
+  const classAttr = imageClass ? ` class="${escapeHtml(imageClass)}"` : "";
+  return `<button class="event-photo-button" type="button" data-photo-preview="true" data-photo-alt="${escapeHtml(alt)}" aria-label="Open ${escapeHtml(alt)}">
+    <img${classAttr} src="${escapeHtml(image)}" alt="${escapeHtml(alt)}" loading="lazy" />
+  </button>`;
+}
+
 function renderTimeline() {
   renderCategoryControls();
   renderOwnerContentControls();
@@ -3486,10 +3493,11 @@ function renderTimeline() {
           const storyImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
           const coverImage = storyImages[0] || "";
           const extraImages = storyImages.slice(1);
+          const coverAlt = story.title;
           const summary = ownerMode ? story.publicSummary : publicStorySummary(story);
           return `
           <article class="event-card ${coverImage ? "has-media" : "no-media"} ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-content-id="${escapeHtml(story.id)}" data-content-type="${escapeHtml(itemType)}">
-            <div class="event-media">${coverImage ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(story.title)}" />` : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
+            <div class="event-media">${coverImage ? (ownerMode ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(coverAlt)}" />` : renderPublicPhotoButton(coverImage, coverAlt, "event-main-image")) : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
             <div>
               <div class="event-card-head">
                 <div class="event-date">${escapeHtml([categoryLabel, story.date, story.location].filter(Boolean).join(" - "))}</div>
@@ -3497,7 +3505,10 @@ function renderTimeline() {
               </div>
               <h3>${escapeHtml(story.title)}</h3>
               ${summary ? `<p>${escapeHtml(summary)}</p>` : ""}
-              ${extraImages.length ? `<details class="event-gallery"><summary>View ${extraImages.length} more photo${extraImages.length === 1 ? "" : "s"}</summary><div>${extraImages.map((image, index) => `<img src="${escapeHtml(image)}" alt="${escapeHtml(`${story.title} photo ${index + 2}`)}" />`).join("")}</div></details>` : ""}
+              ${extraImages.length ? `<details class="event-gallery"><summary>View ${extraImages.length} more photo${extraImages.length === 1 ? "" : "s"}</summary><div>${extraImages.map((image, index) => {
+                const photoAlt = `${story.title} photo ${index + 2}`;
+                return ownerMode ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(photoAlt)}" loading="lazy" />` : renderPublicPhotoButton(image, photoAlt);
+              }).join("")}</div></details>` : ""}
               ${story.link ? `<a class="source-link" href="${escapeHtml(story.link)}" target="_blank" rel="noopener">Open link</a>` : ""}
               ${ownerMode && story.tags?.length ? `<div class="tag-row owner-only">${story.tags.slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
             </div>
@@ -3961,6 +3972,22 @@ function setAiImportDrawer(open) {
   $("#aiImportDrawer").classList.toggle("open", open);
   $("#aiImportDrawer").setAttribute("aria-hidden", String(!open));
   if (open) $("#aiImportSource").focus();
+}
+
+function openImageLightbox(src, alt = "Turnpo photo") {
+  $("#imageLightboxPhoto").src = src;
+  $("#imageLightboxPhoto").alt = alt;
+  $("#imageLightboxCaption").textContent = alt;
+  $("#imageLightbox").classList.add("open");
+  $("#imageLightbox").setAttribute("aria-hidden", "false");
+  $("#closeImageLightbox").focus();
+}
+
+function closeImageLightbox() {
+  $("#imageLightbox").classList.remove("open");
+  $("#imageLightbox").setAttribute("aria-hidden", "true");
+  $("#imageLightboxPhoto").removeAttribute("src");
+  $("#imageLightboxCaption").textContent = "";
 }
 
 function closePublishConfirmation(confirmed = false) {
@@ -4532,6 +4559,13 @@ document.addEventListener("click", (event) => {
 });
 
 $("#timelineList").addEventListener("click", (event) => {
+  const photoButton = event.target.closest("[data-photo-preview]");
+  if (photoButton) {
+    event.preventDefault();
+    const image = photoButton.querySelector("img");
+    if (image?.currentSrc || image?.src) openImageLightbox(image.currentSrc || image.src, photoButton.dataset.photoAlt || image.alt || "Turnpo photo");
+    return;
+  }
   const yearToggle = event.target.closest("[data-toggle-year]");
   if (yearToggle) {
     const yearBlock = yearToggle.closest("[data-year-block]");
@@ -4676,6 +4710,8 @@ $("#closeRegistration").addEventListener("click", () => setRegistrationDrawer(fa
 $("#registrationBackdrop").addEventListener("click", () => setRegistrationDrawer(false));
 $("#closeAiImport").addEventListener("click", () => setAiImportDrawer(false));
 $("#aiImportBackdrop").addEventListener("click", () => setAiImportDrawer(false));
+$("#closeImageLightbox").addEventListener("click", closeImageLightbox);
+$("#imageLightboxBackdrop").addEventListener("click", closeImageLightbox);
 $("#saveProfileState").addEventListener("click", saveCurrentProfileState);
 $("#publishProfileOnline").addEventListener("click", async () => {
   if (!(await requestPublishConfirmation())) return;
@@ -4711,6 +4747,9 @@ $("#copyAiImportDraft").addEventListener("click", copyAiImportDraft);
 $("#addAiImportLife").addEventListener("click", addAiImportLifeDraft);
 
 window.addEventListener("popstate", () => setRoute(routeFromLocation()));
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && $("#imageLightbox").classList.contains("open")) closeImageLightbox();
+});
 
 applyTheme();
 renderContentDateOptions();
