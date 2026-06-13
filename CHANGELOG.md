@@ -10,6 +10,22 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.154
+
+Commit: `Polish light life atlas map`
+
+### Changed
+
+- Refined the Life Atlas light theme so the map reads as a premium atlas instead of a washed-out white panel.
+- Increased world-map contrast, softened the map canvas with pale atlas/ocean tones, and added more grounded warm marker styling.
+- Improved light-theme location cards with clearer borders, depth, and active states while keeping the existing section structure.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: light theme renders the Life Atlas with stronger map contrast, warmer canvas depth, clearer location cards, 4 city markers, 5 cards, no mobile horizontal overflow, and no console errors or warnings.
+
 ## 2026-06-13 - v0.1.153
 
 Commit: `Replace life atlas map base`
