@@ -10,6 +10,22 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.157
+
+Commit: `Add cinematic 3D life atlas globe`
+
+### Changed
+
+- Replaced the flat Life Atlas center visual with a lightweight Three.js globe layer while keeping the existing left copy, center map, and right location-card structure.
+- Added a local optimized NASA Earth-at-night texture, deep-blue atmosphere lighting, warm location signals, and hover sync between globe points and location cards.
+- Lazy-loads the 3D globe when the section approaches the viewport, respects reduced-motion preferences, and keeps a static Earth-horizon fallback when WebGL or the module load is unavailable.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: the Life Atlas center visual lazy-loads into a 3D globe, the static fallback fades out after WebGL is ready, right-side cards remain, card click highlights the matching place, light theme keeps the dark cinematic globe, mobile has no horizontal overflow, and console logs show no warnings or errors.
+
 ## 2026-06-13 - v0.1.156
 
 Commit: `Add earth horizon life atlas mode`
