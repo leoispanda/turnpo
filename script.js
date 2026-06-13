@@ -2280,6 +2280,7 @@ let lastAiImportDrafts = [];
 let publishConfirmationResolver = null;
 let lifeAtlasGlobeState = null;
 let lifeAtlasThreeModulePromise = null;
+let lifeAtlasFocusPlaceId = "";
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -2943,11 +2944,11 @@ function disposeLifeAtlasGlobe() {
 function setLifeAtlasGlobeActive(placeId, active) {
   const point = lifeAtlasGlobeState?.points?.get(placeId);
   if (!point) return;
-  point.core.material.color.set(active ? 0xfff0c2 : 0xffd48a);
-  point.core.scale.setScalar(active ? 1.45 : 1);
-  point.glow.material.opacity = active ? 0.96 : 0.62;
-  point.glow.scale.setScalar(active ? 1.25 : 1);
-  point.hit.scale.setScalar(active ? 1.25 : 1);
+  point.core.material.color.set(active ? 0xffefd1 : 0xf1d08c);
+  point.core.scale.setScalar(active ? 1.22 : 1);
+  point.glow.material.opacity = active ? 0.46 : 0.22;
+  point.glow.scale.setScalar(active ? 1.18 : 1);
+  point.hit.scale.setScalar(active ? 1.18 : 1);
   lifeAtlasGlobeState.requestRender?.();
 }
 
@@ -2967,15 +2968,32 @@ function createLifeAtlasSignalTexture(THREE) {
   canvas.height = 128;
   const context = canvas.getContext("2d");
   const glow = context.createRadialGradient(64, 64, 0, 64, 64, 64);
-  glow.addColorStop(0, "rgba(255, 247, 213, 1)");
-  glow.addColorStop(0.16, "rgba(255, 213, 139, 0.86)");
-  glow.addColorStop(0.48, "rgba(255, 173, 78, 0.28)");
-  glow.addColorStop(1, "rgba(255, 173, 78, 0)");
+  glow.addColorStop(0, "rgba(255, 246, 214, 0.92)");
+  glow.addColorStop(0.18, "rgba(255, 216, 146, 0.5)");
+  glow.addColorStop(0.44, "rgba(255, 179, 91, 0.12)");
+  glow.addColorStop(1, "rgba(255, 179, 91, 0)");
   context.fillStyle = glow;
   context.fillRect(0, 0, 128, 128);
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   return texture;
+}
+
+function lifeAtlasRotationYForPlace(THREE, place, baseRotation, radius) {
+  if (!hasLifeAtlasCoordinates(place)) return baseRotation.y;
+  const vector = latLngToGlobeVector(THREE, place.lat, place.lng, radius);
+  let bestY = baseRotation.y;
+  let bestScore = -Infinity;
+  for (let step = 0; step < 180; step += 1) {
+    const y = -Math.PI + (step / 179) * Math.PI * 2;
+    const projected = vector.clone().applyEuler(new THREE.Euler(baseRotation.x, y, baseRotation.z));
+    const score = projected.z - Math.abs(projected.x) * 0.58 - Math.abs(projected.y) * 0.08;
+    if (score > bestScore) {
+      bestScore = score;
+      bestY = y;
+    }
+  }
+  return bestY;
 }
 
 function createLifeAtlasAtmosphereTexture(THREE) {
@@ -2995,7 +3013,7 @@ function createLifeAtlasAtmosphereTexture(THREE) {
   return texture;
 }
 
-function queueLifeAtlasGlobe(places) {
+function queueLifeAtlasGlobe(places, focusPlaceId = "") {
   disposeLifeAtlasGlobe();
   const mapEl = $("#travelMapCanvas").querySelector(".life-atlas-map");
   const canvas = mapEl?.querySelector(".life-atlas-globe-canvas");
@@ -3004,7 +3022,7 @@ function queueLifeAtlasGlobe(places) {
     return;
   }
 
-  const state = { mapEl, canvas, disposed: false };
+  const state = { mapEl, canvas, disposed: false, focusPlaceId };
   lifeAtlasGlobeState = state;
   const start = () => {
     if (state.started) return;
@@ -3052,9 +3070,16 @@ async function initLifeAtlasGlobe(state, places) {
   const camera = new THREE.PerspectiveCamera(29, 1, 0.1, 100);
   camera.position.set(0, 0.08, 4.55);
 
+  const radius = 1.58;
+  const baseRotation = { x: 0.55, y: 1.08, z: -0.12 };
+  const focusPlace = places.find((place) => place.id === state.focusPlaceId);
   const globe = new THREE.Group();
   globe.position.set(0.12, -0.42, 0);
-  globe.rotation.set(0.55, 1.08, -0.12);
+  globe.rotation.set(
+    baseRotation.x,
+    focusPlace ? lifeAtlasRotationYForPlace(THREE, focusPlace, baseRotation, radius) : baseRotation.y,
+    baseRotation.z
+  );
   scene.add(globe);
 
   scene.add(new THREE.AmbientLight(0x7fa9d8, 0.28));
@@ -3083,7 +3108,6 @@ async function initLifeAtlasGlobe(state, places) {
     texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
   });
 
-  const radius = 1.58;
   const earth = new THREE.Mesh(
     new THREE.SphereGeometry(radius, 96, 56),
     new THREE.MeshStandardMaterial({
@@ -3149,21 +3173,21 @@ async function initLifeAtlasGlobe(state, places) {
     pointGroup.position.copy(pointPosition);
 
     const core = new THREE.Mesh(
-      new THREE.SphereGeometry(0.026, 18, 12),
-      new THREE.MeshBasicMaterial({ color: 0xffe3a3 })
+      new THREE.SphereGeometry(0.016, 16, 10),
+      new THREE.MeshBasicMaterial({ color: 0xf1d08c })
     );
     const glow = new THREE.Sprite(new THREE.SpriteMaterial({
       map: signalTexture,
-      color: 0xffcf8a,
+      color: 0xf3c178,
       transparent: true,
-      opacity: 0.78,
+      opacity: 0.22,
       depthTest: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending
     }));
-    glow.scale.set(0.22, 0.22, 0.22);
+    glow.scale.set(0.12, 0.12, 0.12);
     const hit = new THREE.Mesh(
-      new THREE.SphereGeometry(0.075, 12, 8),
+      new THREE.SphereGeometry(0.068, 12, 8),
       new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })
     );
     hit.userData.placeId = place.id;
@@ -3324,7 +3348,8 @@ function renderTravelMap() {
     node.addEventListener("focusout", () => setActiveTravelPlace(node.dataset.placeId, false));
     node.addEventListener("click", () => setActiveTravelPlace(node.dataset.placeId, true));
   });
-  queueLifeAtlasGlobe(signalPlaces);
+  queueLifeAtlasGlobe(signalPlaces, lifeAtlasFocusPlaceId);
+  lifeAtlasFocusPlaceId = "";
 }
 
 function addTravelPlace(event) {
@@ -3337,9 +3362,15 @@ function addTravelPlace(event) {
     return;
   }
   const profile = currentProfile();
+  const addedPlaceId = typeof entry === "string" ? entry : entry.id;
+  lifeAtlasFocusPlaceId = addedPlaceId || "";
   profile.travelPlaces = normalizeTravelPlaces([...(profile.travelPlaces || []), entry]);
   saveActiveProfile();
   renderProfile();
+  if (addedPlaceId) {
+    window.setTimeout(() => setActiveTravelPlace(addedPlaceId, true), 120);
+    window.setTimeout(() => setActiveTravelPlace(addedPlaceId, true), 900);
+  }
   setOwnerSaveStatus("City added to Life Atlas. Saving online draft...");
   saveProfileDraftOnline({ quiet: true }).then(() => setOwnerSaveStatus("Life Atlas city saved to online draft."));
 }

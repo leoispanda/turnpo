@@ -10,6 +10,24 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.163
+
+Commit: `Focus added life atlas cities`
+
+### Changed
+
+- Focuses the Life Atlas globe toward a newly added city so the new place is immediately visible instead of silently rotating on the far side of the Earth.
+- Keeps the newly added city briefly active after the profile re-renders, including after the async Three.js globe finishes loading.
+- Replaced the oversized gold signal glow with smaller, subtler city lights on the 3D globe, static fallback, and location cards.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Confirmed the add-city path now stores the added city id, focuses the next Life Atlas globe render on that city, and re-applies active state after the async Three.js globe load.
+- Confirmed city signal styling was reduced in `script.js` and `styles.css` from large glowing halos to smaller, subtler points for the 3D globe, static fallback, and location cards.
+- Browser interaction QA was attempted locally, but the Browser plugin blocked search input automation with a virtual clipboard/read-only page limitation before the profile flow could be re-opened.
+
 ## 2026-06-13 - v0.1.162
 
 Commit: `Light all life atlas city places`

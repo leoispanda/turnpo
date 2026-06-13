@@ -1281,49 +1281,44 @@ h1 {
 }
 
 .life-atlas-marker {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
   position: absolute;
   left: var(--x);
   top: var(--y);
   border-radius: 50%;
-  border: 1px solid rgba(30, 20, 8, 0.72);
-  background: #ffe7ad;
+  border: 0;
+  background: rgba(255, 226, 171, 0.92);
   box-shadow:
-    0 0 0 3px rgba(216, 177, 95, 0.13),
-    0 0 10px rgba(255, 217, 146, 0.38),
-    0 0 20px rgba(255, 176, 74, 0.16);
+    0 0 5px rgba(255, 218, 151, 0.36),
+    0 0 12px rgba(255, 185, 88, 0.1);
   cursor: default;
   transform: translate(-50%, -50%);
   animation: mapPinIn 520ms ease both;
   animation-delay: var(--delay, 0ms);
   outline: none;
-  transition: box-shadow 180ms ease, transform 180ms ease, background 180ms ease;
+  transition: opacity 180ms ease, box-shadow 180ms ease, transform 180ms ease, background 180ms ease;
   z-index: 7;
 }
 
 .life-atlas-marker::before {
   content: "";
   position: absolute;
-  inset: -9px;
+  inset: -5px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 206, 126, 0.34), rgba(255, 170, 78, 0.12) 42%, transparent 68%);
-  opacity: 0.72;
-  transform: scale(0.86);
-  animation: atlasSignalPulse 2.8s ease-out infinite;
-  animation-delay: var(--delay, 0ms);
+  background: radial-gradient(circle, rgba(255, 220, 161, 0.16), transparent 68%);
+  opacity: 0.42;
   pointer-events: none;
 }
 
 .life-atlas-marker:hover,
 .life-atlas-marker:focus,
 .life-atlas-marker.is-active {
-  background: #fff1c8;
-  transform: translate(-50%, -50%) scale(1.45);
+  background: rgba(255, 239, 205, 0.98);
+  transform: translate(-50%, -50%) scale(1.22);
   box-shadow:
-    0 0 0 4px rgba(216, 177, 95, 0.18),
-    0 0 14px rgba(255, 217, 146, 0.58),
-    0 0 28px rgba(255, 176, 74, 0.26);
+    0 0 7px rgba(255, 226, 171, 0.48),
+    0 0 16px rgba(255, 194, 99, 0.14);
 }
 
 .life-atlas-marker:hover::before,
@@ -1427,8 +1422,8 @@ h1 {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #ffe7ad;
-  box-shadow: 0 0 0 4px rgba(216, 177, 95, 0.1), 0 0 12px rgba(255, 217, 146, 0.24);
+  background: rgba(255, 226, 171, 0.92);
+  box-shadow: 0 0 7px rgba(255, 217, 146, 0.2);
 }
 
 .travel-place-card:hover,
