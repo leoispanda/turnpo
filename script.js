@@ -2808,22 +2808,60 @@ function renderTravelMap() {
   }
   $("#travelMapSummary").textContent = `${places.length} place${places.length === 1 ? "" : "s"} lit up from this profile's public locations and travel stories.`;
   $("#travelMapCanvas").innerHTML = `
-    <svg class="world-map" viewBox="0 0 1000 520" role="img" aria-label="World map with visited places highlighted">
-      <path class="map-land" d="M118 150c38-44 108-57 166-43 35 9 73 31 84 66 8 26-5 50-27 64-31 20-78 17-104 45-23 25-15 67-43 86-32 22-83-5-100-42-20-43 16-82 2-120-8-22-2-41 22-56z"/>
-      <path class="map-land" d="M270 335c34-10 76 5 92 37 18 35-3 86-34 111-23 19-57 20-80 1-23-20-16-56-5-84 9-23 6-54 27-65z"/>
-      <path class="map-land" d="M455 126c34-28 92-33 134-16 32 13 47 43 84 47 42 5 77-29 119-19 42 10 75 53 66 94-9 44-61 56-91 86-25 24-27 67-62 82-39 17-73-22-111-22-39 0-74 39-112 22-32-15-19-58-35-87-18-31-62-37-75-72-16-41 47-82 83-115z"/>
-      <path class="map-land" d="M632 238c23-19 62-14 84 5 18 16 28 43 16 65-12 21-44 26-65 13-25-16-57-55-35-83z"/>
-      <path class="map-land" d="M798 316c38-12 87 1 109 36 20 32 5 75-28 92-35 19-84 5-106-28-24-35-17-87 25-100z"/>
-      <path class="map-line" d="M60 260h880M500 72v392M220 88c70 88 70 268 0 356M780 88c-70 88-70 268 0 356"/>
+    <svg class="world-map earth-map" viewBox="0 0 1000 520" role="img" aria-label="Earth-view map with visited places highlighted">
+      <defs>
+        <radialGradient id="earthOcean" cx="42%" cy="38%" r="70%">
+          <stop offset="0%" stop-color="#1f4f68"/>
+          <stop offset="48%" stop-color="#0d2834"/>
+          <stop offset="100%" stop-color="#061017"/>
+        </radialGradient>
+        <linearGradient id="earthLand" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#7d8e6d"/>
+          <stop offset="52%" stop-color="#42533f"/>
+          <stop offset="100%" stop-color="#24342d"/>
+        </linearGradient>
+        <filter id="earthGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="8" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="markerGlow" x="-120%" y="-120%" width="340%" height="340%">
+          <feGaussianBlur stdDeviation="5" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <clipPath id="earthClip">
+          <ellipse cx="500" cy="260" rx="438" ry="226"/>
+        </clipPath>
+      </defs>
+      <rect class="earth-space" x="0" y="0" width="1000" height="520"/>
+      <ellipse class="earth-atmosphere" cx="500" cy="260" rx="452" ry="238"/>
+      <ellipse class="earth-ocean" cx="500" cy="260" rx="438" ry="226"/>
+      <g clip-path="url(#earthClip)">
+        <path class="earth-cloud cloud-a" d="M60 180c80-36 170-25 246 8 92 40 145 21 224-12 86-36 162-25 244 15 54 27 110 35 170 18"/>
+        <path class="earth-cloud cloud-b" d="M98 326c92-28 154-10 228 16 72 25 150 31 226 4 90-31 179-23 268 17"/>
+        <path class="map-land" d="M112 141c46-39 118-48 174-31 42 13 76 39 87 73 9 28-7 54-34 68-32 18-80 14-107 42-23 24-17 66-45 86-32 23-84-2-103-40-17-34 7-71 1-105-6-35-3-66 27-93z"/>
+        <path class="map-land" d="M258 334c33-14 79 0 98 31 21 34 1 89-31 115-25 21-61 22-86 1-25-22-17-59-5-88 9-21 3-49 24-59z"/>
+        <path class="map-land" d="M456 118c37-29 97-34 143-16 33 13 48 42 84 46 43 5 78-28 121-17 43 11 75 55 66 97-9 42-59 56-90 85-27 25-29 70-65 86-39 17-74-21-113-22-41-1-76 39-116 22-33-14-21-59-38-88-19-31-62-38-75-74-14-41 46-82 83-119z"/>
+        <path class="map-land" d="M635 238c24-18 63-12 85 8 18 16 27 42 14 64-13 21-45 24-66 10-25-17-55-55-33-82z"/>
+        <path class="map-land" d="M798 316c40-13 90 2 112 36 20 32 5 76-29 94-36 18-87 3-110-31-23-36-14-86 27-99z"/>
+        <path class="earth-grid" d="M70 260h860M500 38v444M188 72c76 104 76 272 0 376M812 72c-76 104-76 272 0 376M92 168c224 47 592 47 816 0M92 352c224-47 592-47 816 0"/>
+        <path class="earth-orbit" d="M92 386c150-124 330-196 540-217 124-12 234 1 316 32"/>
+      </g>
       ${places.map((place) => {
         const point = mapPoint(place);
         return `
-          <g class="map-marker" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}`)}" style="--delay:${Math.min(place.count, 8) * 80}ms">
+          <g class="map-marker" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}`)}" style="--delay:${Math.min(place.count, 8) * 80}ms" filter="url(#markerGlow)">
             <title>${escapeHtml(`${place.label}, ${place.country}`)}</title>
             <circle class="map-marker-glow" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${Math.min(18, 9 + place.count)}"></circle>
             <circle class="map-marker-dot" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${Math.min(7, 4 + place.count * 0.35)}"></circle>
           </g>`;
       }).join("")}
+      <ellipse class="earth-limb" cx="500" cy="260" rx="438" ry="226"/>
     </svg>`;
   $("#travelPlaceList").innerHTML = places.map((place) => `
     <article class="travel-place-card">

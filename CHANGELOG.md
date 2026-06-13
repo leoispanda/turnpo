@@ -10,6 +10,22 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.151
+
+Commit: `Polish visited places earth view`
+
+### Changed
+
+- Upgraded the Travel Map visual from a flat map into an original Earth-view style inspired by satellite maps.
+- Added ocean, atmosphere, cloud, latitude/longitude, orbital, and marker-glow layers without depending on Google Earth or external imagery.
+- Preserved the existing automatic place detection and visited-place list.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: the Earth-view SVG layers render, 5 places remain lit up, and console logs show no errors or warnings.
+
 ## 2026-06-13 - v0.1.150
 
 Commit: `Add visited places map`
