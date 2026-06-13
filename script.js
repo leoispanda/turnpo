@@ -4361,7 +4361,7 @@ function renderTimeline() {
                 return ownerMode ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(photoAlt)}" loading="lazy" />` : renderPublicPhotoButton(image, photoAlt);
               }).join("")}</div></details>` : ""}
               ${story.link ? `<a class="source-link" href="${escapeHtml(story.link)}" target="_blank" rel="noopener">Open link</a>` : ""}
-              ${ownerMode && story.tags?.length ? `<div class="tag-row owner-only">${story.tags.slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
+              ${story.tags?.length ? `<div class="tag-row">${story.tags.slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
             </div>
           </article>
         `; }).join("")}

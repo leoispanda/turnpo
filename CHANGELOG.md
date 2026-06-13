@@ -10,6 +10,21 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.166
+
+Commit: `Show timeline tags to visitors`
+
+### Fixed
+
+- Restored timeline tags in visitor mode so public personal-experience cards show their tags again.
+- Kept owner-mode timeline tags visible while removing the owner-only rendering gate from the tag row.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: visitor mode renders 34 timeline tag rows and 82 timeline tags, the first tagged card is visible, tag rows no longer carry `owner-only`, and the console shows no warnings or errors.
+
 ## 2026-06-13 - v0.1.165
 
 Commit: `Let profiles choose city marker levels`
