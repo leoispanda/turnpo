@@ -10,6 +10,22 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.158
+
+Commit: `Use NASA image for life atlas map`
+
+### Changed
+
+- Replaced the Life Atlas center visual with a real NASA Blue Marble Eastern Hemisphere image cropped into a wide cinematic card.
+- Removed the previous Three.js/custom-drawn globe layer, fake continent/cloud/city-light CSS treatments, and the unused night texture asset.
+- Kept the existing left copy, center visual, and right location-card layout while overlaying warm personal signals for Eindhoven, Harbin, and Shanghai with existing card-to-dot hover/click sync.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: the Life Atlas image loads from `/assets/life-atlas-earth.jpg`, only Eindhoven/Harbin/Shanghai signal markers render, previous custom globe/Three.js/fake visual nodes are absent, card click highlights the matching marker, light theme and mobile layouts keep the existing structure with no horizontal overflow, and console logs show no warnings or errors.
+
 ## 2026-06-13 - v0.1.157
 
 Commit: `Add cinematic 3D life atlas globe`
