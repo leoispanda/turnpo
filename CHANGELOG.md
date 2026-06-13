@@ -10,6 +10,23 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.162
+
+Commit: `Light all life atlas city places`
+
+### Changed
+
+- Changed Life Atlas globe signals from a three-city hardcoded list to every visited or manually added city with valid latitude/longitude data.
+- Updated the owner add-city control from free text/datalist entry to a true city selector so new places are added from available options.
+- Kept compatibility with existing saved manual travel places while making built-in city selections the default path for new additions.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: Life Atlas reaches `is-3d-ready`, Amsterdam/Eindhoven/Harbin/Shanghai all render as city signal markers from their latitude/longitude data, Germany remains a non-city card without a globe marker, no horizontal overflow is present, and console logs show no warnings or errors.
+- Confirmed the owner add-city markup now renders a select/options control in source instead of the previous free-text datalist input.
+
 ## 2026-06-13 - v0.1.161
 
 Commit: `Refine life atlas globe hero immersion`

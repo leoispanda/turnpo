@@ -88,11 +88,6 @@ const LIFE_ATLAS_EARTH_IMAGE = "/assets/life-atlas-earth.jpg";
 const LIFE_ATLAS_THREE_URL = "https://unpkg.com/three@0.160.0/build/three.module.js";
 const LIFE_ATLAS_EARTH_TEXTURE = "/assets/earth-blue-marble-texture.jpg";
 const LIFE_ATLAS_NIGHT_TEXTURE = "/assets/earth-night-lights-texture.png";
-const LIFE_ATLAS_SIGNAL_POINTS = {
-  eindhoven: { x: 45, y: 24 },
-  harbin: { x: 71, y: 25 },
-  shanghai: { x: 73, y: 37 }
-};
 const CONTENT_CATEGORY = {
   story: "life",
   work: "work"
@@ -2854,12 +2849,14 @@ function visitedPlaces(profile = currentProfile()) {
 function travelPlaceFromInput(value = "") {
   const raw = String(value).trim();
   if (!raw) return null;
+  const byId = travelPlaceById(raw);
+  if (byId?.type === "city") return byId.id;
   const normalized = normalizePlaceText(raw);
   const builtIn = TRAVEL_PLACES.find((place) => {
     const names = [place.id, place.label, `${place.label} ${place.country}`, `${place.label}, ${place.country}`, ...place.tokens];
     return names.some((name) => normalizePlaceText(name) === normalized);
   });
-  if (builtIn) return builtIn.id;
+  if (builtIn?.type === "city") return builtIn.id;
 
   const parts = raw.split(",").map((part) => part.trim()).filter(Boolean);
   if (parts.length >= 4) {
@@ -2878,8 +2875,18 @@ function travelPlaceFromInput(value = "") {
   return null;
 }
 
+function hasLifeAtlasCoordinates(place) {
+  return place?.type === "city" && Number.isFinite(Number(place.lat)) && Number.isFinite(Number(place.lng));
+}
+
 function lifeAtlasPoint(place) {
-  return LIFE_ATLAS_SIGNAL_POINTS[place.id] || null;
+  if (!hasLifeAtlasCoordinates(place)) return null;
+  const x = 50 + Number(place.lng) * 0.22;
+  const y = 52 - Number(place.lat) * 0.44;
+  return {
+    x: Math.min(88, Math.max(12, x)),
+    y: Math.min(82, Math.max(12, y))
+  };
 }
 
 function supportsLifeAtlasWebGL(canvas) {
@@ -3258,7 +3265,7 @@ function renderTravelMap() {
     return;
   }
   const markerPlaces = places.filter((place) => place.type === "city");
-  const signalPlaces = markerPlaces.filter((place) => lifeAtlasPoint(place));
+  const signalPlaces = markerPlaces.filter((place) => hasLifeAtlasCoordinates(place));
   $("#travelMapSummary").textContent = "Every new place leaves a quiet signal in us - through its people, culture, rhythm, food, language, and ways of living.";
   $("#travelMapCanvas").innerHTML = `
     <div class="life-atlas-map" role="img" aria-label="Rotating Life Atlas Earth globe with warm signals for places that shaped perspective">
@@ -3279,11 +3286,11 @@ function renderTravelMap() {
     </div>`;
   const addForm = ownerMode ? `
     <form class="travel-place-add owner-only" id="travelPlaceAddForm">
-      <input id="travelPlaceInput" list="travelPlaceOptions" type="text" placeholder="Add city" autocomplete="off" aria-label="Add city to Life Atlas" />
+      <select id="travelPlaceInput" aria-label="Add city to Life Atlas">
+        <option value="">Add city</option>
+        ${TRAVEL_PLACES.filter((place) => place.type === "city").map((place) => `<option value="${escapeHtml(place.id)}">${escapeHtml(`${place.label}, ${place.country}`)}</option>`).join("")}
+      </select>
       <button type="submit" aria-label="Add city">+</button>
-      <datalist id="travelPlaceOptions">
-        ${TRAVEL_PLACES.filter((place) => place.type === "city").map((place) => `<option value="${escapeHtml(`${place.label}, ${place.country}`)}"></option>`).join("")}
-      </datalist>
       <small id="travelPlaceAddNote"></small>
     </form>
   ` : "";
@@ -3326,7 +3333,7 @@ function addTravelPlace(event) {
   const note = $("#travelPlaceAddNote");
   const entry = travelPlaceFromInput(input?.value || "");
   if (!entry) {
-    if (note) note.textContent = "Use a listed city, or City, Country, lat, lng.";
+    if (note) note.textContent = "Choose a city from the list.";
     return;
   }
   const profile = currentProfile();
