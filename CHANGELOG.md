@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.164
+
+Commit: `Split life atlas city markers`
+
+### Changed
+
+- Split Life Atlas city markers into major life-chapter cities and subtle visited-city footprints.
+- Added the requested major and visited city lists so Leo/Cindy profiles can show the fuller Life Atlas by default without making every city a major anchor.
+- Kept labels and soft halo treatment for major cities only; visited cities now render as smaller light dots with labels shown on hover or focus.
+- Preserved the cinematic unframed globe direction with soft atmosphere, slow rotation, and a clean Northern Hemisphere focus.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Confirmed the Life Atlas city list contains 5 major cities and 22 visited cities, with no missing ids in the city option table.
+- Verified Cindy's profile locally in the in-app browser: Life Atlas renders 27 cards and markers, the 5 major cities appear first with `life chapter` labels, the 22 visited cities render as `visited city`, and default Leo/Cindy cities do not show owner remove controls.
+- Confirmed the 3D globe reaches `is-3d-ready`, renders a Three.js canvas, keeps the globe container transparent with no border or rounded frame, shows major labels by default, hides visited labels by default, and reveals a visited label when the city is activated.
+- Confirmed the local browser console showed no warnings or errors during the profile check.
+
 ## 2026-06-13 - v0.1.163
 
 Commit: `Focus added life atlas cities`

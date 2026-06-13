@@ -63,27 +63,55 @@ const CITY_OPTIONS = [
 const TRAVEL_PLACES = [
   { id: "amsterdam", label: "Amsterdam", country: "Netherlands", lat: 52.3676, lng: 4.9041, type: "city", tokens: ["amsterdam"] },
   { id: "eindhoven", label: "Eindhoven", country: "Netherlands", lat: 51.4416, lng: 5.4697, type: "city", tokens: ["eindhoven", "veldhoven", "north brabant"] },
+  { id: "maastricht", label: "Maastricht", country: "Netherlands", lat: 50.8514, lng: 5.691, type: "city", tokens: ["maastricht"] },
+  { id: "the-hague", label: "The Hague", country: "Netherlands", lat: 52.0705, lng: 4.3007, type: "city", tokens: ["the hague", "den haag"] },
   { id: "netherlands", label: "Netherlands", country: "Netherlands", lat: 52.1326, lng: 5.2913, type: "country", tokens: ["netherlands", "holland", "dutch"] },
   { id: "shanghai", label: "Shanghai", country: "China", lat: 31.2304, lng: 121.4737, type: "city", tokens: ["shanghai", "上海"] },
   { id: "harbin", label: "Harbin", country: "China", lat: 45.8038, lng: 126.5349, type: "city", tokens: ["harbin", "哈尔滨"] },
   { id: "beijing", label: "Beijing", country: "China", lat: 39.9042, lng: 116.4074, type: "city", tokens: ["beijing", "北京"] },
   { id: "shenzhen", label: "Shenzhen", country: "China", lat: 22.5431, lng: 114.0579, type: "city", tokens: ["shenzhen", "深圳"] },
+  { id: "chengdu", label: "Chengdu", country: "China", lat: 30.5728, lng: 104.0668, type: "city", tokens: ["chengdu", "成都"] },
+  { id: "xian", label: "Xi'an", country: "China", lat: 34.3416, lng: 108.9398, type: "city", tokens: ["xian", "xi'an", "西安"] },
+  { id: "hailar", label: "Hailar", country: "China", lat: 49.2116, lng: 119.7658, type: "city", tokens: ["hailar", "海拉尔"] },
+  { id: "sanya", label: "Sanya", country: "China", lat: 18.2528, lng: 109.5119, type: "city", tokens: ["sanya", "三亚"] },
+  { id: "haikou", label: "Haikou", country: "China", lat: 20.044, lng: 110.1999, type: "city", tokens: ["haikou", "海口"] },
+  { id: "wuxi", label: "Wuxi", country: "China", lat: 31.4912, lng: 120.3119, type: "city", tokens: ["wuxi", "无锡"] },
+  { id: "hangzhou", label: "Hangzhou", country: "China", lat: 30.2741, lng: 120.1551, type: "city", tokens: ["hangzhou", "杭州"] },
+  { id: "suzhou", label: "Suzhou", country: "China", lat: 31.2989, lng: 120.5853, type: "city", tokens: ["suzhou", "苏州"] },
+  { id: "dalian", label: "Dalian", country: "China", lat: 38.914, lng: 121.6147, type: "city", tokens: ["dalian", "大连"] },
   { id: "china", label: "China", country: "China", lat: 35.8617, lng: 104.1954, type: "country", tokens: ["china", "中国"] },
   { id: "london", label: "London", country: "United Kingdom", lat: 51.5072, lng: -0.1276, type: "city", tokens: ["london"] },
   { id: "paris", label: "Paris", country: "France", lat: 48.8566, lng: 2.3522, type: "city", tokens: ["paris"] },
+  { id: "lyon", label: "Lyon", country: "France", lat: 45.764, lng: 4.8357, type: "city", tokens: ["lyon"] },
+  { id: "grenoble", label: "Grenoble", country: "France", lat: 45.1885, lng: 5.7245, type: "city", tokens: ["grenoble"] },
   { id: "berlin", label: "Berlin", country: "Germany", lat: 52.52, lng: 13.405, type: "city", tokens: ["berlin"] },
   { id: "munich", label: "Munich", country: "Germany", lat: 48.1351, lng: 11.582, type: "city", tokens: ["munich"] },
   { id: "dresden", label: "Dresden", country: "Germany", lat: 51.0504, lng: 13.7373, type: "city", tokens: ["dresden"] },
+  { id: "dusseldorf", label: "Düsseldorf", country: "Germany", lat: 51.2277, lng: 6.7735, type: "city", tokens: ["dusseldorf", "düsseldorf"] },
   { id: "germany", label: "Germany", country: "Germany", lat: 51.1657, lng: 10.4515, type: "country", tokens: ["germany", "german", "rhine"] },
   { id: "brussels", label: "Brussels", country: "Belgium", lat: 50.8476, lng: 4.3572, type: "city", tokens: ["brussels"] },
   { id: "dublin", label: "Dublin", country: "Ireland", lat: 53.3498, lng: -6.2603, type: "city", tokens: ["dublin"] },
   { id: "prague", label: "Prague", country: "Czechia", lat: 50.0755, lng: 14.4378, type: "city", tokens: ["prague"] },
+  { id: "malaga", label: "Málaga", country: "Spain", lat: 36.7213, lng: -4.4214, type: "city", tokens: ["malaga", "málaga"] },
+  { id: "bern", label: "Bern", country: "Switzerland", lat: 46.948, lng: 7.4474, type: "city", tokens: ["bern", "berne"] },
+  { id: "geneva", label: "Geneva", country: "Switzerland", lat: 46.2044, lng: 6.1432, type: "city", tokens: ["geneva"] },
   { id: "new-york", label: "New York", country: "United States", lat: 40.7128, lng: -74.006, type: "city", tokens: ["new york", "nyc"] },
   { id: "san-francisco", label: "San Francisco", country: "United States", lat: 37.7749, lng: -122.4194, type: "city", tokens: ["san francisco", "bay area"] },
+  { id: "bangkok", label: "Bangkok", country: "Thailand", lat: 13.7563, lng: 100.5018, type: "city", tokens: ["bangkok"] },
+  { id: "phuket", label: "Phuket", country: "Thailand", lat: 7.8804, lng: 98.3923, type: "city", tokens: ["phuket"] },
   { id: "singapore", label: "Singapore", country: "Singapore", lat: 1.3521, lng: 103.8198, type: "city", tokens: ["singapore"] },
   { id: "taipei", label: "Taipei", country: "Taiwan", lat: 25.033, lng: 121.5654, type: "city", tokens: ["taipei", "台北"] },
+  { id: "seoul", label: "Seoul", country: "South Korea", lat: 37.5665, lng: 126.978, type: "city", tokens: ["seoul", "서울"] },
+  { id: "jeju", label: "Jeju", country: "South Korea", lat: 33.4996, lng: 126.5312, type: "city", tokens: ["jeju", "jeju island", "제주"] },
   { id: "tokyo", label: "Tokyo", country: "Japan", lat: 35.6762, lng: 139.6503, type: "city", tokens: ["tokyo", "東京", "东京"] }
 ];
+const LIFE_ATLAS_MAJOR_CITY_IDS = new Set(["harbin", "shanghai", "eindhoven", "amsterdam", "maastricht"]);
+const LIFE_ATLAS_VISITED_CITY_IDS = new Set([
+  "bangkok", "phuket", "taipei", "seoul", "jeju", "malaga", "lyon", "grenoble", "chengdu", "xian", "hailar",
+  "sanya", "haikou", "wuxi", "hangzhou", "suzhou", "dalian", "dusseldorf", "the-hague", "bern", "brussels", "geneva"
+]);
+const LIFE_ATLAS_DEFAULT_CITY_IDS = [...LIFE_ATLAS_MAJOR_CITY_IDS, ...LIFE_ATLAS_VISITED_CITY_IDS];
+const LIFE_ATLAS_DEFAULT_PROFILE_USERNAMES = new Set(["leo", "cindy"]);
 const LIFE_ATLAS_EARTH_IMAGE = "/assets/life-atlas-earth.jpg";
 const LIFE_ATLAS_THREE_URL = "https://unpkg.com/three@0.160.0/build/three.module.js";
 const LIFE_ATLAS_EARTH_TEXTURE = "/assets/earth-blue-marble-texture.jpg";
@@ -2811,10 +2839,29 @@ function travelSourceItems(profile = currentProfile()) {
 }
 
 function manualTravelPlaces(profile = currentProfile()) {
-  return normalizeTravelPlaces(profile.travelPlaces).map((entry) => {
+  const normalizedEntries = normalizeTravelPlaces(profile.travelPlaces);
+  const defaultIds = LIFE_ATLAS_DEFAULT_PROFILE_USERNAMES.has(profile.username)
+    ? new Set(LIFE_ATLAS_DEFAULT_CITY_IDS)
+    : new Set();
+  const places = normalizedEntries.map((entry) => {
     if (typeof entry === "string") return travelPlaceById(entry);
     return entry;
-  }).filter(Boolean).map((place) => ({ ...place, manual: true }));
+  }).filter(Boolean).map((place) => ({
+    ...place,
+    atlasDefault: defaultIds.has(place.id),
+    manual: !defaultIds.has(place.id)
+  }));
+  const selectedIds = new Set(places.map((place) => place.id));
+  defaultIds.forEach((placeId) => {
+    if (selectedIds.has(placeId)) return;
+    const place = travelPlaceById(placeId);
+    if (place) places.push({ ...place, atlasDefault: true, manual: false });
+  });
+  return places;
+}
+
+function lifeAtlasCityCategory(place) {
+  return LIFE_ATLAS_MAJOR_CITY_IDS.has(place?.id) ? "major" : "visited";
 }
 
 function visitedPlaces(profile = currentProfile()) {
@@ -2837,14 +2884,21 @@ function visitedPlaces(profile = currentProfile()) {
   manualTravelPlaces(profile).forEach((place) => {
     const existing = matches.get(place.id) || { ...place, count: 0, examples: [] };
     existing.count = Math.max(existing.count, 1);
-    existing.manual = true;
+    existing.manual = existing.manual || place.manual;
+    existing.atlasDefault = existing.atlasDefault || place.atlasDefault;
     matches.set(place.id, existing);
   });
   const places = [...matches.values()];
   const cityCountries = new Set(places.filter((place) => place.type === "city").map((place) => place.country));
   return places
     .filter((place) => place.type !== "country" || !cityCountries.has(place.country))
-    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+    .map((place) => ({ ...place, atlasCategory: place.type === "city" ? lifeAtlasCityCategory(place) : "country" }))
+    .sort((a, b) => {
+      const categoryRank = { major: 0, visited: 1, country: 2 };
+      return (categoryRank[a.atlasCategory] ?? 3) - (categoryRank[b.atlasCategory] ?? 3)
+        || b.count - a.count
+        || a.label.localeCompare(b.label);
+    });
 }
 
 function travelPlaceFromInput(value = "") {
@@ -2944,10 +2998,12 @@ function disposeLifeAtlasGlobe() {
 function setLifeAtlasGlobeActive(placeId, active) {
   const point = lifeAtlasGlobeState?.points?.get(placeId);
   if (!point) return;
-  point.core.material.color.set(active ? 0xffefd1 : 0xf1d08c);
-  point.core.scale.setScalar(active ? 1.22 : 1);
-  point.glow.material.opacity = active ? 0.46 : 0.22;
-  point.glow.scale.setScalar(active ? 1.18 : 1);
+  const isMajor = point.category === "major";
+  point.core.material.color.set(active ? 0xffefd1 : (isMajor ? 0xffdfa1 : 0xd9c18c));
+  point.core.scale.setScalar(active ? (isMajor ? 1.18 : 1.32) : 1);
+  point.glow.material.opacity = active ? (isMajor ? 0.42 : 0.12) : (isMajor ? 0.32 : 0);
+  point.glow.scale.setScalar(active ? 1.16 : 1);
+  if (point.label) point.label.material.opacity = isMajor ? (active ? 0.96 : 0.82) : (active ? 0.88 : 0);
   point.hit.scale.setScalar(active ? 1.18 : 1);
   lifeAtlasGlobeState.requestRender?.();
 }
@@ -2974,6 +3030,24 @@ function createLifeAtlasSignalTexture(THREE) {
   glow.addColorStop(1, "rgba(255, 179, 91, 0)");
   context.fillStyle = glow;
   context.fillRect(0, 0, 128, 128);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function createLifeAtlasLabelTexture(THREE, label) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 256;
+  canvas.height = 72;
+  const context = canvas.getContext("2d");
+  context.font = "600 24px Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  const text = String(label || "").slice(0, 18);
+  context.shadowColor = "rgba(0, 0, 0, 0.72)";
+  context.shadowBlur = 10;
+  context.fillStyle = "rgba(255, 242, 214, 0.92)";
+  context.fillText(text, 128, 36);
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   return texture;
@@ -3165,36 +3239,50 @@ async function initLifeAtlasGlobe(state, places) {
   globe.add(atmosphericHaze);
 
   const signalTexture = createLifeAtlasSignalTexture(THREE);
+  const labelTextures = [];
   const hitMeshes = [];
   const points = new Map();
   places.forEach((place) => {
+    const category = lifeAtlasCityCategory(place);
+    const isMajor = category === "major";
     const pointPosition = latLngToGlobeVector(THREE, place.lat, place.lng, radius * 1.036);
     const pointGroup = new THREE.Group();
     pointGroup.position.copy(pointPosition);
 
     const core = new THREE.Mesh(
-      new THREE.SphereGeometry(0.016, 16, 10),
-      new THREE.MeshBasicMaterial({ color: 0xf1d08c })
+      new THREE.SphereGeometry(isMajor ? 0.026 : 0.012, 16, 10),
+      new THREE.MeshBasicMaterial({ color: isMajor ? 0xffdfa1 : 0xd9c18c })
     );
     const glow = new THREE.Sprite(new THREE.SpriteMaterial({
       map: signalTexture,
-      color: 0xf3c178,
+      color: isMajor ? 0xffcb86 : 0xd7c29a,
       transparent: true,
-      opacity: 0.22,
+      opacity: isMajor ? 0.32 : 0,
       depthTest: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending
     }));
-    glow.scale.set(0.12, 0.12, 0.12);
+    glow.scale.set(isMajor ? 0.2 : 0.06, isMajor ? 0.2 : 0.06, isMajor ? 0.2 : 0.06);
+    const labelTexture = createLifeAtlasLabelTexture(THREE, place.label);
+    labelTextures.push(labelTexture);
+    const label = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: labelTexture,
+      transparent: true,
+      opacity: isMajor ? 0.82 : 0,
+      depthTest: true,
+      depthWrite: false
+    }));
+    label.position.set(0, isMajor ? 0.105 : 0.075, 0);
+    label.scale.set(isMajor ? 0.38 : 0.32, isMajor ? 0.105 : 0.09, 1);
     const hit = new THREE.Mesh(
       new THREE.SphereGeometry(0.068, 12, 8),
       new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })
     );
     hit.userData.placeId = place.id;
-    pointGroup.add(glow, core, hit);
+    pointGroup.add(glow, core, label, hit);
     globe.add(pointGroup);
     hitMeshes.push(hit);
-    points.set(place.id, { core, glow, hit, group: pointGroup });
+    points.set(place.id, { core, glow, label, hit, group: pointGroup, category });
   });
 
   const raycaster = new THREE.Raycaster();
@@ -3242,7 +3330,7 @@ async function initLifeAtlasGlobe(state, places) {
     scene,
     camera,
     points,
-    textures: [earthTexture, nightTexture, signalTexture, atmosphereTexture].filter(Boolean),
+    textures: [earthTexture, nightTexture, signalTexture, atmosphereTexture, ...labelTextures].filter(Boolean),
     onPointerMove: activateFromPointer,
     onPointerLeave: clearPointer,
     onPointerClick: activateFromPointer,
@@ -3300,8 +3388,10 @@ function renderTravelMap() {
         <div class="life-atlas-marker-layer">
           ${signalPlaces.map((place) => {
           const point = lifeAtlasPoint(place);
+          const category = lifeAtlasCityCategory(place);
           return `
-            <span class="life-atlas-marker" data-place-id="${escapeHtml(place.id)}" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}, quiet influence point`)}" style="--x:${point.x.toFixed(2)}%; --y:${point.y.toFixed(2)}%; --delay:${Math.min(place.count, 8) * 80}ms">
+            <span class="life-atlas-marker is-${escapeHtml(category)}" data-place-id="${escapeHtml(place.id)}" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}, ${category === "major" ? "major life chapter" : "visited city"}`)}" style="--x:${point.x.toFixed(2)}%; --y:${point.y.toFixed(2)}%; --delay:${Math.min(place.count, 8) * 80}ms">
+              <span class="life-atlas-marker-label" aria-hidden="true">${escapeHtml(place.label)}</span>
               <span class="sr-only">${escapeHtml(`${place.label}, ${place.country}`)}</span>
             </span>`;
         }).join("")}
@@ -3322,11 +3412,11 @@ function renderTravelMap() {
     ${addForm}
     <div class="travel-place-cards">
       ${places.map((place) => `
-    <article class="travel-place-card${place.manual ? " is-manual" : ""}" data-place-id="${escapeHtml(place.id)}" tabindex="0">
+    <article class="travel-place-card is-${escapeHtml(place.atlasCategory || "trace")}${place.manual ? " is-manual" : ""}" data-place-id="${escapeHtml(place.id)}" tabindex="0">
       <span class="travel-place-dot" aria-hidden="true"></span>
       <div>
         <strong>${escapeHtml(place.label)}</strong>
-        <small>${escapeHtml(place.country)} · ${place.manual && place.count <= 1 ? "added place" : `${place.count} quiet trace${place.count === 1 ? "" : "s"}`}</small>
+        <small>${escapeHtml(place.country)} · ${place.atlasCategory === "major" ? "life chapter" : place.type === "city" ? "visited city" : place.manual && place.count <= 1 ? "added place" : `${place.count} quiet trace${place.count === 1 ? "" : "s"}`}</small>
       </div>
       ${ownerMode && place.manual ? `<button class="travel-place-remove owner-only" type="button" data-remove-place="${escapeHtml(place.id)}" aria-label="Remove ${escapeHtml(place.label)}">×</button>` : ""}
     </article>
