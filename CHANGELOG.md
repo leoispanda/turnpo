@@ -10,6 +10,22 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.152
+
+Commit: `Refine life atlas copy`
+
+### Changed
+
+- Reframed the Travel Map section as a Life Atlas about places that shape perspective rather than tourist-style places visited.
+- Updated the section label, title, subtitle, supporting text, map accessibility labels, and place-list microcopy around quiet traces and lived influence.
+- Lightly warmed marker and place-dot styling while preserving the existing Earth-view map structure and automatic place detection.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: the Life Atlas copy renders on desktop and mobile, 5 places remain listed, the Earth-view map structure is preserved, there is no horizontal overflow on mobile, and console logs show no errors or warnings.
+
 ## 2026-06-13 - v0.1.151
 
 Commit: `Polish visited places earth view`

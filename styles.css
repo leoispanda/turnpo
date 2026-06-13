@@ -1139,6 +1139,12 @@ h1 {
   line-height: 1.55;
 }
 
+.travel-map-support {
+  margin-top: 12px;
+  color: var(--text);
+  line-height: 1.58;
+}
+
 .travel-map-panel {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(168px, 0.36fr);
@@ -1232,13 +1238,13 @@ h1 {
 }
 
 .map-marker-glow {
-  fill: rgba(255, 211, 126, 0.26);
-  stroke: rgba(255, 211, 126, 0.3);
+  fill: rgba(255, 217, 146, 0.28);
+  stroke: rgba(255, 217, 146, 0.34);
   stroke-width: 1;
 }
 
 .map-marker-dot {
-  fill: #ffe29d;
+  fill: #ffe7ad;
   stroke: rgba(4, 8, 10, 0.92);
   stroke-width: 2;
 }
@@ -1273,8 +1279,8 @@ h1 {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--gold-strong);
-  box-shadow: 0 0 0 5px rgba(216, 177, 95, 0.1);
+  background: #ffe7ad;
+  box-shadow: 0 0 0 5px rgba(216, 177, 95, 0.1), 0 0 18px rgba(255, 217, 146, 0.28);
 }
 
 .travel-place-card strong,

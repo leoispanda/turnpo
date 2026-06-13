@@ -2806,9 +2806,9 @@ function renderTravelMap() {
     $("#travelPlaceList").innerHTML = "";
     return;
   }
-  $("#travelMapSummary").textContent = `${places.length} place${places.length === 1 ? "" : "s"} lit up from this profile's public locations and travel stories.`;
+  $("#travelMapSummary").textContent = "Every new place leaves a quiet signal in us - through its people, culture, rhythm, food, language, and ways of living.";
   $("#travelMapCanvas").innerHTML = `
-    <svg class="world-map earth-map" viewBox="0 0 1000 520" role="img" aria-label="Earth-view map with visited places highlighted">
+    <svg class="world-map earth-map" viewBox="0 0 1000 520" role="img" aria-label="Life atlas with places that shaped perspective highlighted">
       <defs>
         <radialGradient id="earthOcean" cx="42%" cy="38%" r="70%">
           <stop offset="0%" stop-color="#1f4f68"/>
@@ -2855,8 +2855,8 @@ function renderTravelMap() {
       ${places.map((place) => {
         const point = mapPoint(place);
         return `
-          <g class="map-marker" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}`)}" style="--delay:${Math.min(place.count, 8) * 80}ms" filter="url(#markerGlow)">
-            <title>${escapeHtml(`${place.label}, ${place.country}`)}</title>
+          <g class="map-marker" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}, quiet influence point`)}" style="--delay:${Math.min(place.count, 8) * 80}ms" filter="url(#markerGlow)">
+            <title>${escapeHtml(`${place.label}, ${place.country} - quiet influence point`)}</title>
             <circle class="map-marker-glow" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${Math.min(18, 9 + place.count)}"></circle>
             <circle class="map-marker-dot" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${Math.min(7, 4 + place.count * 0.35)}"></circle>
           </g>`;
@@ -2868,7 +2868,7 @@ function renderTravelMap() {
       <span class="travel-place-dot" aria-hidden="true"></span>
       <div>
         <strong>${escapeHtml(place.label)}</strong>
-        <small>${escapeHtml(place.country)} · ${place.count} signal${place.count === 1 ? "" : "s"}</small>
+        <small>${escapeHtml(place.country)} · ${place.count} quiet trace${place.count === 1 ? "" : "s"}</small>
       </div>
     </article>
   `).join("");
