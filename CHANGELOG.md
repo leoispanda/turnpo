@@ -10,6 +10,23 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.160
+
+Commit: `Make life atlas globe polar and luminous`
+
+### Changed
+
+- Reframed the Life Atlas globe from a northern polar angle so the Earth reads less like a flat side-view map and more like a complete planet seen from above the Arctic.
+- Pulled the camera back and reduced the globe radius so the sphere, atmosphere, and signal points fit inside the center visual without feeling cropped.
+- Added a deep-blue starfield, stronger blue atmospheric rim, warm night-light overlay, and brighter place signals so the scene feels like a luminous Earth suspended in night sky.
+- Updated the static fallback treatment to match the darker deep-space visual direction when WebGL is unavailable.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: the Life Atlas globe reaches `is-3d-ready`, the fallback layer hides, the scene renders as a complete polar-view Earth in deep-blue night sky, Amsterdam/Eindhoven/Harbin/Shanghai/Germany cards remain visible, Harbin card activation syncs with the matching marker, desktop and mobile checks show no horizontal overflow, and console logs show no warnings or errors.
+
 ## 2026-06-13 - v0.1.159
 
 Commit: `Anchor life atlas signals to rotating globe`

@@ -2971,6 +2971,34 @@ function createLifeAtlasSignalTexture(THREE) {
   return texture;
 }
 
+function createLifeAtlasStarField(THREE) {
+  const starCount = 190;
+  const positions = new Float32Array(starCount * 3);
+  const colors = new Float32Array(starCount * 3);
+  for (let i = 0; i < starCount; i += 1) {
+    const index = i * 3;
+    positions[index] = (Math.random() - 0.5) * 8.2;
+    positions[index + 1] = (Math.random() - 0.5) * 4.8;
+    positions[index + 2] = -2.1 - Math.random() * 2.9;
+    const warmth = 0.78 + Math.random() * 0.22;
+    colors[index] = 0.52 + Math.random() * 0.3;
+    colors[index + 1] = 0.68 + Math.random() * 0.24;
+    colors[index + 2] = warmth;
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  const material = new THREE.PointsMaterial({
+    size: 0.018,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.72,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
+  });
+  return new THREE.Points(geometry, material);
+}
+
 function queueLifeAtlasGlobe(places) {
   disposeLifeAtlasGlobe();
   const mapEl = $("#travelMapCanvas").querySelector(".life-atlas-map");
@@ -3019,23 +3047,30 @@ async function initLifeAtlasGlobe(state, places) {
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.7));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.18;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(33, 1, 0.1, 100);
-  camera.position.set(0, 0.03, 4.55);
+  scene.add(createLifeAtlasStarField(THREE));
+
+  const camera = new THREE.PerspectiveCamera(31, 1, 0.1, 100);
+  camera.position.set(0, 0.08, 5.18);
 
   const globe = new THREE.Group();
-  globe.position.set(0, -0.04, 0);
-  globe.rotation.set(-0.13, 2.55, -0.04);
+  globe.position.set(0, -0.02, 0);
+  globe.rotation.set(1.3, 0.02, -0.14);
   scene.add(globe);
 
-  scene.add(new THREE.AmbientLight(0x8fb8ff, 0.36));
-  const sun = new THREE.DirectionalLight(0xffeed3, 2.25);
-  sun.position.set(3.5, 2.7, 4.8);
+  scene.add(new THREE.AmbientLight(0x9fc9ff, 0.48));
+  const sun = new THREE.DirectionalLight(0xfff0d8, 2.55);
+  sun.position.set(2.9, 3.7, 4.6);
   scene.add(sun);
-  const blueRim = new THREE.PointLight(0x3f9fff, 1.6, 8);
-  blueRim.position.set(-2.8, -0.2, 2.5);
+  const blueRim = new THREE.PointLight(0x35a7ff, 2.45, 8);
+  blueRim.position.set(-2.7, -0.45, 2.7);
   scene.add(blueRim);
+  const polarGlow = new THREE.PointLight(0xb7e8ff, 1.25, 7);
+  polarGlow.position.set(0.5, 2.2, 3.4);
+  scene.add(polarGlow);
 
   const loader = new THREE.TextureLoader();
   const [earthTexture, nightTexture] = await Promise.all([
@@ -3052,27 +3087,42 @@ async function initLifeAtlasGlobe(state, places) {
     texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
   });
 
-  const radius = 1.42;
+  const radius = 1.18;
   const earth = new THREE.Mesh(
-    new THREE.SphereGeometry(radius, 72, 40),
+    new THREE.SphereGeometry(radius, 96, 56),
     new THREE.MeshStandardMaterial({
-      color: 0xffffff,
+      color: 0xd7ecff,
       map: earthTexture,
-      emissive: 0x223d60,
+      emissive: 0x142b52,
       emissiveMap: nightTexture,
-      emissiveIntensity: 0.34,
-      roughness: 0.88,
+      emissiveIntensity: 0.52,
+      roughness: 0.8,
       metalness: 0.02
     })
   );
   globe.add(earth);
 
+  if (nightTexture) {
+    const nightLights = new THREE.Mesh(
+      new THREE.SphereGeometry(radius * 1.006, 96, 56),
+      new THREE.MeshBasicMaterial({
+        map: nightTexture,
+        color: 0xffc978,
+        transparent: true,
+        opacity: 0.62,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      })
+    );
+    globe.add(nightLights);
+  }
+
   const atmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(radius * 1.045, 72, 40),
+    new THREE.SphereGeometry(radius * 1.052, 96, 56),
     new THREE.MeshBasicMaterial({
-      color: 0x63b9ff,
+      color: 0x65c7ff,
       transparent: true,
-      opacity: 0.18,
+      opacity: 0.28,
       side: THREE.BackSide,
       blending: THREE.AdditiveBlending,
       depthWrite: false
@@ -3080,28 +3130,40 @@ async function initLifeAtlasGlobe(state, places) {
   );
   globe.add(atmosphere);
 
+  const outerAtmosphere = new THREE.Mesh(
+    new THREE.SphereGeometry(radius * 1.092, 96, 56),
+    new THREE.MeshBasicMaterial({
+      color: 0x2f97ff,
+      transparent: true,
+      opacity: 0.1,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    })
+  );
+  globe.add(outerAtmosphere);
+
   const signalTexture = createLifeAtlasSignalTexture(THREE);
   const hitMeshes = [];
   const points = new Map();
   places.forEach((place) => {
-    const pointPosition = latLngToGlobeVector(THREE, place.lat, place.lng, radius * 1.028);
+    const pointPosition = latLngToGlobeVector(THREE, place.lat, place.lng, radius * 1.036);
     const pointGroup = new THREE.Group();
     pointGroup.position.copy(pointPosition);
 
     const core = new THREE.Mesh(
       new THREE.SphereGeometry(0.026, 18, 12),
-      new THREE.MeshBasicMaterial({ color: 0xffd48a })
+      new THREE.MeshBasicMaterial({ color: 0xffe3a3 })
     );
     const glow = new THREE.Sprite(new THREE.SpriteMaterial({
       map: signalTexture,
-      color: 0xffc978,
+      color: 0xffcf8a,
       transparent: true,
-      opacity: 0.62,
+      opacity: 0.78,
       depthTest: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending
     }));
-    glow.scale.set(0.22, 0.22, 0.22);
+    glow.scale.set(0.27, 0.27, 0.27);
     const hit = new THREE.Mesh(
       new THREE.SphereGeometry(0.075, 12, 8),
       new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })
@@ -3148,7 +3210,7 @@ async function initLifeAtlasGlobe(state, places) {
 
   const animate = () => {
     if (state.disposed) return;
-    if (!reducedMotion) globe.rotation.y += 0.0014;
+    if (!reducedMotion) globe.rotation.y += 0.001;
     render();
     state.frameId = requestAnimationFrame(animate);
   };
