@@ -111,6 +111,10 @@ const LIFE_ATLAS_VISITED_CITY_IDS = new Set([
   "sanya", "haikou", "wuxi", "hangzhou", "suzhou", "dalian", "dusseldorf", "the-hague", "bern", "brussels", "geneva"
 ]);
 const LIFE_ATLAS_DEFAULT_CITY_IDS = [...LIFE_ATLAS_MAJOR_CITY_IDS, ...LIFE_ATLAS_VISITED_CITY_IDS];
+const LIFE_ATLAS_DEFAULT_CITY_CATEGORIES = new Map([
+  ...[...LIFE_ATLAS_MAJOR_CITY_IDS].map((id) => [id, "major"]),
+  ...[...LIFE_ATLAS_VISITED_CITY_IDS].map((id) => [id, "visited"])
+]);
 const LIFE_ATLAS_DEFAULT_PROFILE_USERNAMES = new Set(["leo", "cindy"]);
 const LIFE_ATLAS_EARTH_IMAGE = "/assets/life-atlas-earth.jpg";
 const LIFE_ATLAS_THREE_URL = "https://unpkg.com/three@0.160.0/build/three.module.js";
@@ -2418,6 +2422,35 @@ function travelPlaceById(id = "") {
   return TRAVEL_PLACES.find((place) => place.id === String(id));
 }
 
+function normalizeLifeAtlasCategory(value = "") {
+  return value === "major" ? "major" : "visited";
+}
+
+function travelPlaceEntryId(entry) {
+  return typeof entry === "string" ? entry : entry?.id || "";
+}
+
+function travelPlaceEntryCategory(entry, fallback = "visited") {
+  if (!entry || typeof entry !== "object") return normalizeLifeAtlasCategory(fallback);
+  return normalizeLifeAtlasCategory(entry.category || entry.atlasCategory || fallback);
+}
+
+function withTravelPlaceCategory(entry, category = "visited") {
+  const normalizedCategory = normalizeLifeAtlasCategory(category);
+  if (typeof entry === "string") return { id: entry, category: normalizedCategory };
+  return { ...entry, category: normalizedCategory };
+}
+
+function upsertTravelPlaceEntry(entries, entry) {
+  const normalizedEntry = normalizeTravelPlaces([entry])[0];
+  const entryId = travelPlaceEntryId(normalizedEntry);
+  if (!entryId) return normalizeTravelPlaces(entries);
+  return normalizeTravelPlaces([
+    ...normalizeTravelPlaces(entries).filter((candidate) => travelPlaceEntryId(candidate) !== entryId),
+    normalizedEntry
+  ]);
+}
+
 function normalizeTravelPlaces(value) {
   if (!Array.isArray(value)) return [];
   const seen = new Set();
@@ -2425,7 +2458,7 @@ function normalizeTravelPlaces(value) {
     if (typeof entry === "string") return travelPlaceById(entry)?.id || "";
     if (!entry || typeof entry !== "object") return "";
     const builtIn = travelPlaceById(entry.id);
-    if (builtIn) return builtIn.id;
+    if (builtIn) return { id: builtIn.id, category: travelPlaceEntryCategory(entry) };
     const label = String(entry.label || "").trim();
     const country = String(entry.country || "").trim();
     const lat = Number(entry.lat);
@@ -2439,10 +2472,11 @@ function normalizeTravelPlaces(value) {
       lat: Math.min(90, Math.max(-90, lat)),
       lng: Math.min(180, Math.max(-180, lng)),
       type: "city",
+      category: travelPlaceEntryCategory(entry),
       manual: true
     };
   }).filter((entry) => {
-    const id = typeof entry === "string" ? entry : entry.id;
+    const id = travelPlaceEntryId(entry);
     if (!id || seen.has(id)) return false;
     seen.add(id);
     return true;
@@ -2844,24 +2878,35 @@ function manualTravelPlaces(profile = currentProfile()) {
     ? new Set(LIFE_ATLAS_DEFAULT_CITY_IDS)
     : new Set();
   const places = normalizedEntries.map((entry) => {
-    if (typeof entry === "string") return travelPlaceById(entry);
-    return entry;
-  }).filter(Boolean).map((place) => ({
-    ...place,
-    atlasDefault: defaultIds.has(place.id),
-    manual: !defaultIds.has(place.id)
-  }));
+    const entryId = travelPlaceEntryId(entry);
+    const place = typeof entry === "string" ? travelPlaceById(entry) : travelPlaceById(entryId) || entry;
+    if (!place) return null;
+    const defaultCategory = LIFE_ATLAS_DEFAULT_CITY_CATEGORIES.get(place.id) || "visited";
+    return {
+      ...place,
+      atlasCategory: travelPlaceEntryCategory(entry, defaultCategory),
+      atlasDefault: defaultIds.has(place.id),
+      manual: !defaultIds.has(place.id)
+    };
+  }).filter(Boolean);
   const selectedIds = new Set(places.map((place) => place.id));
   defaultIds.forEach((placeId) => {
     if (selectedIds.has(placeId)) return;
     const place = travelPlaceById(placeId);
-    if (place) places.push({ ...place, atlasDefault: true, manual: false });
+    if (place) {
+      places.push({
+        ...place,
+        atlasCategory: LIFE_ATLAS_DEFAULT_CITY_CATEGORIES.get(placeId) || "visited",
+        atlasDefault: true,
+        manual: false
+      });
+    }
   });
   return places;
 }
 
 function lifeAtlasCityCategory(place) {
-  return LIFE_ATLAS_MAJOR_CITY_IDS.has(place?.id) ? "major" : "visited";
+  return normalizeLifeAtlasCategory(place?.atlasCategory || place?.category);
 }
 
 function visitedPlaces(profile = currentProfile()) {
@@ -2886,6 +2931,7 @@ function visitedPlaces(profile = currentProfile()) {
     existing.count = Math.max(existing.count, 1);
     existing.manual = existing.manual || place.manual;
     existing.atlasDefault = existing.atlasDefault || place.atlasDefault;
+    existing.atlasCategory = place.atlasCategory || existing.atlasCategory;
     matches.set(place.id, existing);
   });
   const places = [...matches.values()];
@@ -3405,24 +3451,51 @@ function renderTravelMap() {
         ${TRAVEL_PLACES.filter((place) => place.type === "city").map((place) => `<option value="${escapeHtml(place.id)}">${escapeHtml(`${place.label}, ${place.country}`)}</option>`).join("")}
       </select>
       <button type="submit" aria-label="Add city">+</button>
+      <div class="travel-place-category" role="radiogroup" aria-label="City marker level">
+        <label>
+          <input type="radio" name="travelPlaceCategory" value="visited" checked>
+          <span>Visited</span>
+        </label>
+        <label>
+          <input type="radio" name="travelPlaceCategory" value="major">
+          <span>Life chapter</span>
+        </label>
+      </div>
       <small id="travelPlaceAddNote"></small>
     </form>
   ` : "";
   $("#travelPlaceList").innerHTML = `
     ${addForm}
     <div class="travel-place-cards">
-      ${places.map((place) => `
+      ${places.map((place) => {
+        const category = lifeAtlasCityCategory(place);
+        return `
     <article class="travel-place-card is-${escapeHtml(place.atlasCategory || "trace")}${place.manual ? " is-manual" : ""}" data-place-id="${escapeHtml(place.id)}" tabindex="0">
       <span class="travel-place-dot" aria-hidden="true"></span>
       <div>
         <strong>${escapeHtml(place.label)}</strong>
-        <small>${escapeHtml(place.country)} · ${place.atlasCategory === "major" ? "life chapter" : place.type === "city" ? "visited city" : place.manual && place.count <= 1 ? "added place" : `${place.count} quiet trace${place.count === 1 ? "" : "s"}`}</small>
+        <small>${escapeHtml(place.country)} · ${category === "major" ? "life chapter" : place.type === "city" ? "visited city" : place.manual && place.count <= 1 ? "added place" : `${place.count} quiet trace${place.count === 1 ? "" : "s"}`}</small>
       </div>
-      ${ownerMode && place.manual ? `<button class="travel-place-remove owner-only" type="button" data-remove-place="${escapeHtml(place.id)}" aria-label="Remove ${escapeHtml(place.label)}">×</button>` : ""}
+      <div class="travel-place-actions">
+        ${ownerMode && place.type === "city" ? `
+          <div class="travel-place-tier-control owner-only" role="group" aria-label="${escapeHtml(`Marker level for ${place.label}`)}">
+            <button class="${category === "visited" ? "is-selected" : ""}" type="button" data-place-category="${escapeHtml(place.id)}" data-category="visited" aria-pressed="${category === "visited" ? "true" : "false"}">Visit</button>
+            <button class="${category === "major" ? "is-selected" : ""}" type="button" data-place-category="${escapeHtml(place.id)}" data-category="major" aria-pressed="${category === "major" ? "true" : "false"}">Life</button>
+          </div>
+        ` : ""}
+        ${ownerMode && place.manual ? `<button class="travel-place-remove owner-only" type="button" data-remove-place="${escapeHtml(place.id)}" aria-label="Remove ${escapeHtml(place.label)}">×</button>` : ""}
+      </div>
     </article>
-  `).join("")}
+  `;
+      }).join("")}
     </div>`;
   $("#travelPlaceAddForm")?.addEventListener("submit", addTravelPlace);
+  $("#travelPlaceList").querySelectorAll("[data-place-category]").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      updateTravelPlaceCategory(button.dataset.placeCategory, button.dataset.category);
+    });
+  });
   $("#travelPlaceList").querySelectorAll("[data-remove-place]").forEach((button) => {
     button.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -3446,6 +3519,7 @@ function addTravelPlace(event) {
   event.preventDefault();
   const input = $("#travelPlaceInput");
   const note = $("#travelPlaceAddNote");
+  const category = normalizeLifeAtlasCategory(document.querySelector("input[name='travelPlaceCategory']:checked")?.value);
   const entry = travelPlaceFromInput(input?.value || "");
   if (!entry) {
     if (note) note.textContent = "Choose a city from the list.";
@@ -3454,7 +3528,7 @@ function addTravelPlace(event) {
   const profile = currentProfile();
   const addedPlaceId = typeof entry === "string" ? entry : entry.id;
   lifeAtlasFocusPlaceId = addedPlaceId || "";
-  profile.travelPlaces = normalizeTravelPlaces([...(profile.travelPlaces || []), entry]);
+  profile.travelPlaces = upsertTravelPlaceEntry(profile.travelPlaces, withTravelPlaceCategory(entry, category));
   saveActiveProfile();
   renderProfile();
   if (addedPlaceId) {
@@ -3465,9 +3539,23 @@ function addTravelPlace(event) {
   saveProfileDraftOnline({ quiet: true }).then(() => setOwnerSaveStatus("Life Atlas city saved to online draft."));
 }
 
+function updateTravelPlaceCategory(placeId = "", category = "visited") {
+  const profile = currentProfile();
+  const existing = normalizeTravelPlaces(profile.travelPlaces).find((entry) => travelPlaceEntryId(entry) === placeId);
+  const builtIn = travelPlaceById(placeId);
+  if (!existing && !builtIn) return;
+  lifeAtlasFocusPlaceId = placeId;
+  profile.travelPlaces = upsertTravelPlaceEntry(profile.travelPlaces, withTravelPlaceCategory(existing || placeId, category));
+  saveActiveProfile();
+  renderProfile();
+  window.setTimeout(() => setActiveTravelPlace(placeId, true), 120);
+  setOwnerSaveStatus("City marker level updated. Saving online draft...");
+  saveProfileDraftOnline({ quiet: true }).then(() => setOwnerSaveStatus("Life Atlas marker level saved to online draft."));
+}
+
 function removeTravelPlace(placeId = "") {
   const profile = currentProfile();
-  profile.travelPlaces = normalizeTravelPlaces(profile.travelPlaces).filter((entry) => (typeof entry === "string" ? entry : entry.id) !== placeId);
+  profile.travelPlaces = normalizeTravelPlaces(profile.travelPlaces).filter((entry) => travelPlaceEntryId(entry) !== placeId);
   saveActiveProfile();
   renderProfile();
   setOwnerSaveStatus("City removed from Life Atlas. Saving online draft...");

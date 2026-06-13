@@ -433,9 +433,18 @@ export function publicProfile(profile = {}) {
   const cleanTravelPlaces = (value) => {
     if (!Array.isArray(value)) return [];
     const seen = new Set();
+    const cleanCategory = (entry) => {
+      const category = entry?.category || entry?.atlasCategory;
+      return category === "major" ? "major" : category === "visited" ? "visited" : "";
+    };
     return value.map((entry) => {
       if (typeof entry === "string") return entry;
       if (!entry || typeof entry !== "object") return null;
+      const id = String(entry.id || "").trim();
+      const category = cleanCategory(entry);
+      if (id && !entry.label && !entry.country && entry.lat === undefined && entry.lng === undefined) {
+        return category ? { id, category } : id;
+      }
       const lat = Number(entry.lat);
       const lng = Number(entry.lng);
       const clean = pick(entry, ["id", "label", "country", "type", "manual"]);
@@ -443,6 +452,7 @@ export function publicProfile(profile = {}) {
       clean.lat = Math.min(90, Math.max(-90, lat));
       clean.lng = Math.min(180, Math.max(-180, lng));
       clean.type = "city";
+      if (category) clean.category = category;
       return clean;
     }).filter((entry) => {
       const id = typeof entry === "string" ? entry : entry?.id;

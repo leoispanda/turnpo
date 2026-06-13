@@ -10,6 +10,27 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.165
+
+Commit: `Let profiles choose city marker levels`
+
+### Changed
+
+- Upgraded Life Atlas city markers so each profile can define a city as either `major` or `visited` instead of relying on a global major-city rule.
+- Added backwards-compatible `travelPlaces` entries that can store `{ id, category }` while still reading older string-based city ids.
+- Added an owner-mode city marker level control when adding a city, plus per-city `Visit` / `Life` controls so each city can be classified independently.
+- Preserved city marker levels through the public profile sanitizer so published profiles keep each city's chosen tier.
+- Kept Leo/Cindy's default city levels as profile-specific defaults, while other profiles treat cities as visited unless the owner promotes them.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check functions/api/auth/_utils.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: Life Atlas still renders 27 cards, 5 major life-chapter cities, 22 visited cities, a ready Three.js canvas, no public owner controls, and no console warnings or errors.
+- Confirmed the public profile sanitizer preserves old string city ids, new `{ id, category }` built-in city entries, and custom city entries with their category.
+- Confirmed the owner-mode source now renders explicit per-city `Visit` / `Life` controls and saves city marker levels through `profile.travelPlaces` per city.
+
 ## 2026-06-13 - v0.1.164
 
 Commit: `Split life atlas city markers`

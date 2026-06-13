@@ -1440,6 +1440,47 @@ h1 {
   line-height: 1.2;
 }
 
+.travel-place-category {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid rgba(216, 177, 95, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.travel-place-category label {
+  min-width: 0;
+  cursor: pointer;
+}
+
+.travel-place-category input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.travel-place-category span {
+  display: block;
+  min-height: 24px;
+  padding: 5px 6px;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.25;
+  text-align: center;
+  transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+.travel-place-category input:checked + span {
+  background: rgba(216, 177, 95, 0.12);
+  color: var(--gold-strong);
+  box-shadow: inset 0 0 0 1px rgba(216, 177, 95, 0.12);
+}
+
 .travel-place-cards {
   display: grid;
   gap: 6px;
@@ -1506,6 +1547,49 @@ h1 {
   color: var(--muted);
   font-size: 10px;
   line-height: 1.25;
+}
+
+.travel-place-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.travel-place-tier-control {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid rgba(216, 177, 95, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.travel-place-tier-control button {
+  min-width: 34px;
+  height: 19px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.travel-place-tier-control button.is-selected {
+  background: rgba(216, 177, 95, 0.1);
+  color: var(--gold-strong);
+  box-shadow: 0 0 10px rgba(255, 205, 127, 0.08);
+}
+
+.travel-place-tier-control button:hover,
+.travel-place-tier-control button:focus {
+  background: rgba(216, 177, 95, 0.13);
+  color: var(--gold-strong);
 }
 
 .travel-place-remove {
@@ -2983,10 +3067,26 @@ body.theme-light .travel-place-add select {
 }
 
 body.theme-light .travel-place-add button,
-body.theme-light .travel-place-remove {
+body.theme-light .travel-place-remove,
+body.theme-light .travel-place-tier-control {
   background: rgba(255, 252, 244, 0.76);
   border-color: rgba(155, 113, 50, 0.22);
+}
+
+body.theme-light .travel-place-tier-control button {
   color: #9b7132;
+}
+
+body.theme-light .travel-place-category {
+  background: rgba(255, 255, 255, 0.62);
+  border-color: rgba(95, 113, 137, 0.14);
+}
+
+body.theme-light .travel-place-category input:checked + span,
+body.theme-light .travel-place-tier-control button.is-selected {
+  background: rgba(155, 113, 50, 0.1);
+  color: #9b7132;
+  box-shadow: inset 0 0 0 1px rgba(155, 113, 50, 0.12);
 }
 
 body.theme-light .travel-place-card {
