@@ -2793,9 +2793,15 @@ function visitedPlaces(profile = currentProfile()) {
 
 function mapPoint(place) {
   return {
-    x: ((place.lng + 180) / 360) * 1000,
-    y: ((90 - place.lat) / 180) * 520
+    x: ((place.lng + 180) / 360) * 100,
+    y: ((90 - place.lat) / 180) * 100
   };
+}
+
+function setActiveTravelPlace(placeId, active) {
+  $("#travelMap").querySelectorAll(".life-atlas-marker, .travel-place-card").forEach((node) => {
+    if (node.dataset.placeId === placeId) node.classList.toggle("is-active", active);
+  });
 }
 
 function renderTravelMap() {
@@ -2806,65 +2812,21 @@ function renderTravelMap() {
     $("#travelPlaceList").innerHTML = "";
     return;
   }
+  const markerPlaces = places.filter((place) => place.type === "city");
   $("#travelMapSummary").textContent = "Every new place leaves a quiet signal in us - through its people, culture, rhythm, food, language, and ways of living.";
   $("#travelMapCanvas").innerHTML = `
-    <svg class="world-map earth-map" viewBox="0 0 1000 520" role="img" aria-label="Life atlas with places that shaped perspective highlighted">
-      <defs>
-        <radialGradient id="earthOcean" cx="42%" cy="38%" r="70%">
-          <stop offset="0%" stop-color="#1f4f68"/>
-          <stop offset="48%" stop-color="#0d2834"/>
-          <stop offset="100%" stop-color="#061017"/>
-        </radialGradient>
-        <linearGradient id="earthLand" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#7d8e6d"/>
-          <stop offset="52%" stop-color="#42533f"/>
-          <stop offset="100%" stop-color="#24342d"/>
-        </linearGradient>
-        <filter id="earthGlow" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="8" result="blur"/>
-          <feMerge>
-            <feMergeNode in="blur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-        <filter id="markerGlow" x="-120%" y="-120%" width="340%" height="340%">
-          <feGaussianBlur stdDeviation="5" result="blur"/>
-          <feMerge>
-            <feMergeNode in="blur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-        <clipPath id="earthClip">
-          <ellipse cx="500" cy="260" rx="438" ry="226"/>
-        </clipPath>
-      </defs>
-      <rect class="earth-space" x="0" y="0" width="1000" height="520"/>
-      <ellipse class="earth-atmosphere" cx="500" cy="260" rx="452" ry="238"/>
-      <ellipse class="earth-ocean" cx="500" cy="260" rx="438" ry="226"/>
-      <g clip-path="url(#earthClip)">
-        <path class="earth-cloud cloud-a" d="M60 180c80-36 170-25 246 8 92 40 145 21 224-12 86-36 162-25 244 15 54 27 110 35 170 18"/>
-        <path class="earth-cloud cloud-b" d="M98 326c92-28 154-10 228 16 72 25 150 31 226 4 90-31 179-23 268 17"/>
-        <path class="map-land" d="M112 141c46-39 118-48 174-31 42 13 76 39 87 73 9 28-7 54-34 68-32 18-80 14-107 42-23 24-17 66-45 86-32 23-84-2-103-40-17-34 7-71 1-105-6-35-3-66 27-93z"/>
-        <path class="map-land" d="M258 334c33-14 79 0 98 31 21 34 1 89-31 115-25 21-61 22-86 1-25-22-17-59-5-88 9-21 3-49 24-59z"/>
-        <path class="map-land" d="M456 118c37-29 97-34 143-16 33 13 48 42 84 46 43 5 78-28 121-17 43 11 75 55 66 97-9 42-59 56-90 85-27 25-29 70-65 86-39 17-74-21-113-22-41-1-76 39-116 22-33-14-21-59-38-88-19-31-62-38-75-74-14-41 46-82 83-119z"/>
-        <path class="map-land" d="M635 238c24-18 63-12 85 8 18 16 27 42 14 64-13 21-45 24-66 10-25-17-55-55-33-82z"/>
-        <path class="map-land" d="M798 316c40-13 90 2 112 36 20 32 5 76-29 94-36 18-87 3-110-31-23-36-14-86 27-99z"/>
-        <path class="earth-grid" d="M70 260h860M500 38v444M188 72c76 104 76 272 0 376M812 72c-76 104-76 272 0 376M92 168c224 47 592 47 816 0M92 352c224-47 592-47 816 0"/>
-        <path class="earth-orbit" d="M92 386c150-124 330-196 540-217 124-12 234 1 316 32"/>
-      </g>
-      ${places.map((place) => {
+    <div class="life-atlas-map" role="img" aria-label="Life atlas world map with places that shaped perspective highlighted">
+      <img class="life-atlas-map-base" src="/assets/simplemaps-world.svg" alt="" aria-hidden="true" />
+      ${markerPlaces.map((place) => {
         const point = mapPoint(place);
         return `
-          <g class="map-marker" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}, quiet influence point`)}" style="--delay:${Math.min(place.count, 8) * 80}ms" filter="url(#markerGlow)">
-            <title>${escapeHtml(`${place.label}, ${place.country} - quiet influence point`)}</title>
-            <circle class="map-marker-glow" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${Math.min(18, 9 + place.count)}"></circle>
-            <circle class="map-marker-dot" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${Math.min(7, 4 + place.count * 0.35)}"></circle>
-          </g>`;
+          <span class="life-atlas-marker" data-place-id="${escapeHtml(place.id)}" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}, quiet influence point`)}" style="--x:${point.x.toFixed(2)}%; --y:${point.y.toFixed(2)}%; --delay:${Math.min(place.count, 8) * 80}ms">
+            <span class="sr-only">${escapeHtml(`${place.label}, ${place.country}`)}</span>
+          </span>`;
       }).join("")}
-      <ellipse class="earth-limb" cx="500" cy="260" rx="438" ry="226"/>
-    </svg>`;
+    </div>`;
   $("#travelPlaceList").innerHTML = places.map((place) => `
-    <article class="travel-place-card">
+    <article class="travel-place-card" data-place-id="${escapeHtml(place.id)}" tabindex="0">
       <span class="travel-place-dot" aria-hidden="true"></span>
       <div>
         <strong>${escapeHtml(place.label)}</strong>
@@ -2872,6 +2834,15 @@ function renderTravelMap() {
       </div>
     </article>
   `).join("");
+  $("#travelMap").querySelectorAll("[data-place-id]").forEach((node) => {
+    node.addEventListener("mouseenter", () => setActiveTravelPlace(node.dataset.placeId, true));
+    node.addEventListener("mouseleave", () => setActiveTravelPlace(node.dataset.placeId, false));
+    node.addEventListener("focus", () => setActiveTravelPlace(node.dataset.placeId, true));
+    node.addEventListener("blur", () => setActiveTravelPlace(node.dataset.placeId, false));
+    node.addEventListener("focusin", () => setActiveTravelPlace(node.dataset.placeId, true));
+    node.addEventListener("focusout", () => setActiveTravelPlace(node.dataset.placeId, false));
+    node.addEventListener("click", () => setActiveTravelPlace(node.dataset.placeId, true));
+  });
 }
 
 function categoryMatchesFilter(item, filter = activeCategoryFilter) {

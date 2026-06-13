@@ -10,6 +10,22 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.153
+
+Commit: `Replace life atlas map base`
+
+### Changed
+
+- Replaced the custom sci-fi Earth-view drawing with a local SimpleMaps Free SVG World Map base for a more realistic premium Life Atlas visual.
+- Kept the existing left copy block, center map, and right location-card structure while softening the center map background.
+- Added warm glowing city markers and hover/focus sync between location cards and matching map dots.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: the SimpleMaps SVG base loads from the local asset, 4 city markers render over the map, 5 location cards remain on the right, Eindhoven marker/card focus sync works, the mobile layout has no horizontal overflow, and console logs show no errors or warnings.
+
 ## 2026-06-13 - v0.1.152
 
 Commit: `Refine life atlas copy`
