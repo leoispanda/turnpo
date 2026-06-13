@@ -10,6 +10,24 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.161
+
+Commit: `Refine life atlas globe hero immersion`
+
+### Changed
+
+- Removed the visible Life Atlas globe panel treatment so the Earth no longer sits inside a bordered, rounded, rectangular map card.
+- Enlarged and lowered the globe for a more immersive hero-style composition where the planet can naturally extend toward the lower edge instead of reading as a small complete icon.
+- Replaced the hard blue outer ring with a softer atmospheric haze and reduced star noise for a more premium cinematic background.
+- Adjusted the default globe angle away from a direct North Pole view toward an oblique Northern Hemisphere/Eurasia view, with calmer rotation.
+- Tuned light, shadow, city lights, and signal glow so the visual feels more realistic and less like a default WebGL globe.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: the Life Atlas globe reaches `is-3d-ready`, panel/canvas borders and backgrounds are transparent, the Earth renders as a larger immersive oblique Northern Hemisphere visual with no framed map card, desktop and mobile checks show no horizontal overflow, Harbin card activation syncs with the matching marker, and console logs show no warnings or errors.
+
 ## 2026-06-13 - v0.1.160
 
 Commit: `Make life atlas globe polar and luminous`

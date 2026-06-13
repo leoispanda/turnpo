@@ -2971,32 +2971,21 @@ function createLifeAtlasSignalTexture(THREE) {
   return texture;
 }
 
-function createLifeAtlasStarField(THREE) {
-  const starCount = 190;
-  const positions = new Float32Array(starCount * 3);
-  const colors = new Float32Array(starCount * 3);
-  for (let i = 0; i < starCount; i += 1) {
-    const index = i * 3;
-    positions[index] = (Math.random() - 0.5) * 8.2;
-    positions[index + 1] = (Math.random() - 0.5) * 4.8;
-    positions[index + 2] = -2.1 - Math.random() * 2.9;
-    const warmth = 0.78 + Math.random() * 0.22;
-    colors[index] = 0.52 + Math.random() * 0.3;
-    colors[index + 1] = 0.68 + Math.random() * 0.24;
-    colors[index + 2] = warmth;
-  }
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-  const material = new THREE.PointsMaterial({
-    size: 0.018,
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.72,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending
-  });
-  return new THREE.Points(geometry, material);
+function createLifeAtlasAtmosphereTexture(THREE) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 256;
+  canvas.height = 256;
+  const context = canvas.getContext("2d");
+  const haze = context.createRadialGradient(128, 128, 18, 128, 128, 128);
+  haze.addColorStop(0, "rgba(70, 170, 255, 0.02)");
+  haze.addColorStop(0.52, "rgba(70, 170, 255, 0.08)");
+  haze.addColorStop(0.78, "rgba(88, 194, 255, 0.16)");
+  haze.addColorStop(1, "rgba(88, 194, 255, 0)");
+  context.fillStyle = haze;
+  context.fillRect(0, 0, 256, 256);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
 }
 
 function queueLifeAtlasGlobe(places) {
@@ -3046,31 +3035,31 @@ async function initLifeAtlasGlobe(state, places) {
     powerPreference: "low-power"
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.7));
+  renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.18;
+  renderer.toneMappingExposure = 1.08;
 
   const scene = new THREE.Scene();
-  scene.add(createLifeAtlasStarField(THREE));
 
-  const camera = new THREE.PerspectiveCamera(31, 1, 0.1, 100);
-  camera.position.set(0, 0.08, 5.18);
+  const camera = new THREE.PerspectiveCamera(29, 1, 0.1, 100);
+  camera.position.set(0, 0.08, 4.55);
 
   const globe = new THREE.Group();
-  globe.position.set(0, -0.02, 0);
-  globe.rotation.set(1.3, 0.02, -0.14);
+  globe.position.set(0.12, -0.42, 0);
+  globe.rotation.set(0.55, 1.08, -0.12);
   scene.add(globe);
 
-  scene.add(new THREE.AmbientLight(0x9fc9ff, 0.48));
-  const sun = new THREE.DirectionalLight(0xfff0d8, 2.55);
-  sun.position.set(2.9, 3.7, 4.6);
+  scene.add(new THREE.AmbientLight(0x7fa9d8, 0.28));
+  const sun = new THREE.DirectionalLight(0xffefd6, 2.9);
+  sun.position.set(3.7, 2.5, 4.4);
   scene.add(sun);
-  const blueRim = new THREE.PointLight(0x35a7ff, 2.45, 8);
-  blueRim.position.set(-2.7, -0.45, 2.7);
+  const blueRim = new THREE.PointLight(0x48b8ff, 1.55, 8);
+  blueRim.position.set(-2.6, -0.6, 2.4);
   scene.add(blueRim);
-  const polarGlow = new THREE.PointLight(0xb7e8ff, 1.25, 7);
-  polarGlow.position.set(0.5, 2.2, 3.4);
-  scene.add(polarGlow);
+  const horizonFill = new THREE.PointLight(0x9fd8ff, 0.6, 7);
+  horizonFill.position.set(0.2, 1.7, 3.2);
+  scene.add(horizonFill);
 
   const loader = new THREE.TextureLoader();
   const [earthTexture, nightTexture] = await Promise.all([
@@ -3087,16 +3076,16 @@ async function initLifeAtlasGlobe(state, places) {
     texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
   });
 
-  const radius = 1.18;
+  const radius = 1.58;
   const earth = new THREE.Mesh(
     new THREE.SphereGeometry(radius, 96, 56),
     new THREE.MeshStandardMaterial({
-      color: 0xd7ecff,
+      color: 0xf0f7ff,
       map: earthTexture,
-      emissive: 0x142b52,
+      emissive: 0x0b203a,
       emissiveMap: nightTexture,
-      emissiveIntensity: 0.52,
-      roughness: 0.8,
+      emissiveIntensity: 0.38,
+      roughness: 0.72,
       metalness: 0.02
     })
   );
@@ -3107,9 +3096,9 @@ async function initLifeAtlasGlobe(state, places) {
       new THREE.SphereGeometry(radius * 1.006, 96, 56),
       new THREE.MeshBasicMaterial({
         map: nightTexture,
-        color: 0xffc978,
+        color: 0xffc47a,
         transparent: true,
-        opacity: 0.62,
+        opacity: 0.42,
         blending: THREE.AdditiveBlending,
         depthWrite: false
       })
@@ -3118,11 +3107,11 @@ async function initLifeAtlasGlobe(state, places) {
   }
 
   const atmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(radius * 1.052, 96, 56),
+    new THREE.SphereGeometry(radius * 1.026, 96, 56),
     new THREE.MeshBasicMaterial({
-      color: 0x65c7ff,
+      color: 0x79cfff,
       transparent: true,
-      opacity: 0.28,
+      opacity: 0.026,
       side: THREE.BackSide,
       blending: THREE.AdditiveBlending,
       depthWrite: false
@@ -3130,17 +3119,19 @@ async function initLifeAtlasGlobe(state, places) {
   );
   globe.add(atmosphere);
 
-  const outerAtmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(radius * 1.092, 96, 56),
-    new THREE.MeshBasicMaterial({
-      color: 0x2f97ff,
+  const atmosphereTexture = createLifeAtlasAtmosphereTexture(THREE);
+  const atmosphericHaze = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: atmosphereTexture,
+      color: 0x80cfff,
       transparent: true,
-      opacity: 0.1,
+      opacity: 0.34,
       blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-  );
-  globe.add(outerAtmosphere);
+      depthWrite: false,
+      depthTest: false
+    }));
+  atmosphericHaze.scale.set(radius * 2.18, radius * 2.18, 1);
+  atmosphericHaze.renderOrder = -1;
+  globe.add(atmosphericHaze);
 
   const signalTexture = createLifeAtlasSignalTexture(THREE);
   const hitMeshes = [];
@@ -3163,7 +3154,7 @@ async function initLifeAtlasGlobe(state, places) {
       depthWrite: false,
       blending: THREE.AdditiveBlending
     }));
-    glow.scale.set(0.27, 0.27, 0.27);
+    glow.scale.set(0.22, 0.22, 0.22);
     const hit = new THREE.Mesh(
       new THREE.SphereGeometry(0.075, 12, 8),
       new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })
@@ -3210,7 +3201,7 @@ async function initLifeAtlasGlobe(state, places) {
 
   const animate = () => {
     if (state.disposed) return;
-    if (!reducedMotion) globe.rotation.y += 0.001;
+    if (!reducedMotion) globe.rotation.y += 0.00062;
     render();
     state.frameId = requestAnimationFrame(animate);
   };
@@ -3220,7 +3211,7 @@ async function initLifeAtlasGlobe(state, places) {
     scene,
     camera,
     points,
-    textures: [earthTexture, nightTexture, signalTexture].filter(Boolean),
+    textures: [earthTexture, nightTexture, signalTexture, atmosphereTexture].filter(Boolean),
     onPointerMove: activateFromPointer,
     onPointerLeave: clearPointer,
     onPointerClick: activateFromPointer,
