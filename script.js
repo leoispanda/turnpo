@@ -2371,11 +2371,47 @@ function normalizeProfile(profile, options = {}) {
     aiWorks,
     values: profile.values || [],
     themes: profile.themes || [],
+    travelPlaces: normalizeTravelPlaces(profile.travelPlaces),
     links: profile.links || []
   };
   ensurePublicState(normalized);
   applyPublicState(normalized);
   return normalized;
+}
+
+function travelPlaceById(id = "") {
+  return TRAVEL_PLACES.find((place) => place.id === String(id));
+}
+
+function normalizeTravelPlaces(value) {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set();
+  return value.map((entry) => {
+    if (typeof entry === "string") return travelPlaceById(entry)?.id || "";
+    if (!entry || typeof entry !== "object") return "";
+    const builtIn = travelPlaceById(entry.id);
+    if (builtIn) return builtIn.id;
+    const label = String(entry.label || "").trim();
+    const country = String(entry.country || "").trim();
+    const lat = Number(entry.lat);
+    const lng = Number(entry.lng);
+    const id = normalizeUsername(entry.id || `${label}-${country}`);
+    if (!id || !label || !country || !Number.isFinite(lat) || !Number.isFinite(lng)) return "";
+    return {
+      id,
+      label,
+      country,
+      lat: Math.min(90, Math.max(-90, lat)),
+      lng: Math.min(180, Math.max(-180, lng)),
+      type: "city",
+      manual: true
+    };
+  }).filter((entry) => {
+    const id = typeof entry === "string" ? entry : entry.id;
+    if (!id || seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  });
 }
 
 function normalizeContent(item, type) {
@@ -2767,6 +2803,13 @@ function travelSourceItems(profile = currentProfile()) {
   ];
 }
 
+function manualTravelPlaces(profile = currentProfile()) {
+  return normalizeTravelPlaces(profile.travelPlaces).map((entry) => {
+    if (typeof entry === "string") return travelPlaceById(entry);
+    return entry;
+  }).filter(Boolean).map((place) => ({ ...place, manual: true }));
+}
+
 function visitedPlaces(profile = currentProfile()) {
   const matches = new Map();
   travelSourceItems(profile).forEach((item) => {
@@ -2784,11 +2827,44 @@ function visitedPlaces(profile = currentProfile()) {
       matches.set(place.id, existing);
     });
   });
+  manualTravelPlaces(profile).forEach((place) => {
+    const existing = matches.get(place.id) || { ...place, count: 0, examples: [] };
+    existing.count = Math.max(existing.count, 1);
+    existing.manual = true;
+    matches.set(place.id, existing);
+  });
   const places = [...matches.values()];
   const cityCountries = new Set(places.filter((place) => place.type === "city").map((place) => place.country));
   return places
     .filter((place) => place.type !== "country" || !cityCountries.has(place.country))
     .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+}
+
+function travelPlaceFromInput(value = "") {
+  const raw = String(value).trim();
+  if (!raw) return null;
+  const normalized = normalizePlaceText(raw);
+  const builtIn = TRAVEL_PLACES.find((place) => {
+    const names = [place.id, place.label, `${place.label} ${place.country}`, `${place.label}, ${place.country}`, ...place.tokens];
+    return names.some((name) => normalizePlaceText(name) === normalized);
+  });
+  if (builtIn) return builtIn.id;
+
+  const parts = raw.split(",").map((part) => part.trim()).filter(Boolean);
+  if (parts.length >= 4) {
+    const lat = Number(parts[2]);
+    const lng = Number(parts[3]);
+    if (Number.isFinite(lat) && Number.isFinite(lng)) {
+      return normalizeTravelPlaces([{
+        id: `${parts[0]}-${parts[1]}`,
+        label: parts[0],
+        country: parts[1],
+        lat,
+        lng
+      }])[0] || null;
+    }
+  }
+  return null;
 }
 
 function mapPoint(place) {
@@ -2806,8 +2882,8 @@ function setActiveTravelPlace(placeId, active) {
 
 function renderTravelMap() {
   const places = visitedPlaces();
-  $("#travelMap").hidden = !places.length;
-  if (!places.length) {
+  $("#travelMap").hidden = !places.length && !ownerMode;
+  if (!places.length && !ownerMode) {
     $("#travelMapCanvas").innerHTML = "";
     $("#travelPlaceList").innerHTML = "";
     return;
@@ -2825,15 +2901,37 @@ function renderTravelMap() {
           </span>`;
       }).join("")}
     </div>`;
-  $("#travelPlaceList").innerHTML = places.map((place) => `
-    <article class="travel-place-card" data-place-id="${escapeHtml(place.id)}" tabindex="0">
+  const addForm = ownerMode ? `
+    <form class="travel-place-add owner-only" id="travelPlaceAddForm">
+      <input id="travelPlaceInput" list="travelPlaceOptions" type="text" placeholder="Add city" autocomplete="off" aria-label="Add city to Life Atlas" />
+      <button type="submit" aria-label="Add city">+</button>
+      <datalist id="travelPlaceOptions">
+        ${TRAVEL_PLACES.filter((place) => place.type === "city").map((place) => `<option value="${escapeHtml(`${place.label}, ${place.country}`)}"></option>`).join("")}
+      </datalist>
+      <small id="travelPlaceAddNote"></small>
+    </form>
+  ` : "";
+  $("#travelPlaceList").innerHTML = `
+    ${addForm}
+    <div class="travel-place-cards">
+      ${places.map((place) => `
+    <article class="travel-place-card${place.manual ? " is-manual" : ""}" data-place-id="${escapeHtml(place.id)}" tabindex="0">
       <span class="travel-place-dot" aria-hidden="true"></span>
       <div>
         <strong>${escapeHtml(place.label)}</strong>
-        <small>${escapeHtml(place.country)} · ${place.count} quiet trace${place.count === 1 ? "" : "s"}</small>
+        <small>${escapeHtml(place.country)} · ${place.manual && place.count <= 1 ? "added place" : `${place.count} quiet trace${place.count === 1 ? "" : "s"}`}</small>
       </div>
+      ${ownerMode && place.manual ? `<button class="travel-place-remove owner-only" type="button" data-remove-place="${escapeHtml(place.id)}" aria-label="Remove ${escapeHtml(place.label)}">×</button>` : ""}
     </article>
-  `).join("");
+  `).join("")}
+    </div>`;
+  $("#travelPlaceAddForm")?.addEventListener("submit", addTravelPlace);
+  $("#travelPlaceList").querySelectorAll("[data-remove-place]").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      removeTravelPlace(button.dataset.removePlace);
+    });
+  });
   $("#travelMap").querySelectorAll("[data-place-id]").forEach((node) => {
     node.addEventListener("mouseenter", () => setActiveTravelPlace(node.dataset.placeId, true));
     node.addEventListener("mouseleave", () => setActiveTravelPlace(node.dataset.placeId, false));
@@ -2843,6 +2941,32 @@ function renderTravelMap() {
     node.addEventListener("focusout", () => setActiveTravelPlace(node.dataset.placeId, false));
     node.addEventListener("click", () => setActiveTravelPlace(node.dataset.placeId, true));
   });
+}
+
+function addTravelPlace(event) {
+  event.preventDefault();
+  const input = $("#travelPlaceInput");
+  const note = $("#travelPlaceAddNote");
+  const entry = travelPlaceFromInput(input?.value || "");
+  if (!entry) {
+    if (note) note.textContent = "Use a listed city, or City, Country, lat, lng.";
+    return;
+  }
+  const profile = currentProfile();
+  profile.travelPlaces = normalizeTravelPlaces([...(profile.travelPlaces || []), entry]);
+  saveActiveProfile();
+  renderProfile();
+  setOwnerSaveStatus("City added to Life Atlas. Saving online draft...");
+  saveProfileDraftOnline({ quiet: true }).then(() => setOwnerSaveStatus("Life Atlas city saved to online draft."));
+}
+
+function removeTravelPlace(placeId = "") {
+  const profile = currentProfile();
+  profile.travelPlaces = normalizeTravelPlaces(profile.travelPlaces).filter((entry) => (typeof entry === "string" ? entry : entry.id) !== placeId);
+  saveActiveProfile();
+  renderProfile();
+  setOwnerSaveStatus("City removed from Life Atlas. Saving online draft...");
+  saveProfileDraftOnline({ quiet: true }).then(() => setOwnerSaveStatus("Life Atlas city removal saved to online draft."));
 }
 
 function categoryMatchesFilter(item, filter = activeCategoryFilter) {
@@ -2904,6 +3028,7 @@ function starterProfile({ username, displayName, email = "" }) {
     links: [],
     values: [],
     themes: [],
+    travelPlaces: [],
     lifeStories: [],
     aiWorks: [],
     publicState: {
@@ -3119,6 +3244,7 @@ function profileSearchText(profile) {
     profile.location,
     ...profile.values,
     ...profile.themes,
+    ...manualTravelPlaces(profile).flatMap((place) => [place.label, place.country]),
     ...publicStories(profile).flatMap((story) => [story.title, story.location, publicStorySummary(story)]),
     ...publicTimelineWorks(profile).flatMap((work) => [work.title, work.location, work.publicSummary, ...(work.tags || [])]),
     ...publicWorks(profile).flatMap((work) => [work.title, work.type, work.publicSummary, ...(work.tags || []), ...(work.toolsUsed || [])])
@@ -3828,7 +3954,8 @@ function renderLocationOptions() {
   const list = $("#locationOptions");
   if (!list) return;
   const profileCities = currentProfile().lifeStories.map((story) => String(story.location || "").trim()).filter(Boolean);
-  const cities = [...new Set([...CITY_OPTIONS, ...profileCities])].sort((a, b) => a.localeCompare(b));
+  const atlasCities = TRAVEL_PLACES.filter((place) => place.type === "city").map((place) => place.label);
+  const cities = [...new Set([...CITY_OPTIONS, ...atlasCities, ...profileCities])].sort((a, b) => a.localeCompare(b));
   list.innerHTML = cities.map((city) => `<option value="${escapeHtml(city)}"></option>`).join("");
 }
 

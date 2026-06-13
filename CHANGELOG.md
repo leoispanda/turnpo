@@ -10,6 +10,24 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.155
+
+Commit: `Add compact life atlas city editing`
+
+### Changed
+
+- Reduced Life Atlas map marker size and glow so dozens of cities can appear without overwhelming the map.
+- Made the right-side location cards more compact for longer city lists.
+- Added an owner-only compact city input in the right-side Life Atlas column, saving manual cities to the profile and preserving them in the public sanitized profile.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check functions/api/auth/_utils.js`.
+- Ran `node --check functions/api/auth/register.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: map markers render at 8px, compact location cards render at 46px height, desktop and mobile layouts keep 4 city markers and 5 cards with no horizontal overflow, and console logs show no errors or warnings.
+
 ## 2026-06-13 - v0.1.154
 
 Commit: `Polish light life atlas map`

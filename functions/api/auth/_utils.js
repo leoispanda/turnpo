@@ -430,6 +430,27 @@ export function publicProfile(profile = {}) {
     if (source[field] !== undefined) next[field] = source[field];
     return next;
   }, {});
+  const cleanTravelPlaces = (value) => {
+    if (!Array.isArray(value)) return [];
+    const seen = new Set();
+    return value.map((entry) => {
+      if (typeof entry === "string") return entry;
+      if (!entry || typeof entry !== "object") return null;
+      const lat = Number(entry.lat);
+      const lng = Number(entry.lng);
+      const clean = pick(entry, ["id", "label", "country", "type", "manual"]);
+      if (!clean.id || !clean.label || !clean.country || !Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+      clean.lat = Math.min(90, Math.max(-90, lat));
+      clean.lng = Math.min(180, Math.max(-180, lng));
+      clean.type = "city";
+      return clean;
+    }).filter((entry) => {
+      const id = typeof entry === "string" ? entry : entry?.id;
+      if (!id || seen.has(id)) return false;
+      seen.add(id);
+      return true;
+    });
+  };
   const cleanContent = (item) => {
     const clean = pick(item, PUBLIC_CONTENT_FIELDS);
     clean.link = safePublicUrl(clean.link);
@@ -446,6 +467,7 @@ export function publicProfile(profile = {}) {
     links: cleanPublicLinks(profile.links),
     values: Array.isArray(profile.values) ? profile.values : [],
     themes: Array.isArray(profile.themes) ? profile.themes : [],
+    travelPlaces: cleanTravelPlaces(profile.travelPlaces),
     lifeStories: (Array.isArray(profile.lifeStories) ? profile.lifeStories : [])
       .filter((item) => item?.category === "work"
         ? isPublicItem(item, hiddenWorkIds, deletedWorkIds)

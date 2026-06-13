@@ -60,6 +60,7 @@ function profileFromRegistration({ name, username, email }) {
     links: [],
     values: [],
     themes: [],
+    travelPlaces: [],
     lifeStories: [],
     aiWorks: [],
     publicState: publicState(),
