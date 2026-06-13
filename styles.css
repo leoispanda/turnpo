@@ -1166,24 +1166,183 @@ h1 {
   border: 1px solid rgba(216, 177, 95, 0.12);
   border-radius: var(--radius);
   background:
-    radial-gradient(circle at 50% 46%, rgba(216, 177, 95, 0.09), transparent 58%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(216, 177, 95, 0.025));
-  padding: clamp(14px, 2.8vw, 28px);
+    radial-gradient(circle at 82% 9%, rgba(255, 230, 190, 0.22), transparent 20%),
+    radial-gradient(circle at 58% 33%, rgba(60, 146, 238, 0.32), transparent 38%),
+    linear-gradient(135deg, #031736 0%, #08275a 42%, #041026 100%);
+  padding: 0;
 }
 
 .life-atlas-map {
-  width: min(100%, 780px);
-  aspect-ratio: 2000 / 857;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
   position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.life-atlas-space {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 78% 8%, rgba(255, 239, 207, 0.32), transparent 16%),
+    radial-gradient(circle at 58% 28%, rgba(95, 168, 255, 0.24), transparent 42%),
+    linear-gradient(100deg, rgba(0, 7, 22, 0.64), transparent 46%);
+}
+
+.life-atlas-space::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.32;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.72) 0 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(160, 207, 255, 0.36) 0 1px, transparent 1.4px);
+  background-position: 18px 28px, 92px 74px;
+  background-size: 118px 92px, 170px 132px;
+}
+
+.life-atlas-globe {
+  width: 118%;
+  height: 88%;
+  position: absolute;
+  left: -8%;
+  right: auto;
+  bottom: -38%;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 63% 5%, rgba(163, 210, 255, 0.58), transparent 18%),
+    radial-gradient(ellipse at 56% 25%, rgba(62, 151, 241, 0.38), transparent 42%),
+    linear-gradient(180deg, rgba(48, 129, 221, 0.72), rgba(4, 22, 54, 0.96));
+  box-shadow:
+    0 -10px 34px rgba(79, 173, 255, 0.56),
+    inset 0 34px 42px rgba(180, 223, 255, 0.4),
+    inset 0 -90px 110px rgba(0, 6, 22, 0.78);
+  transform: perspective(620px) rotateX(58deg) translateY(2%);
+  transform-origin: center top;
+}
+
+.life-atlas-globe::before {
+  content: "";
+  position: absolute;
+  inset: -4% -2% 0;
+  border-radius: inherit;
+  border-top: 2px solid rgba(166, 221, 255, 0.74);
+  box-shadow: 0 -6px 24px rgba(70, 171, 255, 0.72), inset 0 24px 28px rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.life-atlas-globe::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 82% 8%, rgba(255, 255, 255, 0.36), transparent 24%),
+    linear-gradient(90deg, rgba(0, 8, 27, 0.62), transparent 32%, rgba(255, 237, 202, 0.16) 100%);
+  pointer-events: none;
+  z-index: 5;
 }
 
 .life-atlas-map-base {
-  width: 100%;
-  height: 100%;
+  width: 110%;
+  height: 76%;
+  position: absolute;
+  left: -18%;
+  top: 6%;
   display: block;
-  object-fit: contain;
-  opacity: 0.76;
-  filter: sepia(0.24) saturate(0.82) brightness(0.78) contrast(1.02);
+  object-fit: cover;
+  opacity: 0.5;
+  filter: sepia(0.22) saturate(1.35) hue-rotate(166deg) brightness(0.72) contrast(1.18);
+  mix-blend-mode: screen;
+  z-index: 1;
+}
+
+.life-atlas-cloud,
+.life-atlas-city-lights {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.life-atlas-cloud {
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(234, 246, 255, 0.34);
+  filter: blur(8px);
+  opacity: 0.82;
+  transform: rotate(-9deg);
+  z-index: 3;
+}
+
+.cloud-one {
+  width: 34%;
+  left: 22%;
+  top: 17%;
+}
+
+.cloud-two {
+  width: 26%;
+  right: 16%;
+  top: 27%;
+  opacity: 0.66;
+}
+
+.cloud-three {
+  width: 38%;
+  left: 37%;
+  top: 41%;
+  opacity: 0.48;
+}
+
+.life-atlas-city-lights {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ffd48a;
+  box-shadow:
+    0 0 7px 2px #ffd48a,
+    18px 10px 0 0 rgba(255, 212, 138, 0.82),
+    34px 1px 0 0 rgba(255, 212, 138, 0.72),
+    49px 18px 0 1px rgba(255, 212, 138, 0.86),
+    72px 6px 0 0 rgba(255, 212, 138, 0.62),
+    96px 22px 0 1px rgba(255, 212, 138, 0.86),
+    124px 4px 0 0 rgba(255, 212, 138, 0.58);
+  opacity: 0.82;
+  z-index: 2;
+}
+
+.lights-east-asia {
+  right: 14%;
+  top: 36%;
+}
+
+.lights-europe {
+  left: 47%;
+  top: 29%;
+  transform: scale(0.72);
+  opacity: 0.7;
+}
+
+.lights-south-china {
+  right: 26%;
+  top: 56%;
+  transform: scale(0.9);
+  opacity: 0.7;
+}
+
+.life-atlas-sunrise {
+  position: absolute;
+  width: 34%;
+  height: 42%;
+  right: -6%;
+  top: -12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 245, 225, 0.78), rgba(255, 203, 136, 0.28) 36%, transparent 68%);
+  filter: blur(10px);
+  z-index: 6;
+  pointer-events: none;
 }
 
 .life-atlas-marker {
@@ -1205,6 +1364,7 @@ h1 {
   animation-delay: var(--delay, 0ms);
   outline: none;
   transition: box-shadow 180ms ease, transform 180ms ease, background 180ms ease;
+  z-index: 7;
 }
 
 .life-atlas-marker:hover,
@@ -2741,17 +2901,17 @@ body.theme-light .travel-map-panel {
 
 body.theme-light .travel-map-canvas {
   background:
-    radial-gradient(circle at 51% 48%, rgba(211, 165, 78, 0.14), transparent 34%),
-    radial-gradient(circle at 48% 52%, rgba(158, 189, 213, 0.24), transparent 72%),
-    linear-gradient(180deg, #f7f4ec 0%, #edf4f9 100%);
-  border-color: rgba(155, 113, 50, 0.22);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), inset 0 -22px 50px rgba(95, 113, 137, 0.09);
+    radial-gradient(circle at 82% 9%, rgba(255, 230, 190, 0.24), transparent 20%),
+    radial-gradient(circle at 58% 33%, rgba(60, 146, 238, 0.34), transparent 38%),
+    linear-gradient(135deg, #031736 0%, #08275a 42%, #041026 100%);
+  border-color: rgba(155, 177, 207, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -26px 60px rgba(3, 13, 30, 0.44);
 }
 
 body.theme-light .life-atlas-map-base {
-  opacity: 0.9;
-  filter: sepia(0.26) saturate(0.72) brightness(0.88) contrast(1.22);
-  mix-blend-mode: multiply;
+  opacity: 0.5;
+  filter: sepia(0.22) saturate(1.35) hue-rotate(166deg) brightness(0.72) contrast(1.18);
+  mix-blend-mode: screen;
 }
 
 body.theme-light .life-atlas-marker {

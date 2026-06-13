@@ -10,6 +10,22 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.156
+
+Commit: `Add earth horizon life atlas mode`
+
+### Changed
+
+- Reworked the Life Atlas center map into an original Earth-horizon visual inspired by orbital views, without using satellite imagery, Google Earth, paid APIs, backend services, or map tiles.
+- Added deep-blue atmosphere, curved globe edge, soft clouds, sunrise glow, and subtle night-light layers while keeping the existing left copy, center map, and right city-card structure.
+- Shifted the map projection toward Asia so China city markers sit more naturally in the horizon composition.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: the Life Atlas center map renders with the Earth-horizon globe, sunrise, cloud, city-light, and marker layers; the light theme keeps the dark horizon map mode; desktop and mobile layouts keep 4 city markers and 5 cards with no horizontal overflow; console logs show no errors or warnings.
+
 ## 2026-06-13 - v0.1.155
 
 Commit: `Add compact life atlas city editing`

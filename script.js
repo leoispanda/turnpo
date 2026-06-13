@@ -2869,7 +2869,7 @@ function travelPlaceFromInput(value = "") {
 
 function mapPoint(place) {
   return {
-    x: ((place.lng + 180) / 360) * 100,
+    x: ((place.lng + 180) / 360) * 110 - 18,
     y: ((90 - place.lat) / 180) * 100
   };
 }
@@ -2892,14 +2892,24 @@ function renderTravelMap() {
   $("#travelMapSummary").textContent = "Every new place leaves a quiet signal in us - through its people, culture, rhythm, food, language, and ways of living.";
   $("#travelMapCanvas").innerHTML = `
     <div class="life-atlas-map" role="img" aria-label="Life atlas world map with places that shaped perspective highlighted">
-      <img class="life-atlas-map-base" src="/assets/simplemaps-world.svg" alt="" aria-hidden="true" />
-      ${markerPlaces.map((place) => {
+      <div class="life-atlas-space" aria-hidden="true"></div>
+      <div class="life-atlas-globe" aria-hidden="true">
+        <img class="life-atlas-map-base" src="/assets/simplemaps-world.svg" alt="" aria-hidden="true" />
+        <span class="life-atlas-cloud cloud-one"></span>
+        <span class="life-atlas-cloud cloud-two"></span>
+        <span class="life-atlas-cloud cloud-three"></span>
+        <span class="life-atlas-city-lights lights-east-asia"></span>
+        <span class="life-atlas-city-lights lights-europe"></span>
+        <span class="life-atlas-city-lights lights-south-china"></span>
+        ${markerPlaces.map((place) => {
         const point = mapPoint(place);
         return `
           <span class="life-atlas-marker" data-place-id="${escapeHtml(place.id)}" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}, quiet influence point`)}" style="--x:${point.x.toFixed(2)}%; --y:${point.y.toFixed(2)}%; --delay:${Math.min(place.count, 8) * 80}ms">
             <span class="sr-only">${escapeHtml(`${place.label}, ${place.country}`)}</span>
           </span>`;
       }).join("")}
+      </div>
+      <div class="life-atlas-sunrise" aria-hidden="true"></div>
     </div>`;
   const addForm = ownerMode ? `
     <form class="travel-place-add owner-only" id="travelPlaceAddForm">
