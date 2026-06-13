@@ -10,6 +10,22 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-13 - v0.1.159
+
+Commit: `Anchor life atlas signals to rotating globe`
+
+### Changed
+
+- Replaced the static Life Atlas center image layer with a lightweight rotating Three.js Earth globe using real equirectangular Earth and night-light textures.
+- Anchored Eindhoven, Shanghai, and Harbin signals to their latitude/longitude positions on the globe so the warm points rotate with the planet instead of floating over the background.
+- Kept the existing left copy, center visual, and right location-card layout, with the NASA image retained as a WebGL fallback and card-to-globe signal highlighting preserved.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser: the Life Atlas map reaches `is-3d-ready`, the globe canvas is shown while the static fallback is hidden, Eindhoven/Shanghai/Harbin remain the three signal locations, no horizontal overflow was detected in the tested viewport, and console logs show no warnings or errors.
+
 ## 2026-06-13 - v0.1.158
 
 Commit: `Use NASA image for life atlas map`

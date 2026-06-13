@@ -85,10 +85,13 @@ const TRAVEL_PLACES = [
   { id: "tokyo", label: "Tokyo", country: "Japan", lat: 35.6762, lng: 139.6503, type: "city", tokens: ["tokyo", "東京", "东京"] }
 ];
 const LIFE_ATLAS_EARTH_IMAGE = "/assets/life-atlas-earth.jpg";
+const LIFE_ATLAS_THREE_URL = "https://unpkg.com/three@0.160.0/build/three.module.js";
+const LIFE_ATLAS_EARTH_TEXTURE = "/assets/earth-blue-marble-texture.jpg";
+const LIFE_ATLAS_NIGHT_TEXTURE = "/assets/earth-night-lights-texture.png";
 const LIFE_ATLAS_SIGNAL_POINTS = {
-  eindhoven: { x: 47, y: 24 },
-  harbin: { x: 77, y: 24 },
-  shanghai: { x: 79, y: 35 }
+  eindhoven: { x: 45, y: 24 },
+  harbin: { x: 71, y: 25 },
+  shanghai: { x: 73, y: 37 }
 };
 const CONTENT_CATEGORY = {
   story: "life",
@@ -2280,6 +2283,8 @@ let lastOnlineSavedAt = "";
 let lastOnlinePublishedAt = "";
 let lastAiImportDrafts = [];
 let publishConfirmationResolver = null;
+let lifeAtlasGlobeState = null;
+let lifeAtlasThreeModulePromise = null;
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -2877,16 +2882,324 @@ function lifeAtlasPoint(place) {
   return LIFE_ATLAS_SIGNAL_POINTS[place.id] || null;
 }
 
+function supportsLifeAtlasWebGL(canvas) {
+  try {
+    return Boolean(canvas && (canvas.getContext("webgl2") || canvas.getContext("webgl")));
+  } catch (error) {
+    return false;
+  }
+}
+
+function loadLifeAtlasThree() {
+  if (!lifeAtlasThreeModulePromise) {
+    lifeAtlasThreeModulePromise = import(LIFE_ATLAS_THREE_URL);
+  }
+  return lifeAtlasThreeModulePromise;
+}
+
+function disposeLifeAtlasGlobe() {
+  if (!lifeAtlasGlobeState) return;
+  const state = lifeAtlasGlobeState;
+  state.disposed = true;
+  state.observer?.disconnect();
+  state.resizeObserver?.disconnect();
+  if (state.frameId) cancelAnimationFrame(state.frameId);
+  if (state.canvas) {
+    if (state.onPointerMove) state.canvas.removeEventListener("pointermove", state.onPointerMove);
+    if (state.onPointerLeave) state.canvas.removeEventListener("pointerleave", state.onPointerLeave);
+    if (state.onPointerClick) state.canvas.removeEventListener("click", state.onPointerClick);
+  }
+  if (state.onWindowResize) window.removeEventListener("resize", state.onWindowResize);
+  state.scene?.traverse((node) => {
+    node.geometry?.dispose?.();
+    if (Array.isArray(node.material)) {
+      node.material.forEach((material) => material.dispose?.());
+    } else {
+      node.material?.dispose?.();
+    }
+  });
+  state.textures?.forEach((texture) => texture.dispose?.());
+  state.renderer?.dispose?.();
+  state.mapEl?.classList.remove("is-loading-3d", "is-3d-ready", "is-3d-fallback");
+  if (state.canvas) {
+    state.canvas.style.opacity = "";
+    state.canvas.style.pointerEvents = "";
+  }
+  const fallback = state.mapEl?.querySelector(".life-atlas-static-fallback");
+  if (fallback) {
+    fallback.style.opacity = "";
+    fallback.style.pointerEvents = "";
+  }
+  lifeAtlasGlobeState = null;
+}
+
+function setLifeAtlasGlobeActive(placeId, active) {
+  const point = lifeAtlasGlobeState?.points?.get(placeId);
+  if (!point) return;
+  point.core.material.color.set(active ? 0xfff0c2 : 0xffd48a);
+  point.core.scale.setScalar(active ? 1.45 : 1);
+  point.glow.material.opacity = active ? 0.96 : 0.62;
+  point.glow.scale.setScalar(active ? 1.25 : 1);
+  point.hit.scale.setScalar(active ? 1.25 : 1);
+  lifeAtlasGlobeState.requestRender?.();
+}
+
+function latLngToGlobeVector(THREE, lat, lng, radius) {
+  const phi = (90 - lat) * Math.PI / 180;
+  const theta = (lng + 180) * Math.PI / 180;
+  return new THREE.Vector3(
+    -radius * Math.sin(phi) * Math.cos(theta),
+    radius * Math.cos(phi),
+    radius * Math.sin(phi) * Math.sin(theta)
+  );
+}
+
+function createLifeAtlasSignalTexture(THREE) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 128;
+  canvas.height = 128;
+  const context = canvas.getContext("2d");
+  const glow = context.createRadialGradient(64, 64, 0, 64, 64, 64);
+  glow.addColorStop(0, "rgba(255, 247, 213, 1)");
+  glow.addColorStop(0.16, "rgba(255, 213, 139, 0.86)");
+  glow.addColorStop(0.48, "rgba(255, 173, 78, 0.28)");
+  glow.addColorStop(1, "rgba(255, 173, 78, 0)");
+  context.fillStyle = glow;
+  context.fillRect(0, 0, 128, 128);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function queueLifeAtlasGlobe(places) {
+  disposeLifeAtlasGlobe();
+  const mapEl = $("#travelMapCanvas").querySelector(".life-atlas-map");
+  const canvas = mapEl?.querySelector(".life-atlas-globe-canvas");
+  if (!mapEl || !canvas || !places.length || !supportsLifeAtlasWebGL(canvas)) {
+    mapEl?.classList.add("is-3d-fallback");
+    return;
+  }
+
+  const state = { mapEl, canvas, disposed: false };
+  lifeAtlasGlobeState = state;
+  const start = () => {
+    if (state.started) return;
+    state.started = true;
+    state.observer?.disconnect();
+    initLifeAtlasGlobe(state, places).catch(() => {
+      if (lifeAtlasGlobeState === state) {
+        state.mapEl.classList.remove("is-loading-3d", "is-3d-ready");
+        state.mapEl.classList.add("is-3d-fallback");
+      }
+    });
+  };
+
+  if ("IntersectionObserver" in window) {
+    state.observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) start();
+    }, { rootMargin: "160px" });
+    state.observer.observe(mapEl);
+  } else {
+    window.setTimeout(start, 0);
+  }
+  window.setTimeout(start, 0);
+}
+
+async function initLifeAtlasGlobe(state, places) {
+  state.mapEl.classList.add("is-loading-3d");
+  const THREE = await loadLifeAtlasThree();
+  if (state.disposed || lifeAtlasGlobeState !== state) return;
+
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  const renderer = new THREE.WebGLRenderer({
+    canvas: state.canvas,
+    alpha: true,
+    antialias: true,
+    powerPreference: "low-power"
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.7));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(33, 1, 0.1, 100);
+  camera.position.set(0, 0.03, 4.55);
+
+  const globe = new THREE.Group();
+  globe.position.set(0, -0.04, 0);
+  globe.rotation.set(-0.13, 2.55, -0.04);
+  scene.add(globe);
+
+  scene.add(new THREE.AmbientLight(0x8fb8ff, 0.36));
+  const sun = new THREE.DirectionalLight(0xffeed3, 2.25);
+  sun.position.set(3.5, 2.7, 4.8);
+  scene.add(sun);
+  const blueRim = new THREE.PointLight(0x3f9fff, 1.6, 8);
+  blueRim.position.set(-2.8, -0.2, 2.5);
+  scene.add(blueRim);
+
+  const loader = new THREE.TextureLoader();
+  const [earthTexture, nightTexture] = await Promise.all([
+    new Promise((resolve) => loader.load(LIFE_ATLAS_EARTH_TEXTURE, resolve, undefined, () => resolve(null))),
+    new Promise((resolve) => loader.load(LIFE_ATLAS_NIGHT_TEXTURE, resolve, undefined, () => resolve(null)))
+  ]);
+  if (state.disposed || lifeAtlasGlobeState !== state) {
+    earthTexture?.dispose?.();
+    nightTexture?.dispose?.();
+    return;
+  }
+  [earthTexture, nightTexture].filter(Boolean).forEach((texture) => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
+  });
+
+  const radius = 1.42;
+  const earth = new THREE.Mesh(
+    new THREE.SphereGeometry(radius, 72, 40),
+    new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      map: earthTexture,
+      emissive: 0x223d60,
+      emissiveMap: nightTexture,
+      emissiveIntensity: 0.34,
+      roughness: 0.88,
+      metalness: 0.02
+    })
+  );
+  globe.add(earth);
+
+  const atmosphere = new THREE.Mesh(
+    new THREE.SphereGeometry(radius * 1.045, 72, 40),
+    new THREE.MeshBasicMaterial({
+      color: 0x63b9ff,
+      transparent: true,
+      opacity: 0.18,
+      side: THREE.BackSide,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    })
+  );
+  globe.add(atmosphere);
+
+  const signalTexture = createLifeAtlasSignalTexture(THREE);
+  const hitMeshes = [];
+  const points = new Map();
+  places.forEach((place) => {
+    const pointPosition = latLngToGlobeVector(THREE, place.lat, place.lng, radius * 1.028);
+    const pointGroup = new THREE.Group();
+    pointGroup.position.copy(pointPosition);
+
+    const core = new THREE.Mesh(
+      new THREE.SphereGeometry(0.026, 18, 12),
+      new THREE.MeshBasicMaterial({ color: 0xffd48a })
+    );
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: signalTexture,
+      color: 0xffc978,
+      transparent: true,
+      opacity: 0.62,
+      depthTest: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    }));
+    glow.scale.set(0.22, 0.22, 0.22);
+    const hit = new THREE.Mesh(
+      new THREE.SphereGeometry(0.075, 12, 8),
+      new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })
+    );
+    hit.userData.placeId = place.id;
+    pointGroup.add(glow, core, hit);
+    globe.add(pointGroup);
+    hitMeshes.push(hit);
+    points.set(place.id, { core, glow, hit, group: pointGroup });
+  });
+
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+  let hoveredPlaceId = "";
+
+  const render = () => renderer.render(scene, camera);
+  const pickPlace = (event) => {
+    const rect = state.canvas.getBoundingClientRect();
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+    return raycaster.intersectObjects(hitMeshes, false)[0]?.object?.userData?.placeId || "";
+  };
+  const activateFromPointer = (event) => {
+    const nextPlaceId = pickPlace(event);
+    if (nextPlaceId === hoveredPlaceId) return;
+    if (hoveredPlaceId) setActiveTravelPlace(hoveredPlaceId, false);
+    hoveredPlaceId = nextPlaceId;
+    if (hoveredPlaceId) setActiveTravelPlace(hoveredPlaceId, true);
+  };
+  const clearPointer = () => {
+    if (hoveredPlaceId) setActiveTravelPlace(hoveredPlaceId, false);
+    hoveredPlaceId = "";
+  };
+
+  const resize = () => {
+    const width = Math.max(1, state.mapEl.clientWidth);
+    const height = Math.max(1, state.mapEl.clientHeight);
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    render();
+  };
+
+  const animate = () => {
+    if (state.disposed) return;
+    if (!reducedMotion) globe.rotation.y += 0.0014;
+    render();
+    state.frameId = requestAnimationFrame(animate);
+  };
+
+  Object.assign(state, {
+    renderer,
+    scene,
+    camera,
+    points,
+    textures: [earthTexture, nightTexture, signalTexture].filter(Boolean),
+    onPointerMove: activateFromPointer,
+    onPointerLeave: clearPointer,
+    onPointerClick: activateFromPointer,
+    requestRender: render
+  });
+
+  state.canvas.addEventListener("pointermove", activateFromPointer);
+  state.canvas.addEventListener("pointerleave", clearPointer);
+  state.canvas.addEventListener("click", activateFromPointer);
+  if ("ResizeObserver" in window) {
+    state.resizeObserver = new ResizeObserver(resize);
+    state.resizeObserver.observe(state.mapEl);
+  } else {
+    state.onWindowResize = resize;
+    window.addEventListener("resize", resize);
+  }
+  resize();
+  state.mapEl.classList.remove("is-loading-3d", "is-3d-fallback");
+  state.mapEl.classList.add("is-3d-ready");
+  state.canvas.style.opacity = "1";
+  state.canvas.style.pointerEvents = "auto";
+  const fallback = state.mapEl.querySelector(".life-atlas-static-fallback");
+  if (fallback) {
+    fallback.style.opacity = "0";
+    fallback.style.pointerEvents = "none";
+  }
+  animate();
+}
+
 function setActiveTravelPlace(placeId, active) {
   $("#travelMap").querySelectorAll(".life-atlas-marker, .travel-place-card").forEach((node) => {
     if (node.dataset.placeId === placeId) node.classList.toggle("is-active", active);
   });
+  setLifeAtlasGlobeActive(placeId, active);
 }
 
 function renderTravelMap() {
   const places = visitedPlaces();
   $("#travelMap").hidden = !places.length && !ownerMode;
   if (!places.length && !ownerMode) {
+    disposeLifeAtlasGlobe();
     $("#travelMapCanvas").innerHTML = "";
     $("#travelPlaceList").innerHTML = "";
     return;
@@ -2895,17 +3208,20 @@ function renderTravelMap() {
   const signalPlaces = markerPlaces.filter((place) => lifeAtlasPoint(place));
   $("#travelMapSummary").textContent = "Every new place leaves a quiet signal in us - through its people, culture, rhythm, food, language, and ways of living.";
   $("#travelMapCanvas").innerHTML = `
-    <div class="life-atlas-map" role="img" aria-label="Life Atlas Earth-from-space image with warm signals for places that shaped perspective">
-      <img class="life-atlas-image" src="${LIFE_ATLAS_EARTH_IMAGE}" alt="" aria-hidden="true" loading="lazy" />
-      <div class="life-atlas-vignette" aria-hidden="true"></div>
-      <div class="life-atlas-marker-layer">
-        ${signalPlaces.map((place) => {
-        const point = lifeAtlasPoint(place);
-        return `
-          <span class="life-atlas-marker" data-place-id="${escapeHtml(place.id)}" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}, quiet influence point`)}" style="--x:${point.x.toFixed(2)}%; --y:${point.y.toFixed(2)}%; --delay:${Math.min(place.count, 8) * 80}ms">
-            <span class="sr-only">${escapeHtml(`${place.label}, ${place.country}`)}</span>
-          </span>`;
-      }).join("")}
+    <div class="life-atlas-map" role="img" aria-label="Rotating Life Atlas Earth globe with warm signals for places that shaped perspective">
+      <canvas class="life-atlas-globe-canvas" aria-hidden="true"></canvas>
+      <div class="life-atlas-static-fallback">
+        <img class="life-atlas-image" src="${LIFE_ATLAS_EARTH_IMAGE}" alt="" aria-hidden="true" loading="lazy" />
+        <div class="life-atlas-vignette" aria-hidden="true"></div>
+        <div class="life-atlas-marker-layer">
+          ${signalPlaces.map((place) => {
+          const point = lifeAtlasPoint(place);
+          return `
+            <span class="life-atlas-marker" data-place-id="${escapeHtml(place.id)}" tabindex="0" aria-label="${escapeHtml(`${place.label}, ${place.country}, quiet influence point`)}" style="--x:${point.x.toFixed(2)}%; --y:${point.y.toFixed(2)}%; --delay:${Math.min(place.count, 8) * 80}ms">
+              <span class="sr-only">${escapeHtml(`${place.label}, ${place.country}`)}</span>
+            </span>`;
+        }).join("")}
+        </div>
       </div>
     </div>`;
   const addForm = ownerMode ? `
@@ -2948,6 +3264,7 @@ function renderTravelMap() {
     node.addEventListener("focusout", () => setActiveTravelPlace(node.dataset.placeId, false));
     node.addEventListener("click", () => setActiveTravelPlace(node.dataset.placeId, true));
   });
+  queueLifeAtlasGlobe(signalPlaces);
 }
 
 function addTravelPlace(event) {
