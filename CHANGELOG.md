@@ -10,6 +10,22 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-14 - v0.1.172
+
+Commit: `Raise life atlas earth position`
+
+### Changed
+
+- Raised the Life Atlas Earth within the 3D stage so the globe's highest arc aligns more closely with the left copy and right city list.
+- Kept the enlarged upper-hemisphere framing, diagonal rotation axis, dark lower fade, and floating overlay layout unchanged.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser at desktop size: Life Atlas reaches `is-3d-ready`, the raised globe top aligns better with the surrounding copy/card height, no horizontal overflow appears, and no console warnings or errors are logged.
+- Verified Cindy's public profile locally at 390px mobile width: Life Atlas reaches `is-3d-ready`, the layout stacks as copy, globe, then city list, no horizontal overflow appears, and no console warnings or errors are logged.
+
 ## 2026-06-14 - v0.1.171
 
 Commit: `Correct life atlas earth tilt direction`
