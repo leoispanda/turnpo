@@ -3014,6 +3014,9 @@ function disposeLifeAtlasGlobe() {
   if (state.frameId) cancelAnimationFrame(state.frameId);
   if (state.canvas) {
     if (state.onPointerMove) state.canvas.removeEventListener("pointermove", state.onPointerMove);
+    if (state.onPointerDown) state.canvas.removeEventListener("pointerdown", state.onPointerDown);
+    if (state.onPointerUp) state.canvas.removeEventListener("pointerup", state.onPointerUp);
+    if (state.onPointerCancel) state.canvas.removeEventListener("pointercancel", state.onPointerCancel);
     if (state.onPointerLeave) state.canvas.removeEventListener("pointerleave", state.onPointerLeave);
     if (state.onPointerClick) state.canvas.removeEventListener("click", state.onPointerClick);
   }
@@ -3368,6 +3371,18 @@ async function initLifeAtlasGlobe(state, places) {
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
   let hoveredPlaceId = "";
+  const dragState = {
+    active: false,
+    dragging: false,
+    pointerId: null,
+    startX: 0,
+    startY: 0,
+    lastX: 0,
+    lastY: 0,
+    velocityX: 0,
+    velocityY: 0,
+    suppressClick: false
+  };
 
   const render = () => renderer.render(scene, camera);
   const pickPlace = (event) => {
@@ -3378,6 +3393,7 @@ async function initLifeAtlasGlobe(state, places) {
     return raycaster.intersectObjects(hitMeshes, false)[0]?.object?.userData?.placeId || "";
   };
   const activateFromPointer = (event) => {
+    if (dragState.dragging) return;
     const nextPlaceId = pickPlace(event);
     if (nextPlaceId === hoveredPlaceId) return;
     if (hoveredPlaceId) setActiveTravelPlace(hoveredPlaceId, false);
@@ -3387,6 +3403,66 @@ async function initLifeAtlasGlobe(state, places) {
   const clearPointer = () => {
     if (hoveredPlaceId) setActiveTravelPlace(hoveredPlaceId, false);
     hoveredPlaceId = "";
+  };
+  const rotateFromPointer = (event) => {
+    const dx = event.clientX - dragState.lastX;
+    const dy = event.clientY - dragState.lastY;
+    dragState.lastX = event.clientX;
+    dragState.lastY = event.clientY;
+    dragState.velocityX = dx * 0.00042;
+    dragState.velocityY = dy * 0.00026;
+    globe.rotation.y += dx * 0.0031;
+    globe.rotation.x = THREE.MathUtils.clamp(globe.rotation.x + dy * 0.0012, 0.12, 0.54);
+  };
+  const handlePointerDown = (event) => {
+    if (event.button !== undefined && event.button !== 0) return;
+    dragState.active = true;
+    dragState.dragging = false;
+    dragState.pointerId = event.pointerId;
+    dragState.startX = event.clientX;
+    dragState.startY = event.clientY;
+    dragState.lastX = event.clientX;
+    dragState.lastY = event.clientY;
+    dragState.velocityX = 0;
+    dragState.velocityY = 0;
+    state.canvas.setPointerCapture?.(event.pointerId);
+  };
+  const handlePointerMove = (event) => {
+    if (dragState.active && dragState.pointerId === event.pointerId) {
+      const totalDx = event.clientX - dragState.startX;
+      const totalDy = event.clientY - dragState.startY;
+      if (!dragState.dragging && Math.hypot(totalDx, totalDy) > 4) {
+        dragState.dragging = true;
+        state.canvas.classList.add("is-dragging");
+        clearPointer();
+      }
+      if (dragState.dragging) {
+        event.preventDefault();
+        rotateFromPointer(event);
+        return;
+      }
+    }
+    activateFromPointer(event);
+  };
+  const handlePointerUp = (event) => {
+    if (dragState.pointerId !== event.pointerId) return;
+    state.canvas.releasePointerCapture?.(event.pointerId);
+    dragState.suppressClick = dragState.dragging;
+    dragState.dragging = false;
+    dragState.active = false;
+    dragState.pointerId = null;
+    state.canvas.classList.remove("is-dragging");
+  };
+  const handlePointerCancel = (event) => {
+    if (dragState.pointerId !== event.pointerId) return;
+    state.canvas.releasePointerCapture?.(event.pointerId);
+    dragState.active = false;
+    dragState.dragging = false;
+    dragState.pointerId = null;
+    dragState.velocityX = 0;
+    dragState.velocityY = 0;
+    state.canvas.classList.remove("is-dragging");
+    clearPointer();
   };
 
   const resize = () => {
@@ -3400,7 +3476,15 @@ async function initLifeAtlasGlobe(state, places) {
 
   const animate = () => {
     if (state.disposed) return;
-    if (!reducedMotion) globe.rotation.y += 0.00062;
+    if (!reducedMotion && !dragState.active) globe.rotation.y += 0.00062;
+    if (!dragState.active) {
+      globe.rotation.y += dragState.velocityX;
+      globe.rotation.x = THREE.MathUtils.clamp(globe.rotation.x + dragState.velocityY, 0.12, 0.54);
+      dragState.velocityX *= 0.94;
+      dragState.velocityY *= 0.9;
+      if (Math.abs(dragState.velocityX) < 0.00001) dragState.velocityX = 0;
+      if (Math.abs(dragState.velocityY) < 0.00001) dragState.velocityY = 0;
+    }
     render();
     state.frameId = requestAnimationFrame(animate);
   };
@@ -3411,15 +3495,29 @@ async function initLifeAtlasGlobe(state, places) {
     camera,
     points,
     textures: [earthTexture, nightTexture, signalTexture, atmosphereTexture, ...labelTextures].filter(Boolean),
-    onPointerMove: activateFromPointer,
-    onPointerLeave: clearPointer,
-    onPointerClick: activateFromPointer,
+    onPointerMove: handlePointerMove,
+    onPointerDown: handlePointerDown,
+    onPointerUp: handlePointerUp,
+    onPointerCancel: handlePointerCancel,
+    onPointerLeave: () => {
+      if (!dragState.active) clearPointer();
+    },
+    onPointerClick: (event) => {
+      if (dragState.suppressClick) {
+        dragState.suppressClick = false;
+        return;
+      }
+      activateFromPointer(event);
+    },
     requestRender: render
   });
 
-  state.canvas.addEventListener("pointermove", activateFromPointer);
-  state.canvas.addEventListener("pointerleave", clearPointer);
-  state.canvas.addEventListener("click", activateFromPointer);
+  state.canvas.addEventListener("pointermove", handlePointerMove);
+  state.canvas.addEventListener("pointerdown", handlePointerDown);
+  state.canvas.addEventListener("pointerup", handlePointerUp);
+  state.canvas.addEventListener("pointercancel", handlePointerCancel);
+  state.canvas.addEventListener("pointerleave", state.onPointerLeave);
+  state.canvas.addEventListener("click", state.onPointerClick);
   if ("ResizeObserver" in window) {
     state.resizeObserver = new ResizeObserver(resize);
     state.resizeObserver.observe(state.mapEl);

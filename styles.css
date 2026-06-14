@@ -1231,8 +1231,14 @@ h1 {
 .life-atlas-globe-canvas {
   opacity: 0;
   pointer-events: none;
+  cursor: grab;
+  touch-action: pan-y;
   transition: opacity 360ms ease;
   z-index: 5;
+}
+
+.life-atlas-globe-canvas.is-dragging {
+  cursor: grabbing;
 }
 
 .life-atlas-map.is-3d-ready .life-atlas-globe-canvas {

@@ -10,6 +10,23 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-14 - v0.1.175
+
+Commit: `Add draggable life atlas globe`
+
+### Changed
+
+- Added direct pointer dragging to the Life Atlas 3D Earth so visitors can grab the globe and rotate it manually.
+- Preserved the calm automatic rotation, city marker hover/click behavior, and reduced-motion behavior while adding a small inertial glide after drag release.
+- Added grab/grabbing cursor feedback and touch handling so the globe feels interactive without blocking vertical page scrolling.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser at desktop size: Life Atlas reaches `is-3d-ready`, dragging the canvas changes the globe rotation, marker hover/click still works, no horizontal overflow appears, and no console warnings or errors are logged.
+- Verified Cindy's public profile locally at 390px mobile width: Life Atlas reaches `is-3d-ready`, the layout remains intact, no horizontal overflow appears, and no console warnings or errors are logged.
+
 ## 2026-06-14 - v0.1.174
 
 Commit: `Tune life atlas earth color`
