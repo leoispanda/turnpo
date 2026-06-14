@@ -1119,7 +1119,7 @@ h1 {
 .travel-map-section {
   display: grid;
   grid-template-columns: 1fr;
-  min-height: clamp(640px, 54vw, 780px);
+  min-height: clamp(600px, 50vw, 720px);
   position: relative;
   align-items: stretch;
   padding: 0 clamp(18px, 5vw, 72px) 36px;
@@ -1161,6 +1161,7 @@ h1 {
   min-height: inherit;
   position: relative;
   align-items: stretch;
+  margin-inline: calc(clamp(18px, 5vw, 72px) * -1);
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -1184,7 +1185,7 @@ h1 {
 .life-atlas-map {
   width: 100%;
   height: 100%;
-  min-height: clamp(640px, 54vw, 780px);
+  min-height: clamp(600px, 50vw, 720px);
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -1201,15 +1202,20 @@ h1 {
 }
 
 .life-atlas-map::before {
-  background: transparent;
-  opacity: 0;
-  z-index: 0;
+  background:
+    radial-gradient(ellipse at 50% 4%, rgba(255, 242, 218, 0.08), transparent 24%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.38) 22%, rgba(0, 0, 0, 0.08) 42%, transparent 58%, rgba(0, 0, 0, 0.08) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.34), transparent 15%, transparent 54%, rgba(0, 0, 0, 0.24));
+  opacity: 1;
+  z-index: 6;
 }
 
 .life-atlas-map::after {
-  background: transparent;
+  background:
+    linear-gradient(180deg, transparent 42%, rgba(0, 4, 14, 0.3) 61%, rgba(0, 0, 0, 0.9) 86%, rgba(0, 0, 0, 0.98) 100%),
+    radial-gradient(ellipse at 50% 96%, rgba(0, 0, 0, 0.98), transparent 42%);
   mix-blend-mode: normal;
-  z-index: 2;
+  z-index: 6;
 }
 
 .life-atlas-globe-canvas,
@@ -1250,7 +1256,7 @@ h1 {
   object-fit: contain;
   object-position: center center;
   filter: saturate(1.28) contrast(1.18) brightness(0.84) drop-shadow(0 0 48px rgba(75, 176, 255, 0.3));
-  transform: scale(1.06);
+  transform: translateY(16%) scale(1.36);
   z-index: 1;
 }
 
@@ -1395,9 +1401,9 @@ h1 {
   align-content: start;
   gap: 8px;
   position: absolute;
-  top: clamp(72px, 8vw, 124px);
+  top: clamp(56px, 6.4vw, 96px);
   right: clamp(0px, 2.8vw, 48px);
-  bottom: clamp(60px, 7vw, 116px);
+  bottom: clamp(112px, 12vw, 176px);
   z-index: 9;
   overflow: auto;
   padding-right: 4px;
@@ -3338,6 +3344,7 @@ body.theme-light .image-lightbox-close {
     grid-area: auto;
     grid-template-columns: 1fr;
     min-height: auto;
+    margin-inline: 0;
   }
 
   .travel-map-canvas {

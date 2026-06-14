@@ -10,6 +10,23 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-14 - v0.1.169
+
+Commit: `Show upper life atlas earth view`
+
+### Changed
+
+- Reframed the Life Atlas globe as a larger upper-hemisphere hero instead of a complete sphere.
+- Let the Earth canvas extend across the section edges while keeping the copy and city list floating in readable foreground positions.
+- Tuned the default Northern Hemisphere oblique angle so the Arctic sits near the upper edge rather than dominating the center, with the lower globe fading naturally into darkness.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser at desktop size: Life Atlas reaches `is-3d-ready`, the canvas spans the section from the left edge, copy and city cards float over the globe, no frame/border is present, no horizontal overflow appears, and no console warnings or errors are logged.
+- Verified Cindy's public profile locally at 390px mobile width: Life Atlas reaches `is-3d-ready`, the layout stacks as copy, globe, then city list, no horizontal overflow appears, and no console warnings or errors are logged.
+
 ## 2026-06-14 - v0.1.168
 
 Commit: `Float life atlas copy over full globe`

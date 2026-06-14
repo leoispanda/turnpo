@@ -3188,13 +3188,13 @@ async function initLifeAtlasGlobe(state, places) {
   const scene = new THREE.Scene();
 
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-  camera.position.set(0, 0.06, 7.2);
+  camera.position.set(0, 0.06, 5.15);
 
   const radius = 1.72;
-  const baseRotation = { x: 0.55, y: 1.08, z: -0.12 };
+  const baseRotation = { x: 0.32, y: 1.38, z: -0.1 };
   const focusPlace = places.find((place) => place.id === state.focusPlaceId);
   const globe = new THREE.Group();
-  globe.position.set(0.05, -0.04, 0);
+  globe.position.set(0.04, -0.82, 0);
   globe.rotation.set(
     baseRotation.x,
     focusPlace ? lifeAtlasRotationYForPlace(THREE, focusPlace, baseRotation, radius) : baseRotation.y,
