@@ -10,6 +10,21 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-14 - v0.1.171
+
+Commit: `Correct life atlas earth tilt direction`
+
+### Fixed
+
+- Reversed the Life Atlas globe tilt direction so the Earth rotates along a lower-left to upper-right diagonal axis.
+- Kept the enlarged upper-hemisphere framing, dark lower fade, and floating copy/card composition unchanged.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser at desktop size: Life Atlas reaches `is-3d-ready`, the tilted globe renders without horizontal overflow, and no console warnings or errors are logged.
+
 ## 2026-06-14 - v0.1.170
 
 Commit: `Tilt and enlarge life atlas earth`

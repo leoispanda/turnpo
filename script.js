@@ -3193,7 +3193,7 @@ async function initLifeAtlasGlobe(state, places) {
   const radius = 1.8;
   const baseRotation = { x: 0.3, y: 1.38, z: 0 };
   const focusPlace = places.find((place) => place.id === state.focusPlaceId);
-  const axisTiltDegrees = -20;
+  const axisTiltDegrees = 20;
   const axisTilt = new THREE.Group();
   axisTilt.position.set(0.04, -0.98, 0);
   axisTilt.rotation.z = THREE.MathUtils.degToRad(axisTiltDegrees);
