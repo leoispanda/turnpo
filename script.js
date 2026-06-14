@@ -3179,7 +3179,7 @@ async function initLifeAtlasGlobe(state, places) {
     antialias: true,
     powerPreference: "low-power"
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.7));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.25));
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -3187,14 +3187,14 @@ async function initLifeAtlasGlobe(state, places) {
 
   const scene = new THREE.Scene();
 
-  const camera = new THREE.PerspectiveCamera(29, 1, 0.1, 100);
-  camera.position.set(0, 0.08, 4.55);
+  const camera = new THREE.PerspectiveCamera(27, 1, 0.1, 100);
+  camera.position.set(0, 0.08, 4.25);
 
-  const radius = 1.58;
+  const radius = 1.72;
   const baseRotation = { x: 0.55, y: 1.08, z: -0.12 };
   const focusPlace = places.find((place) => place.id === state.focusPlaceId);
   const globe = new THREE.Group();
-  globe.position.set(0.12, -0.42, 0);
+  globe.position.set(0.1, -0.48, 0);
   globe.rotation.set(
     baseRotation.x,
     focusPlace ? lifeAtlasRotationYForPlace(THREE, focusPlace, baseRotation, radius) : baseRotation.y,
@@ -3225,11 +3225,11 @@ async function initLifeAtlasGlobe(state, places) {
   }
   [earthTexture, nightTexture].filter(Boolean).forEach((texture) => {
     texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
+    texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 16);
   });
 
   const earth = new THREE.Mesh(
-    new THREE.SphereGeometry(radius, 96, 56),
+    new THREE.SphereGeometry(radius, 144, 80),
     new THREE.MeshStandardMaterial({
       color: 0xf0f7ff,
       map: earthTexture,
@@ -3244,7 +3244,7 @@ async function initLifeAtlasGlobe(state, places) {
 
   if (nightTexture) {
     const nightLights = new THREE.Mesh(
-      new THREE.SphereGeometry(radius * 1.006, 96, 56),
+      new THREE.SphereGeometry(radius * 1.006, 144, 80),
       new THREE.MeshBasicMaterial({
         map: nightTexture,
         color: 0xffc47a,
@@ -3258,7 +3258,7 @@ async function initLifeAtlasGlobe(state, places) {
   }
 
   const atmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(radius * 1.026, 96, 56),
+    new THREE.SphereGeometry(radius * 1.026, 144, 80),
     new THREE.MeshBasicMaterial({
       color: 0x79cfff,
       transparent: true,

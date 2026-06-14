@@ -10,6 +10,23 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-14 - v0.1.167
+
+Commit: `Enlarge and sharpen life atlas globe`
+
+### Changed
+
+- Enlarged the Life Atlas globe area on desktop, tablet, and mobile so the Earth reads as a more immersive hero visual.
+- Increased the Three.js globe render resolution cap, sphere geometry density, and texture anisotropy to reduce blur and sharpen the Earth surface.
+- Adjusted the camera, globe radius, and fallback image scale so the globe feels larger while preserving the unframed cinematic composition.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser at desktop size: Life Atlas reaches `is-3d-ready`, canvas renders at 675×600 CSS pixels with a 1350×1200 backing buffer, no horizontal overflow, and no console warnings or errors.
+- Verified Cindy's public profile locally at 390px mobile width via the search flow: Life Atlas reaches `is-3d-ready`, canvas renders at 335×420 CSS pixels, no horizontal overflow, and no console warnings or errors.
+
 ## 2026-06-13 - v0.1.166
 
 Commit: `Show timeline tags to visitors`
