@@ -10,6 +10,23 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-14 - v0.1.170
+
+Commit: `Tilt and enlarge life atlas earth`
+
+### Changed
+
+- Enlarged the Life Atlas Earth again by moving the 3D camera closer and increasing the globe radius.
+- Added a dedicated 20-degree tilted rotation axis so the Earth rotates diagonally instead of spinning upright.
+- Preserved the upper-hemisphere composition, dark lower fade, unframed stage, and floating copy/card layout.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser at desktop size: Life Atlas reaches `is-3d-ready`, the enlarged tilted globe renders without a frame or horizontal overflow, and no console warnings or errors are logged.
+- Verified Cindy's public profile locally at 390px mobile width: Life Atlas reaches `is-3d-ready`, the layout stacks as copy, globe, then city list, no horizontal overflow appears, and no console warnings or errors are logged.
+
 ## 2026-06-14 - v0.1.169
 
 Commit: `Show upper life atlas earth view`
