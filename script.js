@@ -3116,6 +3116,19 @@ function lifeAtlasRotationYForPlace(THREE, place, baseRotation, radius) {
   return bestY;
 }
 
+function tuneLifeAtlasEarthMaterial(material) {
+  material.onBeforeCompile = (shader) => {
+    shader.fragmentShader = shader.fragmentShader.replace(
+      "#include <map_fragment>",
+      `#include <map_fragment>
+      float lifeAtlasLuma = dot(diffuseColor.rgb, vec3(0.299, 0.587, 0.114));
+      diffuseColor.rgb = mix(vec3(lifeAtlasLuma), diffuseColor.rgb, 1.22);
+      diffuseColor.rgb *= vec3(0.9, 1.03, 1.2);
+      diffuseColor.rgb = pow(diffuseColor.rgb, vec3(0.95));`
+    );
+  };
+}
+
 function createLifeAtlasAtmosphereTexture(THREE) {
   const canvas = document.createElement("canvas");
   canvas.width = 256;
@@ -3179,7 +3192,7 @@ async function initLifeAtlasGlobe(state, places) {
     antialias: true,
     powerPreference: "low-power"
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.25));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 3));
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -3231,25 +3244,28 @@ async function initLifeAtlasGlobe(state, places) {
   [earthTexture, nightTexture].filter(Boolean).forEach((texture) => {
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 16);
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.generateMipmaps = true;
+    texture.needsUpdate = true;
   });
 
-  const earth = new THREE.Mesh(
-    new THREE.SphereGeometry(radius, 144, 80),
-    new THREE.MeshStandardMaterial({
-      color: 0xf0f7ff,
-      map: earthTexture,
-      emissive: 0x0b203a,
-      emissiveMap: nightTexture,
-      emissiveIntensity: 0.38,
-      roughness: 0.72,
-      metalness: 0.02
-    })
-  );
+  const earthMaterial = new THREE.MeshStandardMaterial({
+    color: 0xe6f4ff,
+    map: earthTexture,
+    emissive: 0x0b2448,
+    emissiveMap: nightTexture,
+    emissiveIntensity: 0.34,
+    roughness: 0.68,
+    metalness: 0.025
+  });
+  tuneLifeAtlasEarthMaterial(earthMaterial);
+  const earth = new THREE.Mesh(new THREE.SphereGeometry(radius, 176, 96), earthMaterial);
   globe.add(earth);
 
   if (nightTexture) {
     const nightLights = new THREE.Mesh(
-      new THREE.SphereGeometry(radius * 1.006, 144, 80),
+      new THREE.SphereGeometry(radius * 1.006, 176, 96),
       new THREE.MeshBasicMaterial({
         map: nightTexture,
         color: 0xffc47a,

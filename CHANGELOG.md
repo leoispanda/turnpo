@@ -10,6 +10,22 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-14 - v0.1.173
+
+Commit: `Sharpen life atlas earth texture`
+
+### Changed
+
+- Replaced the Life Atlas globe's main Earth texture with a higher-resolution NASA Blue Marble source, increasing the WebGL day texture from 2048x1024 to 8192x4096.
+- Tuned the 3D globe renderer with a higher pixel ratio ceiling, denser sphere geometry, stronger texture sampling, and a subtle cinematic color grade so oceans read deeper blue and the Earth feels more saturated without becoming cartoonish.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser at desktop size: Life Atlas reaches `is-3d-ready`, the globe renders sharper and more saturated, no horizontal overflow appears, and no console warnings or errors are logged.
+- Verified Cindy's public profile locally at 390px mobile width: Life Atlas reaches `is-3d-ready`, the stacked Life Atlas layout remains intact, no horizontal overflow appears, and no console warnings or errors are logged.
+
 ## 2026-06-14 - v0.1.172
 
 Commit: `Raise life atlas earth position`
