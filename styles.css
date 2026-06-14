@@ -1118,14 +1118,23 @@ h1 {
 
 .travel-map-section {
   display: grid;
-  grid-template-columns: minmax(220px, 0.45fr) minmax(0, 1.55fr);
-  gap: 26px;
-  align-items: start;
-  padding: 0 clamp(18px, 5vw, 72px) 28px;
+  grid-template-columns: 1fr;
+  min-height: clamp(640px, 54vw, 780px);
+  position: relative;
+  align-items: stretch;
+  padding: 0 clamp(18px, 5vw, 72px) 36px;
+  overflow: visible;
 }
 
 .travel-map-copy {
-  padding-top: 16px;
+  max-width: clamp(270px, 24vw, 390px);
+  grid-area: 1 / 1;
+  align-self: start;
+  justify-self: start;
+  z-index: 9;
+  margin-left: clamp(0px, 2.6vw, 46px);
+  padding-top: clamp(44px, 6vw, 84px);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.78);
 }
 
 .travel-map-copy h2 {
@@ -1147,9 +1156,11 @@ h1 {
 
 .travel-map-panel {
   display: grid;
-  grid-template-columns: minmax(0, 1.28fr) minmax(158px, 0.28fr);
-  gap: clamp(16px, 2.2vw, 30px);
-  align-items: center;
+  grid-area: 1 / 1;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: inherit;
+  position: relative;
+  align-items: stretch;
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -1161,7 +1172,7 @@ h1 {
 .travel-map-canvas {
   display: grid;
   place-items: center;
-  min-height: clamp(480px, 47vw, 600px);
+  min-height: inherit;
   position: relative;
   overflow: hidden;
   border: 0;
@@ -1173,11 +1184,11 @@ h1 {
 .life-atlas-map {
   width: 100%;
   height: 100%;
-  min-height: 420px;
+  min-height: clamp(640px, 54vw, 780px);
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  transform: translateY(8px);
+  transform: none;
   background: transparent;
 }
 
@@ -1237,9 +1248,9 @@ h1 {
 
 .life-atlas-image {
   object-fit: contain;
-  object-position: center bottom;
+  object-position: center center;
   filter: saturate(1.28) contrast(1.18) brightness(0.84) drop-shadow(0 0 48px rgba(75, 176, 255, 0.3));
-  transform: translateY(11%) scale(1.32);
+  transform: scale(1.06);
   z-index: 1;
 }
 
@@ -1378,12 +1389,20 @@ h1 {
 }
 
 .travel-place-list {
-  max-height: 320px;
+  width: clamp(190px, 16vw, 260px);
+  max-height: none;
   display: grid;
   align-content: start;
   gap: 8px;
+  position: absolute;
+  top: clamp(72px, 8vw, 124px);
+  right: clamp(0px, 2.8vw, 48px);
+  bottom: clamp(60px, 7vw, 116px);
+  z-index: 9;
   overflow: auto;
-  padding-right: 2px;
+  padding-right: 4px;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 18px, #000 calc(100% - 30px), transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 18px, #000 calc(100% - 30px), transparent);
 }
 
 .travel-place-add {
@@ -3316,16 +3335,39 @@ body.theme-light .image-lightbox-close {
   }
 
   .travel-map-panel {
+    grid-area: auto;
     grid-template-columns: 1fr;
+    min-height: auto;
   }
 
   .travel-map-canvas {
     min-height: 460px;
   }
 
+  .life-atlas-map {
+    min-height: 460px;
+  }
+
+  .travel-map-section {
+    min-height: auto;
+  }
+
+  .travel-map-copy {
+    max-width: 620px;
+    grid-area: auto;
+    margin-left: 0;
+    padding-top: 16px;
+  }
+
   .travel-place-list {
+    width: 100%;
     max-height: none;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    position: static;
+    overflow: visible;
+    padding-right: 0;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .portrait-card {
@@ -3437,6 +3479,10 @@ body.theme-light .image-lightbox-close {
   }
 
   .travel-map-canvas {
+    min-height: 410px;
+  }
+
+  .life-atlas-map {
     min-height: 410px;
   }
 

@@ -10,6 +10,23 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-14 - v0.1.168
+
+Commit: `Float life atlas copy over full globe`
+
+### Changed
+
+- Reworked the Life Atlas section into a single immersive globe stage so the left copy and right city list float over the Earth instead of sitting in separate side columns.
+- Pulled the 3D camera back slightly and recentered the globe so the Earth reads as a more complete sphere rather than a cropped close-up.
+- Kept the mobile layout readable by reverting to a natural stack order: copy, globe, then city list.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally with a fallback route server at desktop size: Life Atlas reaches `is-3d-ready`, copy and city cards overlay the globe stage, the canvas renders at 1281×778 CSS pixels with a 2562×1556 backing buffer, no horizontal overflow, and no console warnings or errors.
+- Verified Cindy's public profile locally at 390px mobile width: Life Atlas reaches `is-3d-ready`, mobile order is copy, globe, then city list, no horizontal overflow, and no console warnings or errors.
+
 ## 2026-06-14 - v0.1.167
 
 Commit: `Enlarge and sharpen life atlas globe`
