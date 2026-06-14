@@ -10,6 +10,23 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-14 - v0.1.174
+
+Commit: `Tune life atlas earth color`
+
+### Changed
+
+- Rebalanced the Life Atlas Earth color grade toward a more realistic space-Earth reference: oceans keep a very dark navy floor instead of pure black, while land regains warmer yellow-brown earth tones.
+- Reduced the broad blue saturation push from the previous grade so non-ocean colors stay more natural and less over-saturated.
+- Raised the 3D globe render detail slightly with a higher pixel ratio ceiling and denser sphere geometry for a sharper hero view.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `git diff --check`.
+- Verified Cindy's public profile locally in the in-app browser at desktop size: Life Atlas reaches `is-3d-ready`, the ocean stays dark blue rather than pure black, land tones appear warmer, no horizontal overflow appears, and no console warnings or errors are logged.
+- Verified Cindy's public profile locally at 390px mobile width: Life Atlas reaches `is-3d-ready`, the mobile layout remains intact, no horizontal overflow appears, and no console warnings or errors are logged.
+
 ## 2026-06-14 - v0.1.173
 
 Commit: `Sharpen life atlas earth texture`
