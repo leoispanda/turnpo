@@ -4834,8 +4834,9 @@ function saveProfileText(event) {
 }
 
 function toggleWorkFields(type) {
-  document.querySelectorAll(".work-only").forEach((node) => { node.hidden = true; });
-  document.querySelectorAll(".story-only").forEach((node) => { node.hidden = false; });
+  const isWork = type === "work";
+  document.querySelectorAll(".work-only").forEach((node) => { node.hidden = !isWork; });
+  document.querySelectorAll(".story-only").forEach((node) => { node.hidden = isWork; });
 }
 
 function findContent(type, id) {
