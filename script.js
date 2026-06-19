@@ -2304,6 +2304,7 @@ let userSessionEmail = "";
 let userSessionScopes = [];
 let ownerTimelineView = "published";
 let activeCategoryFilter = "all";
+let activeTimelineYear = "";
 let onlineDraftAvailable = false;
 let onlinePublishedAvailable = false;
 let onlineSyncInFlight = false;
@@ -4333,6 +4334,69 @@ function setAllTimelineYearsCollapsed(collapsed) {
   renderTimeline();
 }
 
+function renderTimelineYearControls(years) {
+  const yearFilters = $("#yearFilters");
+  if (!yearFilters) return;
+  if (!years.length) {
+    activeTimelineYear = "";
+    yearFilters.innerHTML = "";
+    return;
+  }
+  if (activeTimelineYear && !years.includes(activeTimelineYear)) activeTimelineYear = "";
+  yearFilters.innerHTML = `
+    <button class="year-step" type="button" data-year-step="newer" aria-label="Newer year" title="Newer year">‹</button>
+    <select id="timelineYearSelect" aria-label="Jump to timeline year">
+      <option value="">All years</option>
+      ${years.map((year) => `<option value="${escapeHtml(year)}"${year === activeTimelineYear ? " selected" : ""}>${escapeHtml(year)}</option>`).join("")}
+    </select>
+    <button class="year-step" type="button" data-year-step="older" aria-label="Older year" title="Older year">›</button>`;
+  syncTimelineYearControls();
+}
+
+function timelineYearOptions() {
+  const select = document.querySelector("#timelineYearSelect");
+  if (!select) return [];
+  return [...select.options].map((option) => option.value).filter(Boolean);
+}
+
+function syncTimelineYearControls() {
+  const select = document.querySelector("#timelineYearSelect");
+  if (!select) return;
+  const years = timelineYearOptions();
+  const index = years.indexOf(select.value);
+  const newer = document.querySelector("[data-year-step='newer']");
+  const older = document.querySelector("[data-year-step='older']");
+  if (newer) newer.disabled = index <= 0;
+  if (older) older.disabled = !years.length || index >= years.length - 1;
+}
+
+function jumpToTimelineYear(year) {
+  activeTimelineYear = String(year || "");
+  const select = document.querySelector("#timelineYearSelect");
+  if (select) select.value = activeTimelineYear;
+  syncTimelineYearControls();
+  const target = activeTimelineYear
+    ? document.getElementById(`timeline-year-${activeTimelineYear}`)
+    : $("#timelineList");
+  if (!target) return;
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (activeTimelineYear) target.focus({ preventScroll: true });
+}
+
+function stepTimelineYear(direction) {
+  const select = document.querySelector("#timelineYearSelect");
+  if (!select) return;
+  const years = timelineYearOptions();
+  const index = years.indexOf(select.value);
+  if (index < 0) {
+    if (direction > 0 && years.length) jumpToTimelineYear(years[0]);
+    return;
+  }
+  const nextIndex = Math.max(0, Math.min(years.length - 1, index + direction));
+  if (nextIndex === index) return;
+  jumpToTimelineYear(years[nextIndex]);
+}
+
 function statusPill(item) {
   const labels = { published: "visible", hidden: "hidden", deleted: "deleted" };
   return ownerMode ? `<span class="visibility-pill status-${escapeHtml(item.status)}">${escapeHtml(labels[item.status] || item.status)}</span>` : "";
@@ -4769,7 +4833,7 @@ function renderTimeline() {
   const groups = groupedStories();
   const years = Object.keys(groups).sort((a, b) => yearSortValue(b) - yearSortValue(a));
   const collapsedYears = syncDefaultCollapsedYears(years);
-  $("#yearFilters").innerHTML = years.map((year) => `<button type="button" data-year="${year}">${year}</button>`).join("");
+  renderTimelineYearControls(years);
   const viewLabel = ownerMode ? ownerTimelineView : "published";
   $("#timelineList").innerHTML = years.length ? years.map((year) => {
     const isCollapsed = collapsedYears.has(year);
@@ -5817,12 +5881,15 @@ $("#exampleProfiles").addEventListener("click", (event) => {
 });
 
 $("#yearFilters").addEventListener("click", (event) => {
-  const button = event.target.closest("[data-year]");
+  const button = event.target.closest("[data-year-step]");
   if (!button) return;
-  const target = document.getElementById(`timeline-year-${button.dataset.year}`);
-  if (!target) return;
-  target.scrollIntoView({ behavior: "smooth", block: "start" });
-  target.focus({ preventScroll: true });
+  stepTimelineYear(button.dataset.yearStep === "older" ? 1 : -1);
+});
+
+$("#yearFilters").addEventListener("change", (event) => {
+  const select = event.target.closest("#timelineYearSelect");
+  if (!select) return;
+  jumpToTimelineYear(select.value);
 });
 
 $("#expandTimeline").addEventListener("click", () => setAllTimelineYearsCollapsed(false));

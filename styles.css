@@ -1776,9 +1776,10 @@ body:not(.owner-mode) .timeline-section {
 }
 
 .year-jump {
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 6px;
+  min-width: 0;
 }
 
 .timeline-tools,
@@ -1793,12 +1794,16 @@ body:not(.owner-mode) .timeline-section {
   gap: 10px;
 }
 
-.timeline-section-actions,
-.year-jump {
+.timeline-section-actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 8px;
+}
+
+.year-jump {
+  display: flex;
+  align-items: center;
 }
 
 body:not(.owner-mode) .timeline-controls,
@@ -1808,7 +1813,8 @@ body:not(.owner-mode) .year-jump {
 }
 
 .section-action,
-.year-jump button {
+.year-jump button,
+.year-jump select {
   min-height: 34px;
   padding: 0 12px;
   border: 1px solid var(--line-soft);
@@ -1818,10 +1824,34 @@ body:not(.owner-mode) .year-jump {
   cursor: pointer;
 }
 
+.year-jump select {
+  width: clamp(118px, 11vw, 150px);
+  color-scheme: dark;
+}
+
+.year-jump button {
+  width: 34px;
+  padding: 0;
+  font-size: 18px;
+  font-weight: 680;
+  line-height: 1;
+}
+
+.year-jump button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
 .section-action:hover,
-.year-jump button:hover {
+.year-jump button:hover,
+.year-jump select:hover {
   border-color: rgba(216, 177, 95, 0.42);
   color: var(--gold-strong);
+}
+
+.year-jump button:disabled:hover {
+  border-color: var(--line-soft);
+  color: var(--muted);
 }
 
 .timeline.vertical {
@@ -3038,6 +3068,7 @@ body.theme-light .timeline-tag,
 body.theme-light .profile-links a,
 body.theme-light .section-action,
 body.theme-light .year-jump button,
+body.theme-light .year-jump select,
 body.theme-light .event-card,
 body.theme-light .owner-view-tabs,
 body.theme-light .category-tabs,
@@ -3076,11 +3107,16 @@ body.theme-light .ghost-btn:hover,
 body.theme-light .icon-btn:hover,
 body.theme-light .section-action:hover,
 body.theme-light .year-jump button:hover,
+body.theme-light .year-jump select:hover,
 body.theme-light .work-card:hover,
 body.theme-light:not(.owner-mode) .event-card:hover {
   background: rgba(255, 255, 255, 0.82);
   border-color: rgba(117, 80, 27, 0.28);
   color: var(--gold-strong);
+}
+
+body.theme-light .year-jump select {
+  color-scheme: light;
 }
 
 body.theme-light .search-copy .headline,
@@ -3595,8 +3631,15 @@ body.theme-light .image-lightbox-close {
   }
 
   body:not(.owner-mode) .year-jump button {
+    width: 31px;
     min-height: 31px;
-    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  body:not(.owner-mode) .year-jump select {
+    width: 118px;
+    min-height: 31px;
+    padding: 0 8px;
     font-size: 12px;
   }
 
