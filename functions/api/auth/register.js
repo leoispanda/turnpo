@@ -59,7 +59,7 @@ function profileFromRegistration({ name, username, email }) {
     oneLineIntro: `${name} is building a Turnpo profile in the AI era.`,
     currentChapter: "Shaping a public profile through turning points, meaningful work, and owner-approved stories.",
     location: "",
-    avatar: "/assets/turnpo-logo-full.png",
+    avatar: "/assets/turnpo-logo-512.png",
     avatarPositionY: 24,
     links: [],
     values: [],

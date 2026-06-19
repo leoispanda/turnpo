@@ -87,7 +87,7 @@ const cleaned = cleanOwnerProfileForStorage({
   aiWorks: []
 }, "alice", "alice@example.com");
 
-assert.equal(cleaned.avatar, "/assets/turnpo-logo-full.png");
+assert.equal(cleaned.avatar, "/assets/turnpo-logo-512.png");
 assert.deepEqual(cleaned.links, [{ label: "good", url: "https://example.com/path" }]);
 assert.deepEqual(cleaned.values, ["one", "two"]);
 assert.equal(cleaned.lifeStories[0].image, "/assets/safe.jpg");
@@ -119,7 +119,7 @@ const exposed = publicProfile({
   ]
 });
 
-assert.equal(exposed.avatar, "/assets/turnpo-logo-full.png");
+assert.equal(exposed.avatar, "/assets/turnpo-logo-512.png");
 assert.equal(exposed.lifeStories.length, 1);
 assert.equal(exposed.lifeStories[0].image, "");
 assert.deepEqual(exposed.lifeStories[0].images, ["/api/profiles/alice/media/abc123"]);

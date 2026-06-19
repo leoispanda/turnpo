@@ -493,7 +493,7 @@ export function cleanOwnerProfileForStorage(profile = {}, username = "", ownerEm
     oneLineIntro: cleanText(profile.oneLineIntro || "", 280),
     currentChapter: cleanLongText(profile.currentChapter || "", 1500),
     location: cleanText(profile.location || "", 160),
-    avatar: safePublicMediaUrl(profile.avatar || "") || "/assets/turnpo-logo-full.png",
+    avatar: safePublicMediaUrl(profile.avatar || "") || "/assets/turnpo-logo-512.png",
     avatarPositionY: Number.isFinite(Number(profile.avatarPositionY))
       ? Math.min(100, Math.max(0, Number(profile.avatarPositionY)))
       : 24,
@@ -734,7 +734,7 @@ export function publicProfile(profile = {}) {
     return clean;
   };
   const cleanProfile = pick(profile, PUBLIC_PROFILE_FIELDS);
-  cleanProfile.avatar = safePublicMediaUrl(cleanProfile.avatar) || "/assets/turnpo-logo-full.png";
+  cleanProfile.avatar = safePublicMediaUrl(cleanProfile.avatar) || "/assets/turnpo-logo-512.png";
 
   return {
     ...cleanProfile,

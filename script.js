@@ -4547,7 +4547,7 @@ function dragHasFiles(event) {
 function renderPublicPhotoButton(image, alt, imageClass = "") {
   const classAttr = imageClass ? ` class="${escapeHtml(imageClass)}"` : "";
   return `<button class="event-photo-button" type="button" data-photo-preview="true" data-photo-alt="${escapeHtml(alt)}" aria-label="Open ${escapeHtml(alt)}">
-    <img${classAttr} src="${escapeHtml(image)}" alt="${escapeHtml(alt)}" loading="lazy" />
+    <img${classAttr} src="${escapeHtml(image)}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async" fetchpriority="low" />
   </button>`;
 }
 
@@ -4572,7 +4572,7 @@ function renderTimeline() {
       const summary = ownerMode ? story.publicSummary : publicStorySummary(story);
       return `
           <article class="event-card ${coverImage ? "has-media" : "no-media"} ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-content-id="${escapeHtml(story.id)}" data-content-type="${escapeHtml(itemType)}">
-            <div class="event-media">${coverImage ? (ownerMode ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(coverAlt)}" />` : renderPublicPhotoButton(coverImage, coverAlt, "event-main-image")) : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
+            <div class="event-media">${coverImage ? (ownerMode ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(coverAlt)}" loading="lazy" decoding="async" fetchpriority="low" />` : renderPublicPhotoButton(coverImage, coverAlt, "event-main-image")) : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
             <div>
               <div class="event-card-head">
                 <div class="event-date">${escapeHtml([categoryLabel, story.date, story.location].filter(Boolean).join(" - "))}</div>
@@ -4582,7 +4582,7 @@ function renderTimeline() {
               ${summary ? `<p>${escapeHtml(summary)}</p>` : ""}
               ${extraImages.length ? `<details class="event-gallery"><summary>View ${extraImages.length} more photo${extraImages.length === 1 ? "" : "s"}</summary><div>${extraImages.map((image, index) => {
                 const photoAlt = `${story.title} photo ${index + 2}`;
-                return ownerMode ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(photoAlt)}" loading="lazy" />` : renderPublicPhotoButton(image, photoAlt);
+                return ownerMode ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(photoAlt)}" loading="lazy" decoding="async" fetchpriority="low" />` : renderPublicPhotoButton(image, photoAlt);
               }).join("")}</div></details>` : ""}
               ${story.link ? `<a class="source-link" href="${escapeHtml(story.link)}" target="_blank" rel="noopener">Open link</a>` : ""}
               ${story.tags?.length ? `<div class="tag-row">${story.tags.slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}

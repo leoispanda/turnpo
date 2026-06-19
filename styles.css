@@ -1849,6 +1849,8 @@ body:not(.owner-mode) .timeline.vertical {
 .year-block {
   position: relative;
   scroll-margin-top: 110px;
+  content-visibility: auto;
+  contain-intrinsic-size: 240px;
 }
 
 .year-block:focus {
@@ -1950,6 +1952,8 @@ body:not(.owner-mode) .event-stack {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.035);
+  content-visibility: auto;
+  contain-intrinsic-size: 190px;
 }
 
 body:not(.owner-mode) .event-card {
