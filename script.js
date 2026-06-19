@@ -4566,6 +4566,173 @@ function imageUploadStatusMessage(result, successMessage) {
   return `${successMessage} Local image fallback was used because online media storage was not available.`;
 }
 
+function parseOnlineMediaUrl(value = "") {
+  const match = String(value || "").match(/^\/api\/profiles\/([^/]+)\/media\/([a-f0-9]{64})$/i);
+  if (!match) return null;
+  return {
+    username: normalizeUsername(decodeURIComponent(match[1] || "")),
+    mediaId: match[2].toLowerCase()
+  };
+}
+
+function collectExistingOnlineMediaUrls(profile = currentProfile()) {
+  const username = normalizeUsername(profile.username || activeUsername);
+  const urls = new Set();
+  const addUrl = (value = "") => {
+    const url = safeImageSrc(value);
+    const parsed = parseOnlineMediaUrl(url);
+    if (parsed?.username === username) urls.add(url);
+  };
+  addUrl(profile.avatar);
+  [...(profile.lifeStories || []), ...(profile.aiWorks || [])].forEach((item) => {
+    addUrl(item.image);
+    if (Array.isArray(item.images)) item.images.forEach(addUrl);
+  });
+  return [...urls];
+}
+
+function profileMediaFilename(url, index) {
+  const mediaId = parseOnlineMediaUrl(url)?.mediaId || `image-${index + 1}`;
+  return `turnpo-optimized-${mediaId.slice(0, 16)}.jpg`;
+}
+
+function formatByteSize(bytes = 0) {
+  if (bytes >= 1024 * 1024) return `${(bytes / 1024 / 1024).toFixed(1)}MB`;
+  return `${Math.max(1, Math.round(bytes / 1024))}KB`;
+}
+
+async function fileNeedsMediaOptimization(file) {
+  if (!file?.type?.startsWith("image/")) return false;
+  if (file.type !== "image/jpeg" || file.size > IMAGE_UPLOAD_TARGET_BYTES) return true;
+  const image = await fileToImage(file);
+  return Math.max(image.naturalWidth, image.naturalHeight) > IMAGE_UPLOAD_MAX_SIDE;
+}
+
+async function fetchOnlineMediaAsFile(url, index) {
+  const response = await fetch(url, { credentials: "same-origin" });
+  if (!response.ok) throw new Error(`Could not download ${url}.`);
+  const contentType = (response.headers.get("content-type") || "").split(";")[0].trim().toLowerCase();
+  if (!contentType.startsWith("image/")) throw new Error(`${url} is not an image.`);
+  const blob = await response.blob();
+  const type = blob.type || contentType || "image/jpeg";
+  return new File([blob], profileMediaFilename(url, index), { type });
+}
+
+async function uploadOptimizedOnlineMedia(file) {
+  const dataUrl = await optimizeImageFile(file);
+  const optimizedBytes = imageDataUrlBytes(dataUrl);
+  if (optimizedBytes >= file.size && file.size <= IMAGE_UPLOAD_TARGET_BYTES) {
+    return { skipped: true, originalBytes: file.size, optimizedBytes: file.size, url: "" };
+  }
+  const data = await profileApi(`/api/profiles/${encodeURIComponent(activeUsername)}/uploads`, {
+    method: "POST",
+    body: {
+      filename: file.name || "turnpo-optimized-image.jpg",
+      contentType: "image/jpeg",
+      dataUrl
+    }
+  });
+  if (!data.url) throw new Error("Optimized upload did not return an image URL.");
+  return {
+    skipped: false,
+    originalBytes: file.size,
+    optimizedBytes,
+    url: data.url
+  };
+}
+
+function replaceProfileMediaUrls(profile, replacements) {
+  let changed = false;
+  const replaceUrl = (value = "") => {
+    const next = replacements.get(value);
+    if (next && next !== value) {
+      changed = true;
+      return next;
+    }
+    return value;
+  };
+  profile.avatar = replaceUrl(profile.avatar);
+  [...(profile.lifeStories || []), ...(profile.aiWorks || [])].forEach((item) => {
+    const originalFirstImage = Array.isArray(item.images) ? item.images[0] : "";
+    item.image = replaceUrl(item.image);
+    if (Array.isArray(item.images)) {
+      item.images = item.images.map(replaceUrl);
+      if (item.images.length && (!item.image || item.image === originalFirstImage || replacements.has(originalFirstImage))) {
+        item.image = item.images[0];
+      }
+    }
+  });
+  return changed;
+}
+
+async function optimizeExistingOnlineImages() {
+  if (!ownerMode || !ownerSessionProfile) {
+    setOwnerSaveStatus("Log in as the profile owner before optimizing images.");
+    return;
+  }
+  const button = $("#optimizeExistingImages");
+  if (!button || button.disabled) return;
+  const urls = collectExistingOnlineMediaUrls();
+  if (!urls.length) {
+    setOwnerSaveStatus("No existing online media images found for this profile.");
+    return;
+  }
+  const confirmed = confirm(`Optimize ${urls.length} existing online image${urls.length === 1 ? "" : "s"} for @${activeUsername}? New compressed copies will be uploaded, the profile will point to them, and old originals will be left untouched.`);
+  if (!confirmed) return;
+
+  const replacements = new Map();
+  let optimizedCount = 0;
+  let skippedCount = 0;
+  let originalBytes = 0;
+  let optimizedBytes = 0;
+  button.disabled = true;
+  try {
+    for (const [index, url] of urls.entries()) {
+      setOwnerSaveStatus(`Optimizing image ${index + 1}/${urls.length}: downloading...`);
+      const file = await fetchOnlineMediaAsFile(url, index);
+      const shouldOptimize = await fileNeedsMediaOptimization(file);
+      if (!shouldOptimize) {
+        skippedCount += 1;
+        replacements.set(url, url);
+        continue;
+      }
+      setOwnerSaveStatus(`Optimizing image ${index + 1}/${urls.length}: compressing and uploading...`);
+      const result = await uploadOptimizedOnlineMedia(file);
+      if (result.skipped) {
+        skippedCount += 1;
+        replacements.set(url, url);
+      } else {
+        optimizedCount += 1;
+        originalBytes += result.originalBytes;
+        optimizedBytes += result.optimizedBytes;
+        replacements.set(url, result.url);
+      }
+    }
+    if (!optimizedCount) {
+      setOwnerSaveStatus(`Existing online images already look optimized. ${skippedCount} image${skippedCount === 1 ? "" : "s"} skipped.`);
+      return;
+    }
+    const changed = replaceProfileMediaUrls(currentProfile(), replacements);
+    if (!changed) {
+      setOwnerSaveStatus("Optimized copies were uploaded, but no profile references needed replacement.");
+      return;
+    }
+    currentProfile().updatedAt = new Date().toISOString();
+    saveActiveProfile();
+    renderProfile();
+    setOwnerSaveStatus(`Optimized ${optimizedCount} image${optimizedCount === 1 ? "" : "s"} (${formatByteSize(originalBytes)} -> ${formatByteSize(optimizedBytes)}). Saving and publishing...`);
+    const draftSaved = await saveProfileDraftOnline({ quiet: true });
+    if (!draftSaved) throw new Error("Online draft save failed after image optimization.");
+    const published = await publishProfileOnline({ quiet: true });
+    if (!published) throw new Error("Online publish failed after image optimization.");
+    setOwnerSaveStatus(`Optimized ${optimizedCount} image${optimizedCount === 1 ? "" : "s"} (${formatByteSize(originalBytes)} -> ${formatByteSize(optimizedBytes)}) and published the updated profile. Old originals were left untouched.`);
+  } catch (error) {
+    setOwnerSaveStatus(`Image optimization stopped: ${error.message}`);
+  } finally {
+    button.disabled = false;
+  }
+}
+
 function imageFileFromPaste(event) {
   return [...(event.clipboardData?.items || [])]
     .find((item) => item.kind === "file" && item.type.startsWith("image/"))
@@ -5830,6 +5997,7 @@ $("#refreshAdminDashboard").addEventListener("click", renderAdminDashboard);
 $("#themeToggle").addEventListener("click", toggleTheme);
 $("#openRegistration").addEventListener("click", () => setRegistrationDrawer(true));
 $("#openAiImport").addEventListener("click", () => setAiImportDrawer(true));
+$("#optimizeExistingImages").addEventListener("click", optimizeExistingOnlineImages);
 $("#ownerLogout").addEventListener("click", logoutOwner);
 $("#backToSearch").addEventListener("click", () => setRoute("home"));
 $("#closeAuth").addEventListener("click", () => setAuthDrawer(false));
