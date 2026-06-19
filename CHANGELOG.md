@@ -10,6 +10,24 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-19 - v0.1.202
+
+Commit: `Improve profile avatar clarity`
+
+### Changed
+
+- Replaced Leo's default profile portrait with a clearer 724x1086 web-sized avatar asset that is only 121KB.
+- Added a separate higher-quality avatar upload preset so future profile photos keep more detail than regular story images.
+- Added a profile photo chooser in the owner profile editor and removed avatar-specific display blur/filtering while keeping content-image compression and loading treatment intact.
+- Bumped the CSS and JS cache keys to `v0.1.202`.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node tests/security-helpers.test.mjs`.
+- Verified Leo's local profile in the in-app browser at desktop size: the avatar loads from `/assets/leo-profile-clear.jpg`, renders at 724x1086 natural size, has `filter: none`, uses `v0.1.202` CSS/JS cache keys, and logs no warnings or errors.
+- Verified the same page at 390px mobile width: the avatar remains unfiltered, no horizontal overflow appears, and logs stay clean.
+
 ## 2026-06-14 - v0.1.175
 
 Commit: `Add draggable life atlas globe`

@@ -159,7 +159,7 @@ const seedProfiles = {
     oneLineIntro: "L&KM Solution Designer @ ASML | Co-creator of MapKAI | Exploring knowledge, systems, and reflection in the AI era",
     currentChapter: "Exploring AI-native knowledge mapping, reflection, learning systems, and practical decision workflows through MapKAI and public experiments.",
     location: "Eindhoven, Netherlands",
-    avatar: "/assets/leo-profile-900.jpg",
+    avatar: "/assets/leo-profile-clear.jpg",
     avatarPositionY: 8,
     links: [
       { label: "Turnpo", url: "https://www.turnpo.com/u/leo" },
@@ -4514,10 +4514,22 @@ function fileToImage(file) {
   });
 }
 
-const IMAGE_UPLOAD_MAX_SIDE = 1280;
-const IMAGE_UPLOAD_MIN_SIDE = 720;
-const IMAGE_UPLOAD_TARGET_BYTES = 420 * 1024;
-const IMAGE_UPLOAD_QUALITY_STEPS = [0.82, 0.74, 0.68, 0.62];
+const IMAGE_UPLOAD_CONTENT_PRESET = {
+  maxSide: 1280,
+  minSide: 720,
+  targetBytes: 420 * 1024,
+  qualitySteps: [0.82, 0.74, 0.68, 0.62]
+};
+const IMAGE_UPLOAD_AVATAR_PRESET = {
+  maxSide: 1800,
+  minSide: 960,
+  targetBytes: 900 * 1024,
+  qualitySteps: [0.92, 0.88, 0.84, 0.8]
+};
+const IMAGE_UPLOAD_MAX_SIDE = IMAGE_UPLOAD_CONTENT_PRESET.maxSide;
+const IMAGE_UPLOAD_MIN_SIDE = IMAGE_UPLOAD_CONTENT_PRESET.minSide;
+const IMAGE_UPLOAD_TARGET_BYTES = IMAGE_UPLOAD_CONTENT_PRESET.targetBytes;
+const IMAGE_UPLOAD_QUALITY_STEPS = IMAGE_UPLOAD_CONTENT_PRESET.qualitySteps;
 
 function imageDataUrlBytes(dataUrl) {
   const base64 = String(dataUrl).split(",")[1] || "";
@@ -4545,31 +4557,31 @@ function imageToCanvas(image, width, height) {
   return canvas;
 }
 
-async function optimizeImageFile(file) {
+async function optimizeImageFile(file, preset = IMAGE_UPLOAD_CONTENT_PRESET) {
   if (!file || !file.type.startsWith("image/")) throw new Error("Please choose an image file.");
   const image = await fileToImage(file);
   let bestDataUrl = "";
   let bestBytes = Infinity;
-  let maxSide = IMAGE_UPLOAD_MAX_SIDE;
-  while (maxSide >= IMAGE_UPLOAD_MIN_SIDE) {
+  let maxSide = preset.maxSide;
+  while (maxSide >= preset.minSide) {
     const { width, height } = scaledImageDimensions(image, maxSide);
     const canvas = imageToCanvas(image, width, height);
-    for (const quality of IMAGE_UPLOAD_QUALITY_STEPS) {
+    for (const quality of preset.qualitySteps) {
       const dataUrl = canvas.toDataURL("image/jpeg", quality);
       const bytes = imageDataUrlBytes(dataUrl);
       if (bytes < bestBytes) {
         bestDataUrl = dataUrl;
         bestBytes = bytes;
       }
-      if (bytes <= IMAGE_UPLOAD_TARGET_BYTES) return dataUrl;
+      if (bytes <= preset.targetBytes) return dataUrl;
     }
     maxSide = Math.floor(maxSide * 0.82);
   }
   return bestDataUrl;
 }
 
-async function uploadImageToOnlineMedia(file) {
-  const dataUrl = await optimizeImageFile(file);
+async function uploadImageToOnlineMedia(file, preset = IMAGE_UPLOAD_CONTENT_PRESET) {
+  const dataUrl = await optimizeImageFile(file, preset);
   if (!ownerMode || !ownerSessionProfile) return { url: dataUrl, online: false };
   try {
     const data = await profileApi(`/api/profiles/${encodeURIComponent(activeUsername)}/uploads`, {
@@ -4607,6 +4619,25 @@ async function useImageFiles(files) {
     $("#contentStatusNote").textContent = imageUploadStatusMessage(result, "Images ready. Remember to save content.");
   } catch (error) {
     $("#contentStatusNote").textContent = error.message;
+  }
+}
+
+async function useProfileAvatarFile(file) {
+  if (!file?.type?.startsWith("image/")) return;
+  try {
+    $("#profileStatusNote").textContent = "Optimizing and uploading avatar...";
+    const result = await uploadImageToOnlineMedia(file, IMAGE_UPLOAD_AVATAR_PRESET);
+    $("#profileEditAvatar").value = result.url;
+    $("#profileAvatar").src = result.url;
+    updateImageLoadingState($("#profileAvatar"));
+    markProfileFormDirty();
+    $("#profileStatusNote").textContent = imageUploadStatusMessage({
+      urls: [result.url],
+      onlineCount: result.online ? 1 : 0,
+      fallbackError: result.error
+    }, "Avatar ready. Remember to save profile.");
+  } catch (error) {
+    $("#profileStatusNote").textContent = error.message;
   }
 }
 
@@ -6021,6 +6052,12 @@ $("#profileForm").addEventListener("input", markProfileFormDirty);
 $("#profileForm").addEventListener("change", markProfileFormDirty);
 $("#profileEditAvatarY").addEventListener("input", (event) => {
   $("#profileAvatar").style.setProperty("--avatar-y", `${event.target.value}%`);
+});
+$("#chooseProfileAvatar").addEventListener("click", () => $("#profileAvatarFile").click());
+$("#profileAvatarFile").addEventListener("change", (event) => {
+  const [file] = event.target.files || [];
+  if (file) useProfileAvatarFile(file);
+  event.target.value = "";
 });
 $("#deleteContent").addEventListener("click", deleteCurrentContent);
 $("#chooseContentImage").addEventListener("click", () => $("#contentImageFile").click());
