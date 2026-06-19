@@ -11,8 +11,8 @@ import {
   validateJsonMutationRequest
 } from "../../auth/_utils.js";
 
-const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
-const MAX_UPLOAD_BODY_BYTES = 7 * 1024 * 1024;
+const MAX_UPLOAD_BYTES = 2 * 1024 * 1024;
+const MAX_UPLOAD_BODY_BYTES = 3 * 1024 * 1024;
 const IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
 
 export async function onRequestPost({ request, env, params }) {

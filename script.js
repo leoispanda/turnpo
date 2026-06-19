@@ -116,10 +116,10 @@ const LIFE_ATLAS_DEFAULT_CITY_CATEGORIES = new Map([
   ...[...LIFE_ATLAS_VISITED_CITY_IDS].map((id) => [id, "visited"])
 ]);
 const LIFE_ATLAS_DEFAULT_PROFILE_USERNAMES = new Set(["leo", "cindy"]);
-const LIFE_ATLAS_EARTH_IMAGE = "/assets/life-atlas-earth.jpg";
+const LIFE_ATLAS_EARTH_IMAGE = "/assets/life-atlas-earth-1280.jpg";
 const LIFE_ATLAS_THREE_URL = "https://unpkg.com/three@0.160.0/build/three.module.js";
-const LIFE_ATLAS_EARTH_TEXTURE = "/assets/earth-blue-marble-texture.jpg";
-const LIFE_ATLAS_NIGHT_TEXTURE = "/assets/earth-night-lights-texture.png";
+const LIFE_ATLAS_EARTH_TEXTURE = "/assets/earth-blue-marble-texture-2048.jpg";
+const LIFE_ATLAS_NIGHT_TEXTURE = "/assets/earth-night-lights-texture-1024.jpg";
 const CONTENT_CATEGORY = {
   story: "life",
   work: "work"
@@ -158,7 +158,7 @@ const seedProfiles = {
     oneLineIntro: "L&KM Solution Designer @ ASML | Co-creator of MapKAI | Exploring knowledge, systems, and reflection in the AI era",
     currentChapter: "Exploring AI-native knowledge mapping, reflection, learning systems, and practical decision workflows through MapKAI and public experiments.",
     location: "Eindhoven, Netherlands",
-    avatar: "/assets/leo-profile.png",
+    avatar: "/assets/leo-profile-900.jpg",
     avatarPositionY: 8,
     links: [
       { label: "Turnpo", url: "https://www.turnpo.com/u/leo" },
@@ -2313,6 +2313,7 @@ let publishConfirmationResolver = null;
 let lifeAtlasGlobeState = null;
 let lifeAtlasThreeModulePromise = null;
 let lifeAtlasFocusPlaceId = "";
+let lifeAtlasScrollActivated = false;
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -2405,7 +2406,7 @@ function normalizeProfile(profile, options = {}) {
   const normalized = {
     ...profile,
     status: profile.status === "published" ? "published" : "hidden",
-    avatar: safeImageSrc(profile.avatar) || "/assets/turnpo-logo-full.png",
+    avatar: safeImageSrc(profile.avatar) || "/assets/turnpo-logo-512.png",
     avatarPositionY: Number.isFinite(Number(profile.avatarPositionY)) ? Math.min(100, Math.max(0, Number(profile.avatarPositionY))) : 24,
     lifeStories,
     aiWorks,
@@ -3016,6 +3017,8 @@ function disposeLifeAtlasGlobe() {
   state.disposed = true;
   state.observer?.disconnect();
   state.resizeObserver?.disconnect();
+  if (state.idleId) window.cancelIdleCallback?.(state.idleId);
+  if (state.idleTimer) window.clearTimeout(state.idleTimer);
   if (state.frameId) cancelAnimationFrame(state.frameId);
   if (state.canvas) {
     if (state.onPointerMove) state.canvas.removeEventListener("pointermove", state.onPointerMove);
@@ -3047,6 +3050,15 @@ function disposeLifeAtlasGlobe() {
     fallback.style.pointerEvents = "";
   }
   lifeAtlasGlobeState = null;
+}
+
+function isLifeAtlasVisibleEnough(mapEl, threshold = 0.15) {
+  if (!mapEl) return false;
+  if (!lifeAtlasScrollActivated) return false;
+  const rect = mapEl.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+  const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+  return visibleHeight > 0 && visibleHeight >= Math.min(rect.height * threshold, 96);
 }
 
 function setLifeAtlasGlobeActive(placeId, active) {
@@ -3180,25 +3192,38 @@ function queueLifeAtlasGlobe(places, focusPlaceId = "") {
   lifeAtlasGlobeState = state;
   const start = () => {
     if (state.started) return;
+    if (!isLifeAtlasVisibleEnough(mapEl)) return;
     state.started = true;
     state.observer?.disconnect();
-    initLifeAtlasGlobe(state, places).catch(() => {
+    const runInit = () => {
+      if (state.disposed || lifeAtlasGlobeState !== state) return;
+      if (!isLifeAtlasVisibleEnough(mapEl)) {
+        state.started = false;
+        state.observer?.observe(mapEl);
+        return;
+      }
+      initLifeAtlasGlobe(state, places).catch(() => {
       if (lifeAtlasGlobeState === state) {
         state.mapEl.classList.remove("is-loading-3d", "is-3d-ready");
         state.mapEl.classList.add("is-3d-fallback");
       }
-    });
+      });
+    };
+    if ("requestIdleCallback" in window) {
+      state.idleId = window.requestIdleCallback(runInit, { timeout: 1600 });
+    } else {
+      state.idleTimer = window.setTimeout(runInit, 700);
+    }
   };
 
   if ("IntersectionObserver" in window) {
     state.observer = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) start();
-    }, { rootMargin: "160px" });
+    }, { rootMargin: "0px", threshold: 0.15 });
     state.observer.observe(mapEl);
   } else {
     window.setTimeout(start, 0);
   }
-  window.setTimeout(start, 0);
 }
 
 async function initLifeAtlasGlobe(state, places) {
@@ -3213,7 +3238,7 @@ async function initLifeAtlasGlobe(state, places) {
     antialias: true,
     powerPreference: "low-power"
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 3.25));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -3281,12 +3306,12 @@ async function initLifeAtlasGlobe(state, places) {
     metalness: 0.025
   });
   tuneLifeAtlasEarthMaterial(earthMaterial);
-  const earth = new THREE.Mesh(new THREE.SphereGeometry(radius, 208, 112), earthMaterial);
+  const earth = new THREE.Mesh(new THREE.SphereGeometry(radius, 128, 64), earthMaterial);
   globe.add(earth);
 
   if (nightTexture) {
     const nightLights = new THREE.Mesh(
-      new THREE.SphereGeometry(radius * 1.006, 208, 112),
+      new THREE.SphereGeometry(radius * 1.006, 128, 64),
       new THREE.MeshBasicMaterial({
         map: nightTexture,
         color: 0xffc47a,
@@ -3300,7 +3325,7 @@ async function initLifeAtlasGlobe(state, places) {
   }
 
   const atmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(radius * 1.026, 144, 80),
+    new THREE.SphereGeometry(radius * 1.026, 96, 48),
     new THREE.MeshBasicMaterial({
       color: 0x79cfff,
       transparent: true,
@@ -3779,7 +3804,7 @@ function starterProfile({ username, displayName, email = "" }) {
     oneLineIntro: `${displayName} is building a Turnpo profile in the AI era.`,
     currentChapter: "Shaping a public profile through turning points, meaningful work, and owner-approved stories.",
     location: "",
-    avatar: "/assets/turnpo-logo-full.png",
+    avatar: "/assets/turnpo-logo-512.png",
     avatarPositionY: 24,
     links: [],
     values: [],
@@ -3975,10 +4000,11 @@ function setRoute(route) {
   $("#adminView").hidden = true;
   document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = false; });
   history.pushState(null, "", `/u/${activeUsername}`);
+  lifeAtlasScrollActivated = false;
+  window.scrollTo({ top: 0, behavior: "auto" });
   renderProfile();
   if (ownerMode) loadDraftProfileOnline(activeUsername);
   else loadPublishedProfileOnline(activeUsername);
-  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 function routeFromLocation() {
@@ -4379,19 +4405,58 @@ function fileToImage(file) {
   });
 }
 
-async function optimizeImageFile(file) {
-  if (!file || !file.type.startsWith("image/")) throw new Error("Please choose an image file.");
-  const image = await fileToImage(file);
-  const maxSide = 1400;
-  const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
-  const width = Math.max(1, Math.round(image.naturalWidth * scale));
-  const height = Math.max(1, Math.round(image.naturalHeight * scale));
+const IMAGE_UPLOAD_MAX_SIDE = 1280;
+const IMAGE_UPLOAD_MIN_SIDE = 720;
+const IMAGE_UPLOAD_TARGET_BYTES = 420 * 1024;
+const IMAGE_UPLOAD_QUALITY_STEPS = [0.82, 0.74, 0.68, 0.62];
+
+function imageDataUrlBytes(dataUrl) {
+  const base64 = String(dataUrl).split(",")[1] || "";
+  return Math.floor(base64.replace(/=+$/g, "").length * 3 / 4);
+}
+
+function scaledImageDimensions(image, maxSide) {
+  const largestSide = Math.max(image.naturalWidth, image.naturalHeight);
+  const scale = Math.min(1, maxSide / largestSide);
+  return {
+    width: Math.max(1, Math.round(image.naturalWidth * scale)),
+    height: Math.max(1, Math.round(image.naturalHeight * scale))
+  };
+}
+
+function imageToCanvas(image, width, height) {
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
-  const context = canvas.getContext("2d");
+  const context = canvas.getContext("2d", { alpha: false });
+  if (!context) throw new Error("Could not optimize that image.");
+  context.fillStyle = "#ffffff";
+  context.fillRect(0, 0, width, height);
   context.drawImage(image, 0, 0, width, height);
-  return canvas.toDataURL("image/jpeg", 0.82);
+  return canvas;
+}
+
+async function optimizeImageFile(file) {
+  if (!file || !file.type.startsWith("image/")) throw new Error("Please choose an image file.");
+  const image = await fileToImage(file);
+  let bestDataUrl = "";
+  let bestBytes = Infinity;
+  let maxSide = IMAGE_UPLOAD_MAX_SIDE;
+  while (maxSide >= IMAGE_UPLOAD_MIN_SIDE) {
+    const { width, height } = scaledImageDimensions(image, maxSide);
+    const canvas = imageToCanvas(image, width, height);
+    for (const quality of IMAGE_UPLOAD_QUALITY_STEPS) {
+      const dataUrl = canvas.toDataURL("image/jpeg", quality);
+      const bytes = imageDataUrlBytes(dataUrl);
+      if (bytes < bestBytes) {
+        bestDataUrl = dataUrl;
+        bestBytes = bytes;
+      }
+      if (bytes <= IMAGE_UPLOAD_TARGET_BYTES) return dataUrl;
+    }
+    maxSide = Math.floor(maxSide * 0.82);
+  }
+  return bestDataUrl;
 }
 
 async function uploadImageToOnlineMedia(file) {
@@ -4414,7 +4479,8 @@ async function uploadImageToOnlineMedia(file) {
 }
 
 async function uploadImageFiles(files) {
-  const uploaded = await Promise.all(files.map((file) => uploadImageToOnlineMedia(file)));
+  const uploaded = [];
+  for (const file of files) uploaded.push(await uploadImageToOnlineMedia(file));
   return {
     urls: uploaded.map((item) => item.url).filter(Boolean),
     onlineCount: uploaded.filter((item) => item.online).length,
@@ -4426,7 +4492,7 @@ async function useImageFiles(files) {
   const imageFiles = [...files].filter((file) => file.type.startsWith("image/"));
   if (!imageFiles.length) return;
   try {
-    $("#contentStatusNote").textContent = imageFiles.length === 1 ? "Uploading image..." : "Uploading images...";
+    $("#contentStatusNote").textContent = imageFiles.length === 1 ? "Optimizing and uploading image..." : "Optimizing and uploading images...";
     const result = await uploadImageFiles(imageFiles);
     renderImageUpload([...storyImagesFromValue($("#contentImage").value), ...result.urls]);
     $("#contentStatusNote").textContent = imageUploadStatusMessage(result, "Images ready. Remember to save content.");
@@ -4443,6 +4509,7 @@ async function addImageFilesToStory(storyId, files) {
   if (!story || !imageFiles.length) return;
   try {
     card?.classList.add("is-uploading");
+    setOwnerSaveStatus(imageFiles.length === 1 ? "Optimizing and uploading image..." : "Optimizing and uploading images...");
     const currentImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
     const result = await uploadImageFiles(imageFiles);
     const nextImages = [...currentImages, ...result.urls];
@@ -4492,25 +4559,18 @@ function renderTimeline() {
   const collapsedYears = syncDefaultCollapsedYears(years);
   $("#yearFilters").innerHTML = years.map((year) => `<button type="button" data-year="${year}">${year}</button>`).join("");
   const viewLabel = ownerMode ? ownerTimelineView : "published";
-  $("#timelineList").innerHTML = years.length ? years.map((year) => `
-    <article class="year-block ${collapsedYears.has(year) ? "is-collapsed" : ""}" id="timeline-year-${escapeHtml(year)}" tabindex="-1" data-year-block="${escapeHtml(year)}">
-      <div class="year-label">${escapeHtml(year)}</div>
-      <button class="year-title" type="button" data-toggle-year="${escapeHtml(year)}" aria-expanded="${collapsedYears.has(year) ? "false" : "true"}" aria-controls="timeline-events-${escapeHtml(year)}">
-        <span class="year-caret" aria-hidden="true"></span>
-        <strong>${escapeHtml(year)}</strong>
-        <span>${groups[year].length} ${viewLabel === "published" ? "visible" : viewLabel} item${groups[year].length === 1 ? "" : "s"}</span>
-      </button>
-      <div class="event-stack" id="timeline-events-${escapeHtml(year)}">
-        ${groups[year].map((story) => {
-          const itemType = typeForContent(story);
-          const category = story.category || "life";
-          const categoryLabel = CATEGORY_LABELS[category] || "Life";
-          const storyImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
-          const coverImage = storyImages[0] || "";
-          const extraImages = storyImages.slice(1);
-          const coverAlt = story.title;
-          const summary = ownerMode ? story.publicSummary : publicStorySummary(story);
-          return `
+  $("#timelineList").innerHTML = years.length ? years.map((year) => {
+    const isCollapsed = collapsedYears.has(year);
+    const itemsHtml = isCollapsed ? "" : groups[year].map((story) => {
+      const itemType = typeForContent(story);
+      const category = story.category || "life";
+      const categoryLabel = CATEGORY_LABELS[category] || "Life";
+      const storyImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
+      const coverImage = storyImages[0] || "";
+      const extraImages = storyImages.slice(1);
+      const coverAlt = story.title;
+      const summary = ownerMode ? story.publicSummary : publicStorySummary(story);
+      return `
           <article class="event-card ${coverImage ? "has-media" : "no-media"} ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-content-id="${escapeHtml(story.id)}" data-content-type="${escapeHtml(itemType)}">
             <div class="event-media">${coverImage ? (ownerMode ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(coverAlt)}" />` : renderPublicPhotoButton(coverImage, coverAlt, "event-main-image")) : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
             <div>
@@ -4528,10 +4588,22 @@ function renderTimeline() {
               ${story.tags?.length ? `<div class="tag-row">${story.tags.slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
             </div>
           </article>
-        `; }).join("")}
+        `;
+    }).join("");
+    return `
+    <article class="year-block ${isCollapsed ? "is-collapsed" : ""}" id="timeline-year-${escapeHtml(year)}" tabindex="-1" data-year-block="${escapeHtml(year)}">
+      <div class="year-label">${escapeHtml(year)}</div>
+      <button class="year-title" type="button" data-toggle-year="${escapeHtml(year)}" aria-expanded="${isCollapsed ? "false" : "true"}" aria-controls="timeline-events-${escapeHtml(year)}">
+        <span class="year-caret" aria-hidden="true"></span>
+        <strong>${escapeHtml(year)}</strong>
+        <span>${groups[year].length} ${viewLabel === "published" ? "visible" : viewLabel} item${groups[year].length === 1 ? "" : "s"}</span>
+      </button>
+      <div class="event-stack" id="timeline-events-${escapeHtml(year)}">
+        ${itemsHtml}
       </div>
     </article>
-  `).join("") : `<p class="empty-result">No ${activeCategoryFilter === "all" ? "" : `${CATEGORY_LABELS[activeCategoryFilter]} `}${ownerMode ? (ownerTimelineView === "published" ? "visible" : ownerTimelineView) : "published"} items yet</p>`;
+  `;
+  }).join("") : `<p class="empty-result">No ${activeCategoryFilter === "all" ? "" : `${CATEGORY_LABELS[activeCategoryFilter]} `}${ownerMode ? (ownerTimelineView === "published" ? "visible" : ownerTimelineView) : "published"} items yet</p>`;
 }
 
 function renderWorkProjects() {
@@ -5764,6 +5836,11 @@ $("#copyAiImportDraft").addEventListener("click", copyAiImportDraft);
 $("#addAiImportLife").addEventListener("click", addAiImportLifeDraft);
 
 window.addEventListener("popstate", () => setRoute(routeFromLocation()));
+window.addEventListener("scroll", () => {
+  if (body.classList.contains("profile-open") && (window.scrollY || document.documentElement.scrollTop || 0) >= 80) {
+    lifeAtlasScrollActivated = true;
+  }
+}, { passive: true });
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && $("#imageLightbox").classList.contains("open")) closeImageLightbox();
 });
