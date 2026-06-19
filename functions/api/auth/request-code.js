@@ -1,5 +1,6 @@
 import {
   CODE_TTL_SECONDS,
+  clientRateKey,
   codeKey,
   hashCode,
   incrementWindow,
@@ -8,15 +9,24 @@ import {
   ownerProfileForEmail,
   randomCode,
   readJson,
+  requestContentLengthTooLarge,
   requestKey,
   requireAuthConfig,
   sendLoginCode,
+  validateJsonMutationRequest,
   userForEmail
 } from "./_utils.js";
+
+const MAX_AUTH_BODY_BYTES = 16 * 1024;
 
 export async function onRequestPost({ request, env }) {
   const configError = requireAuthConfig(env);
   if (configError) return json({ error: "Auth is not configured." }, { status: 500 });
+  const requestError = validateJsonMutationRequest(request);
+  if (requestError) return json({ error: requestError.error }, { status: requestError.status });
+  if (requestContentLengthTooLarge(request, MAX_AUTH_BODY_BYTES)) {
+    return json({ error: "Auth request is too large." }, { status: 413 });
+  }
 
   const { email: rawEmail } = await readJson(request);
   const email = normalizeEmail(rawEmail);
@@ -24,6 +34,8 @@ export async function onRequestPost({ request, env }) {
 
   const attempts = await incrementWindow(env, requestKey(email), 2 * 60);
   if (attempts > 5) return json({ error: "Too many code requests. Please try again later." }, { status: 429 });
+  const clientAttempts = await incrementWindow(env, clientRateKey(request, "auth-code", email), 2 * 60);
+  if (clientAttempts > 10) return json({ error: "Too many code requests. Please try again later." }, { status: 429 });
 
   const user = await userForEmail(env, email);
   const profile = user?.profile || await ownerProfileForEmail(env, email);

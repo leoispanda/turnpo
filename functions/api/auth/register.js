@@ -3,6 +3,8 @@ import {
   REGISTRATION_TTL_SECONDS,
   SESSION_TTL_SECONDS,
   accessForRole,
+  cleanOwnerProfileForStorage,
+  clientRateKey,
   codeKey,
   ensureUserForEmail,
   hashCode,
@@ -19,6 +21,7 @@ import {
   randomId,
   readJson,
   recordUserLogin,
+  requestContentLengthTooLarge,
   registrationKey,
   registeredUsernameKey,
   requestKey,
@@ -28,6 +31,7 @@ import {
   sessionCookie,
   sessionKey,
   userForEmail,
+  validateJsonMutationRequest,
   verifyKey,
   usernameFromName,
   validUsername
@@ -77,12 +81,48 @@ const REQUIRED_ACKNOWLEDGEMENTS = [
   "aiReview",
   "legalTerms"
 ];
+const REGISTRATION_MESSAGE = "Check your email for a 6-digit verification code if this address can continue.";
+const MAX_REGISTRATION_BODY_BYTES = 32 * 1024;
+
+function usernameBase(name) {
+  const base = usernameFromName(name);
+  const suffix = randomId().slice(0, 6);
+  const stem = base
+    .slice(0, Math.max(1, 31 - suffix.length))
+    .replace(/-+$/g, "");
+  const candidate = `${stem || "turnpo"}-${suffix}`;
+  return validUsername(candidate) ? candidate : `turnpo-${randomId().slice(0, 8)}`;
+}
+
+async function createLoginSession(env, email, profile, { displayName = "" } = {}) {
+  const user = await recordUserLogin(env, await ensureUserForEmail(env, {
+    email,
+    profile,
+    username: profile,
+    displayName: displayName || profile
+  }));
+  const sessionId = randomId();
+  const now = new Date().toISOString();
+  await env.AUTH_KV.put(sessionKey(sessionId), JSON.stringify({
+    userId: user.id,
+    email,
+    profile,
+    role: user.role,
+    createdAt: now
+  }), { expirationTtl: SESSION_TTL_SECONDS });
+  return { user, sessionId };
+}
 
 export async function onRequestPost({ request, env }) {
   const authError = requireAuthConfig(env);
   if (authError) return json({ error: "Auth is not configured." }, { status: 500 });
   const profileError = requireProfileStoreConfig(env);
   if (profileError) return json({ error: "Profile storage is not configured." }, { status: 500 });
+  const requestError = validateJsonMutationRequest(request);
+  if (requestError) return json({ error: requestError.error }, { status: requestError.status });
+  if (requestContentLengthTooLarge(request, MAX_REGISTRATION_BODY_BYTES)) {
+    return json({ error: "Registration request is too large." }, { status: 413 });
+  }
 
   const {
     name: rawName,
@@ -99,31 +139,42 @@ export async function onRequestPost({ request, env }) {
     return json({ error: "Accept every required public-profile acknowledgement before registering." }, { status: 400 });
   }
 
-  const existingProfile = await ownerProfileForEmail(env, email);
   const existingUser = await userForEmail(env, email);
-  if (existingUser) return json({ error: "This email already has a Turnpo profile. Please use email code login." }, { status: 409 });
-  if (existingProfile) return json({ error: "This email already has a Turnpo profile. Please use email code login." }, { status: 409 });
+  const existingProfile = existingUser?.profile || await ownerProfileForEmail(env, email);
 
   if (!code) {
     const attempts = await incrementWindow(env, requestKey(`register:${email}`), 2 * 60);
     if (attempts > 5) return json({ error: "Too many registration code requests. Please try again later." }, { status: 429 });
+    const clientAttempts = await incrementWindow(env, clientRateKey(request, "register", email), 2 * 60);
+    if (clientAttempts > 10) return json({ error: "Too many registration code requests. Please try again later." }, { status: 429 });
 
     const verificationCode = randomCode();
     const codeHash = await hashCode(env, email, verificationCode);
-    const pending = {
-      codeHash,
-      name,
-      email,
-      acknowledgements: Object.fromEntries(REQUIRED_ACKNOWLEDGEMENTS.map((key) => [key, true])),
-      createdAt: new Date().toISOString()
-    };
-    await env.AUTH_KV.put(registrationKey(email), JSON.stringify(pending), { expirationTtl: REGISTRATION_TTL_SECONDS });
-    await env.AUTH_KV.put(codeKey(`register:${email}`), JSON.stringify({
-      codeHash,
-      email,
-      profile: "",
-      createdAt: pending.createdAt
-    }), { expirationTtl: CODE_TTL_SECONDS });
+    const createdAt = new Date().toISOString();
+    if (existingProfile) {
+      await env.AUTH_KV.delete(registrationKey(email));
+      await env.AUTH_KV.put(codeKey(email), JSON.stringify({
+        codeHash,
+        email,
+        profile: existingProfile,
+        createdAt
+      }), { expirationTtl: CODE_TTL_SECONDS });
+    } else {
+      const pending = {
+        codeHash,
+        name,
+        email,
+        acknowledgements: Object.fromEntries(REQUIRED_ACKNOWLEDGEMENTS.map((key) => [key, true])),
+        createdAt
+      };
+      await env.AUTH_KV.put(registrationKey(email), JSON.stringify(pending), { expirationTtl: REGISTRATION_TTL_SECONDS });
+      await env.AUTH_KV.put(codeKey(`register:${email}`), JSON.stringify({
+        codeHash,
+        email,
+        profile: "",
+        createdAt
+      }), { expirationTtl: CODE_TTL_SECONDS });
+    }
 
     const sent = await sendLoginCode(env, email, verificationCode);
     if (!sent.ok) return json({ error: "Could not send registration code." }, { status: 502 });
@@ -131,12 +182,40 @@ export async function onRequestPost({ request, env }) {
     return json({
       ok: true,
       verificationRequired: true,
-      message: "Check your email for a 6-digit registration code."
+      message: REGISTRATION_MESSAGE
     });
   }
 
   const verifyAttempts = await incrementWindow(env, verifyKey(`register:${email}`), 2 * 60);
   if (verifyAttempts > 8) return json({ error: "Too many verification attempts. Please request a new code later." }, { status: 429 });
+  const clientVerifyAttempts = await incrementWindow(env, clientRateKey(request, "register-verify", email), 2 * 60);
+  if (clientVerifyAttempts > 16) return json({ error: "Too many verification attempts. Please request a new code later." }, { status: 429 });
+
+  if (existingProfile) {
+    const storedLoginCode = await env.AUTH_KV.get(codeKey(email), "json");
+    const submittedLoginHash = await hashCode(env, email, code);
+    if (!storedLoginCode?.codeHash || storedLoginCode.email !== email || submittedLoginHash !== storedLoginCode.codeHash) {
+      return json({ error: "Registration code is expired or incorrect." }, { status: 401 });
+    }
+    await env.AUTH_KV.delete(codeKey(email));
+    const { user, sessionId } = await createLoginSession(env, email, existingProfile, {
+      displayName: existingUser?.displayName || name
+    });
+    const access = accessForRole(user.role);
+    return json({
+      ok: true,
+      profile: existingProfile,
+      role: access.role,
+      roleLabel: access.label,
+      scopes: access.scopes,
+      managementAreas: access.managementAreas,
+      readOnly: access.readOnly
+    }, {
+      headers: {
+        "set-cookie": sessionCookie(sessionId)
+      }
+    });
+  }
 
   const pending = await env.AUTH_KV.get(registrationKey(email), "json");
   if (!pending?.codeHash || pending.email !== email) {
@@ -148,8 +227,7 @@ export async function onRequestPost({ request, env }) {
     return json({ error: "Registration code is expired or incorrect." }, { status: 401 });
   }
 
-  let username = usernameFromName(name);
-  if (!validUsername(username)) username = `turnpo-${randomId().slice(0, 8)}`;
+  let username = usernameBase(name);
 
   const store = profileStore(env);
   let availableUsername = "";
@@ -169,12 +247,15 @@ export async function onRequestPost({ request, env }) {
   username = availableUsername;
 
   const now = new Date().toISOString();
-  const profile = profileFromRegistration({ name, username, email });
+  let profile = profileFromRegistration({ name, username, email });
   profile.legalAcknowledgement = {
     version: "0.2",
     acceptedAt: now,
     acknowledgements: Object.fromEntries(REQUIRED_ACKNOWLEDGEMENTS.map((key) => [key, true]))
   };
+  profile = cleanOwnerProfileForStorage(profile, username, email);
+  const lateClaimed = await env.AUTH_KV.get(registeredUsernameKey(username));
+  if (lateClaimed) return json({ error: "Could not create a unique username. Please try again." }, { status: 409 });
   const record = JSON.stringify({
     profile,
     createdAt: now,

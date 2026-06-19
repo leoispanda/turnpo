@@ -20,5 +20,6 @@ export async function onRequestGet({ env, params }) {
   object.writeHttpMetadata(headers);
   headers.set("etag", object.httpEtag);
   headers.set("cache-control", headers.get("cache-control") || "public, max-age=31536000, immutable");
+  headers.set("x-content-type-options", "nosniff");
   return new Response(object.body, { headers });
 }

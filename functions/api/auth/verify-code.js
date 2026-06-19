@@ -1,6 +1,7 @@
 import {
   SESSION_TTL_SECONDS,
   accessForRole,
+  clientRateKey,
   codeKey,
   ensureUserForEmail,
   hashCode,
@@ -10,15 +11,24 @@ import {
   randomId,
   readJson,
   recordUserLogin,
+  requestContentLengthTooLarge,
   requireAuthConfig,
   sessionCookie,
   sessionKey,
+  validateJsonMutationRequest,
   verifyKey
 } from "./_utils.js";
+
+const MAX_AUTH_BODY_BYTES = 16 * 1024;
 
 export async function onRequestPost({ request, env }) {
   const configError = requireAuthConfig(env);
   if (configError) return json({ error: "Auth is not configured." }, { status: 500 });
+  const requestError = validateJsonMutationRequest(request);
+  if (requestError) return json({ error: requestError.error }, { status: requestError.status });
+  if (requestContentLengthTooLarge(request, MAX_AUTH_BODY_BYTES)) {
+    return json({ error: "Auth request is too large." }, { status: 413 });
+  }
 
   const { email: rawEmail, code: rawCode } = await readJson(request);
   const email = normalizeEmail(rawEmail);
@@ -27,6 +37,8 @@ export async function onRequestPost({ request, env }) {
 
   const attempts = await incrementWindow(env, verifyKey(email), 2 * 60);
   if (attempts > 8) return json({ error: "Too many verification attempts. Please request a new code later." }, { status: 429 });
+  const clientAttempts = await incrementWindow(env, clientRateKey(request, "auth-verify", email), 2 * 60);
+  if (clientAttempts > 16) return json({ error: "Too many verification attempts. Please request a new code later." }, { status: 429 });
 
   const stored = await env.AUTH_KV.get(codeKey(email), "json");
   if (!stored) return json({ error: "Code is expired or incorrect." }, { status: 401 });

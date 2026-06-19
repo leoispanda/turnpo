@@ -1,12 +1,15 @@
 import {
   assertOwnerProfile,
+  cleanOwnerProfileForStorage,
   json,
   normalizeUsername,
   ownerSession,
   profileDraftKey,
   profileStore,
   readJson,
-  requireProfileStoreConfig
+  requestContentLengthTooLarge,
+  requireProfileStoreConfig,
+  validateJsonMutationRequest
 } from "../../auth/_utils.js";
 
 const MAX_PROFILE_BYTES = 10 * 1024 * 1024;
@@ -33,6 +36,11 @@ export async function onRequestGet({ request, env, params }) {
 export async function onRequestPut({ request, env, params }) {
   const configError = requireProfileStoreConfig(env);
   if (configError) return json({ error: "Profile storage is not configured." }, { status: 500 });
+  const requestError = validateJsonMutationRequest(request);
+  if (requestError) return json({ error: requestError.error }, { status: requestError.status });
+  if (requestContentLengthTooLarge(request, MAX_PROFILE_BYTES)) {
+    return json({ error: "Profile draft is too large for online storage." }, { status: 413 });
+  }
 
   const username = normalizeUsername(params.username);
   const auth = await ownerSession(request, env);
@@ -45,8 +53,9 @@ export async function onRequestPut({ request, env, params }) {
   }
 
   const now = new Date().toISOString();
+  const cleanProfile = cleanOwnerProfileForStorage(profile, username, auth.session.email || "");
   const payload = JSON.stringify({
-    profile,
+    profile: cleanProfile,
     savedAt: now,
     updatedAt: now,
     updatedBy: auth.session.email || ""

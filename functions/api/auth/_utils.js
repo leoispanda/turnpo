@@ -6,6 +6,13 @@ const RESERVED_USERNAMES = new Set(["admin", "api", "auth", "cindy", "founder", 
 const CODE_TTL_SECONDS = 10 * 60;
 const SESSION_TTL_SECONDS = 7 * 24 * 60 * 60;
 const REGISTRATION_TTL_SECONDS = 20 * 60;
+const MAX_TEXT_FIELD_LENGTH = 1200;
+const MAX_LONG_TEXT_FIELD_LENGTH = 5000;
+const MAX_PROFILE_ITEMS = 250;
+const MAX_PROFILE_TAGS = 20;
+const MAX_PROFILE_LINKS = 24;
+const MAX_PUBLIC_STATE_IDS = 1000;
+const MUTATION_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"]);
 const ROLE_DEFINITIONS = {
   admin: {
     label: "Admin",
@@ -101,6 +108,19 @@ function safePublicUrl(value = "") {
   }
 }
 
+function safePublicMediaUrl(value = "") {
+  const url = String(value || "").trim();
+  if (!url) return "";
+  if (
+    (url.startsWith("/assets/") || url.startsWith("/api/profiles/"))
+    && !url.startsWith("//")
+    && !url.includes("\\")
+  ) {
+    return url;
+  }
+  return "";
+}
+
 function cleanPublicLinks(links = []) {
   return Array.isArray(links)
     ? links
@@ -110,6 +130,152 @@ function cleanPublicLinks(links = []) {
       }))
       .filter((link) => link.label && link.url)
     : [];
+}
+
+function cleanText(value = "", maxLength = MAX_TEXT_FIELD_LENGTH) {
+  return String(value || "").trim().replace(/\s+/g, " ").slice(0, maxLength);
+}
+
+function cleanLongText(value = "", maxLength = MAX_LONG_TEXT_FIELD_LENGTH) {
+  return String(value || "").trim().slice(0, maxLength);
+}
+
+function cleanStringArray(value = [], maxItems = 40, maxLength = 120) {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set();
+  return value
+    .map((item) => cleanText(item, maxLength))
+    .filter((item) => {
+      if (!item || seen.has(item)) return false;
+      seen.add(item);
+      return true;
+    })
+    .slice(0, maxItems);
+}
+
+function cleanLinkList(links = []) {
+  return Array.isArray(links)
+    ? links
+      .map((link) => ({
+        label: cleanText(link?.label || "", 120),
+        url: safePublicUrl(link?.url || "")
+      }))
+      .filter((link) => link.label && link.url)
+      .slice(0, MAX_PROFILE_LINKS)
+    : [];
+}
+
+function cleanMediaList(values = []) {
+  if (!Array.isArray(values)) return [];
+  const seen = new Set();
+  return values
+    .map(safePublicMediaUrl)
+    .filter((url) => {
+      if (!url || seen.has(url)) return false;
+      seen.add(url);
+      return true;
+    })
+    .slice(0, 20);
+}
+
+function cleanStatus(value = "") {
+  return ["published", "hidden", "deleted"].includes(value) ? value : "hidden";
+}
+
+function cleanPublicState(value = {}) {
+  return {
+    hiddenStoryIds: normalizeIdList(value.hiddenStoryIds).slice(0, MAX_PUBLIC_STATE_IDS),
+    deletedStoryIds: normalizeIdList(value.deletedStoryIds).slice(0, MAX_PUBLIC_STATE_IDS),
+    hiddenWorkIds: normalizeIdList(value.hiddenWorkIds).slice(0, MAX_PUBLIC_STATE_IDS),
+    deletedWorkIds: normalizeIdList(value.deletedWorkIds).slice(0, MAX_PUBLIC_STATE_IDS),
+    collapsedYears: normalizeIdList(value.collapsedYears).slice(0, MAX_PUBLIC_STATE_IDS)
+  };
+}
+
+function cleanTravelPlacesForStorage(value = []) {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set();
+  return value.map((entry) => {
+    if (typeof entry === "string") return cleanText(entry, 120);
+    if (!entry || typeof entry !== "object") return null;
+    const lat = Number(entry.lat);
+    const lng = Number(entry.lng);
+    const clean = {
+      id: cleanText(entry.id || "", 120),
+      label: cleanText(entry.label || "", 120),
+      country: cleanText(entry.country || "", 120),
+      type: entry.type === "city" ? "city" : "",
+      category: entry.category === "major" || entry.atlasCategory === "major" ? "major" : "visited",
+      manual: entry.manual === true
+    };
+    if (Number.isFinite(lat)) clean.lat = Math.min(90, Math.max(-90, lat));
+    if (Number.isFinite(lng)) clean.lng = Math.min(180, Math.max(-180, lng));
+    return clean.id ? clean : null;
+  }).filter((entry) => {
+    const id = typeof entry === "string" ? entry : entry?.id;
+    if (!id || seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  }).slice(0, MAX_PROFILE_ITEMS);
+}
+
+function cleanContentItem(item = {}, fallbackCategory = "life") {
+  const category = item.category === "work" || fallbackCategory === "work" ? "work" : "life";
+  const images = cleanMediaList([...(Array.isArray(item.images) ? item.images : []), item.image].filter(Boolean));
+  const status = cleanStatus(item.status);
+  const clean = {
+    id: cleanText(item.id || `${category}-${Date.now()}`, 160),
+    category,
+    title: cleanText(item.title || "", 180),
+    type: cleanText(item.type || "", 120),
+    year: cleanText(item.year || "", 32),
+    date: cleanText(item.date || "", 80),
+    location: cleanText(item.location || "", 180),
+    image: images[0] || "",
+    images,
+    link: safePublicUrl(item.link || ""),
+    sourceUrl: safePublicUrl(item.sourceUrl || ""),
+    publicSummary: cleanLongText(item.publicSummary || "", 2000),
+    fullText: cleanLongText(item.fullText || "", 5000),
+    whyMade: cleanLongText(item.whyMade || "", 2000),
+    whyItMatters: cleanLongText(item.whyItMatters || "", 2000),
+    toolsUsed: cleanStringArray(item.toolsUsed, 30, 80),
+    humanRole: cleanLongText(item.humanRole || "", 2000),
+    aiRole: cleanLongText(item.aiRole || "", 2000),
+    result: cleanLongText(item.result || "", 2000),
+    tags: cleanStringArray(item.tags, MAX_PROFILE_TAGS, 80),
+    status,
+    userApproved: status === "published" && item.userApproved === true,
+    createdAt: cleanText(item.createdAt || "", 80),
+    updatedAt: cleanText(item.updatedAt || "", 80),
+    publishedAt: cleanText(item.publishedAt || "", 80),
+    unpublishedAt: cleanText(item.unpublishedAt || "", 80),
+    deletedAt: cleanText(item.deletedAt || "", 80),
+    previousStatus: cleanStatus(item.previousStatus),
+    ownerEdited: item.ownerEdited === true,
+    ownerReviewed: item.ownerReviewed === true,
+    ownerEditedAt: cleanText(item.ownerEditedAt || "", 80),
+    ownerReviewedAt: cleanText(item.ownerReviewedAt || "", 80)
+  };
+  if (!clean.previousStatus || clean.previousStatus === "hidden") delete clean.previousStatus;
+  return clean;
+}
+
+function cleanAcknowledgement(value = {}) {
+  if (!value || typeof value !== "object") return undefined;
+  const clean = {
+    version: cleanText(value.version || "", 40),
+    acceptedAt: cleanText(value.acceptedAt || "", 80)
+  };
+  if (value.acknowledgements && typeof value.acknowledgements === "object") {
+    clean.acknowledgements = Object.fromEntries(
+      Object.entries(value.acknowledgements)
+        .map(([key, accepted]) => [cleanText(key, 80), accepted === true])
+        .filter(([key]) => key)
+        .slice(0, 40)
+    );
+  }
+  return clean.version || clean.acceptedAt || clean.acknowledgements ? clean : undefined;
 }
 
 export function approvedProfileForEmail(env, email) {
@@ -226,6 +392,64 @@ export async function incrementWindow(env, key, ttlSeconds) {
   return next;
 }
 
+export function clientRateKey(request, scope, identifier = "") {
+  const ip = request.headers.get("cf-connecting-ip")
+    || request.headers.get("x-forwarded-for")
+      ?.split(",")[0]
+      ?.trim()
+    || "unknown";
+  return `rate:${scope}:${ip}:${normalizeEmail(identifier) || "anon"}`;
+}
+
+export function validateJsonMutationRequest(request, { requireSameOrigin = true } = {}) {
+  if (!MUTATION_METHODS.has(request.method)) return null;
+
+  const contentType = request.headers.get("content-type") || "";
+  if (!contentType.toLowerCase().includes("application/json")) {
+    return { error: "Expected application/json request body.", status: 415 };
+  }
+
+  if (!requireSameOrigin) return null;
+
+  const expectedOrigin = new URL(request.url).origin;
+  const origin = request.headers.get("origin");
+  if (origin) {
+    return origin === expectedOrigin ? null : { error: "Same-origin request required.", status: 403 };
+  }
+
+  const referer = request.headers.get("referer");
+  if (referer) {
+    try {
+      return new URL(referer).origin === expectedOrigin ? null : { error: "Same-origin request required.", status: 403 };
+    } catch {
+      return { error: "Same-origin request required.", status: 403 };
+    }
+  }
+
+  return { error: "Same-origin request required.", status: 403 };
+}
+
+export function validateSameOriginRequest(request) {
+  if (!MUTATION_METHODS.has(request.method)) return null;
+
+  const expectedOrigin = new URL(request.url).origin;
+  const origin = request.headers.get("origin");
+  if (origin) return origin === expectedOrigin ? null : { error: "Same-origin request required.", status: 403 };
+
+  const referer = request.headers.get("referer");
+  if (!referer) return { error: "Same-origin request required.", status: 403 };
+  try {
+    return new URL(referer).origin === expectedOrigin ? null : { error: "Same-origin request required.", status: 403 };
+  } catch {
+    return { error: "Same-origin request required.", status: 403 };
+  }
+}
+
+export function requestContentLengthTooLarge(request, maxBytes) {
+  const length = Number(request.headers.get("content-length") || "0");
+  return Number.isFinite(length) && length > maxBytes;
+}
+
 export function getSessionId(request) {
   const cookie = request.headers.get("cookie") || "";
   const match = cookie.match(new RegExp(`(?:^|;\\s*)${SESSION_COOKIE}=([^;]+)`));
@@ -246,6 +470,46 @@ export async function readJson(request) {
   } catch {
     return {};
   }
+}
+
+export function cleanOwnerProfileForStorage(profile = {}, username = "", ownerEmail = "") {
+  const normalizedUsername = normalizeUsername(username || profile.username);
+  const now = new Date().toISOString();
+  const lifeStories = Array.isArray(profile.lifeStories)
+    ? profile.lifeStories.map((item) => cleanContentItem(item, item?.category === "work" ? "work" : "life"))
+    : [];
+  const aiWorks = Array.isArray(profile.aiWorks)
+    ? profile.aiWorks.map((item) => cleanContentItem(item, "work"))
+    : [];
+  const legalAcknowledgement = cleanAcknowledgement(profile.legalAcknowledgement);
+  const publicationAcknowledgement = cleanAcknowledgement(profile.publicationAcknowledgement);
+  const clean = {
+    id: cleanText(profile.id || `profile-${normalizedUsername}`, 120),
+    status: profile.status === "published" ? "published" : "hidden",
+    seedVersion: cleanText(profile.seedVersion || "", 80),
+    username: normalizedUsername,
+    displayName: cleanText(profile.displayName || normalizedUsername, 120),
+    ownerEmail: normalizeEmail(ownerEmail || profile.ownerEmail || ""),
+    oneLineIntro: cleanText(profile.oneLineIntro || "", 280),
+    currentChapter: cleanLongText(profile.currentChapter || "", 1500),
+    location: cleanText(profile.location || "", 160),
+    avatar: safePublicMediaUrl(profile.avatar || "") || "/assets/turnpo-logo-full.png",
+    avatarPositionY: Number.isFinite(Number(profile.avatarPositionY))
+      ? Math.min(100, Math.max(0, Number(profile.avatarPositionY)))
+      : 24,
+    links: cleanLinkList(profile.links),
+    values: cleanStringArray(profile.values, 40, 120),
+    themes: cleanStringArray(profile.themes, 40, 120),
+    travelPlaces: cleanTravelPlacesForStorage(profile.travelPlaces),
+    lifeStories: lifeStories.slice(0, MAX_PROFILE_ITEMS),
+    aiWorks: aiWorks.slice(0, MAX_PROFILE_ITEMS),
+    publicState: cleanPublicState(profile.publicState),
+    createdAt: cleanText(profile.createdAt || now, 80),
+    updatedAt: now
+  };
+  if (legalAcknowledgement) clean.legalAcknowledgement = legalAcknowledgement;
+  if (publicationAcknowledgement) clean.publicationAcknowledgement = publicationAcknowledgement;
+  return clean;
 }
 
 export async function ownerSession(request, env) {
@@ -464,19 +728,20 @@ export function publicProfile(profile = {}) {
   const cleanContent = (item) => {
     const clean = pick(item, PUBLIC_CONTENT_FIELDS);
     clean.link = safePublicUrl(clean.link);
-    clean.image = safePublicUrl(clean.image);
-    clean.images = Array.isArray(clean.images) ? clean.images.map(safePublicUrl).filter(Boolean) : [];
+    clean.image = safePublicMediaUrl(clean.image);
+    clean.images = Array.isArray(clean.images) ? clean.images.map(safePublicMediaUrl).filter(Boolean) : [];
+    clean.tags = cleanStringArray(clean.tags, MAX_PROFILE_TAGS, 80);
     return clean;
   };
   const cleanProfile = pick(profile, PUBLIC_PROFILE_FIELDS);
-  cleanProfile.avatar = safePublicUrl(cleanProfile.avatar);
+  cleanProfile.avatar = safePublicMediaUrl(cleanProfile.avatar) || "/assets/turnpo-logo-full.png";
 
   return {
     ...cleanProfile,
     status: "published",
     links: cleanPublicLinks(profile.links),
-    values: Array.isArray(profile.values) ? profile.values : [],
-    themes: Array.isArray(profile.themes) ? profile.themes : [],
+    values: cleanStringArray(profile.values, 40, 120),
+    themes: cleanStringArray(profile.themes, 40, 120),
     travelPlaces: cleanTravelPlaces(profile.travelPlaces),
     lifeStories: (Array.isArray(profile.lifeStories) ? profile.lifeStories : [])
       .filter((item) => item?.category === "work"

@@ -2405,13 +2405,18 @@ function normalizeProfile(profile, options = {}) {
   const normalized = {
     ...profile,
     status: profile.status === "published" ? "published" : "hidden",
+    avatar: safeImageSrc(profile.avatar) || "/assets/turnpo-logo-full.png",
     avatarPositionY: Number.isFinite(Number(profile.avatarPositionY)) ? Math.min(100, Math.max(0, Number(profile.avatarPositionY))) : 24,
     lifeStories,
     aiWorks,
     values: profile.values || [],
     themes: profile.themes || [],
     travelPlaces: normalizeTravelPlaces(profile.travelPlaces),
-    links: profile.links || []
+    links: Array.isArray(profile.links)
+      ? profile.links
+        .map((link) => ({ label: String(link?.label || "").trim(), url: safePublicLink(link?.url || "") }))
+        .filter((link) => link.label && link.url)
+      : []
   };
   ensurePublicState(normalized);
   applyPublicState(normalized);
@@ -2486,11 +2491,11 @@ function normalizeTravelPlaces(value) {
 function normalizeContent(item, type) {
   const now = new Date().toISOString();
   const existingImages = Array.isArray(item.images) ? item.images : [];
-  const images = [...new Set([...existingImages, item.image].filter(Boolean))];
+  const images = [...new Set([...existingImages, item.image].map(safeImageSrc).filter(Boolean))];
   const rawStatus = item.status === "draft" ? "hidden" : item.status;
   const status = STATUSES.includes(rawStatus) ? rawStatus : "hidden";
   const category = inferContentCategory(item, type);
-  const link = String(item.link || "").trim() || (category === "work" ? KNOWN_WORK_LINKS[item.id] || "" : "");
+  const link = safePublicLink(item.link || "") || (category === "work" ? safePublicLink(KNOWN_WORK_LINKS[item.id] || "") : "");
   return {
     ...item,
     id: item.id || `${type}-${crypto.randomUUID()}`,
@@ -3723,6 +3728,32 @@ function escapeHtml(value = "") {
   }[char]));
 }
 
+function safePublicLink(value = "") {
+  const url = String(value || "").trim();
+  if (!url) return "";
+  if (url.startsWith("/") && !url.startsWith("//") && !url.includes("\\")) return url;
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === "http:" || parsed.protocol === "https:" ? parsed.href : "";
+  } catch {
+    return "";
+  }
+}
+
+function safeImageSrc(value = "") {
+  const url = String(value || "").trim();
+  if (!url) return "";
+  if (
+    (url.startsWith("/assets/") || url.startsWith("/api/profiles/"))
+    && !url.startsWith("//")
+    && !url.includes("\\")
+  ) {
+    return url;
+  }
+  if (/^data:image\/(?:jpeg|png|webp|gif);base64,[a-z0-9+/=]+$/i.test(url)) return url;
+  return "";
+}
+
 function parseList(value) {
   return value.split(",").map((item) => item.trim()).filter(Boolean);
 }
@@ -4302,14 +4333,15 @@ function imageValueType(value) {
 function storyImagesFromValue(value = "") {
   try {
     const parsed = JSON.parse(value || "[]");
-    return Array.isArray(parsed) ? parsed.filter(Boolean) : [];
+    return Array.isArray(parsed) ? parsed.map(safeImageSrc).filter(Boolean) : [];
   } catch {
-    return value ? [value] : [];
+    const image = safeImageSrc(value);
+    return image ? [image] : [];
   }
 }
 
 function renderImageUpload(value = []) {
-  const images = Array.isArray(value) ? value.filter(Boolean) : storyImagesFromValue(value);
+  const images = Array.isArray(value) ? value.map(safeImageSrc).filter(Boolean) : storyImagesFromValue(value);
   $("#contentImage").value = JSON.stringify(images);
   const preview = $("#contentImagePreview");
   const title = $("#contentImageTitle");
@@ -4735,7 +4767,7 @@ function parseProfileLinks(value = "") {
     const [label, ...urlParts] = line.split("|");
     return {
       label: label.trim(),
-      url: urlParts.join("|").trim()
+      url: safePublicLink(urlParts.join("|").trim())
     };
   }).filter((link) => link.label && link.url);
 }
@@ -4776,7 +4808,7 @@ function saveProfileText(event) {
     oneLineIntro: $("#profileEditIntro").value.trim(),
     currentChapter: $("#profileEditChapter").value.trim(),
     location: $("#profileEditLocation").value.trim(),
-    avatar: $("#profileEditAvatar").value.trim() || profile.avatar,
+    avatar: safeImageSrc($("#profileEditAvatar").value.trim()) || profile.avatar,
     avatarPositionY: Number($("#profileEditAvatarY").value),
     links: parseProfileLinks($("#profileEditLinks").value)
   });
@@ -4827,7 +4859,7 @@ async function upsertContent(event) {
     location: $("#contentLocation").value.trim(),
     image: storyImagesFromValue($("#contentImage").value)[0] || "",
     images: storyImagesFromValue($("#contentImage").value),
-    link: $("#workLink").value.trim(),
+    link: safePublicLink($("#workLink").value.trim()),
     publicSummary: $("#contentSummary").value.trim(),
     type: type === "work" ? $("#workType").value.trim() : "",
     whyMade: type === "work" ? $("#contentWhy").value.trim() : "",

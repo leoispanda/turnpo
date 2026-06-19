@@ -1,12 +1,19 @@
 import {
+  clientRateKey,
+  incrementWindow,
   json,
+  normalizeUsername,
   ownerSession,
-  readJson
+  readJson,
+  requestContentLengthTooLarge,
+  requestKey,
+  validateJsonMutationRequest
 } from "../auth/_utils.js";
 
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
 const DEFAULT_MODEL = "gpt-4o-mini";
 const MAX_SOURCE_CHARS = 12000;
+const MAX_AI_IMPORT_BODY_BYTES = 64 * 1024;
 const MONTH_NAMES = [
   "January",
   "February",
@@ -77,6 +84,12 @@ function normalizeDraft(value = {}, sourceText = "", profileLocation = "") {
 }
 
 export async function onRequestPost({ request, env }) {
+  const requestError = validateJsonMutationRequest(request);
+  if (requestError) return json({ error: requestError.error }, { status: requestError.status });
+  if (requestContentLengthTooLarge(request, MAX_AI_IMPORT_BODY_BYTES)) {
+    return json({ error: "AI import request is too large." }, { status: 413 });
+  }
+
   const auth = await ownerSession(request, env);
   if (auth.error) return json({ error: auth.error }, { status: auth.status });
 
@@ -89,6 +102,17 @@ export async function onRequestPost({ request, env }) {
     profileLocation = "",
     username = ""
   } = await readJson(request);
+  const sessionProfile = normalizeUsername(auth.session.profile || "");
+  const submittedUsername = normalizeUsername(username || "");
+  if (submittedUsername && submittedUsername !== sessionProfile) {
+    return json({ error: "Not allowed for this profile." }, { status: 403 });
+  }
+  const rateIdentity = auth.session.email || sessionProfile || "owner";
+  const attempts = await incrementWindow(env, requestKey(`ai-import:${rateIdentity}`), 60 * 60);
+  if (attempts > 20) return json({ error: "Too many AI import requests. Please try again later." }, { status: 429 });
+  const clientAttempts = await incrementWindow(env, clientRateKey(request, "ai-import", rateIdentity), 60 * 60);
+  if (clientAttempts > 30) return json({ error: "Too many AI import requests. Please try again later." }, { status: 429 });
+
   const text = String(sourceText || "").trim();
   if (text.length < 20) return json({ error: "Please provide more source text." }, { status: 400 });
 
