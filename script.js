@@ -3591,7 +3591,7 @@ function renderTravelMap() {
     <div class="life-atlas-map" role="img" aria-label="Rotating Life Atlas Earth globe with warm signals for places that shaped perspective">
       <canvas class="life-atlas-globe-canvas" aria-hidden="true"></canvas>
       <div class="life-atlas-static-fallback">
-        <img class="life-atlas-image" src="${LIFE_ATLAS_EARTH_IMAGE}" alt="" aria-hidden="true" loading="lazy" />
+        <img class="life-atlas-image" src="${LIFE_ATLAS_EARTH_IMAGE}" alt="" aria-hidden="true" ${loadingImageAttributes()} />
         <div class="life-atlas-vignette" aria-hidden="true"></div>
         <div class="life-atlas-marker-layer">
           ${signalPlaces.map((place) => {
@@ -3777,6 +3777,33 @@ function safeImageSrc(value = "") {
   }
   if (/^data:image\/(?:jpeg|png|webp|gif);base64,[a-z0-9+/=]+$/i.test(url)) return url;
   return "";
+}
+
+function loadingImageAttributes(extra = "") {
+  return `data-loading-image="true" loading="lazy" decoding="async" fetchpriority="low"${extra ? ` ${extra}` : ""}`;
+}
+
+function updateImageLoadingState(image) {
+  if (!(image instanceof HTMLImageElement) || !image.matches("[data-loading-image]")) return;
+  const hasSource = Boolean(image.currentSrc || image.getAttribute("src"));
+  const frame = image.closest(".event-photo-button, .event-media, .image-thumb, .image-preview, .person-result, .portrait-card, .directory-card, .image-lightbox-frame");
+  if (!hasSource) {
+    image.classList.remove("is-loaded", "is-broken");
+    frame?.classList.remove("is-image-loading", "is-image-loaded", "is-image-broken");
+    return;
+  }
+  const loaded = Boolean(image.complete && image.naturalWidth);
+  const broken = Boolean(image.complete && !image.naturalWidth);
+  image.classList.toggle("is-loaded", loaded);
+  image.classList.toggle("is-broken", broken);
+  if (!frame) return;
+  frame.classList.toggle("is-image-loading", !loaded && !broken);
+  frame.classList.toggle("is-image-loaded", loaded);
+  frame.classList.toggle("is-image-broken", broken);
+}
+
+function refreshImageLoadingStates(root = document) {
+  root.querySelectorAll?.("img[data-loading-image]").forEach(updateImageLoadingState);
 }
 
 function parseList(value) {
@@ -4045,7 +4072,7 @@ function renderHome(query = "") {
   const results = normalizedQuery ? searchProfiles(normalizedQuery) : [];
   $("#searchResults").innerHTML = !normalizedQuery ? "" : results.length ? results.map((profile) => `
     <button class="person-result" type="button" data-profile="${profile.username}">
-      <img src="${escapeHtml(profile.avatar)}" alt="${escapeHtml(profile.displayName)}" />
+      <img src="${escapeHtml(profile.avatar)}" alt="${escapeHtml(profile.displayName)}" ${loadingImageAttributes()} />
       <span>
         <strong>${escapeHtml(profile.displayName)}</strong>
         <small>@${escapeHtml(profile.username)} · ${escapeHtml(profile.location)} · ${escapeHtml(profile.themes.slice(0, 3).join(", "))}</small>
@@ -4064,6 +4091,7 @@ function renderHome(query = "") {
       <p>${summary}</p>
     </article>
   `).join("");
+  refreshImageLoadingStates($("#entryView"));
 }
 
 function renderProfile() {
@@ -4089,6 +4117,7 @@ function renderProfile() {
   $("#profileAvatar").src = profile.avatar;
   $("#profileAvatar").alt = `${profile.displayName} portrait`;
   $("#profileAvatar").style.setProperty("--avatar-y", `${profile.avatarPositionY}%`);
+  updateImageLoadingState($("#profileAvatar"));
   renderPersistenceStatus();
   $("#profileLinks").innerHTML = publicWorkLinks(profile).map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("");
   const aiProfile = generateAiProfile(profile);
@@ -4099,6 +4128,7 @@ function renderProfile() {
   renderTimeline();
   renderWorkProjects();
   renderJsonLd(profile);
+  refreshImageLoadingStates(document);
 }
 
 function buildPublicAiPreview(profile) {
@@ -4375,18 +4405,20 @@ function renderImageUpload(value = []) {
   const removeButton = $("#removeContentImage");
   const gallery = $("#contentImageGallery");
   const cover = images[0] || "";
-  preview.innerHTML = cover ? `<img src="${escapeHtml(cover)}" alt="" />` : "";
+  preview.innerHTML = cover ? `<img src="${escapeHtml(cover)}" alt="" ${loadingImageAttributes()} />` : "";
   preview.classList.toggle("has-image", Boolean(cover));
   title.textContent = cover ? `${images.length} image${images.length === 1 ? "" : "s"} selected` : "Drop, paste, or choose images";
   hint.textContent = cover ? "The first image is the cover. Drop, paste, or choose more images to add them." : "The first image becomes the cover. Other images appear after opening the story.";
   removeButton.hidden = !images.length;
   gallery.innerHTML = images.map((image, index) => `
     <div class="image-thumb ${index === 0 ? "is-cover" : ""}">
-      <img src="${escapeHtml(image)}" alt="" />
+      <img src="${escapeHtml(image)}" alt="" ${loadingImageAttributes()} />
       <span>${index === 0 ? "Cover" : `Photo ${index + 1}`}</span>
       <button class="small-action" type="button" data-remove-image="${index}">Remove</button>
     </div>
   `).join("");
+  refreshImageLoadingStates(preview);
+  refreshImageLoadingStates(gallery);
 }
 
 function fileToImage(file) {
@@ -4547,7 +4579,7 @@ function dragHasFiles(event) {
 function renderPublicPhotoButton(image, alt, imageClass = "") {
   const classAttr = imageClass ? ` class="${escapeHtml(imageClass)}"` : "";
   return `<button class="event-photo-button" type="button" data-photo-preview="true" data-photo-alt="${escapeHtml(alt)}" aria-label="Open ${escapeHtml(alt)}">
-    <img${classAttr} src="${escapeHtml(image)}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async" fetchpriority="low" />
+    <img${classAttr} src="${escapeHtml(image)}" alt="${escapeHtml(alt)}" ${loadingImageAttributes()} />
   </button>`;
 }
 
@@ -4572,7 +4604,7 @@ function renderTimeline() {
       const summary = ownerMode ? story.publicSummary : publicStorySummary(story);
       return `
           <article class="event-card ${coverImage ? "has-media" : "no-media"} ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-content-id="${escapeHtml(story.id)}" data-content-type="${escapeHtml(itemType)}">
-            <div class="event-media">${coverImage ? (ownerMode ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(coverAlt)}" loading="lazy" decoding="async" fetchpriority="low" />` : renderPublicPhotoButton(coverImage, coverAlt, "event-main-image")) : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
+            <div class="event-media">${coverImage ? (ownerMode ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(coverAlt)}" ${loadingImageAttributes()} />` : renderPublicPhotoButton(coverImage, coverAlt, "event-main-image")) : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
             <div>
               <div class="event-card-head">
                 <div class="event-date">${escapeHtml([categoryLabel, story.date, story.location].filter(Boolean).join(" - "))}</div>
@@ -4582,7 +4614,7 @@ function renderTimeline() {
               ${summary ? `<p>${escapeHtml(summary)}</p>` : ""}
               ${extraImages.length ? `<details class="event-gallery"><summary>View ${extraImages.length} more photo${extraImages.length === 1 ? "" : "s"}</summary><div>${extraImages.map((image, index) => {
                 const photoAlt = `${story.title} photo ${index + 2}`;
-                return ownerMode ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(photoAlt)}" loading="lazy" decoding="async" fetchpriority="low" />` : renderPublicPhotoButton(image, photoAlt);
+                return ownerMode ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(photoAlt)}" ${loadingImageAttributes()} />` : renderPublicPhotoButton(image, photoAlt);
               }).join("")}</div></details>` : ""}
               ${story.link ? `<a class="source-link" href="${escapeHtml(story.link)}" target="_blank" rel="noopener">Open link</a>` : ""}
               ${story.tags?.length ? `<div class="tag-row">${story.tags.slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
@@ -5064,8 +5096,14 @@ function setAiImportDrawer(open) {
 }
 
 function openImageLightbox(src, alt = "Turnpo photo") {
-  $("#imageLightboxPhoto").src = src;
-  $("#imageLightboxPhoto").alt = alt;
+  const photo = $("#imageLightboxPhoto");
+  photo.classList.remove("is-loaded", "is-broken");
+  photo.dataset.loadingImage = "true";
+  photo.loading = "eager";
+  photo.decoding = "async";
+  photo.src = src;
+  photo.alt = alt;
+  updateImageLoadingState(photo);
   $("#imageLightboxCaption").textContent = alt;
   $("#imageLightbox").classList.add("open");
   $("#imageLightbox").setAttribute("aria-hidden", "false");
@@ -5076,6 +5114,7 @@ function closeImageLightbox() {
   $("#imageLightbox").classList.remove("open");
   $("#imageLightbox").setAttribute("aria-hidden", "true");
   $("#imageLightboxPhoto").removeAttribute("src");
+  $("#imageLightboxPhoto").classList.remove("is-loaded", "is-broken");
   $("#imageLightboxCaption").textContent = "";
 }
 
@@ -5844,6 +5883,8 @@ window.addEventListener("scroll", () => {
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && $("#imageLightbox").classList.contains("open")) closeImageLightbox();
 });
+document.addEventListener("load", (event) => updateImageLoadingState(event.target), true);
+document.addEventListener("error", (event) => updateImageLoadingState(event.target), true);
 
 applyTheme();
 renderContentDateOptions();

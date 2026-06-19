@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.187" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.189" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -63,7 +63,7 @@
           <div class="search-results" id="searchResults" aria-live="polite"></div>
         </div>
         <aside class="directory-card">
-          <img src="/assets/turnpo-logo-512.png" alt="Turnpo logo" />
+          <img src="/assets/turnpo-logo-512.png" alt="Turnpo logo" data-loading-image="true" loading="lazy" decoding="async" fetchpriority="low" />
           <div class="directory-brand-copy">
             <p>TURNPO</p>
             <span>A life, in turning points</span>
@@ -137,7 +137,7 @@
         </div>
         <div class="portrait-card" aria-label="Profile snapshot">
           <button class="profile-edit-btn owner-only portrait-edit-btn" id="editPortraitProfile" type="button">Edit card</button>
-          <img id="profileAvatar" src="/assets/turnpo-logo-512.png" alt="Profile portrait" />
+          <img id="profileAvatar" src="/assets/turnpo-logo-512.png" alt="Profile portrait" data-loading-image="true" loading="eager" decoding="async" />
           <div>
             <strong>What I am building now</strong>
             <span id="profileChapter"></span>
@@ -259,7 +259,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.187</span>
+          <span class="version-badge">v0.1.189</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -478,11 +478,11 @@
         <button class="image-lightbox-close" id="closeImageLightbox" type="button" aria-label="Close photo preview">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
-        <img id="imageLightboxPhoto" alt="" />
+        <img id="imageLightboxPhoto" alt="" data-loading-image="true" decoding="async" />
         <figcaption id="imageLightboxCaption"></figcaption>
       </figure>
     </div>
 
-    <script src="/script.js?v=0.1.187"></script>
+    <script src="/script.js?v=0.1.189"></script>
   </body>
 </html>

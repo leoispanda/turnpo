@@ -2020,6 +2020,85 @@ body.owner-mode .event-card.is-uploading {
   align-self: start;
 }
 
+img[data-loading-image] {
+  background:
+    linear-gradient(105deg, rgba(216, 177, 95, 0.08), rgba(255, 255, 255, 0.08), rgba(216, 177, 95, 0.08));
+  background-size: 220% 100%;
+  opacity: 1;
+  transition: opacity 180ms ease, filter 180ms ease;
+}
+
+img[data-loading-image]:not(.is-loaded):not(.is-broken) {
+  opacity: 0.16;
+  filter: blur(3px) saturate(0.7);
+}
+
+img[data-loading-image].is-loaded {
+  opacity: 1;
+}
+
+img[data-loading-image].is-broken {
+  opacity: 0;
+}
+
+.event-photo-button,
+.event-media,
+.image-preview,
+.image-lightbox-frame {
+  position: relative;
+}
+
+.event-photo-button.is-image-loading::before,
+.event-media.is-image-loading::before,
+.image-preview.is-image-loading::before,
+.image-lightbox-frame.is-image-loading::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(105deg, rgba(216, 177, 95, 0.07) 0%, rgba(255, 245, 218, 0.15) 45%, rgba(216, 177, 95, 0.07) 80%);
+  background-size: 220% 100%;
+  animation: imageLoadingSweep 1.35s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.event-photo-button.is-image-broken::after,
+.event-media.is-image-broken::after,
+.image-lightbox-frame.is-image-broken::after {
+  content: "Image unavailable";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  border: 1px dashed rgba(216, 177, 95, 0.24);
+  border-radius: inherit;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 12px;
+  text-align: center;
+  pointer-events: none;
+}
+
+@keyframes imageLoadingSweep {
+  from { background-position: 120% 0; }
+  to { background-position: -120% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  img[data-loading-image] {
+    transition: none;
+  }
+
+  .event-photo-button.is-image-loading::before,
+  .event-media.is-image-loading::before,
+  .image-preview.is-image-loading::before,
+  .image-lightbox-frame.is-image-loading::before {
+    animation: none;
+  }
+}
+
 .event-photo-button {
   width: 100%;
   display: block;
