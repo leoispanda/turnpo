@@ -10,6 +10,20 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-19 - v0.1.203
+
+Commit: `Map legacy Leo avatar to clear asset`
+
+### Changed
+
+- Added a Leo-only legacy avatar path mapping so published profile data that still points at `/assets/leo-profile.png` or `/assets/leo-profile-900.jpg` renders the new clearer `/assets/leo-profile-clear.jpg` asset.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node tests/security-helpers.test.mjs`.
+- Confirmed the production public profile API currently returns `/assets/leo-profile.png`, so the compatibility mapping is needed for the live page after deployment.
+
 ## 2026-06-19 - v0.1.202
 
 Commit: `Improve profile avatar clarity`

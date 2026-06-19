@@ -141,6 +141,10 @@ const KNOWN_WORK_LINKS = {
   "work-dishkai": "https://www.dishkai.com"
 };
 const PROJECT_WORK_IDS = new Set(Object.keys(KNOWN_WORK_LINKS));
+const LEGACY_LEO_AVATAR_PATHS = new Set([
+  "/assets/leo-profile.png",
+  "/assets/leo-profile-900.jpg"
+]);
 
 const seedProfiles = {
   leo: {
@@ -2408,7 +2412,7 @@ function normalizeProfile(profile, options = {}) {
   const normalized = {
     ...profile,
     status: profile.status === "published" ? "published" : "hidden",
-    avatar: safeImageSrc(profile.avatar) || "/assets/turnpo-logo-512.png",
+    avatar: normalizeProfileAvatar(profile.username, profile.avatar),
     avatarPositionY: Number.isFinite(Number(profile.avatarPositionY)) ? Math.min(100, Math.max(0, Number(profile.avatarPositionY))) : 24,
     lifeStories,
     aiWorks,
@@ -2424,6 +2428,14 @@ function normalizeProfile(profile, options = {}) {
   ensurePublicState(normalized);
   applyPublicState(normalized);
   return normalized;
+}
+
+function normalizeProfileAvatar(username, avatar) {
+  const safeAvatar = safeImageSrc(avatar);
+  if (normalizeUsername(username) === "leo" && LEGACY_LEO_AVATAR_PATHS.has(safeAvatar)) {
+    return "/assets/leo-profile-clear.jpg";
+  }
+  return safeAvatar || "/assets/turnpo-logo-512.png";
 }
 
 function travelPlaceById(id = "") {
