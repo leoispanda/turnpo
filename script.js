@@ -3155,18 +3155,18 @@ function tuneLifeAtlasEarthMaterial(material) {
       float lifeAtlasDarkWater = (1.0 - smoothstep(0.04, 0.17, lifeAtlasLuma)) * smoothstep(0.006, 0.07, diffuseColor.b + diffuseColor.g - diffuseColor.r * 1.16);
       float lifeAtlasWater = max(lifeAtlasBlueWater, lifeAtlasDarkWater * 0.28);
       float lifeAtlasLand = 1.0 - lifeAtlasWater;
-      vec3 lifeAtlasDeepOcean = vec3(0.008, 0.105, 0.25);
+      vec3 lifeAtlasDeepOcean = vec3(0.012, 0.125, 0.29);
       vec3 lifeAtlasWarmLand = diffuseColor.rgb * vec3(1.08, 1.02, 0.86);
       diffuseColor.rgb = mix(diffuseColor.rgb, max(diffuseColor.rgb, lifeAtlasDeepOcean), lifeAtlasWater * 0.56);
       diffuseColor.rgb = mix(diffuseColor.rgb, lifeAtlasWarmLand, lifeAtlasLand * 0.42);
       diffuseColor.rgb = mix(vec3(lifeAtlasLuma), diffuseColor.rgb, 1.08);
-      diffuseColor.rgb *= vec3(0.98, 1.0, 1.05);
+      diffuseColor.rgb *= vec3(0.99, 1.005, 1.07);
       diffuseColor.rgb = pow(diffuseColor.rgb, vec3(0.95));`
     );
     shader.fragmentShader = shader.fragmentShader.replace(
       "#include <emissivemap_fragment>",
       `#include <emissivemap_fragment>
-      totalEmissiveRadiance += lifeAtlasWater * vec3(0.0, 0.022, 0.064);`
+      totalEmissiveRadiance += lifeAtlasWater * vec3(0.0, 0.026, 0.078);`
     );
   };
 }
