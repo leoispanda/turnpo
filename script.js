@@ -2679,6 +2679,14 @@ async function loadDraftProfileOnline(username = activeUsername) {
   }
 }
 
+async function loadOwnerProfileOnline(username = activeUsername) {
+  const draftLoaded = await loadDraftProfileOnline(username);
+  if (draftLoaded || hasLocalDraft(username)) return draftLoaded;
+  const publishedLoaded = await loadPublishedProfileOnline(username);
+  if (publishedLoaded && activeUsername === username && body.classList.contains("profile-open")) renderProfile();
+  return publishedLoaded;
+}
+
 async function saveProfileDraftOnline({ quiet = false } = {}) {
   if (!ownerMode || !ownerSessionProfile) return false;
   onlineSyncInFlight = true;
@@ -4030,7 +4038,7 @@ function setRoute(route) {
   lifeAtlasScrollActivated = false;
   window.scrollTo({ top: 0, behavior: "auto" });
   renderProfile();
-  if (ownerMode) loadDraftProfileOnline(activeUsername);
+  if (ownerMode) loadOwnerProfileOnline(activeUsername);
   else loadPublishedProfileOnline(activeUsername);
 }
 
@@ -4038,6 +4046,10 @@ function routeFromLocation() {
   if (location.pathname === "/admin") return "admin";
   const pathMatch = location.pathname.match(/^\/u\/([^/]+)/);
   if (pathMatch) return decodeURIComponent(pathMatch[1]);
+  const shortProfileMatch = location.pathname.match(/^\/([^/.]+)\/?$/);
+  if (shortProfileMatch && !["api", "assets", "legal", "admin"].includes(shortProfileMatch[1].toLowerCase())) {
+    return decodeURIComponent(shortProfileMatch[1]);
+  }
   const hashMatch = location.hash.match(/^#\/u\/([^/]+)/);
   if (hashMatch) return decodeURIComponent(hashMatch[1]);
   if (location.hash === "#leo") return "leo";
@@ -5771,12 +5783,21 @@ function exportProfile() {
   URL.revokeObjectURL(link.href);
 }
 
-function resetActiveProfile() {
+async function resetActiveProfile() {
   localStorage.removeItem(localKey(activeUsername));
-  if (ownerMode) loadOwnerProfile(activeUsername);
-  else loadPublicProfile(activeUsername);
+  if (ownerMode) {
+    setOwnerSaveStatus("Local draft reset. Restoring online published profile...");
+    const restoredOnline = await loadPublishedProfileOnline(activeUsername);
+    if (!restoredOnline) loadOwnerProfile(activeUsername);
+    renderProfile();
+    setOwnerSaveStatus(restoredOnline
+      ? "Local draft reset. Restored the online published profile and images."
+      : "Local draft reset. Viewing bundled public seed.");
+    return;
+  }
+  loadPublicProfile(activeUsername);
+  await loadPublishedProfileOnline(activeUsername);
   renderProfile();
-  $("#ownerSaveStatus").textContent = "Local draft reset. Viewing public seed.";
 }
 
 $("#searchForm").addEventListener("submit", (event) => {
