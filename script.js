@@ -119,7 +119,7 @@ const LIFE_ATLAS_DEFAULT_PROFILE_USERNAMES = new Set(["leo", "cindy"]);
 // Web-optimized from NASA Earth Observatory Blue Marble Next Generation imagery.
 const LIFE_ATLAS_EARTH_IMAGE = "/assets/life-atlas-earth-1280.jpg";
 const LIFE_ATLAS_THREE_URL = "https://unpkg.com/three@0.160.0/build/three.module.js";
-const LIFE_ATLAS_EARTH_TEXTURE = "/assets/earth-blue-marble-texture-3072.jpg";
+const LIFE_ATLAS_EARTH_TEXTURE = "/assets/earth-blue-marble-texture-4096.jpg";
 const LIFE_ATLAS_NIGHT_TEXTURE = "/assets/earth-night-lights-texture-1024.jpg";
 const CONTENT_CATEGORY = {
   story: "life",
