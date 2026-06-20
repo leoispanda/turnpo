@@ -121,6 +121,9 @@ const LIFE_ATLAS_EARTH_IMAGE = "/assets/life-atlas-earth-1280.jpg";
 const LIFE_ATLAS_THREE_URL = "https://unpkg.com/three@0.160.0/build/three.module.js";
 const LIFE_ATLAS_EARTH_TEXTURE = "/assets/earth-blue-marble-texture-4096.jpg";
 const LIFE_ATLAS_NIGHT_TEXTURE = "/assets/earth-night-lights-texture-1024.jpg";
+const LIFE_ATLAS_TERRAIN_TEXTURE = "/assets/earth-terrain-bump-2048.jpg";
+const LIFE_ATLAS_SPECULAR_TEXTURE = "/assets/earth-ocean-specular-2048.jpg";
+const LIFE_ATLAS_CLOUD_TEXTURE = "/assets/earth-cloud-alpha-2048.jpg";
 const CONTENT_CATEGORY = {
   story: "life",
   work: "work"
@@ -2416,7 +2419,6 @@ let publishConfirmationResolver = null;
 let lifeAtlasGlobeState = null;
 let lifeAtlasThreeModulePromise = null;
 let lifeAtlasFocusPlaceId = "";
-let lifeAtlasScrollActivated = false;
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -3316,11 +3318,19 @@ function disposeLifeAtlasGlobe() {
 
 function isLifeAtlasVisibleEnough(mapEl, threshold = 0.15) {
   if (!mapEl) return false;
-  if (!lifeAtlasScrollActivated) return false;
   const rect = mapEl.getBoundingClientRect();
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
   const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
-  return visibleHeight > 0 && visibleHeight >= Math.min(rect.height * threshold, 96);
+  const visibleWidth = Math.min(rect.right, viewportWidth) - Math.max(rect.left, 0);
+  return (
+    rect.width >= 120 &&
+    rect.height >= 120 &&
+    visibleHeight > 0 &&
+    visibleWidth > 0 &&
+    visibleHeight >= Math.min(rect.height * threshold, 96) &&
+    visibleWidth >= Math.min(rect.width * 0.08, 96)
+  );
 }
 
 function setLifeAtlasGlobeActive(placeId, active) {
@@ -3421,6 +3431,11 @@ function tuneLifeAtlasEarthMaterial(material) {
       `#include <emissivemap_fragment>
       totalEmissiveRadiance += lifeAtlasWater * vec3(0.0, 0.026, 0.078);`
     );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      "#include <roughnessmap_fragment>",
+      `#include <roughnessmap_fragment>
+      roughnessFactor = mix(roughnessFactor, 0.34, lifeAtlasWater * 0.58);`
+    );
   };
 }
 
@@ -3500,7 +3515,7 @@ async function initLifeAtlasGlobe(state, places) {
     antialias: true,
     powerPreference: "low-power"
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 520 ? 1.55 : 2));
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -3540,32 +3555,47 @@ async function initLifeAtlasGlobe(state, places) {
   scene.add(horizonFill);
 
   const loader = new THREE.TextureLoader();
-  const [earthTexture, nightTexture] = await Promise.all([
+  const [earthTexture, nightTexture, terrainTexture, specularTexture, cloudTexture] = await Promise.all([
     new Promise((resolve) => loader.load(LIFE_ATLAS_EARTH_TEXTURE, resolve, undefined, () => resolve(null))),
-    new Promise((resolve) => loader.load(LIFE_ATLAS_NIGHT_TEXTURE, resolve, undefined, () => resolve(null)))
+    new Promise((resolve) => loader.load(LIFE_ATLAS_NIGHT_TEXTURE, resolve, undefined, () => resolve(null))),
+    new Promise((resolve) => loader.load(LIFE_ATLAS_TERRAIN_TEXTURE, resolve, undefined, () => resolve(null))),
+    new Promise((resolve) => loader.load(LIFE_ATLAS_SPECULAR_TEXTURE, resolve, undefined, () => resolve(null))),
+    new Promise((resolve) => loader.load(LIFE_ATLAS_CLOUD_TEXTURE, resolve, undefined, () => resolve(null)))
   ]);
   if (state.disposed || lifeAtlasGlobeState !== state) {
     earthTexture?.dispose?.();
     nightTexture?.dispose?.();
+    terrainTexture?.dispose?.();
+    specularTexture?.dispose?.();
+    cloudTexture?.dispose?.();
     return;
   }
-  [earthTexture, nightTexture].filter(Boolean).forEach((texture) => {
-    texture.colorSpace = THREE.SRGBColorSpace;
+  const configureTexture = (texture, { color = false } = {}) => {
+    if (!texture) return;
+    if (color) texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 16);
     texture.minFilter = THREE.LinearMipmapLinearFilter;
     texture.magFilter = THREE.LinearFilter;
     texture.generateMipmaps = true;
     texture.needsUpdate = true;
-  });
+  };
+  [earthTexture, nightTexture].forEach((texture) => configureTexture(texture, { color: true }));
+  [terrainTexture, specularTexture, cloudTexture].forEach((texture) => configureTexture(texture));
 
   const earthMaterial = new THREE.MeshStandardMaterial({
     color: 0xf2f5f5,
     map: earthTexture,
+    bumpMap: terrainTexture,
+    bumpScale: 0.044,
+    displacementMap: terrainTexture,
+    displacementScale: 0.018,
+    displacementBias: -0.008,
     emissive: 0x0b2448,
     emissiveMap: nightTexture,
     emissiveIntensity: 0.34,
-    roughness: 0.68,
-    metalness: 0.025
+    roughness: 0.7,
+    metalness: 0.16,
+    metalnessMap: specularTexture
   });
   tuneLifeAtlasEarthMaterial(earthMaterial);
   const earth = new THREE.Mesh(new THREE.SphereGeometry(radius, 128, 64), earthMaterial);
@@ -3584,6 +3614,24 @@ async function initLifeAtlasGlobe(state, places) {
       })
     );
     globe.add(nightLights);
+  }
+
+  let cloudLayer = null;
+  if (cloudTexture) {
+    cloudLayer = new THREE.Mesh(
+      new THREE.SphereGeometry(radius * 1.016, 128, 64),
+      new THREE.MeshStandardMaterial({
+        color: 0xf5fbff,
+        alphaMap: cloudTexture,
+        transparent: true,
+        opacity: 0.19,
+        roughness: 0.92,
+        metalness: 0,
+        depthWrite: false
+      })
+    );
+    cloudLayer.renderOrder = 2;
+    globe.add(cloudLayer);
   }
 
   const atmosphere = new THREE.Mesh(
@@ -3768,7 +3816,10 @@ async function initLifeAtlasGlobe(state, places) {
 
   const animate = () => {
     if (state.disposed) return;
-    if (!reducedMotion && !dragState.active) globe.rotation.y += 0.00062;
+    if (!reducedMotion && !dragState.active) {
+      globe.rotation.y += 0.00062;
+      if (cloudLayer) cloudLayer.rotation.y += 0.00018;
+    }
     if (!dragState.active) {
       globe.rotation.y += dragState.velocityX;
       globe.rotation.x = THREE.MathUtils.clamp(globe.rotation.x + dragState.velocityY, 0.12, 0.54);
@@ -3786,7 +3837,16 @@ async function initLifeAtlasGlobe(state, places) {
     scene,
     camera,
     points,
-    textures: [earthTexture, nightTexture, signalTexture, atmosphereTexture, ...labelTextures].filter(Boolean),
+    textures: [
+      earthTexture,
+      nightTexture,
+      terrainTexture,
+      specularTexture,
+      cloudTexture,
+      signalTexture,
+      atmosphereTexture,
+      ...labelTextures
+    ].filter(Boolean),
     onPointerMove: handlePointerMove,
     onPointerDown: handlePointerDown,
     onPointerUp: handlePointerUp,
@@ -4326,7 +4386,6 @@ function setRoute(route) {
   $("#adminView").hidden = true;
   showProfileContent();
   history.pushState(null, "", `/u/${activeUsername}`);
-  lifeAtlasScrollActivated = false;
   window.scrollTo({ top: 0, behavior: "auto" });
   renderProfile();
   if (ownerMode) loadOwnerProfileOnline(activeUsername);
@@ -7491,11 +7550,6 @@ $("#openJobApplicationPage").addEventListener("click", openCurrentJobPage);
 $("#printJobResume").addEventListener("click", printJobResumePdf);
 
 window.addEventListener("popstate", () => setRoute(routeFromLocation()));
-window.addEventListener("scroll", () => {
-  if (body.classList.contains("profile-open") && (window.scrollY || document.documentElement.scrollTop || 0) >= 80) {
-    lifeAtlasScrollActivated = true;
-  }
-}, { passive: true });
 window.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && $("#imageLightbox").classList.contains("open")) closeImageLightbox();
 });

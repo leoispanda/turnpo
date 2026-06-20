@@ -10,6 +10,29 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.219
+
+Commit: `Add layered Life Atlas globe`
+
+### Changed
+
+- Upgraded the Life Atlas Earth from a single color texture to a layered globe with compact terrain displacement/bump, ocean specular, and drifting cloud alpha textures.
+- Derived the terrain and cloud helper textures from NASA Visible Earth sources, then compressed them for web delivery: terrain 197KB, ocean specular 64KB, cloud alpha 430KB.
+- Removed the scroll-activation gate that could prevent the 3D globe from starting when Life Atlas was already visible on initial page load.
+- Raised desktop globe render sharpness while keeping mobile pixel ratio lower to avoid unnecessary GPU cost.
+- Added a Life Atlas static test to guard the new globe layers, asset size limits, and no-scroll-gate startup logic.
+
+### Verification
+
+- Ran bundled Node `--check` on `script.js`.
+- Ran `node tests/life-atlas-globe-static.test.mjs` with bundled Node.
+- Ran `node tests/profile-layout-static.test.mjs` with bundled Node.
+- Ran `node tests/jobs-ui-static.test.mjs` with bundled Node.
+- Ran `node tests/jobs-search.test.mjs` with bundled Node.
+- Ran `node tests/security-helpers.test.mjs` with bundled Node.
+- Ran `git diff --check`.
+- Attempted in-app browser validation, but the Browser plugin failed during setup with `sandbox-state-meta: missing field sandboxPolicy`.
+
 ## 2026-06-20 - v0.1.217
 
 Commit: `Fix public timeline overflow`
