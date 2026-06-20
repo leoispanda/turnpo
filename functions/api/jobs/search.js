@@ -32,6 +32,93 @@ const SEARCH_PHRASES = [
   "internal AI tools"
 ];
 
+const LOCATION_PROFILES = [
+  {
+    key: "netherlands",
+    label: "Netherlands",
+    aliases: ["netherlands", "nederland", "eindhoven", "veldhoven", "amsterdam", "rotterdam", "utrecht", "asml"],
+    targetLocations: ["Netherlands", "Eindhoven", "Veldhoven", "Amsterdam", "Hybrid Netherlands"],
+    compatibleTerms: [
+      "netherlands",
+      "nederland",
+      "eindhoven",
+      "veldhoven",
+      "amsterdam",
+      "rotterdam",
+      "utrecht",
+      "the hague",
+      "den haag",
+      "europe",
+      "european union",
+      "emea",
+      " eu ",
+      "cet",
+      "cest"
+    ],
+    rejectedTerms: [
+      "brazil",
+      "brasil",
+      "latam",
+      "latin america",
+      "americas",
+      "north america",
+      "south america",
+      "argentina",
+      "chile",
+      "colombia",
+      "mexico",
+      "peru",
+      "uruguay",
+      "united states",
+      "usa",
+      "us only",
+      "canada",
+      "india",
+      "philippines",
+      "australia",
+      "israel",
+      "middle east",
+      "apac",
+      "asia pacific",
+      "worldwide",
+      "global remote",
+      "anywhere"
+    ]
+  }
+];
+
+const ROLE_FAMILY_RULES = [
+  {
+    key: "ai-knowledge",
+    label: "AI knowledge management",
+    terms: ["ai knowledge", "knowledge management", "knowledge mapping", "knowledge strategy", "knowledge workflows", "mapkai"],
+    queries: ["AI knowledge management", "Knowledge Management Specialist", "AI Knowledge Lead"]
+  },
+  {
+    key: "learning-enablement",
+    label: "learning and enablement",
+    terms: ["learning", "training", "academy", "enablement", "l&km", "learning systems", "technical training"],
+    queries: ["Learning and Development", "AI Enablement", "Technical Training"]
+  },
+  {
+    key: "project-product-ops",
+    label: "project/product operations",
+    terms: ["project management", "product", "program", "stakeholder", "workflow", "process improvement", "solution designer"],
+    queries: ["Project Manager", "Product Operations", "Business Process Improvement"]
+  }
+];
+
+const INDUSTRY_RULES = [
+  { key: "high-tech", label: "high-tech / semiconductor", terms: ["asml", "semiconductor", "high-tech", "eindhoven", "veldhoven"] },
+  { key: "ai-product", label: "AI product tools", terms: ["ai", "mapkai", "turnpo", "product", "tools", "workflow"] },
+  { key: "learning-knowledge", label: "learning / knowledge systems", terms: ["learning", "training", "academy", "knowledge", "l&km"] }
+];
+
+const COMPANY_SCALE_RULES = [
+  { key: "enterprise", label: "enterprise / large company", terms: ["asml", "enterprise", "corporate", "stakeholder", "academy"] },
+  { key: "product-startup", label: "product/startup builder", terms: ["co-creator", "mapkai", "turnpo", "startup", "builder"] }
+];
+
 const FOCUS_TERMS = [
   "ai",
   "artificial intelligence",
@@ -49,8 +136,20 @@ const FOCUS_TERMS = [
   "systems"
 ];
 
-const LOCATION_TERMS = ["eindhoven", "veldhoven", "netherlands", "amsterdam", "remote", "hybrid"];
-const RISK_TERMS = ["fluent dutch", "native dutch", "dutch required", "senior software engineer", "backend engineer", "frontend engineer"];
+const RISK_TERMS = [
+  "fluent dutch",
+  "native dutch",
+  "dutch required",
+  "senior software engineer",
+  "backend engineer",
+  "frontend engineer",
+  "machine learning engineer",
+  "ai engineer",
+  "software architect",
+  "developer",
+  "kubernetes",
+  "devops"
+];
 
 function cleanText(value = "", maxLength = 1200) {
   return String(value || "")
@@ -98,12 +197,67 @@ function uniqueStrings(values = [], maxItems = 12) {
     .slice(0, maxItems);
 }
 
-function queriesFromMarkdown(markdown = "") {
+function includesAny(text = "", terms = []) {
+  return terms.some((term) => text.includes(String(term || "").toLowerCase()));
+}
+
+function matchingRuleLabels(text = "", rules = []) {
+  return rules
+    .filter((rule) => includesAny(text, rule.terms))
+    .map((rule) => rule.label);
+}
+
+function matchingRuleTerms(text = "", rules = []) {
+  return uniqueStrings(rules
+    .filter((rule) => includesAny(text, rule.terms))
+    .flatMap((rule) => rule.terms), 30);
+}
+
+function seniorityFromMarkdown(text = "") {
+  if (includesAny(text, ["director", "head of", "principal", "staff"])) return "senior";
+  if (includesAny(text, ["senior", "lead", "manager", "project management", "solution designer", "co-creator", "stakeholder"])) return "mid-senior";
+  if (includesAny(text, ["junior", "graduate", "intern", "trainee"])) return "entry";
+  return "mid";
+}
+
+function locationProfileFromMarkdown(text = "") {
+  return LOCATION_PROFILES.find((profile) => includesAny(text, profile.aliases)) || LOCATION_PROFILES[0];
+}
+
+function searchProfileFromMarkdown(markdown = "") {
   const text = String(markdown || "").toLowerCase();
+  const locationProfile = locationProfileFromMarkdown(text);
+  const roleFamilies = matchingRuleLabels(text, ROLE_FAMILY_RULES);
+  const industries = matchingRuleLabels(text, INDUSTRY_RULES);
+  const companyScale = matchingRuleLabels(text, COMPANY_SCALE_RULES);
+  const roleTerms = matchingRuleTerms(text, ROLE_FAMILY_RULES);
+  const industryTerms = matchingRuleTerms(text, INDUSTRY_RULES);
+  const companyScaleTerms = matchingRuleTerms(text, COMPANY_SCALE_RULES);
   const phraseHits = SEARCH_PHRASES.filter((phrase) => text.includes(phrase.toLowerCase()));
-  const focusHits = FOCUS_TERMS.filter((term) => text.includes(term));
-  const queries = uniqueStrings([...phraseHits, ...focusHits], 8);
-  return queries.length ? queries : ["knowledge management", "learning and development", "AI enablement"];
+  return {
+    locationKey: locationProfile.key,
+    locationLabel: locationProfile.label,
+    targetLocations: locationProfile.targetLocations,
+    compatibleLocationTerms: locationProfile.compatibleTerms,
+    rejectedLocationTerms: locationProfile.rejectedTerms,
+    seniority: seniorityFromMarkdown(text),
+    roleFamilies: roleFamilies.length ? roleFamilies : ["knowledge / learning / AI enablement"],
+    industries: industries.length ? industries : ["AI product tools", "learning / knowledge systems"],
+    companyScale: companyScale.length ? companyScale : ["enterprise / product teams"],
+    roleTerms: roleTerms.length ? roleTerms : ["knowledge", "learning", "ai", "enablement"],
+    industryTerms,
+    companyScaleTerms,
+    phraseHits
+  };
+}
+
+function queriesFromProfile(profile) {
+  const matchedQueries = ROLE_FAMILY_RULES
+    .filter((rule) => profile.roleFamilies.includes(rule.label))
+    .flatMap((rule) => rule.queries);
+  const baseQueries = uniqueStrings([...profile.phraseHits, ...matchedQueries], 8);
+  const queries = baseQueries.length ? baseQueries : ["knowledge management", "learning and development", "AI enablement"];
+  return uniqueStrings(queries.map((query) => `${query} ${profile.locationLabel}`), 8);
 }
 
 async function fetchJsonWithTimeout(url) {
@@ -172,7 +326,29 @@ function normalizeRemotiveJob(job = {}) {
   };
 }
 
-function scoreJob(job, queries) {
+function jobSearchText(job = {}) {
+  return [
+    job.title,
+    job.company,
+    job.location,
+    job.description,
+    job.summary,
+    ...(job.searchKeywords || [])
+  ].join(" ").toLowerCase();
+}
+
+function locationCompatible(job, profile) {
+  const text = ` ${jobSearchText(job)} `;
+  if (includesAny(text, profile.rejectedLocationTerms)) return false;
+  return includesAny(text, profile.compatibleLocationTerms);
+}
+
+function roleSignalScore(text, terms = []) {
+  return uniqueStrings(terms, 40).reduce((total, term) => total + (text.includes(term.toLowerCase()) ? 1 : 0), 0);
+}
+
+function scoreJob(job, profile) {
+  const queries = profile.queries || [];
   const text = [
     job.title,
     job.company,
@@ -181,19 +357,18 @@ function scoreJob(job, queries) {
     job.summary,
     ...(job.searchKeywords || [])
   ].join(" ").toLowerCase();
-  let score = 0;
+  let score = locationCompatible(job, profile) ? 22 : -80;
   for (const query of queries) {
     const normalized = query.toLowerCase();
     if (text.includes(normalized)) score += normalized.includes(" ") ? 16 : 8;
   }
-  for (const term of FOCUS_TERMS) {
-    if (text.includes(term)) score += 4;
-  }
-  for (const term of LOCATION_TERMS) {
-    if (text.includes(term)) score += 6;
-  }
+  score += Math.min(36, roleSignalScore(text, [...profile.roleTerms, ...FOCUS_TERMS]) * 6);
+  score += Math.min(18, roleSignalScore(text, profile.industryTerms) * 4);
+  score += Math.min(12, roleSignalScore(text, profile.companyScaleTerms) * 3);
   if (text.includes("hybrid")) score += 5;
-  if (text.includes("remote")) score += 4;
+  if (text.includes("remote") && locationCompatible(job, profile)) score += 2;
+  if (profile.seniority === "mid-senior" && includesAny(text, ["senior", "lead", "manager", "specialist", "consultant"])) score += 6;
+  if (profile.seniority === "entry" && includesAny(text, ["junior", "graduate", "trainee"])) score += 6;
   if (job.url) score += 2;
   for (const term of RISK_TERMS) {
     if (text.includes(term)) score -= 7;
@@ -221,8 +396,8 @@ async function fetchArbeitnow(errors) {
   }
 }
 
-async function fetchRemotive(queries, errors) {
-  const topQueries = queries.slice(0, 3);
+async function fetchRemotive(profile, errors) {
+  const topQueries = profile.queries.slice(0, 3);
   const batches = await Promise.all(topQueries.map(async (query) => {
     try {
       const data = await fetchJsonWithTimeout(`${REMOTIVE_URL}?search=${encodeURIComponent(query)}`);
@@ -253,25 +428,35 @@ export async function onRequestPost({ request, env = {} }) {
   if (markdown.length < 20) return json({ error: "Save more Turnpo Markdown before starting search." }, { status: 400 });
 
   const limit = Math.max(1, Math.min(MAX_RESULTS, Math.round(Number(body.limit) || 18)));
-  const queries = queriesFromMarkdown(markdown);
+  const searchProfile = searchProfileFromMarkdown(markdown);
+  const queries = queriesFromProfile(searchProfile);
+  searchProfile.queries = queries;
   const errors = [];
   const [arbeitnowJobs, remotiveJobs] = await Promise.all([
     fetchArbeitnow(errors),
-    fetchRemotive(queries, errors)
+    fetchRemotive(searchProfile, errors)
   ]);
   const scoredJobs = dedupeJobs([...arbeitnowJobs, ...remotiveJobs])
     .map((job) => ({
       ...job,
-      score: scoreJob(job, queries),
-      confidence: "API collected"
+      score: scoreJob(job, searchProfile),
+      confidence: `${searchProfile.locationLabel} profile match`
     }))
-    .filter((job) => job.score >= 8 || LOCATION_TERMS.some((term) => `${job.location} ${job.summary}`.toLowerCase().includes(term)))
+    .filter((job) => locationCompatible(job, searchProfile) && job.score >= 18)
     .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title))
     .slice(0, limit);
 
   return json({
     jobs: scoredJobs,
     queries,
+    searchProfile: {
+      locationLabel: searchProfile.locationLabel,
+      targetLocations: searchProfile.targetLocations,
+      seniority: searchProfile.seniority,
+      roleFamilies: searchProfile.roleFamilies,
+      industries: searchProfile.industries,
+      companyScale: searchProfile.companyScale
+    },
     sources: ["Arbeitnow", "Remotive"],
     fetchedAt: new Date().toISOString(),
     errors

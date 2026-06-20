@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.211
+
+Commit: `Constrain Jobs search to profile context`
+
+### Changed
+
+- Added Markdown search-profile extraction before collecting jobs, including location, seniority, role family, industry, and company-scale signals.
+- Made Netherlands/Eindhoven context a hard filter for Leo's Jobs search so Brazil, LATAM, and broad global remote roles are excluded.
+- Adjusted API scoring to prioritize profile-matching roles in AI knowledge management, learning enablement, project/product operations, high-tech, and enterprise/product environments.
+- Updated the Jobs search status message to show that results were collected for the inferred location profile.
+
+### Verification
+
+- Ran `node --check functions/api/jobs/search.js`.
+- Ran `node --check script.js`.
+- Ran `node tests/jobs-search.test.mjs`.
+- Ran `node tests/jobs-ui-static.test.mjs`.
+- Ran `node tests/security-helpers.test.mjs`.
+- Ran `git diff --check`.
+
 ## 2026-06-20 - v0.1.210
 
 Commit: `Simplify Jobs search selection flow`

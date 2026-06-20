@@ -5331,6 +5331,7 @@ async function collectJobsFromApi(markdown) {
   return {
     jobs: Array.isArray(data.jobs) ? data.jobs.map(normalizeJobPotential).filter((job) => job.kind === "job" && (job.title || job.summary)) : [],
     queries: Array.isArray(data.queries) ? data.queries : [],
+    searchProfile: data.searchProfile && typeof data.searchProfile === "object" ? data.searchProfile : {},
     errors: Array.isArray(data.errors) ? data.errors : []
   };
 }
@@ -5609,10 +5610,6 @@ function renderPotentialSource(jobs = currentJobs()) {
   if ($("#jobPotentialMarkdown")) $("#jobPotentialMarkdown").value = jobs.markdown || profileMarkdownForJobs();
 }
 
-function potentialTags(items = []) {
-  return items.slice(0, 4).map((item) => `<span>${escapeHtml(item)}</span>`).join("");
-}
-
 function compactJobDuty(potential = {}) {
   const text = String(potential.summary || potential.description || "")
     .replace(/\s+/g, " ")
@@ -5824,7 +5821,8 @@ async function startJobWebSearch() {
     jobs.potentials = mergePotentialSearchState(result.jobs, previousPotentials);
     activePotentialId = jobs.potentials[0]?.id || "";
     const sourceNote = result.errors.length ? " Some sources were unavailable." : "";
-    saveJobsState(`Collected ${jobs.potentials.length} jobs from API.${sourceNote}`);
+    const locationNote = result.searchProfile?.locationLabel ? ` for ${result.searchProfile.locationLabel}` : "";
+    saveJobsState(`Collected ${jobs.potentials.length} jobs${locationNote} from the Markdown profile.${sourceNote}`);
   } catch (error) {
     jobs.potentials = mergePotentialSearchState(buildJobWebSearches(jobs.markdown), previousPotentials);
     activePotentialId = jobs.potentials[0]?.id || "";
