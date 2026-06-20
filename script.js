@@ -5346,10 +5346,13 @@ async function refreshJobsPublicProfileContext(username = activeUsername) {
 }
 
 function filteredPotentials(jobs = currentJobs()) {
+  const filterValue = $("#jobPotentialFilter") ? activePotentialFilter : "all";
   return jobs.potentials
-    .filter((potential) => activePotentialFilter === "active"
+    .filter((potential) => filterValue === "all"
+      ? true
+      : filterValue === "active"
       ? potential.status !== "saved"
-      : potential.status === activePotentialFilter)
+      : potential.status === filterValue)
     .sort((a, b) => (b.score || 0) - (a.score || 0) || String(b.updatedAt).localeCompare(String(a.updatedAt)) || a.title.localeCompare(b.title));
 }
 
@@ -5610,41 +5613,40 @@ function potentialTags(items = []) {
   return items.slice(0, 4).map((item) => `<span>${escapeHtml(item)}</span>`).join("");
 }
 
+function compactJobDuty(potential = {}) {
+  const text = String(potential.summary || potential.description || "")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!text) return potential.kind === "job" ? "Open the original posting to review the concrete responsibilities." : "Open this search source to review matching job posts.";
+  const firstSentenceMatch = text.match(/^(.{80,220}?[.!?])\s/);
+  const compact = firstSentenceMatch?.[1] || text;
+  return compact.length > 220 ? `${compact.slice(0, 217).trim()}...` : compact;
+}
+
 function renderPotentialCard(potential, { compact = false } = {}) {
   const isActive = potential.id === activePotentialId;
   const isJob = potential.kind === "job";
-  const statusLabel = JOB_POTENTIAL_STATUS_LABELS[potential.status] || potential.status;
-  const savedAction = potential.status === "saved"
-    ? `<button class="small-action" type="button" data-potential-status="queued">Queue</button>`
-    : `<button class="small-action" type="button" data-potential-status="saved">${isJob ? "Save job" : "Save link"}</button>`;
   const title = isJob ? (potential.title || "Untitled role") : (potential.query || potential.title || "Untitled search");
   const meta = isJob
     ? [potential.company || "Unknown company", potential.location || "Location not saved"].filter(Boolean).join(" · ")
     : (potential.summary || "Open this search and review real job posts.");
-  const summary = isJob
-    ? (potential.summary || potential.description || "Open the posting to review the full requirements.")
-    : (potential.summary || "Open this search and review real job posts.");
+  const duty = compactJobDuty(potential);
   const sourceLabel = potential.platform || potential.lane || potential.source || (isJob ? "Job API" : "Search");
   const linkLabel = isJob ? "Open posting" : "Open result page";
-  const openLabel = isJob ? "Open posting" : "Open search";
+  const selectLabel = isJob ? "Select for Step 3" : "Select source";
   return `
     <article class="job-potential-card ${isActive ? "active" : ""} ${compact ? "compact" : ""}" data-potential-id="${escapeHtml(potential.id)}">
       <div class="job-card-main">
         <div class="job-potential-meta">
-          <span class="visibility-pill status-${escapeHtml(potential.status)}">${escapeHtml(statusLabel)}</span>
           <strong>${escapeHtml(sourceLabel)}</strong>
         </div>
         <h3>${escapeHtml(title)}</h3>
         <small>${escapeHtml(meta)}</small>
-        <p>${escapeHtml(summary)}</p>
-        <div class="job-potential-tags">${potentialTags(potential.searchKeywords)}</div>
+        <p><span class="job-duty-label">What it does</span>${escapeHtml(duty)}</p>
         ${potential.url ? `<a class="job-search-link" href="${escapeHtml(potential.url)}" target="_blank" rel="noopener">${escapeHtml(linkLabel)}</a>` : ""}
       </div>
       <div class="job-card-actions">
-        <button class="small-action" type="button" data-potential-action="select">Select</button>
-        ${isJob ? `<button class="small-action" type="button" data-potential-action="use-job">Use JD</button>` : ""}
-        <button class="small-action" type="button" data-potential-action="open">${escapeHtml(openLabel)}</button>
-        ${savedAction}
+        <button class="small-action" type="button" data-potential-action="select">${escapeHtml(selectLabel)}</button>
       </div>
     </article>
   `;
@@ -5656,7 +5658,7 @@ function renderPotentialList(jobs = currentJobs()) {
   $("#jobPotentialCount").textContent = `${items.length} ${hasJobs ? (items.length === 1 ? "job" : "jobs") : (items.length === 1 ? "source" : "sources")}`;
   $("#jobPotentialList").innerHTML = items.length
     ? items.map((potential) => renderPotentialCard(potential)).join("")
-    : `<p class="empty-result">Save the Markdown, then start API search</p>`;
+    : `<p class="empty-result">Click Start search to collect jobs from the saved Markdown</p>`;
 }
 
 function renderShortlist(jobs = currentJobs()) {
@@ -5703,7 +5705,7 @@ function renderJobMatchOutput(job) {
   if (!job) {
     $("#jobMatchTitle").textContent = "No JD selected";
     $("#jobMatchMarkdown").value = "";
-    $("#jobMarkdownStatus").textContent = "Select a potential, then add a real JD to generate an application kit.";
+    $("#jobMarkdownStatus").textContent = "Select a collected job in Step 2, then create the application kit in Step 3.";
     return;
   }
   const previewJob = job.applicationMarkdown ? job : analyzeJobForProfile(job);
@@ -5724,8 +5726,8 @@ function resetJobForm() {
   $("#jobNotes").value = "";
   $("#jobStatus").value = "collected";
   $("#deleteJobEntry").hidden = true;
-  $("#jobStatusNote").textContent = "Paste a real job description after API search.";
-  $("#saveJobEntry").textContent = "Create application kit";
+  $("#jobStatusNote").textContent = "Select a collected job in Step 2, then synthesize it here.";
+  $("#saveJobEntry").textContent = "Synthesize JD kit";
 }
 
 function fillJobForm(job) {
@@ -5740,7 +5742,7 @@ function fillJobForm(job) {
   $("#jobStatus").value = job.status || "collected";
   $("#deleteJobEntry").hidden = false;
   $("#jobStatusNote").textContent = "Editing saved JD kit.";
-  $("#saveJobEntry").textContent = "Update application kit";
+  $("#saveJobEntry").textContent = "Update JD kit";
 }
 
 function jobFromForm() {
@@ -5867,6 +5869,11 @@ function usePotentialForJob(potentialId) {
   const jobs = currentJobs();
   const potential = jobs.potentials.find((item) => item.id === potentialId);
   if (!potential) return;
+  if (potential.kind !== "job") {
+    selectPotential(potentialId);
+    setJobsModuleStatus("Open this search source first, then choose a concrete job posting.");
+    return;
+  }
   activePotentialId = potential.id;
   potential.status = "opened";
   potential.updatedAt = new Date().toISOString();
@@ -5883,9 +5890,9 @@ function usePotentialForJob(potentialId) {
   ].filter(Boolean).join("\n");
   $("#jobStatus").value = "collected";
   $("#deleteJobEntry").hidden = true;
-  $("#saveJobEntry").textContent = "Create application kit";
-  $("#jobStatusNote").textContent = "Collected job loaded. Review the JD, then create the application kit.";
-  saveJobsState("Collected job loaded into JD form.");
+  $("#saveJobEntry").textContent = "Synthesize JD kit";
+  $("#jobStatusNote").textContent = "Selected job loaded. Review it, then synthesize the JD kit.";
+  saveJobsState("Selected job loaded into Step 3.");
   $("#jobForm")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -7190,7 +7197,7 @@ $("#jobForm").addEventListener("input", () => {
 $("#newJobEntry").addEventListener("click", resetJobForm);
 $("#analyzeSelectedJob").addEventListener("click", analyzeSelectedJob);
 $("#deleteJobEntry").addEventListener("click", deleteCurrentJob);
-$("#jobPotentialFilter").addEventListener("change", (event) => {
+$("#jobPotentialFilter")?.addEventListener("change", (event) => {
   activePotentialFilter = event.target.value;
   renderJobsModule();
 });
@@ -7206,10 +7213,11 @@ document.querySelectorAll("#jobPotentialList, #jobShortlistList").forEach((list)
     }
     const actionButton = event.target.closest("[data-potential-action]");
     if (actionButton?.dataset.potentialAction === "open") {
+      event.preventDefault();
       openJobSearch(potentialId);
       return;
     }
-    if (actionButton?.dataset.potentialAction === "use-job") {
+    if (actionButton?.dataset.potentialAction === "select" || actionButton?.dataset.potentialAction === "use-job") {
       usePotentialForJob(potentialId);
       return;
     }

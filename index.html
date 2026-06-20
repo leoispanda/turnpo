@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.208" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.210" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -227,9 +227,6 @@
           </div>
           <div class="jobs-head-actions">
             <button class="section-action" id="backToProfileFromJobs" type="button">Back to profile</button>
-            <button class="section-action" id="saveJobMarkdown" type="button">Save Markdown</button>
-            <button class="section-action" id="startJobSearch" type="button">Start search</button>
-            <button class="section-action" id="newJobEntry" type="button">New JD</button>
           </div>
         </div>
 
@@ -242,7 +239,10 @@
                 <p class="eyebrow">Step 1</p>
                 <h3>Saved Turnpo Markdown</h3>
               </div>
-              <button class="section-action" id="refreshJobPotentialMarkdown" type="button">Refresh</button>
+              <div class="job-panel-actions">
+                <button class="section-action" id="saveJobMarkdown" type="button">Save</button>
+                <button class="section-action" id="refreshJobPotentialMarkdown" type="button">Refresh</button>
+              </div>
             </div>
             <textarea id="jobPotentialMarkdown" spellcheck="false"></textarea>
             <p class="form-status" id="jobStatusNote"></p>
@@ -254,9 +254,9 @@
                 <p class="eyebrow">Step 2</p>
                 <h3>Collected jobs</h3>
               </div>
+              <button class="section-action" id="startJobSearch" type="button">Start search</button>
             </div>
             <div class="job-board-toolbar">
-              <label><span>Job filter</span><select id="jobPotentialFilter"></select></label>
               <span id="jobPotentialCount"></span>
             </div>
             <div class="job-potential-list" id="jobPotentialList"></div>
@@ -268,9 +268,12 @@
             <div class="job-panel-head">
               <div>
                 <p class="eyebrow">Step 3</p>
-                <h3>Paste a real JD</h3>
+                <h3>Synthesize selected JD</h3>
               </div>
-              <button class="section-action" id="analyzeSelectedJob" type="button">Analyze JD</button>
+              <div class="job-panel-actions">
+                <button class="section-action" id="newJobEntry" type="button">Clear</button>
+                <button class="section-action" id="analyzeSelectedJob" type="button">Analyze JD</button>
+              </div>
             </div>
             <input id="jobEditId" type="hidden" />
             <input id="jobPotentialId" type="hidden" />
@@ -359,7 +362,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.208</span>
+          <span class="version-badge">v0.1.210</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -589,6 +592,6 @@
       </figure>
     </div>
 
-    <script src="/script.js?v=0.1.208"></script>
+    <script src="/script.js?v=0.1.210"></script>
   </body>
 </html>

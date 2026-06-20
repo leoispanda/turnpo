@@ -2640,6 +2640,7 @@ body.jobs-open .jobs-module {
 }
 
 .jobs-head-actions,
+.job-panel-actions,
 .job-match-actions,
 .job-card-actions {
   display: flex;
@@ -2829,6 +2830,15 @@ body.jobs-open .jobs-module {
   margin: 0;
   color: var(--muted);
   line-height: 1.4;
+}
+
+.job-duty-label {
+  display: block;
+  margin-bottom: 3px;
+  color: #bdeafb;
+  font-size: 11px;
+  font-weight: 820;
+  text-transform: uppercase;
 }
 
 .job-potential-meta strong {

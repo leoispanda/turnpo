@@ -10,6 +10,25 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.210
+
+Commit: `Simplify Jobs search selection flow`
+
+### Changed
+
+- Moved `Start search` into Step 2 and removed the Step 2 filter control so the search step has one primary action.
+- Simplified collected job cards to show the role title, company/location, a short `What it does` summary, the original posting link, and a single selection action.
+- Changed Step 3 copy and button labels to focus on synthesizing the selected job into a JD/application kit.
+- Kept API-collected job details saved privately while avoiding extra queue/save controls in the search results.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node tests/jobs-ui-static.test.mjs`.
+- Ran `node tests/jobs-search.test.mjs`.
+- Ran `node tests/security-helpers.test.mjs`.
+- Ran `git diff --check`.
+
 ## 2026-06-20 - v0.1.208
 
 Commit: `Collect Jobs from API search`
