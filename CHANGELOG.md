@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.213
+
+Commit: `Mark Jobs general info complete`
+
+### Changed
+
+- Changed Jobs Step 1 from a plain Markdown save action into `Complete info`, combining the saved Turnpo Markdown and recent follow-up notes into a visible general-information completion state.
+- Added a `General information completed` / changed / incomplete status so Step 2 clearly knows which profile context it should use.
+- Made `Start search` auto-complete the current Step 1 information before collecting the top 30 job leads, so freshly typed follow-up notes are included even if the owner starts searching immediately.
+- Preserved the Step 1 completion timestamp in private online Jobs drafts.
+
+### Verification
+
+- Ran bundled Node `--check` on `script.js`.
+- Ran bundled Node `--check` on `functions/api/jobs/search.js`.
+- Ran `node tests/jobs-search.test.mjs` with bundled Node.
+- Ran `node tests/jobs-ui-static.test.mjs` with bundled Node.
+- Ran `node tests/security-helpers.test.mjs` with bundled Node.
+- Ran `git diff --check`.
+
 ## 2026-06-20 - v0.1.212
 
 Commit: `Build Jobs application package flow`

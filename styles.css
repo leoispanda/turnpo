@@ -2747,6 +2747,35 @@ body.jobs-open .jobs-module {
   min-height: 120px;
 }
 
+.job-general-info-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: fit-content;
+  min-height: 30px;
+  margin: 0;
+  padding: 6px 10px;
+  border: 1px solid rgba(216, 177, 95, 0.22);
+  border-radius: var(--radius);
+  background: rgba(216, 177, 95, 0.08);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 760;
+  line-height: 1.2;
+}
+
+.job-general-info-status.is-complete {
+  border-color: rgba(61, 186, 128, 0.34);
+  background: rgba(61, 186, 128, 0.1);
+  color: #7ee1ad;
+}
+
+.job-general-info-status.is-dirty {
+  border-color: rgba(240, 207, 130, 0.36);
+  background: rgba(240, 207, 130, 0.1);
+  color: var(--gold-strong);
+}
+
 .job-intake textarea {
   width: 100%;
   min-height: 126px;
@@ -3849,6 +3878,23 @@ body.theme-light .job-potential-card:hover,
 body.theme-light .job-potential-card.active {
   background: rgba(155, 113, 50, 0.08);
   border-color: rgba(117, 80, 27, 0.28);
+}
+
+body.theme-light .job-general-info-status {
+  background: rgba(155, 113, 50, 0.08);
+  border-color: rgba(155, 113, 50, 0.2);
+}
+
+body.theme-light .job-general-info-status.is-complete {
+  background: rgba(32, 137, 77, 0.08);
+  border-color: rgba(32, 137, 77, 0.22);
+  color: #247345;
+}
+
+body.theme-light .job-general-info-status.is-dirty {
+  background: rgba(155, 113, 50, 0.08);
+  border-color: rgba(155, 113, 50, 0.24);
+  color: var(--gold-strong);
 }
 
 body.theme-light .status-interesting {

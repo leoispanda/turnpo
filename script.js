@@ -2542,6 +2542,7 @@ function normalizeJobs(value = {}) {
   return {
     markdown: String(value.markdown || "").trim(),
     followUps: String(value.followUps || "").trim(),
+    generalInfoCompletedAt: String(value.generalInfoCompletedAt || "").trim(),
     preferences: {
       targetLocations: uniqueCleanStrings(preferences.targetLocations || JOB_TARGET_LOCATIONS, 12),
       focusKeywords: uniqueCleanStrings(preferences.focusKeywords || JOB_FOCUS_KEYWORDS, 40),
@@ -5269,11 +5270,45 @@ function savedJobMarkdown(profile = currentProfile()) {
   return normalizeJobs(profile.jobs).markdown || profileMarkdownForJobs(profile);
 }
 
-function saveJobMarkdownFromInput(message = "Markdown saved.") {
+function readJobGeneralInfoInputs(jobs = currentJobs()) {
+  const markdownInput = $("#jobPotentialMarkdown");
+  const followUpsInput = $("#jobFollowUps");
+  return {
+    markdown: (markdownInput ? markdownInput.value : jobs.markdown || profileMarkdownForJobs()).trim(),
+    followUps: (followUpsInput ? followUpsInput.value : jobs.followUps || "").trim()
+  };
+}
+
+function renderJobGeneralInfoStatus(jobs = currentJobs(), state = "") {
+  const note = $("#jobGeneralInfoStatus");
+  if (!note) return;
+  const isDirty = state === "dirty";
+  const isComplete = Boolean(jobs.generalInfoCompletedAt) && !isDirty;
+  note.classList.toggle("is-complete", isComplete);
+  note.classList.toggle("is-dirty", isDirty);
+  note.textContent = isDirty
+    ? "General information changed"
+    : isComplete
+    ? "General information completed"
+    : "General information incomplete";
+}
+
+function completeJobGeneralInfo(message = "General information completed.", { persist = true } = {}) {
   const jobs = currentJobs();
-  jobs.markdown = ($("#jobPotentialMarkdown")?.value || profileMarkdownForJobs()).trim();
-  jobs.followUps = ($("#jobFollowUps")?.value || "").trim();
-  saveJobsState(message);
+  const source = readJobGeneralInfoInputs(jobs);
+  jobs.markdown = source.markdown || profileMarkdownForJobs();
+  jobs.followUps = source.followUps;
+  jobs.generalInfoCompletedAt = new Date().toISOString();
+  renderJobGeneralInfoStatus(jobs);
+  if (persist) saveJobsState(message);
+  return jobs;
+}
+
+function markJobGeneralInfoDirty(message = "General information changed. Complete info before starting a fresh search.") {
+  const jobs = currentJobs();
+  jobs.generalInfoCompletedAt = "";
+  renderJobGeneralInfoStatus(jobs, "dirty");
+  setJobsModuleStatus(message);
 }
 
 function jobsSearchSourceText(jobs = currentJobs()) {
@@ -5626,6 +5661,7 @@ function renderJobAgents(jobs, selectedJob) {
 function renderPotentialSource(jobs = currentJobs()) {
   if ($("#jobPotentialMarkdown")) $("#jobPotentialMarkdown").value = jobs.markdown || profileMarkdownForJobs();
   if ($("#jobFollowUps")) $("#jobFollowUps").value = jobs.followUps || "";
+  renderJobGeneralInfoStatus(jobs);
 }
 
 function compactJobDuty(potential = {}) {
@@ -5897,9 +5933,8 @@ function upsertJob(event) {
 }
 
 async function startJobWebSearch() {
-  const jobs = currentJobs();
-  jobs.markdown = ($("#jobPotentialMarkdown")?.value || profileMarkdownForJobs()).trim();
-  jobs.followUps = ($("#jobFollowUps")?.value || "").trim();
+  const wasComplete = Boolean(currentJobs().generalInfoCompletedAt);
+  const jobs = completeJobGeneralInfo("General information completed.", { persist: false });
   const sourceText = jobsSearchSourceText(jobs);
   if (sourceText.length < 20) {
     setJobsModuleStatus("Save more Turnpo Markdown before starting search.");
@@ -5911,7 +5946,7 @@ async function startJobWebSearch() {
     button.disabled = true;
     button.textContent = "Searching...";
   }
-  setJobsModuleStatus("Searching public job APIs...");
+  setJobsModuleStatus(`${wasComplete ? "" : "General information completed. "}Searching public job APIs...`);
   const previousPotentials = jobs.potentials;
   try {
     const result = await collectJobsFromApi(sourceText);
@@ -7301,15 +7336,16 @@ $("#openAiImport").addEventListener("click", () => setAiImportDrawer(true));
 $("#openJobsPage").addEventListener("click", () => setRoute(jobsRoute(activeUsername)));
 $("#openJobsModule").addEventListener("click", openJobsModule);
 $("#backToProfileFromJobs").addEventListener("click", () => setRoute(activeUsername));
-$("#saveJobMarkdown").addEventListener("click", () => saveJobMarkdownFromInput("Markdown saved."));
+$("#saveJobMarkdown").addEventListener("click", () => completeJobGeneralInfo("General information completed."));
 $("#startJobSearch").addEventListener("click", startJobWebSearch);
-$("#jobPotentialMarkdown").addEventListener("input", () => {
-  setJobsModuleStatus("Markdown edited. Save Markdown before starting a fresh search.");
-});
+$("#jobPotentialMarkdown").addEventListener("input", () => markJobGeneralInfoDirty());
+$("#jobFollowUps").addEventListener("input", () => markJobGeneralInfoDirty());
 $("#refreshJobPotentialMarkdown").addEventListener("click", () => {
-  currentJobs().markdown = profileMarkdownForJobs();
+  const jobs = currentJobs();
+  jobs.markdown = profileMarkdownForJobs();
+  jobs.generalInfoCompletedAt = "";
   renderJobsModule();
-  setJobsModuleStatus("Markdown refreshed from current Turnpo profile.");
+  setJobsModuleStatus("Markdown refreshed from current Turnpo profile. Complete info before starting a fresh search.");
 });
 $("#optimizeExistingImages").addEventListener("click", optimizeExistingOnlineImages);
 $("#ownerLogout").addEventListener("click", logoutOwner);

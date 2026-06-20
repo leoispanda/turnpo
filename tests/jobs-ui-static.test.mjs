@@ -7,6 +7,8 @@ const version = JSON.parse(fs.readFileSync(new URL("../version.json", import.met
 
 assert.ok(indexHtml.includes("Collected jobs"));
 assert.ok(indexHtml.includes("Start search"));
+assert.ok(indexHtml.includes("Complete info"));
+assert.ok(indexHtml.includes("General information incomplete"));
 assert.ok(indexHtml.includes("Recent follow-ups / search notes"));
 assert.ok(indexHtml.includes("Generate modified resume"));
 assert.ok(indexHtml.includes("Print / Save PDF"));
@@ -17,6 +19,9 @@ assert.ok(indexHtml.includes(`/styles.css?v=${version}`));
 assert.ok(scriptJs.includes('const JOB_SEARCH_API = "/api/jobs/search";'));
 assert.ok(scriptJs.includes("async function startJobWebSearch()"));
 assert.ok(scriptJs.includes("collectJobsFromApi(sourceText)"));
+assert.ok(scriptJs.includes("function completeJobGeneralInfo("));
+assert.ok(scriptJs.includes("General information completed"));
+assert.ok(scriptJs.includes("General information changed"));
 assert.ok(scriptJs.includes("Proceed to Step 3"));
 assert.ok(scriptJs.includes('dataset.potentialAction === "select"'));
 assert.ok(scriptJs.includes("function usePotentialForJob(potentialId)"));
