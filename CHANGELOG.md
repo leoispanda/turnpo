@@ -10,6 +10,24 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.205
+
+Commit: `Split Jobs into standalone profile function page`
+
+### Changed
+
+- Moved the Turnpo Jobs workspace out of the main profile flow and into a standalone `/turnpo-jobs/:username` route.
+- Added a lightweight `Turnpo Jobs` function button on each Turnpo profile page.
+- Kept the Jobs workspace temporarily available without login for iteration, while saving job data locally when no owner session is active.
+- Marked the temporary Jobs page as `noindex, nofollow` and added Cloudflare redirects for direct route loading.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node tests/security-helpers.test.mjs`.
+- Ran `git diff --check`.
+- Ran local static route QA confirming `/turnpo-jobs/leo` and `/u/leo` return HTML through the fallback server, the Jobs route is noindex, and the profile button/back button/routing hooks are present.
+
 ## 2026-06-20 - v0.1.204
 
 Commit: `Add owner jobs agent workspace`

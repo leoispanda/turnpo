@@ -2766,7 +2766,10 @@ async function loadPublishedProfileOnline(username = activeUsername) {
     profiles[username] = normalizeProfile(data.profile, { remote: true });
     onlinePublishedAvailable = true;
     lastOnlinePublishedAt = data.publishedAt || data.updatedAt || "";
-    if (!ownerMode && activeUsername === username && body.classList.contains("profile-open")) renderProfile();
+    if (!ownerMode && activeUsername === username) {
+      if (body.classList.contains("profile-open")) renderProfile();
+      else if (isJobsWorkspaceOpen()) renderJobsModule();
+    }
     return true;
   } catch {
     onlinePublishedAvailable = false;
@@ -2783,7 +2786,10 @@ async function loadDraftProfileOnline(username = activeUsername) {
     saveActiveProfile();
     onlineDraftAvailable = true;
     lastOnlineSavedAt = data.savedAt || data.updatedAt || "";
-    if (activeUsername === username && body.classList.contains("profile-open")) renderProfile();
+    if (activeUsername === username) {
+      if (body.classList.contains("profile-open")) renderProfile();
+      else if (isJobsWorkspaceOpen()) renderJobsModule();
+    }
     return true;
   } catch {
     onlineDraftAvailable = false;
@@ -2898,6 +2904,48 @@ function saveCurrentProfileState() {
 
 function currentProfile() {
   return profiles[activeUsername] || profiles.leo;
+}
+
+function jobsRoute(username = activeUsername) {
+  return `jobs:${normalizeUsername(username) || "leo"}`;
+}
+
+function jobsPath(username = activeUsername) {
+  return `/turnpo-jobs/${normalizeUsername(username) || "leo"}`;
+}
+
+function jobsUsernameFromRoute(route) {
+  const match = String(route || "").match(/^jobs:(.+)$/);
+  return match ? normalizeUsername(match[1]) || "leo" : "";
+}
+
+function isJobsWorkspaceOpen() {
+  return body.classList.contains("jobs-open");
+}
+
+function canEditJobs() {
+  return ownerMode || isJobsWorkspaceOpen();
+}
+
+function hideProfileContent() {
+  document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = true; });
+}
+
+function showProfileContent() {
+  document.querySelectorAll(".profile-content").forEach((node) => {
+    node.hidden = node.id === "turnpoJobs";
+  });
+}
+
+function showOnlyProfileContent(id) {
+  document.querySelectorAll(".profile-content").forEach((node) => {
+    node.hidden = node.id !== id;
+  });
+}
+
+function setJobsModuleStatus(message) {
+  if ($("#jobStatusNote")) $("#jobStatusNote").textContent = message;
+  if (ownerMode) setOwnerSaveStatus(message);
 }
 
 function isPublished(item) {
@@ -4096,9 +4144,10 @@ function setRoute(route) {
   if (route === "home") {
     body.classList.remove("profile-open");
     body.classList.remove("admin-open");
+    body.classList.remove("jobs-open");
     $("#entryView").hidden = false;
     $("#adminView").hidden = true;
-    document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = true; });
+    hideProfileContent();
     history.pushState(null, "", "/");
     setSeoMeta({
       title: HOME_SEO.title,
@@ -4116,10 +4165,11 @@ function setRoute(route) {
   if (route === "admin") {
     body.classList.remove("profile-open");
     body.classList.add("admin-open");
+    body.classList.remove("jobs-open");
     body.classList.toggle("owner-session", Boolean(ownerSessionProfile));
     $("#entryView").hidden = true;
     $("#adminView").hidden = false;
-    document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = true; });
+    hideProfileContent();
     history.pushState(null, "", "/admin");
     setSeoMeta({
       title: "Admin Dashboard | Turnpo",
@@ -4135,6 +4185,40 @@ function setRoute(route) {
     return;
   }
 
+  const jobsUsername = jobsUsernameFromRoute(route);
+  if (jobsUsername) {
+    activeUsername = jobsUsername;
+    if (!profiles[activeUsername] && !seedProfiles[activeUsername]) {
+      profiles[activeUsername] = starterProfile({ username: activeUsername, displayName: activeUsername });
+    }
+    loadOwnerProfile(activeUsername);
+    localStorage.setItem(ACTIVE_PROFILE_KEY, activeUsername);
+    body.classList.remove("profile-open");
+    body.classList.remove("admin-open");
+    body.classList.add("jobs-open");
+    $("#entryView").hidden = true;
+    $("#adminView").hidden = true;
+    showOnlyProfileContent("turnpoJobs");
+    history.pushState(null, "", jobsPath(activeUsername));
+    const profile = currentProfile();
+    setSeoMeta({
+      title: `Turnpo Jobs for ${profile.displayName || `@${activeUsername}`} | Turnpo`,
+      description: "A temporary Turnpo Jobs workspace for collecting roles, scoring fit, and generating Markdown application kits.",
+      url: `${SITE_URL}${jobsPath(activeUsername)}`,
+      image: profile.avatar || HOME_SEO.image,
+      imageAlt: `${profile.displayName || activeUsername} Turnpo Jobs workspace`,
+      imageWidth: "1024",
+      imageHeight: "1536",
+      type: "website",
+      robots: "noindex, nofollow"
+    });
+    $("#jsonLd").textContent = "{}";
+    renderJobsModule();
+    if (!hasLocalDraft(activeUsername)) refreshJobsPublicProfileContext(activeUsername);
+    window.scrollTo({ top: 0, behavior: "auto" });
+    return;
+  }
+
   const normalizedRoute = normalizeUsername(route);
   activeUsername = normalizedRoute && (profiles[normalizedRoute] || !seedProfiles[normalizedRoute])
     ? normalizedRoute
@@ -4143,9 +4227,10 @@ function setRoute(route) {
   localStorage.setItem(ACTIVE_PROFILE_KEY, activeUsername);
   body.classList.add("profile-open");
   body.classList.remove("admin-open");
+  body.classList.remove("jobs-open");
   $("#entryView").hidden = true;
   $("#adminView").hidden = true;
-  document.querySelectorAll(".profile-content").forEach((node) => { node.hidden = false; });
+  showProfileContent();
   history.pushState(null, "", `/u/${activeUsername}`);
   lifeAtlasScrollActivated = false;
   window.scrollTo({ top: 0, behavior: "auto" });
@@ -4156,10 +4241,14 @@ function setRoute(route) {
 
 function routeFromLocation() {
   if (location.pathname === "/admin") return "admin";
+  const jobsPathMatch = location.pathname.match(/^\/turnpo-jobs\/([^/]+)/);
+  if (jobsPathMatch) return jobsRoute(decodeURIComponent(jobsPathMatch[1]));
+  const dotJobsPathMatch = location.pathname.match(/^\/turnpo\.jobs\/([^/]+)/);
+  if (dotJobsPathMatch) return jobsRoute(decodeURIComponent(dotJobsPathMatch[1]));
   const pathMatch = location.pathname.match(/^\/u\/([^/]+)/);
   if (pathMatch) return decodeURIComponent(pathMatch[1]);
   const shortProfileMatch = location.pathname.match(/^\/([^/.]+)\/?$/);
-  if (shortProfileMatch && !["api", "assets", "legal", "admin"].includes(shortProfileMatch[1].toLowerCase())) {
+  if (shortProfileMatch && !["api", "assets", "legal", "admin", "turnpo-jobs", "turnpo.jobs"].includes(shortProfileMatch[1].toLowerCase())) {
     return decodeURIComponent(shortProfileMatch[1]);
   }
   const hashMatch = location.hash.match(/^#\/u\/([^/]+)/);
@@ -5080,6 +5169,16 @@ function currentJobs() {
   return profile.jobs;
 }
 
+async function refreshJobsPublicProfileContext(username = activeUsername) {
+  const savedJobs = normalizeJobs(currentProfile().jobs);
+  const loaded = await loadPublishedProfileOnline(username);
+  if (!loaded || activeUsername !== username || !isJobsWorkspaceOpen()) return false;
+  profiles[username].jobs = savedJobs;
+  if (savedJobs.items.length) saveActiveProfile();
+  renderJobsModule();
+  return true;
+}
+
 function jobSearchText(job = {}) {
   return [
     job.title,
@@ -5273,7 +5372,7 @@ function renderJobControlOptions() {
 function renderJobsModule() {
   if (!$("#turnpoJobs")) return;
   renderJobControlOptions();
-  if (!ownerMode) return;
+  if (!canEditJobs()) return;
   const jobs = currentJobs();
   if (activeJobId && !jobs.items.some((job) => job.id === activeJobId)) activeJobId = "";
   if (!activeJobId && jobs.items.length) activeJobId = jobs.items[0].id;
@@ -5397,15 +5496,19 @@ function jobFromForm() {
 function saveJobsState(message) {
   saveActiveProfile();
   renderJobsModule();
-  setOwnerSaveStatus(`${message} Saving online draft...`);
+  if (!ownerMode || !ownerSessionProfile) {
+    setJobsModuleStatus(`${message} Saved locally in this browser.`);
+    return;
+  }
+  setJobsModuleStatus(`${message} Saving online draft...`);
   saveProfileDraftOnline({ quiet: true }).then((saved) => {
-    setOwnerSaveStatus(saved ? `${message} Saved to online draft.` : `${message} Saved locally. Log in to sync online draft.`);
+    setJobsModuleStatus(saved ? `${message} Saved to online draft.` : `${message} Saved locally. Log in to sync online draft.`);
   });
 }
 
 function upsertJob(event) {
   event.preventDefault();
-  if (!ownerMode) {
+  if (!canEditJobs()) {
     setAuthDrawer(true);
     return;
   }
@@ -5469,13 +5572,7 @@ function deleteCurrentJob() {
 }
 
 function openJobsModule() {
-  if (!ownerMode) {
-    setAuthDrawer(true);
-    return;
-  }
-  if (!body.classList.contains("profile-open")) setRoute(activeUsername);
-  renderJobsModule();
-  setTimeout(() => $("#turnpoJobs")?.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+  setRoute(jobsRoute(activeUsername));
 }
 
 function copyJobApplicationMarkdown() {
@@ -5557,13 +5654,14 @@ function renderJsonLd(profile) {
 function setOwnerMode(enabled) {
   ownerMode = enabled;
   ownerTimelineView = "published";
-  if (enabled) loadOwnerProfile(activeUsername);
+  if (enabled || isJobsWorkspaceOpen()) loadOwnerProfile(activeUsername);
   else loadPublicProfile(activeUsername);
   body.classList.toggle("owner-mode", enabled);
-  if (body.classList.contains("profile-open")) renderProfile();
+  if (isJobsWorkspaceOpen()) renderJobsModule();
+  else if (body.classList.contains("profile-open")) renderProfile();
   else renderHome($("#personSearch").value);
   if (enabled) loadDraftProfileOnline(activeUsername);
-  else loadPublishedProfileOnline(activeUsername);
+  else if (!isJobsWorkspaceOpen()) loadPublishedProfileOnline(activeUsername);
 }
 
 function setUserSessionState(session = {}) {
@@ -6665,7 +6763,9 @@ $("#refreshAdminDashboard").addEventListener("click", renderAdminDashboard);
 $("#themeToggle").addEventListener("click", toggleTheme);
 $("#openRegistration").addEventListener("click", () => setRegistrationDrawer(true));
 $("#openAiImport").addEventListener("click", () => setAiImportDrawer(true));
+$("#openJobsPage").addEventListener("click", () => setRoute(jobsRoute(activeUsername)));
 $("#openJobsModule").addEventListener("click", openJobsModule);
+$("#backToProfileFromJobs").addEventListener("click", () => setRoute(activeUsername));
 $("#optimizeExistingImages").addEventListener("click", optimizeExistingOnlineImages);
 $("#ownerLogout").addEventListener("click", logoutOwner);
 $("#backToSearch").addEventListener("click", () => setRoute("home"));
@@ -6712,7 +6812,7 @@ $("#copyAiImportDraft").addEventListener("click", copyAiImportDraft);
 $("#addAiImportLife").addEventListener("click", addAiImportLifeDraft);
 $("#jobForm").addEventListener("submit", upsertJob);
 $("#jobForm").addEventListener("input", () => {
-  if (ownerMode) setOwnerSaveStatus("Unsaved job edits. Save and analyze to update the Jobs module.");
+  if (canEditJobs()) setJobsModuleStatus("Unsaved job edits. Save and analyze to update the Jobs module.");
 });
 $("#newJobEntry").addEventListener("click", resetJobForm);
 $("#analyzeSelectedJob").addEventListener("click", analyzeSelectedJob);

@@ -232,9 +232,14 @@ body.theme-light .brand-mark {
 body:not(.profile-open) .profile-only,
 body.profile-open .home-only,
 body.admin-open .home-only,
+body.jobs-open .home-only,
 body.admin-open .owner-only,
 body:not(.owner-mode) .owner-only {
   display: none;
+}
+
+body.jobs-open #turnpoJobs {
+  display: grid;
 }
 
 body.authenticated .logged-out-only,
@@ -253,6 +258,10 @@ body.owner-mode #homeOwnerLogin {
 }
 
 body.admin-open .founder-tools {
+  display: none;
+}
+
+body.jobs-open .site-footer {
   display: none;
 }
 
@@ -967,6 +976,33 @@ h1 {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 16px;
+}
+
+.profile-functions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.profile-function-btn {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(116, 188, 210, 0.28);
+  border-radius: 999px;
+  color: #bdeafb;
+  background: rgba(88, 170, 198, 0.08);
+  font-size: 13px;
+  font-weight: 760;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.profile-function-btn:hover {
+  border-color: rgba(116, 188, 210, 0.5);
+  color: #e4f8ff;
+  background: rgba(88, 170, 198, 0.14);
+  transform: translateY(-1px);
 }
 
 .public-ai-strip {
@@ -2570,6 +2606,11 @@ body:not(.owner-mode) .work-link-action {
   box-shadow: var(--shadow-soft);
 }
 
+body.jobs-open .jobs-module {
+  width: min(1320px, calc(100% - clamp(28px, 6vw, 96px)));
+  margin: clamp(24px, 5vw, 58px) auto clamp(32px, 6vw, 72px);
+}
+
 .jobs-head,
 .job-match-head,
 .job-board-toolbar {
@@ -3257,6 +3298,7 @@ body.theme-light .person-result,
 body.theme-light .profile-meta span,
 body.theme-light .timeline-tag,
 body.theme-light .profile-links a,
+body.theme-light .profile-function-btn,
 body.theme-light .section-action,
 body.theme-light .year-jump button,
 body.theme-light .year-jump select,
@@ -3300,6 +3342,7 @@ body.theme-light .icon-btn:hover,
 body.theme-light .section-action:hover,
 body.theme-light .year-jump button:hover,
 body.theme-light .year-jump select:hover,
+body.theme-light .profile-function-btn:hover,
 body.theme-light .work-card:hover,
 body.theme-light:not(.owner-mode) .event-card:hover {
   background: rgba(255, 255, 255, 0.82);
