@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.214
+
+Commit: `Absorb Jobs follow-ups into Markdown`
+
+### Changed
+
+- Changed Jobs Step 1 follow-ups into a processing input that absorbs new notes into the personal Markdown textarea.
+- Added a stable `Recent follow-ups absorbed into personal Markdown` Markdown section, merging new follow-ups without duplicating earlier notes.
+- Changed the completion status to show `Absorbed into personal Markdown` after follow-ups are processed, including when `Start search` is clicked directly.
+
+### Verification
+
+- Ran bundled Node `--check` on `script.js`.
+- Ran bundled Node `--check` on `functions/api/jobs/search.js`.
+- Ran `node tests/jobs-search.test.mjs` with bundled Node.
+- Ran `node tests/jobs-ui-static.test.mjs` with bundled Node.
+- Ran `node tests/security-helpers.test.mjs` with bundled Node.
+- Ran `git diff --check`.
+
+
 ## 2026-06-20 - v0.1.213
 
 Commit: `Mark Jobs general info complete`

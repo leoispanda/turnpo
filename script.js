@@ -169,6 +169,7 @@ const JOB_POTENTIAL_FILTER_LABELS = {
   ...JOB_POTENTIAL_STATUS_LABELS
 };
 const JOB_SEARCH_API = "/api/jobs/search";
+const JOB_FOLLOW_UPS_MARKDOWN_HEADING = "## Recent follow-ups absorbed into personal Markdown";
 const JOB_FOCUS_KEYWORDS = [
   "ai",
   "artificial intelligence",
@@ -5279,15 +5280,49 @@ function readJobGeneralInfoInputs(jobs = currentJobs()) {
   };
 }
 
+function normalizeFollowUpLines(value = "") {
+  return String(value || "")
+    .split(/\n+/)
+    .map((line) => line.replace(/^\s*(?:[-*•]|\d+[.)])\s*/, "").trim())
+    .filter(Boolean)
+    .slice(0, 40);
+}
+
+function escapeRegExp(value = "") {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function absorbFollowUpsIntoMarkdown(markdown = "", followUps = "") {
+  const baseMarkdown = String(markdown || "").trim();
+  const incomingLines = normalizeFollowUpLines(followUps);
+  if (!incomingLines.length) return { markdown: baseMarkdown, absorbedCount: 0 };
+  const sectionPattern = new RegExp(`(?:^|\\n)${escapeRegExp(JOB_FOLLOW_UPS_MARKDOWN_HEADING)}\\n([\\s\\S]*?)(?=\\n##\\s|$)`);
+  const existingSection = baseMarkdown.match(sectionPattern);
+  const existingLines = normalizeFollowUpLines(existingSection?.[1] || "");
+  const mergedLines = uniqueCleanStrings([...existingLines, ...incomingLines], 40);
+  const nextSection = `${JOB_FOLLOW_UPS_MARKDOWN_HEADING}\n${mergedLines.map((line) => `- ${line}`).join("\n")}`;
+  const nextMarkdown = existingSection
+    ? baseMarkdown.replace(sectionPattern, `\n\n${nextSection}`)
+    : `${baseMarkdown}\n\n${nextSection}`;
+  return {
+    markdown: nextMarkdown.replace(/\n{3,}/g, "\n\n").trim(),
+    absorbedCount: incomingLines.length
+  };
+}
+
 function renderJobGeneralInfoStatus(jobs = currentJobs(), state = "") {
   const note = $("#jobGeneralInfoStatus");
   if (!note) return;
   const isDirty = state === "dirty";
+  const isAbsorbed = state === "absorbed";
+  const hasAbsorbedFollowUps = String(jobs.markdown || "").includes(JOB_FOLLOW_UPS_MARKDOWN_HEADING);
   const isComplete = Boolean(jobs.generalInfoCompletedAt) && !isDirty;
   note.classList.toggle("is-complete", isComplete);
   note.classList.toggle("is-dirty", isDirty);
   note.textContent = isDirty
-    ? "General information changed"
+    ? "Ready to absorb into personal Markdown"
+    : isAbsorbed || (isComplete && hasAbsorbedFollowUps)
+    ? "Absorbed into personal Markdown"
     : isComplete
     ? "General information completed"
     : "General information incomplete";
@@ -5296,15 +5331,19 @@ function renderJobGeneralInfoStatus(jobs = currentJobs(), state = "") {
 function completeJobGeneralInfo(message = "General information completed.", { persist = true } = {}) {
   const jobs = currentJobs();
   const source = readJobGeneralInfoInputs(jobs);
-  jobs.markdown = source.markdown || profileMarkdownForJobs();
-  jobs.followUps = source.followUps;
+  const absorption = absorbFollowUpsIntoMarkdown(source.markdown || profileMarkdownForJobs(), source.followUps);
+  jobs.markdown = absorption.markdown || profileMarkdownForJobs();
+  jobs.followUps = "";
   jobs.generalInfoCompletedAt = new Date().toISOString();
-  renderJobGeneralInfoStatus(jobs);
-  if (persist) saveJobsState(message);
+  if ($("#jobPotentialMarkdown")) $("#jobPotentialMarkdown").value = jobs.markdown;
+  if ($("#jobFollowUps")) $("#jobFollowUps").value = "";
+  renderJobGeneralInfoStatus(jobs, absorption.absorbedCount ? "absorbed" : "");
+  const statusMessage = absorption.absorbedCount ? "Absorbed follow-ups into personal Markdown." : message;
+  if (persist) saveJobsState(statusMessage);
   return jobs;
 }
 
-function markJobGeneralInfoDirty(message = "General information changed. Complete info before starting a fresh search.") {
+function markJobGeneralInfoDirty(message = "General information changed. Complete info to absorb updates before starting a fresh search.") {
   const jobs = currentJobs();
   jobs.generalInfoCompletedAt = "";
   renderJobGeneralInfoStatus(jobs, "dirty");
@@ -5934,6 +5973,7 @@ function upsertJob(event) {
 
 async function startJobWebSearch() {
   const wasComplete = Boolean(currentJobs().generalInfoCompletedAt);
+  const hadFollowUpsToAbsorb = Boolean(readJobGeneralInfoInputs(currentJobs()).followUps);
   const jobs = completeJobGeneralInfo("General information completed.", { persist: false });
   const sourceText = jobsSearchSourceText(jobs);
   if (sourceText.length < 20) {
@@ -5946,7 +5986,7 @@ async function startJobWebSearch() {
     button.disabled = true;
     button.textContent = "Searching...";
   }
-  setJobsModuleStatus(`${wasComplete ? "" : "General information completed. "}Searching public job APIs...`);
+  setJobsModuleStatus(`${hadFollowUpsToAbsorb ? "Absorbed follow-ups into personal Markdown. " : wasComplete ? "" : "General information completed. "}Searching public job APIs...`);
   const previousPotentials = jobs.potentials;
   try {
     const result = await collectJobsFromApi(sourceText);
@@ -7339,13 +7379,13 @@ $("#backToProfileFromJobs").addEventListener("click", () => setRoute(activeUsern
 $("#saveJobMarkdown").addEventListener("click", () => completeJobGeneralInfo("General information completed."));
 $("#startJobSearch").addEventListener("click", startJobWebSearch);
 $("#jobPotentialMarkdown").addEventListener("input", () => markJobGeneralInfoDirty());
-$("#jobFollowUps").addEventListener("input", () => markJobGeneralInfoDirty());
+$("#jobFollowUps").addEventListener("input", () => markJobGeneralInfoDirty("Follow-up ready. Complete info to absorb it into personal Markdown."));
 $("#refreshJobPotentialMarkdown").addEventListener("click", () => {
   const jobs = currentJobs();
   jobs.markdown = profileMarkdownForJobs();
   jobs.generalInfoCompletedAt = "";
   renderJobsModule();
-  setJobsModuleStatus("Markdown refreshed from current Turnpo profile. Complete info before starting a fresh search.");
+  setJobsModuleStatus("Markdown refreshed from current Turnpo profile. Complete info to absorb follow-ups before starting a fresh search.");
 });
 $("#optimizeExistingImages").addEventListener("click", optimizeExistingOnlineImages);
 $("#ownerLogout").addEventListener("click", logoutOwner);
