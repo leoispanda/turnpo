@@ -72,6 +72,7 @@ const cleaned = cleanOwnerProfileForStorage({
   ],
   values: ["one", "one", "two"],
   jobs: {
+    markdown: "# Alice\n\nAI knowledge management and learning systems.",
     preferences: {
       targetLocations: ["Eindhoven", "Eindhoven", "Remote"],
       focusKeywords: ["AI", "knowledge"],
@@ -79,17 +80,15 @@ const cleaned = cleanOwnerProfileForStorage({
     },
     potentials: [
       {
-        id: "ai-knowledge-solution",
-        title: "AI Knowledge Solution Designer",
-        lane: "AI + Knowledge",
-        summary: "Design AI-enabled knowledge flows.",
-        status: "shortlisted",
-        score: 91,
-        confidence: "High",
-        targetTitles: ["AI Knowledge Solution Designer", "AI Knowledge Solution Designer"],
-        searchKeywords: ["AI knowledge management"],
-        evidence: ["2026: MapKAI"],
-        gaps: ["Add measurable outcomes"]
+        id: "google-ai-knowledge-management",
+        title: "AI knowledge management",
+        lane: "Google Jobs",
+        summary: "Search Google Jobs.",
+        query: "AI knowledge management",
+        platform: "Google Jobs",
+        url: "https://www.google.com/search?q=AI%20knowledge%20management%20jobs",
+        status: "opened",
+        searchKeywords: ["AI knowledge management", "Netherlands"]
       }
     ],
     items: [
@@ -130,10 +129,11 @@ assert.equal(cleaned.jobs.items.length, 1);
 assert.equal(cleaned.jobs.items[0].sourceUrl, "");
 assert.equal(cleaned.jobs.items[0].status, "apply-ready");
 assert.equal(cleaned.jobs.items[0].applicationMarkdown, "# Private application kit");
+assert.equal(cleaned.jobs.markdown, "# Alice\n\nAI knowledge management and learning systems.");
 assert.equal(cleaned.jobs.potentials.length, 1);
-assert.equal(cleaned.jobs.potentials[0].status, "shortlisted");
-assert.equal(cleaned.jobs.potentials[0].score, 91);
-assert.deepEqual(cleaned.jobs.potentials[0].targetTitles, ["AI Knowledge Solution Designer"]);
+assert.equal(cleaned.jobs.potentials[0].status, "opened");
+assert.equal(cleaned.jobs.potentials[0].url, "https://www.google.com/search?q=AI%20knowledge%20management%20jobs");
+assert.deepEqual(cleaned.jobs.potentials[0].searchKeywords, ["AI knowledge management", "Netherlands"]);
 assert.deepEqual(cleaned.jobs.preferences.targetLocations, ["Eindhoven", "Remote"]);
 assert.equal(cleaned.lifeStories[0].image, "/assets/safe.jpg");
 assert.deepEqual(cleaned.lifeStories[0].images, ["/assets/safe.jpg"]);

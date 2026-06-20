@@ -79,7 +79,7 @@ const PUBLIC_CONTENT_FIELDS = [
   "publishedAt"
 ];
 const JOB_STATUSES = new Set(["collected", "interesting", "apply-ready", "applied", "rejected", "archived"]);
-const JOB_POTENTIAL_STATUSES = new Set(["suggested", "shortlisted", "dismissed"]);
+const JOB_POTENTIAL_STATUSES = new Set(["queued", "opened", "saved"]);
 
 export function json(data, init = {}) {
   return new Response(JSON.stringify(data), {
@@ -269,13 +269,16 @@ function cleanJobsForStorage(value = {}) {
   const preferences = value?.preferences && typeof value.preferences === "object" ? value.preferences : {};
   const cleanPreferenceList = (items, maxItems = 40) => cleanStringArray(items, maxItems, 120);
   const cleanPotential = (potential = {}) => {
-    const status = JOB_POTENTIAL_STATUSES.has(potential.status) ? potential.status : "suggested";
+    const status = JOB_POTENTIAL_STATUSES.has(potential.status) ? potential.status : "queued";
     const score = Math.round(Number(potential.score) || 0);
     return {
       id: cleanText(potential.id || `potential-${Date.now()}`, 160),
       title: cleanText(potential.title || "", 220),
       lane: cleanText(potential.lane || "", 120),
       summary: cleanLongText(potential.summary || "", 1200),
+      query: cleanText(potential.query || "", 220),
+      platform: cleanText(potential.platform || "", 120),
+      url: safePublicUrl(potential.url || ""),
       status,
       score: Math.min(100, Math.max(0, score)),
       confidence: cleanText(potential.confidence || "", 80),
@@ -316,6 +319,7 @@ function cleanJobsForStorage(value = {}) {
     };
   };
   return {
+    markdown: cleanLongText(value?.markdown || "", 24000),
     preferences: {
       targetLocations: cleanPreferenceList(preferences.targetLocations, 20),
       focusKeywords: cleanPreferenceList(preferences.focusKeywords, 60),

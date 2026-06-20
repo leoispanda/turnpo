@@ -10,6 +10,25 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.207
+
+Commit: `Make Jobs search from saved Markdown`
+
+### Changed
+
+- Removed the local career-potential generator from the Turnpo Jobs first step.
+- Changed Step 1 to save editable Turnpo Markdown as the source for job search.
+- Changed `Start search` to build real external search links across Google Jobs, LinkedIn Jobs, Indeed NL, and ASML-focused Google searches from saved Markdown keywords.
+- Kept Step 3 for pasting a real JD and generating the application kit only after a concrete job is found.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check functions/api/auth/_utils.js`.
+- Ran `node tests/security-helpers.test.mjs`.
+- Ran `git diff --check`.
+- Ran local static route QA confirming `/turnpo-jobs/leo` serves the Markdown + web search workflow and no longer includes the old fake potential action.
+
 ## 2026-06-20 - v0.1.206
 
 Commit: `Make Jobs potential-first`

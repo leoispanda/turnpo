@@ -2332,13 +2332,14 @@ body.owner-mode .event-card.is-uploading .empty-media {
   background: rgba(98, 177, 255, 0.08);
 }
 
-.status-suggested {
+.status-queued {
   border-color: rgba(116, 188, 210, 0.32);
   color: #bdeafb;
   background: rgba(88, 170, 198, 0.08);
 }
 
-.status-shortlisted {
+.status-opened,
+.status-saved {
   border-color: rgba(112, 224, 154, 0.32);
   color: #b9f3cf;
   background: rgba(112, 224, 154, 0.08);
@@ -2357,7 +2358,6 @@ body.owner-mode .event-card.is-uploading .empty-media {
 }
 
 .status-rejected,
-.status-dismissed,
 .status-archived {
   border-color: rgba(160, 166, 176, 0.28);
   color: var(--muted);
@@ -2853,6 +2853,26 @@ body.jobs-open .jobs-module {
   background: rgba(88, 170, 198, 0.07);
   font-size: 11px;
   font-weight: 720;
+}
+
+.job-search-link {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgba(116, 188, 210, 0.26);
+  border-radius: 999px;
+  color: #bdeafb;
+  background: rgba(88, 170, 198, 0.08);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.job-search-link:hover {
+  border-color: rgba(116, 188, 210, 0.5);
+  color: #e4f8ff;
+  background: rgba(88, 170, 198, 0.14);
 }
 
 .job-match-output textarea {
@@ -3714,7 +3734,7 @@ body.theme-light .status-interesting {
   color: #316da6;
 }
 
-body.theme-light .status-suggested {
+body.theme-light .status-queued {
   background: rgba(42, 132, 160, 0.08);
   border-color: rgba(42, 132, 160, 0.22);
   color: #24738f;
@@ -3726,7 +3746,8 @@ body.theme-light .status-apply-ready {
   color: #247345;
 }
 
-body.theme-light .status-shortlisted {
+body.theme-light .status-opened,
+body.theme-light .status-saved {
   background: rgba(32, 137, 77, 0.08);
   border-color: rgba(32, 137, 77, 0.22);
   color: #247345;

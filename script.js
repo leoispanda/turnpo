@@ -158,11 +158,11 @@ const JOB_FILTER_LABELS = {
   active: "Active",
   ...JOB_STATUS_LABELS
 };
-const JOB_POTENTIAL_STATUSES = ["suggested", "shortlisted", "dismissed"];
+const JOB_POTENTIAL_STATUSES = ["queued", "opened", "saved"];
 const JOB_POTENTIAL_STATUS_LABELS = {
-  suggested: "Suggested",
-  shortlisted: "Shortlisted",
-  dismissed: "Dismissed"
+  queued: "Queued",
+  opened: "Opened",
+  saved: "Saved"
 };
 const JOB_POTENTIAL_FILTER_LABELS = {
   active: "Active",
@@ -193,86 +193,42 @@ const JOB_RISK_RULES = [
   { label: "Deep data science requirement", keywords: ["phd", "machine learning research", "deep learning", "model training", "computer vision"] },
   { label: "Likely onsite constraint", keywords: ["fully onsite", "on-site only", "5 days onsite", "no remote"] }
 ];
-const JOB_POTENTIAL_BLUEPRINTS = [
+const JOB_SEARCH_PHRASES = [
+  "AI knowledge management",
+  "knowledge management",
+  "learning solution design",
+  "technical training",
+  "AI enablement",
+  "workflow transformation",
+  "business process improvement",
+  "product operations",
+  "project management",
+  "stakeholder management",
+  "technical enablement",
+  "learning and development",
+  "knowledge strategy",
+  "internal AI tools"
+];
+const JOB_SEARCH_PLATFORMS = [
   {
-    id: "ai-knowledge-solution",
-    title: "AI Knowledge Solution Designer",
-    lane: "AI + Knowledge",
-    summary: "Design AI-enabled knowledge flows, learning assets, and practical work systems for expert teams.",
-    keywords: ["ai", "knowledge", "learning", "solution", "workflow", "training", "systems", "asml", "mapkai"],
-    targetTitles: ["AI Knowledge Solution Designer", "Knowledge Management AI Lead", "Learning & Knowledge Solution Lead"],
-    searchKeywords: ["AI knowledge management", "learning solution design", "knowledge workflow AI"],
-    gaps: ["Add measurable AI adoption outcomes", "Show before/after knowledge workflow examples"]
+    id: "google",
+    label: "Google Jobs",
+    buildUrl: (query) => `https://www.google.com/search?q=${encodeURIComponent(`${query} jobs Netherlands Eindhoven hybrid`)}`
   },
   {
-    id: "learning-systems-product",
-    title: "Learning Systems Product Owner",
-    lane: "Learning Product",
-    summary: "Own learning platforms, capability systems, and roadmap decisions that turn complex knowledge into performance.",
-    keywords: ["learning", "training", "product", "roadmap", "stakeholder", "technical training", "program", "enablement"],
-    targetTitles: ["Learning Systems Product Owner", "Capability Platform Product Owner", "Technical Learning Product Lead"],
-    searchKeywords: ["learning product owner", "capability platform", "technical training product"],
-    gaps: ["Frame training work as product ownership", "Prepare platform or roadmap examples"]
+    id: "linkedin",
+    label: "LinkedIn Jobs",
+    buildUrl: (query) => `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(query)}&location=${encodeURIComponent("Netherlands")}`
   },
   {
-    id: "ai-adoption-enablement",
-    title: "AI Adoption & Enablement Lead",
-    lane: "AI Enablement",
-    summary: "Help business teams adopt AI through use-case discovery, training, governance, and change support.",
-    keywords: ["ai", "enablement", "adoption", "stakeholder", "change", "workshop", "governance", "training"],
-    targetTitles: ["AI Adoption Lead", "AI Enablement Manager", "Business AI Transformation Lead"],
-    searchKeywords: ["AI adoption lead", "AI enablement manager", "business AI transformation"],
-    gaps: ["Clarify AI governance exposure", "Prepare adoption metrics or pilot stories"]
+    id: "indeed",
+    label: "Indeed NL",
+    buildUrl: (query) => `https://nl.indeed.com/jobs?q=${encodeURIComponent(query)}&l=${encodeURIComponent("Netherlands")}`
   },
   {
-    id: "workflow-transformation",
-    title: "Workflow Transformation Consultant",
-    lane: "Process + Systems",
-    summary: "Translate messy operational work into clearer processes, tools, training, and execution routines.",
-    keywords: ["workflow", "process", "transformation", "project", "improvement", "stakeholder", "systems", "operations"],
-    targetTitles: ["Business Process Transformation Consultant", "Workflow Transformation Lead", "Operational Excellence Specialist"],
-    searchKeywords: ["workflow transformation", "business process improvement", "operational excellence knowledge"],
-    gaps: ["Package project examples into consulting case studies", "Quantify time or quality improvements"]
-  },
-  {
-    id: "technical-enablement-program",
-    title: "Technical Enablement Program Manager",
-    lane: "Program Enablement",
-    summary: "Coordinate cross-country training, rollout, and stakeholder alignment for complex technical programs.",
-    keywords: ["technical", "training", "program", "project", "international", "deployment", "stakeholder", "equipment"],
-    targetTitles: ["Technical Enablement Program Manager", "Training Deployment Lead", "Field Enablement Program Manager"],
-    searchKeywords: ["technical enablement program manager", "training deployment lead", "field enablement"],
-    gaps: ["Make international scale visible", "Separate technical depth from enablement leadership"]
-  },
-  {
-    id: "ai-product-ops",
-    title: "AI Product Operations Lead",
-    lane: "Product Ops",
-    summary: "Bridge product thinking, user feedback, AI experimentation, and operational rollout for internal tools.",
-    keywords: ["product", "ai", "operations", "experiment", "feedback", "tools", "mapkai", "prototype", "decision"],
-    targetTitles: ["AI Product Operations Lead", "Internal AI Tools Product Manager", "Product Operations Manager AI"],
-    searchKeywords: ["AI product operations", "internal AI tools product manager", "product ops AI"],
-    gaps: ["Show product discovery artifacts", "Define ownership across roadmap, users, and delivery"]
-  },
-  {
-    id: "knowledge-strategy",
-    title: "Knowledge Strategy Manager",
-    lane: "Knowledge Strategy",
-    summary: "Shape how organizations capture, structure, reuse, and govern knowledge in the AI era.",
-    keywords: ["knowledge", "strategy", "governance", "learning", "reflection", "systems", "decision", "information"],
-    targetTitles: ["Knowledge Strategy Manager", "Knowledge Management Lead", "Organizational Learning Strategist"],
-    searchKeywords: ["knowledge strategy manager", "knowledge management lead", "organizational learning strategy"],
-    gaps: ["Prepare a point of view on AI-readable knowledge", "Add examples of taxonomy or reuse design"]
-  },
-  {
-    id: "ai-assisted-builder",
-    title: "AI-assisted Product Builder",
-    lane: "Builder Track",
-    summary: "Create lightweight AI-native tools and experiments from domain insight, product judgment, and fast iteration.",
-    keywords: ["ai", "builder", "prototype", "mapkai", "turnpo", "product", "experiment", "decision", "systems"],
-    targetTitles: ["AI Product Builder", "No-code/AI Solutions Builder", "AI Prototyping Specialist"],
-    searchKeywords: ["AI product builder", "AI solutions builder", "AI prototyping specialist"],
-    gaps: ["Clarify coding/tooling boundary", "Collect demos, screenshots, and shipped examples"]
+    id: "asml",
+    label: "ASML Careers",
+    buildUrl: (query) => `https://www.google.com/search?q=${encodeURIComponent(`site:asml.com/en/careers ${query} Eindhoven OR Veldhoven`)}`
   }
 ];
 
@@ -2578,6 +2534,7 @@ function normalizeJobs(value = {}) {
   const potentials = Array.isArray(value.potentials) ? value.potentials : [];
   const preferences = value.preferences && typeof value.preferences === "object" ? value.preferences : {};
   return {
+    markdown: String(value.markdown || "").trim(),
     preferences: {
       targetLocations: uniqueCleanStrings(preferences.targetLocations || JOB_TARGET_LOCATIONS, 12),
       focusKeywords: uniqueCleanStrings(preferences.focusKeywords || JOB_FOCUS_KEYWORDS, 40),
@@ -2590,12 +2547,15 @@ function normalizeJobs(value = {}) {
 
 function normalizeJobPotential(potential = {}) {
   const now = new Date().toISOString();
-  const status = JOB_POTENTIAL_STATUSES.includes(potential.status) ? potential.status : "suggested";
+  const status = JOB_POTENTIAL_STATUSES.includes(potential.status) ? potential.status : "queued";
   return {
-    id: normalizeUsername(potential.id || potential.title || `potential-${crypto.randomUUID()}`) || `potential-${crypto.randomUUID()}`,
+    id: normalizeUsername(potential.id || `${potential.platform || ""}-${potential.query || potential.title || ""}` || `search-${crypto.randomUUID()}`) || `search-${crypto.randomUUID()}`,
     title: String(potential.title || "").trim(),
-    lane: String(potential.lane || "").trim(),
+    lane: String(potential.lane || potential.platform || "").trim(),
     summary: String(potential.summary || "").trim(),
+    query: String(potential.query || "").trim(),
+    platform: String(potential.platform || "").trim(),
+    url: safePublicLink(potential.url || ""),
     status,
     score: clampScore(potential.score),
     confidence: String(potential.confidence || "").trim(),
@@ -5292,63 +5252,49 @@ function profileMarkdownForJobs(profile = currentProfile()) {
   return generateAiProfile(profile);
 }
 
-function careerPotentialSourceText(profile = currentProfile()) {
-  return [
-    profileMarkdownForJobs(profile),
-    profile.oneLineIntro,
-    profile.currentChapter,
-    profile.location,
-    ...(profile.values || []),
-    ...(profile.themes || []),
-    ...(profile.lifeStories || []).flatMap((item) => [item.title, item.publicSummary, item.fullText, ...(item.tags || [])]),
-    ...(profile.aiWorks || []).flatMap((item) => [item.title, item.publicSummary, item.whyMade, item.humanRole, item.aiRole, item.result, ...(item.tags || []), ...(item.toolsUsed || [])])
-  ].join(" ").toLowerCase();
+function savedJobMarkdown(profile = currentProfile()) {
+  return normalizeJobs(profile.jobs).markdown || profileMarkdownForJobs(profile);
 }
 
-function confidenceForPotential(score) {
-  if (score >= 82) return "High";
-  if (score >= 68) return "Medium";
-  return "Exploratory";
+function saveJobMarkdownFromInput(message = "Markdown saved.") {
+  const jobs = currentJobs();
+  jobs.markdown = ($("#jobPotentialMarkdown")?.value || profileMarkdownForJobs()).trim();
+  saveJobsState(message);
 }
 
-function analyzeCareerPotentials(profile = currentProfile()) {
-  const sourceText = careerPotentialSourceText(profile);
-  const existingById = new Map(normalizeJobs(profile.jobs).potentials.map((potential) => [potential.id, potential]));
-  return JOB_POTENTIAL_BLUEPRINTS.map((blueprint) => {
-    const keywordHits = blueprint.keywords.filter((keyword) => sourceText.includes(keyword.toLowerCase()));
-    const highlights = ownerCareerHighlights(profile, {
-      title: blueprint.title,
-      description: blueprint.keywords.join(" "),
-      keywords: blueprint.keywords
-    }).slice(0, 4);
-    const score = clampScore(42 + Math.min(36, keywordHits.length * 5) + Math.min(18, highlights.length * 5));
-    const existing = existingById.get(blueprint.id) || {};
+function jobSearchQueriesFromMarkdown(markdown = savedJobMarkdown()) {
+  const text = String(markdown || "").toLowerCase();
+  const hits = JOB_SEARCH_PHRASES.filter((phrase) => text.includes(phrase.toLowerCase()));
+  const profile = currentProfile();
+  const themeHits = uniqueCleanStrings([...(profile.themes || []), ...(profile.values || [])], 12)
+    .filter((term) => term.length >= 4 && text.includes(term.toLowerCase()));
+  const coreQueries = uniqueCleanStrings([...hits, ...themeHits], 8);
+  if (!coreQueries.length) return ["knowledge management", "learning and development", "AI enablement"];
+  return coreQueries.slice(0, 6);
+}
+
+function buildJobWebSearches(markdown = savedJobMarkdown()) {
+  const existingByUrl = new Map(currentJobs().potentials.map((search) => [search.url, search]));
+  const queries = jobSearchQueriesFromMarkdown(markdown);
+  const searches = queries.flatMap((query) => JOB_SEARCH_PLATFORMS.map((platform) => {
+    const url = platform.buildUrl(query);
+    const existing = existingByUrl.get(url) || {};
     return normalizeJobPotential({
       ...existing,
-      id: blueprint.id,
-      title: blueprint.title,
-      lane: blueprint.lane,
-      summary: blueprint.summary,
-      status: existing.status || "suggested",
-      score,
-      confidence: confidenceForPotential(score),
-      targetTitles: blueprint.targetTitles,
-      searchKeywords: uniqueCleanStrings([...blueprint.searchKeywords, ...keywordHits], 14),
-      evidence: highlights.map((item) => `${item.year || "Undated"}: ${item.title}`),
-      gaps: blueprint.gaps,
+      id: existing.id || `${platform.id}-${query}`,
+      title: query,
+      lane: platform.label,
+      platform: platform.label,
+      query,
+      url,
+      summary: `Search ${platform.label} for "${query}" with Netherlands/Eindhoven context.`,
+      status: existing.status || "queued",
+      searchKeywords: [query, "Netherlands", "Eindhoven", "Hybrid"],
       updatedAt: new Date().toISOString(),
       lastAnalyzedAt: new Date().toISOString()
     });
-  }).sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
-}
-
-function ensureCareerPotentials() {
-  const jobs = currentJobs();
-  if (!jobs.potentials.length) {
-    jobs.potentials = analyzeCareerPotentials(currentProfile());
-    saveActiveProfile();
-  }
-  return jobs.potentials;
+  }));
+  return searches.slice(0, 24);
 }
 
 async function refreshJobsPublicProfileContext(username = activeUsername) {
@@ -5361,34 +5307,18 @@ async function refreshJobsPublicProfileContext(username = activeUsername) {
   return true;
 }
 
-function careerPotentialMarkdown(potentials = ensureCareerPotentials(), profile = currentProfile()) {
-  const lines = [
-    `# Career Potential Map - ${profile.displayName}`,
-    "",
-    "## Short potential list",
-    ...potentials
-      .filter((potential) => potential.status !== "dismissed")
-      .slice(0, 8)
-      .map((potential) => `- ${potential.title} (${potential.score}/100): ${potential.summary}`),
-    "",
-    "## Source Markdown",
-    profileMarkdownForJobs(profile)
-  ];
-  return lines.join("\n");
-}
-
 function filteredPotentials(jobs = currentJobs()) {
   return jobs.potentials
     .filter((potential) => activePotentialFilter === "active"
-      ? potential.status !== "dismissed"
+      ? potential.status !== "saved"
       : potential.status === activePotentialFilter)
-    .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
+    .sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)) || a.title.localeCompare(b.title));
 }
 
 function shortlistedPotentials(jobs = currentJobs()) {
   return jobs.potentials
-    .filter((potential) => potential.status === "shortlisted")
-    .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
+    .filter((potential) => potential.status === "saved")
+    .sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)) || a.title.localeCompare(b.title));
 }
 
 function jobSearchText(job = {}) {
@@ -5425,11 +5355,9 @@ function nextJobStatusFromScore(job, score) {
 function analyzeJobForProfile(job, profile = currentProfile()) {
   const jobs = normalizeJobs(profile.jobs);
   const text = jobSearchText(job);
-  const selectedPotential = jobs.potentials.find((potential) => potential.id === job.potentialId) || null;
   const focusKeywords = jobs.preferences.focusKeywords.length ? jobs.preferences.focusKeywords : JOB_FOCUS_KEYWORDS;
-  const potentialKeywords = selectedPotential ? [...selectedPotential.targetTitles, ...selectedPotential.searchKeywords, selectedPotential.title] : [];
-  const focusHits = uniqueCleanStrings([...potentialKeywords, ...focusKeywords], 80)
-    .filter((keyword) => text.includes(keyword.toLowerCase()) || selectedPotential?.title === keyword)
+  const focusHits = uniqueCleanStrings(focusKeywords, 80)
+    .filter((keyword) => text.includes(keyword.toLowerCase()))
     .slice(0, 10);
   const profileSignals = uniqueCleanStrings([
     ...profile.values,
@@ -5457,7 +5385,6 @@ function analyzeJobForProfile(job, profile = currentProfile()) {
   score += Math.min(14, careerHighlights.length * 4);
   score += locationHits.length ? 12 : 0;
   score += job.sourceUrl ? 2 : 0;
-  score += selectedPotential ? 10 : 0;
   score -= Math.min(28, riskFlags.length * 8);
   if (text.length < 240) score -= 8;
 
@@ -5467,7 +5394,6 @@ function analyzeJobForProfile(job, profile = currentProfile()) {
   const summary = `${job.company || "This company"} is hiring ${job.title || "a role"}${job.location ? ` in ${job.location}` : ""}. The role appears connected to ${focusLabel}.`;
   const fitReasons = [
     focusHits.length ? `Matches focus areas: ${focusHits.slice(0, 6).join(", ")}` : "",
-    selectedPotential ? `Built from shortlisted potential: ${selectedPotential.title}` : "",
     profileHits.length ? `Echoes profile themes: ${profileHits.slice(0, 5).join(", ")}` : "",
     locationHits.length ? `Location signal fits: ${locationHits.join(", ")}` : "",
     careerHighlights.length ? `Reusable Turnpo evidence: ${careerHighlights.map((item) => item.title).slice(0, 3).join("; ")}` : "",
@@ -5479,8 +5405,6 @@ function analyzeJobForProfile(job, profile = currentProfile()) {
     summary,
     recommendation,
     matchScore,
-    potentialId: selectedPotential?.id || job.potentialId || "",
-    potentialTitle: selectedPotential?.title || job.potentialTitle || "",
     fitReasons: fitReasons.length ? fitReasons : ["Needs a richer job post before the match can be trusted."],
     riskFlags,
     keywords: uniqueCleanStrings([...focusHits, ...profileHits], 16),
@@ -5529,7 +5453,6 @@ function markdownList(items = [], fallback = "- Not enough signal yet") {
 function generateJobApplicationMarkdown(job, profile = currentProfile()) {
   const highlights = ownerCareerHighlights(profile, job).slice(0, 6);
   const jobDescription = String(job.description || "").trim();
-  const selectedPotential = normalizeJobs(profile.jobs).potentials.find((potential) => potential.id === job.potentialId) || null;
   const profileContextItems = [...(profile.lifeStories || []), ...(profile.aiWorks || [])]
     .filter((item) => item.status !== "deleted")
     .slice(0, 12);
@@ -5544,12 +5467,6 @@ Owner: ${profile.displayName} (@${profile.username})
 - Location: ${job.location || "Not specified"}
 - Status: ${JOB_STATUS_LABELS[job.status] || job.status}
 - Source: ${job.sourceUrl || "Not saved"}
-
-## Selected career potential
-- Direction: ${job.potentialTitle || selectedPotential?.title || "Not linked yet"}
-- Why this direction: ${selectedPotential?.summary || "Select a potential before matching the JD for a sharper resume angle."}
-- Search titles: ${selectedPotential?.targetTitles?.join(", ") || "Not selected"}
-- Growth gaps: ${selectedPotential?.gaps?.join("; ") || "Not selected"}
 
 ## Agent verdict
 - Recommendation: ${job.recommendation || recommendationForScore(job.matchScore)}
@@ -5612,7 +5529,6 @@ function renderJobsModule() {
   renderJobControlOptions();
   if (!canEditJobs()) return;
   const jobs = currentJobs();
-  if (!jobs.potentials.length) jobs.potentials = analyzeCareerPotentials(currentProfile());
   if (activePotentialId && !jobs.potentials.some((potential) => potential.id === activePotentialId)) activePotentialId = "";
   if (!activePotentialId && jobs.potentials.length) activePotentialId = jobs.potentials[0].id;
   if (activeJobId && !jobs.items.some((job) => job.id === activeJobId)) activeJobId = "";
@@ -5629,13 +5545,14 @@ function renderJobsModule() {
 }
 
 function renderJobAgents(jobs, selectedJob) {
-  const activePotentials = jobs.potentials.filter((potential) => potential.status !== "dismissed");
-  const shortlisted = jobs.potentials.filter((potential) => potential.status === "shortlisted");
+  const markdownWords = savedJobMarkdown().split(/\s+/).filter(Boolean).length;
+  const activeSearches = jobs.potentials.filter((potential) => potential.status !== "saved");
+  const openedSearches = jobs.potentials.filter((potential) => potential.status === "opened");
   const applicationKits = jobs.items.filter((job) => job.applicationMarkdown);
   const selectedScore = selectedJob ? `${selectedJob.matchScore || 0}/100` : "No JD";
   $("#jobAgentStrip").innerHTML = [
-    ["Potential", `${activePotentials.length} directions`, "Markdown scan"],
-    ["Shortlist", `${shortlisted.length} selected`, "Your filter"],
+    ["Markdown", `${markdownWords} words`, "Saved source"],
+    ["Web search", `${activeSearches.length} links`, `${openedSearches.length} opened`],
     ["Apply kit", selectedScore, applicationKits.length ? `${applicationKits.length} saved` : "Add a JD"]
   ].map(([name, metric, note]) => `
     <article class="job-agent">
@@ -5647,7 +5564,7 @@ function renderJobAgents(jobs, selectedJob) {
 }
 
 function renderPotentialSource(jobs = currentJobs()) {
-  if ($("#jobPotentialMarkdown")) $("#jobPotentialMarkdown").value = careerPotentialMarkdown(jobs.potentials, currentProfile());
+  if ($("#jobPotentialMarkdown")) $("#jobPotentialMarkdown").value = jobs.markdown || profileMarkdownForJobs();
 }
 
 function potentialTags(items = []) {
@@ -5657,28 +5574,25 @@ function potentialTags(items = []) {
 function renderPotentialCard(potential, { compact = false } = {}) {
   const isActive = potential.id === activePotentialId;
   const statusLabel = JOB_POTENTIAL_STATUS_LABELS[potential.status] || potential.status;
-  const primaryAction = potential.status === "shortlisted"
-    ? `<button class="small-action" type="button" data-potential-action="use">Use for JD</button>`
-    : `<button class="small-action" type="button" data-potential-status="shortlisted">Shortlist</button>`;
-  const dismissAction = potential.status === "dismissed"
-    ? `<button class="small-action" type="button" data-potential-status="suggested">Restore</button>`
-    : `<button class="small-action" type="button" data-potential-status="dismissed">Dismiss</button>`;
+  const savedAction = potential.status === "saved"
+    ? `<button class="small-action" type="button" data-potential-status="queued">Queue</button>`
+    : `<button class="small-action" type="button" data-potential-status="saved">Save link</button>`;
   return `
     <article class="job-potential-card ${isActive ? "active" : ""} ${compact ? "compact" : ""}" data-potential-id="${escapeHtml(potential.id)}">
       <div class="job-card-main">
         <div class="job-potential-meta">
           <span class="visibility-pill status-${escapeHtml(potential.status)}">${escapeHtml(statusLabel)}</span>
-          <strong>${potential.score || 0}/100</strong>
+          <strong>${escapeHtml(potential.platform || potential.lane || "Search")}</strong>
         </div>
-        <h3>${escapeHtml(potential.title || "Untitled potential")}</h3>
-        <p>${escapeHtml(potential.summary || "No summary yet.")}</p>
-        <div class="job-potential-tags">${potentialTags(potential.targetTitles)}</div>
-        ${compact ? "" : `<small>${escapeHtml((potential.evidence || []).slice(0, 2).join(" / ") || "Evidence will improve as the profile gets richer.")}</small>`}
+        <h3>${escapeHtml(potential.query || potential.title || "Untitled search")}</h3>
+        <p>${escapeHtml(potential.summary || "Open this search and review real job posts.")}</p>
+        <div class="job-potential-tags">${potentialTags(potential.searchKeywords)}</div>
+        ${potential.url ? `<a class="job-search-link" href="${escapeHtml(potential.url)}" target="_blank" rel="noopener">Open result page</a>` : ""}
       </div>
       <div class="job-card-actions">
         <button class="small-action" type="button" data-potential-action="select">Select</button>
-        ${primaryAction}
-        ${dismissAction}
+        <button class="small-action" type="button" data-potential-action="open">Open search</button>
+        ${savedAction}
       </div>
     </article>
   `;
@@ -5686,18 +5600,19 @@ function renderPotentialCard(potential, { compact = false } = {}) {
 
 function renderPotentialList(jobs = currentJobs()) {
   const items = filteredPotentials(jobs);
-  $("#jobPotentialCount").textContent = `${items.length} ${items.length === 1 ? "direction" : "directions"}`;
+  $("#jobPotentialCount").textContent = `${items.length} ${items.length === 1 ? "search" : "searches"}`;
   $("#jobPotentialList").innerHTML = items.length
     ? items.map((potential) => renderPotentialCard(potential)).join("")
-    : `<p class="empty-result">No potential directions in this view yet</p>`;
+    : `<p class="empty-result">Save the Markdown, then start web search</p>`;
 }
 
 function renderShortlist(jobs = currentJobs()) {
+  if (!$("#jobShortlistList") || !$("#jobShortlistCount")) return;
   const items = shortlistedPotentials(jobs);
-  $("#jobShortlistCount").textContent = `${items.length} selected`;
+  $("#jobShortlistCount").textContent = `${items.length} saved`;
   $("#jobShortlistList").innerHTML = items.length
     ? items.map((potential) => renderPotentialCard(potential, { compact: true })).join("")
-    : `<p class="empty-result">Shortlist potential directions before matching a real JD</p>`;
+    : `<p class="empty-result">Saved search links will appear here</p>`;
 }
 
 function filteredJobs(jobs) {
@@ -5717,7 +5632,7 @@ function renderJobsList(jobs = currentJobs()) {
         <span class="visibility-pill status-${escapeHtml(job.status)}">${escapeHtml(JOB_STATUS_LABELS[job.status] || job.status)}</span>
         <h3>${escapeHtml(job.title || "Untitled role")}</h3>
         <p>${escapeHtml(job.company || "Unknown company")} · ${escapeHtml(job.location || "Location not saved")}</p>
-        ${job.potentialTitle ? `<small>Potential: ${escapeHtml(job.potentialTitle)}</small>` : ""}
+        ${job.potentialTitle ? `<small>Search source: ${escapeHtml(job.potentialTitle)}</small>` : ""}
         <small>${escapeHtml(job.recommendation || "Not analyzed")} · ${job.matchScore || 0}/100</small>
       </div>
       <div class="job-card-actions">
@@ -5747,17 +5662,16 @@ function renderJobMatchOutput(job) {
 function resetJobForm() {
   if (!$("#jobForm")) return;
   $("#jobEditId").value = "";
-  $("#jobPotentialId").value = activePotentialId || "";
+  $("#jobPotentialId").value = "";
   $("#jobCompany").value = "";
-  const potential = currentJobs().potentials.find((item) => item.id === activePotentialId);
-  $("#jobTitle").value = potential?.targetTitles?.[0] || "";
+  $("#jobTitle").value = "";
   $("#jobLocation").value = "";
   $("#jobSourceUrl").value = "";
   $("#jobDescription").value = "";
-  $("#jobNotes").value = potential ? `Potential direction: ${potential.title}` : "";
+  $("#jobNotes").value = "";
   $("#jobStatus").value = "collected";
   $("#deleteJobEntry").hidden = true;
-  $("#jobStatusNote").textContent = potential ? `JD kit will start from ${potential.title}.` : "";
+  $("#jobStatusNote").textContent = "Paste a real job description after web search.";
   $("#saveJobEntry").textContent = "Create application kit";
 }
 
@@ -5772,15 +5686,13 @@ function fillJobForm(job) {
   $("#jobNotes").value = job.notes || "";
   $("#jobStatus").value = job.status || "collected";
   $("#deleteJobEntry").hidden = false;
-  $("#jobStatusNote").textContent = job.potentialTitle ? `Editing kit from ${job.potentialTitle}.` : "Editing saved JD kit.";
+  $("#jobStatusNote").textContent = "Editing saved JD kit.";
   $("#saveJobEntry").textContent = "Update application kit";
 }
 
 function jobFromForm() {
   const id = $("#jobEditId").value.trim();
   const existing = currentJobs().items.find((job) => job.id === id) || {};
-  const potentialId = normalizeUsername($("#jobPotentialId").value || activePotentialId || existing.potentialId || "");
-  const selectedPotential = currentJobs().potentials.find((potential) => potential.id === potentialId);
   const rawUrl = $("#jobSourceUrl").value.trim();
   const safeUrl = safePublicLink(rawUrl);
   if (rawUrl && !safeUrl) throw new Error("Use a valid http or https job URL.");
@@ -5794,8 +5706,8 @@ function jobFromForm() {
     description: $("#jobDescription").value.trim(),
     notes: $("#jobNotes").value.trim(),
     status: $("#jobStatus").value,
-    potentialId,
-    potentialTitle: selectedPotential?.title || existing.potentialTitle || "",
+    potentialId: existing.potentialId || "",
+    potentialTitle: existing.potentialTitle || "",
     updatedAt: new Date().toISOString()
   });
 }
@@ -5833,11 +5745,16 @@ function upsertJob(event) {
   }
 }
 
-function analyzeAndSaveCareerPotentials() {
+function startJobWebSearch() {
   const jobs = currentJobs();
-  jobs.potentials = analyzeCareerPotentials(currentProfile());
+  jobs.markdown = ($("#jobPotentialMarkdown")?.value || profileMarkdownForJobs()).trim();
+  jobs.potentials = buildJobWebSearches(jobs.markdown);
   activePotentialId = jobs.potentials[0]?.id || "";
-  saveJobsState("Career potential map updated.");
+  if (jobs.potentials[0]) {
+    jobs.potentials[0].status = "opened";
+    window.open(jobs.potentials[0].url, "_blank", "noopener");
+  }
+  saveJobsState("Web search started.");
 }
 
 function selectPotential(potentialId) {
@@ -5855,25 +5772,17 @@ function setPotentialStatus(potentialId, status) {
   potential.status = status;
   potential.updatedAt = new Date().toISOString();
   activePotentialId = potential.id;
-  saveJobsState(`Potential moved to ${JOB_POTENTIAL_STATUS_LABELS[status] || status}.`);
+  saveJobsState(`Search marked ${JOB_POTENTIAL_STATUS_LABELS[status] || status}.`);
 }
 
-function usePotentialForJob(potentialId) {
+function openJobSearch(potentialId) {
   const potential = currentJobs().potentials.find((item) => item.id === potentialId);
   if (!potential) return;
   activePotentialId = potential.id;
-  if (potential.status !== "shortlisted") potential.status = "shortlisted";
-  resetJobForm();
-  $("#jobPotentialId").value = potential.id;
-  $("#jobTitle").value = potential.targetTitles[0] || potential.title;
-  $("#jobNotes").value = [
-    `Potential direction: ${potential.title}`,
-    potential.summary,
-    potential.searchKeywords.length ? `Search keywords: ${potential.searchKeywords.join(", ")}` : ""
-  ].filter(Boolean).join("\n");
-  $("#jobStatusNote").textContent = `Ready to paste a real JD for ${potential.title}.`;
-  saveJobsState("Potential selected for JD.");
-  setTimeout(() => $("#jobForm")?.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+  potential.status = "opened";
+  potential.updatedAt = new Date().toISOString();
+  if (potential.url) window.open(potential.url, "_blank", "noopener");
+  saveJobsState("Search opened.");
 }
 
 function selectJob(jobId, { edit = false } = {}) {
@@ -7116,10 +7025,15 @@ $("#openAiImport").addEventListener("click", () => setAiImportDrawer(true));
 $("#openJobsPage").addEventListener("click", () => setRoute(jobsRoute(activeUsername)));
 $("#openJobsModule").addEventListener("click", openJobsModule);
 $("#backToProfileFromJobs").addEventListener("click", () => setRoute(activeUsername));
-$("#analyzeJobPotential").addEventListener("click", analyzeAndSaveCareerPotentials);
+$("#saveJobMarkdown").addEventListener("click", () => saveJobMarkdownFromInput("Markdown saved."));
+$("#startJobSearch").addEventListener("click", startJobWebSearch);
+$("#jobPotentialMarkdown").addEventListener("input", () => {
+  setJobsModuleStatus("Markdown edited. Save Markdown before starting a fresh search.");
+});
 $("#refreshJobPotentialMarkdown").addEventListener("click", () => {
+  currentJobs().markdown = profileMarkdownForJobs();
   renderJobsModule();
-  setJobsModuleStatus("Potential source refreshed from current Turnpo Markdown.");
+  setJobsModuleStatus("Markdown refreshed from current Turnpo profile.");
 });
 $("#optimizeExistingImages").addEventListener("click", optimizeExistingOnlineImages);
 $("#ownerLogout").addEventListener("click", logoutOwner);
@@ -7187,8 +7101,8 @@ document.querySelectorAll("#jobPotentialList, #jobShortlistList").forEach((list)
       return;
     }
     const actionButton = event.target.closest("[data-potential-action]");
-    if (actionButton?.dataset.potentialAction === "use") {
-      usePotentialForJob(potentialId);
+    if (actionButton?.dataset.potentialAction === "open") {
+      openJobSearch(potentialId);
       return;
     }
     selectPotential(potentialId);
