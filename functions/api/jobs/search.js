@@ -13,6 +13,9 @@ const DEFAULT_RESULT_LIMIT = 30;
 const MAX_RESULTS = 40;
 const MAX_SEARCHES_PER_HOUR = 40;
 const REQUEST_TIMEOUT_MS = 8000;
+const OPENAI_REQUEST_TIMEOUT_MS = 7000;
+const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
+const DEFAULT_OPENAI_JOBS_MODEL = "gpt-4o-mini";
 const ARBEITNOW_URL = "https://www.arbeitnow.com/api/job-board-api";
 const REMOTIVE_URL = "https://remotive.com/api/remote-jobs";
 const JOBICY_URL = "https://jobicy.com/api/v2/remote-jobs";
@@ -264,13 +267,164 @@ function searchProfileFromMarkdown(markdown = "") {
   };
 }
 
+function extractOutputText(data) {
+  if (typeof data.output_text === "string") return data.output_text;
+  const content = data.output
+    ?.flatMap((item) => item.content || [])
+    ?.find((item) => item.type === "output_text" && typeof item.text === "string");
+  return content?.text || "";
+}
+
+function arrayFromModel(value, maxItems = 12) {
+  return uniqueStrings(Array.isArray(value) ? value : [], maxItems);
+}
+
+function mergeAiSearchProfile(aiProfile = {}, fallbackProfile = {}, markdown = "") {
+  const locationProfile = locationProfileFromMarkdown([
+    markdown,
+    aiProfile.locationLabel,
+    ...(Array.isArray(aiProfile.targetLocations) ? aiProfile.targetLocations : [])
+  ].join("\n").toLowerCase());
+  const roleTerms = arrayFromModel(aiProfile.roleTerms, 30);
+  const industryTerms = arrayFromModel(aiProfile.industryTerms, 30);
+  const companyScaleTerms = arrayFromModel(aiProfile.companyScaleTerms, 20);
+  return {
+    ...fallbackProfile,
+    locationKey: locationProfile.key,
+    locationLabel: locationProfile.label,
+    targetLocations: arrayFromModel(aiProfile.targetLocations, 12).length
+      ? arrayFromModel(aiProfile.targetLocations, 12)
+      : fallbackProfile.targetLocations,
+    compatibleLocationTerms: locationProfile.compatibleTerms,
+    rejectedLocationTerms: locationProfile.rejectedTerms,
+    seniority: cleanText(aiProfile.seniority || fallbackProfile.seniority || "mid", 40),
+    roleFamilies: arrayFromModel(aiProfile.roleFamilies, 8).length
+      ? arrayFromModel(aiProfile.roleFamilies, 8)
+      : fallbackProfile.roleFamilies,
+    industries: arrayFromModel(aiProfile.industries, 8).length
+      ? arrayFromModel(aiProfile.industries, 8)
+      : fallbackProfile.industries,
+    companyScale: arrayFromModel(aiProfile.companyScale, 8).length
+      ? arrayFromModel(aiProfile.companyScale, 8)
+      : fallbackProfile.companyScale,
+    roleTerms: roleTerms.length ? roleTerms : fallbackProfile.roleTerms,
+    industryTerms: industryTerms.length ? industryTerms : fallbackProfile.industryTerms,
+    companyScaleTerms: companyScaleTerms.length ? companyScaleTerms : fallbackProfile.companyScaleTerms,
+    avoidTerms: arrayFromModel(aiProfile.avoidTerms, 20),
+    phraseHits: fallbackProfile.phraseHits,
+    queries: arrayFromModel(aiProfile.queries, 8)
+  };
+}
+
+async function searchProfileFromOpenAi(markdown, fallbackProfile, env = {}, errors = []) {
+  const apiKey = env.OPENAI_API_KEY;
+  if (!apiKey) return { profile: fallbackProfile, ai: { used: false, reason: "missing-key" } };
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), OPENAI_REQUEST_TIMEOUT_MS);
+  const model = env.OPENAI_JOBS_MODEL || env.OPENAI_MODEL || DEFAULT_OPENAI_JOBS_MODEL;
+  try {
+    const response = await fetch(OPENAI_RESPONSES_URL, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${apiKey}`,
+        "content-type": "application/json"
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model,
+        instructions: [
+          "You analyze a Turnpo personal Markdown profile for job search.",
+          "Return only JSON matching the schema.",
+          "Extract concrete search preferences from the profile and recent follow-ups: location, seniority, role families, industries, company scale, search keywords, avoid terms, and search queries.",
+          "Prefer the user's stated geography. If Eindhoven, Netherlands, ASML, Veldhoven, Dutch cities, or nearby wording appears, keep the search focused on Netherlands / Eindhoven / hybrid / Europe.",
+          "Do not invent employers, degrees, languages, visa facts, private facts, or job postings.",
+          "Queries should be short job-search phrases suitable for public job APIs, not long sentences.",
+          "Avoid software-engineering-heavy queries unless the profile clearly asks for developer roles."
+        ].join(" "),
+        input: [
+          {
+            role: "user",
+            content: [
+              {
+                type: "input_text",
+                text: markdown.slice(0, 12000)
+              }
+            ]
+          }
+        ],
+        text: {
+          format: {
+            type: "json_schema",
+            name: "turnpo_jobs_search_profile",
+            strict: true,
+            schema: {
+              type: "object",
+              additionalProperties: false,
+              required: [
+                "locationLabel",
+                "targetLocations",
+                "seniority",
+                "roleFamilies",
+                "industries",
+                "companyScale",
+                "roleTerms",
+                "industryTerms",
+                "companyScaleTerms",
+                "queries",
+                "avoidTerms"
+              ],
+              properties: {
+                locationLabel: { type: "string" },
+                targetLocations: { type: "array", items: { type: "string" } },
+                seniority: { type: "string" },
+                roleFamilies: { type: "array", items: { type: "string" } },
+                industries: { type: "array", items: { type: "string" } },
+                companyScale: { type: "array", items: { type: "string" } },
+                roleTerms: { type: "array", items: { type: "string" } },
+                industryTerms: { type: "array", items: { type: "string" } },
+                companyScaleTerms: { type: "array", items: { type: "string" } },
+                queries: { type: "array", items: { type: "string" } },
+                avoidTerms: { type: "array", items: { type: "string" } }
+              }
+            }
+          }
+        }
+      })
+    });
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`.trim());
+    const data = await response.json();
+    const text = extractOutputText(data);
+    const aiProfile = JSON.parse(text);
+    return {
+      profile: mergeAiSearchProfile(aiProfile, fallbackProfile, markdown),
+      ai: { used: true, model }
+    };
+  } catch (error) {
+    errors.push(`OpenAI mini profile: ${error.message || "unavailable"}`);
+    return { profile: fallbackProfile, ai: { used: false, reason: "fallback", model } };
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+function queryWithLocation(query = "", locationLabel = "") {
+  const cleanQuery = cleanText(query, 120);
+  const cleanLocation = cleanText(locationLabel, 80);
+  if (!cleanQuery) return "";
+  if (!cleanLocation || cleanQuery.toLowerCase().includes(cleanLocation.toLowerCase())) return cleanQuery;
+  return `${cleanQuery} ${cleanLocation}`;
+}
+
 function queriesFromProfile(profile) {
+  if (Array.isArray(profile.queries) && profile.queries.length) {
+    return uniqueStrings(profile.queries.map((query) => queryWithLocation(query, profile.locationLabel)), 8);
+  }
   const matchedQueries = ROLE_FAMILY_RULES
     .filter((rule) => profile.roleFamilies.includes(rule.label))
     .flatMap((rule) => rule.queries);
   const baseQueries = uniqueStrings([...profile.phraseHits, ...matchedQueries], 8);
   const queries = baseQueries.length ? baseQueries : ["knowledge management", "learning and development", "AI enablement"];
-  return uniqueStrings(queries.map((query) => `${query} ${profile.locationLabel}`), 8);
+  return uniqueStrings(queries.map((query) => queryWithLocation(query, profile.locationLabel)), 8);
 }
 
 async function fetchJsonWithTimeout(url) {
@@ -412,7 +566,7 @@ function scoreJob(job, profile) {
   if (profile.seniority === "entry" && includesAny(text, ["junior", "graduate", "trainee"])) score += 6;
   if (profile.seniority !== "entry" && includesAny(text, ["junior", "graduate", "intern", "trainee"])) score -= 25;
   if (job.url) score += 2;
-  for (const term of RISK_TERMS) {
+  for (const term of [...RISK_TERMS, ...(profile.avoidTerms || [])]) {
     if (text.includes(term)) score -= 7;
   }
   return Math.max(0, Math.min(100, score));
@@ -483,10 +637,11 @@ export async function onRequestPost({ request, env = {} }) {
   if (markdown.length < 20) return json({ error: "Save more Turnpo Markdown before starting search." }, { status: 400 });
 
   const limit = Math.max(1, Math.min(MAX_RESULTS, Math.round(Number(body.limit) || DEFAULT_RESULT_LIMIT)));
-  const searchProfile = searchProfileFromMarkdown(markdown);
+  const errors = [];
+  const fallbackProfile = searchProfileFromMarkdown(markdown);
+  const { profile: searchProfile, ai } = await searchProfileFromOpenAi(markdown, fallbackProfile, env, errors);
   const queries = queriesFromProfile(searchProfile);
   searchProfile.queries = queries;
-  const errors = [];
   const [arbeitnowJobs, remotiveJobs, jobicyJobs] = await Promise.all([
     fetchArbeitnow(errors),
     fetchRemotive(searchProfile, errors),
@@ -513,7 +668,8 @@ export async function onRequestPost({ request, env = {} }) {
       industries: searchProfile.industries,
       companyScale: searchProfile.companyScale
     },
-    sources: ["Arbeitnow", "Remotive", "Jobicy"],
+    ai,
+    sources: [...(ai.used ? [`OpenAI ${ai.model}`] : []), "Arbeitnow", "Remotive", "Jobicy"],
     fetchedAt: new Date().toISOString(),
     errors
   });

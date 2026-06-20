@@ -15,6 +15,23 @@ const fetchCalls = [];
 globalThis.fetch = async (url) => {
   const href = String(url);
   fetchCalls.push(href);
+  if (href.includes("api.openai.com/v1/responses")) {
+    return jsonResponse({
+      output_text: JSON.stringify({
+        locationLabel: "Netherlands",
+        targetLocations: ["Eindhoven", "Veldhoven", "Hybrid Netherlands"],
+        seniority: "mid-senior",
+        roleFamilies: ["AI knowledge management", "learning and enablement"],
+        industries: ["learning / knowledge systems", "AI product tools"],
+        companyScale: ["enterprise / product teams"],
+        roleTerms: ["ai", "knowledge management", "learning enablement", "technical training"],
+        industryTerms: ["knowledge", "learning", "ai"],
+        companyScaleTerms: ["enterprise", "product"],
+        queries: ["AI learning enablement", "Knowledge management specialist"],
+        avoidTerms: ["native dutch"]
+      })
+    });
+  }
   if (href.includes("arbeitnow.com")) {
     return jsonResponse({
       data: [
@@ -144,6 +161,7 @@ try {
   assert.ok(fetchCalls.some((url) => url.includes("arbeitnow.com")));
   assert.ok(fetchCalls.some((url) => url.includes("remotive.com")));
   assert.ok(fetchCalls.some((url) => url.includes("jobicy.com")));
+  assert.equal(fetchCalls.some((url) => url.includes("api.openai.com")), false);
   assert.equal(data.searchProfile.locationLabel, "Netherlands");
   assert.equal(data.searchProfile.seniority, "mid-senior");
   assert.ok(data.searchProfile.targetLocations.includes("Eindhoven"));
@@ -170,6 +188,34 @@ try {
     })
   });
   assert.equal(blocked.status, 403);
+
+  fetchCalls.length = 0;
+  const aiResponse = await searchJobs({
+    request: new Request("https://www.turnpo.com/api/jobs/search", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        origin: "https://www.turnpo.com"
+      },
+      body: JSON.stringify({
+        markdown: "# Leo\n\nLocation: Eindhoven, Netherlands\n\nRecent follow-ups absorbed into personal Markdown\n- Eindhoven nearby roles\n- AI learning enablement and knowledge management roles",
+        limit: 6
+      })
+    }),
+    env: {
+      OPENAI_API_KEY: "test-key",
+      OPENAI_JOBS_MODEL: "gpt-4o-mini"
+    }
+  });
+  assert.equal(aiResponse.status, 200);
+  const aiData = await aiResponse.json();
+  assert.ok(fetchCalls.some((url) => url.includes("api.openai.com/v1/responses")));
+  assert.ok(fetchCalls.some((url) => url.includes("remotive.com/api/remote-jobs?search=AI%20learning%20enablement%20Netherlands")));
+  assert.equal(aiData.ai.used, true);
+  assert.equal(aiData.ai.model, "gpt-4o-mini");
+  assert.equal(aiData.sources[0], "OpenAI gpt-4o-mini");
+  assert.ok(aiData.queries.includes("AI learning enablement Netherlands"));
+  assert.equal(aiData.searchProfile.roleFamilies.includes("learning and enablement"), true);
 } finally {
   globalThis.fetch = originalFetch;
 }

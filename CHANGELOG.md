@@ -10,6 +10,26 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.216
+
+Commit: `Add mini AI profile for Jobs search`
+
+### Changed
+
+- Added an optional OpenAI Responses API mini-model pass to Jobs `Start search` through `/api/jobs/search`.
+- Uses `OPENAI_JOBS_MODEL`, then `OPENAI_MODEL`, then `gpt-4o-mini` to extract location, seniority, role families, industries, company scale, avoid terms, and job-search queries from the personal Markdown.
+- Kept Arbeitnow, Remotive, and Jobicy as the real job-posting sources so the model only guides search intent and never invents jobs.
+- Falls back to the existing deterministic Markdown rules when `OPENAI_API_KEY` is missing, unavailable, or times out.
+
+### Verification
+
+- Ran bundled Node `--check` on `functions/api/jobs/search.js`.
+- Ran bundled Node `--check` on `script.js`.
+- Ran `node tests/jobs-search.test.mjs` with bundled Node.
+- Ran `node tests/jobs-ui-static.test.mjs` with bundled Node.
+- Ran `node tests/security-helpers.test.mjs` with bundled Node.
+- Ran `git diff --check`.
+
 ## 2026-06-20 - v0.1.215
 
 Commit: `Remove Jobs markdown refresh button`
