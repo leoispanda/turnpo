@@ -9,6 +9,7 @@ const REGISTRATION_TTL_SECONDS = 20 * 60;
 const MAX_TEXT_FIELD_LENGTH = 1200;
 const MAX_LONG_TEXT_FIELD_LENGTH = 5000;
 const MAX_PROFILE_ITEMS = 250;
+const MAX_PROFILE_JOBS = 300;
 const MAX_PROFILE_TAGS = 20;
 const MAX_PROFILE_LINKS = 24;
 const MAX_PUBLIC_STATE_IDS = 1000;
@@ -76,6 +77,7 @@ const PUBLIC_CONTENT_FIELDS = [
   "userApproved",
   "publishedAt"
 ];
+const JOB_STATUSES = new Set(["collected", "interesting", "apply-ready", "applied", "rejected", "archived"]);
 
 export function json(data, init = {}) {
   return new Response(JSON.stringify(data), {
@@ -259,6 +261,46 @@ function cleanContentItem(item = {}, fallbackCategory = "life") {
   };
   if (!clean.previousStatus || clean.previousStatus === "hidden") delete clean.previousStatus;
   return clean;
+}
+
+function cleanJobsForStorage(value = {}) {
+  const preferences = value?.preferences && typeof value.preferences === "object" ? value.preferences : {};
+  const cleanPreferenceList = (items, maxItems = 40) => cleanStringArray(items, maxItems, 120);
+  const cleanJob = (job = {}) => {
+    const status = JOB_STATUSES.has(job.status) ? job.status : "collected";
+    const score = Math.round(Number(job.matchScore) || 0);
+    return {
+      id: cleanText(job.id || `job-${Date.now()}`, 160),
+      title: cleanText(job.title || "", 220),
+      company: cleanText(job.company || "", 160),
+      location: cleanText(job.location || "", 180),
+      source: cleanText(job.source || "manual", 80),
+      sourceUrl: safePublicUrl(job.sourceUrl || job.url || ""),
+      description: cleanLongText(job.description || "", 12000),
+      notes: cleanLongText(job.notes || "", 5000),
+      status,
+      summary: cleanLongText(job.summary || "", 1200),
+      recommendation: cleanText(job.recommendation || "", 80),
+      matchScore: Math.min(100, Math.max(0, score)),
+      fitReasons: cleanStringArray(job.fitReasons, 12, 220),
+      riskFlags: cleanStringArray(job.riskFlags, 12, 220),
+      keywords: cleanStringArray(job.keywords, 30, 80),
+      applicationMarkdown: cleanLongText(job.applicationMarkdown || "", 18000),
+      createdAt: cleanText(job.createdAt || "", 80),
+      updatedAt: cleanText(job.updatedAt || "", 80),
+      lastAnalyzedAt: cleanText(job.lastAnalyzedAt || "", 80)
+    };
+  };
+  return {
+    preferences: {
+      targetLocations: cleanPreferenceList(preferences.targetLocations, 20),
+      focusKeywords: cleanPreferenceList(preferences.focusKeywords, 60),
+      riskKeywords: cleanPreferenceList(preferences.riskKeywords, 60)
+    },
+    items: Array.isArray(value?.items)
+      ? value.items.map(cleanJob).filter((job) => job.title || job.company || job.description || job.sourceUrl).slice(0, MAX_PROFILE_JOBS)
+      : []
+  };
 }
 
 function cleanAcknowledgement(value = {}) {
@@ -501,6 +543,7 @@ export function cleanOwnerProfileForStorage(profile = {}, username = "", ownerEm
     values: cleanStringArray(profile.values, 40, 120),
     themes: cleanStringArray(profile.themes, 40, 120),
     travelPlaces: cleanTravelPlacesForStorage(profile.travelPlaces),
+    jobs: cleanJobsForStorage(profile.jobs),
     lifeStories: lifeStories.slice(0, MAX_PROFILE_ITEMS),
     aiWorks: aiWorks.slice(0, MAX_PROFILE_ITEMS),
     publicState: cleanPublicState(profile.publicState),

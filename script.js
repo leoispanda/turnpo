@@ -145,6 +145,44 @@ const LEGACY_LEO_AVATAR_PATHS = new Set([
   "/assets/leo-profile.png",
   "/assets/leo-profile-900.jpg"
 ]);
+const JOB_STATUSES = ["collected", "interesting", "apply-ready", "applied", "rejected", "archived"];
+const JOB_STATUS_LABELS = {
+  "collected": "Collected",
+  "interesting": "Interesting",
+  "apply-ready": "Apply ready",
+  "applied": "Applied",
+  "rejected": "Rejected",
+  "archived": "Archived"
+};
+const JOB_FILTER_LABELS = {
+  active: "Active",
+  ...JOB_STATUS_LABELS
+};
+const JOB_FOCUS_KEYWORDS = [
+  "ai",
+  "artificial intelligence",
+  "knowledge",
+  "learning",
+  "training",
+  "solution",
+  "product",
+  "project",
+  "program",
+  "workflow",
+  "transformation",
+  "systems",
+  "strategy",
+  "enablement",
+  "stakeholder",
+  "process"
+];
+const JOB_TARGET_LOCATIONS = ["eindhoven", "netherlands", "remote", "hybrid", "veldhoven", "amsterdam"];
+const JOB_RISK_RULES = [
+  { label: "Dutch language may be required", keywords: ["dutch required", "fluent dutch", "native dutch", "dutch speaker", "nederlands"] },
+  { label: "Heavy software engineering signal", keywords: ["senior software engineer", "full stack", "backend engineer", "frontend engineer", "kubernetes", "java developer"] },
+  { label: "Deep data science requirement", keywords: ["phd", "machine learning research", "deep learning", "model training", "computer vision"] },
+  { label: "Likely onsite constraint", keywords: ["fully onsite", "on-site only", "5 days onsite", "no remote"] }
+];
 
 const seedProfiles = {
   leo: {
@@ -2309,6 +2347,8 @@ let userSessionScopes = [];
 let ownerTimelineView = "published";
 let activeCategoryFilter = "all";
 let activeTimelineYear = "";
+let activeJobId = "";
+let activeJobFilter = "active";
 let onlineDraftAvailable = false;
 let onlinePublishedAvailable = false;
 let onlineSyncInFlight = false;
@@ -2419,6 +2459,7 @@ function normalizeProfile(profile, options = {}) {
     values: profile.values || [],
     themes: profile.themes || [],
     travelPlaces: normalizeTravelPlaces(profile.travelPlaces),
+    jobs: normalizeJobs(profile.jobs),
     links: Array.isArray(profile.links)
       ? profile.links
         .map((link) => ({ label: String(link?.label || "").trim(), url: safePublicLink(link?.url || "") }))
@@ -2436,6 +2477,63 @@ function normalizeProfileAvatar(username, avatar) {
     return "/assets/leo-profile-clear.jpg";
   }
   return safeAvatar || "/assets/turnpo-logo-512.png";
+}
+
+function normalizeJobs(value = {}) {
+  const items = Array.isArray(value.items) ? value.items : [];
+  const preferences = value.preferences && typeof value.preferences === "object" ? value.preferences : {};
+  return {
+    preferences: {
+      targetLocations: uniqueCleanStrings(preferences.targetLocations || JOB_TARGET_LOCATIONS, 12),
+      focusKeywords: uniqueCleanStrings(preferences.focusKeywords || JOB_FOCUS_KEYWORDS, 40),
+      riskKeywords: uniqueCleanStrings(preferences.riskKeywords || [], 40)
+    },
+    items: items.map(normalizeJobItem).filter((job) => job.title || job.company || job.description || job.sourceUrl)
+  };
+}
+
+function normalizeJobItem(job = {}) {
+  const now = new Date().toISOString();
+  const status = JOB_STATUSES.includes(job.status) ? job.status : "collected";
+  return {
+    id: job.id || `job-${crypto.randomUUID()}`,
+    title: String(job.title || "").trim(),
+    company: String(job.company || "").trim(),
+    location: String(job.location || "").trim(),
+    source: String(job.source || "manual").trim() || "manual",
+    sourceUrl: safePublicLink(job.sourceUrl || job.url || ""),
+    description: String(job.description || "").trim(),
+    notes: String(job.notes || "").trim(),
+    status,
+    summary: String(job.summary || "").trim(),
+    recommendation: String(job.recommendation || "").trim(),
+    matchScore: clampScore(job.matchScore),
+    fitReasons: uniqueCleanStrings(job.fitReasons || [], 8),
+    riskFlags: uniqueCleanStrings(job.riskFlags || [], 8),
+    keywords: uniqueCleanStrings(job.keywords || [], 16),
+    applicationMarkdown: String(job.applicationMarkdown || "").trim(),
+    createdAt: job.createdAt || now,
+    updatedAt: job.updatedAt || now,
+    lastAnalyzedAt: job.lastAnalyzedAt || ""
+  };
+}
+
+function uniqueCleanStrings(values = [], maxItems = 20) {
+  const seen = new Set();
+  return (Array.isArray(values) ? values : String(values || "").split(","))
+    .map((value) => String(value || "").trim())
+    .filter((value) => {
+      const key = value.toLowerCase();
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .slice(0, maxItems);
+}
+
+function clampScore(value = 0) {
+  const score = Math.round(Number(value) || 0);
+  return Math.min(100, Math.max(0, score));
 }
 
 function travelPlaceById(id = "") {
@@ -4153,6 +4251,7 @@ function renderProfile() {
   renderTravelMap();
   renderTimeline();
   renderWorkProjects();
+  renderJobsModule();
   renderJsonLd(profile);
   refreshImageLoadingStates(document);
 }
@@ -4973,6 +5072,437 @@ ${workLinks.length ? workLinks.map((link) => `- [${link.label}](${link.url})`).j
 - Which values and themes appear across their public stories?
 
 Only published and user-approved Turnpo content is included in this AI-readable profile.`;
+}
+
+function currentJobs() {
+  const profile = currentProfile();
+  profile.jobs = normalizeJobs(profile.jobs);
+  return profile.jobs;
+}
+
+function jobSearchText(job = {}) {
+  return [
+    job.title,
+    job.company,
+    job.location,
+    job.description,
+    job.notes,
+    ...(job.keywords || [])
+  ].join(" ").toLowerCase();
+}
+
+function textIncludesAny(text, keywords = []) {
+  const normalized = String(text || "").toLowerCase();
+  return keywords.some((keyword) => normalized.includes(String(keyword || "").toLowerCase()));
+}
+
+function recommendationForScore(score) {
+  if (score >= 82) return "Strong match";
+  if (score >= 68) return "Good match";
+  if (score >= 52) return "Worth reviewing";
+  return "Low priority";
+}
+
+function nextJobStatusFromScore(job, score) {
+  if (["applied", "rejected", "archived"].includes(job.status)) return job.status;
+  if (score >= 82) return "apply-ready";
+  if (score >= 62) return "interesting";
+  return "collected";
+}
+
+function analyzeJobForProfile(job, profile = currentProfile()) {
+  const jobs = normalizeJobs(profile.jobs);
+  const text = jobSearchText(job);
+  const focusKeywords = jobs.preferences.focusKeywords.length ? jobs.preferences.focusKeywords : JOB_FOCUS_KEYWORDS;
+  const focusHits = focusKeywords.filter((keyword) => text.includes(keyword.toLowerCase())).slice(0, 10);
+  const profileSignals = uniqueCleanStrings([
+    ...profile.values,
+    ...profile.themes,
+    ...String(profile.currentChapter || "").split(/[,|/;\n]/)
+  ], 60);
+  const profileHits = profileSignals
+    .filter((keyword) => keyword.length >= 3 && text.includes(keyword.toLowerCase()))
+    .slice(0, 8);
+  const locationHits = jobs.preferences.targetLocations
+    .filter((location) => String(job.location || "").toLowerCase().includes(location.toLowerCase()))
+    .slice(0, 3);
+  const customRiskFlags = jobs.preferences.riskKeywords
+    .filter((keyword) => text.includes(keyword.toLowerCase()))
+    .map((keyword) => `Risk keyword: ${keyword}`);
+  const ruleRiskFlags = JOB_RISK_RULES
+    .filter((rule) => textIncludesAny(text, rule.keywords))
+    .map((rule) => rule.label);
+  const riskFlags = uniqueCleanStrings([...ruleRiskFlags, ...customRiskFlags], 8);
+  const careerHighlights = ownerCareerHighlights(profile, { ...job, keywords: focusHits }).slice(0, 5);
+
+  let score = 40;
+  score += Math.min(32, focusHits.length * 4);
+  score += Math.min(18, profileHits.length * 3);
+  score += Math.min(14, careerHighlights.length * 4);
+  score += locationHits.length ? 12 : 0;
+  score += job.sourceUrl ? 2 : 0;
+  score -= Math.min(28, riskFlags.length * 8);
+  if (text.length < 240) score -= 8;
+
+  const matchScore = clampScore(score);
+  const recommendation = recommendationForScore(matchScore);
+  const focusLabel = focusHits.length ? focusHits.slice(0, 5).join(", ") : "general career context";
+  const summary = `${job.company || "This company"} is hiring ${job.title || "a role"}${job.location ? ` in ${job.location}` : ""}. The role appears connected to ${focusLabel}.`;
+  const fitReasons = [
+    focusHits.length ? `Matches focus areas: ${focusHits.slice(0, 6).join(", ")}` : "",
+    profileHits.length ? `Echoes profile themes: ${profileHits.slice(0, 5).join(", ")}` : "",
+    locationHits.length ? `Location signal fits: ${locationHits.join(", ")}` : "",
+    careerHighlights.length ? `Reusable Turnpo evidence: ${careerHighlights.map((item) => item.title).slice(0, 3).join("; ")}` : "",
+    job.sourceUrl ? "Source URL saved for application follow-up" : ""
+  ].filter(Boolean);
+  const analyzed = normalizeJobItem({
+    ...job,
+    status: nextJobStatusFromScore(job, matchScore),
+    summary,
+    recommendation,
+    matchScore,
+    fitReasons: fitReasons.length ? fitReasons : ["Needs a richer job post before the match can be trusted."],
+    riskFlags,
+    keywords: uniqueCleanStrings([...focusHits, ...profileHits], 16),
+    updatedAt: new Date().toISOString(),
+    lastAnalyzedAt: new Date().toISOString()
+  });
+  analyzed.applicationMarkdown = generateJobApplicationMarkdown(analyzed, profile);
+  return analyzed;
+}
+
+function ownerCareerHighlights(profile, job = {}) {
+  const terms = uniqueCleanStrings([
+    ...(job.keywords || []),
+    ...String(job.title || "").split(/\W+/),
+    ...String(job.description || "").split(/\W+/).filter((term) => term.length > 6).slice(0, 16)
+  ], 30).map((term) => term.toLowerCase());
+  const items = [...(profile.lifeStories || []), ...(profile.aiWorks || [])]
+    .filter((item) => item.status !== "deleted")
+    .map((item) => {
+      const text = [
+        item.title,
+        item.type,
+        item.publicSummary,
+        item.fullText,
+        item.whyMade,
+        item.whyItMatters,
+        item.humanRole,
+        item.result,
+        ...(item.tags || []),
+        ...(item.toolsUsed || [])
+      ].join(" ").toLowerCase();
+      const score = terms.reduce((total, term) => total + (term.length >= 3 && text.includes(term) ? 1 : 0), 0);
+      return { item, score };
+    })
+    .sort((a, b) => b.score - a.score);
+  return items
+    .filter(({ score }, index) => score > 0 || index < 6)
+    .slice(0, 8)
+    .map(({ item }) => item);
+}
+
+function markdownList(items = [], fallback = "- Not enough signal yet") {
+  return items.length ? items.map((item) => `- ${item}`).join("\n") : fallback;
+}
+
+function generateJobApplicationMarkdown(job, profile = currentProfile()) {
+  const highlights = ownerCareerHighlights(profile, job).slice(0, 6);
+  const jobDescription = String(job.description || "").trim();
+  const profileContextItems = [...(profile.lifeStories || []), ...(profile.aiWorks || [])]
+    .filter((item) => item.status !== "deleted")
+    .slice(0, 12);
+  return `# Turnpo Jobs Application Kit
+
+Generated: ${new Date().toISOString()}
+Owner: ${profile.displayName} (@${profile.username})
+
+## Target job
+- Company: ${job.company || "Not specified"}
+- Role: ${job.title || "Not specified"}
+- Location: ${job.location || "Not specified"}
+- Status: ${JOB_STATUS_LABELS[job.status] || job.status}
+- Source: ${job.sourceUrl || "Not saved"}
+
+## Agent verdict
+- Recommendation: ${job.recommendation || recommendationForScore(job.matchScore)}
+- Match score: ${job.matchScore || 0}/100
+
+## Why this role may fit
+${markdownList(job.fitReasons)}
+
+## Risk flags
+${markdownList(job.riskFlags, "- No strong risk flags detected by the local filter.")}
+
+## Tailored resume angle
+- Lead with ${profile.oneLineIntro}
+- Emphasize current chapter: ${profile.currentChapter}
+- Connect the role to these keywords: ${(job.keywords || []).join(", ") || "no extracted keywords yet"}
+
+## Evidence from Turnpo
+${highlights.length ? highlights.map((item) => `- ${item.year || "Undated"}: ${item.title}${item.publicSummary ? ` - ${item.publicSummary}` : ""}`).join("\n") : "- Add or select richer Turnpo stories to strengthen the application evidence."}
+
+## Motivation paragraph draft
+I am interested in ${job.title || "this role"} at ${job.company || "your organization"} because it connects with my experience in ${profile.themes.slice(0, 4).join(", ") || "knowledge, learning, systems, and AI-enabled work"}. My Turnpo profile shows a pattern of turning complex work into clearer structures, practical learning systems, and useful AI-era tools. For this role, I would highlight my ability to combine stakeholder understanding, structured thinking, and hands-on product experimentation.
+
+## Job post excerpt
+${jobDescription ? jobDescription.slice(0, 2200) : "No job description saved yet."}
+
+## Owner notes
+${job.notes || "No owner notes yet."}
+
+## Owner-only Turnpo context
+${profileContextItems.length ? profileContextItems.map((item) => `- ${item.year || "Undated"}: ${item.title} [${JOB_STATUS_LABELS[item.status] || item.status || "profile"}]${item.publicSummary ? ` - ${item.publicSummary}` : ""}`).join("\n") : "- No owner profile context available."}
+`;
+}
+
+function renderJobControlOptions() {
+  if (!$("#jobStatus") || !$("#jobStatusFilter")) return;
+  const currentJobStatus = JOB_STATUSES.includes($("#jobStatus").value) ? $("#jobStatus").value : "collected";
+  $("#jobStatus").innerHTML = JOB_STATUSES
+    .map((status) => `<option value="${escapeHtml(status)}">${escapeHtml(JOB_STATUS_LABELS[status])}</option>`)
+    .join("");
+  $("#jobStatus").value = currentJobStatus;
+  $("#jobStatusFilter").innerHTML = [
+    `<option value="active">${JOB_FILTER_LABELS.active}</option>`,
+    ...JOB_STATUSES.map((status) => `<option value="${escapeHtml(status)}">${escapeHtml(JOB_STATUS_LABELS[status])}</option>`)
+  ].join("");
+  $("#jobStatusFilter").value = activeJobFilter;
+}
+
+function renderJobsModule() {
+  if (!$("#turnpoJobs")) return;
+  renderJobControlOptions();
+  if (!ownerMode) return;
+  const jobs = currentJobs();
+  if (activeJobId && !jobs.items.some((job) => job.id === activeJobId)) activeJobId = "";
+  if (!activeJobId && jobs.items.length) activeJobId = jobs.items[0].id;
+  const selectedJob = jobs.items.find((job) => job.id === activeJobId) || null;
+  renderJobAgents(jobs, selectedJob);
+  renderJobsList(jobs);
+  renderJobMatchOutput(selectedJob);
+  if (!$("#jobEditId").value && !$("#jobStatus").value) resetJobForm();
+}
+
+function renderJobAgents(jobs, selectedJob) {
+  const activeJobs = jobs.items.filter((job) => !["applied", "rejected", "archived"].includes(job.status));
+  const readyJobs = jobs.items.filter((job) => job.status === "apply-ready");
+  const interestingJobs = jobs.items.filter((job) => job.status === "interesting");
+  const selectedScore = selectedJob ? `${selectedJob.matchScore || 0}/100` : "No job";
+  $("#jobAgentStrip").innerHTML = [
+    ["Collector", `${jobs.items.length} saved`, "Manual intake"],
+    ["Filter", `${interestingJobs.length + readyJobs.length} shortlisted`, `${activeJobs.length} active`],
+    ["Match", selectedScore, selectedJob?.recommendation || "Select a job"]
+  ].map(([name, metric, note]) => `
+    <article class="job-agent">
+      <span>${escapeHtml(name)}</span>
+      <strong>${escapeHtml(metric)}</strong>
+      <small>${escapeHtml(note)}</small>
+    </article>
+  `).join("");
+}
+
+function filteredJobs(jobs) {
+  return jobs.items
+    .filter((job) => activeJobFilter === "active"
+      ? !["applied", "rejected", "archived"].includes(job.status)
+      : job.status === activeJobFilter)
+    .sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0) || String(b.updatedAt).localeCompare(String(a.updatedAt)));
+}
+
+function renderJobsList(jobs = currentJobs()) {
+  const items = filteredJobs(jobs);
+  $("#jobBoardCount").textContent = `${items.length} ${items.length === 1 ? "job" : "jobs"}`;
+  $("#jobsList").innerHTML = items.length ? items.map((job) => `
+    <article class="job-card ${job.id === activeJobId ? "active" : ""}" data-job-id="${escapeHtml(job.id)}">
+      <div class="job-card-main">
+        <span class="visibility-pill status-${escapeHtml(job.status)}">${escapeHtml(JOB_STATUS_LABELS[job.status] || job.status)}</span>
+        <h3>${escapeHtml(job.title || "Untitled role")}</h3>
+        <p>${escapeHtml(job.company || "Unknown company")} · ${escapeHtml(job.location || "Location not saved")}</p>
+        <small>${escapeHtml(job.recommendation || "Not analyzed")} · ${job.matchScore || 0}/100</small>
+      </div>
+      <div class="job-card-actions">
+        <button class="small-action" type="button" data-job-action="edit">Edit</button>
+        <button class="small-action" type="button" data-job-action="analyze">Analyze</button>
+        ${job.status !== "apply-ready" && job.status !== "applied" ? `<button class="small-action" type="button" data-job-status="apply-ready">Ready</button>` : ""}
+        ${job.status !== "applied" ? `<button class="small-action" type="button" data-job-status="applied">Applied</button>` : ""}
+        ${job.status !== "archived" ? `<button class="small-action" type="button" data-job-status="archived">Archive</button>` : ""}
+      </div>
+    </article>
+  `).join("") : `<p class="empty-result">No jobs in this view yet</p>`;
+}
+
+function renderJobMatchOutput(job) {
+  if (!job) {
+    $("#jobMatchTitle").textContent = "No job selected";
+    $("#jobMatchMarkdown").value = "";
+    $("#jobMarkdownStatus").textContent = "Select or save a job to generate an application kit.";
+    return;
+  }
+  const previewJob = job.applicationMarkdown ? job : analyzeJobForProfile(job);
+  $("#jobMatchTitle").textContent = `${previewJob.title || "Untitled role"} · ${previewJob.company || "Unknown company"}`;
+  $("#jobMatchMarkdown").value = previewJob.applicationMarkdown || generateJobApplicationMarkdown(previewJob);
+  $("#jobMarkdownStatus").textContent = `${previewJob.recommendation || "Match ready"} · ${previewJob.matchScore || 0}/100`;
+}
+
+function resetJobForm() {
+  if (!$("#jobForm")) return;
+  $("#jobEditId").value = "";
+  $("#jobCompany").value = "";
+  $("#jobTitle").value = "";
+  $("#jobLocation").value = "";
+  $("#jobSourceUrl").value = "";
+  $("#jobDescription").value = "";
+  $("#jobNotes").value = "";
+  $("#jobStatus").value = "collected";
+  $("#deleteJobEntry").hidden = true;
+  $("#jobStatusNote").textContent = "";
+  $("#saveJobEntry").textContent = "Save and analyze";
+}
+
+function fillJobForm(job) {
+  $("#jobEditId").value = job.id;
+  $("#jobCompany").value = job.company || "";
+  $("#jobTitle").value = job.title || "";
+  $("#jobLocation").value = job.location || "";
+  $("#jobSourceUrl").value = job.sourceUrl || "";
+  $("#jobDescription").value = job.description || "";
+  $("#jobNotes").value = job.notes || "";
+  $("#jobStatus").value = job.status || "collected";
+  $("#deleteJobEntry").hidden = false;
+  $("#jobStatusNote").textContent = "Editing saved job.";
+  $("#saveJobEntry").textContent = "Update and analyze";
+}
+
+function jobFromForm() {
+  const id = $("#jobEditId").value.trim();
+  const existing = currentJobs().items.find((job) => job.id === id) || {};
+  const rawUrl = $("#jobSourceUrl").value.trim();
+  const safeUrl = safePublicLink(rawUrl);
+  if (rawUrl && !safeUrl) throw new Error("Use a valid http or https job URL.");
+  return normalizeJobItem({
+    ...existing,
+    id: id || existing.id || `job-${crypto.randomUUID()}`,
+    company: $("#jobCompany").value.trim(),
+    title: $("#jobTitle").value.trim(),
+    location: $("#jobLocation").value.trim(),
+    sourceUrl: safeUrl,
+    description: $("#jobDescription").value.trim(),
+    notes: $("#jobNotes").value.trim(),
+    status: $("#jobStatus").value,
+    updatedAt: new Date().toISOString()
+  });
+}
+
+function saveJobsState(message) {
+  saveActiveProfile();
+  renderJobsModule();
+  setOwnerSaveStatus(`${message} Saving online draft...`);
+  saveProfileDraftOnline({ quiet: true }).then((saved) => {
+    setOwnerSaveStatus(saved ? `${message} Saved to online draft.` : `${message} Saved locally. Log in to sync online draft.`);
+  });
+}
+
+function upsertJob(event) {
+  event.preventDefault();
+  if (!ownerMode) {
+    setAuthDrawer(true);
+    return;
+  }
+  try {
+    const job = analyzeJobForProfile(jobFromForm());
+    const jobs = currentJobs();
+    const index = jobs.items.findIndex((item) => item.id === job.id);
+    if (index >= 0) jobs.items[index] = job;
+    else jobs.items.unshift(job);
+    activeJobId = job.id;
+    fillJobForm(job);
+    saveJobsState("Job saved and analyzed.");
+  } catch (error) {
+    $("#jobStatusNote").textContent = error.message;
+  }
+}
+
+function selectJob(jobId, { edit = false } = {}) {
+  const job = currentJobs().items.find((item) => item.id === jobId);
+  if (!job) return;
+  activeJobId = job.id;
+  if (edit) fillJobForm(job);
+  renderJobsModule();
+}
+
+function analyzeSelectedJob() {
+  const jobs = currentJobs();
+  const index = jobs.items.findIndex((job) => job.id === activeJobId);
+  if (index < 0) {
+    $("#jobMarkdownStatus").textContent = "Select a job before analyzing.";
+    return;
+  }
+  jobs.items[index] = analyzeJobForProfile(jobs.items[index]);
+  activeJobId = jobs.items[index].id;
+  fillJobForm(jobs.items[index]);
+  saveJobsState("Selected job analyzed.");
+}
+
+function setJobStatus(jobId, status) {
+  if (!JOB_STATUSES.includes(status)) return;
+  const jobs = currentJobs();
+  const job = jobs.items.find((item) => item.id === jobId);
+  if (!job) return;
+  job.status = status;
+  job.updatedAt = new Date().toISOString();
+  activeJobId = job.id;
+  fillJobForm(job);
+  saveJobsState(`Job moved to ${JOB_STATUS_LABELS[status] || status}.`);
+}
+
+function deleteCurrentJob() {
+  const id = $("#jobEditId").value.trim() || activeJobId;
+  if (!id) return;
+  const jobs = currentJobs();
+  const job = jobs.items.find((item) => item.id === id);
+  if (!job || !window.confirm(`Delete ${job.title || "this job"}?`)) return;
+  jobs.items = jobs.items.filter((item) => item.id !== id);
+  activeJobId = jobs.items[0]?.id || "";
+  resetJobForm();
+  saveJobsState("Job deleted.");
+}
+
+function openJobsModule() {
+  if (!ownerMode) {
+    setAuthDrawer(true);
+    return;
+  }
+  if (!body.classList.contains("profile-open")) setRoute(activeUsername);
+  renderJobsModule();
+  setTimeout(() => $("#turnpoJobs")?.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+}
+
+function copyJobApplicationMarkdown() {
+  return copyProfileMarkdown({
+    button: $("#copyJobMarkdown"),
+    markdown: $("#jobMatchMarkdown"),
+    status: $("#jobMarkdownStatus"),
+    readyMessage: $("#jobMarkdownStatus").textContent || "Application kit ready.",
+    copiedMessage: "Copied job application Markdown"
+  });
+}
+
+function downloadJobApplicationMarkdown() {
+  const markdown = $("#jobMatchMarkdown").value;
+  if (!markdown.trim()) {
+    $("#jobMarkdownStatus").textContent = "Select a job before downloading.";
+    return;
+  }
+  const job = currentJobs().items.find((item) => item.id === activeJobId);
+  const filenameBase = normalizeUsername(`${job?.company || "turnpo"}-${job?.title || "job"}-application-kit`) || "turnpo-job-application-kit";
+  const blob = new Blob([markdown], { type: "text/markdown" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `${filenameBase}.md`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+  $("#jobMarkdownStatus").textContent = "Downloaded Markdown application kit.";
 }
 
 function renderJsonLd(profile) {
@@ -6135,6 +6665,7 @@ $("#refreshAdminDashboard").addEventListener("click", renderAdminDashboard);
 $("#themeToggle").addEventListener("click", toggleTheme);
 $("#openRegistration").addEventListener("click", () => setRegistrationDrawer(true));
 $("#openAiImport").addEventListener("click", () => setAiImportDrawer(true));
+$("#openJobsModule").addEventListener("click", openJobsModule);
 $("#optimizeExistingImages").addEventListener("click", optimizeExistingOnlineImages);
 $("#ownerLogout").addEventListener("click", logoutOwner);
 $("#backToSearch").addEventListener("click", () => setRoute("home"));
@@ -6179,6 +6710,40 @@ $("#aiImportForm").addEventListener("submit", prepareAiImport);
 $("#useLocalAiImportFallback").addEventListener("click", useLocalAiImportFallback);
 $("#copyAiImportDraft").addEventListener("click", copyAiImportDraft);
 $("#addAiImportLife").addEventListener("click", addAiImportLifeDraft);
+$("#jobForm").addEventListener("submit", upsertJob);
+$("#jobForm").addEventListener("input", () => {
+  if (ownerMode) setOwnerSaveStatus("Unsaved job edits. Save and analyze to update the Jobs module.");
+});
+$("#newJobEntry").addEventListener("click", resetJobForm);
+$("#analyzeSelectedJob").addEventListener("click", analyzeSelectedJob);
+$("#deleteJobEntry").addEventListener("click", deleteCurrentJob);
+$("#jobStatusFilter").addEventListener("change", (event) => {
+  activeJobFilter = event.target.value;
+  renderJobsModule();
+});
+$("#jobsList").addEventListener("click", (event) => {
+  const card = event.target.closest("[data-job-id]");
+  if (!card) return;
+  const jobId = card.dataset.jobId;
+  const statusButton = event.target.closest("[data-job-status]");
+  if (statusButton) {
+    setJobStatus(jobId, statusButton.dataset.jobStatus);
+    return;
+  }
+  const actionButton = event.target.closest("[data-job-action]");
+  if (actionButton?.dataset.jobAction === "edit") {
+    selectJob(jobId, { edit: true });
+    return;
+  }
+  if (actionButton?.dataset.jobAction === "analyze") {
+    activeJobId = jobId;
+    analyzeSelectedJob();
+    return;
+  }
+  selectJob(jobId);
+});
+$("#copyJobMarkdown").addEventListener("click", copyJobApplicationMarkdown);
+$("#downloadJobMarkdown").addEventListener("click", downloadJobApplicationMarkdown);
 
 window.addEventListener("popstate", () => setRoute(routeFromLocation()));
 window.addEventListener("scroll", () => {

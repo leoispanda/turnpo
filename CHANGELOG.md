@@ -10,6 +10,24 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.204
+
+Commit: `Add owner jobs agent workspace`
+
+### Changed
+
+- Added an owner-only Turnpo Jobs workspace for collecting job posts, filtering opportunities, scoring fit, and generating Markdown application kits from the Turnpo profile context.
+- Added local Collector, Filter, and Match agent surfaces with saved job statuses: collected, interesting, apply ready, applied, rejected, and archived.
+- Added owner draft storage support for private `jobs` data while keeping jobs out of the public profile API.
+- Added copy and download actions for generated job application Markdown.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check functions/api/auth/_utils.js`.
+- Ran `node tests/security-helpers.test.mjs`.
+- Added backend tests confirming owner storage keeps private jobs data and public profile output does not expose it.
+
 ## 2026-06-19 - v0.1.203
 
 Commit: `Map legacy Leo avatar to clear asset`

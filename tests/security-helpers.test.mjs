@@ -71,6 +71,27 @@ const cleaned = cleanOwnerProfileForStorage({
     { label: "good", url: "https://example.com/path" }
   ],
   values: ["one", "one", "two"],
+  jobs: {
+    preferences: {
+      targetLocations: ["Eindhoven", "Eindhoven", "Remote"],
+      focusKeywords: ["AI", "knowledge"],
+      riskKeywords: ["Dutch required"]
+    },
+    items: [
+      {
+        id: "job-1",
+        title: "Knowledge AI Lead",
+        company: "Example",
+        location: "Eindhoven",
+        sourceUrl: "javascript:alert(1)",
+        description: "Build AI knowledge workflows.",
+        notes: "Private note",
+        status: "apply-ready",
+        matchScore: 88,
+        applicationMarkdown: "# Private application kit"
+      }
+    ]
+  },
   lifeStories: [
     {
       id: "story-1",
@@ -90,6 +111,11 @@ const cleaned = cleanOwnerProfileForStorage({
 assert.equal(cleaned.avatar, "/assets/turnpo-logo-512.png");
 assert.deepEqual(cleaned.links, [{ label: "good", url: "https://example.com/path" }]);
 assert.deepEqual(cleaned.values, ["one", "two"]);
+assert.equal(cleaned.jobs.items.length, 1);
+assert.equal(cleaned.jobs.items[0].sourceUrl, "");
+assert.equal(cleaned.jobs.items[0].status, "apply-ready");
+assert.equal(cleaned.jobs.items[0].applicationMarkdown, "# Private application kit");
+assert.deepEqual(cleaned.jobs.preferences.targetLocations, ["Eindhoven", "Remote"]);
 assert.equal(cleaned.lifeStories[0].image, "/assets/safe.jpg");
 assert.deepEqual(cleaned.lifeStories[0].images, ["/assets/safe.jpg"]);
 assert.equal(cleaned.lifeStories[0].link, "");
@@ -124,6 +150,7 @@ assert.equal(exposed.lifeStories.length, 1);
 assert.equal(exposed.lifeStories[0].image, "");
 assert.deepEqual(exposed.lifeStories[0].images, ["/api/profiles/alice/media/abc123"]);
 assert.equal(exposed.lifeStories[0].link, "https://example.com/");
+assert.equal(exposed.jobs, undefined);
 
 const originalFetch = globalThis.fetch;
 const sentEmails = [];
