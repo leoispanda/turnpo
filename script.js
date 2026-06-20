@@ -7380,13 +7380,6 @@ $("#saveJobMarkdown").addEventListener("click", () => completeJobGeneralInfo("Ge
 $("#startJobSearch").addEventListener("click", startJobWebSearch);
 $("#jobPotentialMarkdown").addEventListener("input", () => markJobGeneralInfoDirty());
 $("#jobFollowUps").addEventListener("input", () => markJobGeneralInfoDirty("Follow-up ready. Complete info to absorb it into personal Markdown."));
-$("#refreshJobPotentialMarkdown").addEventListener("click", () => {
-  const jobs = currentJobs();
-  jobs.markdown = profileMarkdownForJobs();
-  jobs.generalInfoCompletedAt = "";
-  renderJobsModule();
-  setJobsModuleStatus("Markdown refreshed from current Turnpo profile. Complete info to absorb follow-ups before starting a fresh search.");
-});
 $("#optimizeExistingImages").addEventListener("click", optimizeExistingOnlineImages);
 $("#ownerLogout").addEventListener("click", logoutOwner);
 $("#backToSearch").addEventListener("click", () => setRoute("home"));

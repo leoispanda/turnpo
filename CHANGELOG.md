@@ -10,6 +10,25 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.215
+
+Commit: `Remove Jobs markdown refresh button`
+
+### Changed
+
+- Removed the Jobs Step 1 `Refresh` button so completed personal Markdown and absorbed follow-ups are not accidentally reset.
+- Removed the now-unused refresh event handler from the Jobs workspace.
+- Added a UI static check to ensure the Jobs markdown refresh control does not return.
+
+### Verification
+
+- Ran bundled Node `--check` on `script.js`.
+- Ran bundled Node `--check` on `functions/api/jobs/search.js`.
+- Ran `node tests/jobs-search.test.mjs` with bundled Node.
+- Ran `node tests/jobs-ui-static.test.mjs` with bundled Node.
+- Ran `node tests/security-helpers.test.mjs` with bundled Node.
+- Ran `git diff --check`.
+
 ## 2026-06-20 - v0.1.214
 
 Commit: `Absorb Jobs follow-ups into Markdown`

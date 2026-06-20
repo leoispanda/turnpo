@@ -13,6 +13,7 @@ assert.ok(indexHtml.includes("Follow-ups to process into personal Markdown"));
 assert.ok(indexHtml.includes("Generate modified resume"));
 assert.ok(indexHtml.includes("Print / Save PDF"));
 assert.equal(indexHtml.includes("Job filter"), false);
+assert.equal(indexHtml.includes("refreshJobPotentialMarkdown"), false);
 assert.ok(indexHtml.includes(`/script.js?v=${version}`));
 assert.ok(indexHtml.includes(`/styles.css?v=${version}`));
 
@@ -30,6 +31,7 @@ assert.ok(scriptJs.includes("function printJobResumePdf()"));
 assert.ok(scriptJs.includes("function generateTailoredResumeHtml(job"));
 assert.ok(scriptJs.includes("What it does"));
 assert.equal(scriptJs.includes("Save job"), false);
+assert.equal(scriptJs.includes("refreshJobPotentialMarkdown"), false);
 assert.equal(scriptJs.includes("window.open(jobs.potentials[0]"), false);
 
 console.log("jobs UI static checks passed");
