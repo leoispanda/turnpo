@@ -2738,6 +2738,15 @@ body.jobs-open .jobs-module {
   line-height: 1.55;
 }
 
+.job-followups-label {
+  display: grid;
+  gap: 8px;
+}
+
+.job-followups-label textarea {
+  min-height: 120px;
+}
+
 .job-intake textarea {
   width: 100%;
   min-height: 126px;
@@ -2815,6 +2824,11 @@ body.jobs-open .jobs-module {
   min-width: 0;
 }
 
+.job-card-link {
+  color: inherit;
+  text-decoration: none;
+}
+
 .job-card h3,
 .job-potential-card h3,
 .job-match-head h3 {
@@ -2883,6 +2897,105 @@ body.jobs-open .jobs-module {
   border-color: rgba(116, 188, 210, 0.5);
   color: #e4f8ff;
   background: rgba(88, 170, 198, 0.14);
+}
+
+.job-selected-target {
+  display: grid;
+  gap: 6px;
+  min-height: 88px;
+  padding: 14px;
+  border: 1px solid rgba(116, 188, 210, 0.22);
+  border-radius: var(--radius);
+  background: rgba(88, 170, 198, 0.07);
+  color: var(--muted);
+}
+
+.job-selected-target strong {
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.job-selected-target a {
+  justify-self: start;
+  color: #bdeafb;
+  font-weight: 760;
+}
+
+.job-resume-preview {
+  min-height: 360px;
+}
+
+.resume-sheet {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.92);
+  color: #17202d;
+}
+
+.resume-sheet header {
+  padding-bottom: 16px;
+  border-bottom: 2px solid #17202d;
+}
+
+.resume-sheet header p,
+.resume-sheet h4 {
+  margin: 0 0 6px;
+  color: #356274;
+  font-size: 12px;
+  font-weight: 820;
+  text-transform: uppercase;
+}
+
+.resume-sheet h2,
+.resume-sheet p {
+  margin: 0;
+}
+
+.resume-sheet h2 {
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.05;
+}
+
+.resume-sheet section {
+  display: grid;
+  gap: 8px;
+}
+
+.resume-sheet ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.resume-sheet li {
+  margin-bottom: 8px;
+}
+
+.resume-sheet li span {
+  display: block;
+  color: #4b5563;
+}
+
+.resume-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.resume-keywords span {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid rgba(53, 98, 116, 0.22);
+  border-radius: 999px;
+  background: rgba(88, 170, 198, 0.1);
+  color: #1f4f65;
+  font-size: 12px;
+  font-weight: 760;
 }
 
 .job-match-output textarea {

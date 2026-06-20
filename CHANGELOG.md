@@ -10,6 +10,28 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.212
+
+Commit: `Build Jobs application package flow`
+
+### Changed
+
+- Added Step 1 `Recent follow-ups / search notes` and saved it with the private Jobs draft context.
+- Changed Step 2 to request 30 job leads, combine structured free API jobs with mainstream Netherlands search sources when needed, and make each result card open its original link.
+- Added Jobicy's Europe public jobs API as a free structured source alongside Arbeitnow and Remotive.
+- Changed Step 2 result actions to `Proceed to Step 3` for structured jobs.
+- Reworked Step 3 into a modified-resume application package with selected target summary, resume preview, `Print / Save PDF`, and open-application-page actions.
+
+### Verification
+
+- Ran `node --check functions/api/jobs/search.js`.
+- Ran `node --check script.js`.
+- Ran `node tests/jobs-search.test.mjs`.
+- Ran `node tests/jobs-ui-static.test.mjs`.
+- Ran `node tests/security-helpers.test.mjs`.
+- Ran `git diff --check`.
+- Ran a live free-API smoke test; strict filtering returned safe Europe/EMEA structured jobs and the UI fills remaining leads with Netherlands search sources.
+
 ## 2026-06-20 - v0.1.211
 
 Commit: `Constrain Jobs search to profile context`

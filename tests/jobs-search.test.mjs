@@ -91,6 +91,37 @@ globalThis.fetch = async (url) => {
       ]
     });
   }
+  if (href.includes("jobicy.com")) {
+    return jsonResponse({
+      jobCount: 2,
+      jobs: [
+        {
+          id: 501,
+          jobTitle: "Training Delivery Manager",
+          companyName: "Skill Platform",
+          jobGeo: "Europe",
+          url: "https://jobicy.example/jobs/training-delivery-manager",
+          jobIndustry: "Education",
+          jobType: "Full-time",
+          jobLevel: "Senior",
+          jobExcerpt: "Manage learning delivery and enablement programs for European teams.",
+          jobDescription: "<p>Manage learning delivery, stakeholder enablement, and training operations for European teams.</p>"
+        },
+        {
+          id: 502,
+          jobTitle: "AI Product Developer",
+          companyName: "Wrong Fit",
+          jobGeo: "Worldwide",
+          url: "https://jobicy.example/jobs/worldwide-developer",
+          jobIndustry: "Software",
+          jobType: "Contract",
+          jobLevel: "Senior",
+          jobExcerpt: "Build developer tooling anywhere in the world.",
+          jobDescription: "<p>Senior software developer role, worldwide remote.</p>"
+        }
+      ]
+    });
+  }
   throw new Error(`Unexpected URL ${href}`);
 };
 
@@ -112,6 +143,7 @@ try {
   const data = await response.json();
   assert.ok(fetchCalls.some((url) => url.includes("arbeitnow.com")));
   assert.ok(fetchCalls.some((url) => url.includes("remotive.com")));
+  assert.ok(fetchCalls.some((url) => url.includes("jobicy.com")));
   assert.equal(data.searchProfile.locationLabel, "Netherlands");
   assert.equal(data.searchProfile.seniority, "mid-senior");
   assert.ok(data.searchProfile.targetLocations.includes("Eindhoven"));
@@ -125,6 +157,7 @@ try {
   assert.equal(knowledgeRole.location, "Eindhoven / Hybrid");
   assert.equal(knowledgeRole.description.includes("<p>"), false);
   assert.deepEqual(knowledgeRole.searchKeywords.slice(0, 2), ["AI", "Knowledge management"]);
+  assert.ok(data.jobs.some((job) => job.url === "https://jobicy.example/jobs/training-delivery-manager"));
 
   const blocked = await searchJobs({
     request: new Request("https://www.turnpo.com/api/jobs/search", {

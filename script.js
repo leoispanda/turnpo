@@ -230,6 +230,11 @@ const JOB_SEARCH_PLATFORMS = [
     id: "asml",
     label: "ASML Careers",
     buildUrl: (query) => `https://www.google.com/search?q=${encodeURIComponent(`site:asml.com/en/careers ${query} Eindhoven OR Veldhoven`)}`
+  },
+  {
+    id: "company-careers",
+    label: "NL Company Careers",
+    buildUrl: (query) => `https://www.google.com/search?q=${encodeURIComponent(`(${query}) (Eindhoven OR Veldhoven OR Amsterdam OR Netherlands) (ASML OR Philips OR Booking OR TomTom OR Adyen) careers`)}`
   }
 ];
 
@@ -2536,6 +2541,7 @@ function normalizeJobs(value = {}) {
   const preferences = value.preferences && typeof value.preferences === "object" ? value.preferences : {};
   return {
     markdown: String(value.markdown || "").trim(),
+    followUps: String(value.followUps || "").trim(),
     preferences: {
       targetLocations: uniqueCleanStrings(preferences.targetLocations || JOB_TARGET_LOCATIONS, 12),
       focusKeywords: uniqueCleanStrings(preferences.focusKeywords || JOB_FOCUS_KEYWORDS, 40),
@@ -5266,7 +5272,15 @@ function savedJobMarkdown(profile = currentProfile()) {
 function saveJobMarkdownFromInput(message = "Markdown saved.") {
   const jobs = currentJobs();
   jobs.markdown = ($("#jobPotentialMarkdown")?.value || profileMarkdownForJobs()).trim();
+  jobs.followUps = ($("#jobFollowUps")?.value || "").trim();
   saveJobsState(message);
+}
+
+function jobsSearchSourceText(jobs = currentJobs()) {
+  return [
+    jobs.markdown || profileMarkdownForJobs(),
+    jobs.followUps ? `\n## Recent follow-ups and search notes\n${jobs.followUps}` : ""
+  ].join("\n").trim();
 }
 
 function jobSearchQueriesFromMarkdown(markdown = savedJobMarkdown()) {
@@ -5302,7 +5316,7 @@ function buildJobWebSearches(markdown = savedJobMarkdown()) {
       lastAnalyzedAt: new Date().toISOString()
     });
   }));
-  return searches.slice(0, 24);
+  return searches.slice(0, 30);
 }
 
 function mergePotentialSearchState(nextPotentials = [], previousPotentials = currentJobs().potentials) {
@@ -5324,7 +5338,7 @@ async function collectJobsFromApi(markdown) {
     method: "POST",
     credentials: "same-origin",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ markdown, limit: 18 })
+    body: JSON.stringify({ markdown, limit: 30 })
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.error || "Job search API is unavailable.");
@@ -5495,50 +5509,53 @@ function markdownList(items = [], fallback = "- Not enough signal yet") {
 function generateJobApplicationMarkdown(job, profile = currentProfile()) {
   const highlights = ownerCareerHighlights(profile, job).slice(0, 6);
   const jobDescription = String(job.description || "").trim();
-  const profileContextItems = [...(profile.lifeStories || []), ...(profile.aiWorks || [])]
-    .filter((item) => item.status !== "deleted")
-    .slice(0, 12);
-  return `# Turnpo Jobs Application Kit
+  const skillKeywords = uniqueCleanStrings([
+    ...(job.keywords || []),
+    ...profile.themes,
+    ...profile.values,
+    "AI knowledge workflows",
+    "learning systems",
+    "stakeholder management",
+    "project management"
+  ], 14);
+  return `# Tailored Resume - ${profile.displayName}
 
 Generated: ${new Date().toISOString()}
-Owner: ${profile.displayName} (@${profile.username})
+Target: ${job.title || "Selected role"} at ${job.company || "Selected company"}
 
 ## Target job
 - Company: ${job.company || "Not specified"}
 - Role: ${job.title || "Not specified"}
 - Location: ${job.location || "Not specified"}
-- Status: ${JOB_STATUS_LABELS[job.status] || job.status}
 - Source: ${job.sourceUrl || "Not saved"}
 
-## Agent verdict
-- Recommendation: ${job.recommendation || recommendationForScore(job.matchScore)}
-- Match score: ${job.matchScore || 0}/100
+## Profile summary
+${profile.oneLineIntro}
 
-## Why this role may fit
-${markdownList(job.fitReasons)}
+${profile.currentChapter}
 
-## Risk flags
-${markdownList(job.riskFlags, "- No strong risk flags detected by the local filter.")}
+## Relevant strengths
+${markdownList([
+  "Translate complex knowledge, learning, and workflow needs into usable systems.",
+  "Connect stakeholder understanding with practical AI-era product and process experiments.",
+  "Work across learning, knowledge management, project coordination, and reflective product building.",
+  job.location ? `Prepared for ${job.location} / hybrid context with Netherlands-based experience.` : ""
+].filter(Boolean))}
 
-## Tailored resume angle
-- Lead with ${profile.oneLineIntro}
-- Emphasize current chapter: ${profile.currentChapter}
-- Connect the role to these keywords: ${(job.keywords || []).join(", ") || "no extracted keywords yet"}
-
-## Evidence from Turnpo
+## Selected evidence
 ${highlights.length ? highlights.map((item) => `- ${item.year || "Undated"}: ${item.title}${item.publicSummary ? ` - ${item.publicSummary}` : ""}`).join("\n") : "- Add or select richer Turnpo stories to strengthen the application evidence."}
 
-## Motivation paragraph draft
-I am interested in ${job.title || "this role"} at ${job.company || "your organization"} because it connects with my experience in ${profile.themes.slice(0, 4).join(", ") || "knowledge, learning, systems, and AI-enabled work"}. My Turnpo profile shows a pattern of turning complex work into clearer structures, practical learning systems, and useful AI-era tools. For this role, I would highlight my ability to combine stakeholder understanding, structured thinking, and hands-on product experimentation.
+## Skills and keywords
+${markdownList(skillKeywords)}
 
-## Job post excerpt
-${jobDescription ? jobDescription.slice(0, 2200) : "No job description saved yet."}
+## Application note
+I am interested in ${job.title || "this role"} at ${job.company || "your organization"} because it connects with my experience in ${profile.themes.slice(0, 4).join(", ") || "knowledge, learning, systems, and AI-enabled work"}. I would highlight my ability to combine stakeholder understanding, structured thinking, and hands-on product experimentation.
+
+## Role requirement signals used
+${jobDescription ? jobDescription.slice(0, 900) : "No job description saved yet."}
 
 ## Owner notes
 ${job.notes || "No owner notes yet."}
-
-## Owner-only Turnpo context
-${profileContextItems.length ? profileContextItems.map((item) => `- ${item.year || "Undated"}: ${item.title} [${JOB_STATUS_LABELS[item.status] || item.status || "profile"}]${item.publicSummary ? ` - ${item.publicSummary}` : ""}`).join("\n") : "- No owner profile context available."}
 `;
 }
 
@@ -5608,6 +5625,7 @@ function renderJobAgents(jobs, selectedJob) {
 
 function renderPotentialSource(jobs = currentJobs()) {
   if ($("#jobPotentialMarkdown")) $("#jobPotentialMarkdown").value = jobs.markdown || profileMarkdownForJobs();
+  if ($("#jobFollowUps")) $("#jobFollowUps").value = jobs.followUps || "";
 }
 
 function compactJobDuty(potential = {}) {
@@ -5629,21 +5647,20 @@ function renderPotentialCard(potential, { compact = false } = {}) {
     : (potential.summary || "Open this search and review real job posts.");
   const duty = compactJobDuty(potential);
   const sourceLabel = potential.platform || potential.lane || potential.source || (isJob ? "Job API" : "Search");
-  const linkLabel = isJob ? "Open posting" : "Open result page";
-  const selectLabel = isJob ? "Select for Step 3" : "Select source";
+  const selectLabel = isJob ? "Proceed to Step 3" : "Open source";
+  const cardHref = potential.url || "#";
   return `
     <article class="job-potential-card ${isActive ? "active" : ""} ${compact ? "compact" : ""}" data-potential-id="${escapeHtml(potential.id)}">
-      <div class="job-card-main">
+      <a class="job-card-main job-card-link" href="${escapeHtml(cardHref)}" target="_blank" rel="noopener">
         <div class="job-potential-meta">
           <strong>${escapeHtml(sourceLabel)}</strong>
         </div>
         <h3>${escapeHtml(title)}</h3>
         <small>${escapeHtml(meta)}</small>
         <p><span class="job-duty-label">What it does</span>${escapeHtml(duty)}</p>
-        ${potential.url ? `<a class="job-search-link" href="${escapeHtml(potential.url)}" target="_blank" rel="noopener">${escapeHtml(linkLabel)}</a>` : ""}
-      </div>
+      </a>
       <div class="job-card-actions">
-        <button class="small-action" type="button" data-potential-action="select">${escapeHtml(selectLabel)}</button>
+        <button class="small-action" type="button" data-potential-action="${isJob ? "select" : "open"}">${escapeHtml(selectLabel)}</button>
       </div>
     </article>
   `;
@@ -5651,8 +5668,8 @@ function renderPotentialCard(potential, { compact = false } = {}) {
 
 function renderPotentialList(jobs = currentJobs()) {
   const items = filteredPotentials(jobs);
-  const hasJobs = items.some((item) => item.kind === "job");
-  $("#jobPotentialCount").textContent = `${items.length} ${hasJobs ? (items.length === 1 ? "job" : "jobs") : (items.length === 1 ? "source" : "sources")}`;
+  const jobCount = items.filter((item) => item.kind === "job").length;
+  $("#jobPotentialCount").textContent = `${items.length} results · ${jobCount} structured jobs`;
   $("#jobPotentialList").innerHTML = items.length
     ? items.map((potential) => renderPotentialCard(potential)).join("")
     : `<p class="empty-result">Click Start search to collect jobs from the saved Markdown</p>`;
@@ -5698,17 +5715,89 @@ function renderJobsList(jobs = currentJobs()) {
   `).join("") : `<p class="empty-result">No application kits in this view yet</p>`;
 }
 
+function renderSelectedJobTarget(job = null) {
+  const formJob = job || {
+    title: $("#jobTitle")?.value || "",
+    company: $("#jobCompany")?.value || "",
+    location: $("#jobLocation")?.value || "",
+    sourceUrl: $("#jobSourceUrl")?.value || "",
+    description: $("#jobDescription")?.value || ""
+  };
+  if (!$("#jobSelectedTarget")) return;
+  if (!formJob.title && !formJob.company && !formJob.sourceUrl) {
+    $("#jobSelectedTarget").innerHTML = "Select a job in Step 2 to generate a modified resume.";
+    return;
+  }
+  $("#jobSelectedTarget").innerHTML = `
+    <strong>${escapeHtml(formJob.title || "Selected role")}</strong>
+    <span>${escapeHtml([formJob.company || "Unknown company", formJob.location || "Location not saved"].filter(Boolean).join(" · "))}</span>
+    ${formJob.sourceUrl ? `<a href="${escapeHtml(formJob.sourceUrl)}" target="_blank" rel="noopener">Open original job</a>` : ""}
+  `;
+}
+
+function generateTailoredResumeHtml(job, profile = currentProfile()) {
+  const highlights = ownerCareerHighlights(profile, job).slice(0, 5);
+  const keywords = uniqueCleanStrings([
+    ...(job.keywords || []),
+    ...profile.themes,
+    ...profile.values,
+    "AI knowledge workflows",
+    "learning systems",
+    "project management",
+    "stakeholder management"
+  ], 12);
+  const evidenceHtml = highlights.length
+    ? highlights.map((item) => `<li><strong>${escapeHtml(item.year || "Undated")} · ${escapeHtml(item.title)}</strong>${item.publicSummary ? `<span>${escapeHtml(item.publicSummary)}</span>` : ""}</li>`).join("")
+    : `<li><span>Add richer Turnpo evidence to strengthen this resume.</span></li>`;
+  const keywordsHtml = keywords.length
+    ? keywords.map((keyword) => `<span>${escapeHtml(keyword)}</span>`).join("")
+    : `<span>AI-enabled knowledge work</span>`;
+  return `
+    <div class="resume-sheet">
+      <header>
+        <p>Modified Resume</p>
+        <h2>${escapeHtml(profile.displayName || "Turnpo owner")}</h2>
+        <span>${escapeHtml(profile.oneLineIntro || "AI-era knowledge and learning systems profile")}</span>
+      </header>
+      <section>
+        <h4>Target Role</h4>
+        <p><strong>${escapeHtml(job.title || "Selected role")}</strong>${job.company ? ` at ${escapeHtml(job.company)}` : ""}${job.location ? ` · ${escapeHtml(job.location)}` : ""}</p>
+      </section>
+      <section>
+        <h4>Profile Summary</h4>
+        <p>${escapeHtml(profile.currentChapter || profile.oneLineIntro || "")}</p>
+      </section>
+      <section>
+        <h4>Selected Evidence</h4>
+        <ul>${evidenceHtml}</ul>
+      </section>
+      <section>
+        <h4>Relevant Skills</h4>
+        <div class="resume-keywords">${keywordsHtml}</div>
+      </section>
+      <section>
+        <h4>Application Note</h4>
+        <p>I am interested in ${escapeHtml(job.title || "this role")}${job.company ? ` at ${escapeHtml(job.company)}` : ""} because it connects with my experience in ${escapeHtml(profile.themes.slice(0, 4).join(", ") || "knowledge, learning, systems, and AI-enabled work")}.</p>
+      </section>
+    </div>
+  `;
+}
+
 function renderJobMatchOutput(job) {
   if (!job) {
     $("#jobMatchTitle").textContent = "No JD selected";
     $("#jobMatchMarkdown").value = "";
+    if ($("#jobResumePreview")) $("#jobResumePreview").innerHTML = `<p class="empty-result">Select a collected job in Step 2, then generate a modified resume here.</p>`;
     $("#jobMarkdownStatus").textContent = "Select a collected job in Step 2, then create the application kit in Step 3.";
+    renderSelectedJobTarget();
     return;
   }
   const previewJob = job.applicationMarkdown ? job : analyzeJobForProfile(job);
   $("#jobMatchTitle").textContent = `${previewJob.title || "Untitled role"} · ${previewJob.company || "Unknown company"}`;
   $("#jobMatchMarkdown").value = previewJob.applicationMarkdown || generateJobApplicationMarkdown(previewJob);
-  $("#jobMarkdownStatus").textContent = `${previewJob.recommendation || "Match ready"} · ${previewJob.matchScore || 0}/100`;
+  if ($("#jobResumePreview")) $("#jobResumePreview").innerHTML = generateTailoredResumeHtml(previewJob);
+  $("#jobMarkdownStatus").textContent = "Modified resume ready. Use Print / Save PDF, then open the application page.";
+  renderSelectedJobTarget(previewJob);
 }
 
 function resetJobForm() {
@@ -5724,7 +5813,8 @@ function resetJobForm() {
   $("#jobStatus").value = "collected";
   $("#deleteJobEntry").hidden = true;
   $("#jobStatusNote").textContent = "Select a collected job in Step 2, then synthesize it here.";
-  $("#saveJobEntry").textContent = "Synthesize JD kit";
+  $("#saveJobEntry").textContent = "Generate resume";
+  renderSelectedJobTarget();
 }
 
 function fillJobForm(job) {
@@ -5739,7 +5829,8 @@ function fillJobForm(job) {
   $("#jobStatus").value = job.status || "collected";
   $("#deleteJobEntry").hidden = false;
   $("#jobStatusNote").textContent = "Editing saved JD kit.";
-  $("#saveJobEntry").textContent = "Update JD kit";
+  $("#saveJobEntry").textContent = "Update resume";
+  renderSelectedJobTarget(job);
 }
 
 function jobFromForm() {
@@ -5787,14 +5878,19 @@ function upsertJob(event) {
     return;
   }
   try {
-    const job = analyzeJobForProfile(jobFromForm());
+    const sourceJob = jobFromForm();
+    if (!sourceJob.title && !sourceJob.sourceUrl) {
+      $("#jobStatusNote").textContent = "Select a job in Step 2 before generating a resume.";
+      return;
+    }
+    const job = analyzeJobForProfile(sourceJob);
     const jobs = currentJobs();
     const index = jobs.items.findIndex((item) => item.id === job.id);
     if (index >= 0) jobs.items[index] = job;
     else jobs.items.unshift(job);
     activeJobId = job.id;
     fillJobForm(job);
-    saveJobsState("Job saved and analyzed.");
+    saveJobsState("Modified resume generated.");
   } catch (error) {
     $("#jobStatusNote").textContent = error.message;
   }
@@ -5803,7 +5899,9 @@ function upsertJob(event) {
 async function startJobWebSearch() {
   const jobs = currentJobs();
   jobs.markdown = ($("#jobPotentialMarkdown")?.value || profileMarkdownForJobs()).trim();
-  if (jobs.markdown.length < 20) {
+  jobs.followUps = ($("#jobFollowUps")?.value || "").trim();
+  const sourceText = jobsSearchSourceText(jobs);
+  if (sourceText.length < 20) {
     setJobsModuleStatus("Save more Turnpo Markdown before starting search.");
     return;
   }
@@ -5816,15 +5914,17 @@ async function startJobWebSearch() {
   setJobsModuleStatus("Searching public job APIs...");
   const previousPotentials = jobs.potentials;
   try {
-    const result = await collectJobsFromApi(jobs.markdown);
-    if (!result.jobs.length) throw new Error("No API jobs matched this Markdown yet.");
-    jobs.potentials = mergePotentialSearchState(result.jobs, previousPotentials);
+    const result = await collectJobsFromApi(sourceText);
+    const fallbackSearches = buildJobWebSearches(sourceText);
+    const nextPotentials = [...result.jobs, ...fallbackSearches].slice(0, 30);
+    if (!nextPotentials.length) throw new Error("No API jobs matched this Markdown yet.");
+    jobs.potentials = mergePotentialSearchState(nextPotentials, previousPotentials);
     activePotentialId = jobs.potentials[0]?.id || "";
     const sourceNote = result.errors.length ? " Some sources were unavailable." : "";
     const locationNote = result.searchProfile?.locationLabel ? ` for ${result.searchProfile.locationLabel}` : "";
-    saveJobsState(`Collected ${jobs.potentials.length} jobs${locationNote} from the Markdown profile.${sourceNote}`);
+    saveJobsState(`Collected ${jobs.potentials.length} job leads${locationNote} from the Markdown profile.${sourceNote}`);
   } catch (error) {
-    jobs.potentials = mergePotentialSearchState(buildJobWebSearches(jobs.markdown), previousPotentials);
+    jobs.potentials = mergePotentialSearchState(buildJobWebSearches(sourceText), previousPotentials);
     activePotentialId = jobs.potentials[0]?.id || "";
     saveJobsState(`${error.message || "Job API unavailable"} Created search links as fallback.`);
   } finally {
@@ -5873,6 +5973,7 @@ function usePotentialForJob(potentialId) {
     return;
   }
   activePotentialId = potential.id;
+  activeJobId = "";
   potential.status = "opened";
   potential.updatedAt = new Date().toISOString();
   $("#jobEditId").value = "";
@@ -5888,9 +5989,12 @@ function usePotentialForJob(potentialId) {
   ].filter(Boolean).join("\n");
   $("#jobStatus").value = "collected";
   $("#deleteJobEntry").hidden = true;
-  $("#saveJobEntry").textContent = "Synthesize JD kit";
-  $("#jobStatusNote").textContent = "Selected job loaded. Review it, then synthesize the JD kit.";
+  $("#saveJobEntry").textContent = "Generate resume";
+  $("#jobStatusNote").textContent = "Selected job loaded. Generate the modified resume when ready.";
   saveJobsState("Selected job loaded into Step 3.");
+  activeJobId = "";
+  renderJobMatchOutput(null);
+  renderSelectedJobTarget();
   $("#jobForm")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -5948,8 +6052,8 @@ function copyJobApplicationMarkdown() {
     button: $("#copyJobMarkdown"),
     markdown: $("#jobMatchMarkdown"),
     status: $("#jobMarkdownStatus"),
-    readyMessage: $("#jobMarkdownStatus").textContent || "Application kit ready.",
-    copiedMessage: "Copied job application Markdown"
+    readyMessage: $("#jobMarkdownStatus").textContent || "Tailored resume ready.",
+    copiedMessage: "Copied tailored resume text"
   });
 }
 
@@ -5967,7 +6071,70 @@ function downloadJobApplicationMarkdown() {
   link.download = `${filenameBase}.md`;
   link.click();
   URL.revokeObjectURL(link.href);
-  $("#jobMarkdownStatus").textContent = "Downloaded Markdown application kit.";
+  $("#jobMarkdownStatus").textContent = "Downloaded tailored resume Markdown.";
+}
+
+function currentApplicationJob() {
+  return currentJobs().items.find((item) => item.id === activeJobId) || jobFromForm();
+}
+
+function openCurrentJobPage() {
+  let url = "";
+  try {
+    url = currentApplicationJob().sourceUrl || "";
+  } catch {
+    url = $("#jobSourceUrl")?.value || "";
+  }
+  if (!url) {
+    $("#jobStatusNote").textContent = "Select a job with an original link first.";
+    $("#jobMarkdownStatus").textContent = "Select a job with an original link first.";
+    return;
+  }
+  window.open(url, "_blank", "noopener");
+}
+
+function printJobResumePdf() {
+  const preview = $("#jobResumePreview");
+  if (!preview || !preview.textContent.trim() || preview.querySelector(".empty-result")) {
+    $("#jobMarkdownStatus").textContent = "Generate a resume before printing.";
+    return;
+  }
+  const title = ($("#jobMatchTitle")?.textContent || "Turnpo tailored resume").trim();
+  const printWindow = window.open("", "_blank");
+  if (!printWindow) {
+    $("#jobMarkdownStatus").textContent = "Allow popups, then try Print / Save PDF again.";
+    return;
+  }
+  printWindow.document.write(`<!doctype html>
+    <html>
+      <head>
+        <title>${escapeHtml(title)}</title>
+        <style>
+          body { margin: 0; background: #f5f7fb; color: #111827; font-family: Inter, Arial, sans-serif; }
+          .resume-sheet { max-width: 820px; margin: 0 auto; min-height: 100vh; padding: 48px; background: #fff; box-sizing: border-box; }
+          header { border-bottom: 2px solid #111827; padding-bottom: 18px; margin-bottom: 24px; }
+          header p { margin: 0 0 6px; color: #6b7280; text-transform: uppercase; font-size: 12px; letter-spacing: .08em; }
+          h2 { margin: 0 0 8px; font-size: 34px; line-height: 1.05; }
+          h4 { margin: 0 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: #1f4f65; }
+          section { margin: 0 0 22px; }
+          p, li, span { font-size: 14px; line-height: 1.55; }
+          ul { padding-left: 18px; margin: 0; }
+          li { margin-bottom: 8px; }
+          li span { display: block; color: #4b5563; margin-top: 2px; }
+          .resume-keywords { display: flex; flex-wrap: wrap; gap: 8px; }
+          .resume-keywords span { border: 1px solid #c8d7df; border-radius: 999px; padding: 4px 9px; background: #f1f7fa; }
+          @media print {
+            body { background: #fff; }
+            .resume-sheet { min-height: auto; padding: 32px; }
+          }
+        </style>
+      </head>
+      <body>${preview.innerHTML}</body>
+    </html>`);
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+  $("#jobMarkdownStatus").textContent = "Print dialog opened. Choose Save as PDF to export.";
 }
 
 function renderJsonLd(profile) {
@@ -7201,6 +7368,7 @@ $("#jobPotentialFilter")?.addEventListener("change", (event) => {
 });
 document.querySelectorAll("#jobPotentialList, #jobShortlistList").forEach((list) => {
   list.addEventListener("click", (event) => {
+    if (event.target.closest("a")) return;
     const card = event.target.closest("[data-potential-id]");
     if (!card) return;
     const potentialId = card.dataset.potentialId;
@@ -7249,6 +7417,9 @@ $("#jobsList").addEventListener("click", (event) => {
 });
 $("#copyJobMarkdown").addEventListener("click", copyJobApplicationMarkdown);
 $("#downloadJobMarkdown").addEventListener("click", downloadJobApplicationMarkdown);
+$("#openSelectedJobPage").addEventListener("click", openCurrentJobPage);
+$("#openJobApplicationPage").addEventListener("click", openCurrentJobPage);
+$("#printJobResume").addEventListener("click", printJobResumePdf);
 
 window.addEventListener("popstate", () => setRoute(routeFromLocation()));
 window.addEventListener("scroll", () => {

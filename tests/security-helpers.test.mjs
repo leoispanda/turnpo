@@ -73,6 +73,7 @@ const cleaned = cleanOwnerProfileForStorage({
   values: ["one", "one", "two"],
   jobs: {
     markdown: "# Alice\n\nAI knowledge management and learning systems.",
+    followUps: "This month: focus on Netherlands hybrid AI enablement roles around Eindhoven.",
     preferences: {
       targetLocations: ["Eindhoven", "Eindhoven", "Remote"],
       focusKeywords: ["AI", "knowledge"],
@@ -135,6 +136,7 @@ assert.equal(cleaned.jobs.items[0].sourceUrl, "");
 assert.equal(cleaned.jobs.items[0].status, "apply-ready");
 assert.equal(cleaned.jobs.items[0].applicationMarkdown, "# Private application kit");
 assert.equal(cleaned.jobs.markdown, "# Alice\n\nAI knowledge management and learning systems.");
+assert.equal(cleaned.jobs.followUps, "This month: focus on Netherlands hybrid AI enablement roles around Eindhoven.");
 assert.equal(cleaned.jobs.potentials.length, 1);
 assert.equal(cleaned.jobs.potentials[0].kind, "job");
 assert.equal(cleaned.jobs.potentials[0].company, "Example BV");

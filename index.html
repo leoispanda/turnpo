@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.211" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.212" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -245,6 +245,10 @@
               </div>
             </div>
             <textarea id="jobPotentialMarkdown" spellcheck="false"></textarea>
+            <label class="job-followups-label">
+              <span>Recent follow-ups / search notes</span>
+              <textarea id="jobFollowUps" spellcheck="false" placeholder="Recent companies, people, roles, locations, seniority, or industries to prioritize in this search."></textarea>
+            </label>
             <p class="form-status" id="jobStatusNote"></p>
           </section>
 
@@ -268,29 +272,32 @@
             <div class="job-panel-head">
               <div>
                 <p class="eyebrow">Step 3</p>
-                <h3>Synthesize selected JD</h3>
+                <h3>Generate modified resume</h3>
               </div>
               <div class="job-panel-actions">
                 <button class="section-action" id="newJobEntry" type="button">Clear</button>
-                <button class="section-action" id="analyzeSelectedJob" type="button">Analyze JD</button>
+                <button class="section-action" id="openSelectedJobPage" type="button">Open job page</button>
               </div>
             </div>
             <input id="jobEditId" type="hidden" />
             <input id="jobPotentialId" type="hidden" />
+            <div class="job-selected-target" id="jobSelectedTarget">Select a job in Step 2 to generate a modified resume.</div>
+            <div class="job-form-fields" hidden>
             <div class="form-row">
               <label><span>Company</span><input id="jobCompany" placeholder="ASML" /></label>
-              <label><span>Actual role</span><input id="jobTitle" required placeholder="AI Knowledge Solution Lead" /></label>
+              <label><span>Actual role</span><input id="jobTitle" placeholder="AI Knowledge Solution Lead" /></label>
             </div>
             <div class="form-row">
               <label><span>Location</span><input id="jobLocation" placeholder="Eindhoven / Hybrid" /></label>
               <label><span>Status</span><select id="jobStatus"></select></label>
             </div>
             <label><span>Job URL</span><input id="jobSourceUrl" inputmode="url" placeholder="https://..." /></label>
-            <label><span>JD / requirements</span><textarea id="jobDescription" required></textarea></label>
+            <label><span>JD / requirements</span><textarea id="jobDescription"></textarea></label>
             <label><span>Owner notes</span><textarea id="jobNotes"></textarea></label>
+            </div>
             <div class="form-actions">
               <button class="danger-btn" id="deleteJobEntry" type="button" hidden>Delete</button>
-              <button class="submit-btn" id="saveJobEntry" type="submit">Create application kit</button>
+              <button class="submit-btn" id="saveJobEntry" type="submit">Generate resume</button>
             </div>
           </form>
 
@@ -303,19 +310,22 @@
           </section>
         </div>
 
-        <section class="job-match-output" aria-label="Job match Markdown">
+        <section class="job-match-output" aria-label="Tailored resume package">
           <div class="job-match-head">
             <div>
-              <p class="eyebrow">Match & apply agent</p>
+              <p class="eyebrow">Tailored resume</p>
               <h3 id="jobMatchTitle">No job selected</h3>
             </div>
             <div class="job-match-actions">
-              <button class="section-action" id="copyJobMarkdown" type="button">Copy Markdown</button>
+              <button class="section-action" id="printJobResume" type="button">Print / Save PDF</button>
+              <button class="section-action" id="openJobApplicationPage" type="button">Open application page</button>
+              <button class="section-action" id="copyJobMarkdown" type="button">Copy text</button>
               <button class="section-action" id="downloadJobMarkdown" type="button">Download .md</button>
             </div>
           </div>
-          <textarea id="jobMatchMarkdown" readonly spellcheck="false"></textarea>
-          <p class="copy-status" id="jobMarkdownStatus">Select or save a job to generate an application kit.</p>
+          <article class="job-resume-preview" id="jobResumePreview"></article>
+          <textarea id="jobMatchMarkdown" readonly spellcheck="false" hidden></textarea>
+          <p class="copy-status" id="jobMarkdownStatus">Select a job to generate a modified resume.</p>
         </section>
       </section>
 
@@ -362,7 +372,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.211</span>
+          <span class="version-badge">v0.1.212</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -592,6 +602,6 @@
       </figure>
     </div>
 
-    <script src="/script.js?v=0.1.211"></script>
+    <script src="/script.js?v=0.1.212"></script>
   </body>
 </html>

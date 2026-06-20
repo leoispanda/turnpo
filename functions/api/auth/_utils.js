@@ -325,6 +325,7 @@ function cleanJobsForStorage(value = {}) {
   };
   return {
     markdown: cleanLongText(value?.markdown || "", 24000),
+    followUps: cleanLongText(value?.followUps || "", 12000),
     preferences: {
       targetLocations: cleanPreferenceList(preferences.targetLocations, 20),
       focusKeywords: cleanPreferenceList(preferences.focusKeywords, 60),

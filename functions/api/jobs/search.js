@@ -9,11 +9,14 @@ import {
 
 const MAX_JOB_SEARCH_BODY_BYTES = 32 * 1024;
 const MAX_MARKDOWN_CHARS = 24000;
-const MAX_RESULTS = 24;
+const DEFAULT_RESULT_LIMIT = 30;
+const MAX_RESULTS = 40;
 const MAX_SEARCHES_PER_HOUR = 40;
 const REQUEST_TIMEOUT_MS = 8000;
 const ARBEITNOW_URL = "https://www.arbeitnow.com/api/job-board-api";
 const REMOTIVE_URL = "https://remotive.com/api/remote-jobs";
+const JOBICY_URL = "https://jobicy.com/api/v2/remote-jobs";
+const JOBICY_TAGS = ["product", "management", "training", "business", "operations"];
 
 const SEARCH_PHRASES = [
   "AI knowledge management",
@@ -73,6 +76,16 @@ const LOCATION_PROFILES = [
       "usa",
       "us only",
       "canada",
+      "united kingdom",
+      "uk",
+      "london",
+      "poland",
+      "portugal",
+      "czechia",
+      "germany",
+      "spain",
+      "france",
+      "mena",
       "india",
       "philippines",
       "australia",
@@ -326,6 +339,34 @@ function normalizeRemotiveJob(job = {}) {
   };
 }
 
+function normalizeJobicyJob(job = {}) {
+  const url = safeUrl(job.url || job.jobUrl || "");
+  const title = cleanText(job.jobTitle || "", 220);
+  const company = cleanText(job.companyName || "", 160);
+  const tags = uniqueStrings([
+    job.jobIndustry,
+    job.jobType,
+    job.jobLevel,
+    ...(Array.isArray(job.jobTags) ? job.jobTags : [])
+  ], 10);
+  return {
+    kind: "job",
+    id: normalizeId(`jobicy-${job.id || url || company}-${title}`),
+    title,
+    company,
+    location: cleanText(job.jobGeo || "Europe / Remote", 180),
+    source: "jobicy",
+    platform: "Jobicy",
+    url,
+    description: cleanText(job.jobDescription || "", 5000),
+    summary: summarize(job.jobExcerpt || job.jobDescription || ""),
+    searchKeywords: tags,
+    status: "queued",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
+}
+
 function jobSearchText(job = {}) {
   return [
     job.title,
@@ -369,6 +410,7 @@ function scoreJob(job, profile) {
   if (text.includes("remote") && locationCompatible(job, profile)) score += 2;
   if (profile.seniority === "mid-senior" && includesAny(text, ["senior", "lead", "manager", "specialist", "consultant"])) score += 6;
   if (profile.seniority === "entry" && includesAny(text, ["junior", "graduate", "trainee"])) score += 6;
+  if (profile.seniority !== "entry" && includesAny(text, ["junior", "graduate", "intern", "trainee"])) score -= 25;
   if (job.url) score += 2;
   for (const term of RISK_TERMS) {
     if (text.includes(term)) score -= 7;
@@ -410,6 +452,19 @@ async function fetchRemotive(profile, errors) {
   return batches.flat();
 }
 
+async function fetchJobicy(errors) {
+  const batches = await Promise.all(JOBICY_TAGS.map(async (tag) => {
+    try {
+      const data = await fetchJsonWithTimeout(`${JOBICY_URL}?geo=europe&tag=${encodeURIComponent(tag)}&count=20`);
+      return Array.isArray(data?.jobs) ? data.jobs.map(normalizeJobicyJob) : [];
+    } catch (error) {
+      errors.push(`Jobicy ${tag}: ${error.message || "unavailable"}`);
+      return [];
+    }
+  }));
+  return batches.flat();
+}
+
 export async function onRequestPost({ request, env = {} }) {
   const requestError = validateJsonMutationRequest(request);
   if (requestError) return json({ error: requestError.error }, { status: requestError.status });
@@ -427,16 +482,17 @@ export async function onRequestPost({ request, env = {} }) {
   const markdown = String(body.markdown || "").trim().slice(0, MAX_MARKDOWN_CHARS);
   if (markdown.length < 20) return json({ error: "Save more Turnpo Markdown before starting search." }, { status: 400 });
 
-  const limit = Math.max(1, Math.min(MAX_RESULTS, Math.round(Number(body.limit) || 18)));
+  const limit = Math.max(1, Math.min(MAX_RESULTS, Math.round(Number(body.limit) || DEFAULT_RESULT_LIMIT)));
   const searchProfile = searchProfileFromMarkdown(markdown);
   const queries = queriesFromProfile(searchProfile);
   searchProfile.queries = queries;
   const errors = [];
-  const [arbeitnowJobs, remotiveJobs] = await Promise.all([
+  const [arbeitnowJobs, remotiveJobs, jobicyJobs] = await Promise.all([
     fetchArbeitnow(errors),
-    fetchRemotive(searchProfile, errors)
+    fetchRemotive(searchProfile, errors),
+    fetchJobicy(errors)
   ]);
-  const scoredJobs = dedupeJobs([...arbeitnowJobs, ...remotiveJobs])
+  const scoredJobs = dedupeJobs([...arbeitnowJobs, ...remotiveJobs, ...jobicyJobs])
     .map((job) => ({
       ...job,
       score: scoreJob(job, searchProfile),
@@ -457,7 +513,7 @@ export async function onRequestPost({ request, env = {} }) {
       industries: searchProfile.industries,
       companyScale: searchProfile.companyScale
     },
-    sources: ["Arbeitnow", "Remotive"],
+    sources: ["Arbeitnow", "Remotive", "Jobicy"],
     fetchedAt: new Date().toISOString(),
     errors
   });
