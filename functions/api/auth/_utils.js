@@ -273,9 +273,14 @@ function cleanJobsForStorage(value = {}) {
     const score = Math.round(Number(potential.score) || 0);
     return {
       id: cleanText(potential.id || `potential-${Date.now()}`, 160),
+      kind: potential.kind === "job" || potential.company || potential.description ? "job" : "search",
       title: cleanText(potential.title || "", 220),
+      company: cleanText(potential.company || "", 160),
+      location: cleanText(potential.location || "", 180),
       lane: cleanText(potential.lane || "", 120),
+      source: cleanText(potential.source || "", 80),
       summary: cleanLongText(potential.summary || "", 1200),
+      description: cleanLongText(potential.description || "", 8000),
       query: cleanText(potential.query || "", 220),
       platform: cleanText(potential.platform || "", 120),
       url: safePublicUrl(potential.url || ""),

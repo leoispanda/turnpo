@@ -1,0 +1,19 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+
+const indexHtml = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
+const scriptJs = fs.readFileSync(new URL("../script.js", import.meta.url), "utf8");
+
+assert.ok(indexHtml.includes("Collected jobs"));
+assert.ok(indexHtml.includes("Job filter"));
+assert.ok(indexHtml.includes("/script.js?v=0.1.208"));
+assert.ok(indexHtml.includes("/styles.css?v=0.1.208"));
+
+assert.ok(scriptJs.includes('const JOB_SEARCH_API = "/api/jobs/search";'));
+assert.ok(scriptJs.includes("async function startJobWebSearch()"));
+assert.ok(scriptJs.includes("collectJobsFromApi(jobs.markdown)"));
+assert.ok(scriptJs.includes('data-potential-action="use-job"'));
+assert.ok(scriptJs.includes("function usePotentialForJob(potentialId)"));
+assert.equal(scriptJs.includes("window.open(jobs.potentials[0]"), false);
+
+console.log("jobs UI static checks passed");

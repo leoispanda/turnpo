@@ -80,13 +80,18 @@ const cleaned = cleanOwnerProfileForStorage({
     },
     potentials: [
       {
-        id: "google-ai-knowledge-management",
-        title: "AI knowledge management",
-        lane: "Google Jobs",
-        summary: "Search Google Jobs.",
+        id: "arbeitnow-knowledge-ai-lead",
+        kind: "job",
+        title: "Knowledge AI Lead",
+        company: "Example BV",
+        location: "Eindhoven / Hybrid",
+        lane: "Arbeitnow",
+        source: "arbeitnow",
+        summary: "Build AI knowledge workflows.",
+        description: "Build AI knowledge workflows for teams.",
         query: "AI knowledge management",
-        platform: "Google Jobs",
-        url: "https://www.google.com/search?q=AI%20knowledge%20management%20jobs",
+        platform: "Arbeitnow",
+        url: "https://example.com/jobs/knowledge-ai-lead",
         status: "opened",
         searchKeywords: ["AI knowledge management", "Netherlands"]
       }
@@ -131,8 +136,11 @@ assert.equal(cleaned.jobs.items[0].status, "apply-ready");
 assert.equal(cleaned.jobs.items[0].applicationMarkdown, "# Private application kit");
 assert.equal(cleaned.jobs.markdown, "# Alice\n\nAI knowledge management and learning systems.");
 assert.equal(cleaned.jobs.potentials.length, 1);
+assert.equal(cleaned.jobs.potentials[0].kind, "job");
+assert.equal(cleaned.jobs.potentials[0].company, "Example BV");
+assert.equal(cleaned.jobs.potentials[0].description, "Build AI knowledge workflows for teams.");
 assert.equal(cleaned.jobs.potentials[0].status, "opened");
-assert.equal(cleaned.jobs.potentials[0].url, "https://www.google.com/search?q=AI%20knowledge%20management%20jobs");
+assert.equal(cleaned.jobs.potentials[0].url, "https://example.com/jobs/knowledge-ai-lead");
 assert.deepEqual(cleaned.jobs.potentials[0].searchKeywords, ["AI knowledge management", "Netherlands"]);
 assert.deepEqual(cleaned.jobs.preferences.targetLocations, ["Eindhoven", "Remote"]);
 assert.equal(cleaned.lifeStories[0].image, "/assets/safe.jpg");

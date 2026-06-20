@@ -168,6 +168,7 @@ const JOB_POTENTIAL_FILTER_LABELS = {
   active: "Active",
   ...JOB_POTENTIAL_STATUS_LABELS
 };
+const JOB_SEARCH_API = "/api/jobs/search";
 const JOB_FOCUS_KEYWORDS = [
   "ai",
   "artificial intelligence",
@@ -2548,11 +2549,17 @@ function normalizeJobs(value = {}) {
 function normalizeJobPotential(potential = {}) {
   const now = new Date().toISOString();
   const status = JOB_POTENTIAL_STATUSES.includes(potential.status) ? potential.status : "queued";
+  const kind = potential.kind === "job" || potential.company || potential.description ? "job" : "search";
   return {
     id: normalizeUsername(potential.id || `${potential.platform || ""}-${potential.query || potential.title || ""}` || `search-${crypto.randomUUID()}`) || `search-${crypto.randomUUID()}`,
+    kind,
     title: String(potential.title || "").trim(),
+    company: String(potential.company || "").trim(),
+    location: String(potential.location || "").trim(),
     lane: String(potential.lane || potential.platform || "").trim(),
+    source: String(potential.source || "").trim(),
     summary: String(potential.summary || "").trim(),
+    description: String(potential.description || "").trim(),
     query: String(potential.query || "").trim(),
     platform: String(potential.platform || "").trim(),
     url: safePublicLink(potential.url || ""),
@@ -5282,6 +5289,7 @@ function buildJobWebSearches(markdown = savedJobMarkdown()) {
     return normalizeJobPotential({
       ...existing,
       id: existing.id || `${platform.id}-${query}`,
+      kind: "search",
       title: query,
       lane: platform.label,
       platform: platform.label,
@@ -5295,6 +5303,36 @@ function buildJobWebSearches(markdown = savedJobMarkdown()) {
     });
   }));
   return searches.slice(0, 24);
+}
+
+function mergePotentialSearchState(nextPotentials = [], previousPotentials = currentJobs().potentials) {
+  const previousByUrl = new Map(previousPotentials.filter((item) => item.url).map((item) => [item.url, item]));
+  const previousById = new Map(previousPotentials.map((item) => [item.id, item]));
+  return nextPotentials.map((potential) => {
+    const previous = (potential.url && previousByUrl.get(potential.url)) || previousById.get(potential.id) || {};
+    return normalizeJobPotential({
+      ...potential,
+      status: previous.status || potential.status,
+      createdAt: previous.createdAt || potential.createdAt,
+      updatedAt: potential.updatedAt || previous.updatedAt || new Date().toISOString()
+    });
+  });
+}
+
+async function collectJobsFromApi(markdown) {
+  const response = await fetch(JOB_SEARCH_API, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ markdown, limit: 18 })
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error || "Job search API is unavailable.");
+  return {
+    jobs: Array.isArray(data.jobs) ? data.jobs.map(normalizeJobPotential).filter((job) => job.kind === "job" && (job.title || job.summary)) : [],
+    queries: Array.isArray(data.queries) ? data.queries : [],
+    errors: Array.isArray(data.errors) ? data.errors : []
+  };
 }
 
 async function refreshJobsPublicProfileContext(username = activeUsername) {
@@ -5312,13 +5350,13 @@ function filteredPotentials(jobs = currentJobs()) {
     .filter((potential) => activePotentialFilter === "active"
       ? potential.status !== "saved"
       : potential.status === activePotentialFilter)
-    .sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)) || a.title.localeCompare(b.title));
+    .sort((a, b) => (b.score || 0) - (a.score || 0) || String(b.updatedAt).localeCompare(String(a.updatedAt)) || a.title.localeCompare(b.title));
 }
 
 function shortlistedPotentials(jobs = currentJobs()) {
   return jobs.potentials
     .filter((potential) => potential.status === "saved")
-    .sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)) || a.title.localeCompare(b.title));
+    .sort((a, b) => (b.score || 0) - (a.score || 0) || String(b.updatedAt).localeCompare(String(a.updatedAt)) || a.title.localeCompare(b.title));
 }
 
 function jobSearchText(job = {}) {
@@ -5546,13 +5584,14 @@ function renderJobsModule() {
 
 function renderJobAgents(jobs, selectedJob) {
   const markdownWords = savedJobMarkdown().split(/\s+/).filter(Boolean).length;
-  const activeSearches = jobs.potentials.filter((potential) => potential.status !== "saved");
-  const openedSearches = jobs.potentials.filter((potential) => potential.status === "opened");
+  const collectedJobs = jobs.potentials.filter((potential) => potential.kind === "job");
+  const activeSources = jobs.potentials.filter((potential) => potential.status !== "saved");
+  const openedSources = jobs.potentials.filter((potential) => potential.status === "opened");
   const applicationKits = jobs.items.filter((job) => job.applicationMarkdown);
   const selectedScore = selectedJob ? `${selectedJob.matchScore || 0}/100` : "No JD";
   $("#jobAgentStrip").innerHTML = [
     ["Markdown", `${markdownWords} words`, "Saved source"],
-    ["Web search", `${activeSearches.length} links`, `${openedSearches.length} opened`],
+    ["Job search", collectedJobs.length ? `${collectedJobs.length} jobs` : `${activeSources.length} links`, `${openedSources.length} opened`],
     ["Apply kit", selectedScore, applicationKits.length ? `${applicationKits.length} saved` : "Add a JD"]
   ].map(([name, metric, note]) => `
     <article class="job-agent">
@@ -5573,25 +5612,38 @@ function potentialTags(items = []) {
 
 function renderPotentialCard(potential, { compact = false } = {}) {
   const isActive = potential.id === activePotentialId;
+  const isJob = potential.kind === "job";
   const statusLabel = JOB_POTENTIAL_STATUS_LABELS[potential.status] || potential.status;
   const savedAction = potential.status === "saved"
     ? `<button class="small-action" type="button" data-potential-status="queued">Queue</button>`
-    : `<button class="small-action" type="button" data-potential-status="saved">Save link</button>`;
+    : `<button class="small-action" type="button" data-potential-status="saved">${isJob ? "Save job" : "Save link"}</button>`;
+  const title = isJob ? (potential.title || "Untitled role") : (potential.query || potential.title || "Untitled search");
+  const meta = isJob
+    ? [potential.company || "Unknown company", potential.location || "Location not saved"].filter(Boolean).join(" · ")
+    : (potential.summary || "Open this search and review real job posts.");
+  const summary = isJob
+    ? (potential.summary || potential.description || "Open the posting to review the full requirements.")
+    : (potential.summary || "Open this search and review real job posts.");
+  const sourceLabel = potential.platform || potential.lane || potential.source || (isJob ? "Job API" : "Search");
+  const linkLabel = isJob ? "Open posting" : "Open result page";
+  const openLabel = isJob ? "Open posting" : "Open search";
   return `
     <article class="job-potential-card ${isActive ? "active" : ""} ${compact ? "compact" : ""}" data-potential-id="${escapeHtml(potential.id)}">
       <div class="job-card-main">
         <div class="job-potential-meta">
           <span class="visibility-pill status-${escapeHtml(potential.status)}">${escapeHtml(statusLabel)}</span>
-          <strong>${escapeHtml(potential.platform || potential.lane || "Search")}</strong>
+          <strong>${escapeHtml(sourceLabel)}</strong>
         </div>
-        <h3>${escapeHtml(potential.query || potential.title || "Untitled search")}</h3>
-        <p>${escapeHtml(potential.summary || "Open this search and review real job posts.")}</p>
+        <h3>${escapeHtml(title)}</h3>
+        <small>${escapeHtml(meta)}</small>
+        <p>${escapeHtml(summary)}</p>
         <div class="job-potential-tags">${potentialTags(potential.searchKeywords)}</div>
-        ${potential.url ? `<a class="job-search-link" href="${escapeHtml(potential.url)}" target="_blank" rel="noopener">Open result page</a>` : ""}
+        ${potential.url ? `<a class="job-search-link" href="${escapeHtml(potential.url)}" target="_blank" rel="noopener">${escapeHtml(linkLabel)}</a>` : ""}
       </div>
       <div class="job-card-actions">
         <button class="small-action" type="button" data-potential-action="select">Select</button>
-        <button class="small-action" type="button" data-potential-action="open">Open search</button>
+        ${isJob ? `<button class="small-action" type="button" data-potential-action="use-job">Use JD</button>` : ""}
+        <button class="small-action" type="button" data-potential-action="open">${escapeHtml(openLabel)}</button>
         ${savedAction}
       </div>
     </article>
@@ -5600,10 +5652,11 @@ function renderPotentialCard(potential, { compact = false } = {}) {
 
 function renderPotentialList(jobs = currentJobs()) {
   const items = filteredPotentials(jobs);
-  $("#jobPotentialCount").textContent = `${items.length} ${items.length === 1 ? "search" : "searches"}`;
+  const hasJobs = items.some((item) => item.kind === "job");
+  $("#jobPotentialCount").textContent = `${items.length} ${hasJobs ? (items.length === 1 ? "job" : "jobs") : (items.length === 1 ? "source" : "sources")}`;
   $("#jobPotentialList").innerHTML = items.length
     ? items.map((potential) => renderPotentialCard(potential)).join("")
-    : `<p class="empty-result">Save the Markdown, then start web search</p>`;
+    : `<p class="empty-result">Save the Markdown, then start API search</p>`;
 }
 
 function renderShortlist(jobs = currentJobs()) {
@@ -5612,7 +5665,7 @@ function renderShortlist(jobs = currentJobs()) {
   $("#jobShortlistCount").textContent = `${items.length} saved`;
   $("#jobShortlistList").innerHTML = items.length
     ? items.map((potential) => renderPotentialCard(potential, { compact: true })).join("")
-    : `<p class="empty-result">Saved search links will appear here</p>`;
+    : `<p class="empty-result">Saved jobs and search links will appear here</p>`;
 }
 
 function filteredJobs(jobs) {
@@ -5671,7 +5724,7 @@ function resetJobForm() {
   $("#jobNotes").value = "";
   $("#jobStatus").value = "collected";
   $("#deleteJobEntry").hidden = true;
-  $("#jobStatusNote").textContent = "Paste a real job description after web search.";
+  $("#jobStatusNote").textContent = "Paste a real job description after API search.";
   $("#saveJobEntry").textContent = "Create application kit";
 }
 
@@ -5692,7 +5745,10 @@ function fillJobForm(job) {
 
 function jobFromForm() {
   const id = $("#jobEditId").value.trim();
-  const existing = currentJobs().items.find((job) => job.id === id) || {};
+  const jobs = currentJobs();
+  const existing = jobs.items.find((job) => job.id === id) || {};
+  const potentialId = $("#jobPotentialId").value.trim();
+  const potential = jobs.potentials.find((item) => item.id === potentialId) || null;
   const rawUrl = $("#jobSourceUrl").value.trim();
   const safeUrl = safePublicLink(rawUrl);
   if (rawUrl && !safeUrl) throw new Error("Use a valid http or https job URL.");
@@ -5706,8 +5762,8 @@ function jobFromForm() {
     description: $("#jobDescription").value.trim(),
     notes: $("#jobNotes").value.trim(),
     status: $("#jobStatus").value,
-    potentialId: existing.potentialId || "",
-    potentialTitle: existing.potentialTitle || "",
+    potentialId: potentialId || existing.potentialId || "",
+    potentialTitle: potential?.title || potential?.query || existing.potentialTitle || "",
     updatedAt: new Date().toISOString()
   });
 }
@@ -5745,16 +5801,38 @@ function upsertJob(event) {
   }
 }
 
-function startJobWebSearch() {
+async function startJobWebSearch() {
   const jobs = currentJobs();
   jobs.markdown = ($("#jobPotentialMarkdown")?.value || profileMarkdownForJobs()).trim();
-  jobs.potentials = buildJobWebSearches(jobs.markdown);
-  activePotentialId = jobs.potentials[0]?.id || "";
-  if (jobs.potentials[0]) {
-    jobs.potentials[0].status = "opened";
-    window.open(jobs.potentials[0].url, "_blank", "noopener");
+  if (jobs.markdown.length < 20) {
+    setJobsModuleStatus("Save more Turnpo Markdown before starting search.");
+    return;
   }
-  saveJobsState("Web search started.");
+  const button = $("#startJobSearch");
+  const previousLabel = button?.textContent || "Start search";
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Searching...";
+  }
+  setJobsModuleStatus("Searching public job APIs...");
+  const previousPotentials = jobs.potentials;
+  try {
+    const result = await collectJobsFromApi(jobs.markdown);
+    if (!result.jobs.length) throw new Error("No API jobs matched this Markdown yet.");
+    jobs.potentials = mergePotentialSearchState(result.jobs, previousPotentials);
+    activePotentialId = jobs.potentials[0]?.id || "";
+    const sourceNote = result.errors.length ? " Some sources were unavailable." : "";
+    saveJobsState(`Collected ${jobs.potentials.length} jobs from API.${sourceNote}`);
+  } catch (error) {
+    jobs.potentials = mergePotentialSearchState(buildJobWebSearches(jobs.markdown), previousPotentials);
+    activePotentialId = jobs.potentials[0]?.id || "";
+    saveJobsState(`${error.message || "Job API unavailable"} Created search links as fallback.`);
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = previousLabel;
+    }
+  }
 }
 
 function selectPotential(potentialId) {
@@ -5772,7 +5850,7 @@ function setPotentialStatus(potentialId, status) {
   potential.status = status;
   potential.updatedAt = new Date().toISOString();
   activePotentialId = potential.id;
-  saveJobsState(`Search marked ${JOB_POTENTIAL_STATUS_LABELS[status] || status}.`);
+  saveJobsState(`${potential.kind === "job" ? "Job" : "Search"} marked ${JOB_POTENTIAL_STATUS_LABELS[status] || status}.`);
 }
 
 function openJobSearch(potentialId) {
@@ -5782,7 +5860,33 @@ function openJobSearch(potentialId) {
   potential.status = "opened";
   potential.updatedAt = new Date().toISOString();
   if (potential.url) window.open(potential.url, "_blank", "noopener");
-  saveJobsState("Search opened.");
+  saveJobsState(`${potential.kind === "job" ? "Job posting" : "Search"} opened.`);
+}
+
+function usePotentialForJob(potentialId) {
+  const jobs = currentJobs();
+  const potential = jobs.potentials.find((item) => item.id === potentialId);
+  if (!potential) return;
+  activePotentialId = potential.id;
+  potential.status = "opened";
+  potential.updatedAt = new Date().toISOString();
+  $("#jobEditId").value = "";
+  $("#jobPotentialId").value = potential.id;
+  $("#jobCompany").value = potential.company || "";
+  $("#jobTitle").value = potential.title || potential.query || "";
+  $("#jobLocation").value = potential.location || "";
+  $("#jobSourceUrl").value = potential.url || "";
+  $("#jobDescription").value = potential.description || potential.summary || "";
+  $("#jobNotes").value = [
+    potential.platform || potential.source ? `Collected from ${potential.platform || potential.source}.` : "",
+    potential.score ? `API relevance score: ${potential.score}/100.` : ""
+  ].filter(Boolean).join("\n");
+  $("#jobStatus").value = "collected";
+  $("#deleteJobEntry").hidden = true;
+  $("#saveJobEntry").textContent = "Create application kit";
+  $("#jobStatusNote").textContent = "Collected job loaded. Review the JD, then create the application kit.";
+  saveJobsState("Collected job loaded into JD form.");
+  $("#jobForm")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function selectJob(jobId, { edit = false } = {}) {
@@ -7103,6 +7207,10 @@ document.querySelectorAll("#jobPotentialList, #jobShortlistList").forEach((list)
     const actionButton = event.target.closest("[data-potential-action]");
     if (actionButton?.dataset.potentialAction === "open") {
       openJobSearch(potentialId);
+      return;
+    }
+    if (actionButton?.dataset.potentialAction === "use-job") {
+      usePotentialForJob(potentialId);
       return;
     }
     selectPotential(potentialId);

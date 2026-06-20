@@ -10,6 +10,29 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.208
+
+Commit: `Collect Jobs from API search`
+
+### Changed
+
+- Added `/api/jobs/search` to collect real job postings from public job APIs using the saved Turnpo Markdown as search context.
+- Changed Jobs Step 2 from a web-search-link queue into a collected jobs list with company, location, source, posting link, and one-click `Use JD`.
+- Kept external search links as the fallback when the job API is unavailable or returns no matching roles.
+- Extended private jobs draft storage to preserve collected API job fields while keeping jobs out of public profile output.
+- Added same-origin JSON validation, request size limits, fetch timeouts, and optional KV-backed rate limiting to the job search API.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check functions/api/auth/_utils.js`.
+- Ran `node --check functions/api/jobs/search.js`.
+- Ran `node tests/security-helpers.test.mjs`.
+- Ran `node tests/jobs-search.test.mjs`.
+- Ran `node tests/jobs-ui-static.test.mjs`.
+- Ran `git diff --check`.
+- Ran a live endpoint smoke test against public job APIs and received 3 normalized job results.
+
 ## 2026-06-20 - v0.1.207
 
 Commit: `Make Jobs search from saved Markdown`
