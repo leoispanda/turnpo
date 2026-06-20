@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.205" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.206" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -223,35 +223,75 @@
         <div class="jobs-head">
           <div>
             <p class="eyebrow">Turnpo Jobs</p>
-            <h2>Career agent workspace</h2>
+            <h2>Career potential workspace</h2>
           </div>
           <div class="jobs-head-actions">
             <button class="section-action" id="backToProfileFromJobs" type="button">Back to profile</button>
-            <button class="section-action" id="newJobEntry" type="button">New job</button>
-            <button class="section-action" id="analyzeSelectedJob" type="button">Analyze selected</button>
+            <button class="section-action" id="analyzeJobPotential" type="button">Analyze potential</button>
+            <button class="section-action" id="newJobEntry" type="button">New JD</button>
           </div>
         </div>
 
         <div class="job-agent-strip" id="jobAgentStrip" aria-label="Job agents"></div>
 
-        <div class="jobs-workspace">
+        <div class="jobs-workspace jobs-potential-workspace">
+          <section class="job-potential-source" aria-label="Turnpo Markdown potential source">
+            <div class="job-panel-head">
+              <div>
+                <p class="eyebrow">Step 1</p>
+                <h3>Markdown potential scan</h3>
+              </div>
+              <button class="section-action" id="refreshJobPotentialMarkdown" type="button">Refresh</button>
+            </div>
+            <textarea id="jobPotentialMarkdown" readonly spellcheck="false"></textarea>
+            <p class="form-status" id="jobStatusNote"></p>
+          </section>
+
+          <section class="job-potential-board" aria-label="Career potential list">
+            <div class="job-board-toolbar">
+              <label><span>Potential filter</span><select id="jobPotentialFilter"></select></label>
+              <span id="jobPotentialCount"></span>
+            </div>
+            <div class="job-potential-list" id="jobPotentialList"></div>
+          </section>
+        </div>
+
+        <section class="job-shortlist-stage" aria-label="Shortlisted career potentials">
+          <div class="job-panel-head">
+            <div>
+              <p class="eyebrow">Step 2</p>
+              <h3>Your potential shortlist</h3>
+            </div>
+            <span id="jobShortlistCount"></span>
+          </div>
+          <div class="job-shortlist-list" id="jobShortlistList"></div>
+        </section>
+
+        <div class="jobs-workspace jobs-application-workspace">
           <form class="job-intake" id="jobForm">
+            <div class="job-panel-head">
+              <div>
+                <p class="eyebrow">Step 3</p>
+                <h3>Match a real JD</h3>
+              </div>
+              <button class="section-action" id="analyzeSelectedJob" type="button">Analyze JD</button>
+            </div>
             <input id="jobEditId" type="hidden" />
+            <input id="jobPotentialId" type="hidden" />
             <div class="form-row">
-              <label><span>Company</span><input id="jobCompany" required placeholder="ASML" /></label>
-              <label><span>Role</span><input id="jobTitle" required placeholder="AI Knowledge Solution Lead" /></label>
+              <label><span>Company</span><input id="jobCompany" placeholder="ASML" /></label>
+              <label><span>Actual role</span><input id="jobTitle" required placeholder="AI Knowledge Solution Lead" /></label>
             </div>
             <div class="form-row">
               <label><span>Location</span><input id="jobLocation" placeholder="Eindhoven / Hybrid" /></label>
               <label><span>Status</span><select id="jobStatus"></select></label>
             </div>
             <label><span>Job URL</span><input id="jobSourceUrl" inputmode="url" placeholder="https://..." /></label>
-            <label><span>Job post / requirements</span><textarea id="jobDescription" required></textarea></label>
+            <label><span>JD / requirements</span><textarea id="jobDescription" required></textarea></label>
             <label><span>Owner notes</span><textarea id="jobNotes"></textarea></label>
-            <p class="form-status" id="jobStatusNote"></p>
             <div class="form-actions">
               <button class="danger-btn" id="deleteJobEntry" type="button" hidden>Delete</button>
-              <button class="submit-btn" id="saveJobEntry" type="submit">Save and analyze</button>
+              <button class="submit-btn" id="saveJobEntry" type="submit">Create application kit</button>
             </div>
           </form>
 
@@ -323,7 +363,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.205</span>
+          <span class="version-badge">v0.1.206</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -553,6 +593,6 @@
       </figure>
     </div>
 
-    <script src="/script.js?v=0.1.205"></script>
+    <script src="/script.js?v=0.1.206"></script>
   </body>
 </html>

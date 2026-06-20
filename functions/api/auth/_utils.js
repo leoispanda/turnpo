@@ -10,6 +10,7 @@ const MAX_TEXT_FIELD_LENGTH = 1200;
 const MAX_LONG_TEXT_FIELD_LENGTH = 5000;
 const MAX_PROFILE_ITEMS = 250;
 const MAX_PROFILE_JOBS = 300;
+const MAX_PROFILE_JOB_POTENTIALS = 80;
 const MAX_PROFILE_TAGS = 20;
 const MAX_PROFILE_LINKS = 24;
 const MAX_PUBLIC_STATE_IDS = 1000;
@@ -78,6 +79,7 @@ const PUBLIC_CONTENT_FIELDS = [
   "publishedAt"
 ];
 const JOB_STATUSES = new Set(["collected", "interesting", "apply-ready", "applied", "rejected", "archived"]);
+const JOB_POTENTIAL_STATUSES = new Set(["suggested", "shortlisted", "dismissed"]);
 
 export function json(data, init = {}) {
   return new Response(JSON.stringify(data), {
@@ -266,6 +268,26 @@ function cleanContentItem(item = {}, fallbackCategory = "life") {
 function cleanJobsForStorage(value = {}) {
   const preferences = value?.preferences && typeof value.preferences === "object" ? value.preferences : {};
   const cleanPreferenceList = (items, maxItems = 40) => cleanStringArray(items, maxItems, 120);
+  const cleanPotential = (potential = {}) => {
+    const status = JOB_POTENTIAL_STATUSES.has(potential.status) ? potential.status : "suggested";
+    const score = Math.round(Number(potential.score) || 0);
+    return {
+      id: cleanText(potential.id || `potential-${Date.now()}`, 160),
+      title: cleanText(potential.title || "", 220),
+      lane: cleanText(potential.lane || "", 120),
+      summary: cleanLongText(potential.summary || "", 1200),
+      status,
+      score: Math.min(100, Math.max(0, score)),
+      confidence: cleanText(potential.confidence || "", 80),
+      targetTitles: cleanStringArray(potential.targetTitles, 12, 160),
+      searchKeywords: cleanStringArray(potential.searchKeywords, 30, 120),
+      evidence: cleanStringArray(potential.evidence, 12, 220),
+      gaps: cleanStringArray(potential.gaps, 12, 220),
+      createdAt: cleanText(potential.createdAt || "", 80),
+      updatedAt: cleanText(potential.updatedAt || "", 80),
+      lastAnalyzedAt: cleanText(potential.lastAnalyzedAt || "", 80)
+    };
+  };
   const cleanJob = (job = {}) => {
     const status = JOB_STATUSES.has(job.status) ? job.status : "collected";
     const score = Math.round(Number(job.matchScore) || 0);
@@ -282,6 +304,8 @@ function cleanJobsForStorage(value = {}) {
       summary: cleanLongText(job.summary || "", 1200),
       recommendation: cleanText(job.recommendation || "", 80),
       matchScore: Math.min(100, Math.max(0, score)),
+      potentialId: cleanText(job.potentialId || "", 160),
+      potentialTitle: cleanText(job.potentialTitle || "", 220),
       fitReasons: cleanStringArray(job.fitReasons, 12, 220),
       riskFlags: cleanStringArray(job.riskFlags, 12, 220),
       keywords: cleanStringArray(job.keywords, 30, 80),
@@ -299,6 +323,9 @@ function cleanJobsForStorage(value = {}) {
     },
     items: Array.isArray(value?.items)
       ? value.items.map(cleanJob).filter((job) => job.title || job.company || job.description || job.sourceUrl).slice(0, MAX_PROFILE_JOBS)
+      : [],
+    potentials: Array.isArray(value?.potentials)
+      ? value.potentials.map(cleanPotential).filter((potential) => potential.title || potential.summary).slice(0, MAX_PROFILE_JOB_POTENTIALS)
       : []
   };
 }

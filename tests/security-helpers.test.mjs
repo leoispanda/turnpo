@@ -77,6 +77,21 @@ const cleaned = cleanOwnerProfileForStorage({
       focusKeywords: ["AI", "knowledge"],
       riskKeywords: ["Dutch required"]
     },
+    potentials: [
+      {
+        id: "ai-knowledge-solution",
+        title: "AI Knowledge Solution Designer",
+        lane: "AI + Knowledge",
+        summary: "Design AI-enabled knowledge flows.",
+        status: "shortlisted",
+        score: 91,
+        confidence: "High",
+        targetTitles: ["AI Knowledge Solution Designer", "AI Knowledge Solution Designer"],
+        searchKeywords: ["AI knowledge management"],
+        evidence: ["2026: MapKAI"],
+        gaps: ["Add measurable outcomes"]
+      }
+    ],
     items: [
       {
         id: "job-1",
@@ -115,6 +130,10 @@ assert.equal(cleaned.jobs.items.length, 1);
 assert.equal(cleaned.jobs.items[0].sourceUrl, "");
 assert.equal(cleaned.jobs.items[0].status, "apply-ready");
 assert.equal(cleaned.jobs.items[0].applicationMarkdown, "# Private application kit");
+assert.equal(cleaned.jobs.potentials.length, 1);
+assert.equal(cleaned.jobs.potentials[0].status, "shortlisted");
+assert.equal(cleaned.jobs.potentials[0].score, 91);
+assert.deepEqual(cleaned.jobs.potentials[0].targetTitles, ["AI Knowledge Solution Designer"]);
 assert.deepEqual(cleaned.jobs.preferences.targetLocations, ["Eindhoven", "Remote"]);
 assert.equal(cleaned.lifeStories[0].image, "/assets/safe.jpg");
 assert.deepEqual(cleaned.lifeStories[0].images, ["/assets/safe.jpg"]);

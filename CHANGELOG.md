@@ -10,6 +10,25 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.206
+
+Commit: `Make Jobs potential-first`
+
+### Changed
+
+- Reworked Turnpo Jobs into a potential-first workflow: Markdown potential scan, owner shortlist, then real JD matching.
+- Added career potential blueprints and local scoring from the Turnpo Markdown/profile context.
+- Added private potential storage in owner jobs data while keeping jobs out of public profile output.
+- Moved the company/role/JD inputs into Step 3 so the first screen is no longer manual job intake.
+
+### Verification
+
+- Ran `node --check script.js`.
+- Ran `node --check functions/api/auth/_utils.js`.
+- Ran `node tests/security-helpers.test.mjs`.
+- Ran `git diff --check`.
+- Ran local static route QA confirming `/turnpo-jobs/leo` serves the new potential-first page and the potential analysis controls are wired.
+
 ## 2026-06-20 - v0.1.205
 
 Commit: `Split Jobs into standalone profile function page`
