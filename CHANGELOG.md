@@ -10,6 +10,28 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-20 - v0.1.217
+
+Commit: `Fix public timeline overflow`
+
+### Changed
+
+- Fixed public timeline cards so text, dates, tags, and details cannot expand the card horizontally on desktop.
+- Relaxed the unloaded-image style so profile photos no longer stay visibly blurred if the browser misses a lazy-load state update.
+- Added a profile layout static test to guard against reintroducing timeline overflow or blurred loading images.
+
+### Verification
+
+- Checked live `https://www.turnpo.com/u/leo`, deployed `script.js`, `styles.css`, `version.json`, and `/api/profiles/leo` with `curl`; all returned 200.
+- Verified real profile media GET requests return `image/jpeg` from `/api/profiles/leo/media/...`.
+- Ran bundled Node `--check` on `script.js`.
+- Ran bundled Node `--check` on `functions/api/jobs/search.js`.
+- Ran `node tests/jobs-search.test.mjs` with bundled Node.
+- Ran `node tests/jobs-ui-static.test.mjs` with bundled Node.
+- Ran `node tests/security-helpers.test.mjs` with bundled Node.
+- Ran `node tests/profile-layout-static.test.mjs` with bundled Node.
+- Ran `git diff --check`.
+
 ## 2026-06-20 - v0.1.216
 
 Commit: `Add mini AI profile for Jobs search`
