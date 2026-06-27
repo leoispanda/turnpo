@@ -754,6 +754,31 @@ main {
   margin-top: 0;
 }
 
+.footer-maintenance {
+  grid-column: 1 / -1;
+  justify-self: end;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -6px;
+}
+
+.footer-maintenance .footer-maintenance-link {
+  min-height: 28px;
+  margin-top: 0;
+  padding: 0 10px;
+  border-color: rgba(244, 239, 228, 0.13);
+  color: rgba(244, 239, 228, 0.42);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.footer-maintenance .footer-maintenance-link:hover {
+  border-color: rgba(216, 177, 95, 0.28);
+  color: rgba(244, 239, 228, 0.7);
+  background: rgba(216, 177, 95, 0.055);
+}
+
 .data-mode-status {
   display: inline-flex;
   align-items: center;
@@ -3592,6 +3617,7 @@ body.theme-light .mini-profile-card,
 body.theme-light .admin-access > div,
 body.theme-light .admin-metric,
 body.theme-light .founder-tools > .ghost-btn,
+body.theme-light .footer-maintenance .footer-maintenance-link,
 body.theme-light .person-result,
 body.theme-light .profile-meta span,
 body.theme-light .timeline-tag,
@@ -3646,6 +3672,19 @@ body.theme-light:not(.owner-mode) .event-card:hover {
   background: rgba(255, 255, 255, 0.82);
   border-color: rgba(117, 80, 27, 0.28);
   color: var(--gold-strong);
+}
+
+body.theme-light .footer-maintenance .footer-maintenance-link {
+  border-color: rgba(28, 39, 54, 0.1);
+  color: rgba(58, 69, 84, 0.48);
+  background: rgba(28, 39, 54, 0.025);
+  box-shadow: none;
+}
+
+body.theme-light .footer-maintenance .footer-maintenance-link:hover {
+  border-color: rgba(159, 119, 48, 0.28);
+  color: rgba(58, 69, 84, 0.7);
+  background: rgba(216, 177, 95, 0.08);
 }
 
 body.theme-light .year-jump select {
@@ -4058,6 +4097,11 @@ body.theme-light .image-lightbox-close {
 
   .founder-tools {
     justify-self: start;
+  }
+
+  .footer-maintenance {
+    justify-self: start;
+    margin-top: 0;
   }
 
   .ai-panel {

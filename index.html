@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.219" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.221" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -122,9 +122,6 @@
           <h1 id="profileName">Turnpo Profile</h1>
           <p class="headline" id="profileIntro"></p>
           <div class="profile-links" id="profileLinks"></div>
-          <div class="profile-functions" aria-label="Turnpo profile functions">
-            <button class="profile-function-btn" id="openJobsPage" type="button">Turnpo Jobs</button>
-          </div>
           <div class="public-ai-strip public-only" aria-label="AI-readable Markdown profile preview">
             <button class="public-ai-copy" id="copyPublicMd" type="button" title="Copy AI Profile" aria-label="Copy AI-readable Markdown">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h11v11H8z"/><path d="M5 16H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
@@ -372,7 +369,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-          <span class="version-badge">v0.1.219</span>
+          <span class="version-badge">v0.1.221</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -381,13 +378,15 @@
             <button class="gold-btn" id="openStory" type="button">Add Life</button>
             <button class="gold-btn" id="openWork" type="button">Add Work</button>
             <button class="gold-btn" id="openAiImport" type="button">Import with AI</button>
-            <button class="gold-btn" id="openJobsModule" type="button">Jobs</button>
             <button class="ghost-btn" id="optimizeExistingImages" type="button">Optimize images</button>
             <button class="ghost-btn" id="exportProfile" type="button">Export JSON</button>
             <button class="ghost-btn" id="restoreSeed" type="button">Reset local draft / restore online public</button>
             <button class="ghost-btn" id="ownerLogout" type="button">Exit owner mode</button>
             <span class="owner-save-status" id="ownerSaveStatus" aria-live="polite"></span>
           </div>
+        </div>
+        <div class="footer-maintenance owner-only" aria-label="Owner maintenance tools">
+          <button class="ghost-btn footer-maintenance-link" id="openJobsModule" type="button">Jobs workspace</button>
         </div>
       </footer>
     </main>
@@ -602,6 +601,6 @@
       </figure>
     </div>
 
-    <script src="/script.js?v=0.1.219"></script>
+    <script src="/script.js?v=0.1.221"></script>
   </body>
 </html>

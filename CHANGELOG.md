@@ -10,6 +10,27 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-27 - v0.1.221
+
+Commit: `Tuck Jobs workspace into footer`
+
+### Changed
+
+- Removed the prominent Turnpo Jobs function button from the public profile hero.
+- Removed Jobs from the main owner-mode gold action grid.
+- Moved the Jobs workspace entry to a small owner-only maintenance link at the very bottom of the About / Legal footer area.
+- Kept the Jobs workspace route and internal functionality intact for future maintenance.
+- Relaxed a stale Jobs button event binding so the page does not throw when the old analyze button is absent.
+- Added static checks so the Jobs entry stays out of the prominent profile and owner action areas.
+
+### Verification
+
+- Ran bundled Node `--check` on `script.js`.
+- Ran `node tests/jobs-ui-static.test.mjs` with bundled Node.
+- Ran `node tests/profile-layout-static.test.mjs` with bundled Node.
+- Verified the local homepage in the in-app browser: no prominent Jobs button, no gold owner Jobs button, footer maintenance link exists in the About / Legal area, and no console warnings or errors.
+- Ran `git diff --check`.
+
 ## 2026-06-20 - v0.1.219
 
 Commit: `Add layered Life Atlas globe`

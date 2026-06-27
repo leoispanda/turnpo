@@ -7432,8 +7432,8 @@ $("#refreshAdminDashboard").addEventListener("click", renderAdminDashboard);
 $("#themeToggle").addEventListener("click", toggleTheme);
 $("#openRegistration").addEventListener("click", () => setRegistrationDrawer(true));
 $("#openAiImport").addEventListener("click", () => setAiImportDrawer(true));
-$("#openJobsPage").addEventListener("click", () => setRoute(jobsRoute(activeUsername)));
-$("#openJobsModule").addEventListener("click", openJobsModule);
+$("#openJobsPage")?.addEventListener("click", () => setRoute(jobsRoute(activeUsername)));
+$("#openJobsModule")?.addEventListener("click", openJobsModule);
 $("#backToProfileFromJobs").addEventListener("click", () => setRoute(activeUsername));
 $("#saveJobMarkdown").addEventListener("click", () => completeJobGeneralInfo("General information completed."));
 $("#startJobSearch").addEventListener("click", startJobWebSearch);
@@ -7488,7 +7488,7 @@ $("#jobForm").addEventListener("input", () => {
   if (canEditJobs()) setJobsModuleStatus("Unsaved job edits. Save and analyze to update the Jobs module.");
 });
 $("#newJobEntry").addEventListener("click", resetJobForm);
-$("#analyzeSelectedJob").addEventListener("click", analyzeSelectedJob);
+$("#analyzeSelectedJob")?.addEventListener("click", analyzeSelectedJob);
 $("#deleteJobEntry").addEventListener("click", deleteCurrentJob);
 $("#jobPotentialFilter")?.addEventListener("change", (event) => {
   activePotentialFilter = event.target.value;
