@@ -10,6 +10,25 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-06-30 - v0.1.222
+
+Commit: `Compact mobile Life Atlas cities`
+
+### Changed
+
+- Changed the public mobile Life Atlas city list into a small horizontal sliding window over the bottom of the map.
+- Kept the map and signal dots as the main mobile focus while reducing city cards to compact chips.
+- Left owner-mode city editing controls in the fuller layout so maintenance actions stay usable.
+- Added static layout checks to keep the mobile Life Atlas city list compact.
+
+### Verification
+
+- Ran bundled Node `--check` on `script.js`.
+- Ran `node tests/profile-layout-static.test.mjs` with bundled Node.
+- Ran `node tests/life-atlas-globe-static.test.mjs` with bundled Node.
+- Verified the local profile in the in-app browser at a mobile viewport: the map remains primary, the city list is a compact horizontal sliding window, and no current-version console warnings or errors are present.
+- Ran `git diff --check`.
+
 ## 2026-06-27 - v0.1.221
 
 Commit: `Tuck Jobs workspace into footer`
