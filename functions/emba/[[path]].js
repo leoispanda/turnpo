@@ -68,16 +68,16 @@ async function isValidToken(token, secret) {
   return timingSafeEqual(signature, expected);
 }
 
-function accessCookie(token) {
-  return `${ACCESS_COOKIE}=${token}; Path=/emba; Max-Age=${COOKIE_MAX_AGE_SECONDS}; HttpOnly; Secure; SameSite=Lax`;
+function accessCookie(token, path = "/") {
+  return `${ACCESS_COOKIE}=${token}; Path=${path}; Max-Age=${COOKIE_MAX_AGE_SECONDS}; HttpOnly; Secure; SameSite=Lax`;
 }
 
 function uiCookie() {
   return `${UI_COOKIE}=granted; Path=/emba; Max-Age=${COOKIE_MAX_AGE_SECONDS}; Secure; SameSite=Lax`;
 }
 
-function clearAccessCookie() {
-  return `${ACCESS_COOKIE}=; Path=/emba; Max-Age=0; HttpOnly; Secure; SameSite=Lax`;
+function clearAccessCookie(path = "/") {
+  return `${ACCESS_COOKIE}=; Path=${path}; Max-Age=0; HttpOnly; Secure; SameSite=Lax`;
 }
 
 function clearUiCookie() {
@@ -143,8 +143,15 @@ function accessPage(error = "") {
 </html>`);
 }
 
-async function isAuthorized(request, env) {
-  return isValidToken(cookieValue(request, ACCESS_COOKIE), configuredAccessCode(env));
+async function authorizedToken(request, env) {
+  const token = cookieValue(request, ACCESS_COOKIE);
+  return await isValidToken(token, configuredAccessCode(env)) ? token : "";
+}
+
+function appendClearCookies(headers) {
+  headers.append("set-cookie", clearAccessCookie("/"));
+  headers.append("set-cookie", clearAccessCookie("/emba"));
+  headers.append("set-cookie", clearUiCookie());
 }
 
 export async function onRequestGet(context) {
@@ -153,12 +160,21 @@ export async function onRequestGet(context) {
 
   if (url.pathname === "/emba/logout") {
     const headers = new Headers({ location: "/emba/", "cache-control": "no-store" });
-    headers.append("set-cookie", clearAccessCookie());
-    headers.append("set-cookie", clearUiCookie());
+    appendClearCookies(headers);
     return new Response(null, { status: 303, headers });
   }
 
-  if (await isAuthorized(request, env)) return context.next();
+  const token = await authorizedToken(request, env);
+  if (token) {
+    const response = await context.next();
+    const headers = new Headers(response.headers);
+    headers.append("set-cookie", accessCookie(token));
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers
+    });
+  }
   return accessPage();
 }
 
@@ -168,8 +184,7 @@ export async function onRequestPost(context) {
 
   if (url.pathname === "/emba/logout") {
     const headers = new Headers({ location: "/emba/", "cache-control": "no-store" });
-    headers.append("set-cookie", clearAccessCookie());
-    headers.append("set-cookie", clearUiCookie());
+    appendClearCookies(headers);
     return new Response(null, { status: 303, headers });
   }
 

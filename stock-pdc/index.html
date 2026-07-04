@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>股票大作手 Top 20 | Turnpo</title>
+    <meta name="description" content="股票大作手 Top 20 榜单时间流。" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href="https://www.turnpo.com/stock-pdc/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="股票大作手 Top 20 | Turnpo" />
+    <meta property="og:description" content="股票大作手 Top 20 榜单时间流。" />
+    <meta property="og:url" content="https://www.turnpo.com/stock-pdc/" />
+    <meta property="og:image" content="https://www.turnpo.com/assets/turnpo-og-image.png" />
+    <meta name="theme-color" content="#f5f6f8" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon-48.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.223" />
+    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Turnpo home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Turnpo</span>
+      </a>
+      <div></div>
+      <div class="top-actions">
+        <a class="ghost-btn stock-home-link" href="/">Turnpo home</a>
+        <button class="ghost-btn stock-lock-btn" id="stockLock" type="button" hidden>Lock</button>
+      </div>
+    </header>
+
+    <section class="stock-access-gate" id="stockAccessGate" aria-label="Stock PDC access">
+      <form class="stock-access-card" id="stockAccessForm">
+        <div>
+          <h1>股票大作手</h1>
+          <p>Enter the access password to open the Top 20 rank flow.</p>
+        </div>
+        <label>
+          <span>Password</span>
+          <input id="stockPassword" type="password" autocomplete="current-password" placeholder="Enter password" required />
+        </label>
+        <button class="stock-primary-btn" type="submit">Enter</button>
+        <p class="stock-access-note" id="stockAccessNote" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <main class="stock-shell stock-color-wall" id="stockApp" hidden>
+      <section class="stock-flow-panel stock-color-panel" aria-label="股票大作手 Top 20 颜色榜单">
+        <div class="stock-rank-matrix-wrap" id="stockRankList"></div>
+      </section>
+    </main>
+
+    <script src="/stock-pdc/stock-pdc.js"></script>
+  </body>
+</html>

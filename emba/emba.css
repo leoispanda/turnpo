@@ -172,6 +172,19 @@ body::before {
   background: rgba(0, 0, 0, 0.16);
 }
 
+.emba-sync-status {
+  min-height: 16px;
+  margin: -8px 0 0;
+  color: #86868b;
+  font-size: 11px;
+  font-weight: 640;
+  line-height: 1.2;
+}
+
+.emba-sync-status[data-tone="warn"] {
+  color: #9b7b33;
+}
+
 .emba-dock {
   position: relative;
   width: min(1180px, 100%);
@@ -415,6 +428,10 @@ body::before {
   grid-template-columns: minmax(140px, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) auto;
 }
 
+.emba-material-form {
+  grid-template-columns: minmax(140px, 0.8fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+}
+
 .emba-edit-input,
 .emba-edit-textarea,
 .emba-reflection-editor {
@@ -513,11 +530,36 @@ body::before {
 
 .emba-edit-item {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto auto;
   gap: 10px;
   align-items: center;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
   padding-top: 10px;
+}
+
+.emba-file-link {
+  min-height: 32px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #1d1d1f;
+  font-size: 12px;
+  font-weight: 650;
+  padding: 0 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.emba-file-link:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: #ffffff;
+}
+
+.emba-file-spacer {
+  width: 1px;
+  height: 1px;
 }
 
 .emba-list {
@@ -642,6 +684,7 @@ body::before {
   }
 
   .emba-edit-form,
+  .emba-material-form,
   .emba-upload-form,
   .emba-edit-item {
     grid-template-columns: 1fr;

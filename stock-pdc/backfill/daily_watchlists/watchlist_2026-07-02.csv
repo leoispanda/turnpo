@@ -1,0 +1,21 @@
+run_date,ticker,rank,final_score,final_status,market_regime_score,trend_score,livermore_breakout_score,volume_price_score,candlestick_score,overheat_score,risk_score,zhuge_orion_score,final_chair_score,main_reason,main_risk,suggested_action_status,analysis_date,front_desk_instruction
+2026-07-02,600030.SH,1,6.94,Watch,6.0,10.0,5.6,5.8,3.6,6.5,8.4,5.5,6.4,BUY_TOP20_MANUAL,RSI warming at 64.9,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,688041.SH,2,6.68,Watch,6.0,10.0,3.3,8.2,5.0,8.5,5.3,5.5,6.9,BUY_TOP20_MANUAL,ATR high at 7.4%; pullback from recent high -13.0%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,688981.SH,3,6.33,Watch,6.0,10.0,3.3,7.2,5.0,7.2,5.0,5.5,6.6,BUY_TOP20_MANUAL,ATR high at 7.1%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,301308.SZ,4,6.2,High Risk Watch,6.0,10.0,3.3,7.2,5.0,7.2,4.3,5.5,6.5,BUY_TOP20_MANUAL,ATR high at 8.6%; pullback from recent high -17.1%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,002916.SZ,5,6.08,Watch,6.0,10.0,3.3,5.8,4.7,7.2,5.0,5.5,5.9,BUY_TOP20_MANUAL,ATR high at 8.6%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,688008.SH,6,6.08,High Risk Watch,6.0,10.0,3.3,7.2,3.6,7.2,4.3,5.5,6.3,BUY_TOP20_MANUAL,ATR high at 8.5%; pullback from recent high -14.8%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,601066.SH,7,5.92,Remove,6.0,10.0,3.3,6.8,3.6,5.7,4.8,5.5,5.7,BUY_TOP20_MANUAL,ATR elevated at 5.8%; wide stop distance 16.1%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,600999.SH,8,5.67,High Risk Watch,6.0,10.0,4.7,7.0,3.6,2.3,4.2,5.5,5.0,BUY_TOP20_MANUAL,ATR elevated at 4.7%; very wide stop distance 24.0%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,002371.SZ,9,5.19,High Risk Watch,6.0,10.0,3.3,8.2,2.8,1.0,3.8,5.5,2.5,BUY_TOP20_MANUAL,ATR elevated at 5.9%; very wide stop distance 32.3%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,000657.SZ,10,5.0,Remove,6.0,10.0,3.3,5.8,5.0,3.6,2.8,5.5,3.0,BUY_TOP20_MANUAL,ATR high at 9.0%; very wide stop distance 35.0%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,000725.SZ,11,5.0,Remove,6.0,10.0,8.1,8.2,5.0,1.0,3.2,5.5,4.0,BUY_TOP20_MANUAL,ATR high at 7.2%; very wide stop distance 65.3%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,001309.SZ,12,5.0,Remove,6.0,10.0,3.3,7.2,4.4,3.6,2.1,5.5,3.4,BUY_TOP20_MANUAL,ATR high at 8.6%; very wide stop distance 22.1%; pullback from recent high -16.4%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,300433.SZ,13,5.0,Remove,6.0,10.0,3.3,7.2,4.7,5.0,2.8,5.5,4.5,BUY_TOP20_MANUAL,ATR high at 9.7%; very wide stop distance 24.8%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,300604.SZ,14,5.0,Remove,6.0,10.0,3.3,7.2,5.0,1.9,2.8,5.5,3.3,BUY_TOP20_MANUAL,ATR high at 8.1%; very wide stop distance 33.2%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,301377.SZ,15,5.0,Remove,6.0,10.0,3.3,5.8,4.4,5.1,2.1,5.5,3.8,BUY_TOP20_MANUAL,ATR high at 10.7%; very wide stop distance 42.4%; pullback from recent high -19.5%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,600176.SH,16,5.0,Remove,6.0,10.0,3.3,7.2,4.7,1.0,2.8,5.5,3.2,BUY_TOP20_MANUAL,ATR high at 8.9%; very wide stop distance 55.7%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,688347.SH,17,5.0,Remove,6.0,10.0,3.3,5.8,5.0,5.0,2.1,5.5,3.8,BUY_TOP20_MANUAL,ATR high at 9.8%; very wide stop distance 35.1%; pullback from recent high -16.1%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,688498.SH,18,5.0,Remove,6.0,10.0,3.3,5.8,4.7,6.5,2.1,5.5,4.0,BUY_TOP20_MANUAL,ATR high at 8.9%; very wide stop distance 26.3%; pullback from recent high -13.1%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,688525.SH,19,5.0,Remove,6.0,10.0,3.3,7.2,5.0,3.6,2.1,5.5,3.4,BUY_TOP20_MANUAL,ATR high at 8.9%; very wide stop distance 25.3%; pullback from recent high -17.4%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL
+2026-07-02,603986.SH,20,4.81,Remove,6.0,10.0,3.3,7.2,2.8,1.7,2.1,5.5,2.2,BUY_TOP20_MANUAL,ATR high at 8.7%; very wide stop distance 44.3%; pullback from recent high -17.3%,BUY_TOP20_MANUAL,2026-07-02,BUY_TOP20_MANUAL

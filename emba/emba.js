@@ -1,8 +1,11 @@
 const EMBA_ACCESS_KEY = "turnpo:emba-access";
 const EMBA_PASSWORD = "emba2026";
 const EMBA_LIBRARY_KEY = "turnpo:emba-library";
+const EMBA_LIBRARY_API = "/api/emba/library";
+const EMBA_UPLOAD_API = "/api/emba/upload";
 const DEFAULT_START_MONTH = "2026-07";
 const DEFAULT_END_MONTH = "2028-12";
+const CLOUD_SAVE_DELAY_MS = 700;
 
 const state = {
   selectedMonthId: "",
@@ -12,7 +15,9 @@ const state = {
   },
   openBlockId: "",
   libraryLoaded: false,
-  accessGranted: false
+  accessGranted: false,
+  cloudReady: false,
+  cloudSaveTimer: 0
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -180,14 +185,21 @@ function editableMonth() {
   return month;
 }
 
+function normalizeLibraryData(library = {}) {
+  const months = Array.isArray(library.months)
+    ? library.months.map(normalizeMonth)
+    : legacyDaysToMonths(library.days || library.items);
+  return {
+    timeline: library.timeline || {},
+    months
+  };
+}
+
 function savedLibrary() {
   try {
     const saved = JSON.parse(localStorage.getItem(EMBA_LIBRARY_KEY) || "null");
     if (!saved || !Array.isArray(saved.months)) return null;
-    return {
-      timeline: saved.timeline || {},
-      months: saved.months.map(normalizeMonth)
-    };
+    return normalizeLibraryData(saved);
   } catch {
     return null;
   }
@@ -203,7 +215,28 @@ function mergeLibrary(baseLibrary, saved) {
   };
 }
 
-function saveLibrary() {
+function setSyncStatus(message = "", tone = "") {
+  const status = $("#embaSyncStatus");
+  if (!status) return;
+  status.textContent = message;
+  status.dataset.tone = tone;
+}
+
+function libraryForCloud() {
+  return {
+    updated: new Date().toISOString(),
+    timeline: state.library.timeline,
+    months: state.library.months.map((month) => ({
+      ...month,
+      memoryMoment: asArray(month.memoryMoment).map((item) => ({
+        ...item,
+        image: String(item.image || "").startsWith("data:") ? "" : item.image
+      }))
+    }))
+  };
+}
+
+function persistLocalLibrary() {
   try {
     localStorage.setItem(EMBA_LIBRARY_KEY, JSON.stringify({
       updated: new Date().toISOString(),
@@ -213,6 +246,38 @@ function saveLibrary() {
   } catch (error) {
     console.warn("Could not save EMBA edits locally.", error);
   }
+}
+
+async function syncLibraryToCloud() {
+  if (!state.cloudReady) return;
+  setSyncStatus("Saving");
+  try {
+    const response = await fetch(EMBA_LIBRARY_API, {
+      method: "PUT",
+      credentials: "same-origin",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(libraryForCloud())
+    });
+    if (!response.ok) throw new Error(`Cloud save failed (${response.status})`);
+    setSyncStatus("Saved");
+  } catch (error) {
+    console.warn("Could not save EMBA library to cloud.", error);
+    setSyncStatus("Local saved", "warn");
+  }
+}
+
+function queueCloudSave() {
+  if (!state.cloudReady) {
+    setSyncStatus("Local saved", "warn");
+    return;
+  }
+  window.clearTimeout(state.cloudSaveTimer);
+  state.cloudSaveTimer = window.setTimeout(syncLibraryToCloud, CLOUD_SAVE_DELAY_MS);
+}
+
+function saveLibrary() {
+  persistLocalLibrary();
+  queueCloudSave();
 }
 
 function readFileAsDataUrl(file) {
@@ -248,6 +313,30 @@ async function imageFileToDataUrl(file) {
     return canvas.toDataURL("image/jpeg", 0.84);
   } catch {
     return rawDataUrl;
+  }
+}
+
+async function uploadEmbaFile(file, month, kind) {
+  if (!file || !state.cloudReady) return null;
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("month", month);
+  formData.append("kind", kind);
+  setSyncStatus("Uploading");
+  try {
+    const response = await fetch(EMBA_UPLOAD_API, {
+      method: "POST",
+      credentials: "same-origin",
+      body: formData
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.error || `Upload failed (${response.status})`);
+    setSyncStatus("Uploaded");
+    return payload;
+  } catch (error) {
+    console.warn("Could not upload EMBA file to cloud.", error);
+    setSyncStatus("Upload kept local", "warn");
+    return null;
   }
 }
 
@@ -287,7 +376,11 @@ function renderTimeline() {
 function renderMaterials(month) {
   const materials = asArray(month?.materials);
   return `
-    <form class="emba-edit-form" data-material-add>
+    <form class="emba-edit-form emba-material-form" data-material-add>
+      <label class="emba-upload-target">
+        <input name="file" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.key,.pages,.numbers,.xls,.xlsx,image/*,application/pdf" />
+        <span>Upload file</span>
+      </label>
       <input class="emba-edit-input" name="title" placeholder="Material title" autocomplete="off" />
       <input class="emba-edit-input" name="notes" placeholder="Notes or link" autocomplete="off" />
       <button class="emba-small-btn" type="submit">Add</button>
@@ -297,7 +390,8 @@ function renderMaterials(month) {
         ${materials.map((item, index) => `
           <li class="emba-edit-item">
             <input class="emba-edit-input" value="${escapeHtml(item.title)}" data-material-field="title" data-index="${index}" aria-label="Material title" />
-            <input class="emba-edit-input" value="${escapeHtml(item.notes || item.file || item.type)}" data-material-field="notes" data-index="${index}" aria-label="Material notes" />
+            <input class="emba-edit-input" value="${escapeHtml(item.notes || "")}" data-material-field="notes" data-index="${index}" aria-label="Material notes" />
+            ${item.file ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener">Open file</a>` : `<span class="emba-file-spacer" aria-hidden="true"></span>`}
             <button class="emba-text-btn" type="button" data-material-delete="${index}">Delete</button>
           </li>
         `).join("")}
@@ -431,20 +525,53 @@ async function loadLibrary() {
     const response = await fetch("/emba/materials.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`Could not load materials.json (${response.status})`);
     const library = await response.json();
-    const months = Array.isArray(library.months)
-      ? library.months.map(normalizeMonth)
-      : legacyDaysToMonths(library.days || library.items);
-    const baseLibrary = {
-      timeline: library.timeline || {},
-      months
-    };
-    state.library = mergeLibrary(baseLibrary, savedLibrary());
+    const baseLibrary = normalizeLibraryData(library);
+    const cloudLibrary = await loadCloudLibrary();
+    const localLibrary = savedLibrary();
+    if (cloudLibrary) {
+      state.library = mergeLibrary(baseLibrary, cloudLibrary);
+      if (!cloudLibrary.months.length && localLibrary) {
+        state.library = mergeLibrary(state.library, localLibrary);
+        saveLibrary();
+      } else {
+        persistLocalLibrary();
+      }
+    } else {
+      state.library = mergeLibrary(baseLibrary, localLibrary);
+    }
     state.selectedMonthId = timelineMonths()[0] ? monthId(timelineMonths()[0]) : "";
     renderTimeline();
   } catch (error) {
     state.libraryLoaded = false;
     const timeline = $("#embaTimeline");
     if (timeline) timeline.innerHTML = `<div class="emba-empty-state">${escapeHtml(error.message)}</div>`;
+  }
+}
+
+async function loadCloudLibrary() {
+  try {
+    const response = await fetch(EMBA_LIBRARY_API, {
+      cache: "no-store",
+      credentials: "same-origin"
+    });
+    if (response.status === 401 || response.status === 404) {
+      state.cloudReady = false;
+      setSyncStatus("Local only", "warn");
+      return null;
+    }
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || payload.configured === false) {
+      state.cloudReady = false;
+      setSyncStatus("Local only", "warn");
+      return null;
+    }
+    state.cloudReady = true;
+    setSyncStatus(payload.months?.length ? "Cloud synced" : "Cloud ready");
+    return normalizeLibraryData(payload);
+  } catch (error) {
+    state.cloudReady = false;
+    setSyncStatus("Local only", "warn");
+    return null;
   }
 }
 
@@ -558,7 +685,8 @@ $("#embaMonthDetail")?.addEventListener("submit", async (event) => {
     const file = form.elements.image?.files?.[0] || null;
     const title = String(form.elements.title?.value || "").trim();
     const caption = String(form.elements.caption?.value || "").trim();
-    const image = file ? await imageFileToDataUrl(file) : "";
+    const uploaded = file ? await uploadEmbaFile(file, month.month, "memory") : null;
+    const image = uploaded?.url || (file ? await imageFileToDataUrl(file) : "");
     if (!image && !title && !caption) return;
     month.memoryMoment.push({
       title: title || "Memory",
@@ -573,13 +701,16 @@ $("#embaMonthDetail")?.addEventListener("submit", async (event) => {
   }
 
   if (form.matches("[data-material-add]")) {
+    const file = form.elements.file?.files?.[0] || null;
     const title = String(form.elements.title?.value || "").trim();
     const notes = String(form.elements.notes?.value || "").trim();
-    if (!title && !notes) return;
+    const uploaded = file ? await uploadEmbaFile(file, month.month, "material") : null;
+    if (file && !uploaded && !title && !notes) return;
+    if (!file && !title && !notes) return;
     month.materials.push({
-      title: title || "Material",
-      type: "",
-      file: "",
+      title: title || uploaded?.name || "Material",
+      type: uploaded?.type || "",
+      file: uploaded?.url || "",
       notes
     });
     saveLibrary();

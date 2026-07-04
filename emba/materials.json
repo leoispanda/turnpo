@@ -14,7 +14,7 @@
           "title": "Put class slides or readings here",
           "type": "slides",
           "file": "",
-          "notes": "Upload files into /emba/materials/ and paste the file path here."
+          "notes": "Upload files directly from the Material block."
         }
       ],
       "reflection": "Write this month's reflection here: what changed your view, what you want to apply, and which questions you want to keep thinking about.",

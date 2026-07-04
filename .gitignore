@@ -7,3 +7,5 @@ connections*
 */connections*
 *.mbox
 *.vcf
+.DS_Store
+.tmp-stock-pdc-backfill*/

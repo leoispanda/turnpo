@@ -1,8 +1,12 @@
 # EMBA Timeline
 
-This folder powers the Turnpo EMBA timeline page at `/emba/`.
+This folder powers the private Turnpo EMBA timeline at `/emba/`.
 
-The local page has a lightweight browser password gate. Current local password: `emba2026`.
+The local page has a lightweight browser password gate. Current local password:
+
+```text
+emba2026
+```
 
 On Cloudflare Pages, `/emba/*` is protected by `functions/emba/[[path]].js`. Set the Pages environment variable:
 
@@ -10,48 +14,42 @@ On Cloudflare Pages, `/emba/*` is protected by `functions/emba/[[path]].js`. Set
 EMBA_ACCESS_CODE=emba2026
 ```
 
-The Function sets an authenticated cookie after the correct access code is submitted, so `/emba/` and files under `/emba/materials/` are both protected on Cloudflare.
+## Cloud Sync
 
-## Add a learning day
+EMBA edits sync through Pages Functions:
 
-1. Put the file in `emba/materials/`.
-2. Add or update one day in `emba/materials.json`.
-3. Add documents, personal notes, and GPT study records under that day.
-4. Keep sensitive or copyrighted files out of the public site unless you have permission to publish them.
+- `functions/api/emba/library.js` stores month structure, reflections, material metadata, and memory captions in D1.
+- `functions/api/emba/upload.js` stores photos and material files in R2.
+- `functions/api/emba/file/[[key]].js` serves R2 files behind the same EMBA access cookie.
 
-Example:
+Use Cloudflare D1 for structured text and R2 for larger photos/PDF/PPT files. Do not store large binary files in D1.
 
-```json
-{
-  "id": "2026-07-04-strategy-case-day",
-  "date": "2026-07-04",
-  "title": "Strategy case discussion",
-  "module": "strategy",
-  "type": "class",
-  "summary": "Class discussion about competitive advantage and trade-offs.",
-  "tags": ["case", "competitive advantage"],
-  "documents": [
-    {
-      "title": "Strategy case notes - Module 1",
-      "type": "note",
-      "file": "/emba/materials/strategy-case-notes-module-1.pdf",
-      "notes": "Personal notes and key questions for class discussion."
-    }
-  ],
-  "notes": [
-    {
-      "title": "My reflection",
-      "body": "The most useful idea today was that strategy is choosing what not to do.",
-      "bullets": ["Apply this to product roadmap decisions", "Compare with MapKAI positioning"]
-    }
-  ],
-  "gptRecords": [
-    {
-      "title": "GPT study record",
-      "prompt": "Turn my notes into a study summary with key ideas and application questions.",
-      "summary": "GPT synthesis of the day.",
-      "takeaways": ["Key concepts", "Case logic", "Action questions"]
-    }
-  ]
-}
+Create these Cloudflare bindings for the Pages project:
+
+```text
+D1 database binding name: EMBA_DB
+R2 bucket binding name: EMBA_BUCKET
 ```
+
+The app creates this D1 table automatically on first use:
+
+```sql
+CREATE TABLE IF NOT EXISTS emba_state (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+```
+
+If either binding is missing, the page still works locally using browser storage, but edits will not sync to the cloud.
+
+## Editing
+
+After entering the access code:
+
+1. Hover the monthly timeline to select a month.
+2. Open `Memory Moment` to upload photos and captions.
+3. Open `Reflection` to write notes.
+4. Open `Material` to upload class files or add links/notes.
+
+Uploaded files are stored in R2 and referenced by private `/api/emba/file/...` URLs.

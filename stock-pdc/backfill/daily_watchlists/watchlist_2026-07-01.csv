@@ -1,0 +1,21 @@
+run_date,ticker,rank,final_score,final_status,market_regime_score,trend_score,livermore_breakout_score,volume_price_score,candlestick_score,overheat_score,risk_score,zhuge_orion_score,final_chair_score,main_reason,main_risk,suggested_action_status,analysis_date,front_desk_instruction
+2026-07-01,600030.SH,1,7.86,High Risk Watch,9.4,10.0,9.0,8.2,5.0,4.0,7.4,5.5,7.2,BUY_TOP20_MANUAL,RSI elevated at 69.6; stretched above 50d SMA; stretched above 20d SMA,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,002463.SZ,2,6.44,High Risk Watch,9.4,10.0,3.3,8.2,5.0,6.5,3.8,5.5,5.7,BUY_TOP20_MANUAL,ATR high at 7.8%; wide stop distance 18.6%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,688041.SH,3,6.39,High Risk Watch,9.4,10.0,3.3,8.2,4.2,3.8,5.4,5.5,6.1,BUY_TOP20_MANUAL,ATR high at 6.5%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,002384.SZ,4,6.38,Wait for Pullback,9.4,10.0,3.3,7.2,2.0,7.2,5.0,5.5,6.2,BUY_TOP20_MANUAL,ATR high at 7.6%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,002371.SZ,5,6.2,High Risk Watch,9.4,10.0,6.5,8.2,6.6,1.0,4.2,5.5,6.3,BUY_TOP20_MANUAL,ATR elevated at 4.8%; very wide stop distance 48.8%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,600999.SH,6,6.2,High Risk Watch,9.4,10.0,8.1,9.2,6.4,1.0,4.2,5.5,6.6,BUY_TOP20_MANUAL,ATR elevated at 4.2%; very wide stop distance 32.0%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,601066.SH,7,6.2,High Risk Watch,9.4,10.0,5.3,7.8,6.6,2.2,4.2,5.5,6.3,BUY_TOP20_MANUAL,ATR elevated at 5.4%; very wide stop distance 23.5%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,603259.SH,8,6.2,High Risk Watch,9.4,10.0,6.2,9.2,7.2,1.2,5.2,5.5,6.9,BUY_TOP20_MANUAL,ATR elevated at 4.2%; wide stop distance 20.7%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,002916.SZ,9,6.18,High Risk Watch,9.4,10.0,4.7,5.8,3.8,5.0,4.2,5.5,6.3,BUY_TOP20_MANUAL,ATR high at 7.5%; wide stop distance 21.6%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,688256.SH,10,6.14,High Risk Watch,9.4,10.0,3.3,8.2,3.6,5.0,3.8,5.5,5.3,BUY_TOP20_MANUAL,ATR high at 6.8%; wide stop distance 18.5%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,300502.SZ,11,6.11,High Risk Watch,9.4,10.0,4.7,5.0,2.7,6.5,4.2,5.5,5.6,BUY_TOP20_MANUAL,ATR high at 8.0%; wide stop distance 17.4%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,688981.SH,12,5.97,High Risk Watch,9.4,10.0,4.7,7.2,3.3,2.2,4.2,5.5,5.0,BUY_TOP20_MANUAL,ATR high at 6.3%; wide stop distance 19.1%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,000657.SZ,13,5.0,Remove,9.4,10.0,3.3,7.2,5.0,2.8,2.8,5.5,4.2,BUY_TOP20_MANUAL,ATR high at 8.8%; very wide stop distance 35.1%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,000725.SZ,14,5.0,Remove,9.4,10.0,6.5,7.2,5.0,1.0,3.2,5.5,4.4,BUY_TOP20_MANUAL,ATR high at 6.5%; very wide stop distance 60.2%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,001309.SZ,15,5.0,Remove,9.4,10.0,3.3,7.2,2.6,1.0,2.8,5.5,2.9,BUY_TOP20_MANUAL,ATR high at 7.2%; very wide stop distance 35.7%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,300408.SZ,16,5.0,Remove,9.4,10.0,4.7,7.2,5.0,3.3,3.2,5.5,4.4,BUY_TOP20_MANUAL,ATR high at 8.0%; very wide stop distance 40.3%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,300433.SZ,17,5.0,Remove,9.4,10.0,3.3,7.2,4.7,3.3,3.2,5.5,4.2,BUY_TOP20_MANUAL,ATR high at 8.9%; very wide stop distance 32.6%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,300604.SZ,18,5.0,Remove,9.4,10.0,4.7,7.2,3.3,1.0,3.2,5.5,3.2,BUY_TOP20_MANUAL,ATR high at 6.7%; very wide stop distance 49.5%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,301308.SZ,19,5.0,Remove,9.4,10.0,3.3,8.2,4.2,1.2,2.8,5.5,4.0,BUY_TOP20_MANUAL,ATR high at 7.1%; very wide stop distance 26.4%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
+2026-07-01,301377.SZ,20,5.0,Remove,9.4,10.0,3.3,7.2,4.7,3.6,2.1,5.5,4.1,BUY_TOP20_MANUAL,ATR high at 10.1%; very wide stop distance 51.4%; pullback from recent high -15.8%,BUY_TOP20_MANUAL,2026-07-01,BUY_TOP20_MANUAL
