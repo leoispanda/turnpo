@@ -3480,6 +3480,18 @@ select {
   font-weight: 700;
 }
 
+.image-thumb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.image-thumb-actions .small-action {
+  min-height: 26px;
+  padding: 0 8px;
+  font-size: 11px;
+}
+
 .image-thumb.is-cover {
   border-color: rgba(216, 177, 95, 0.38);
   background: rgba(216, 177, 95, 0.055);

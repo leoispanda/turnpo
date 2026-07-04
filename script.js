@@ -4838,13 +4838,16 @@ function renderImageUpload(value = []) {
   preview.innerHTML = cover ? `<img src="${escapeHtml(cover)}" alt="" ${loadingImageAttributes()} />` : "";
   preview.classList.toggle("has-image", Boolean(cover));
   title.textContent = cover ? `${images.length} image${images.length === 1 ? "" : "s"} selected` : "Drop, paste, or choose images";
-  hint.textContent = cover ? "The first image is the cover. Drop, paste, or choose more images to add them." : "The first image becomes the cover. Other images appear after opening the story.";
+  hint.textContent = cover ? "Use Set cover to choose the story cover. Drop, paste, or choose more images to add them." : "The first image becomes the cover. Other images appear after opening the story.";
   removeButton.hidden = !images.length;
   gallery.innerHTML = images.map((image, index) => `
     <div class="image-thumb ${index === 0 ? "is-cover" : ""}">
       <img src="${escapeHtml(image)}" alt="" ${loadingImageAttributes()} />
       <span>${index === 0 ? "Cover" : `Photo ${index + 1}`}</span>
-      <button class="small-action" type="button" data-remove-image="${index}">Remove</button>
+      <div class="image-thumb-actions">
+        ${index === 0 ? "" : `<button class="small-action" type="button" data-cover-image="${index}">Set cover</button>`}
+        <button class="small-action" type="button" data-remove-image="${index}">Remove</button>
+      </div>
     </div>
   `).join("");
   refreshImageLoadingStates(preview);
@@ -7379,9 +7382,19 @@ $("#removeContentImage").addEventListener("click", () => {
   $("#contentStatusNote").textContent = "Images removed. Remember to save content.";
 });
 $("#contentImageGallery").addEventListener("click", (event) => {
+  const coverButton = event.target.closest("[data-cover-image]");
+  const images = storyImagesFromValue($("#contentImage").value);
+  if (coverButton) {
+    const coverIndex = Number(coverButton.dataset.coverImage);
+    if (Number.isInteger(coverIndex) && coverIndex > 0 && coverIndex < images.length) {
+      const [coverImage] = images.splice(coverIndex, 1);
+      renderImageUpload([coverImage, ...images]);
+      $("#contentStatusNote").textContent = "Cover image updated. Remember to save content.";
+    }
+    return;
+  }
   const button = event.target.closest("[data-remove-image]");
   if (!button) return;
-  const images = storyImagesFromValue($("#contentImage").value);
   images.splice(Number(button.dataset.removeImage), 1);
   renderImageUpload(images);
   $("#contentStatusNote").textContent = "Image removed. Remember to save content.";

@@ -10,6 +10,25 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-07-04 - v0.1.223
+
+Commit: `Add story image cover selection`
+
+### Changed
+
+- Added a Set cover action to the story image gallery editor so any uploaded image can become the cover without deleting the current cover first.
+- Keeps the cover as the first image in the story image array, preserving the existing public timeline rendering model.
+- Updated the story image upload hint and gallery button layout for the new cover-selection flow.
+- Added static checks for the Set cover gallery controls and reorder behavior.
+
+### Verification
+
+- Ran bundled Node `--check` on `script.js`.
+- Ran `node tests/image-upload-static.test.mjs` with bundled Node.
+- Ran `node tests/profile-layout-static.test.mjs` with bundled Node.
+- Verified the editor in the in-app browser: clicking Set cover moves the selected image to the first slot, updates the preview, and shows the cover-save reminder.
+- Ran `git diff --check`.
+
 ## 2026-06-30 - v0.1.222
 
 Commit: `Compact mobile Life Atlas cities`
