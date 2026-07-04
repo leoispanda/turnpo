@@ -33,6 +33,10 @@ assert.ok(stockJs.includes("isTradingWeekday"));
 assert.ok(stockJs.includes("weekday !== 0 && weekday !== 6"));
 assert.ok(stockJs.includes("weekdayLabel"));
 assert.ok(stockJs.includes("rowByRank"));
+assert.ok(stockJs.includes("droppedRankDelta"));
+assert.ok(stockJs.includes("droppedChangeLabel"));
+assert.ok(stockJs.includes("21 - previousRank"));
+assert.ok(stockJs.includes("至少下滑"));
 assert.ok(stockJs.includes("renderDroppedCell"));
 assert.ok(stockJs.includes("droppedSlots"));
 assert.ok(stockJs.includes("stock-rank-axis-dropped"));
@@ -41,6 +45,7 @@ assert.ok(stockJs.includes("stock-date-head"));
 assert.ok(stockJs.includes("stock-rank-axis"));
 assert.ok(stockJs.includes("星期五"));
 assert.ok(stockJs.includes("renderRankList"));
+assert.ok(!stockJs.includes("<strong>Out</strong>"));
 assert.ok(!stockJs.includes("renderMatrix"));
 assert.ok(!stockJs.includes("function renderDropped("));
 

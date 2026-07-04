@@ -54,8 +54,20 @@ function changeLabel(row) {
   return "0";
 }
 
+function droppedRankDelta(row) {
+  const previousRank = Number.parseInt(row.previousRank, 10);
+  return Number.isFinite(previousRank) ? Math.max(1, 21 - previousRank) : null;
+}
+
+function droppedChangeLabel(row) {
+  const delta = droppedRankDelta(row);
+  return delta === null ? "Out" : `-${delta}+`;
+}
+
 function droppedMovementPath(row) {
-  return `#${row.previousRank || "-"} -> 跌出 Top 20`;
+  const delta = droppedRankDelta(row);
+  const movement = delta === null ? "跌出 Top 20" : `跌出 Top 20，至少下滑 ${delta} 名`;
+  return `#${row.previousRank || "-"} -> ${movement}`;
 }
 
 function shortDate(value) {
@@ -101,7 +113,7 @@ function renderDroppedCell(day, index) {
       </div>
       <div class="stock-change" aria-label="${escapeHtml(droppedMovementPath(row))}">
         <span class="stock-change-arrow" aria-hidden="true"></span>
-        <strong>Out</strong>
+        <strong>${escapeHtml(droppedChangeLabel(row))}</strong>
       </div>
     </article>
   `;
