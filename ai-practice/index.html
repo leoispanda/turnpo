@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Practice | Turnpo</title>
+    <meta name="description" content="A private Turnpo workspace for AI practice notes." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href="https://www.turnpo.com/ai-practice/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Practice | Turnpo" />
+    <meta property="og:description" content="A private Turnpo workspace for AI practice notes." />
+    <meta property="og:url" content="https://www.turnpo.com/ai-practice/" />
+    <meta property="og:image" content="https://www.turnpo.com/assets/turnpo-og-image.png" />
+    <meta name="theme-color" content="#f6f7f2" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon-48.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.223" />
+    <link rel="stylesheet" href="/ai-practice/ai-practice.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Turnpo home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Turnpo</span>
+      </a>
+      <div></div>
+      <div class="top-actions">
+        <a class="ghost-btn practice-home-link" href="/">Turnpo home</a>
+        <button class="ghost-btn practice-lock-btn" id="practiceLock" type="button" hidden>Lock</button>
+      </div>
+    </header>
+
+    <section class="practice-access-gate" id="practiceAccessGate" aria-label="AI Practice access">
+      <form class="practice-access-card" id="practiceAccessForm">
+        <div>
+          <h1>AI Practice</h1>
+          <p>Enter the access password to open the practice workspace.</p>
+        </div>
+        <label>
+          <span>Password</span>
+          <input id="practicePassword" type="password" autocomplete="current-password" placeholder="Enter password" required />
+        </label>
+        <button class="practice-primary-btn" type="submit">Enter</button>
+        <p class="practice-access-note" id="practiceAccessNote" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <main class="practice-shell" id="practiceApp" hidden>
+      <section class="practice-hero" aria-label="AI Practice overview">
+        <div>
+          <p class="practice-kicker">Private Lab</p>
+          <h1>AI Practice</h1>
+          <p>Prompts, experiments, reflections, and next actions in one quiet workspace.</p>
+        </div>
+        <div class="practice-stats" aria-label="Practice stats">
+          <article>
+            <span id="practiceCount">0</span>
+            <small>Sessions</small>
+          </article>
+          <article>
+            <span id="practiceNextCount">0</span>
+            <small>Next actions</small>
+          </article>
+          <article>
+            <span id="practiceLastDate">-</span>
+            <small>Latest</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="practice-workbench" aria-label="AI Practice workbench">
+        <form class="practice-form" id="practiceForm">
+          <div class="practice-form-row">
+            <label>
+              <span>Date</span>
+              <input id="practiceDate" name="date" type="date" required />
+            </label>
+            <label>
+              <span>Mode</span>
+              <select id="practiceMode" name="mode">
+                <option>Prompt</option>
+                <option>Workflow</option>
+                <option>Writing</option>
+                <option>Research</option>
+                <option>Automation</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            <span>Title</span>
+            <input id="practiceTitle" name="title" type="text" autocomplete="off" placeholder="Practice title" required />
+          </label>
+          <label>
+            <span>Prompt or task</span>
+            <textarea id="practicePrompt" name="prompt" rows="5" placeholder="What did you ask AI to do?"></textarea>
+          </label>
+          <label>
+            <span>Result or reflection</span>
+            <textarea id="practiceOutcome" name="outcome" rows="5" placeholder="What changed after the practice?"></textarea>
+          </label>
+          <label>
+            <span>Next action</span>
+            <input id="practiceNextAction" name="nextAction" type="text" autocomplete="off" placeholder="One next move" />
+          </label>
+          <button class="practice-primary-btn" type="submit">Save practice</button>
+        </form>
+
+        <aside class="practice-export-panel" aria-label="AI Practice Markdown">
+          <div class="practice-panel-head">
+            <div>
+              <p class="practice-kicker">Markdown</p>
+              <h2>Practice memory</h2>
+            </div>
+            <button class="ghost-btn" id="copyPracticeMarkdown" type="button">Copy</button>
+          </div>
+          <textarea id="practiceMarkdown" readonly spellcheck="false"></textarea>
+          <p class="practice-copy-status" id="practiceCopyStatus">Ready</p>
+        </aside>
+      </section>
+
+      <section class="practice-log" aria-label="AI Practice log">
+        <div class="practice-section-head">
+          <p class="practice-kicker">Log</p>
+          <h2>Saved practice</h2>
+        </div>
+        <div class="practice-list" id="practiceList"></div>
+      </section>
+    </main>
+
+    <script src="/ai-practice/ai-practice.js"></script>
+  </body>
+</html>

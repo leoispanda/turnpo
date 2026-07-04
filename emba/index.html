@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EMBA Timeline | Turnpo</title>
+    <meta name="description" content="A private EMBA learning timeline." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href="https://www.turnpo.com/emba/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="EMBA Timeline | Turnpo" />
+    <meta property="og:description" content="A private EMBA learning timeline." />
+    <meta property="og:url" content="https://www.turnpo.com/emba/" />
+    <meta property="og:image" content="https://www.turnpo.com/assets/turnpo-og-image.png" />
+    <meta name="theme-color" content="#f5f5f7" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon-48.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.223" />
+    <link rel="stylesheet" href="/emba/emba.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Turnpo home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Turnpo</span>
+      </a>
+      <div></div>
+      <div class="top-actions">
+        <a class="ghost-btn emba-home-link" href="/">Turnpo home</a>
+        <button class="ghost-btn emba-lock-btn" id="embaLock" type="button" hidden>Lock</button>
+      </div>
+    </header>
+
+    <section class="emba-access-gate" id="embaAccessGate" aria-label="EMBA access">
+      <form class="emba-access-card" id="embaAccessForm">
+        <div>
+          <h1>EMBA Timeline</h1>
+          <p>Enter the access password to open the learning timeline.</p>
+        </div>
+        <label>
+          <span>Password</span>
+          <input id="embaPassword" type="password" autocomplete="current-password" placeholder="Enter password" required />
+        </label>
+        <button class="gold-btn" type="submit">Enter</button>
+        <p class="emba-access-note" id="embaAccessNote" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <main class="emba-shell" id="embaApp" hidden>
+      <section class="emba-stage" aria-label="EMBA horizontal timeline">
+        <div class="emba-heading">
+          <h1>EMBA Timeline</h1>
+          <span aria-hidden="true"></span>
+        </div>
+        <div class="emba-dock" aria-label="Learning months">
+          <div class="emba-track" aria-hidden="true"></div>
+          <div class="emba-timeline" id="embaTimeline"></div>
+        </div>
+        <section class="emba-month-detail" id="embaMonthDetail" aria-live="polite"></section>
+      </section>
+    </main>
+
+    <script src="/emba/emba.js"></script>
+  </body>
+</html>

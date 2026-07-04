@@ -212,6 +212,14 @@ body.theme-light .brand-mark {
   content: "+";
 }
 
+#openEmbaLibrary::before {
+  content: "↗";
+}
+
+#openAiPractice::before {
+  content: "✦";
+}
+
 #openOwnerProfile::before,
 #openAdminOwnerProfile::before {
   content: "↩";

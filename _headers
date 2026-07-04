@@ -30,3 +30,12 @@
 
 /admin
   X-Robots-Tag: noindex, nofollow
+
+/emba/*
+  X-Robots-Tag: noindex, nofollow
+
+/ai-practice/*
+  X-Robots-Tag: noindex, nofollow
+
+/stock-pdc/*
+  X-Robots-Tag: noindex, nofollow

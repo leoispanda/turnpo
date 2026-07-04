@@ -1,0 +1,30 @@
+{
+  "updated": "2026-07-04",
+  "timeline": {
+    "startMonth": "2026-07",
+    "endMonth": "2028-12"
+  },
+  "months": [
+    {
+      "id": "2026-07",
+      "month": "2026-07",
+      "title": "July 2026",
+      "materials": [
+        {
+          "title": "Put class slides or readings here",
+          "type": "slides",
+          "file": "",
+          "notes": "Upload files into /emba/materials/ and paste the file path here."
+        }
+      ],
+      "reflection": "Write this month's reflection here: what changed your view, what you want to apply, and which questions you want to keep thinking about.",
+      "memoryMoment": [
+        {
+          "title": "First EMBA memory",
+          "image": "",
+          "caption": "Add a monthly photo when it is ready."
+        }
+      ]
+    }
+  ]
+}
