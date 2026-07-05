@@ -10,6 +10,22 @@ Future updates should be appended at the top with the same structure:
 - What changed
 - Verification
 
+## 2026-07-05 - v0.1.229
+
+Commit: `Hide AI Practice nav entry`
+
+### Changed
+
+- Temporarily hid the AI Practice entry from the top navigation while keeping the underlying `/ai-practice/` page and code in place for future restoration.
+- Added a top navigation static check so AI Practice stays hidden while EMBA and Stock PDC remain visible.
+
+### Verification
+
+- Ran bundled Node `tests/top-nav-static.test.mjs`.
+- Ran bundled Node `--check` on `script.js`.
+- Verified the homepage in the in-app browser: AI Practice is not visible in the top navigation, while Create profile, EMBA, Stock PDC, theme toggle, and Log in remain visible.
+- Ran `git diff --check`.
+
 ## 2026-07-04 - v0.1.223
 
 Commit: `Add story image cover selection`
