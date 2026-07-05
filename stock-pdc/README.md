@@ -7,10 +7,10 @@ It renders a private color-only matrix view of the local Stock PDC Top 20 output
 - The vertical axis is rank `#1` through `#20`, followed by ten dropped-out reserve slots.
 - The horizontal axis is refresh date plus weekday, newest to oldest from left to right.
 - Each cell shows the stock that held that rank on that date.
-- Each stock cell also shows the stock's same-day close-to-close percentage move from the local OHLCV data.
+- Each stock cell also shows the stock's next-trading-day close-to-close percentage move from the local OHLCV data, approximating buying after the list date and holding through the next close.
 - Empty refresh days and weekend refresh files are skipped.
 - Cell colors encode movement: red for new/up, green for down, blue for unchanged, gray for dropped out of the Top 20.
-- The bottom return row starts from 100% and compounds each trading day's equal-weight Top 20 average return.
+- The bottom return row starts from 100% and compounds each available next-trading-day equal-weight Top 20 average return.
 - The page intentionally hides summary cards, filters, explanatory panels, and exit tables.
 
 The page reads:

@@ -206,15 +206,23 @@ function loadPriceBars(priceDataDir, ticker, priceCache) {
 function priceMoveForTicker(ticker, date, priceDataDir, priceCache) {
   const bars = loadPriceBars(priceDataDir, ticker, priceCache);
   const index = bars.findIndex((bar) => bar.date === date);
-  if (index < 0) return { close: null, previousClose: null, dayChangePct: null };
+  if (index < 0) {
+    return {
+      close: null,
+      nextClose: null,
+      returnDate: "",
+      dayChangePct: null
+    };
+  }
   const current = bars[index];
-  const previous = bars[index - 1] || null;
-  const dayChangePct = previous?.close
-    ? round2((current.close / previous.close - 1) * 100)
+  const next = bars[index + 1] || null;
+  const dayChangePct = next?.close && current.close
+    ? round2((next.close / current.close - 1) * 100)
     : null;
   return {
     close: round2(current.close),
-    previousClose: previous?.close ? round2(previous.close) : null,
+    nextClose: next?.close ? round2(next.close) : null,
+    returnDate: next?.date || "",
     dayChangePct
   };
 }
@@ -304,7 +312,8 @@ function normalizeWatchRow(row, date, previousByTicker, changesByTicker, names, 
     mainRisk: clean(row.main_risk || changed?.main_risk),
     analysisDate: clean(row.analysis_date || date),
     close: priceMove.close,
-    previousClose: priceMove.previousClose,
+    nextClose: priceMove.nextClose,
+    returnDate: priceMove.returnDate,
     dayChangePct: priceMove.dayChangePct,
     scores: scoreMap(row)
   };
@@ -323,7 +332,8 @@ function normalizeDroppedRow(row, date, previousByTicker, names, priceDataDir, p
     changeType: "DROPPED",
     movement: "退出",
     close: priceMove.close,
-    previousClose: priceMove.previousClose,
+    nextClose: priceMove.nextClose,
+    returnDate: priceMove.returnDate,
     dayChangePct: priceMove.dayChangePct,
     mainRisk: clean(row.main_risk) || previous?.mainRisk || ""
   };
@@ -367,6 +377,7 @@ function buildTickerHistory(days) {
         score: row.score,
         status: row.status,
         changeType: row.changeType,
+        returnDate: row.returnDate,
         dayChangePct: row.dayChangePct
       });
     });
@@ -387,9 +398,11 @@ function buildPortfolio(days) {
       const dailyReturnPct = returns.length
         ? round2(returns.reduce((sum, value) => sum + value, 0) / returns.length)
         : null;
+      if (dailyReturnPct === null) return;
       if (dailyReturnPct !== null) valuePct *= 1 + dailyReturnPct / 100;
       const portfolioDay = {
         date: day.date,
+        returnDate: day.rows.find((row) => row.returnDate)?.returnDate || "",
         investedCount: returns.length,
         dailyReturnPct,
         valuePct: round2(valuePct),
@@ -400,7 +413,7 @@ function buildPortfolio(days) {
     });
 
   return {
-    method: "equal_weight_top20_daily_rebalanced",
+    method: "equal_weight_top20_next_trading_day_close_to_close",
     initialValuePct: 100,
     latestValuePct: daily.at(-1)?.valuePct ?? 100,
     latestReturnPct: daily.at(-1)?.cumulativeReturnPct ?? 0,
@@ -446,7 +459,8 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
             changeType: "DROPPED",
             movement: "退出",
             close: priceMove.close,
-            previousClose: priceMove.previousClose,
+            nextClose: priceMove.nextClose,
+            returnDate: priceMove.returnDate,
             dayChangePct: priceMove.dayChangePct,
             mainRisk: previous.mainRisk || ""
           });

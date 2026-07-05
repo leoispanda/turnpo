@@ -110,7 +110,7 @@ function renderRankCell(day, rank) {
   const row = rowByRank(day, rank);
   if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} #${rank} empty"></div>`;
   return `
-    <article class="stock-rank-cell ${escapeHtml(row.changeType)}" aria-label="${escapeHtml(day.date)} #${rank} ${escapeHtml(row.name)} ${escapeHtml(movementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(row.dayChangePct, "unknown"))}">
+    <article class="stock-rank-cell ${escapeHtml(row.changeType)}" aria-label="${escapeHtml(day.date)} #${rank} ${escapeHtml(row.name)} ${escapeHtml(movementPath(row))} 下一交易日涨跌幅 ${escapeHtml(formatPct(row.dayChangePct, "unknown"))}">
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
@@ -128,7 +128,7 @@ function renderDroppedCell(day, index) {
   const row = (day.dropped || [])[index] || null;
   if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} dropped ${index + 1} empty"></div>`;
   return `
-    <article class="stock-rank-cell DROPPED" aria-label="${escapeHtml(day.date)} dropped ${index + 1} ${escapeHtml(row.name)} ${escapeHtml(droppedMovementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(row.dayChangePct, "unknown"))}">
+    <article class="stock-rank-cell DROPPED" aria-label="${escapeHtml(day.date)} dropped ${index + 1} ${escapeHtml(row.name)} ${escapeHtml(droppedMovementPath(row))} 下一交易日涨跌幅 ${escapeHtml(formatPct(row.dayChangePct, "unknown"))}">
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
@@ -154,7 +154,7 @@ function renderPortfolioCell(day) {
     return `<div class="stock-rank-cell stock-rank-cell-empty stock-portfolio-cell" aria-label="${escapeHtml(day.date)} portfolio empty"></div>`;
   }
   return `
-    <article class="stock-rank-cell stock-portfolio-cell ${portfolioClass(day)}" aria-label="${escapeHtml(day.date)} 初始100组合累计 ${escapeHtml(formatPct(cumulative))} 当日 ${escapeHtml(formatPct(daily))}">
+    <article class="stock-rank-cell stock-portfolio-cell ${portfolioClass(day)}" aria-label="${escapeHtml(day.date)} 初始100组合累计 ${escapeHtml(formatPct(cumulative))} 下一交易日 ${escapeHtml(formatPct(daily))}">
       <div class="stock-name">
         <h3>${escapeHtml(formatPct(cumulative))}</h3>
         <small>100% -> ${escapeHtml(formatValuePct(portfolio.valuePct))}</small>
@@ -177,7 +177,7 @@ function latestPortfolioSummary(days) {
     <div class="stock-portfolio-summary" aria-label="Stock PDC equal weight portfolio return">
       <span>初始 100%</span>
       <strong class="${pctClass(latest.cumulativeReturnPct)}">${escapeHtml(formatPct(latest.cumulativeReturnPct))}</strong>
-      <small>截至 ${escapeHtml(latest.date)}，当前 ${escapeHtml(formatValuePct(latest.valuePct))}，当日 ${escapeHtml(formatPct(latest.dailyReturnPct))}</small>
+      <small>截至 ${escapeHtml(latest.returnDate || latest.date)}，当前 ${escapeHtml(formatValuePct(latest.valuePct))}，次日 ${escapeHtml(formatPct(latest.dailyReturnPct))}</small>
     </div>
   `;
 }

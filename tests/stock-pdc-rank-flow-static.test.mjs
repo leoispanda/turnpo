@@ -61,7 +61,7 @@ assert.ok(syncScript.includes("BACKFILL_WATCHLIST_DIR"));
 assert.ok(syncScript.includes("turnpo-backfill"));
 assert.ok(syncScript.includes("priceMoveForTicker"));
 assert.ok(syncScript.includes("dayChangePct"));
-assert.ok(syncScript.includes("equal_weight_top20_daily_rebalanced"));
+assert.ok(syncScript.includes("equal_weight_top20_next_trading_day_close_to_close"));
 assert.ok(syncScript.includes("rank-flow.json"));
 
 assert.ok(stockFunction.includes("env.STOCK_PDC_ACCESS_CODE || env.EMBA_ACCESS_CODE"));
@@ -74,12 +74,12 @@ assert.equal(rankFlow.latestDate, rankFlow.dates.at(-1));
 assert.ok(rankFlow.days.at(-1).rows.length <= 20);
 assert.ok(rankFlow.days.at(-1).rows.length > 0);
 assert.ok(rankFlow.priceDataDir);
-assert.equal(rankFlow.portfolio.method, "equal_weight_top20_daily_rebalanced");
+assert.equal(rankFlow.portfolio.method, "equal_weight_top20_next_trading_day_close_to_close");
 assert.equal(rankFlow.portfolio.initialValuePct, 100);
 assert.ok(Number.isFinite(rankFlow.portfolio.latestReturnPct));
 assert.ok(rankFlow.portfolio.daily.length > 0);
-assert.ok(rankFlow.days.at(-1).rows.some((row) => Number.isFinite(row.dayChangePct)));
-assert.ok(Number.isFinite(rankFlow.days.at(-1).portfolio.cumulativeReturnPct));
+assert.ok(rankFlow.days.some((day) => day.rows.some((row) => Number.isFinite(row.dayChangePct))));
+assert.ok(rankFlow.days.some((day) => Number.isFinite(day.portfolio?.cumulativeReturnPct)));
 
 const backfilledWorkdays = ["2026-06-25", "2026-06-30", "2026-07-01", "2026-07-02"];
 backfilledWorkdays.forEach((date) => {
