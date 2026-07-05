@@ -37,8 +37,14 @@ assert.ok(stockJs.includes("droppedRankDelta"));
 assert.ok(stockJs.includes("droppedChangeLabel"));
 assert.ok(stockJs.includes("21 - previousRank"));
 assert.ok(stockJs.includes("至少下滑"));
+assert.ok(stockJs.includes("formatPct"));
+assert.ok(stockJs.includes("formatValuePct"));
+assert.ok(stockJs.includes("stock-day-change"));
+assert.ok(stockJs.includes("renderPortfolioCell"));
+assert.ok(stockJs.includes("stock-portfolio-summary"));
 assert.ok(stockJs.includes("renderDroppedCell"));
 assert.ok(stockJs.includes("droppedSlots"));
+assert.ok(stockJs.includes("stock-rank-axis-return"));
 assert.ok(stockJs.includes("stock-rank-axis-dropped"));
 assert.ok(stockJs.includes("stock-rank-matrix"));
 assert.ok(stockJs.includes("stock-date-head"));
@@ -53,6 +59,9 @@ assert.ok(syncScript.includes("daily_watchlists"));
 assert.ok(syncScript.includes("daily_leaderboard_changes"));
 assert.ok(syncScript.includes("BACKFILL_WATCHLIST_DIR"));
 assert.ok(syncScript.includes("turnpo-backfill"));
+assert.ok(syncScript.includes("priceMoveForTicker"));
+assert.ok(syncScript.includes("dayChangePct"));
+assert.ok(syncScript.includes("equal_weight_top20_daily_rebalanced"));
 assert.ok(syncScript.includes("rank-flow.json"));
 
 assert.ok(stockFunction.includes("env.STOCK_PDC_ACCESS_CODE || env.EMBA_ACCESS_CODE"));
@@ -64,6 +73,13 @@ assert.ok(rankFlow.days.length > 0);
 assert.equal(rankFlow.latestDate, rankFlow.dates.at(-1));
 assert.ok(rankFlow.days.at(-1).rows.length <= 20);
 assert.ok(rankFlow.days.at(-1).rows.length > 0);
+assert.ok(rankFlow.priceDataDir);
+assert.equal(rankFlow.portfolio.method, "equal_weight_top20_daily_rebalanced");
+assert.equal(rankFlow.portfolio.initialValuePct, 100);
+assert.ok(Number.isFinite(rankFlow.portfolio.latestReturnPct));
+assert.ok(rankFlow.portfolio.daily.length > 0);
+assert.ok(rankFlow.days.at(-1).rows.some((row) => Number.isFinite(row.dayChangePct)));
+assert.ok(Number.isFinite(rankFlow.days.at(-1).portfolio.cumulativeReturnPct));
 
 const backfilledWorkdays = ["2026-06-25", "2026-06-30", "2026-07-01", "2026-07-02"];
 backfilledWorkdays.forEach((date) => {

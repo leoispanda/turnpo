@@ -54,6 +54,23 @@ function changeLabel(row) {
   return "0";
 }
 
+function pctClass(value) {
+  if (!Number.isFinite(value)) return "neutral";
+  if (value > 0) return "positive";
+  if (value < 0) return "negative";
+  return "neutral";
+}
+
+function formatPct(value, fallback = "--") {
+  if (!Number.isFinite(value)) return fallback;
+  const sign = value > 0 ? "+" : "";
+  return `${sign}${value.toFixed(2)}%`;
+}
+
+function formatValuePct(value, fallback = "--") {
+  return Number.isFinite(value) ? `${value.toFixed(2)}%` : fallback;
+}
+
 function droppedRankDelta(row) {
   const previousRank = Number.parseInt(row.previousRank, 10);
   return Number.isFinite(previousRank) ? Math.max(1, 21 - previousRank) : null;
@@ -85,14 +102,19 @@ function rowByRank(day, rank) {
   return (day.rows || []).find((row) => Number(row.rank) === rank) || null;
 }
 
+function renderDayChange(row) {
+  return `<span class="stock-day-change ${pctClass(row.dayChangePct)}">${formatPct(row.dayChangePct)}</span>`;
+}
+
 function renderRankCell(day, rank) {
   const row = rowByRank(day, rank);
   if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} #${rank} empty"></div>`;
   return `
-    <article class="stock-rank-cell ${escapeHtml(row.changeType)}" aria-label="${escapeHtml(day.date)} #${rank} ${escapeHtml(row.name)} ${escapeHtml(movementPath(row))}">
+    <article class="stock-rank-cell ${escapeHtml(row.changeType)}" aria-label="${escapeHtml(day.date)} #${rank} ${escapeHtml(row.name)} ${escapeHtml(movementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(row.dayChangePct, "unknown"))}">
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
+        ${renderDayChange(row)}
       </div>
       <div class="stock-change" aria-label="${escapeHtml(movementPath(row))}">
         <span class="stock-change-arrow" aria-hidden="true"></span>
@@ -106,16 +128,57 @@ function renderDroppedCell(day, index) {
   const row = (day.dropped || [])[index] || null;
   if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} dropped ${index + 1} empty"></div>`;
   return `
-    <article class="stock-rank-cell DROPPED" aria-label="${escapeHtml(day.date)} dropped ${index + 1} ${escapeHtml(row.name)} ${escapeHtml(droppedMovementPath(row))}">
+    <article class="stock-rank-cell DROPPED" aria-label="${escapeHtml(day.date)} dropped ${index + 1} ${escapeHtml(row.name)} ${escapeHtml(droppedMovementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(row.dayChangePct, "unknown"))}">
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
+        ${renderDayChange(row)}
       </div>
       <div class="stock-change" aria-label="${escapeHtml(droppedMovementPath(row))}">
         <span class="stock-change-arrow" aria-hidden="true"></span>
         <strong>${escapeHtml(droppedChangeLabel(row))}</strong>
       </div>
     </article>
+  `;
+}
+
+function portfolioClass(day) {
+  return pctClass(day.portfolio?.cumulativeReturnPct);
+}
+
+function renderPortfolioCell(day) {
+  const portfolio = day.portfolio || {};
+  const cumulative = portfolio.cumulativeReturnPct;
+  const daily = portfolio.dailyReturnPct;
+  if (!Number.isFinite(cumulative)) {
+    return `<div class="stock-rank-cell stock-rank-cell-empty stock-portfolio-cell" aria-label="${escapeHtml(day.date)} portfolio empty"></div>`;
+  }
+  return `
+    <article class="stock-rank-cell stock-portfolio-cell ${portfolioClass(day)}" aria-label="${escapeHtml(day.date)} 初始100组合累计 ${escapeHtml(formatPct(cumulative))} 当日 ${escapeHtml(formatPct(daily))}">
+      <div class="stock-name">
+        <h3>${escapeHtml(formatPct(cumulative))}</h3>
+        <small>100% -> ${escapeHtml(formatValuePct(portfolio.valuePct))}</small>
+        <span class="stock-day-change neutral">${escapeHtml(portfolio.investedCount || 0)} / 20</span>
+      </div>
+      <div class="stock-change" aria-label="${escapeHtml(day.date)} portfolio daily return">
+        <span class="stock-change-arrow" aria-hidden="true"></span>
+        <strong>${escapeHtml(formatPct(daily))}</strong>
+      </div>
+    </article>
+  `;
+}
+
+function latestPortfolioSummary(days) {
+  const latest = days.find((day) => day.date === state.data?.portfolio?.daily?.at(-1)?.date)?.portfolio
+    || days.find((day) => day.portfolio)?.portfolio
+    || null;
+  if (!latest) return "";
+  return `
+    <div class="stock-portfolio-summary" aria-label="Stock PDC equal weight portfolio return">
+      <span>初始 100%</span>
+      <strong class="${pctClass(latest.cumulativeReturnPct)}">${escapeHtml(formatPct(latest.cumulativeReturnPct))}</strong>
+      <small>截至 ${escapeHtml(latest.date)}，当前 ${escapeHtml(formatValuePct(latest.valuePct))}，当日 ${escapeHtml(formatPct(latest.dailyReturnPct))}</small>
+    </div>
   `;
 }
 
@@ -146,7 +209,10 @@ function renderRankList() {
         <div class="stock-rank-axis stock-rank-axis-dropped">出${index + 1}</div>
         ${days.map((day) => renderDroppedCell(day, index)).join("")}
       `).join("")}
+      <div class="stock-rank-axis stock-rank-axis-return">收益</div>
+      ${days.map((day) => renderPortfolioCell(day)).join("")}
     </div>
+    ${latestPortfolioSummary(days)}
   `;
 }
 

@@ -7,6 +7,7 @@ const TURNPO_ROOT = path.resolve(__dirname, "..");
 const DEFAULT_SOURCE_ROOT = "/Users/leoyang/Documents/financial freedom/stock-pdc-local";
 const OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "rank-flow.json");
 const BACKFILL_WATCHLIST_DIR = path.join(TURNPO_ROOT, "stock-pdc", "backfill", "daily_watchlists");
+const DEFAULT_BENCHMARK_TICKER = "CSI300ETF";
 const SCORE_FIELDS = [
   "market_regime_score",
   "trend_score",
@@ -76,6 +77,21 @@ function readCsv(filePath) {
   return parseCsv(fs.readFileSync(filePath, "utf8"));
 }
 
+function dateParts(value) {
+  const [year, month, day] = String(value || "").split("-").map((part) => Number.parseInt(part, 10));
+  return [year, month, day].every(Number.isFinite) ? { year, month, day } : null;
+}
+
+function dayOfWeek(value) {
+  const parts = dateParts(value);
+  return parts ? new Date(Date.UTC(parts.year, parts.month - 1, parts.day)).getUTCDay() : null;
+}
+
+function isTradingWeekday(value) {
+  const weekday = dayOfWeek(value);
+  return weekday !== null && weekday !== 0 && weekday !== 6;
+}
+
 function listCsvFiles(dir, prefix) {
   if (!fs.existsSync(dir)) return [];
   return fs.readdirSync(dir)
@@ -125,6 +141,82 @@ function intOrNull(value) {
 
 function clean(value) {
   return String(value ?? "").trim();
+}
+
+function round2(value) {
+  return Number.isFinite(value) ? Math.round(value * 100) / 100 : null;
+}
+
+function lastBarDate(dataDir, ticker = DEFAULT_BENCHMARK_TICKER) {
+  const filePath = path.join(dataDir, `${ticker}.csv`);
+  if (!fs.existsSync(filePath)) return "";
+  const rows = readCsv(filePath);
+  return rows.at(-1)?.Date || rows.at(-1)?.date || "";
+}
+
+function resolvePriceDataDir(sourceRoot, latestDate, explicitDataDir = "") {
+  const explicitPath = clean(explicitDataDir);
+  if (explicitPath) {
+    const resolved = path.isAbsolute(explicitPath) ? explicitPath : path.join(sourceRoot, explicitPath);
+    return fs.existsSync(resolved) ? resolved : "";
+  }
+
+  const latestDataDirs = fs.existsSync(sourceRoot)
+    ? fs.readdirSync(sourceRoot)
+      .filter((entry) => entry.startsWith("data_a_share_latest_"))
+      .sort()
+      .reverse()
+    : [];
+  const candidates = [
+    ...latestDataDirs,
+    "data_a_share",
+    "data_a_share_live_mcap",
+    "data_a_share_live_mcap_2020",
+    "data_a_share_live_mcap_2020_em"
+  ];
+
+  for (const name of candidates) {
+    const dataDir = path.join(sourceRoot, name);
+    if (!fs.existsSync(dataDir) || !fs.statSync(dataDir).isDirectory()) continue;
+    const latestBarDate = lastBarDate(dataDir);
+    if (!latestDate || latestBarDate >= latestDate) return dataDir;
+  }
+
+  return "";
+}
+
+function loadPriceBars(priceDataDir, ticker, priceCache) {
+  const cacheKey = `${priceDataDir}:${ticker}`;
+  if (priceCache.has(cacheKey)) return priceCache.get(cacheKey);
+  const filePath = path.join(priceDataDir, `${ticker}.csv`);
+  if (!priceDataDir || !fs.existsSync(filePath)) {
+    priceCache.set(cacheKey, []);
+    return [];
+  }
+  const rows = readCsv(filePath)
+    .map((row) => ({
+      date: clean(row.Date || row.date),
+      close: numberOrNull(row.Close || row.close)
+    }))
+    .filter((row) => row.date && row.close !== null && row.close > 0);
+  priceCache.set(cacheKey, rows);
+  return rows;
+}
+
+function priceMoveForTicker(ticker, date, priceDataDir, priceCache) {
+  const bars = loadPriceBars(priceDataDir, ticker, priceCache);
+  const index = bars.findIndex((bar) => bar.date === date);
+  if (index < 0) return { close: null, previousClose: null, dayChangePct: null };
+  const current = bars[index];
+  const previous = bars[index - 1] || null;
+  const dayChangePct = previous?.close
+    ? round2((current.close / previous.close - 1) * 100)
+    : null;
+  return {
+    close: round2(current.close),
+    previousClose: previous?.close ? round2(previous.close) : null,
+    dayChangePct
+  };
 }
 
 function scoreMap(row) {
@@ -185,7 +277,7 @@ function movementText(type, delta) {
   return "保持";
 }
 
-function normalizeWatchRow(row, date, previousByTicker, changesByTicker, names) {
+function normalizeWatchRow(row, date, previousByTicker, changesByTicker, names, priceDataDir, priceCache) {
   const ticker = clean(row.ticker);
   const currentRank = intOrNull(row.rank);
   const changed = changesByTicker.get(ticker);
@@ -193,6 +285,7 @@ function normalizeWatchRow(row, date, previousByTicker, changesByTicker, names) 
   const changeType = clean(changed?.change_type) || changeFromRanks(currentRank, previousRank);
   const delta = intOrNull(changed?.rank_delta) ?? rankDelta(currentRank, previousRank);
   const name = clean(changed?.name) || names.get(ticker) || ticker;
+  const priceMove = priceMoveForTicker(ticker, date, priceDataDir, priceCache);
 
   return {
     ticker,
@@ -210,13 +303,17 @@ function normalizeWatchRow(row, date, previousByTicker, changesByTicker, names) 
     mainReason: clean(row.main_reason),
     mainRisk: clean(row.main_risk || changed?.main_risk),
     analysisDate: clean(row.analysis_date || date),
+    close: priceMove.close,
+    previousClose: priceMove.previousClose,
+    dayChangePct: priceMove.dayChangePct,
     scores: scoreMap(row)
   };
 }
 
-function normalizeDroppedRow(row, previousByTicker, names) {
+function normalizeDroppedRow(row, date, previousByTicker, names, priceDataDir, priceCache) {
   const ticker = clean(row.ticker);
   const previous = previousByTicker.get(ticker);
+  const priceMove = priceMoveForTicker(ticker, date, priceDataDir, priceCache);
   return {
     ticker,
     name: clean(row.name) || names.get(ticker) || ticker,
@@ -225,6 +322,9 @@ function normalizeDroppedRow(row, previousByTicker, names) {
     previousStatus: clean(row.previous_status) || previous?.status || "",
     changeType: "DROPPED",
     movement: "退出",
+    close: priceMove.close,
+    previousClose: priceMove.previousClose,
+    dayChangePct: priceMove.dayChangePct,
     mainRisk: clean(row.main_risk) || previous?.mainRisk || ""
   };
 }
@@ -266,16 +366,54 @@ function buildTickerHistory(days) {
         rank: row.rank,
         score: row.score,
         status: row.status,
-        changeType: row.changeType
+        changeType: row.changeType,
+        dayChangePct: row.dayChangePct
       });
     });
   });
   return history;
 }
 
-function buildSnapshot(sourceRoot) {
+function buildPortfolio(days) {
+  let valuePct = 100;
+  const daily = [];
+
+  days
+    .filter((day) => isTradingWeekday(day.date) && Array.isArray(day.rows) && day.rows.length)
+    .forEach((day) => {
+      const returns = day.rows
+        .map((row) => row.dayChangePct)
+        .filter((value) => Number.isFinite(value));
+      const dailyReturnPct = returns.length
+        ? round2(returns.reduce((sum, value) => sum + value, 0) / returns.length)
+        : null;
+      if (dailyReturnPct !== null) valuePct *= 1 + dailyReturnPct / 100;
+      const portfolioDay = {
+        date: day.date,
+        investedCount: returns.length,
+        dailyReturnPct,
+        valuePct: round2(valuePct),
+        cumulativeReturnPct: round2(valuePct - 100)
+      };
+      day.portfolio = portfolioDay;
+      daily.push(portfolioDay);
+    });
+
+  return {
+    method: "equal_weight_top20_daily_rebalanced",
+    initialValuePct: 100,
+    latestValuePct: daily.at(-1)?.valuePct ?? 100,
+    latestReturnPct: daily.at(-1)?.cumulativeReturnPct ?? 0,
+    daily
+  };
+}
+
+function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
   const changesDir = path.join(sourceRoot, "outputs", "daily_leaderboard_changes");
   const watchlistFiles = collectWatchlistFiles(sourceRoot);
+  const latestDate = watchlistFiles.at(-1)?.date || "";
+  const priceDataDir = resolvePriceDataDir(sourceRoot, latestDate, explicitPriceDataDir);
+  const priceCache = new Map();
   const changeFiles = new Map(listCsvFiles(changesDir, "leaderboard_changes").map((filePath) => [
     dateFromFile(filePath, "leaderboard_changes"),
     filePath
@@ -288,16 +426,17 @@ function buildSnapshot(sourceRoot) {
     const changeRows = changeFiles.has(date) ? readCsv(changeFiles.get(date)) : [];
     const changesByTicker = new Map(changeRows.map((row) => [row.ticker, row]));
     const rows = readCsv(filePath)
-      .map((row) => normalizeWatchRow(row, date, previousByTicker, changesByTicker, names))
+      .map((row) => normalizeWatchRow(row, date, previousByTicker, changesByTicker, names, priceDataDir, priceCache))
       .sort((a, b) => (a.rank || 999) - (b.rank || 999));
     const currentTickers = new Set(rows.map((row) => row.ticker));
     const dropped = changeRows
       .filter((row) => row.change_type === "DROPPED")
-      .map((row) => normalizeDroppedRow(row, previousByTicker, names));
+      .map((row) => normalizeDroppedRow(row, date, previousByTicker, names, priceDataDir, priceCache));
 
     if (!dropped.length && index > 0) {
       previousByTicker.forEach((previous, ticker) => {
         if (!currentTickers.has(ticker)) {
+          const priceMove = priceMoveForTicker(ticker, date, priceDataDir, priceCache);
           dropped.push({
             ticker,
             name: previous.name,
@@ -306,6 +445,9 @@ function buildSnapshot(sourceRoot) {
             previousStatus: previous.status,
             changeType: "DROPPED",
             movement: "退出",
+            close: priceMove.close,
+            previousClose: priceMove.previousClose,
+            dayChangePct: priceMove.dayChangePct,
             mainRisk: previous.mainRisk || ""
           });
         }
@@ -325,22 +467,26 @@ function buildSnapshot(sourceRoot) {
       dropped: dropped.sort((a, b) => (a.previousRank || 999) - (b.previousRank || 999))
     };
   });
+  const portfolio = buildPortfolio(days);
 
   return {
     generatedAt: new Date().toISOString(),
     sourceRoot,
     sourceKind: "stock-pdc-local daily watchlists + turnpo backfills",
     backfillRoot: path.relative(TURNPO_ROOT, BACKFILL_WATCHLIST_DIR),
+    priceDataDir: priceDataDir ? path.relative(sourceRoot, priceDataDir) : "",
     dates: days.map((day) => day.date),
     latestDate: days.at(-1)?.date || "",
     days,
+    portfolio,
     tickerHistory: buildTickerHistory(days)
   };
 }
 
 const sourceRoot = path.resolve(argValue("--source-root", process.env.STOCK_PDC_ROOT || DEFAULT_SOURCE_ROOT));
 const outputPath = path.resolve(argValue("--output", OUTPUT_PATH));
-const snapshot = buildSnapshot(sourceRoot);
+const priceDataDir = argValue("--price-data-dir", process.env.STOCK_PDC_PRICE_DATA_DIR || "");
+const snapshot = buildSnapshot(sourceRoot, priceDataDir);
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, `${JSON.stringify(snapshot, null, 2)}\n`);
@@ -348,3 +494,4 @@ fs.writeFileSync(outputPath, `${JSON.stringify(snapshot, null, 2)}\n`);
 console.log(`Wrote ${outputPath}`);
 console.log(`Dates: ${snapshot.dates.join(", ") || "none"}`);
 console.log(`Latest: ${snapshot.latestDate || "none"}`);
+console.log(`Price data: ${snapshot.priceDataDir || "none"}`);
