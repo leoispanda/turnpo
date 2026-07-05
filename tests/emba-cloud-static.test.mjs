@@ -15,6 +15,9 @@ assert.ok(embaJs.includes('const EMBA_UPLOAD_API = "/api/emba/upload";'));
 assert.ok(embaJs.includes("uploadEmbaFile(file, month.month, \"memory\")"));
 assert.ok(embaJs.includes("uploadEmbaFile(file, month.month, \"material\")"));
 assert.ok(embaJs.includes("libraryForCloud"));
+assert.ok(embaJs.includes("emba-single-memory"));
+assert.ok(!embaJs.includes("Photo title"));
+assert.ok(!embaJs.includes('placeholder="Caption"'));
 assert.ok(embaHtml.includes('id="embaSyncStatus"'));
 
 assert.ok(embaFunction.includes('accessCookie(token, path = "/")'));
@@ -25,6 +28,7 @@ assert.ok(embaApiUtils.includes("turnpo_emba_access"));
 assert.ok(embaApiUtils.includes("validateSameOriginRequest"));
 assert.ok(embaApiUtils.includes("validR2Key"));
 assert.ok(embaApiUtils.includes("data:"));
+assert.ok(embaApiUtils.includes("MAX_MEMORIES_PER_MONTH = 1"));
 
 assert.ok(embaLibraryApi.includes("env.EMBA_DB"));
 assert.ok(embaLibraryApi.includes("CREATE TABLE IF NOT EXISTS emba_state"));

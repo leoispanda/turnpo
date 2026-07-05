@@ -115,7 +115,7 @@ function normalizeMonth(month) {
     title: month.title || formatMonth(monthKey),
     materials,
     reflection: month.reflection || month.notes || "",
-    memoryMoment: memories
+    memoryMoment: memories.slice(0, 1)
   };
 }
 
@@ -416,31 +416,19 @@ function memoryInitials(monthKey) {
 }
 
 function renderMemoryMoment(month) {
-  const memories = asArray(month?.memoryMoment);
+  const memory = asArray(month?.memoryMoment)[0] || null;
+  const image = memory?.image || "";
   return `
-    <form class="emba-upload-form" data-memory-add>
-      <label class="emba-upload-target">
+    <div class="emba-single-memory">
+      <label class="emba-photo-card${image ? " has-photo" : ""}">
         <input name="image" type="file" accept="image/*" />
-        <span>Upload photo</span>
+        ${image
+          ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(memory?.title || formatMonth(month?.month))}" loading="lazy" />`
+          : `<span class="emba-photo-placeholder"><span class="emba-photo-initial">${escapeHtml(memoryInitials(month?.month))}</span><span>Upload photo</span></span>`}
+        ${image ? `<strong>Replace photo</strong>` : ""}
       </label>
-      <input class="emba-edit-input" name="title" placeholder="Photo title" autocomplete="off" />
-      <input class="emba-edit-input" name="caption" placeholder="Caption" autocomplete="off" />
-      <button class="emba-small-btn" type="submit">Add</button>
-    </form>
-    ${memories.length ? `
-      <div class="emba-memory-rail">
-        ${memories.map((item, index) => `
-          <article class="emba-memory-item">
-            <div class="emba-memory-photo">${item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy" />` : escapeHtml(memoryInitials(item.month))}</div>
-            <div class="emba-memory-caption">
-              <input class="emba-edit-input" value="${escapeHtml(item.title)}" data-memory-field="title" data-index="${index}" aria-label="Memory title" />
-              <textarea class="emba-edit-textarea" data-memory-field="caption" data-index="${index}" aria-label="Memory caption">${escapeHtml(item.caption)}</textarea>
-              <button class="emba-text-btn" type="button" data-memory-delete="${index}">Delete</button>
-            </div>
-          </article>
-        `).join("")}
-      </div>
-    ` : `<p class="emba-empty-copy">No memory photos yet.</p>`}
+      ${image ? `<button class="emba-text-btn" type="button" data-memory-delete="0">Remove photo</button>` : ""}
+    </div>
   `;
 }
 
@@ -627,7 +615,7 @@ $("#embaMonthDetail")?.addEventListener("click", (event) => {
   const memoryDelete = event.target.closest("[data-memory-delete]");
   if (memoryDelete) {
     const month = editableMonth();
-    month.memoryMoment.splice(Number(memoryDelete.dataset.memoryDelete), 1);
+    month.memoryMoment = [];
     saveLibrary();
     renderMonthDetail(selectedMonth());
     return;
@@ -649,20 +637,31 @@ $("#embaMonthDetail")?.addEventListener("click", (event) => {
   renderMonthDetail(selectedMonth());
 });
 
+$("#embaMonthDetail")?.addEventListener("change", async (event) => {
+  const target = event.target;
+  if (!target.matches('.emba-photo-card input[name="image"]')) return;
+  const file = target.files?.[0] || null;
+  if (!file) return;
+  const month = editableMonth();
+  const uploaded = await uploadEmbaFile(file, month.month, "memory");
+  const image = uploaded?.url || await imageFileToDataUrl(file);
+  if (!image) return;
+  month.memoryMoment = [{
+    title: "Memory",
+    image,
+    caption: "",
+    month: month.month
+  }];
+  saveLibrary();
+  renderMonthDetail(selectedMonth());
+});
+
 $("#embaMonthDetail")?.addEventListener("input", (event) => {
   const target = event.target;
   const month = editableMonth();
 
   if (target.matches("[data-reflection-editor]")) {
     month.reflection = target.value;
-    saveLibrary();
-    return;
-  }
-
-  if (target.matches("[data-memory-field]")) {
-    const item = month.memoryMoment[Number(target.dataset.index)];
-    if (!item) return;
-    item[target.dataset.memoryField] = target.value;
     saveLibrary();
     return;
   }
@@ -677,28 +676,9 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
 
 $("#embaMonthDetail")?.addEventListener("submit", async (event) => {
   const form = event.target;
-  if (!form.matches("[data-memory-add], [data-material-add]")) return;
+  if (!form.matches("[data-material-add]")) return;
   event.preventDefault();
   const month = editableMonth();
-
-  if (form.matches("[data-memory-add]")) {
-    const file = form.elements.image?.files?.[0] || null;
-    const title = String(form.elements.title?.value || "").trim();
-    const caption = String(form.elements.caption?.value || "").trim();
-    const uploaded = file ? await uploadEmbaFile(file, month.month, "memory") : null;
-    const image = uploaded?.url || (file ? await imageFileToDataUrl(file) : "");
-    if (!image && !title && !caption) return;
-    month.memoryMoment.push({
-      title: title || "Memory",
-      image,
-      caption,
-      month: month.month
-    });
-    saveLibrary();
-    form.reset();
-    renderMonthDetail(selectedMonth());
-    return;
-  }
 
   if (form.matches("[data-material-add]")) {
     const file = form.elements.file?.files?.[0] || null;
