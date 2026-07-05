@@ -393,8 +393,8 @@ body::before {
   --date-count: 1;
   min-width: max-content;
   display: grid;
-  grid-template-columns: 32px repeat(var(--date-count), 132px);
-  gap: 4px;
+  grid-template-columns: 34px repeat(var(--date-count), 192px);
+  gap: 5px;
   align-items: stretch;
 }
 
@@ -413,7 +413,7 @@ body::before {
 
 .stock-matrix-corner,
 .stock-rank-axis {
-  min-height: 30px;
+  min-height: 34px;
 }
 
 .stock-matrix-corner,
@@ -436,9 +436,9 @@ body::before {
   position: sticky;
   top: 0;
   z-index: 1;
-  min-height: 30px;
+  min-height: 34px;
   gap: 3px;
-  padding: 3px;
+  padding: 4px;
 }
 
 .stock-date-head span,
@@ -454,14 +454,14 @@ body::before {
 
 .stock-rank-cell {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(34px, auto) auto;
-  gap: 3px;
+  grid-template-columns: minmax(74px, 1fr) minmax(48px, auto) minmax(42px, auto);
+  gap: 5px;
   align-items: center;
-  min-height: 34px;
+  min-height: 42px;
   border: 1px solid rgba(34, 87, 122, 0.22);
   border-radius: 7px;
   background: rgba(34, 87, 122, 0.08);
-  padding: 3px 4px;
+  padding: 4px 6px;
   box-shadow: none;
 }
 
@@ -500,12 +500,12 @@ body::before {
 
 .stock-name h3 {
   margin: 0 0 1px;
-  overflow: hidden;
+  overflow: visible;
   color: #15191f;
-  font-size: 11.5px;
+  font-size: 12.5px;
   line-height: 1.05;
   letter-spacing: 0;
-  text-overflow: ellipsis;
+  text-overflow: clip;
   white-space: nowrap;
 }
 
@@ -518,18 +518,18 @@ body::before {
 
 .stock-name small {
   display: block;
-  overflow: hidden;
-  font-size: 8.5px;
+  overflow: visible;
+  font-size: 9.5px;
   line-height: 1.1;
-  text-overflow: ellipsis;
+  text-overflow: clip;
   white-space: nowrap;
 }
 
 .stock-day-change {
   display: block;
-  min-width: 34px;
+  min-width: 48px;
   margin-top: 0;
-  font-size: 9.5px;
+  font-size: 10.5px;
   font-weight: 850;
   line-height: 1;
   text-align: center;
@@ -563,15 +563,15 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 2px;
-  min-width: 28px;
+  gap: 3px;
+  min-width: 42px;
   color: #22577a;
 }
 
 .stock-change strong {
-  min-width: 14px;
+  min-width: 22px;
   color: currentColor;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 840;
   line-height: 1;
   text-align: right;
@@ -598,8 +598,8 @@ body::before {
 }
 
 .stock-change-arrow {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   display: inline-grid;
   place-items: center;
   border-radius: 999px;
@@ -608,7 +608,7 @@ body::before {
 
 .stock-change-arrow::before {
   color: currentColor;
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 900;
   line-height: 1;
 }
@@ -642,11 +642,11 @@ body::before {
 }
 
 .stock-portfolio-cell {
-  min-height: 34px;
+  min-height: 42px;
 }
 
 .stock-portfolio-cell .stock-change strong {
-  min-width: 34px;
+  min-width: 42px;
 }
 
 .stock-portfolio-summary {
