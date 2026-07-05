@@ -393,8 +393,8 @@ body::before {
   --date-count: 1;
   min-width: max-content;
   display: grid;
-  grid-template-columns: 34px repeat(var(--date-count), 192px);
-  gap: 5px;
+  grid-template-columns: 34px repeat(var(--date-count), 172px);
+  gap: 4px;
   align-items: stretch;
 }
 
@@ -454,14 +454,14 @@ body::before {
 
 .stock-rank-cell {
   display: grid;
-  grid-template-columns: minmax(74px, 1fr) minmax(48px, auto) minmax(42px, auto);
-  gap: 5px;
+  grid-template-columns: minmax(70px, 1fr) minmax(44px, auto) minmax(36px, auto);
+  gap: 3px;
   align-items: center;
-  min-height: 42px;
+  min-height: 40px;
   border: 1px solid rgba(34, 87, 122, 0.22);
   border-radius: 7px;
   background: rgba(34, 87, 122, 0.08);
-  padding: 4px 6px;
+  padding: 4px 5px;
   box-shadow: none;
 }
 
@@ -502,7 +502,7 @@ body::before {
   margin: 0 0 1px;
   overflow: visible;
   color: #15191f;
-  font-size: 12.5px;
+  font-size: 12px;
   line-height: 1.05;
   letter-spacing: 0;
   text-overflow: clip;
@@ -519,7 +519,7 @@ body::before {
 .stock-name small {
   display: block;
   overflow: visible;
-  font-size: 9.5px;
+  font-size: 9.2px;
   line-height: 1.1;
   text-overflow: clip;
   white-space: nowrap;
@@ -527,9 +527,9 @@ body::before {
 
 .stock-day-change {
   display: block;
-  min-width: 48px;
+  min-width: 44px;
   margin-top: 0;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 850;
   line-height: 1;
   text-align: center;
@@ -563,15 +563,15 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 3px;
-  min-width: 42px;
+  gap: 2px;
+  min-width: 36px;
   color: #22577a;
 }
 
 .stock-change strong {
-  min-width: 22px;
+  min-width: 19px;
   color: currentColor;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 840;
   line-height: 1;
   text-align: right;
@@ -598,8 +598,8 @@ body::before {
 }
 
 .stock-change-arrow {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   display: inline-grid;
   place-items: center;
   border-radius: 999px;
@@ -608,7 +608,7 @@ body::before {
 
 .stock-change-arrow::before {
   color: currentColor;
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 900;
   line-height: 1;
 }
@@ -642,11 +642,11 @@ body::before {
 }
 
 .stock-portfolio-cell {
-  min-height: 42px;
+  min-height: 40px;
 }
 
 .stock-portfolio-cell .stock-change strong {
-  min-width: 42px;
+  min-width: 38px;
 }
 
 .stock-portfolio-summary {
