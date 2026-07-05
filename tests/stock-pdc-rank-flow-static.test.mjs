@@ -19,6 +19,8 @@ assert.ok(stockHtml.includes('id="stockRankList"'));
 assert.ok(stockHtml.includes("stock-color-wall"));
 assert.ok(stockHtml.includes("stock-color-panel"));
 assert.ok(stockHtml.includes("stock-rank-matrix-wrap"));
+assert.ok(stockHtml.includes("stock-bottom-home-btn"));
+assert.ok(stockHtml.includes("回到主页"));
 assert.ok(!stockHtml.includes('id="stockDateSelect"'));
 assert.ok(!stockHtml.includes('id="stockMatrix"'));
 assert.ok(!stockHtml.includes('id="stockFilterTabs"'));
