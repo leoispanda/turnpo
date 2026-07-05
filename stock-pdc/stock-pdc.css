@@ -454,14 +454,14 @@ body::before {
 
 .stock-rank-cell {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 6px;
+  grid-template-columns: minmax(0, 1fr) minmax(40px, auto) auto;
+  gap: 5px;
   align-items: center;
-  min-height: 46px;
+  min-height: 36px;
   border: 1px solid rgba(34, 87, 122, 0.22);
   border-radius: 7px;
   background: rgba(34, 87, 122, 0.08);
-  padding: 5px 6px;
+  padding: 3px 5px;
   box-shadow: none;
 }
 
@@ -499,11 +499,11 @@ body::before {
 }
 
 .stock-name h3 {
-  margin: 0 0 2px;
+  margin: 0 0 1px;
   overflow: hidden;
   color: #15191f;
-  font-size: 12.5px;
-  line-height: 1.1;
+  font-size: 12px;
+  line-height: 1.05;
   letter-spacing: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -519,7 +519,7 @@ body::before {
 .stock-name small {
   display: block;
   overflow: hidden;
-  font-size: 9.5px;
+  font-size: 9px;
   line-height: 1.1;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -527,10 +527,13 @@ body::before {
 
 .stock-day-change {
   display: block;
-  margin-top: 2px;
-  font-size: 9.5px;
+  min-width: 40px;
+  margin-top: 0;
+  font-size: 10px;
   font-weight: 850;
   line-height: 1;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .stock-day-change.positive,
@@ -560,14 +563,15 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 4px;
+  gap: 3px;
+  min-width: 34px;
   color: #22577a;
 }
 
 .stock-change strong {
-  min-width: 21px;
+  min-width: 18px;
   color: currentColor;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 840;
   line-height: 1;
   text-align: right;
@@ -594,8 +598,8 @@ body::before {
 }
 
 .stock-change-arrow {
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
   display: inline-grid;
   place-items: center;
   border-radius: 999px;
@@ -638,7 +642,7 @@ body::before {
 }
 
 .stock-portfolio-cell {
-  min-height: 46px;
+  min-height: 36px;
 }
 
 .stock-portfolio-cell .stock-change strong {

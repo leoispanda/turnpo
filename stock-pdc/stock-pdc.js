@@ -114,8 +114,8 @@ function renderRankCell(day, rank) {
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
-        ${renderDayChange(row)}
       </div>
+      ${renderDayChange(row)}
       <div class="stock-change" aria-label="${escapeHtml(movementPath(row))}">
         <span class="stock-change-arrow" aria-hidden="true"></span>
         <strong>${escapeHtml(changeLabel(row))}</strong>
@@ -132,8 +132,8 @@ function renderDroppedCell(day, index) {
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
-        ${renderDayChange(row)}
       </div>
+      ${renderDayChange(row)}
       <div class="stock-change" aria-label="${escapeHtml(droppedMovementPath(row))}">
         <span class="stock-change-arrow" aria-hidden="true"></span>
         <strong>${escapeHtml(droppedChangeLabel(row))}</strong>
@@ -158,8 +158,8 @@ function renderPortfolioCell(day) {
       <div class="stock-name">
         <h3>${escapeHtml(formatPct(cumulative))}</h3>
         <small>100% -> ${escapeHtml(formatValuePct(portfolio.valuePct))}</small>
-        <span class="stock-day-change neutral">${escapeHtml(portfolio.investedCount || 0)} / 20</span>
       </div>
+      <span class="stock-day-change neutral">${escapeHtml(portfolio.investedCount || 0)} / 20</span>
       <div class="stock-change" aria-label="${escapeHtml(day.date)} portfolio daily return">
         <span class="stock-change-arrow" aria-hidden="true"></span>
         <strong>${escapeHtml(formatPct(daily))}</strong>
