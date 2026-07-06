@@ -683,6 +683,38 @@ body::before {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
+.emba-private-tools {
+  width: min(1180px, 100%);
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 0;
+}
+
+.emba-classmate-tool-link {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.66);
+  color: #1d1d1f;
+  padding: 0 18px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 680;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.emba-classmate-tool-link:hover,
+.emba-classmate-tool-link:focus-visible {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-1px);
+}
+
 @media (max-width: 760px) {
   .emba-shell {
     place-items: center;
