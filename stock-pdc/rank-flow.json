@@ -1,9 +1,15 @@
 {
-  "generatedAt": "2026-07-05T06:27:01.576Z",
+  "generatedAt": "2026-07-06T21:06:00.778Z",
   "sourceRoot": "/Users/leoyang/Documents/financial freedom/stock-pdc-local",
   "sourceKind": "stock-pdc-local daily watchlists + turnpo backfills",
   "backfillRoot": "stock-pdc/backfill/daily_watchlists",
-  "priceDataDir": "data_a_share_latest_2026_07_03",
+  "priceDataDir": "",
+  "priceDataFallbacks": [
+    "data_a_share",
+    "data_a_share_live_mcap",
+    "data_a_share_live_mcap_2020",
+    "data_a_share_live_mcap_2020_em"
+  ],
   "dates": [
     "2026-06-24",
     "2026-06-25",
@@ -14,9 +20,10 @@
     "2026-06-30",
     "2026-07-01",
     "2026-07-02",
-    "2026-07-03"
+    "2026-07-03",
+    "2026-07-06"
   ],
-  "latestDate": "2026-07-03",
+  "latestDate": "2026-07-06",
   "days": [
     {
       "date": "2026-06-24",
@@ -54,6 +61,7 @@
           "close": 6.02,
           "nextClose": 5.79,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": -1.95,
           "dayChangePct": -3.82,
           "scores": {
             "market_regime_score": 9.4,
@@ -86,6 +94,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 9.4,
@@ -118,6 +127,7 @@
           "close": 7.22,
           "nextClose": 7.19,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": -2.17,
           "dayChangePct": -0.42,
           "scores": {
             "market_regime_score": 9.4,
@@ -150,6 +160,7 @@
           "close": 27.89,
           "nextClose": 28.98,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": -1.52,
           "dayChangePct": 3.91,
           "scores": {
             "market_regime_score": 9.4,
@@ -182,6 +193,7 @@
           "close": 115.4,
           "nextClose": 117.22,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": 8.55,
           "dayChangePct": 1.58,
           "scores": {
             "market_regime_score": 9.4,
@@ -211,10 +223,11 @@
           "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 8.1%; 60d momentum 16.0% | 5 accumulation vs 2 distribution days; up days carry heavier volume than down days; latest advance came on strong volume; 20d price gain 6.3% is volume-supported",
           "mainRisk": "ATR elevated at 5.0%",
           "analysisDate": "2026-06-24",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "dayChangePct": null,
+          "close": 240.2,
+          "nextClose": 259,
+          "returnDate": "2026-06-25",
+          "signalDayChangePct": -3.69,
+          "dayChangePct": 7.83,
           "scores": {
             "market_regime_score": 9.4,
             "trend_score": 7.9,
@@ -246,6 +259,7 @@
           "close": 20.86,
           "nextClose": 21.4,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": -1.79,
           "dayChangePct": 2.59,
           "scores": {
             "market_regime_score": 9.4,
@@ -278,6 +292,7 @@
           "close": 76.78,
           "nextClose": 76.99,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": 3.62,
           "dayChangePct": 0.27,
           "scores": {
             "market_regime_score": 9.4,
@@ -310,6 +325,7 @@
           "close": 9.92,
           "nextClose": 9.81,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": -1.49,
           "dayChangePct": -1.11,
           "scores": {
             "market_regime_score": 9.4,
@@ -339,10 +355,11 @@
           "mainReason": "market backdrop supports offense | above 50d SMA by 0.3%; 20d > 50d > 200d trend stack",
           "mainRisk": "stop is tight and may shake out",
           "analysisDate": "2026-06-24",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "dayChangePct": null,
+          "close": 8.81,
+          "nextClose": 8.98,
+          "returnDate": "2026-06-25",
+          "signalDayChangePct": -2.44,
+          "dayChangePct": 1.93,
           "scores": {
             "market_regime_score": 9.4,
             "trend_score": 7.3,
@@ -374,6 +391,7 @@
           "close": 17.21,
           "nextClose": 17.77,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": -2.27,
           "dayChangePct": 3.25,
           "scores": {
             "market_regime_score": 9.4,
@@ -403,10 +421,11 @@
           "mainReason": "market backdrop supports offense | above 50d SMA by 7.2%; 60d momentum 21.5%; outperforming benchmark by 11.2%",
           "mainRisk": "ATR elevated at 4.4%",
           "analysisDate": "2026-06-24",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "dayChangePct": null,
+          "close": 83.64,
+          "nextClose": 87.5,
+          "returnDate": "2026-06-25",
+          "signalDayChangePct": 2.11,
+          "dayChangePct": 4.62,
           "scores": {
             "market_regime_score": 9.4,
             "trend_score": 9.5,
@@ -438,6 +457,7 @@
           "close": 6.63,
           "nextClose": 6.59,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": -2.93,
           "dayChangePct": -0.6,
           "scores": {
             "market_regime_score": 9.4,
@@ -467,10 +487,11 @@
           "mainReason": "market backdrop supports offense | above 50d SMA by 10.2%; 20d > 50d > 200d trend stack; 60d momentum 27.7%; outperforming benchmark by 17.4%",
           "mainRisk": "ATR elevated at 5.4%",
           "analysisDate": "2026-06-24",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "dayChangePct": null,
+          "close": 41.99,
+          "nextClose": 42.34,
+          "returnDate": "2026-06-25",
+          "signalDayChangePct": 1.18,
+          "dayChangePct": 0.83,
           "scores": {
             "market_regime_score": 9.4,
             "trend_score": 10,
@@ -502,6 +523,7 @@
           "close": 337.1,
           "nextClose": 360.28,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": 6.34,
           "dayChangePct": 6.88,
           "scores": {
             "market_regime_score": 9.4,
@@ -534,6 +556,7 @@
           "close": 325.28,
           "nextClose": 341.97,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": 4.57,
           "dayChangePct": 5.13,
           "scores": {
             "market_regime_score": 9.4,
@@ -566,6 +589,7 @@
           "close": 75.05,
           "nextClose": 74.42,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": 8.2,
           "dayChangePct": -0.84,
           "scores": {
             "market_regime_score": 9.4,
@@ -598,6 +622,7 @@
           "close": 34.03,
           "nextClose": 34.44,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": 8.34,
           "dayChangePct": 1.2,
           "scores": {
             "market_regime_score": 9.4,
@@ -630,6 +655,7 @@
           "close": 1453,
           "nextClose": 1505,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": 2.83,
           "dayChangePct": 3.58,
           "scores": {
             "market_regime_score": 9.4,
@@ -662,6 +688,7 @@
           "close": 151.53,
           "nextClose": 156.86,
           "returnDate": "2026-06-25",
+          "signalDayChangePct": 6.94,
           "dayChangePct": 3.52,
           "scores": {
             "market_regime_score": 9.4,
@@ -680,10 +707,10 @@
       "portfolio": {
         "date": "2026-06-24",
         "returnDate": "2026-06-25",
-        "investedCount": 15,
-        "dailyReturnPct": 1.67,
-        "valuePct": 101.67,
-        "cumulativeReturnPct": 1.67
+        "investedCount": 19,
+        "dailyReturnPct": 2.12,
+        "valuePct": 102.12,
+        "cumulativeReturnPct": 2.12
       }
     },
     {
@@ -722,6 +749,7 @@
           "close": 74.42,
           "nextClose": 68,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": -0.84,
           "dayChangePct": -8.63,
           "scores": {
             "market_regime_score": 9.4,
@@ -754,6 +782,7 @@
           "close": 76.99,
           "nextClose": 70.22,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 0.27,
           "dayChangePct": -8.79,
           "scores": {
             "market_regime_score": 9.4,
@@ -786,6 +815,7 @@
           "close": 1323.4,
           "nextClose": 1253.89,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 0.86,
           "dayChangePct": -5.25,
           "scores": {
             "market_regime_score": 9.4,
@@ -818,6 +848,7 @@
           "close": 156.86,
           "nextClose": 148.76,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 3.52,
           "dayChangePct": -5.16,
           "scores": {
             "market_regime_score": 9.4,
@@ -850,6 +881,7 @@
           "close": 114.14,
           "nextClose": 110.98,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 7.27,
           "dayChangePct": -2.77,
           "scores": {
             "market_regime_score": 9.4,
@@ -882,6 +914,7 @@
           "close": 891,
           "nextClose": 951,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 10,
           "dayChangePct": 6.73,
           "scores": {
             "market_regime_score": 9.4,
@@ -914,6 +947,7 @@
           "close": 797.24,
           "nextClose": 812.61,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 3.63,
           "dayChangePct": 1.93,
           "scores": {
             "market_regime_score": 9.4,
@@ -946,6 +980,7 @@
           "close": 775.21,
           "nextClose": 770,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 9.94,
           "dayChangePct": -0.67,
           "scores": {
             "market_regime_score": 9.4,
@@ -978,6 +1013,7 @@
           "close": 399.13,
           "nextClose": 413,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 4.21,
           "dayChangePct": 3.48,
           "scores": {
             "market_regime_score": 9.4,
@@ -1010,6 +1046,7 @@
           "close": 105.68,
           "nextClose": 99.51,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 5.6,
           "dayChangePct": -5.84,
           "scores": {
             "market_regime_score": 9.4,
@@ -1042,6 +1079,7 @@
           "close": 7.52,
           "nextClose": 7.79,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 6.36,
           "dayChangePct": 3.59,
           "scores": {
             "market_regime_score": 9.4,
@@ -1074,6 +1112,7 @@
           "close": 275.8,
           "nextClose": 260.32,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 7.26,
           "dayChangePct": -5.61,
           "scores": {
             "market_regime_score": 9.4,
@@ -1106,6 +1145,7 @@
           "close": 154.99,
           "nextClose": 147.28,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 8.12,
           "dayChangePct": -4.97,
           "scores": {
             "market_regime_score": 9.4,
@@ -1138,6 +1178,7 @@
           "close": 455,
           "nextClose": 433.5,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 5.35,
           "dayChangePct": -4.73,
           "scores": {
             "market_regime_score": 9.4,
@@ -1170,6 +1211,7 @@
           "close": 341.97,
           "nextClose": 318,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 5.13,
           "dayChangePct": -7.01,
           "scores": {
             "market_regime_score": 9.4,
@@ -1202,6 +1244,7 @@
           "close": 163.62,
           "nextClose": 160.05,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 12.64,
           "dayChangePct": -2.18,
           "scores": {
             "market_regime_score": 9.4,
@@ -1234,6 +1277,7 @@
           "close": 55.72,
           "nextClose": 55.59,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 5.29,
           "dayChangePct": -0.23,
           "scores": {
             "market_regime_score": 9.4,
@@ -1266,6 +1310,7 @@
           "close": 610.49,
           "nextClose": 566,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 9.94,
           "dayChangePct": -7.29,
           "scores": {
             "market_regime_score": 9.4,
@@ -1298,6 +1343,7 @@
           "close": 309.99,
           "nextClose": 314.9,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 0.86,
           "dayChangePct": 1.58,
           "scores": {
             "market_regime_score": 9.4,
@@ -1330,6 +1376,7 @@
           "close": 677.3,
           "nextClose": 679.6,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 9.25,
           "dayChangePct": 0.34,
           "scores": {
             "market_regime_score": 9.4,
@@ -1356,7 +1403,10 @@
           "close": 5.79,
           "nextClose": 5.76,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": -3.82,
           "dayChangePct": -0.52,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "No major single risk flag; keep monitoring market regime and stop distance."
         },
         {
@@ -1370,7 +1420,10 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "RSI warming at 65.8"
         },
         {
@@ -1384,7 +1437,10 @@
           "close": 7.19,
           "nextClose": 7.15,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": -0.42,
           "dayChangePct": -0.56,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "stop is tight and may shake out"
         },
         {
@@ -1398,7 +1454,10 @@
           "close": 28.98,
           "nextClose": 27.74,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 3.91,
           "dayChangePct": -4.28,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "RSI overheated at 75.4"
         },
         {
@@ -1412,7 +1471,10 @@
           "close": 117.22,
           "nextClose": 118.18,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 1.58,
           "dayChangePct": 0.82,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "RSI warming at 64.1"
         },
         {
@@ -1423,10 +1485,13 @@
           "previousStatus": "Watch",
           "changeType": "DROPPED",
           "movement": "退出",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "dayChangePct": null,
+          "close": 259,
+          "nextClose": 242,
+          "returnDate": "2026-06-26",
+          "signalDayChangePct": 7.83,
+          "dayChangePct": -6.56,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 5.0%"
         },
         {
@@ -1440,7 +1505,10 @@
           "close": 21.4,
           "nextClose": 20.41,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 2.59,
           "dayChangePct": -4.63,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "RSI elevated at 74.1; stretched above 50d SMA; stretched above 20d SMA"
         },
         {
@@ -1454,7 +1522,10 @@
           "close": 9.81,
           "nextClose": 9.78,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": -1.11,
           "dayChangePct": -0.31,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "stop is tight and may shake out"
         },
         {
@@ -1465,10 +1536,13 @@
           "previousStatus": "Watch",
           "changeType": "DROPPED",
           "movement": "退出",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "dayChangePct": null,
+          "close": 8.98,
+          "nextClose": 8.93,
+          "returnDate": "2026-06-26",
+          "signalDayChangePct": 1.93,
+          "dayChangePct": -0.56,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "stop is tight and may shake out"
         },
         {
@@ -1482,7 +1556,10 @@
           "close": 17.77,
           "nextClose": 17.4,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 3.25,
           "dayChangePct": -2.08,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "below 200d SMA"
         },
         {
@@ -1493,10 +1570,13 @@
           "previousStatus": "Watch",
           "changeType": "DROPPED",
           "movement": "退出",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "dayChangePct": null,
+          "close": 87.5,
+          "nextClose": 83.98,
+          "returnDate": "2026-06-26",
+          "signalDayChangePct": 4.62,
+          "dayChangePct": -4.02,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 4.4%"
         },
         {
@@ -1510,7 +1590,10 @@
           "close": 6.59,
           "nextClose": 6.51,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": -0.6,
           "dayChangePct": -1.21,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "stop is tight and may shake out; below 200d SMA"
         },
         {
@@ -1521,10 +1604,13 @@
           "previousStatus": "High Risk Watch",
           "changeType": "DROPPED",
           "movement": "退出",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "dayChangePct": null,
+          "close": 42.34,
+          "nextClose": 42.69,
+          "returnDate": "2026-06-26",
+          "signalDayChangePct": 0.83,
+          "dayChangePct": 0.83,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 5.4%"
         },
         {
@@ -1538,7 +1624,10 @@
           "close": 360.28,
           "nextClose": 344.9,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 6.88,
           "dayChangePct": -4.27,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 5.8%"
         },
         {
@@ -1552,7 +1641,10 @@
           "close": 34.44,
           "nextClose": 33.32,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 1.2,
           "dayChangePct": -3.25,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "below 50d SMA"
         },
         {
@@ -1566,7 +1658,10 @@
           "close": 1505,
           "nextClose": 1458,
           "returnDate": "2026-06-26",
+          "signalDayChangePct": 3.58,
           "dayChangePct": -3.12,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR high at 6.5%; wide stop distance 17.8%"
         }
       ],
@@ -1575,8 +1670,8 @@
         "returnDate": "2026-06-26",
         "investedCount": 20,
         "dailyReturnPct": -2.57,
-        "valuePct": 99.06,
-        "cumulativeReturnPct": -0.94
+        "valuePct": 99.5,
+        "cumulativeReturnPct": -0.5
       }
     },
     {
@@ -1615,6 +1710,7 @@
           "close": 33.32,
           "nextClose": 32.99,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -3.25,
           "dayChangePct": -0.99,
           "scores": {
             "market_regime_score": 9.4,
@@ -1647,6 +1743,7 @@
           "close": 27.74,
           "nextClose": 28.49,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -4.28,
           "dayChangePct": 2.7,
           "scores": {
             "market_regime_score": 9.4,
@@ -1679,6 +1776,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 9.4,
@@ -1708,9 +1806,10 @@
           "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 11.8%; 20d > 50d > 200d trend stack; 20d momentum 9.4%; 60d momentum 28.9%; outperforming benchmark by 16.4% | 6 accumulation vs 2 distribution days; up days carry heavier volume than down days; 20d price gain 9.4% is volume-supported",
           "mainRisk": "ATR elevated at 5.0%",
           "analysisDate": "2026-06-26",
-          "close": null,
+          "close": 42.69,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 0.83,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 9.4,
@@ -1740,9 +1839,10 @@
           "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 11.7%; 20d momentum 8.4%; 60d momentum 24.3%; outperforming benchmark by 11.8% | cleared 55d pivot by 0.2%; breakout volume confirmed; latest up move came with volume | 5 accumulation vs 2 distribution days; up days carry heavier volume than down days; latest advance came on strong volume; 20d price gain 8.4% is volume-supported",
           "mainRisk": "ATR elevated at 5.4%",
           "analysisDate": "2026-06-26",
-          "close": null,
+          "close": 242,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -6.56,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 9.4,
@@ -1775,6 +1875,7 @@
           "close": 68,
           "nextClose": 65.3,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -8.63,
           "dayChangePct": -3.97,
           "scores": {
             "market_regime_score": 9.4,
@@ -1807,6 +1908,7 @@
           "close": 20.41,
           "nextClose": 20.86,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -4.63,
           "dayChangePct": 2.2,
           "scores": {
             "market_regime_score": 9.4,
@@ -1839,6 +1941,7 @@
           "close": 70.22,
           "nextClose": 69.61,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -8.79,
           "dayChangePct": -0.87,
           "scores": {
             "market_regime_score": 9.4,
@@ -1871,6 +1974,7 @@
           "close": 17.4,
           "nextClose": 18.13,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -2.08,
           "dayChangePct": 4.2,
           "scores": {
             "market_regime_score": 9.4,
@@ -1900,9 +2004,10 @@
           "mainReason": "market backdrop supports offense | above 50d SMA by 13.5%; 60d momentum 29.2%; outperforming benchmark by 16.7%",
           "mainRisk": "ATR elevated at 4.4%",
           "analysisDate": "2026-06-26",
-          "close": null,
+          "close": 83.98,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -4.02,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 9.4,
@@ -1935,6 +2040,7 @@
           "close": 1253.89,
           "nextClose": 1220,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -5.25,
           "dayChangePct": -2.7,
           "scores": {
             "market_regime_score": 9.4,
@@ -1964,9 +2070,10 @@
           "mainReason": "market backdrop supports offense | above 50d SMA by 3.7%; 20d momentum 10.4%; 60d momentum 17.6%",
           "mainRisk": "ATR elevated at 5.5%; below 200d SMA",
           "analysisDate": "2026-06-26",
-          "close": null,
+          "close": 35.67,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -7.21,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 9.4,
@@ -1999,6 +2106,7 @@
           "close": 148.76,
           "nextClose": 151,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -5.16,
           "dayChangePct": 1.51,
           "scores": {
             "market_regime_score": 9.4,
@@ -2031,6 +2139,7 @@
           "close": 20.07,
           "nextClose": 20.1,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -4.93,
           "dayChangePct": 0.15,
           "scores": {
             "market_regime_score": 9.4,
@@ -2063,6 +2172,7 @@
           "close": 812.61,
           "nextClose": 859.43,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": 1.93,
           "dayChangePct": 5.76,
           "scores": {
             "market_regime_score": 9.4,
@@ -2095,6 +2205,7 @@
           "close": 118.18,
           "nextClose": 126.17,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": 0.82,
           "dayChangePct": 6.76,
           "scores": {
             "market_regime_score": 9.4,
@@ -2127,6 +2238,7 @@
           "close": 413,
           "nextClose": 456.69,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": 3.48,
           "dayChangePct": 10.58,
           "scores": {
             "market_regime_score": 9.4,
@@ -2159,6 +2271,7 @@
           "close": 344.9,
           "nextClose": 354.84,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -4.27,
           "dayChangePct": 2.88,
           "scores": {
             "market_regime_score": 9.4,
@@ -2188,9 +2301,10 @@
           "mainReason": "market backdrop supports offense | 20d > 50d > 200d trend stack",
           "mainRisk": "below 50d SMA",
           "analysisDate": "2026-06-26",
-          "close": null,
+          "close": 8.93,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -0.56,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 9.4,
@@ -2223,6 +2337,7 @@
           "close": 5.76,
           "nextClose": 5.8,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -0.52,
           "dayChangePct": 0.69,
           "scores": {
             "market_regime_score": 9.4,
@@ -2249,7 +2364,10 @@
           "close": 7.15,
           "nextClose": 7.22,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -0.56,
           "dayChangePct": 0.98,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "stop is tight and may shake out"
         },
         {
@@ -2263,7 +2381,10 @@
           "close": 9.78,
           "nextClose": 9.83,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -0.31,
           "dayChangePct": 0.51,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "stop is tight and may shake out"
         },
         {
@@ -2277,7 +2398,10 @@
           "close": 6.51,
           "nextClose": 6.57,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -1.21,
           "dayChangePct": 0.92,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "stop is tight and may shake out; below 200d SMA"
         },
         {
@@ -2291,7 +2415,10 @@
           "close": 318,
           "nextClose": 295.15,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -7.01,
           "dayChangePct": -7.19,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 7.9%; pullback from recent high -12.3%"
         },
         {
@@ -2305,7 +2432,10 @@
           "close": 1458,
           "nextClose": 1482,
           "returnDate": "2026-06-29",
+          "signalDayChangePct": -3.12,
           "dayChangePct": 1.65,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 6.5%; wide stop distance 17.8%"
         }
       ],
@@ -2314,8 +2444,8 @@
         "returnDate": "2026-06-29",
         "investedCount": 14,
         "dailyReturnPct": 2.06,
-        "valuePct": 101.1,
-        "cumulativeReturnPct": 1.1
+        "valuePct": 101.55,
+        "cumulativeReturnPct": 1.55
       }
     },
     {
@@ -2354,6 +2484,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2386,6 +2517,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2418,6 +2550,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2450,6 +2583,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2482,6 +2616,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2514,6 +2649,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2546,6 +2682,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2578,6 +2715,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2610,6 +2748,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2642,6 +2781,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2674,6 +2814,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2706,6 +2847,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2738,6 +2880,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2770,6 +2913,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2802,6 +2946,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2834,6 +2979,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2866,6 +3012,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2898,6 +3045,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2930,6 +3078,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2962,6 +3111,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -2988,7 +3138,10 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "RSI warming at 65.8"
         },
         {
@@ -3002,7 +3155,10 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 5.9%"
         },
         {
@@ -3016,7 +3172,10 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 5.5%; below 200d SMA"
         },
         {
@@ -3030,7 +3189,10 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 4.6%; below 200d SMA"
         }
       ]
@@ -3071,6 +3233,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3103,6 +3266,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3135,6 +3299,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3167,6 +3332,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3199,6 +3365,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3231,6 +3398,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3263,6 +3431,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3295,6 +3464,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3327,6 +3497,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3359,6 +3530,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3391,6 +3563,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3423,6 +3596,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3455,6 +3629,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3487,6 +3662,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3519,6 +3695,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3551,6 +3728,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3583,6 +3761,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3615,6 +3794,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3647,6 +3827,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3679,6 +3860,7 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 8.9,
@@ -3731,6 +3913,7 @@
           "close": 28.49,
           "nextClose": 28.73,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 2.7,
           "dayChangePct": 0.84,
           "scores": {
             "market_regime_score": 9.4,
@@ -3763,6 +3946,7 @@
           "close": 77.27,
           "nextClose": 75.53,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 3.26,
           "dayChangePct": -2.25,
           "scores": {
             "market_regime_score": 9.4,
@@ -3795,6 +3979,7 @@
           "close": 32.99,
           "nextClose": 34.2,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": -0.99,
           "dayChangePct": 3.67,
           "scores": {
             "market_regime_score": 9.4,
@@ -3827,6 +4012,7 @@
           "close": 18.13,
           "nextClose": 18.2,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 4.2,
           "dayChangePct": 0.39,
           "scores": {
             "market_regime_score": 9.4,
@@ -3859,6 +4045,7 @@
           "close": 69.61,
           "nextClose": 72.15,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": -0.87,
           "dayChangePct": 3.65,
           "scores": {
             "market_regime_score": 9.4,
@@ -3891,6 +4078,7 @@
           "close": 1220,
           "nextClose": 1270,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": -2.7,
           "dayChangePct": 4.1,
           "scores": {
             "market_regime_score": 9.4,
@@ -3923,6 +4111,7 @@
           "close": 1482,
           "nextClose": 1595.55,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 1.65,
           "dayChangePct": 7.66,
           "scores": {
             "market_regime_score": 9.4,
@@ -3955,6 +4144,7 @@
           "close": 141.06,
           "nextClose": 152.8,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": -4.22,
           "dayChangePct": 8.32,
           "scores": {
             "market_regime_score": 9.4,
@@ -3987,6 +4177,7 @@
           "close": 295.15,
           "nextClose": 302.68,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": -7.19,
           "dayChangePct": 2.55,
           "scores": {
             "market_regime_score": 9.4,
@@ -4019,6 +4210,7 @@
           "close": 859.43,
           "nextClose": 883.8,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 5.76,
           "dayChangePct": 2.84,
           "scores": {
             "market_regime_score": 9.4,
@@ -4051,6 +4243,7 @@
           "close": 723.1,
           "nextClose": 703.8,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 6.4,
           "dayChangePct": -2.67,
           "scores": {
             "market_regime_score": 9.4,
@@ -4083,6 +4276,7 @@
           "close": 126.17,
           "nextClose": 124.51,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 6.76,
           "dayChangePct": -1.32,
           "scores": {
             "market_regime_score": 9.4,
@@ -4115,6 +4309,7 @@
           "close": 840,
           "nextClose": 815,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 9.09,
           "dayChangePct": -2.98,
           "scores": {
             "market_regime_score": 9.4,
@@ -4147,6 +4342,7 @@
           "close": 456.69,
           "nextClose": 468.5,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 10.58,
           "dayChangePct": 2.59,
           "scores": {
             "market_regime_score": 9.4,
@@ -4179,6 +4375,7 @@
           "close": 354.84,
           "nextClose": 370.3,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 2.88,
           "dayChangePct": 4.36,
           "scores": {
             "market_regime_score": 9.4,
@@ -4211,6 +4408,7 @@
           "close": 151,
           "nextClose": 158.82,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 1.51,
           "dayChangePct": 5.18,
           "scores": {
             "market_regime_score": 9.4,
@@ -4243,6 +4441,7 @@
           "close": 970,
           "nextClose": 942.9,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 2,
           "dayChangePct": -2.79,
           "scores": {
             "market_regime_score": 9.4,
@@ -4275,6 +4474,7 @@
           "close": 29.46,
           "nextClose": 29.07,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": -2.61,
           "dayChangePct": -1.32,
           "scores": {
             "market_regime_score": 9.4,
@@ -4307,6 +4507,7 @@
           "close": 255.9,
           "nextClose": 254.61,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 10.25,
           "dayChangePct": -0.5,
           "scores": {
             "market_regime_score": 9.4,
@@ -4339,6 +4540,7 @@
           "close": 434.16,
           "nextClose": 457.9,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 0.15,
           "dayChangePct": 5.47,
           "scores": {
             "market_regime_score": 9.4,
@@ -4365,7 +4567,10 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 4.9%"
         },
         {
@@ -4379,7 +4584,10 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 4.6%"
         },
         {
@@ -4393,7 +4601,10 @@
           "close": 20.86,
           "nextClose": 20.62,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 2.2,
           "dayChangePct": -1.15,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 4.3%; below 200d SMA"
         },
         {
@@ -4407,7 +4618,10 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 6.0%"
         },
         {
@@ -4421,7 +4635,10 @@
           "close": 5.8,
           "nextClose": 5.72,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": 0.69,
           "dayChangePct": -1.38,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "stop is tight and may shake out; below 50d SMA"
         },
         {
@@ -4435,7 +4652,10 @@
           "close": null,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": null,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "stop is tight and may shake out; below 50d SMA"
         },
         {
@@ -4449,7 +4669,10 @@
           "close": 556.96,
           "nextClose": 607,
           "returnDate": "2026-06-30",
+          "signalDayChangePct": -1.6,
           "dayChangePct": 8.98,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 7.5%; wide stop distance 17.9%"
         }
       ],
@@ -4458,8 +4681,8 @@
         "returnDate": "2026-06-30",
         "investedCount": 20,
         "dailyReturnPct": 1.89,
-        "valuePct": 103.01,
-        "cumulativeReturnPct": 3.01
+        "valuePct": 103.46,
+        "cumulativeReturnPct": 3.46
       }
     },
     {
@@ -4498,6 +4721,7 @@
           "close": 262.35,
           "nextClose": 246.31,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 5.11,
           "dayChangePct": -6.11,
           "scores": {
             "market_regime_score": 9.4,
@@ -4530,6 +4754,7 @@
           "close": 29.07,
           "nextClose": 30.01,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": -1.32,
           "dayChangePct": 3.23,
           "scores": {
             "market_regime_score": 9.4,
@@ -4562,6 +4787,7 @@
           "close": 883.8,
           "nextClose": 934.6,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 2.84,
           "dayChangePct": 5.75,
           "scores": {
             "market_regime_score": 9.4,
@@ -4594,6 +4820,7 @@
           "close": 703.8,
           "nextClose": 667.84,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": -2.67,
           "dayChangePct": -5.11,
           "scores": {
             "market_regime_score": 9.4,
@@ -4626,6 +4853,7 @@
           "close": 21.1,
           "nextClose": 22.94,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": -0.47,
           "dayChangePct": 8.72,
           "scores": {
             "market_regime_score": 9.4,
@@ -4658,6 +4886,7 @@
           "close": 468.5,
           "nextClose": 462,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 2.59,
           "dayChangePct": -1.39,
           "scores": {
             "market_regime_score": 9.4,
@@ -4690,6 +4919,7 @@
           "close": 370.3,
           "nextClose": 349.9,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 4.36,
           "dayChangePct": -5.51,
           "scores": {
             "market_regime_score": 9.4,
@@ -4722,6 +4952,7 @@
           "close": 158.82,
           "nextClose": 154.48,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 5.18,
           "dayChangePct": -2.73,
           "scores": {
             "market_regime_score": 9.4,
@@ -4754,6 +4985,7 @@
           "close": 1270,
           "nextClose": 1223.17,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 4.1,
           "dayChangePct": -3.69,
           "scores": {
             "market_regime_score": 9.4,
@@ -4786,6 +5018,7 @@
           "close": 95.72,
           "nextClose": 95.94,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 0.16,
           "dayChangePct": 0.23,
           "scores": {
             "market_regime_score": 9.4,
@@ -4818,6 +5051,7 @@
           "close": 8.68,
           "nextClose": 8.77,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 9.18,
           "dayChangePct": 1.04,
           "scores": {
             "market_regime_score": 9.4,
@@ -4850,6 +5084,7 @@
           "close": 942.9,
           "nextClose": 893.22,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": -2.79,
           "dayChangePct": -5.27,
           "scores": {
             "market_regime_score": 9.4,
@@ -4882,6 +5117,7 @@
           "close": 152.8,
           "nextClose": 145.01,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 8.32,
           "dayChangePct": -5.1,
           "scores": {
             "market_regime_score": 9.4,
@@ -4914,6 +5150,7 @@
           "close": 457.9,
           "nextClose": 448.02,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 5.47,
           "dayChangePct": -2.16,
           "scores": {
             "market_regime_score": 9.4,
@@ -4946,6 +5183,7 @@
           "close": 166.9,
           "nextClose": 170.46,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 0.13,
           "dayChangePct": 2.13,
           "scores": {
             "market_regime_score": 9.4,
@@ -4978,6 +5216,7 @@
           "close": 53.66,
           "nextClose": 53.42,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 3.53,
           "dayChangePct": -0.45,
           "scores": {
             "market_regime_score": 9.4,
@@ -5010,6 +5249,7 @@
           "close": 607,
           "nextClose": 575.56,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 8.98,
           "dayChangePct": -5.18,
           "scores": {
             "market_regime_score": 9.4,
@@ -5042,6 +5282,7 @@
           "close": 341.42,
           "nextClose": 333.67,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 1.04,
           "dayChangePct": -2.27,
           "scores": {
             "market_regime_score": 9.4,
@@ -5074,6 +5315,7 @@
           "close": 550.9,
           "nextClose": 555.3,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": -0.52,
           "dayChangePct": 0.8,
           "scores": {
             "market_regime_score": 9.4,
@@ -5106,6 +5348,7 @@
           "close": 72.88,
           "nextClose": 70.27,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 2.68,
           "dayChangePct": -3.58,
           "scores": {
             "market_regime_score": 9.4,
@@ -5132,7 +5375,10 @@
           "close": 28.73,
           "nextClose": 29.47,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 0.84,
           "dayChangePct": 2.58,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "RSI elevated at 68.5"
         },
         {
@@ -5146,7 +5392,10 @@
           "close": 75.53,
           "nextClose": 77.4,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": -2.25,
           "dayChangePct": 2.48,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "stop is tight and may shake out"
         },
         {
@@ -5160,7 +5409,10 @@
           "close": 34.2,
           "nextClose": 34.03,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 3.67,
           "dayChangePct": -0.5,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 4.1%; stop is tight and may shake out"
         },
         {
@@ -5174,7 +5426,10 @@
           "close": 18.2,
           "nextClose": 19.12,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 0.39,
           "dayChangePct": 5.05,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "below 200d SMA"
         },
         {
@@ -5188,7 +5443,10 @@
           "close": 72.15,
           "nextClose": 70,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 3.65,
           "dayChangePct": -2.98,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 6.0%; stop is tight and may shake out; pullback from recent high -14.1%"
         },
         {
@@ -5202,7 +5460,10 @@
           "close": 1595.55,
           "nextClose": 1485.33,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 7.66,
           "dayChangePct": -6.91,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR high at 6.4%; wide stop distance 20.8%"
         },
         {
@@ -5216,7 +5477,10 @@
           "close": 302.68,
           "nextClose": 285,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": 2.55,
           "dayChangePct": -5.84,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR high at 7.8%; pullback from recent high -16.8%"
         },
         {
@@ -5230,7 +5494,10 @@
           "close": 124.51,
           "nextClose": 125.2,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": -1.32,
           "dayChangePct": 0.55,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "very wide stop distance 22.6%"
         },
         {
@@ -5244,7 +5511,10 @@
           "close": 815,
           "nextClose": 772.01,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": -2.98,
           "dayChangePct": -5.27,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 5.9%; very wide stop distance 85.6%"
         },
         {
@@ -5258,7 +5528,10 @@
           "close": 254.61,
           "nextClose": 261.8,
           "returnDate": "2026-07-01",
+          "signalDayChangePct": -0.5,
           "dayChangePct": 2.82,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 4.5%; below 200d SMA"
         }
       ],
@@ -5267,8 +5540,8 @@
         "returnDate": "2026-07-01",
         "investedCount": 20,
         "dailyReturnPct": -1.33,
-        "valuePct": 101.64,
-        "cumulativeReturnPct": 1.64
+        "valuePct": 102.09,
+        "cumulativeReturnPct": 2.09
       }
     },
     {
@@ -5307,6 +5580,7 @@
           "close": 29.47,
           "nextClose": 28.62,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": 2.58,
           "dayChangePct": -2.88,
           "scores": {
             "market_regime_score": 9.4,
@@ -5339,6 +5613,7 @@
           "close": 145.01,
           "nextClose": 130.51,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -5.1,
           "dayChangePct": -10,
           "scores": {
             "market_regime_score": 9.4,
@@ -5371,6 +5646,7 @@
           "close": 349.9,
           "nextClose": 322.29,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -5.51,
           "dayChangePct": -7.89,
           "scores": {
             "market_regime_score": 9.4,
@@ -5403,6 +5679,7 @@
           "close": 246.31,
           "nextClose": 221.68,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -6.11,
           "dayChangePct": -10,
           "scores": {
             "market_regime_score": 9.4,
@@ -5435,6 +5712,7 @@
           "close": 934.6,
           "nextClose": 841.06,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": 5.75,
           "dayChangePct": -10.01,
           "scores": {
             "market_regime_score": 9.4,
@@ -5467,6 +5745,7 @@
           "close": 22.94,
           "nextClose": 21.7,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": 8.72,
           "dayChangePct": -5.41,
           "scores": {
             "market_regime_score": 9.4,
@@ -5499,6 +5778,7 @@
           "close": 30.01,
           "nextClose": 28.37,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": 3.23,
           "dayChangePct": -5.46,
           "scores": {
             "market_regime_score": 9.4,
@@ -5531,6 +5811,7 @@
           "close": 125.2,
           "nextClose": 121.3,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": 0.55,
           "dayChangePct": -3.12,
           "scores": {
             "market_regime_score": 9.4,
@@ -5563,6 +5844,7 @@
           "close": 448.02,
           "nextClose": 423.1,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -2.16,
           "dayChangePct": -5.56,
           "scores": {
             "market_regime_score": 9.4,
@@ -5595,6 +5877,7 @@
           "close": 1485.33,
           "nextClose": 1372,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -6.91,
           "dayChangePct": -7.63,
           "scores": {
             "market_regime_score": 9.4,
@@ -5627,6 +5910,7 @@
           "close": 575.56,
           "nextClose": 509,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -5.18,
           "dayChangePct": -11.56,
           "scores": {
             "market_regime_score": 9.4,
@@ -5659,6 +5943,7 @@
           "close": 154.48,
           "nextClose": 144.1,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -2.73,
           "dayChangePct": -6.72,
           "scores": {
             "market_regime_score": 9.4,
@@ -5691,6 +5976,7 @@
           "close": 95.94,
           "nextClose": 97.03,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": 0.23,
           "dayChangePct": 1.14,
           "scores": {
             "market_regime_score": 9.4,
@@ -5723,6 +6009,7 @@
           "close": 8.77,
           "nextClose": 9.1,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": 1.04,
           "dayChangePct": 3.76,
           "scores": {
             "market_regime_score": 9.4,
@@ -5755,6 +6042,7 @@
           "close": 893.22,
           "nextClose": 811,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -5.27,
           "dayChangePct": -9.2,
           "scores": {
             "market_regime_score": 9.4,
@@ -5787,6 +6075,7 @@
           "close": 170.46,
           "nextClose": 148.2,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": 2.13,
           "dayChangePct": -13.06,
           "scores": {
             "market_regime_score": 9.4,
@@ -5819,6 +6108,7 @@
           "close": 53.42,
           "nextClose": 50.69,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -0.45,
           "dayChangePct": -5.11,
           "scores": {
             "market_regime_score": 9.4,
@@ -5851,6 +6141,7 @@
           "close": 333.67,
           "nextClose": 301.46,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -2.27,
           "dayChangePct": -9.65,
           "scores": {
             "market_regime_score": 9.4,
@@ -5883,6 +6174,7 @@
           "close": 667.84,
           "nextClose": 599.22,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -5.11,
           "dayChangePct": -10.27,
           "scores": {
             "market_regime_score": 9.4,
@@ -5915,6 +6207,7 @@
           "close": 555.3,
           "nextClose": 531,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": 0.8,
           "dayChangePct": -4.38,
           "scores": {
             "market_regime_score": 9.4,
@@ -5941,7 +6234,10 @@
           "close": 462,
           "nextClose": 408.9,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -1.39,
           "dayChangePct": -11.49,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 5.7%; very wide stop distance 58.8%"
         },
         {
@@ -5955,7 +6251,10 @@
           "close": 1223.17,
           "nextClose": 1143,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -3.69,
           "dayChangePct": -6.55,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 6.0%; wide stop distance 16.2%"
         },
         {
@@ -5969,7 +6268,10 @@
           "close": 70.27,
           "nextClose": 67.82,
           "returnDate": "2026-07-02",
+          "signalDayChangePct": -3.58,
           "dayChangePct": -3.49,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 7.4%; very wide stop distance 73.1%"
         }
       ],
@@ -5978,8 +6280,8 @@
         "returnDate": "2026-07-02",
         "investedCount": 20,
         "dailyReturnPct": -6.65,
-        "valuePct": 94.88,
-        "cumulativeReturnPct": -5.12
+        "valuePct": 95.3,
+        "cumulativeReturnPct": -4.7
       }
     },
     {
@@ -6018,6 +6320,7 @@
           "close": 28.62,
           "nextClose": 28.95,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -2.88,
           "dayChangePct": 1.15,
           "scores": {
             "market_regime_score": 6,
@@ -6050,6 +6353,7 @@
           "close": 322.29,
           "nextClose": 325.4,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -7.89,
           "dayChangePct": 0.96,
           "scores": {
             "market_regime_score": 6,
@@ -6082,6 +6386,7 @@
           "close": 144.1,
           "nextClose": 140.31,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -6.72,
           "dayChangePct": -2.63,
           "scores": {
             "market_regime_score": 6,
@@ -6114,6 +6419,7 @@
           "close": 599.22,
           "nextClose": 618.02,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -10.27,
           "dayChangePct": 3.14,
           "scores": {
             "market_regime_score": 6,
@@ -6146,6 +6452,7 @@
           "close": 423.1,
           "nextClose": 454.48,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -5.56,
           "dayChangePct": 7.42,
           "scores": {
             "market_regime_score": 6,
@@ -6178,6 +6485,7 @@
           "close": 269.15,
           "nextClose": 266.8,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -14.8,
           "dayChangePct": -0.87,
           "scores": {
             "market_regime_score": 6,
@@ -6210,6 +6518,7 @@
           "close": 28.37,
           "nextClose": 28.32,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -5.46,
           "dayChangePct": -0.18,
           "scores": {
             "market_regime_score": 6,
@@ -6242,6 +6551,7 @@
           "close": 21.7,
           "nextClose": 21.82,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -5.41,
           "dayChangePct": 0.55,
           "scores": {
             "market_regime_score": 6,
@@ -6274,6 +6584,7 @@
           "close": 841.06,
           "nextClose": 816,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -10.01,
           "dayChangePct": -2.98,
           "scores": {
             "market_regime_score": 6,
@@ -6306,6 +6617,7 @@
           "close": 97.03,
           "nextClose": 89.63,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": 1.14,
           "dayChangePct": -7.63,
           "scores": {
             "market_regime_score": 6,
@@ -6338,6 +6650,7 @@
           "close": 9.1,
           "nextClose": 8.38,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": 3.76,
           "dayChangePct": -7.91,
           "scores": {
             "market_regime_score": 6,
@@ -6370,6 +6683,7 @@
           "close": 811,
           "nextClose": 881.91,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -9.2,
           "dayChangePct": 8.74,
           "scores": {
             "market_regime_score": 6,
@@ -6402,6 +6716,7 @@
           "close": 50.69,
           "nextClose": 52.42,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -5.11,
           "dayChangePct": 3.41,
           "scores": {
             "market_regime_score": 6,
@@ -6434,6 +6749,7 @@
           "close": 301.46,
           "nextClose": 302.71,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -9.65,
           "dayChangePct": 0.41,
           "scores": {
             "market_regime_score": 6,
@@ -6466,6 +6782,7 @@
           "close": 531,
           "nextClose": 518.04,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -4.38,
           "dayChangePct": -2.44,
           "scores": {
             "market_regime_score": 6,
@@ -6498,6 +6815,7 @@
           "close": 67.82,
           "nextClose": 70.9,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -3.49,
           "dayChangePct": 4.54,
           "scores": {
             "market_regime_score": 6,
@@ -6530,6 +6848,7 @@
           "close": 284.5,
           "nextClose": 285,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -9.86,
           "dayChangePct": 0.18,
           "scores": {
             "market_regime_score": 6,
@@ -6562,6 +6881,7 @@
           "close": 1639,
           "nextClose": 1659.23,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -6.93,
           "dayChangePct": 1.23,
           "scores": {
             "market_regime_score": 6,
@@ -6594,6 +6914,7 @@
           "close": 418.8,
           "nextClose": 427.91,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -9.56,
           "dayChangePct": 2.18,
           "scores": {
             "market_regime_score": 6,
@@ -6626,6 +6947,7 @@
           "close": 694.81,
           "nextClose": 677.77,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -10,
           "dayChangePct": -2.45,
           "scores": {
             "market_regime_score": 6,
@@ -6652,7 +6974,10 @@
           "close": 130.51,
           "nextClose": 135.35,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -10,
           "dayChangePct": 3.71,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 7.8%; wide stop distance 18.6%"
         },
         {
@@ -6666,7 +6991,10 @@
           "close": 221.68,
           "nextClose": 232.73,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -10,
           "dayChangePct": 4.98,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 7.6%"
         },
         {
@@ -6680,7 +7008,10 @@
           "close": 121.3,
           "nextClose": 124.12,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -3.12,
           "dayChangePct": 2.32,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 4.2%; wide stop distance 20.7%"
         },
         {
@@ -6694,7 +7025,10 @@
           "close": 1372,
           "nextClose": 1353,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -7.63,
           "dayChangePct": -1.38,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 6.8%; wide stop distance 18.5%"
         },
         {
@@ -6708,7 +7042,10 @@
           "close": 509,
           "nextClose": 526,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -11.56,
           "dayChangePct": 3.34,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 8.0%; wide stop distance 17.4%"
         },
         {
@@ -6722,7 +7059,10 @@
           "close": 148.2,
           "nextClose": 144.89,
           "returnDate": "2026-07-03",
+          "signalDayChangePct": -13.06,
           "dayChangePct": -2.23,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 8.0%; very wide stop distance 40.3%"
         }
       ],
@@ -6731,8 +7071,8 @@
         "returnDate": "2026-07-03",
         "investedCount": 20,
         "dailyReturnPct": 0.34,
-        "valuePct": 95.2,
-        "cumulativeReturnPct": -4.8
+        "valuePct": 95.62,
+        "cumulativeReturnPct": -4.38
       }
     },
     {
@@ -6771,6 +7111,7 @@
           "close": 21.19,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 0.76,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -6803,6 +7144,7 @@
           "close": 48.99,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 9.06,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -6835,6 +7177,7 @@
           "close": 28.95,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 1.15,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -6867,6 +7210,7 @@
           "close": 34,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 1.16,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -6899,6 +7243,7 @@
           "close": 77.96,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 1.23,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -6931,6 +7276,7 @@
           "close": 325.4,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 0.96,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -6963,6 +7309,7 @@
           "close": 19.37,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 1.04,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -6995,6 +7342,7 @@
           "close": 38.66,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 0.39,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7027,6 +7375,7 @@
           "close": 232.73,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 4.98,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7059,6 +7408,7 @@
           "close": 140.31,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -2.63,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7091,6 +7441,7 @@
           "close": 1353,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -1.38,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7123,6 +7474,7 @@
           "close": 135.35,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 3.71,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7155,6 +7507,7 @@
           "close": 28.32,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -0.18,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7187,6 +7540,7 @@
           "close": 618.02,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 3.14,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7219,6 +7573,7 @@
           "close": 37.15,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 8.12,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7251,6 +7606,7 @@
           "close": 266.8,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -0.87,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7283,6 +7639,7 @@
           "close": 526,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 3.34,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7315,6 +7672,7 @@
           "close": 63.52,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 0.06,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7347,6 +7705,7 @@
           "close": 124.12,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 2.32,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7379,6 +7738,7 @@
           "close": 454.48,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 7.42,
           "dayChangePct": null,
           "scores": {
             "market_regime_score": 6,
@@ -7405,7 +7765,10 @@
           "close": 64.72,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 1.09,
           "dayChangePct": null,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 6.0%; stop is tight and may shake out; pullback from recent high -14.1%"
         },
         {
@@ -7419,7 +7782,10 @@
           "close": 1116,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -2.36,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 6.2%"
         },
         {
@@ -7433,7 +7799,10 @@
           "close": 250.1,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -0.27,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR high at 7.8%; pullback from recent high -16.8%"
         },
         {
@@ -7447,7 +7816,10 @@
           "close": 816,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -2.98,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 4.7%; very wide stop distance 40.7%"
         },
         {
@@ -7461,7 +7833,10 @@
           "close": 677.77,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": -2.45,
           "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 5.9%; very wide stop distance 85.6%"
         },
         {
@@ -7475,7 +7850,10 @@
           "close": 413.69,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 1.17,
           "dayChangePct": null,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 5.8%; very wide stop distance 57.5%"
         },
         {
@@ -7489,7 +7867,10 @@
           "close": 881.91,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 8.74,
           "dayChangePct": null,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 5.9%; very wide stop distance 51.1%"
         },
         {
@@ -7503,8 +7884,777 @@
           "close": 266.96,
           "nextClose": null,
           "returnDate": "",
+          "signalDayChangePct": 5.28,
           "dayChangePct": null,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 4.5%; below 200d SMA"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-06",
+      "previousDate": "2026-07-03",
+      "sourceFile": "outputs/daily_watchlists/watchlist_2026-07-06.csv",
+      "changeFile": "outputs/daily_leaderboard_changes/leaderboard_changes_2026-07-06.csv",
+      "summary": {
+        "total": 20,
+        "new": 5,
+        "up": 6,
+        "down": 6,
+        "unchanged": 3,
+        "retained": 15,
+        "dropped": 5,
+        "highRisk": 5,
+        "avgScore": 6.66
+      },
+      "rows": [
+        {
+          "ticker": "601688.SH",
+          "name": "华泰证券",
+          "rank": 1,
+          "previousRank": 1,
+          "rankDelta": 0,
+          "changeType": "UNCHANGED",
+          "movement": "保持",
+          "score": 7.47,
+          "previousScore": 7.39,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 9.3%; 20d momentum 13.1%; 60d momentum 21.1%; outperforming benchmark by 11.5% | 5 accumulation vs 0 distribution days; up days carry heavier volume than down days; 20d price gain 13.1% is volume-supported",
+          "mainRisk": "ATR elevated at 4.2%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 10,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 8.2,
+            "candlestick_score": 5,
+            "overheat_score": 8,
+            "risk_score": 7.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7.4
+          }
+        },
+        {
+          "ticker": "000333.SZ",
+          "name": "美的集团",
+          "rank": 2,
+          "previousRank": 5,
+          "rankDelta": 3,
+          "changeType": "UP",
+          "movement": "上升 3",
+          "score": 7.28,
+          "previousScore": 6.77,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 3.9%",
+          "mainRisk": "CSI300ETF below 50d SMA",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 8.7,
+            "livermore_breakout_score": 6.5,
+            "volume_price_score": 6.4,
+            "candlestick_score": 6.4,
+            "overheat_score": 8.5,
+            "risk_score": 7.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7
+          }
+        },
+        {
+          "ticker": "600030.SH",
+          "name": "中信证券",
+          "rank": 3,
+          "previousRank": 3,
+          "rankDelta": 0,
+          "changeType": "UNCHANGED",
+          "movement": "保持",
+          "score": 7.27,
+          "previousScore": 7.04,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 9.8%; 20d momentum 15.7%; 60d momentum 24.3%; outperforming benchmark by 14.6%",
+          "mainRisk": "RSI warming at 62.3",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 10,
+            "livermore_breakout_score": 6.5,
+            "volume_price_score": 5.8,
+            "candlestick_score": 5,
+            "overheat_score": 6.5,
+            "risk_score": 8.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.8
+          }
+        },
+        {
+          "ticker": "600919.SH",
+          "name": "江苏银行",
+          "rank": 4,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 7.26,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "candlestick timing confirms demand | above 50d SMA by 0.9%; 20d > 50d > 200d trend stack | strong bullish candle closed near high; bullish engulfing pattern",
+          "mainRisk": "stop is tight and may shake out",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 10,
+            "livermore_breakout_score": 6.5,
+            "volume_price_score": 5,
+            "candlestick_score": 8,
+            "overheat_score": 7.5,
+            "risk_score": 6.9,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7.3
+          }
+        },
+        {
+          "ticker": "601211.SH",
+          "name": "国泰海通",
+          "rank": 5,
+          "previousRank": 7,
+          "rankDelta": 2,
+          "changeType": "UP",
+          "movement": "上升 2",
+          "score": 7.15,
+          "previousScore": 6.62,
+          "status": "High Risk Watch",
+          "previousStatus": "High Risk Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 20.8%; 20d momentum 24.5%; 60d momentum 24.2%; outperforming benchmark by 14.5% | cleared 55d pivot by 1.1%; breakout volume confirmed | 7 accumulation vs 2 distribution days; latest advance came on strong volume; 20d price gain 24.5% is volume-supported",
+          "mainRisk": "wide stop distance 20.8%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 10,
+            "livermore_breakout_score": 8.4,
+            "volume_price_score": 8.2,
+            "candlestick_score": 5,
+            "overheat_score": 3.3,
+            "risk_score": 6.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.2
+          }
+        },
+        {
+          "ticker": "688256.SH",
+          "name": "寒武纪",
+          "rank": 6,
+          "previousRank": 11,
+          "rankDelta": 5,
+          "changeType": "UP",
+          "movement": "上升 5",
+          "score": 6.79,
+          "previousScore": 6.38,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 6.9%; 20d > 50d > 200d trend stack; 60d momentum 82.6%; outperforming benchmark by 72.9% | 6 accumulation vs 1 distribution days; up days carry heavier volume than down days; 20d price gain 5.4% is volume-supported",
+          "mainRisk": "ATR high at 7.9%; pullback from recent high -14.2%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 9.9,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 8.2,
+            "candlestick_score": 5.9,
+            "overheat_score": 8.5,
+            "risk_score": 5.3,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7
+          }
+        },
+        {
+          "ticker": "002415.SZ",
+          "name": "海康威视",
+          "rank": 7,
+          "previousRank": 4,
+          "rankDelta": -3,
+          "changeType": "DOWN",
+          "movement": "下降 3",
+          "score": 6.77,
+          "previousScore": 7.02,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 4.0%; 20d momentum 8.2%",
+          "mainRisk": "ATR elevated at 5.2%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 9.2,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 6.8,
+            "candlestick_score": 4.7,
+            "overheat_score": 7,
+            "risk_score": 6.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.5
+          }
+        },
+        {
+          "ticker": "600150.SH",
+          "name": "中国船舶",
+          "rank": 8,
+          "previousRank": 15,
+          "rankDelta": 7,
+          "changeType": "UP",
+          "movement": "上升 7",
+          "score": 6.75,
+          "previousScore": 6.16,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 0.4%; 60d momentum 17.7%; outperforming benchmark by 8.0% | up days carry heavier volume than down days; latest advance came on strong volume",
+          "mainRisk": "ATR elevated at 4.5%; stop is tight and may shake out",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 10,
+            "livermore_breakout_score": 4.2,
+            "volume_price_score": 7,
+            "candlestick_score": 5,
+            "overheat_score": 8.5,
+            "risk_score": 5.5,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.9
+          }
+        },
+        {
+          "ticker": "601628.SH",
+          "name": "中国人寿",
+          "rank": 9,
+          "previousRank": 8,
+          "rankDelta": -1,
+          "changeType": "DOWN",
+          "movement": "下降 1",
+          "score": 6.68,
+          "previousScore": 6.56,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 9.1%; 20d momentum 18.2% | 6 accumulation vs 2 distribution days; up days carry heavier volume than down days; 20d price gain 18.2% is volume-supported",
+          "mainRisk": "ATR elevated at 4.8%; below 200d SMA",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 6.8,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 8.2,
+            "candlestick_score": 5.6,
+            "overheat_score": 8,
+            "risk_score": 6.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.5
+          }
+        },
+        {
+          "ticker": "000651.SZ",
+          "name": "格力电器",
+          "rank": 10,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.65,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 1.1%",
+          "mainRisk": "stop is tight and may shake out",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 6.9,
+            "livermore_breakout_score": 6.5,
+            "volume_price_score": 5,
+            "candlestick_score": 6.4,
+            "overheat_score": 8.5,
+            "risk_score": 6.9,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.5
+          }
+        },
+        {
+          "ticker": "688041.SH",
+          "name": "海光信息",
+          "rank": 11,
+          "previousRank": 6,
+          "rankDelta": -5,
+          "changeType": "DOWN",
+          "movement": "下降 5",
+          "score": 6.63,
+          "previousScore": 6.65,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 8.9%; 20d > 50d > 200d trend stack; 20d momentum 23.8%; 60d momentum 55.9%; outperforming benchmark by 46.2% | 5 accumulation vs 1 distribution days; 20d price gain 23.8% is volume-supported",
+          "mainRisk": "ATR high at 7.2%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 7.2,
+            "candlestick_score": 4.7,
+            "overheat_score": 8,
+            "risk_score": 6,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.8
+          }
+        },
+        {
+          "ticker": "688981.SH",
+          "name": "中芯国际",
+          "rank": 12,
+          "previousRank": 10,
+          "rankDelta": -2,
+          "changeType": "DOWN",
+          "movement": "下降 2",
+          "score": 6.63,
+          "previousScore": 6.41,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 9.2%; 20d > 50d > 200d trend stack; 20d momentum 13.0%; 60d momentum 50.6%; outperforming benchmark by 40.9% | 6 accumulation vs 2 distribution days; 20d price gain 13.0% is volume-supported",
+          "mainRisk": "ATR high at 7.2%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 7.2,
+            "candlestick_score": 4.7,
+            "overheat_score": 8,
+            "risk_score": 6,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.8
+          }
+        },
+        {
+          "ticker": "000776.SZ",
+          "name": "广发证券",
+          "rank": 13,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.54,
+          "previousScore": 0,
+          "status": "Wait for Pullback",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 15.3%; 20d momentum 26.8%; 60d momentum 34.4%; outperforming benchmark by 24.7% | 6 accumulation vs 1 distribution days; up days carry heavier volume than down days; 20d price gain 26.8% is volume-supported",
+          "mainRisk": "ATR elevated at 5.3%; wide stop distance 15.3%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 10,
+            "livermore_breakout_score": 4.7,
+            "volume_price_score": 8.2,
+            "candlestick_score": 5,
+            "overheat_score": 4.9,
+            "risk_score": 5.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.7
+          }
+        },
+        {
+          "ticker": "601336.SH",
+          "name": "新华保险",
+          "rank": 14,
+          "previousRank": 18,
+          "rankDelta": 4,
+          "changeType": "UP",
+          "movement": "上升 4",
+          "score": 6.38,
+          "previousScore": 6,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 5.4%; 20d momentum 14.4%",
+          "mainRisk": "ATR elevated at 5.2%; below 200d SMA",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 5.5,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 6.8,
+            "candlestick_score": 6.6,
+            "overheat_score": 8.5,
+            "risk_score": 6.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.4
+          }
+        },
+        {
+          "ticker": "601066.SH",
+          "name": "中信建投",
+          "rank": 15,
+          "previousRank": 13,
+          "rankDelta": -2,
+          "changeType": "DOWN",
+          "movement": "下降 2",
+          "score": 6.34,
+          "previousScore": 6.21,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 16.1%; 20d momentum 16.8%; 60d momentum 36.7%; outperforming benchmark by 27.0%",
+          "mainRisk": "ATR elevated at 5.5%; wide stop distance 16.1%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 6.8,
+            "candlestick_score": 5,
+            "overheat_score": 7.2,
+            "risk_score": 5.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.2
+          }
+        },
+        {
+          "ticker": "688008.SH",
+          "name": "澜起科技",
+          "rank": 16,
+          "previousRank": 16,
+          "rankDelta": 0,
+          "changeType": "UNCHANGED",
+          "movement": "保持",
+          "score": 6.25,
+          "previousScore": 6.06,
+          "status": "High Risk Watch",
+          "previousStatus": "High Risk Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 10.7%; 20d > 50d > 200d trend stack; 20d momentum 12.2%; 60d momentum 110.1%; outperforming benchmark by 100.4% | 6 accumulation vs 3 distribution days; 20d price gain 12.2% is volume-supported",
+          "mainRisk": "ATR high at 8.8%; pullback from recent high -14.9%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 7.2,
+            "candlestick_score": 5,
+            "overheat_score": 7.2,
+            "risk_score": 4.3,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.5
+          }
+        },
+        {
+          "ticker": "688235.SH",
+          "name": "百济神州",
+          "rank": 17,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.2,
+          "previousScore": 0,
+          "status": "High Risk Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 16.4%; 20d momentum 25.8%; 60d momentum 16.8%; outperforming benchmark by 7.1% | cleared 55d pivot by 0.4%; breakout volume confirmed; latest up move came with volume | 7 accumulation vs 2 distribution days; up days carry heavier volume than down days; latest advance came on strong volume; 20d price gain 25.8% is volume-supported",
+          "mainRisk": "ATR elevated at 5.4%; wide stop distance 16.4%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 9.2,
+            "livermore_breakout_score": 8.1,
+            "volume_price_score": 9.2,
+            "candlestick_score": 5,
+            "overheat_score": 1.9,
+            "risk_score": 5.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 5.9
+          }
+        },
+        {
+          "ticker": "002463.SZ",
+          "name": "沪电股份",
+          "rank": 18,
+          "previousRank": 12,
+          "rankDelta": -6,
+          "changeType": "DOWN",
+          "movement": "下降 6",
+          "score": 6.14,
+          "previousScore": 6.3,
+          "status": "High Risk Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 3.8%; 20d > 50d > 200d trend stack; 60d momentum 69.7%; outperforming benchmark by 60.0% | 6 accumulation vs 1 distribution days; up days carry heavier volume than down days",
+          "mainRisk": "ATR high at 9.7%; pullback from recent high -16.9%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 9.4,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 7.4,
+            "candlestick_score": 3.4,
+            "overheat_score": 8.5,
+            "risk_score": 4.3,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 5.7
+          }
+        },
+        {
+          "ticker": "002916.SZ",
+          "name": "深南电路",
+          "rank": 19,
+          "previousRank": 20,
+          "rankDelta": 1,
+          "changeType": "UP",
+          "movement": "上升 1",
+          "score": 6,
+          "previousScore": 5.95,
+          "status": "High Risk Watch",
+          "previousStatus": "High Risk Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 16.6%; 20d > 50d > 200d trend stack; 20d momentum 18.0%; 60d momentum 106.2%; outperforming benchmark by 96.5%",
+          "mainRisk": "ATR high at 8.8%; wide stop distance 16.6%",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 5.8,
+            "candlestick_score": 5,
+            "overheat_score": 7.2,
+            "risk_score": 4.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 5.9
+          }
+        },
+        {
+          "ticker": "300059.SZ",
+          "name": "东方财富",
+          "rank": 20,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 7.0%; 20d momentum 14.4%; 60d momentum 15.4%",
+          "mainRisk": "ATR elevated at 4.9%; below 200d SMA",
+          "analysisDate": "2026-07-06",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6.5,
+            "trend_score": 6,
+            "livermore_breakout_score": 4.7,
+            "volume_price_score": 6.8,
+            "candlestick_score": 5,
+            "overheat_score": 7,
+            "risk_score": 6.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6
+          }
+        }
+      ],
+      "dropped": [
+        {
+          "ticker": "002050.SZ",
+          "name": "三花智控",
+          "previousRank": 2,
+          "previousScore": 7.05,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR elevated at 4.5%"
+        },
+        {
+          "ticker": "002384.SZ",
+          "name": "东山精密",
+          "previousRank": 9,
+          "previousScore": 6.53,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 8.9%; pullback from recent high -15.6%"
+        },
+        {
+          "ticker": "301308.SZ",
+          "name": "江波龙",
+          "previousRank": 14,
+          "previousScore": 6.16,
+          "previousStatus": "High Risk Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 8.7%; pullback from recent high -14.5%"
+        },
+        {
+          "ticker": "300502.SZ",
+          "name": "新易盛",
+          "previousRank": 17,
+          "previousScore": 6.02,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 8.7%; pullback from recent high -13.8%"
+        },
+        {
+          "ticker": "603259.SH",
+          "name": "药明康德",
+          "previousRank": 19,
+          "previousScore": 6,
+          "previousStatus": "High Risk Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR elevated at 4.6%; wide stop distance 18.5%"
         }
       ]
     }
@@ -7512,64 +8662,64 @@
   "portfolio": {
     "method": "equal_weight_top20_next_trading_day_close_to_close",
     "initialValuePct": 100,
-    "latestValuePct": 95.2,
-    "latestReturnPct": -4.8,
+    "latestValuePct": 95.62,
+    "latestReturnPct": -4.38,
     "daily": [
       {
         "date": "2026-06-24",
         "returnDate": "2026-06-25",
-        "investedCount": 15,
-        "dailyReturnPct": 1.67,
-        "valuePct": 101.67,
-        "cumulativeReturnPct": 1.67
+        "investedCount": 19,
+        "dailyReturnPct": 2.12,
+        "valuePct": 102.12,
+        "cumulativeReturnPct": 2.12
       },
       {
         "date": "2026-06-25",
         "returnDate": "2026-06-26",
         "investedCount": 20,
         "dailyReturnPct": -2.57,
-        "valuePct": 99.06,
-        "cumulativeReturnPct": -0.94
+        "valuePct": 99.5,
+        "cumulativeReturnPct": -0.5
       },
       {
         "date": "2026-06-26",
         "returnDate": "2026-06-29",
         "investedCount": 14,
         "dailyReturnPct": 2.06,
-        "valuePct": 101.1,
-        "cumulativeReturnPct": 1.1
+        "valuePct": 101.55,
+        "cumulativeReturnPct": 1.55
       },
       {
         "date": "2026-06-29",
         "returnDate": "2026-06-30",
         "investedCount": 20,
         "dailyReturnPct": 1.89,
-        "valuePct": 103.01,
-        "cumulativeReturnPct": 3.01
+        "valuePct": 103.46,
+        "cumulativeReturnPct": 3.46
       },
       {
         "date": "2026-06-30",
         "returnDate": "2026-07-01",
         "investedCount": 20,
         "dailyReturnPct": -1.33,
-        "valuePct": 101.64,
-        "cumulativeReturnPct": 1.64
+        "valuePct": 102.09,
+        "cumulativeReturnPct": 2.09
       },
       {
         "date": "2026-07-01",
         "returnDate": "2026-07-02",
         "investedCount": 20,
         "dailyReturnPct": -6.65,
-        "valuePct": 94.88,
-        "cumulativeReturnPct": -5.12
+        "valuePct": 95.3,
+        "cumulativeReturnPct": -4.7
       },
       {
         "date": "2026-07-02",
         "returnDate": "2026-07-03",
         "investedCount": 20,
         "dailyReturnPct": 0.34,
-        "valuePct": 95.2,
-        "cumulativeReturnPct": -4.8
+        "valuePct": 95.62,
+        "cumulativeReturnPct": -4.38
       }
     ]
   },
@@ -7730,6 +8880,15 @@
           "changeType": "DOWN",
           "returnDate": "",
           "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 3,
+          "score": 7.27,
+          "status": "Watch",
+          "changeType": "UNCHANGED",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -7812,8 +8971,8 @@
           "score": 7.47,
           "status": "Watch",
           "changeType": "NEW",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-06-25",
+          "dayChangePct": 7.83
         },
         {
           "date": "2026-06-26",
@@ -7890,6 +9049,15 @@
           "score": 7.39,
           "status": "Watch",
           "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 1,
+          "score": 7.47,
+          "status": "Watch",
+          "changeType": "UNCHANGED",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -7980,8 +9148,8 @@
           "score": 7.18,
           "status": "Watch",
           "changeType": "NEW",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-06-25",
+          "dayChangePct": 1.93
         },
         {
           "date": "2026-06-26",
@@ -8069,6 +9237,15 @@
           "changeType": "DOWN",
           "returnDate": "",
           "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 5,
+          "score": 7.15,
+          "status": "High Risk Watch",
+          "changeType": "UP",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -8082,8 +9259,8 @@
           "score": 6.91,
           "status": "Watch",
           "changeType": "NEW",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-06-25",
+          "dayChangePct": 4.62
         },
         {
           "date": "2026-06-26",
@@ -8139,8 +9316,8 @@
           "score": 6.89,
           "status": "High Risk Watch",
           "changeType": "NEW",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-06-25",
+          "dayChangePct": 0.83
         },
         {
           "date": "2026-06-26",
@@ -8253,6 +9430,15 @@
           "score": 6.65,
           "status": "Watch",
           "changeType": "UP",
+          "returnDate": "",
+          "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 11,
+          "score": 6.63,
+          "status": "Watch",
+          "changeType": "DOWN",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -8399,6 +9585,15 @@
           "changeType": "DOWN",
           "returnDate": "",
           "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 7,
+          "score": 6.77,
+          "status": "Watch",
+          "changeType": "DOWN",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -8457,6 +9652,15 @@
           "score": 6.38,
           "status": "Watch",
           "changeType": "DOWN",
+          "returnDate": "",
+          "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 6,
+          "score": 6.79,
+          "status": "Watch",
+          "changeType": "UP",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -8553,6 +9757,15 @@
           "score": 6.41,
           "status": "Watch",
           "changeType": "UP",
+          "returnDate": "",
+          "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 12,
+          "score": 6.63,
+          "status": "Watch",
+          "changeType": "DOWN",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -9029,6 +10242,15 @@
           "changeType": "DOWN",
           "returnDate": "",
           "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 18,
+          "score": 6.14,
+          "status": "High Risk Watch",
+          "changeType": "DOWN",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -9087,6 +10309,15 @@
           "score": 5.95,
           "status": "High Risk Watch",
           "changeType": "UNCHANGED",
+          "returnDate": "",
+          "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 19,
+          "score": 6,
+          "status": "High Risk Watch",
+          "changeType": "UP",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -9356,6 +10587,15 @@
           "changeType": "NEW",
           "returnDate": "2026-06-29",
           "dayChangePct": 0.15
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 20,
+          "score": 6,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -9396,6 +10636,15 @@
           "score": 6.77,
           "status": "Watch",
           "changeType": "DOWN",
+          "returnDate": "",
+          "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 2,
+          "score": 7.28,
+          "status": "Watch",
+          "changeType": "UP",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -9449,6 +10698,15 @@
           "changeType": "UP",
           "returnDate": "",
           "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 15,
+          "score": 6.34,
+          "status": "Watch",
+          "changeType": "DOWN",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -9464,6 +10722,15 @@
           "changeType": "NEW",
           "returnDate": "2026-06-30",
           "dayChangePct": -0.5
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 17,
+          "score": 6.2,
+          "status": "High Risk Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -9578,6 +10845,15 @@
           "changeType": "NEW",
           "returnDate": "",
           "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 16,
+          "score": 6.25,
+          "status": "High Risk Watch",
+          "changeType": "UNCHANGED",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -9653,6 +10929,15 @@
           "changeType": "NEW",
           "returnDate": "",
           "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 9,
+          "score": 6.68,
+          "status": "Watch",
+          "changeType": "DOWN",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -9668,6 +10953,15 @@
           "changeType": "NEW",
           "returnDate": "",
           "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 8,
+          "score": 6.75,
+          "status": "Watch",
+          "changeType": "UP",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -9680,6 +10974,60 @@
           "rank": 18,
           "score": 6,
           "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
+        },
+        {
+          "date": "2026-07-06",
+          "rank": 14,
+          "score": 6.38,
+          "status": "Watch",
+          "changeType": "UP",
+          "returnDate": "",
+          "dayChangePct": null
+        }
+      ]
+    },
+    "600919.SH": {
+      "ticker": "600919.SH",
+      "name": "江苏银行",
+      "appearances": [
+        {
+          "date": "2026-07-06",
+          "rank": 4,
+          "score": 7.26,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
+        }
+      ]
+    },
+    "000651.SZ": {
+      "ticker": "000651.SZ",
+      "name": "格力电器",
+      "appearances": [
+        {
+          "date": "2026-07-06",
+          "rank": 10,
+          "score": 6.65,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
+        }
+      ]
+    },
+    "000776.SZ": {
+      "ticker": "000776.SZ",
+      "name": "广发证券",
+      "appearances": [
+        {
+          "date": "2026-07-06",
+          "rank": 13,
+          "score": 6.54,
+          "status": "Wait for Pullback",
           "changeType": "NEW",
           "returnDate": "",
           "dayChangePct": null

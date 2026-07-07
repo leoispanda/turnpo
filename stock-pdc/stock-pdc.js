@@ -77,6 +77,7 @@ function droppedRankDelta(row) {
 }
 
 function droppedChangeLabel(row) {
+  if (row.exitAction === "HOLD_DROPPED_UP_DAY") return "Hold";
   const delta = droppedRankDelta(row);
   return delta === null ? "Out" : `-${delta}+`;
 }
@@ -84,7 +85,8 @@ function droppedChangeLabel(row) {
 function droppedMovementPath(row) {
   const delta = droppedRankDelta(row);
   const movement = delta === null ? "跌出 Top 20" : `跌出 Top 20，至少下滑 ${delta} 名`;
-  return `#${row.previousRank || "-"} -> ${movement}`;
+  const action = row.exitText ? `，${row.exitText}` : "";
+  return `#${row.previousRank || "-"} -> ${movement}${action}`;
 }
 
 function shortDate(value) {
@@ -104,6 +106,11 @@ function rowByRank(day, rank) {
 
 function renderDayChange(row) {
   return `<span class="stock-day-change ${pctClass(row.dayChangePct)}">${formatPct(row.dayChangePct)}</span>`;
+}
+
+function renderDroppedDayChange(row) {
+  const value = Number.isFinite(row.signalDayChangePct) ? row.signalDayChangePct : row.dayChangePct;
+  return `<span class="stock-day-change ${pctClass(value)}">${formatPct(value)}</span>`;
 }
 
 function renderRankCell(day, rank) {
@@ -128,12 +135,12 @@ function renderDroppedCell(day, index) {
   const row = (day.dropped || [])[index] || null;
   if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} dropped ${index + 1} empty"></div>`;
   return `
-    <article class="stock-rank-cell DROPPED" aria-label="${escapeHtml(day.date)} dropped ${index + 1} ${escapeHtml(row.name)} ${escapeHtml(droppedMovementPath(row))} 下一交易日涨跌幅 ${escapeHtml(formatPct(row.dayChangePct, "unknown"))}">
+    <article class="stock-rank-cell DROPPED" aria-label="${escapeHtml(day.date)} dropped ${index + 1} ${escapeHtml(row.name)} ${escapeHtml(droppedMovementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(row.signalDayChangePct, "unknown"))}">
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
       </div>
-      ${renderDayChange(row)}
+      ${renderDroppedDayChange(row)}
       <div class="stock-change" aria-label="${escapeHtml(droppedMovementPath(row))}">
         <span class="stock-change-arrow" aria-hidden="true"></span>
         <strong>${escapeHtml(droppedChangeLabel(row))}</strong>
