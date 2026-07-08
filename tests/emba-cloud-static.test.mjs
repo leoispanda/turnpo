@@ -4,6 +4,8 @@ import fs from "node:fs";
 const embaJs = fs.readFileSync(new URL("../emba/emba.js", import.meta.url), "utf8");
 const embaHtml = fs.readFileSync(new URL("../emba/index.html", import.meta.url), "utf8");
 const embaReadme = fs.readFileSync(new URL("../emba/README.md", import.meta.url), "utf8");
+const classmateHtml = fs.readFileSync(new URL("../emba/linkedin-class-connect.html", import.meta.url), "utf8");
+const classmateJs = fs.readFileSync(new URL("../emba/linkedin-class-connect.js", import.meta.url), "utf8");
 const embaFunction = fs.readFileSync(new URL("../functions/emba/[[path]].js", import.meta.url), "utf8");
 const embaApiUtils = fs.readFileSync(new URL("../functions/api/emba/_utils.js", import.meta.url), "utf8");
 const embaLibraryApi = fs.readFileSync(new URL("../functions/api/emba/library.js", import.meta.url), "utf8");
@@ -32,6 +34,12 @@ assert.ok(embaHtml.includes('id="embaSyncStatus"'));
 assert.ok(embaHtml.includes('id="embaEditToggle"'));
 assert.ok(embaHtml.includes('id="embaLightbox"'));
 assert.ok(embaHtml.includes("data-lightbox-close"));
+
+assert.ok(classmateHtml.includes('src="/emba/linkedin-class-connect.js"'));
+assert.equal(classmateHtml.match(/<script(?![^>]*\bsrc=)/g)?.length || 0, 0);
+assert.ok(classmateJs.includes("function guardEmbaTool"));
+assert.ok(classmateJs.includes("const people = ["));
+assert.ok(classmateJs.includes("renderRows();"));
 
 assert.ok(embaFunction.includes('accessCookie(token, path = "/")'));
 assert.ok(embaFunction.includes('clearAccessCookie(path = "/")'));
