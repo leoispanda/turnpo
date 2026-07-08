@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>July 2026 Classmates LinkedIn Helper</title>
+  <title>July 2026 Classmate Detailed List</title>
   <style>
     :root {
       color-scheme: light;
@@ -171,7 +171,7 @@
 
     .toolbar {
       display: grid;
-      grid-template-columns: minmax(220px, 1fr) auto auto;
+      grid-template-columns: minmax(220px, 1fr) auto auto auto;
       gap: 12px;
       align-items: center;
       padding: 14px;
@@ -389,6 +389,23 @@
       color: var(--muted);
       font-size: 0.92rem;
       line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .detail-text {
+      color: var(--text);
+    }
+
+    .detail-link {
+      display: block;
+      margin-top: 4px;
+      color: var(--accent);
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .detail-link:hover {
+      text-decoration: underline;
     }
 
     .empty {
@@ -497,8 +514,8 @@
   <main class="shell">
     <section class="topbar" aria-labelledby="page-title">
       <div>
-        <h1 id="page-title"><span class="title-line">July 2026</span><span class="title-line">Classmates</span></h1>
-        <p class="meta">Combined manual LinkedIn helper for the Corporate Finance and Accounting list plus the Intro Programme profile-picture groups. Your own row is excluded; phone numbers and email addresses are not stored here.</p>
+        <h1 id="page-title"><span class="title-line">July 2026</span><span class="title-line">Classmate List</span></h1>
+        <p class="meta">Detailed working list for July 2026 EMBA classmates from the Corporate Finance and Accounting class list plus the Intro Programme profile-picture groups. Your own row is excluded; phone numbers and email addresses are not stored here.</p>
       </div>
       <div class="stats" aria-label="List summary">
         <div class="stat">
@@ -507,14 +524,14 @@
         </div>
         <div class="stat">
           <strong id="done-count">0</strong>
-          <span>Done</span>
+          <span>Sent</span>
         </div>
         <div class="stat">
           <strong id="direct-count">26</strong>
-          <span>Direct links</span>
+          <span>Direct LinkedIn</span>
         </div>
         <div class="stat">
-          <strong id="lookup-count">3</strong>
+          <strong id="lookup-count">30</strong>
           <span>Lookup</span>
         </div>
       </div>
@@ -526,7 +543,7 @@
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
             <path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
-          <input id="search-input" type="search" placeholder="Search name">
+          <input id="search-input" type="search" placeholder="Search name, source, or detail">
         </label>
         <div class="segments" aria-label="Filter rows">
           <button class="segment" type="button" data-filter="all" aria-pressed="true">All</button>
@@ -538,8 +555,14 @@
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
             <path d="M8 8V5.8C8 4.8 8.8 4 9.8 4h8.4c1 0 1.8.8 1.8 1.8v8.4c0 1-.8 1.8-1.8 1.8H16M5.8 8h8.4c1 0 1.8.8 1.8 1.8v8.4c0 1-.8 1.8-1.8 1.8H5.8c-1 0-1.8-.8-1.8-1.8V9.8c0-1 .8-1.8 1.8-1.8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
           </svg>
-          Copy URLs
+          Copy LinkedIn URLs
         </button>
+        <a class="button ghost" href="./july-2026-classmates-linkedin.csv" download>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Download CSV
+        </a>
       </div>
 
       <div class="table-wrap">
@@ -549,7 +572,7 @@
               <th scope="col">#</th>
               <th scope="col">Name</th>
               <th scope="col">Source</th>
-              <th scope="col">Brief info</th>
+              <th scope="col">List detail</th>
               <th scope="col">Status</th>
               <th scope="col">Actions</th>
               <th scope="col">Invite note</th>
@@ -645,20 +668,33 @@
       return `Hi ${person.first}, I am also in the Maastricht University July 2026 programme. I saw your name on the class list and would love to connect here. Looking forward to meeting you during the programme!`;
     }
 
-    function briefFor(person) {
-      if (person.source === "Corporate Finance + Intro B") {
-        return "Corporate Finance and Accounting participant; also listed in Intro Programme Group B.";
+    function listDetailFor(person) {
+      const source = person.source || "classmate list";
+      if (person.status === "direct") {
+        return {
+          text: `${source}. Direct LinkedIn profile captured from the detailed list.`,
+          href: person.url,
+          label: person.url
+        };
       }
-      if (person.source === "Corporate Finance") {
-        return "Corporate Finance and Accounting participant.";
-      }
-      if (person.source === "Intro A") {
-        return "Intro Programme profile-picture Group A.";
-      }
-      if (person.source === "Intro B") {
-        return "Intro Programme profile-picture Group B.";
-      }
-      return person.source;
+      return {
+        text: `${source}. Manual LinkedIn lookup needed${person.reason ? `: ${person.reason}` : "."}`,
+        href: person.search,
+        label: "Prepared LinkedIn search"
+      };
+    }
+
+    function listDetailText(person) {
+      const detail = listDetailFor(person);
+      return `${detail.text} ${detail.label || ""}`;
+    }
+
+    function listDetailHtml(person) {
+      const detail = listDetailFor(person);
+      return `
+        <span class="detail-text">${detail.text}</span>
+        ${detail.href ? `<a class="detail-link" href="${detail.href}" target="_blank" rel="noopener noreferrer">${detail.label}</a>` : ""}
+      `;
     }
 
     function getDoneSet() {
@@ -709,7 +745,7 @@
       const doneSet = getDoneSet();
       const query = searchInput.value.trim().toLowerCase();
       const filtered = people.filter((person) => {
-        const searchable = `${person.name} ${person.source} ${briefFor(person)}`.toLowerCase();
+        const searchable = `${person.name} ${person.source} ${listDetailText(person)}`.toLowerCase();
         const matchesQuery = !query || searchable.includes(query);
         const matchesFilter =
           activeFilter === "all" ||
@@ -725,19 +761,17 @@
         const statusLabel = done ? "Done" : person.status === "direct" ? "Direct" : "Lookup";
         const openLabel = person.status === "direct" ? "Open" : "Search";
         const statusClass = done ? "done" : person.status;
-        const reason = person.reason ? `<span class="note-preview">${person.reason}</span>` : "";
         return `
           <tr class="${done ? "done" : ""}" data-number="${person.number}">
             <td class="num">${person.number}</td>
             <td><span class="name">${person.name}</span></td>
             <td><span class="source-label">${person.source}</span></td>
-            <td class="note-preview">${briefFor(person)}</td>
+            <td class="note-preview">${listDetailHtml(person)}</td>
             <td><span class="pill ${statusClass}">${statusLabel}</span></td>
             <td>
               <div class="actions">
                 <a class="button primary" href="${target}" target="_blank" rel="noopener noreferrer">${iconPath(person.status === "direct" ? "open" : "search")}${openLabel}</a>
                 <button class="button ghost" type="button" data-copy-note="${person.number}">${iconPath("copy")}Copy note</button>
-                ${reason}
               </div>
             </td>
             <td class="note-preview">${inviteFor(person)}</td>
