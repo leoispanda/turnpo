@@ -141,18 +141,30 @@ function legacyDaysToMonths(days = []) {
   return [...grouped.values()];
 }
 
+function hasTextContent(value) {
+  return String(value || "").trim().length > 0;
+}
+
+function materialHasContent(item = {}) {
+  return hasTextContent(item.file)
+    || hasTextContent(item.notes)
+    || (hasTextContent(item.title) && item.title !== "Material");
+}
+
+function memoryHasContent(item = {}) {
+  return hasTextContent(item.image);
+}
+
+function monthHasContent(month = {}) {
+  return asArray(month.materials).some(materialHasContent)
+    || hasTextContent(month.reflection)
+    || asArray(month.memoryMoment).some(memoryHasContent);
+}
+
 function timelineMonths() {
-  const startMonth = state.library.timeline.startMonth || DEFAULT_START_MONTH;
-  const endMonth = state.library.timeline.endMonth || DEFAULT_END_MONTH;
-  const savedMonths = new Map(state.library.months.map((month) => [month.month, month]));
-  return monthRange(startMonth, endMonth).map((monthKey) => savedMonths.get(monthKey) || {
-    id: monthKey,
-    month: monthKey,
-    title: formatMonth(monthKey),
-    materials: [],
-    reflection: "",
-    memoryMoment: []
-  });
+  return state.library.months
+    .filter(monthHasContent)
+    .sort((a, b) => String(a.month || "").localeCompare(String(b.month || "")));
 }
 
 function createEmptyMonth(monthKey) {
@@ -341,7 +353,8 @@ async function uploadEmbaFile(file, month, kind) {
 }
 
 function selectedMonth() {
-  return timelineMonths().find((month) => monthId(month) === state.selectedMonthId) || timelineMonths()[0] || null;
+  const months = timelineMonths();
+  return months.find((month) => monthId(month) === state.selectedMonthId) || months[0] || null;
 }
 
 function renderTimeline() {
@@ -349,11 +362,14 @@ function renderTimeline() {
   if (!timeline) return;
   const months = timelineMonths();
   if (!months.length) {
-    timeline.innerHTML = `<div class="emba-empty-state">Add months in emba/materials.json.</div>`;
+    timeline.innerHTML = `<div class="emba-empty-state">No EMBA month has content yet.</div>`;
+    state.selectedMonthId = "";
     renderMonthDetail(null);
     return;
   }
-  if (!state.selectedMonthId) state.selectedMonthId = monthId(months[0]);
+  if (!months.some((month) => monthId(month) === state.selectedMonthId)) {
+    state.selectedMonthId = monthId(months[0]);
+  }
 
   timeline.innerHTML = months.map((month) => {
     const id = monthId(month);
