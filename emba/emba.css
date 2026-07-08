@@ -600,16 +600,15 @@ body::before {
   margin: 0;
 }
 
-.emba-single-memory {
+.emba-memory-gallery {
   display: grid;
   gap: 12px;
-  justify-items: start;
 }
 
-.emba-photo-card {
+.emba-photo-upload {
   position: relative;
   width: min(520px, 100%);
-  aspect-ratio: 16 / 10;
+  min-height: 120px;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -623,18 +622,32 @@ body::before {
   transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
-.emba-photo-card:hover {
+.emba-photo-upload:hover {
   border-color: rgba(177, 138, 47, 0.48);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
   transform: translateY(-1px);
 }
 
-.emba-photo-card input {
+.emba-photo-upload input {
   position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
   clip: rect(0 0 0 0);
+}
+
+.emba-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.emba-photo-card {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #ececef;
 }
 
 .emba-photo-card img {
@@ -644,20 +657,21 @@ body::before {
   object-fit: cover;
 }
 
-.emba-photo-card strong {
+.emba-photo-remove {
   position: absolute;
-  left: 14px;
-  bottom: 14px;
-  min-height: 32px;
+  right: 10px;
+  top: 10px;
+  width: 30px;
+  height: 30px;
   display: grid;
   place-items: center;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.82);
   color: #1d1d1f;
-  font-size: 12px;
-  font-weight: 680;
-  padding: 0 12px;
+  font-size: 18px;
+  font-weight: 360;
+  line-height: 1;
   backdrop-filter: blur(14px) saturate(1.25);
 }
 
