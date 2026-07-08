@@ -494,6 +494,46 @@ body::before {
   background: rgba(255, 255, 255, 0.42);
 }
 
+.stock-strategy-note {
+  margin: 0 0 18px;
+  padding: 16px 18px;
+  border: 1px solid rgba(34, 87, 122, 0.16);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(232, 243, 249, 0.92));
+  box-shadow: 0 12px 28px rgba(24, 39, 75, 0.08);
+}
+
+.stock-strategy-note h2 {
+  margin: 0 0 8px;
+  color: #15191f;
+  font-size: 15px;
+  line-height: 1.1;
+}
+
+.stock-strategy-note p {
+  margin: 0;
+  color: #42505c;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.stock-strategy-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.stock-strategy-meta span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(34, 87, 122, 0.08);
+  color: #22577a;
+  font-size: 11px;
+  font-weight: 760;
+  line-height: 1;
+}
+
 .stock-name {
   min-width: 0;
 }

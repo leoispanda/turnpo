@@ -325,6 +325,10 @@ function normalizeWatchRow(row, date, previousByTicker, changesByTicker, names, 
   const delta = intOrNull(changed?.rank_delta) ?? rankDelta(currentRank, previousRank);
   const name = clean(changed?.name) || names.get(ticker) || ticker;
   const priceMove = priceMoveForTicker(ticker, date, priceDataDirs, priceCache);
+  const finalStatus = clean(row.final_status || changed?.current_status);
+  const frontDeskInstruction = clean(row.front_desk_instruction || changed?.front_desk_instruction);
+  const mainReason = clean(row.main_reason);
+  const mainRisk = clean(row.main_risk || changed?.main_risk);
 
   return {
     ticker,
@@ -336,18 +340,32 @@ function normalizeWatchRow(row, date, previousByTicker, changesByTicker, names, 
     movement: movementText(changeType, delta),
     score: numberOrNull(row.final_score),
     previousScore: numberOrNull(changed?.previous_score),
-    status: clean(row.final_status || changed?.current_status),
+    status: finalStatus,
     previousStatus: clean(changed?.previous_status),
-    frontDeskInstruction: clean(row.front_desk_instruction || changed?.front_desk_instruction),
-    mainReason: clean(row.main_reason),
-    mainRisk: clean(row.main_risk || changed?.main_risk),
+    frontDeskInstruction,
+    mainReason,
+    mainRisk,
     analysisDate: clean(row.analysis_date || date),
     close: priceMove.close,
     nextClose: priceMove.nextClose,
     returnDate: priceMove.returnDate,
     signalDayChangePct: priceMove.signalDayChangePct,
     dayChangePct: priceMove.dayChangePct,
-    scores: scoreMap(row)
+    scores: scoreMap(row),
+    decision: {
+      policy: "TOP20_TARGET_HOLDING",
+      targetHolding: true,
+      action: changeType === "NEW" ? "ENTER_TOP20" : "KEEP_TOP20",
+      basis: "Top 20 rank only"
+    },
+    research: {
+      finalStatus,
+      previousStatus: clean(changed?.previous_status),
+      frontDeskInstruction,
+      mainReason,
+      mainRisk,
+      scores: scoreMap(row)
+    }
   };
 }
 
@@ -370,28 +388,42 @@ function normalizeDroppedRow(row, date, previousByTicker, names, priceDataDirs, 
     dayChangePct: priceMove.dayChangePct,
     exitAction: droppedExitAction(priceMove.signalDayChangePct),
     exitText: droppedExitText(priceMove.signalDayChangePct),
-    mainRisk: clean(row.main_risk) || previous?.mainRisk || ""
+    mainRisk: clean(row.main_risk) || previous?.mainRisk || "",
+    decision: {
+      policy: "TOP20_ROTATION_EXIT_REVIEW",
+      targetHolding: false,
+      action: droppedExitAction(priceMove.signalDayChangePct),
+      basis: Number.isFinite(priceMove.signalDayChangePct) && priceMove.signalDayChangePct > 0
+        ? "Dropped from Top 20 but signal day closed up"
+        : "Dropped from Top 20"
+    },
+    research: {
+      previousStatus: clean(row.previous_status) || previous?.status || "",
+      previousScore: numberOrNull(row.previous_score) ?? previous?.score ?? null,
+      mainRisk: clean(row.main_risk) || previous?.mainRisk || ""
+    }
   };
 }
 
 function summarize(rows, dropped) {
   const count = (type) => rows.filter((row) => row.changeType === type).length;
   const scoreRows = rows.filter((row) => row.score !== null);
-  const highRisk = rows.filter((row) => row.status === "High Risk Watch").length;
   const avgScore = scoreRows.length
     ? Math.round((scoreRows.reduce((sum, row) => sum + row.score, 0) / scoreRows.length) * 100) / 100
     : null;
 
   return {
     total: rows.length,
+    targetHoldings: 20,
+    inTop20: rows.length,
     new: count("NEW"),
     up: count("UP"),
     down: count("DOWN"),
     unchanged: count("UNCHANGED"),
     retained: rows.length - count("NEW"),
     dropped: dropped.length,
-    highRisk,
-    avgScore
+    avgScore,
+    decisionRule: "Hold the highest-ranked Top 20 names; keep factor scores for research only."
   };
 }
 
@@ -526,6 +558,14 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
     generatedAt: new Date().toISOString(),
     sourceRoot,
     sourceKind: "stock-pdc-local daily watchlists + turnpo backfills",
+    strategy: {
+      version: "top20-rotation-v2",
+      candidateStage: "Hawkeye Radar",
+      rankingStage: "PDC scores rank radar-selected candidates",
+      decisionRule: "Top 20 names are the target portfolio. Status fields are research-only.",
+      exitRule: "Dropped names go to sell review unless signal day change is positive, then HOLD_DROPPED_UP_DAY.",
+      researchRetention: "All factor scores, reasons, and risks are retained for later attribution and tuning."
+    },
     backfillRoot: path.relative(TURNPO_ROOT, BACKFILL_WATCHLIST_DIR),
     priceDataDir: priceDataDir ? path.relative(sourceRoot, priceDataDir) : "",
     priceDataFallbacks: priceDataDirs.map((dir) => path.relative(sourceRoot, dir)),

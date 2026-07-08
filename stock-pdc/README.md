@@ -1,52 +1,36 @@
-# Stock PDC Rank Flow
+# Stock PDC v2
 
-This folder powers the private Turnpo page at `/stock-pdc/`.
+## Rule
 
-It renders a private color-only matrix view of the local Stock PDC Top 20 outputs:
+Stock PDC now follows a strict three-step flow:
 
-- The vertical axis is rank `#1` through `#20`, followed by ten dropped-out reserve slots.
-- The horizontal axis is refresh date plus weekday, newest to oldest from left to right.
-- Each cell shows the stock that held that rank on that date.
-- Each stock cell also shows the stock's next-trading-day close-to-close percentage move from the local OHLCV data, approximating buying after the list date and holding through the next close.
-- Empty refresh days and weekend refresh files are skipped.
-- Cell colors encode movement: red for new/up, green for down, blue for unchanged, gray for dropped out of the Top 20.
-- The bottom return row starts from 100% and compounds each available next-trading-day equal-weight Top 20 average return.
-- The page intentionally hides summary cards, filters, explanatory panels, and exit tables.
+1. `Hawkeye Radar` filters the A-share universe down to a candidate pool.
+2. `PDC` scores and ranks only those radar-selected candidates.
+3. `Top 20` is the target portfolio.
 
-The page reads:
+The system does not use `final_status` to decide whether to buy. Status and action-style labels are retained only as research metadata.
 
-```text
-stock-pdc/rank-flow.json
-```
+## Portfolio Decision
 
-Refresh the JSON snapshot from the local Financial Freedom project with:
+- Buy: names that enter today's Top 20.
+- Hold: names that remain in today's Top 20.
+- Review for exit: names that drop out of today's Top 20.
+- Exception: if a dropped name is up on the signal day, mark `HOLD_DROPPED_UP_DAY / 上涨不卖`.
 
-```bash
-node scripts/sync-stock-pdc-rank-flow.mjs
-```
+The intended portfolio behavior is to stay aligned with the highest-ranked 20 names.
 
-Default source project:
+## Research Retention
 
-```text
-/Users/leoyang/Documents/financial freedom/stock-pdc-local
-```
+Even though Top 20 is the only decision output, all factor information is preserved for later analysis:
 
-Historical PDC replay backfills are stored in:
+- market regime
+- trend
+- Livermore breakout
+- volume-price
+- candlestick
+- overheat
+- risk
+- Zhuge Orion
+- final chair
 
-```text
-stock-pdc/backfill/daily_watchlists
-```
-
-The sync script merges those backfills with the Financial Freedom daily watchlists by date. Backfill rows are generated from `scripts/run_historical_replay.py`; the June/July 2026 gap uses a wider `--radar-max-daily-move 15` replay so each missing workday has a full Top 20.
-
-The Cloudflare Pages Function at `functions/stock-pdc/[[path]].js` protects `/stock-pdc/*`. It uses:
-
-```text
-STOCK_PDC_ACCESS_CODE
-```
-
-If `STOCK_PDC_ACCESS_CODE` is not set, it falls back to:
-
-```text
-EMBA_ACCESS_CODE=emba2026
-```
+Reasons, warnings, main risk, and historical rank changes remain in the exported data so the model can be reweighted later based on actual outcomes.
