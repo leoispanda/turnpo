@@ -154,6 +154,33 @@ function lastBarDate(dataDir, ticker = DEFAULT_BENCHMARK_TICKER) {
   return rows.at(-1)?.Date || rows.at(-1)?.date || "";
 }
 
+function expandPriceDataDirCandidates(sourceRoot) {
+  if (!fs.existsSync(sourceRoot)) return [];
+  const rootEntries = fs.readdirSync(sourceRoot).sort().reverse();
+  const expanded = [];
+
+  rootEntries
+    .filter((entry) => entry.startsWith("data_a_share_latest_"))
+    .forEach((entry) => {
+      const dir = path.join(sourceRoot, entry);
+      if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) return;
+      expanded.push(dir);
+      if (entry === "data_a_share_latest_runs") {
+        fs.readdirSync(dir)
+          .sort()
+          .reverse()
+          .forEach((subEntry) => {
+            const subDir = path.join(dir, subEntry);
+            if (fs.existsSync(subDir) && fs.statSync(subDir).isDirectory()) {
+              expanded.push(subDir);
+            }
+          });
+      }
+    });
+
+  return expanded;
+}
+
 function resolvePriceDataDir(sourceRoot, latestDate, explicitDataDir = "") {
   const explicitPath = clean(explicitDataDir);
   if (explicitPath) {
@@ -161,22 +188,15 @@ function resolvePriceDataDir(sourceRoot, latestDate, explicitDataDir = "") {
     return fs.existsSync(resolved) ? resolved : "";
   }
 
-  const latestDataDirs = fs.existsSync(sourceRoot)
-    ? fs.readdirSync(sourceRoot)
-      .filter((entry) => entry.startsWith("data_a_share_latest_"))
-      .sort()
-      .reverse()
-    : [];
   const candidates = [
-    ...latestDataDirs,
+    ...expandPriceDataDirCandidates(sourceRoot),
     "data_a_share",
     "data_a_share_live_mcap",
     "data_a_share_live_mcap_2020",
     "data_a_share_live_mcap_2020_em"
-  ];
+  ].map((candidate) => path.isAbsolute(candidate) ? candidate : path.join(sourceRoot, candidate));
 
-  for (const name of candidates) {
-    const dataDir = path.join(sourceRoot, name);
+  for (const dataDir of candidates) {
     if (!fs.existsSync(dataDir) || !fs.statSync(dataDir).isDirectory()) continue;
     const latestBarDate = lastBarDate(dataDir);
     if (!latestDate || latestBarDate >= latestDate) return dataDir;
@@ -188,6 +208,7 @@ function resolvePriceDataDir(sourceRoot, latestDate, explicitDataDir = "") {
 function priceDataDirCandidates(sourceRoot, primaryDir) {
   const candidates = [
     primaryDir,
+    ...expandPriceDataDirCandidates(sourceRoot),
     path.join(sourceRoot, "data_a_share"),
     path.join(sourceRoot, "data_a_share_live_mcap"),
     path.join(sourceRoot, "data_a_share_live_mcap_2020"),
