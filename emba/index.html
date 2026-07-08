@@ -30,6 +30,7 @@
       <div></div>
       <div class="top-actions">
         <a class="ghost-btn emba-home-link" href="/">Turnpo home</a>
+        <button class="ghost-btn emba-edit-toggle" id="embaEditToggle" type="button" aria-pressed="false" hidden>Edit mode</button>
         <button class="ghost-btn emba-lock-btn" id="embaLock" type="button" hidden>Lock</button>
       </div>
     </header>
@@ -66,6 +67,14 @@
         <a class="emba-classmate-tool-link" href="./linkedin-class-connect.html">Classmate brief info</a>
       </section>
     </main>
+
+    <div class="emba-lightbox" id="embaLightbox" role="dialog" aria-modal="true" aria-hidden="true" hidden>
+      <button class="emba-lightbox-backdrop" type="button" data-lightbox-close aria-label="Close photo preview"></button>
+      <figure class="emba-lightbox-frame">
+        <button class="emba-lightbox-close" type="button" data-lightbox-close aria-label="Close photo preview">×</button>
+        <img id="embaLightboxImage" alt="" />
+      </figure>
+    </div>
 
     <script src="/emba/emba.js"></script>
   </body>

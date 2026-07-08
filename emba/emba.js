@@ -16,6 +16,7 @@ const state = {
   openBlockId: "",
   libraryLoaded: false,
   accessGranted: false,
+  editMode: false,
   cloudReady: false,
   cloudSaveTimer: 0
 };
@@ -83,6 +84,10 @@ function monthId(month) {
 
 function asArray(value) {
   return Array.isArray(value) ? value : [];
+}
+
+function isEditMode() {
+  return state.editMode;
 }
 
 function normalizeMaterial(item) {
@@ -232,6 +237,45 @@ function setSyncStatus(message = "", tone = "") {
   if (!status) return;
   status.textContent = message;
   status.dataset.tone = tone;
+}
+
+function updateEditModeControl() {
+  const button = $("#embaEditToggle");
+  if (!button) return;
+  const granted = hasEmbaAccess();
+  button.hidden = !granted;
+  button.setAttribute("aria-pressed", String(isEditMode()));
+  button.textContent = isEditMode() ? "Editing" : "Edit mode";
+  button.setAttribute("aria-label", isEditMode() ? "Turn off EMBA editing" : "Turn on EMBA editing");
+  document.body.classList.toggle("emba-editing", isEditMode());
+}
+
+function setEditMode(enabled) {
+  state.editMode = Boolean(enabled);
+  updateEditModeControl();
+  renderMonthDetail(selectedMonth());
+}
+
+function openMemoryLightbox(image, label = "") {
+  const lightbox = $("#embaLightbox");
+  const photo = $("#embaLightboxImage");
+  if (!lightbox || !photo || !image) return;
+  photo.src = image;
+  photo.alt = label || "EMBA memory photo";
+  lightbox.hidden = false;
+  lightbox.setAttribute("aria-hidden", "false");
+  document.body.classList.add("emba-lightbox-open");
+}
+
+function closeMemoryLightbox() {
+  const lightbox = $("#embaLightbox");
+  const photo = $("#embaLightboxImage");
+  if (!lightbox || !photo) return;
+  lightbox.hidden = true;
+  lightbox.setAttribute("aria-hidden", "true");
+  photo.removeAttribute("src");
+  photo.alt = "";
+  document.body.classList.remove("emba-lightbox-open");
 }
 
 function libraryForCloud() {
@@ -391,6 +435,22 @@ function renderTimeline() {
 
 function renderMaterials(month) {
   const materials = asArray(month?.materials);
+  if (!isEditMode()) {
+    return materials.length ? `
+      <ul class="emba-read-list emba-material-read-list">
+        ${materials.map((item) => `
+          <li class="emba-material-read-item">
+            <div class="emba-read-copy">
+              <span class="emba-read-title">${escapeHtml(item.title || "Material")}</span>
+              ${item.notes ? `<span class="emba-read-note">${escapeHtml(item.notes)}</span>` : ""}
+            </div>
+            ${item.file ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener">Open file</a>` : ""}
+          </li>
+        `).join("")}
+      </ul>
+    ` : `<p class="emba-empty-copy">No material yet.</p>`;
+  }
+
   return `
     <form class="emba-edit-form emba-material-form" data-material-add>
       <label class="emba-upload-target">
@@ -420,6 +480,12 @@ function renderReflection(month) {
   const reflection = typeof month?.reflection === "string"
     ? month.reflection
     : asArray(month?.reflection).map((item) => item.body || item.title || item).filter(Boolean).join("\n\n");
+  if (!isEditMode()) {
+    return reflection.trim()
+      ? `<div class="emba-reflection-read">${escapeHtml(reflection)}</div>`
+      : `<p class="emba-empty-copy">No reflection yet.</p>`;
+  }
+
   return `
     <textarea class="emba-reflection-editor" data-reflection-editor placeholder="Write reflection for this month...">${escapeHtml(reflection)}</textarea>
   `;
@@ -432,23 +498,29 @@ function memoryInitials(monthKey) {
 }
 
 function renderMemoryMoment(month) {
-  const memories = asArray(month?.memoryMoment).filter((item) => item.image);
+  const memories = asArray(month?.memoryMoment)
+    .map((item, index) => ({ ...normalizeMemory(item, month?.month), originalIndex: index }))
+    .filter((item) => item.image);
   return `
     <div class="emba-memory-gallery">
-      <label class="emba-photo-upload">
-        <input name="image" type="file" accept="image/*" multiple />
-        <span class="emba-photo-placeholder"><span class="emba-photo-initial">${escapeHtml(memoryInitials(month?.month))}</span><span>Upload photos</span></span>
-      </label>
+      ${isEditMode() ? `
+        <label class="emba-photo-upload">
+          <input name="image" type="file" accept="image/*" multiple />
+          <span class="emba-photo-placeholder"><span class="emba-photo-initial">${escapeHtml(memoryInitials(month?.month))}</span><span>Upload photos</span></span>
+        </label>
+      ` : ""}
       ${memories.length ? `
         <div class="emba-photo-grid">
-          ${memories.map((item, index) => `
+          ${memories.map((item) => `
             <article class="emba-photo-card has-photo">
-              <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title || formatMonth(month?.month))}" loading="lazy" />
-              <button class="emba-photo-remove" type="button" data-memory-delete="${index}" aria-label="Remove photo">×</button>
+              <button class="emba-photo-preview" type="button" data-memory-preview="${item.originalIndex}" aria-label="Open photo preview">
+                <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title || formatMonth(month?.month))}" loading="lazy" />
+              </button>
+              ${isEditMode() ? `<button class="emba-photo-remove" type="button" data-memory-delete="${item.originalIndex}" aria-label="Remove photo">×</button>` : ""}
             </article>
           `).join("")}
         </div>
-      ` : ""}
+      ` : `<p class="emba-empty-copy">No memory photos yet.</p>`}
     </div>
   `;
 }
@@ -468,6 +540,7 @@ function blockTemplate(id, title, body) {
 function renderMonthDetail(month) {
   const detail = $("#embaMonthDetail");
   if (!detail) return;
+  detail.dataset.mode = isEditMode() ? "edit" : "read";
   if (!month) {
     detail.innerHTML = "";
     return;
@@ -522,9 +595,11 @@ function renderAccessState() {
   const gate = $("#embaAccessGate");
   const app = $("#embaApp");
   const lock = $("#embaLock");
+  if (!granted) state.editMode = false;
   if (gate) gate.hidden = granted;
   if (app) app.hidden = !granted;
   if (lock) lock.hidden = !granted;
+  updateEditModeControl();
   if (granted && !state.libraryLoaded) loadLibrary();
 }
 
@@ -602,9 +677,15 @@ function initAccessGate() {
 
   $("#embaLock")?.addEventListener("click", async () => {
     setEmbaAccess(false);
+    setEditMode(false);
     await fetch("/emba/logout", { method: "POST" }).catch(() => null);
     renderAccessState();
     $("#embaPassword")?.focus();
+  });
+
+  $("#embaEditToggle")?.addEventListener("click", () => {
+    if (!hasEmbaAccess()) return;
+    setEditMode(!isEditMode());
   });
 
   renderAccessState();
@@ -635,6 +716,7 @@ $("#embaTimeline")?.addEventListener("focusin", (event) => {
 $("#embaMonthDetail")?.addEventListener("click", (event) => {
   const memoryDelete = event.target.closest("[data-memory-delete]");
   if (memoryDelete) {
+    if (!isEditMode()) return;
     const month = editableMonth();
     month.memoryMoment.splice(Number(memoryDelete.dataset.memoryDelete), 1);
     saveLibrary();
@@ -644,10 +726,19 @@ $("#embaMonthDetail")?.addEventListener("click", (event) => {
 
   const materialDelete = event.target.closest("[data-material-delete]");
   if (materialDelete) {
+    if (!isEditMode()) return;
     const month = editableMonth();
     month.materials.splice(Number(materialDelete.dataset.materialDelete), 1);
     saveLibrary();
     renderMonthDetail(selectedMonth());
+    return;
+  }
+
+  const memoryPreview = event.target.closest("[data-memory-preview]");
+  if (memoryPreview) {
+    const month = selectedMonth();
+    const item = normalizeMemory(asArray(month?.memoryMoment)[Number(memoryPreview.dataset.memoryPreview)], month?.month);
+    if (item?.image) openMemoryLightbox(item.image, item.title || formatMonth(month?.month));
     return;
   }
 
@@ -661,6 +752,10 @@ $("#embaMonthDetail")?.addEventListener("click", (event) => {
 $("#embaMonthDetail")?.addEventListener("change", async (event) => {
   const target = event.target;
   if (!target.matches('.emba-photo-upload input[name="image"]')) return;
+  if (!isEditMode()) {
+    target.value = "";
+    return;
+  }
   const files = [...(target.files || [])].filter((file) => file.type.startsWith("image/"));
   if (!files.length) return;
   const month = editableMonth();
@@ -681,15 +776,17 @@ $("#embaMonthDetail")?.addEventListener("change", async (event) => {
 
 $("#embaMonthDetail")?.addEventListener("input", (event) => {
   const target = event.target;
-  const month = editableMonth();
+  if (!isEditMode()) return;
 
   if (target.matches("[data-reflection-editor]")) {
+    const month = editableMonth();
     month.reflection = target.value;
     saveLibrary();
     return;
   }
 
   if (target.matches("[data-material-field]")) {
+    const month = editableMonth();
     const item = month.materials[Number(target.dataset.index)];
     if (!item) return;
     item[target.dataset.materialField] = target.value;
@@ -701,6 +798,7 @@ $("#embaMonthDetail")?.addEventListener("submit", async (event) => {
   const form = event.target;
   if (!form.matches("[data-material-add]")) return;
   event.preventDefault();
+  if (!isEditMode()) return;
   const month = editableMonth();
 
   if (form.matches("[data-material-add]")) {
@@ -720,6 +818,16 @@ $("#embaMonthDetail")?.addEventListener("submit", async (event) => {
     form.reset();
     renderMonthDetail(selectedMonth());
   }
+});
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest("[data-lightbox-close]")) return;
+  closeMemoryLightbox();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  closeMemoryLightbox();
 });
 
 initAccessGate();

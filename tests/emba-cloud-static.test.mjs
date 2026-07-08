@@ -20,9 +20,18 @@ assert.ok(embaJs.includes('input name="image" type="file" accept="image/*" multi
 assert.ok(embaJs.includes("function monthHasContent"));
 assert.ok(embaJs.includes(".filter(monthHasContent)"));
 assert.ok(embaJs.includes("No EMBA month has content yet."));
+assert.ok(embaJs.includes("editMode: false"));
+assert.ok(embaJs.includes("function setEditMode"));
+assert.ok(embaJs.includes("function openMemoryLightbox"));
+assert.ok(embaJs.includes('data-memory-preview="${item.originalIndex}"'));
+assert.ok(embaJs.includes("if (!isEditMode()) return;"));
+assert.ok(embaJs.includes('detail.dataset.mode = isEditMode() ? "edit" : "read";'));
 assert.ok(!embaJs.includes("Photo title"));
 assert.ok(!embaJs.includes('placeholder="Caption"'));
 assert.ok(embaHtml.includes('id="embaSyncStatus"'));
+assert.ok(embaHtml.includes('id="embaEditToggle"'));
+assert.ok(embaHtml.includes('id="embaLightbox"'));
+assert.ok(embaHtml.includes("data-lightbox-close"));
 
 assert.ok(embaFunction.includes('accessCookie(token, path = "/")'));
 assert.ok(embaFunction.includes('clearAccessCookie(path = "/")'));
