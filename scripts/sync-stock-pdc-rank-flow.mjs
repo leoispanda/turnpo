@@ -509,6 +509,40 @@ function buildPortfolio(days) {
   };
 }
 
+function buildBenchmark(days, priceDataDirs, priceCache, ticker = DEFAULT_BENCHMARK_TICKER) {
+  let valuePct = 100;
+  const daily = [];
+
+  days
+    .filter((day) => isTradingWeekday(day.date))
+    .forEach((day) => {
+      const priceMove = priceMoveForTicker(ticker, day.date, priceDataDirs, priceCache);
+      if (!Number.isFinite(priceMove.dayChangePct)) return;
+      valuePct *= 1 + priceMove.dayChangePct / 100;
+      const benchmarkDay = {
+        date: day.date,
+        ticker,
+        returnDate: priceMove.returnDate || "",
+        close: priceMove.close,
+        nextClose: priceMove.nextClose,
+        dailyReturnPct: priceMove.dayChangePct,
+        valuePct: round2(valuePct),
+        cumulativeReturnPct: round2(valuePct - 100)
+      };
+      day.benchmark = benchmarkDay;
+      daily.push(benchmarkDay);
+    });
+
+  return {
+    method: "benchmark_next_trading_day_close_to_close",
+    ticker,
+    initialValuePct: 100,
+    latestValuePct: daily.at(-1)?.valuePct ?? 100,
+    latestReturnPct: daily.at(-1)?.cumulativeReturnPct ?? 0,
+    daily
+  };
+}
+
 function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
   const changesDir = path.join(sourceRoot, "outputs", "daily_leaderboard_changes");
   const watchlistFiles = collectWatchlistFiles(sourceRoot);
@@ -574,6 +608,7 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
     };
   });
   const portfolio = buildPortfolio(days);
+  const benchmark = buildBenchmark(days, priceDataDirs, priceCache);
 
   return {
     generatedAt: new Date().toISOString(),
@@ -594,6 +629,7 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
     latestDate: days.at(-1)?.date || "",
     days,
     portfolio,
+    benchmark,
     tickerHistory: buildTickerHistory(days)
   };
 }

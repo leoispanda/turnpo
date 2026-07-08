@@ -175,6 +175,32 @@ function renderPortfolioCell(day) {
   `;
 }
 
+function benchmarkClass(day) {
+  return pctClass(day.benchmark?.cumulativeReturnPct);
+}
+
+function renderBenchmarkCell(day) {
+  const benchmark = day.benchmark || {};
+  const cumulative = benchmark.cumulativeReturnPct;
+  const daily = benchmark.dailyReturnPct;
+  if (!Number.isFinite(cumulative)) {
+    return `<div class="stock-rank-cell stock-rank-cell-empty stock-portfolio-cell" aria-label="${escapeHtml(day.date)} benchmark empty"></div>`;
+  }
+  return `
+    <article class="stock-rank-cell stock-portfolio-cell ${benchmarkClass(day)}" aria-label="${escapeHtml(day.date)} 大盘累计 ${escapeHtml(formatPct(cumulative))} 下一交易日 ${escapeHtml(formatPct(daily))}">
+      <div class="stock-name">
+        <h3>${escapeHtml(formatPct(cumulative))}</h3>
+        <small>${escapeHtml(benchmark.ticker || "CSI300ETF")} ${escapeHtml(formatValuePct(benchmark.valuePct))}</small>
+      </div>
+      <span class="stock-day-change neutral">${escapeHtml(benchmark.returnDate || "--")}</span>
+      <div class="stock-change" aria-label="${escapeHtml(day.date)} benchmark daily return">
+        <span class="stock-change-arrow" aria-hidden="true"></span>
+        <strong>${escapeHtml(formatPct(daily))}</strong>
+      </div>
+    </article>
+  `;
+}
+
 function latestPortfolioSummary(days) {
   const latest = days.find((day) => day.date === state.data?.portfolio?.daily?.at(-1)?.date)?.portfolio
     || days.find((day) => day.portfolio)?.portfolio
@@ -235,6 +261,8 @@ function renderRankList() {
       `).join("")}
       <div class="stock-rank-axis stock-rank-axis-return">收益</div>
       ${days.map((day) => renderPortfolioCell(day)).join("")}
+      <div class="stock-rank-axis stock-rank-axis-return">大盘</div>
+      ${days.map((day) => renderBenchmarkCell(day)).join("")}
     </div>
     ${latestPortfolioSummary(days)}
   `;
