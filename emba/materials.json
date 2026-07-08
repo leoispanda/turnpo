@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-04",
+  "updated": "2026-07-08",
   "timeline": {
     "startMonth": "2026-07",
     "endMonth": "2028-12"
@@ -11,18 +11,18 @@
       "title": "July 2026",
       "materials": [
         {
-          "title": "Put class slides or readings here",
-          "type": "slides",
-          "file": "",
-          "notes": "Upload files directly from the Material block."
+          "title": "Handwritten notes analysis - Lead in Learning, AI, Inclusion & Diversity",
+          "type": "notes",
+          "file": "/emba/materials/2026-07/handwritten-notes/leadership-learning-notes-analysis.md",
+          "notes": "整理自 2026-07-01 至 2026-07-03 的 13 张手写笔记照片；原图已归档在同一目录的 images 文件夹。"
         }
       ],
-      "reflection": "Write this month's reflection here: what changed your view, what you want to apply, and which questions you want to keep thinking about.",
+      "reflection": "July's first EMBA notes show a clear shift in my understanding of leadership: leadership is not mainly about having sharper answers, but about creating the conditions for better thinking through safety, trust, listening, reflection, and the courage to question assumptions. My strongest learning is to notice my autopilot, wait longer before responding, and help others find their own answers instead of rushing to provide solutions. AI can raise the standard of preparation and reflection, but only if human judgment remains in the lead. Inclusion and diversity become practical through listening, cultural awareness, and communication that makes different perspectives visible.",
       "memoryMoment": [
         {
-          "title": "First EMBA memory",
-          "image": "",
-          "caption": "Add a monthly photo when it is ready."
+          "title": "First July EMBA handwritten notes",
+          "image": "/emba/materials/2026-07/handwritten-notes/images/IMG_6900.jpeg",
+          "caption": "Lead in Learning notes from 2026-07-01."
         }
       ]
     }
