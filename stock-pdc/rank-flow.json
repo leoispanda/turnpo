@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-08T07:47:55.151Z",
+  "generatedAt": "2026-07-09T21:10:29.561Z",
   "sourceRoot": "/Users/leoyang/Documents/financial freedom/stock-pdc-local",
   "sourceKind": "stock-pdc-local daily watchlists + turnpo backfills",
   "strategy": {
@@ -11,10 +11,16 @@
     "researchRetention": "All factor scores, reasons, and risks are retained for later attribution and tuning."
   },
   "backfillRoot": "stock-pdc/backfill/daily_watchlists",
-  "priceDataDir": "data_a_share_latest_runs/run_20260707_231328",
+  "priceDataDir": "data_a_share_latest_runs/run_20260709_230712",
   "priceDataFallbacks": [
-    "data_a_share_latest_runs/run_20260707_231328",
+    "data_a_share_latest_runs/run_20260709_230712",
     "data_a_share_latest_runs",
+    "data_a_share_latest_runs/run_20260709_230446",
+    "data_a_share_latest_runs/run_20260709_230201",
+    "data_a_share_latest_runs/run_20260708_eastmoney",
+    "data_a_share_latest_runs/run_20260708_230158",
+    "data_a_share_latest_runs/run_20260708_230156",
+    "data_a_share_latest_runs/run_20260707_231328",
     "data_a_share_latest_runs/run_20260707_231324",
     "data_a_share_latest_runs/run_20260706_230349",
     "data_a_share_latest_runs/run_20260706_230143",
@@ -41,9 +47,11 @@
     "2026-07-02",
     "2026-07-03",
     "2026-07-06",
-    "2026-07-07"
+    "2026-07-07",
+    "2026-07-08",
+    "2026-07-09"
   ],
-  "latestDate": "2026-07-07",
+  "latestDate": "2026-07-09",
   "days": [
     {
       "date": "2026-06-24",
@@ -636,7 +644,7 @@
         },
         {
           "ticker": "601211.SH",
-          "name": "国泰海通",
+          "name": "国泰君安",
           "rank": 11,
           "previousRank": null,
           "rankDelta": null,
@@ -707,11 +715,11 @@
           "mainReason": "market backdrop supports offense | above 50d SMA by 7.2%; 60d momentum 21.5%; outperforming benchmark by 11.2%",
           "mainRisk": "ATR elevated at 4.4%",
           "analysisDate": "2026-06-24",
-          "close": 83.64,
-          "nextClose": 87.5,
+          "close": 83.33,
+          "nextClose": 87.19,
           "returnDate": "2026-06-25",
-          "signalDayChangePct": 2.11,
-          "dayChangePct": 4.62,
+          "signalDayChangePct": 2.12,
+          "dayChangePct": 4.63,
           "scores": {
             "market_regime_score": 9.4,
             "trend_score": 9.5,
@@ -1816,7 +1824,7 @@
         },
         {
           "ticker": "000725.SZ",
-          "name": "京东方Ａ",
+          "name": "京东方A",
           "rank": 11,
           "previousRank": null,
           "rankDelta": null,
@@ -2541,7 +2549,7 @@
         },
         {
           "ticker": "601211.SH",
-          "name": "国泰海通",
+          "name": "国泰君安",
           "previousRank": 11,
           "previousScore": 7.02,
           "previousStatus": "Watch",
@@ -2564,11 +2572,11 @@
           "previousStatus": "Watch",
           "changeType": "DROPPED",
           "movement": "退出",
-          "close": 87.5,
-          "nextClose": 83.98,
+          "close": 87.19,
+          "nextClose": 83.67,
           "returnDate": "2026-06-26",
-          "signalDayChangePct": 4.62,
-          "dayChangePct": -4.02,
+          "signalDayChangePct": 4.63,
+          "dayChangePct": -4.04,
           "exitAction": "HOLD_DROPPED_UP_DAY",
           "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 4.4%"
@@ -2885,10 +2893,10 @@
           "mainRisk": "ATR elevated at 5.0%",
           "analysisDate": "2026-06-26",
           "close": 42.69,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 44.1,
+          "returnDate": "2026-06-29",
           "signalDayChangePct": 0.83,
-          "dayChangePct": null,
+          "dayChangePct": 3.3,
           "scores": {
             "market_regime_score": 9.4,
             "trend_score": 10,
@@ -2942,10 +2950,10 @@
           "mainRisk": "ATR elevated at 5.4%",
           "analysisDate": "2026-06-26",
           "close": 242,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 239.48,
+          "returnDate": "2026-06-29",
           "signalDayChangePct": -6.56,
-          "dayChangePct": null,
+          "dayChangePct": -1.04,
           "scores": {
             "market_regime_score": 9.4,
             "trend_score": 9.2,
@@ -3226,11 +3234,11 @@
           "mainReason": "market backdrop supports offense | above 50d SMA by 13.5%; 60d momentum 29.2%; outperforming benchmark by 16.7%",
           "mainRisk": "ATR elevated at 4.4%",
           "analysisDate": "2026-06-26",
-          "close": 83.98,
-          "nextClose": null,
-          "returnDate": "",
-          "signalDayChangePct": -4.02,
-          "dayChangePct": null,
+          "close": 83.67,
+          "nextClose": 85.04,
+          "returnDate": "2026-06-29",
+          "signalDayChangePct": -4.04,
+          "dayChangePct": 1.64,
           "scores": {
             "market_regime_score": 9.4,
             "trend_score": 10,
@@ -3341,10 +3349,10 @@
           "mainRisk": "ATR elevated at 5.5%; below 200d SMA",
           "analysisDate": "2026-06-26",
           "close": 35.67,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 35.2,
+          "returnDate": "2026-06-29",
           "signalDayChangePct": -7.21,
-          "dayChangePct": null,
+          "dayChangePct": -1.32,
           "scores": {
             "market_regime_score": 9.4,
             "trend_score": 7.3,
@@ -3740,10 +3748,10 @@
           "mainRisk": "below 50d SMA",
           "analysisDate": "2026-06-26",
           "close": 8.93,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 9.06,
+          "returnDate": "2026-06-29",
           "signalDayChangePct": -0.56,
-          "dayChangePct": null,
+          "dayChangePct": 1.46,
           "scores": {
             "market_regime_score": 9.4,
             "trend_score": 5.1,
@@ -3983,10 +3991,10 @@
       "portfolio": {
         "date": "2026-06-26",
         "returnDate": "2026-06-29",
-        "investedCount": 14,
-        "dailyReturnPct": 2.06,
-        "valuePct": 101.55,
-        "cumulativeReturnPct": 1.55
+        "investedCount": 19,
+        "dailyReturnPct": 1.73,
+        "valuePct": 101.22,
+        "cumulativeReturnPct": 1.22
       },
       "benchmark": {
         "date": "2026-06-26",
@@ -7605,19 +7613,19 @@
           "previousStatus": "High Risk Watch",
           "changeType": "DROPPED",
           "movement": "退出",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "signalDayChangePct": null,
-          "dayChangePct": null,
-          "exitAction": "SELL_REVIEW_DROPPED",
-          "exitText": "卖出复核",
+          "close": 44.1,
+          "nextClose": 46.2,
+          "returnDate": "2026-06-30",
+          "signalDayChangePct": 3.3,
+          "dayChangePct": 4.76,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 4.9%",
           "decision": {
             "policy": "TOP20_ROTATION_EXIT_REVIEW",
             "targetHolding": false,
-            "action": "SELL_REVIEW_DROPPED",
-            "basis": "Dropped from Top 20"
+            "action": "HOLD_DROPPED_UP_DAY",
+            "basis": "Dropped from Top 20 but signal day closed up"
           },
           "research": {
             "previousStatus": "High Risk Watch",
@@ -7633,19 +7641,19 @@
           "previousStatus": "Watch",
           "changeType": "DROPPED",
           "movement": "退出",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "signalDayChangePct": null,
-          "dayChangePct": null,
-          "exitAction": "SELL_REVIEW_DROPPED",
-          "exitText": "卖出复核",
+          "close": 85.04,
+          "nextClose": 88.75,
+          "returnDate": "2026-06-30",
+          "signalDayChangePct": 1.64,
+          "dayChangePct": 4.36,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "ATR elevated at 4.6%",
           "decision": {
             "policy": "TOP20_ROTATION_EXIT_REVIEW",
             "targetHolding": false,
-            "action": "SELL_REVIEW_DROPPED",
-            "basis": "Dropped from Top 20"
+            "action": "HOLD_DROPPED_UP_DAY",
+            "basis": "Dropped from Top 20 but signal day closed up"
           },
           "research": {
             "previousStatus": "Watch",
@@ -7689,11 +7697,11 @@
           "previousStatus": "Wait for Pullback",
           "changeType": "DROPPED",
           "movement": "退出",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "signalDayChangePct": null,
-          "dayChangePct": null,
+          "close": 239.48,
+          "nextClose": 241,
+          "returnDate": "2026-06-30",
+          "signalDayChangePct": -1.04,
+          "dayChangePct": 0.63,
           "exitAction": "SELL_REVIEW_DROPPED",
           "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 6.0%",
@@ -7745,19 +7753,19 @@
           "previousStatus": "Remove",
           "changeType": "DROPPED",
           "movement": "退出",
-          "close": null,
-          "nextClose": null,
-          "returnDate": "",
-          "signalDayChangePct": null,
-          "dayChangePct": null,
-          "exitAction": "SELL_REVIEW_DROPPED",
-          "exitText": "卖出复核",
+          "close": 9.06,
+          "nextClose": 9.03,
+          "returnDate": "2026-06-30",
+          "signalDayChangePct": 1.46,
+          "dayChangePct": -0.33,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
           "mainRisk": "stop is tight and may shake out; below 50d SMA",
           "decision": {
             "policy": "TOP20_ROTATION_EXIT_REVIEW",
             "targetHolding": false,
-            "action": "SELL_REVIEW_DROPPED",
-            "basis": "Dropped from Top 20"
+            "action": "HOLD_DROPPED_UP_DAY",
+            "basis": "Dropped from Top 20 but signal day closed up"
           },
           "research": {
             "previousStatus": "Remove",
@@ -7799,8 +7807,8 @@
         "returnDate": "2026-06-30",
         "investedCount": 20,
         "dailyReturnPct": 1.89,
-        "valuePct": 103.46,
-        "cumulativeReturnPct": 3.46
+        "valuePct": 103.13,
+        "cumulativeReturnPct": 3.13
       },
       "benchmark": {
         "date": "2026-06-29",
@@ -8404,7 +8412,7 @@
         },
         {
           "ticker": "000725.SZ",
-          "name": "京东方Ａ",
+          "name": "京东方A",
           "rank": 11,
           "previousRank": null,
           "rankDelta": null,
@@ -9150,8 +9158,8 @@
         "returnDate": "2026-07-01",
         "investedCount": 20,
         "dailyReturnPct": -1.33,
-        "valuePct": 102.09,
-        "cumulativeReturnPct": 2.09
+        "valuePct": 101.76,
+        "cumulativeReturnPct": 1.76
       },
       "benchmark": {
         "date": "2026-06-30",
@@ -9926,7 +9934,7 @@
         },
         {
           "ticker": "000725.SZ",
-          "name": "京东方Ａ",
+          "name": "京东方A",
           "rank": 14,
           "previousRank": 11,
           "rankDelta": -3,
@@ -10382,8 +10390,8 @@
         "returnDate": "2026-07-02",
         "investedCount": 20,
         "dailyReturnPct": -6.65,
-        "valuePct": 95.3,
-        "cumulativeReturnPct": -4.7
+        "valuePct": 94.99,
+        "cumulativeReturnPct": -5.01
       },
       "benchmark": {
         "date": "2026-07-01",
@@ -10987,7 +10995,7 @@
         },
         {
           "ticker": "000725.SZ",
-          "name": "京东方Ａ",
+          "name": "京东方A",
           "rank": 11,
           "previousRank": 14,
           "rankDelta": 3,
@@ -11665,8 +11673,8 @@
         "returnDate": "2026-07-03",
         "investedCount": 20,
         "dailyReturnPct": 0.34,
-        "valuePct": 95.62,
-        "cumulativeReturnPct": -4.38
+        "valuePct": 95.31,
+        "cumulativeReturnPct": -4.69
       },
       "benchmark": {
         "date": "2026-07-02",
@@ -12113,11 +12121,11 @@
           "mainReason": "committee evidence is mixed | above 50d SMA by 8.9%; 20d momentum 19.0% | 7 accumulation vs 3 distribution days; up days carry heavier volume than down days; 20d price gain 19.0% is volume-supported",
           "mainRisk": "ATR elevated at 4.9%; below 200d SMA",
           "analysisDate": "2026-07-03",
-          "close": 38.66,
-          "nextClose": 38.78,
+          "close": 38.04,
+          "nextClose": 38.16,
           "returnDate": "2026-07-06",
-          "signalDayChangePct": 0.39,
-          "dayChangePct": 0.31,
+          "signalDayChangePct": 0.4,
+          "dayChangePct": 0.32,
           "scores": {
             "market_regime_score": 6,
             "trend_score": 6.8,
@@ -13070,8 +13078,8 @@
         "returnDate": "2026-07-06",
         "investedCount": 20,
         "dailyReturnPct": 0.37,
-        "valuePct": 95.98,
-        "cumulativeReturnPct": -4.02
+        "valuePct": 95.67,
+        "cumulativeReturnPct": -4.33
       },
       "benchmark": {
         "date": "2026-07-03",
@@ -13575,11 +13583,11 @@
           "mainReason": "committee evidence is mixed | above 50d SMA by 9.1%; 20d momentum 18.2% | 6 accumulation vs 2 distribution days; up days carry heavier volume than down days; 20d price gain 18.2% is volume-supported",
           "mainRisk": "ATR elevated at 4.8%; below 200d SMA",
           "analysisDate": "2026-07-06",
-          "close": 38.78,
-          "nextClose": 37.57,
+          "close": 38.16,
+          "nextClose": 36.95,
           "returnDate": "2026-07-07",
-          "signalDayChangePct": 0.31,
-          "dayChangePct": -3.12,
+          "signalDayChangePct": 0.32,
+          "dayChangePct": -3.17,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 6.8,
@@ -14391,8 +14399,8 @@
         "returnDate": "2026-07-07",
         "investedCount": 19,
         "dailyReturnPct": -1.99,
-        "valuePct": 94.07,
-        "cumulativeReturnPct": -5.93
+        "valuePct": 93.76,
+        "cumulativeReturnPct": -6.24
       },
       "benchmark": {
         "date": "2026-07-06",
@@ -14441,10 +14449,10 @@
           "mainRisk": "strong bearish candle closed near low",
           "analysisDate": "2026-07-07",
           "close": 28.45,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 28,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -2.67,
-          "dayChangePct": null,
+          "dayChangePct": -1.58,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -14498,10 +14506,10 @@
           "mainRisk": "ATR elevated at 5.1%",
           "analysisDate": "2026-07-07",
           "close": 33.86,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 34.35,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": 0.09,
-          "dayChangePct": null,
+          "dayChangePct": 1.45,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -14555,10 +14563,10 @@
           "mainRisk": "stop is tight and may shake out",
           "analysisDate": "2026-07-07",
           "close": 11.42,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 11.46,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": 0.18,
-          "dayChangePct": null,
+          "dayChangePct": 0.35,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 9,
@@ -14612,10 +14620,10 @@
           "mainRisk": "ATR high at 8.1%; pullback from recent high -13.0%",
           "analysisDate": "2026-07-07",
           "close": 1388,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 1413.55,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": 1.33,
-          "dayChangePct": null,
+          "dayChangePct": 1.84,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -14669,10 +14677,10 @@
           "mainRisk": "stop is tight and may shake out",
           "analysisDate": "2026-07-07",
           "close": 79.12,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 79.41,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -1.1,
-          "dayChangePct": null,
+          "dayChangePct": 0.37,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 8.2,
@@ -14726,10 +14734,10 @@
           "mainRisk": "ATR elevated at 4.4%; below 200d SMA",
           "analysisDate": "2026-07-07",
           "close": 20.64,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 20.03,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -3.14,
-          "dayChangePct": null,
+          "dayChangePct": -2.96,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 7.6,
@@ -14783,10 +14791,10 @@
           "mainRisk": "ATR high at 7.3%",
           "analysisDate": "2026-07-07",
           "close": 145.42,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 152.1,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": 0.99,
-          "dayChangePct": null,
+          "dayChangePct": 4.59,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -14840,10 +14848,10 @@
           "mainRisk": "stop is tight and may shake out",
           "analysisDate": "2026-07-07",
           "close": 27.41,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 27.83,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": 0.81,
-          "dayChangePct": null,
+          "dayChangePct": 1.53,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 6.4,
@@ -14897,10 +14905,10 @@
           "mainRisk": "ATR high at 9.0%; pullback from recent high -14.1%",
           "analysisDate": "2026-07-07",
           "close": 236.87,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 237.56,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": 5.53,
-          "dayChangePct": null,
+          "dayChangePct": 0.29,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -15011,10 +15019,10 @@
           "mainRisk": "ATR elevated at 5.8%",
           "analysisDate": "2026-07-07",
           "close": 27.93,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 27.76,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -2.55,
-          "dayChangePct": null,
+          "dayChangePct": -0.61,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -15067,11 +15075,11 @@
           "mainReason": "committee evidence is mixed | above 50d SMA by 5.7%; 20d momentum 13.8% | 6 accumulation vs 3 distribution days; up days carry heavier volume than down days; 20d price gain 13.8% is volume-supported",
           "mainRisk": "ATR elevated at 5.0%; below 200d SMA",
           "analysisDate": "2026-07-07",
-          "close": 37.57,
-          "nextClose": null,
-          "returnDate": "",
-          "signalDayChangePct": -3.12,
-          "dayChangePct": null,
+          "close": 36.95,
+          "nextClose": 36.89,
+          "returnDate": "2026-07-08",
+          "signalDayChangePct": -3.17,
+          "dayChangePct": -0.16,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 6.3,
@@ -15125,10 +15133,10 @@
           "mainRisk": "ATR high at 7.5%",
           "analysisDate": "2026-07-07",
           "close": 342.6,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 343,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": 1.06,
-          "dayChangePct": null,
+          "dayChangePct": 0.12,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -15182,10 +15190,10 @@
           "mainRisk": "ATR high at 10.0%",
           "analysisDate": "2026-07-07",
           "close": 412.1,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 402.33,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -6.38,
-          "dayChangePct": null,
+          "dayChangePct": -2.37,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -15239,10 +15247,10 @@
           "mainRisk": "ATR high at 9.7%; pullback from recent high -19.8%",
           "analysisDate": "2026-07-07",
           "close": 253.2,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 247.15,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -5.76,
-          "dayChangePct": null,
+          "dayChangePct": -2.39,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -15296,10 +15304,10 @@
           "mainRisk": "ATR high at 10.2%; pullback from recent high -17.9%",
           "analysisDate": "2026-07-07",
           "close": 140,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 130.43,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -1.22,
-          "dayChangePct": null,
+          "dayChangePct": -6.84,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -15353,10 +15361,10 @@
           "mainRisk": "ATR high at 9.7%; pullback from recent high -13.2%",
           "analysisDate": "2026-07-07",
           "close": 627.9,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 592.71,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -7.91,
-          "dayChangePct": null,
+          "dayChangePct": -5.6,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -15410,10 +15418,10 @@
           "mainRisk": "ATR high at 9.4%; pullback from recent high -16.3%",
           "analysisDate": "2026-07-07",
           "close": 129.72,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 128.2,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": 0.69,
-          "dayChangePct": null,
+          "dayChangePct": -1.17,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 9.4,
@@ -15467,10 +15475,10 @@
           "mainRisk": "ATR elevated at 5.3%; below 200d SMA",
           "analysisDate": "2026-07-07",
           "close": 63.31,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 63.07,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -1.81,
-          "dayChangePct": null,
+          "dayChangePct": -0.38,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 6.3,
@@ -15524,10 +15532,10 @@
           "mainRisk": "ATR high at 9.5%; pullback from recent high -19.5%",
           "analysisDate": "2026-07-07",
           "close": 150.77,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 145.46,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -2.27,
-          "dayChangePct": null,
+          "dayChangePct": -3.52,
           "scores": {
             "market_regime_score": 6.5,
             "trend_score": 10,
@@ -15575,10 +15583,10 @@
           "changeType": "DROPPED",
           "movement": "退出",
           "close": 18.99,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 18.72,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -4.09,
-          "dayChangePct": null,
+          "dayChangePct": -1.42,
           "exitAction": "SELL_REVIEW_DROPPED",
           "exitText": "卖出复核",
           "mainRisk": "wide stop distance 20.8%",
@@ -15603,10 +15611,10 @@
           "changeType": "DROPPED",
           "movement": "退出",
           "close": 37.33,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 35.98,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -0.82,
-          "dayChangePct": null,
+          "dayChangePct": -3.62,
           "exitAction": "SELL_REVIEW_DROPPED",
           "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 4.5%; stop is tight and may shake out",
@@ -15631,10 +15639,10 @@
           "changeType": "DROPPED",
           "movement": "退出",
           "close": 38.4,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 38.54,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -1.54,
-          "dayChangePct": null,
+          "dayChangePct": 0.36,
           "exitAction": "SELL_REVIEW_DROPPED",
           "exitText": "卖出复核",
           "mainRisk": "stop is tight and may shake out",
@@ -15687,10 +15695,10 @@
           "changeType": "DROPPED",
           "movement": "退出",
           "close": 263.16,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 256.62,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -5,
-          "dayChangePct": null,
+          "dayChangePct": -2.49,
           "exitAction": "SELL_REVIEW_DROPPED",
           "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 5.4%; wide stop distance 16.4%",
@@ -15715,10 +15723,10 @@
           "changeType": "DROPPED",
           "movement": "退出",
           "close": 20.29,
-          "nextClose": null,
-          "returnDate": "",
+          "nextClose": 20.13,
+          "returnDate": "2026-07-08",
           "signalDayChangePct": -4.2,
-          "dayChangePct": null,
+          "dayChangePct": -0.79,
           "exitAction": "SELL_REVIEW_DROPPED",
           "exitText": "卖出复核",
           "mainRisk": "ATR elevated at 4.9%; below 200d SMA",
@@ -15734,14 +15742,2880 @@
             "mainRisk": "ATR elevated at 4.9%; below 200d SMA"
           }
         }
+      ],
+      "portfolio": {
+        "date": "2026-07-07",
+        "returnDate": "2026-07-08",
+        "investedCount": 19,
+        "dailyReturnPct": -0.9,
+        "valuePct": 92.92,
+        "cumulativeReturnPct": -7.08
+      },
+      "benchmark": {
+        "date": "2026-07-07",
+        "ticker": "CSI300ETF",
+        "returnDate": "2026-07-08",
+        "close": 4.83,
+        "nextClose": 4.8,
+        "dailyReturnPct": -0.58,
+        "valuePct": 96.6,
+        "cumulativeReturnPct": -3.4
+      }
+    },
+    {
+      "date": "2026-07-08",
+      "previousDate": "2026-07-07",
+      "sourceFile": "outputs/daily_watchlists/watchlist_2026-07-08.csv",
+      "changeFile": "outputs/daily_leaderboard_changes/leaderboard_changes_2026-07-08.csv",
+      "summary": {
+        "total": 20,
+        "targetHoldings": 20,
+        "inTop20": 20,
+        "new": 6,
+        "up": 4,
+        "down": 9,
+        "unchanged": 1,
+        "retained": 14,
+        "dropped": 6,
+        "avgScore": 6.66,
+        "decisionRule": "Hold the highest-ranked Top 20 names; keep factor scores for research only."
+      },
+      "rows": [
+        {
+          "ticker": "600030.SH",
+          "name": "中信证券",
+          "rank": 1,
+          "previousRank": 1,
+          "rankDelta": 0,
+          "changeType": "UNCHANGED",
+          "movement": "保持",
+          "score": 7.44,
+          "previousScore": 7.22,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 4.9%; 20d momentum 11.5%; 60d momentum 17.9%; outperforming benchmark by 13.0%",
+          "mainRisk": "CSI300ETF below 50d SMA",
+          "analysisDate": "2026-07-08",
+          "close": 28,
+          "nextClose": 28.68,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": -1.58,
+          "dayChangePct": 2.43,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 10,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 6.8,
+            "candlestick_score": 5,
+            "overheat_score": 8.5,
+            "risk_score": 8.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "committee evidence is mixed | above 50d SMA by 4.9%; 20d momentum 11.5%; 60d momentum 17.9%; outperforming benchmark by 13.0%",
+            "mainRisk": "CSI300ETF below 50d SMA",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 10,
+              "livermore_breakout_score": 5.6,
+              "volume_price_score": 6.8,
+              "candlestick_score": 5,
+              "overheat_score": 8.5,
+              "risk_score": 8.4,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 7
+            }
+          }
+        },
+        {
+          "ticker": "600900.SH",
+          "name": "长江电力",
+          "rank": 2,
+          "previousRank": 8,
+          "rankDelta": 6,
+          "changeType": "UP",
+          "movement": "上升 6",
+          "score": 7.33,
+          "previousScore": 6.62,
+          "status": "Breakout Pending",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "trend, breakout, and risk controls align; volume supports the trend | above 50d SMA by 2.6% | within 1.6% of 55d pivot; tight 20d base range 8.2% | 6 accumulation vs 3 distribution days; latest advance came on strong volume",
+          "mainRisk": "stop is tight and may shake out",
+          "analysisDate": "2026-07-08",
+          "close": 27.83,
+          "nextClose": 27.77,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": 1.53,
+          "dayChangePct": -0.22,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 7.4,
+            "livermore_breakout_score": 7.4,
+            "volume_price_score": 7.4,
+            "candlestick_score": 5,
+            "overheat_score": 8.5,
+            "risk_score": 7.9,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 8.1
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Breakout Pending",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "trend, breakout, and risk controls align; volume supports the trend | above 50d SMA by 2.6% | within 1.6% of 55d pivot; tight 20d base range 8.2% | 6 accumulation vs 3 distribution days; latest advance came on strong volume",
+            "mainRisk": "stop is tight and may shake out",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 7.4,
+              "livermore_breakout_score": 7.4,
+              "volume_price_score": 7.4,
+              "candlestick_score": 5,
+              "overheat_score": 8.5,
+              "risk_score": 7.9,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 8.1
+            }
+          }
+        },
+        {
+          "ticker": "002415.SZ",
+          "name": "海康威视",
+          "rank": 3,
+          "previousRank": 2,
+          "rankDelta": -1,
+          "changeType": "DOWN",
+          "movement": "下降 1",
+          "score": 7.15,
+          "previousScore": 7.06,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 5.4%; 20d > 50d > 200d trend stack; 20d momentum 12.7%; outperforming benchmark by 9.5%",
+          "mainRisk": "ATR elevated at 5.0%",
+          "analysisDate": "2026-07-08",
+          "close": 34.35,
+          "nextClose": 35.39,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": 1.45,
+          "dayChangePct": 3.03,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 10,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 6.8,
+            "candlestick_score": 3.8,
+            "overheat_score": 8.5,
+            "risk_score": 7.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.7
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "committee evidence is mixed | above 50d SMA by 5.4%; 20d > 50d > 200d trend stack; 20d momentum 12.7%; outperforming benchmark by 9.5%",
+            "mainRisk": "ATR elevated at 5.0%",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 10,
+              "livermore_breakout_score": 5.6,
+              "volume_price_score": 6.8,
+              "candlestick_score": 3.8,
+              "overheat_score": 8.5,
+              "risk_score": 7.4,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.7
+            }
+          }
+        },
+        {
+          "ticker": "601398.SH",
+          "name": "工商银行",
+          "rank": 4,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 7.12,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 1.3% | 6 accumulation vs 3 distribution days; up days carry heavier volume than down days",
+          "mainRisk": "stop is tight and may shake out",
+          "analysisDate": "2026-07-08",
+          "close": 7.37,
+          "nextClose": 7.27,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": 1.52,
+          "dayChangePct": -1.36,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 7.7,
+            "livermore_breakout_score": 6.5,
+            "volume_price_score": 7.4,
+            "candlestick_score": 6.4,
+            "overheat_score": 8.5,
+            "risk_score": 6.9,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7.3
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend | above 50d SMA by 1.3% | 6 accumulation vs 3 distribution days; up days carry heavier volume than down days",
+            "mainRisk": "stop is tight and may shake out",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 7.7,
+              "livermore_breakout_score": 6.5,
+              "volume_price_score": 7.4,
+              "candlestick_score": 6.4,
+              "overheat_score": 8.5,
+              "risk_score": 6.9,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 7.3
+            }
+          }
+        },
+        {
+          "ticker": "600919.SH",
+          "name": "江苏银行",
+          "rank": 5,
+          "previousRank": 3,
+          "rankDelta": -2,
+          "changeType": "DOWN",
+          "movement": "下降 2",
+          "score": 6.96,
+          "previousScore": 6.89,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 1.4%; 20d > 50d > 200d trend stack",
+          "mainRisk": "stop is tight and may shake out",
+          "analysisDate": "2026-07-08",
+          "close": 11.46,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 0.35,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 9.5,
+            "livermore_breakout_score": 6.5,
+            "volume_price_score": 5,
+            "candlestick_score": 5,
+            "overheat_score": 8.5,
+            "risk_score": 6.9,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.6
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "committee evidence is mixed | above 50d SMA by 1.4%; 20d > 50d > 200d trend stack",
+            "mainRisk": "stop is tight and may shake out",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 9.5,
+              "livermore_breakout_score": 6.5,
+              "volume_price_score": 5,
+              "candlestick_score": 5,
+              "overheat_score": 8.5,
+              "risk_score": 6.9,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.6
+            }
+          }
+        },
+        {
+          "ticker": "601988.SH",
+          "name": "中国银行",
+          "rank": 6,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.83,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 1.0%; 20d > 50d > 200d trend stack",
+          "mainRisk": "stop is tight and may shake out",
+          "analysisDate": "2026-07-08",
+          "close": 5.92,
+          "nextClose": 5.83,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": 2.42,
+          "dayChangePct": -1.52,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 9,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 5,
+            "candlestick_score": 6.4,
+            "overheat_score": 8.5,
+            "risk_score": 6.9,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.6
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "committee evidence is mixed | above 50d SMA by 1.0%; 20d > 50d > 200d trend stack",
+            "mainRisk": "stop is tight and may shake out",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 9,
+              "livermore_breakout_score": 5.6,
+              "volume_price_score": 5,
+              "candlestick_score": 6.4,
+              "overheat_score": 8.5,
+              "risk_score": 6.9,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.6
+            }
+          }
+        },
+        {
+          "ticker": "601939.SH",
+          "name": "建设银行",
+          "rank": 7,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.8,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 1.1%; 20d > 50d > 200d trend stack",
+          "mainRisk": "stop is tight and may shake out",
+          "analysisDate": "2026-07-08",
+          "close": 10.07,
+          "nextClose": 9.89,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": 1.51,
+          "dayChangePct": -1.79,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 9.5,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 5,
+            "candlestick_score": 5,
+            "overheat_score": 8.5,
+            "risk_score": 6.9,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.5
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "committee evidence is mixed | above 50d SMA by 1.1%; 20d > 50d > 200d trend stack",
+            "mainRisk": "stop is tight and may shake out",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 9.5,
+              "livermore_breakout_score": 5.6,
+              "volume_price_score": 5,
+              "candlestick_score": 5,
+              "overheat_score": 8.5,
+              "risk_score": 6.9,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.5
+            }
+          }
+        },
+        {
+          "ticker": "000333.SZ",
+          "name": "美的集团",
+          "rank": 8,
+          "previousRank": 5,
+          "rankDelta": -3,
+          "changeType": "DOWN",
+          "movement": "下降 3",
+          "score": 6.76,
+          "previousScore": 6.81,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 3.0%",
+          "mainRisk": "stop is tight and may shake out",
+          "analysisDate": "2026-07-08",
+          "close": 79.41,
+          "nextClose": 79.33,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": 0.37,
+          "dayChangePct": -0.1,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 8.7,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 6.4,
+            "candlestick_score": 5.9,
+            "overheat_score": 7,
+            "risk_score": 6.9,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.5
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "committee evidence is mixed | above 50d SMA by 3.0%",
+            "mainRisk": "stop is tight and may shake out",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 8.7,
+              "livermore_breakout_score": 5.6,
+              "volume_price_score": 6.4,
+              "candlestick_score": 5.9,
+              "overheat_score": 7,
+              "risk_score": 6.9,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.5
+            }
+          }
+        },
+        {
+          "ticker": "688256.SH",
+          "name": "寒武纪",
+          "rank": 9,
+          "previousRank": 4,
+          "rankDelta": -5,
+          "changeType": "DOWN",
+          "movement": "下降 5",
+          "score": 6.73,
+          "previousScore": 6.87,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 8.6%; 20d > 50d > 200d trend stack; 20d momentum 11.3%; 60d momentum 76.0%; outperforming benchmark by 71.1% | 6 accumulation vs 1 distribution days; up days carry heavier volume than down days; 20d price gain 11.3% is volume-supported",
+          "mainRisk": "ATR high at 8.1%",
+          "analysisDate": "2026-07-08",
+          "close": 1413.55,
+          "nextClose": 1535.01,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": 1.84,
+          "dayChangePct": 8.59,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 8.2,
+            "candlestick_score": 4.7,
+            "overheat_score": 8,
+            "risk_score": 6,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.9
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend | above 50d SMA by 8.6%; 20d > 50d > 200d trend stack; 20d momentum 11.3%; 60d momentum 76.0%; outperforming benchmark by 71.1% | 6 accumulation vs 1 distribution days; up days carry heavier volume than down days; 20d price gain 11.3% is volume-supported",
+            "mainRisk": "ATR high at 8.1%",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 10,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 8.2,
+              "candlestick_score": 4.7,
+              "overheat_score": 8,
+              "risk_score": 6,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.9
+            }
+          }
+        },
+        {
+          "ticker": "688041.SH",
+          "name": "海光信息",
+          "rank": 10,
+          "previousRank": 13,
+          "rankDelta": 3,
+          "changeType": "UP",
+          "movement": "上升 3",
+          "score": 6.61,
+          "previousScore": 6.46,
+          "status": "Watch",
+          "previousStatus": "Wait for Pullback",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 9.1%; 20d > 50d > 200d trend stack; 20d momentum 28.0%; 60d momentum 51.2%; outperforming benchmark by 46.3% | 5 accumulation vs 1 distribution days; 20d price gain 28.0% is volume-supported",
+          "mainRisk": "ATR high at 7.3%",
+          "analysisDate": "2026-07-08",
+          "close": 343,
+          "nextClose": 363.46,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": 0.12,
+          "dayChangePct": 5.97,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 7.2,
+            "candlestick_score": 5,
+            "overheat_score": 8,
+            "risk_score": 6,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.8
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Wait for Pullback",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend | above 50d SMA by 9.1%; 20d > 50d > 200d trend stack; 20d momentum 28.0%; 60d momentum 51.2%; outperforming benchmark by 46.3% | 5 accumulation vs 1 distribution days; 20d price gain 28.0% is volume-supported",
+            "mainRisk": "ATR high at 7.3%",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 10,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 7.2,
+              "candlestick_score": 5,
+              "overheat_score": 8,
+              "risk_score": 6,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.8
+            }
+          }
+        },
+        {
+          "ticker": "601211.SH",
+          "name": "国泰海通",
+          "rank": 11,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.59,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 13.5%; 20d momentum 15.8%; 60d momentum 16.4%; outperforming benchmark by 11.5% | 6 accumulation vs 2 distribution days; 20d price gain 15.8% is volume-supported",
+          "mainRisk": "ATR elevated at 4.2%",
+          "analysisDate": "2026-07-08",
+          "close": 18.72,
+          "nextClose": 18.87,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": -1.42,
+          "dayChangePct": 0.8,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 7.2,
+            "candlestick_score": 5,
+            "overheat_score": 7.2,
+            "risk_score": 6.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.7
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend | above 50d SMA by 13.5%; 20d momentum 15.8%; 60d momentum 16.4%; outperforming benchmark by 11.5% | 6 accumulation vs 2 distribution days; 20d price gain 15.8% is volume-supported",
+            "mainRisk": "ATR elevated at 4.2%",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 10,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 7.2,
+              "candlestick_score": 5,
+              "overheat_score": 7.2,
+              "risk_score": 6.4,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.7
+            }
+          }
+        },
+        {
+          "ticker": "301308.SZ",
+          "name": "江波龙",
+          "rank": 12,
+          "previousRank": 17,
+          "rankDelta": 5,
+          "changeType": "UP",
+          "movement": "上升 5",
+          "score": 6.56,
+          "previousScore": 6.25,
+          "status": "Watch",
+          "previousStatus": "High Risk Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 7.1%; 20d > 50d > 200d trend stack; 20d momentum 15.2%; 60d momentum 82.6%; outperforming benchmark by 77.7% | 7 accumulation vs 2 distribution days; up days carry heavier volume than down days; 20d price gain 15.2% is volume-supported",
+          "mainRisk": "ATR high at 10.1%; pullback from recent high -18.0%",
+          "analysisDate": "2026-07-08",
+          "close": 592.71,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -5.6,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 8.2,
+            "candlestick_score": 3.6,
+            "overheat_score": 8.5,
+            "risk_score": 5.3,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.7
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "High Risk Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend | above 50d SMA by 7.1%; 20d > 50d > 200d trend stack; 20d momentum 15.2%; 60d momentum 82.6%; outperforming benchmark by 77.7% | 7 accumulation vs 2 distribution days; up days carry heavier volume than down days; 20d price gain 15.2% is volume-supported",
+            "mainRisk": "ATR high at 10.1%; pullback from recent high -18.0%",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 10,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 8.2,
+              "candlestick_score": 3.6,
+              "overheat_score": 8.5,
+              "risk_score": 5.3,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.7
+            }
+          }
+        },
+        {
+          "ticker": "002384.SZ",
+          "name": "东山精密",
+          "rank": 13,
+          "previousRank": 9,
+          "rankDelta": -4,
+          "changeType": "DOWN",
+          "movement": "下降 4",
+          "score": 6.54,
+          "previousScore": 6.58,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 5.9%; 20d > 50d > 200d trend stack; 60d momentum 80.1%; outperforming benchmark by 75.2% | 6 accumulation vs 2 distribution days; up days carry heavier volume than down days; 20d price gain 5.9% is volume-supported",
+          "mainRisk": "ATR high at 9.0%; pullback from recent high -13.9%",
+          "analysisDate": "2026-07-08",
+          "close": 237.56,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 0.29,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 9.9,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 8.2,
+            "candlestick_score": 5,
+            "overheat_score": 7.5,
+            "risk_score": 5.3,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.7
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend | above 50d SMA by 5.9%; 20d > 50d > 200d trend stack; 60d momentum 80.1%; outperforming benchmark by 75.2% | 6 accumulation vs 2 distribution days; up days carry heavier volume than down days; 20d price gain 5.9% is volume-supported",
+            "mainRisk": "ATR high at 9.0%; pullback from recent high -13.9%",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 9.9,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 8.2,
+              "candlestick_score": 5,
+              "overheat_score": 7.5,
+              "risk_score": 5.3,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.7
+            }
+          }
+        },
+        {
+          "ticker": "601628.SH",
+          "name": "中国人寿",
+          "rank": 14,
+          "previousRank": 12,
+          "rankDelta": -2,
+          "changeType": "DOWN",
+          "movement": "下降 2",
+          "score": 6.52,
+          "previousScore": 6.47,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 5.6%; 20d momentum 13.4% | 6 accumulation vs 3 distribution days; up days carry heavier volume than down days; 20d price gain 13.4% is volume-supported",
+          "mainRisk": "ATR elevated at 5.1%; below 200d SMA",
+          "analysisDate": "2026-07-08",
+          "close": 36.89,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -0.16,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 6.3,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 8.2,
+            "candlestick_score": 4.7,
+            "overheat_score": 8.5,
+            "risk_score": 6.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.4
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "committee evidence is mixed | above 50d SMA by 5.6%; 20d momentum 13.4% | 6 accumulation vs 3 distribution days; up days carry heavier volume than down days; 20d price gain 13.4% is volume-supported",
+            "mainRisk": "ATR elevated at 5.1%; below 200d SMA",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 6.3,
+              "livermore_breakout_score": 5.6,
+              "volume_price_score": 8.2,
+              "candlestick_score": 4.7,
+              "overheat_score": 8.5,
+              "risk_score": 6.2,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.4
+            }
+          }
+        },
+        {
+          "ticker": "601066.SH",
+          "name": "中信建投",
+          "rank": 15,
+          "previousRank": 11,
+          "rankDelta": -4,
+          "changeType": "DOWN",
+          "movement": "下降 4",
+          "score": 6.41,
+          "previousScore": 6.49,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 11.3%; 20d > 50d > 200d trend stack; 20d momentum 11.2%; 60d momentum 30.0%; outperforming benchmark by 25.1%",
+          "mainRisk": "ATR elevated at 5.9%",
+          "analysisDate": "2026-07-08",
+          "close": 27.76,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -0.61,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 6.8,
+            "candlestick_score": 4.7,
+            "overheat_score": 7.2,
+            "risk_score": 6,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.2
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "committee evidence is mixed | above 50d SMA by 11.3%; 20d > 50d > 200d trend stack; 20d momentum 11.2%; 60d momentum 30.0%; outperforming benchmark by 25.1%",
+            "mainRisk": "ATR elevated at 5.9%",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 10,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 6.8,
+              "candlestick_score": 4.7,
+              "overheat_score": 7.2,
+              "risk_score": 6,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.2
+            }
+          }
+        },
+        {
+          "ticker": "688981.SH",
+          "name": "中芯国际",
+          "rank": 16,
+          "previousRank": 7,
+          "rankDelta": -9,
+          "changeType": "DOWN",
+          "movement": "下降 9",
+          "score": 6.4,
+          "previousScore": 6.65,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 13.9%; 20d > 50d > 200d trend stack; 20d momentum 19.5%; 60d momentum 52.5%; outperforming benchmark by 47.6% | 7 accumulation vs 2 distribution days; 20d price gain 19.5% is volume-supported",
+          "mainRisk": "ATR high at 7.3%",
+          "analysisDate": "2026-07-08",
+          "close": 152.1,
+          "nextClose": 173,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": 4.59,
+          "dayChangePct": 13.74,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 7.2,
+            "candlestick_score": 5,
+            "overheat_score": 7.2,
+            "risk_score": 5.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.6
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend | above 50d SMA by 13.9%; 20d > 50d > 200d trend stack; 20d momentum 19.5%; 60d momentum 52.5%; outperforming benchmark by 47.6% | 7 accumulation vs 2 distribution days; 20d price gain 19.5% is volume-supported",
+            "mainRisk": "ATR high at 7.3%",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 10,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 7.2,
+              "candlestick_score": 5,
+              "overheat_score": 7.2,
+              "risk_score": 5.4,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.6
+            }
+          }
+        },
+        {
+          "ticker": "603259.SH",
+          "name": "药明康德",
+          "rank": 17,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.17,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 8.9%; 20d > 50d > 200d trend stack; 20d momentum 23.4%",
+          "mainRisk": "ATR elevated at 5.6%",
+          "analysisDate": "2026-07-08",
+          "close": 115.4,
+          "nextClose": 121.07,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": -2.45,
+          "dayChangePct": 4.91,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 5.8,
+            "candlestick_score": 3.6,
+            "overheat_score": 5.6,
+            "risk_score": 7,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 5.8
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "committee evidence is mixed | above 50d SMA by 8.9%; 20d > 50d > 200d trend stack; 20d momentum 23.4%",
+            "mainRisk": "ATR elevated at 5.6%",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 10,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 5.8,
+              "candlestick_score": 3.6,
+              "overheat_score": 5.6,
+              "risk_score": 7,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 5.8
+            }
+          }
+        },
+        {
+          "ticker": "601336.SH",
+          "name": "新华保险",
+          "rank": 18,
+          "previousRank": 19,
+          "rankDelta": 1,
+          "changeType": "UP",
+          "movement": "上升 1",
+          "score": 6.13,
+          "previousScore": 6.2,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 3.1%; 20d momentum 12.9%",
+          "mainRisk": "ATR elevated at 5.4%; below 200d SMA",
+          "analysisDate": "2026-07-08",
+          "close": 63.07,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -0.38,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 6.3,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 6.8,
+            "candlestick_score": 4.7,
+            "overheat_score": 8.5,
+            "risk_score": 5.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.1
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "committee evidence is mixed | above 50d SMA by 3.1%; 20d momentum 12.9%",
+            "mainRisk": "ATR elevated at 5.4%; below 200d SMA",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 6.3,
+              "livermore_breakout_score": 5.6,
+              "volume_price_score": 6.8,
+              "candlestick_score": 4.7,
+              "overheat_score": 8.5,
+              "risk_score": 5.2,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.1
+            }
+          }
+        },
+        {
+          "ticker": "002916.SZ",
+          "name": "深南电路",
+          "rank": 19,
+          "previousRank": 14,
+          "rankDelta": -5,
+          "changeType": "DOWN",
+          "movement": "下降 5",
+          "score": 6.06,
+          "previousScore": 6.43,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "committee evidence is mixed | above 50d SMA by 5.3%; 20d > 50d > 200d trend stack; 60d momentum 67.2%; outperforming benchmark by 62.3%",
+          "mainRisk": "ATR high at 9.9%; pullback from recent high -12.1%",
+          "analysisDate": "2026-07-08",
+          "close": 402.33,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -2.37,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 9.9,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 5,
+            "candlestick_score": 5,
+            "overheat_score": 7.5,
+            "risk_score": 5.3,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 5.9
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "committee evidence is mixed | above 50d SMA by 5.3%; 20d > 50d > 200d trend stack; 60d momentum 67.2%; outperforming benchmark by 62.3%",
+            "mainRisk": "ATR high at 9.9%; pullback from recent high -12.1%",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 9.9,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 5,
+              "candlestick_score": 5,
+              "overheat_score": 7.5,
+              "risk_score": 5.3,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 5.9
+            }
+          }
+        },
+        {
+          "ticker": "688525.SH",
+          "name": "佰维存储",
+          "rank": 20,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.02,
+          "previousScore": 0,
+          "status": "High Risk Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend | above 50d SMA by 14.3%; 20d > 50d > 200d trend stack; 20d momentum 29.9%; 60d momentum 74.3%; outperforming benchmark by 69.4% | 8 accumulation vs 0 distribution days; up days carry heavier volume than down days; 20d price gain 29.9% is volume-supported",
+          "mainRisk": "ATR high at 10.4%; 60d drawdown -21.9%",
+          "analysisDate": "2026-07-08",
+          "close": 396.22,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -6.77,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 6,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 8.2,
+            "candlestick_score": 3.6,
+            "overheat_score": 7.2,
+            "risk_score": 3.6,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 4.8
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "High Risk Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend | above 50d SMA by 14.3%; 20d > 50d > 200d trend stack; 20d momentum 29.9%; 60d momentum 74.3%; outperforming benchmark by 69.4% | 8 accumulation vs 0 distribution days; up days carry heavier volume than down days; 20d price gain 29.9% is volume-supported",
+            "mainRisk": "ATR high at 10.4%; 60d drawdown -21.9%",
+            "scores": {
+              "market_regime_score": 6,
+              "trend_score": 10,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 8.2,
+              "candlestick_score": 3.6,
+              "overheat_score": 7.2,
+              "risk_score": 3.6,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 4.8
+            }
+          }
+        }
+      ],
+      "dropped": [
+        {
+          "ticker": "601688.SH",
+          "name": "华泰证券",
+          "previousRank": 6,
+          "previousScore": 6.74,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": 20.03,
+          "nextClose": 20.39,
+          "returnDate": "2026-07-09",
+          "signalDayChangePct": -2.96,
+          "dayChangePct": 1.8,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR elevated at 4.4%; below 200d SMA",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.74,
+            "mainRisk": "ATR elevated at 4.4%; below 200d SMA"
+          }
+        },
+        {
+          "ticker": "002281.SZ",
+          "name": "光迅科技",
+          "previousRank": 10,
+          "previousScore": 6.53,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 9.4%; pullback from recent high -19.7%",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.53,
+            "mainRisk": "ATR high at 9.4%; pullback from recent high -19.7%"
+          }
+        },
+        {
+          "ticker": "688008.SH",
+          "name": "澜起科技",
+          "previousRank": 15,
+          "previousScore": 6.4,
+          "previousStatus": "High Risk Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": 247.15,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -2.39,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 9.7%; pullback from recent high -19.8%",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "High Risk Watch",
+            "previousScore": 6.4,
+            "mainRisk": "ATR high at 9.7%; pullback from recent high -19.8%"
+          }
+        },
+        {
+          "ticker": "300408.SZ",
+          "name": "三环集团",
+          "previousRank": 16,
+          "previousScore": 6.25,
+          "previousStatus": "High Risk Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": 130.43,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -6.84,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 10.2%; pullback from recent high -17.9%",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "High Risk Watch",
+            "previousScore": 6.25,
+            "mainRisk": "ATR high at 10.2%; pullback from recent high -17.9%"
+          }
+        },
+        {
+          "ticker": "002463.SZ",
+          "name": "沪电股份",
+          "previousRank": 18,
+          "previousScore": 6.22,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": 128.2,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -1.17,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 9.4%; pullback from recent high -16.3%",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.22,
+            "mainRisk": "ATR high at 9.4%; pullback from recent high -16.3%"
+          }
+        },
+        {
+          "ticker": "600183.SH",
+          "name": "生益科技",
+          "previousRank": 20,
+          "previousScore": 6.13,
+          "previousStatus": "High Risk Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": 145.46,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -3.52,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 9.5%; pullback from recent high -19.5%",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "High Risk Watch",
+            "previousScore": 6.13,
+            "mainRisk": "ATR high at 9.5%; pullback from recent high -19.5%"
+          }
+        }
+      ],
+      "portfolio": {
+        "date": "2026-07-08",
+        "returnDate": "2026-07-09",
+        "investedCount": 12,
+        "dailyReturnPct": 2.87,
+        "valuePct": 95.59,
+        "cumulativeReturnPct": -4.41
+      },
+      "benchmark": {
+        "date": "2026-07-08",
+        "ticker": "CSI300ETF",
+        "returnDate": "2026-07-09",
+        "close": 4.8,
+        "nextClose": 4.92,
+        "dailyReturnPct": 2.46,
+        "valuePct": 98.98,
+        "cumulativeReturnPct": -1.02
+      }
+    },
+    {
+      "date": "2026-07-09",
+      "previousDate": "2026-07-08",
+      "sourceFile": "outputs/daily_watchlists/watchlist_2026-07-09.csv",
+      "changeFile": "outputs/daily_leaderboard_changes/leaderboard_changes_2026-07-09.csv",
+      "summary": {
+        "total": 20,
+        "targetHoldings": 20,
+        "inTop20": 20,
+        "new": 12,
+        "up": 4,
+        "down": 1,
+        "unchanged": 3,
+        "retained": 8,
+        "dropped": 12,
+        "avgScore": 6.82,
+        "decisionRule": "Hold the highest-ranked Top 20 names; keep factor scores for research only."
+      },
+      "rows": [
+        {
+          "ticker": "600030.SH",
+          "name": "中信证券",
+          "rank": 1,
+          "previousRank": 1,
+          "rankDelta": 0,
+          "changeType": "UNCHANGED",
+          "movement": "保持",
+          "score": 7.9,
+          "previousScore": 7.44,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "market backdrop supports offense | above 50d SMA by 7.2%; 20d momentum 11.8%; outperforming benchmark by 6.6%",
+          "mainRisk": "No major single risk flag; keep monitoring market regime and stop distance.",
+          "analysisDate": "2026-07-09",
+          "close": 28.68,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 2.43,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 10,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 6.8,
+            "candlestick_score": 6.4,
+            "overheat_score": 8.5,
+            "risk_score": 8.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7.9
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "market backdrop supports offense | above 50d SMA by 7.2%; 20d momentum 11.8%; outperforming benchmark by 6.6%",
+            "mainRisk": "No major single risk flag; keep monitoring market regime and stop distance.",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 10,
+              "livermore_breakout_score": 5.6,
+              "volume_price_score": 6.8,
+              "candlestick_score": 6.4,
+              "overheat_score": 8.5,
+              "risk_score": 8.4,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 7.9
+            }
+          }
+        },
+        {
+          "ticker": "002049.SZ",
+          "name": "紫光国微",
+          "rank": 2,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 7.83,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 9.6%; 20d > 50d > 200d trend stack; 20d momentum 19.8%; 60d momentum 26.1%; outperforming benchmark by 20.2% | 6 accumulation vs 3 distribution days; latest advance came on strong volume; 20d price gain 19.8% is volume-supported",
+          "mainRisk": "ATR elevated at 5.9%",
+          "analysisDate": "2026-07-09",
+          "close": 87.09,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 4.29,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 10,
+            "livermore_breakout_score": 5.3,
+            "volume_price_score": 8.2,
+            "candlestick_score": 6.4,
+            "overheat_score": 8,
+            "risk_score": 7.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 8.2
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 9.6%; 20d > 50d > 200d trend stack; 20d momentum 19.8%; 60d momentum 26.1%; outperforming benchmark by 20.2% | 6 accumulation vs 3 distribution days; latest advance came on strong volume; 20d price gain 19.8% is volume-supported",
+            "mainRisk": "ATR elevated at 5.9%",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 10,
+              "livermore_breakout_score": 5.3,
+              "volume_price_score": 8.2,
+              "candlestick_score": 6.4,
+              "overheat_score": 8,
+              "risk_score": 7.4,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 8.2
+            }
+          }
+        },
+        {
+          "ticker": "002415.SZ",
+          "name": "海康威视",
+          "rank": 3,
+          "previousRank": 3,
+          "rankDelta": 0,
+          "changeType": "UNCHANGED",
+          "movement": "保持",
+          "score": 7.72,
+          "previousScore": 7.15,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 8.4%; 20d > 50d > 200d trend stack; 20d momentum 16.5%; outperforming benchmark by 8.4% | 6 accumulation vs 2 distribution days; 20d price gain 16.5% is volume-supported",
+          "mainRisk": "ATR elevated at 4.9%",
+          "analysisDate": "2026-07-09",
+          "close": 35.39,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 3.03,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 10,
+            "livermore_breakout_score": 6.5,
+            "volume_price_score": 7.2,
+            "candlestick_score": 6.4,
+            "overheat_score": 6.5,
+            "risk_score": 7.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 8.1
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 8.4%; 20d > 50d > 200d trend stack; 20d momentum 16.5%; outperforming benchmark by 8.4% | 6 accumulation vs 2 distribution days; 20d price gain 16.5% is volume-supported",
+            "mainRisk": "ATR elevated at 4.9%",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 10,
+              "livermore_breakout_score": 6.5,
+              "volume_price_score": 7.2,
+              "candlestick_score": 6.4,
+              "overheat_score": 6.5,
+              "risk_score": 7.4,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 8.1
+            }
+          }
+        },
+        {
+          "ticker": "000063.SZ",
+          "name": "中兴通讯",
+          "rank": 4,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 7.68,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "trend, breakout, and risk controls align; volume supports the trend; market backdrop supports offense | above 50d SMA by 8.4%; outperforming benchmark by 6.8% | within 2.3% of 55d pivot; latest up move came with volume | up days carry heavier volume than down days; latest advance came on strong volume",
+          "mainRisk": "ATR elevated at 4.8%",
+          "analysisDate": "2026-07-09",
+          "close": 40.33,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 9.38,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 8.2,
+            "livermore_breakout_score": 7.1,
+            "volume_price_score": 7,
+            "candlestick_score": 6.4,
+            "overheat_score": 8,
+            "risk_score": 7.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 8.9
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "trend, breakout, and risk controls align; volume supports the trend; market backdrop supports offense | above 50d SMA by 8.4%; outperforming benchmark by 6.8% | within 2.3% of 55d pivot; latest up move came with volume | up days carry heavier volume than down days; latest advance came on strong volume",
+            "mainRisk": "ATR elevated at 4.8%",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 8.2,
+              "livermore_breakout_score": 7.1,
+              "volume_price_score": 7,
+              "candlestick_score": 6.4,
+              "overheat_score": 8,
+              "risk_score": 7.4,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 8.9
+            }
+          }
+        },
+        {
+          "ticker": "600900.SH",
+          "name": "长江电力",
+          "rank": 5,
+          "previousRank": 2,
+          "rankDelta": -3,
+          "changeType": "DOWN",
+          "movement": "下降 3",
+          "score": 7.12,
+          "previousScore": 7.33,
+          "status": "Breakout Pending",
+          "previousStatus": "Breakout Pending",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "trend, breakout, and risk controls align; market backdrop supports offense | above 50d SMA by 2.3% | within 1.8% of 55d pivot; tight 20d base range 8.2%",
+          "mainRisk": "stop is tight and may shake out",
+          "analysisDate": "2026-07-09",
+          "close": 27.77,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -0.22,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 7.4,
+            "livermore_breakout_score": 7.4,
+            "volume_price_score": 5,
+            "candlestick_score": 5,
+            "overheat_score": 7,
+            "risk_score": 7.9,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7.9
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Breakout Pending",
+            "previousStatus": "Breakout Pending",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "trend, breakout, and risk controls align; market backdrop supports offense | above 50d SMA by 2.3% | within 1.8% of 55d pivot; tight 20d base range 8.2%",
+            "mainRisk": "stop is tight and may shake out",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 7.4,
+              "livermore_breakout_score": 7.4,
+              "volume_price_score": 5,
+              "candlestick_score": 5,
+              "overheat_score": 7,
+              "risk_score": 7.9,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 7.9
+            }
+          }
+        },
+        {
+          "ticker": "000333.SZ",
+          "name": "美的集团",
+          "rank": 6,
+          "previousRank": 8,
+          "rankDelta": 2,
+          "changeType": "UP",
+          "movement": "上升 2",
+          "score": 6.98,
+          "previousScore": 6.76,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "market backdrop supports offense | above 50d SMA by 2.8%",
+          "mainRisk": "stop is tight and may shake out",
+          "analysisDate": "2026-07-09",
+          "close": 79.33,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -0.1,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 8.2,
+            "livermore_breakout_score": 5.6,
+            "volume_price_score": 6.4,
+            "candlestick_score": 5.6,
+            "overheat_score": 7,
+            "risk_score": 6.9,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7.1
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "market backdrop supports offense | above 50d SMA by 2.8%",
+            "mainRisk": "stop is tight and may shake out",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 8.2,
+              "livermore_breakout_score": 5.6,
+              "volume_price_score": 6.4,
+              "candlestick_score": 5.6,
+              "overheat_score": 7,
+              "risk_score": 6.9,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 7.1
+            }
+          }
+        },
+        {
+          "ticker": "603259.SH",
+          "name": "药明康德",
+          "rank": 7,
+          "previousRank": 17,
+          "rankDelta": 10,
+          "changeType": "UP",
+          "movement": "上升 10",
+          "score": 6.95,
+          "previousScore": 6.17,
+          "status": "Wait for Pullback",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "candlestick timing confirms demand; market backdrop supports offense | above 50d SMA by 13.7%; 20d > 50d > 200d trend stack; 20d momentum 24.8%; 60d momentum 15.6%; outperforming benchmark by 9.7% | strong bullish candle closed near high; bullish engulfing pattern",
+          "mainRisk": "ATR elevated at 5.3%",
+          "analysisDate": "2026-07-09",
+          "close": 121.07,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 4.91,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 10,
+            "livermore_breakout_score": 4.7,
+            "volume_price_score": 5.8,
+            "candlestick_score": 8,
+            "overheat_score": 4.8,
+            "risk_score": 6.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7.4
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Wait for Pullback",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "candlestick timing confirms demand; market backdrop supports offense | above 50d SMA by 13.7%; 20d > 50d > 200d trend stack; 20d momentum 24.8%; 60d momentum 15.6%; outperforming benchmark by 9.7% | strong bullish candle closed near high; bullish engulfing pattern",
+            "mainRisk": "ATR elevated at 5.3%",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 10,
+              "livermore_breakout_score": 4.7,
+              "volume_price_score": 5.8,
+              "candlestick_score": 8,
+              "overheat_score": 4.8,
+              "risk_score": 6.4,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 7.4
+            }
+          }
+        },
+        {
+          "ticker": "688256.SH",
+          "name": "寒武纪",
+          "rank": 8,
+          "previousRank": 9,
+          "rankDelta": 1,
+          "changeType": "UP",
+          "movement": "上升 1",
+          "score": 6.92,
+          "previousScore": 6.73,
+          "status": "High Risk Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 16.8%; 20d > 50d > 200d trend stack; 20d momentum 24.7%; 60d momentum 89.1%; outperforming benchmark by 83.2% | 7 accumulation vs 1 distribution days; up days carry heavier volume than down days; 20d price gain 24.7% is volume-supported",
+          "mainRisk": "ATR high at 7.1%; wide stop distance 16.8%",
+          "analysisDate": "2026-07-09",
+          "close": 1535.01,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 8.59,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 10,
+            "livermore_breakout_score": 4.7,
+            "volume_price_score": 8.2,
+            "candlestick_score": 5,
+            "overheat_score": 7.2,
+            "risk_score": 4.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7.5
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "High Risk Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 16.8%; 20d > 50d > 200d trend stack; 20d momentum 24.7%; 60d momentum 89.1%; outperforming benchmark by 83.2% | 7 accumulation vs 1 distribution days; up days carry heavier volume than down days; 20d price gain 24.7% is volume-supported",
+            "mainRisk": "ATR high at 7.1%; wide stop distance 16.8%",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 10,
+              "livermore_breakout_score": 4.7,
+              "volume_price_score": 8.2,
+              "candlestick_score": 5,
+              "overheat_score": 7.2,
+              "risk_score": 4.2,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 7.5
+            }
+          }
+        },
+        {
+          "ticker": "601211.SH",
+          "name": "国泰海通",
+          "rank": 9,
+          "previousRank": 11,
+          "rankDelta": 2,
+          "changeType": "UP",
+          "movement": "上升 2",
+          "score": 6.84,
+          "previousScore": 6.59,
+          "status": "Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 14.1%; 20d momentum 13.0%; outperforming benchmark by 6.6% | 5 accumulation vs 2 distribution days; 20d price gain 13.0% is volume-supported",
+          "mainRisk": "ATR elevated at 4.1%",
+          "analysisDate": "2026-07-09",
+          "close": 18.87,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 0.8,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 7.2,
+            "candlestick_score": 5.9,
+            "overheat_score": 5.7,
+            "risk_score": 6.4,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7.4
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 14.1%; 20d momentum 13.0%; outperforming benchmark by 6.6% | 5 accumulation vs 2 distribution days; 20d price gain 13.0% is volume-supported",
+            "mainRisk": "ATR elevated at 4.1%",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 10,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 7.2,
+              "candlestick_score": 5.9,
+              "overheat_score": 5.7,
+              "risk_score": 6.4,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 7.4
+            }
+          }
+        },
+        {
+          "ticker": "688041.SH",
+          "name": "海光信息",
+          "rank": 10,
+          "previousRank": 10,
+          "rankDelta": 0,
+          "changeType": "UNCHANGED",
+          "movement": "保持",
+          "score": 6.79,
+          "previousScore": 6.61,
+          "status": "High Risk Watch",
+          "previousStatus": "Watch",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 15.0%; 20d > 50d > 200d trend stack; 20d momentum 27.7%; 60d momentum 56.9%; outperforming benchmark by 51.0% | 4 accumulation vs 1 distribution days; 20d price gain 27.7% is volume-supported",
+          "mainRisk": "ATR high at 6.9%; wide stop distance 15.0%",
+          "analysisDate": "2026-07-09",
+          "close": 363.46,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 5.97,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 10,
+            "livermore_breakout_score": 4.7,
+            "volume_price_score": 7.2,
+            "candlestick_score": 6.4,
+            "overheat_score": 6.4,
+            "risk_score": 4.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7.4
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "KEEP_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "High Risk Watch",
+            "previousStatus": "Watch",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend; market backdrop supports offense | above 50d SMA by 15.0%; 20d > 50d > 200d trend stack; 20d momentum 27.7%; 60d momentum 56.9%; outperforming benchmark by 51.0% | 4 accumulation vs 1 distribution days; 20d price gain 27.7% is volume-supported",
+            "mainRisk": "ATR high at 6.9%; wide stop distance 15.0%",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 10,
+              "livermore_breakout_score": 4.7,
+              "volume_price_score": 7.2,
+              "candlestick_score": 6.4,
+              "overheat_score": 6.4,
+              "risk_score": 4.2,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 7.4
+            }
+          }
+        },
+        {
+          "ticker": "300059.SZ",
+          "name": "东方财富",
+          "rank": 11,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.65,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "market backdrop supports offense | above 50d SMA by 3.9%; 20d momentum 15.8% | up days carry heavier volume than down days; 20d price gain 15.8% is volume-supported; volume dried up without price damage | strong bullish candle closed near high; bullish engulfing pattern",
+          "mainRisk": "ATR elevated at 5.3%; below 200d SMA",
+          "analysisDate": "2026-07-09",
+          "close": 20.59,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 2.29,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 6.3,
+            "livermore_breakout_score": 4.7,
+            "volume_price_score": 7.2,
+            "candlestick_score": 8,
+            "overheat_score": 8.5,
+            "risk_score": 5.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7.1
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "market backdrop supports offense | above 50d SMA by 3.9%; 20d momentum 15.8% | up days carry heavier volume than down days; 20d price gain 15.8% is volume-supported; volume dried up without price damage | strong bullish candle closed near high; bullish engulfing pattern",
+            "mainRisk": "ATR elevated at 5.3%; below 200d SMA",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 6.3,
+              "livermore_breakout_score": 4.7,
+              "volume_price_score": 7.2,
+              "candlestick_score": 8,
+              "overheat_score": 8.5,
+              "risk_score": 5.2,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 7.1
+            }
+          }
+        },
+        {
+          "ticker": "600018.SH",
+          "name": "上港集团",
+          "rank": 12,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.63,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "market backdrop supports offense | above 50d SMA by 1.4% | within 2.3% of 55d pivot; tight 20d base range 11.0% | 5 accumulation vs 1 distribution days; up days carry heavier volume than down days",
+          "mainRisk": "stop is tight and may shake out; below 200d SMA",
+          "analysisDate": "2026-07-09",
+          "close": 5.07,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 0,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 4.5,
+            "livermore_breakout_score": 7.4,
+            "volume_price_score": 7.4,
+            "candlestick_score": 4.7,
+            "overheat_score": 8.5,
+            "risk_score": 5.7,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.9
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "market backdrop supports offense | above 50d SMA by 1.4% | within 2.3% of 55d pivot; tight 20d base range 11.0% | 5 accumulation vs 1 distribution days; up days carry heavier volume than down days",
+            "mainRisk": "stop is tight and may shake out; below 200d SMA",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 4.5,
+              "livermore_breakout_score": 7.4,
+              "volume_price_score": 7.4,
+              "candlestick_score": 4.7,
+              "overheat_score": 8.5,
+              "risk_score": 5.7,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.9
+            }
+          }
+        },
+        {
+          "ticker": "600276.SH",
+          "name": "恒瑞医药",
+          "rank": 13,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.5,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "market backdrop supports offense | above 50d SMA by 8.9%; 20d momentum 18.3% | 7 accumulation vs 2 distribution days; up days carry heavier volume than down days; 20d price gain 18.3% is volume-supported | strong bullish candle closed near high; bullish engulfing pattern",
+          "mainRisk": "ATR elevated at 4.8%; below 200d SMA",
+          "analysisDate": "2026-07-09",
+          "close": 55.61,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 2.96,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 5.5,
+            "livermore_breakout_score": 4.7,
+            "volume_price_score": 8.2,
+            "candlestick_score": 8,
+            "overheat_score": 5.6,
+            "risk_score": 6.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.9
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "market backdrop supports offense | above 50d SMA by 8.9%; 20d momentum 18.3% | 7 accumulation vs 2 distribution days; up days carry heavier volume than down days; 20d price gain 18.3% is volume-supported | strong bullish candle closed near high; bullish engulfing pattern",
+            "mainRisk": "ATR elevated at 4.8%; below 200d SMA",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 5.5,
+              "livermore_breakout_score": 4.7,
+              "volume_price_score": 8.2,
+              "candlestick_score": 8,
+              "overheat_score": 5.6,
+              "risk_score": 6.2,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.9
+            }
+          }
+        },
+        {
+          "ticker": "601688.SH",
+          "name": "华泰证券",
+          "rank": 14,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.44,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "market backdrop supports offense | above 50d SMA by 4.2% | 5 accumulation vs 0 distribution days; up days carry heavier volume than down days; 20d price gain 5.3% is volume-supported; volume dried up without price damage",
+          "mainRisk": "ATR elevated at 4.4%; below 200d SMA",
+          "analysisDate": "2026-07-09",
+          "close": 20.39,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 1.8,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 4.9,
+            "livermore_breakout_score": 4.2,
+            "volume_price_score": 8.6,
+            "candlestick_score": 5,
+            "overheat_score": 8.5,
+            "risk_score": 6.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.8
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "market backdrop supports offense | above 50d SMA by 4.2% | 5 accumulation vs 0 distribution days; up days carry heavier volume than down days; 20d price gain 5.3% is volume-supported; volume dried up without price damage",
+            "mainRisk": "ATR elevated at 4.4%; below 200d SMA",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 4.9,
+              "livermore_breakout_score": 4.2,
+              "volume_price_score": 8.6,
+              "candlestick_score": 5,
+              "overheat_score": 8.5,
+              "risk_score": 6.2,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.8
+            }
+          }
+        },
+        {
+          "ticker": "002236.SZ",
+          "name": "大华股份",
+          "rank": 15,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.42,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "market backdrop supports offense | above 50d SMA by 1.5% | 7 accumulation vs 1 distribution days; up days carry heavier volume than down days; 20d price gain 6.2% is volume-supported",
+          "mainRisk": "stop is tight and may shake out; below 200d SMA",
+          "analysisDate": "2026-07-09",
+          "close": 17.25,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 1.71,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 4.5,
+            "livermore_breakout_score": 5.1,
+            "volume_price_score": 8.2,
+            "candlestick_score": 6.4,
+            "overheat_score": 8.5,
+            "risk_score": 5.3,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.9
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "market backdrop supports offense | above 50d SMA by 1.5% | 7 accumulation vs 1 distribution days; up days carry heavier volume than down days; 20d price gain 6.2% is volume-supported",
+            "mainRisk": "stop is tight and may shake out; below 200d SMA",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 4.5,
+              "livermore_breakout_score": 5.1,
+              "volume_price_score": 8.2,
+              "candlestick_score": 6.4,
+              "overheat_score": 8.5,
+              "risk_score": 5.3,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.9
+            }
+          }
+        },
+        {
+          "ticker": "300308.SZ",
+          "name": "中际旭创",
+          "rank": 16,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.29,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "market backdrop supports offense | above 50d SMA by 6.7%; 20d > 50d > 200d trend stack; 60d momentum 62.9%; outperforming benchmark by 57.0%",
+          "mainRisk": "ATR high at 6.6%; pullback from recent high -13.6%",
+          "analysisDate": "2026-07-09",
+          "close": 1194.9,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 5.9,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 9.9,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 5,
+            "candlestick_score": 5,
+            "overheat_score": 6.6,
+            "risk_score": 5.3,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.5
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "market backdrop supports offense | above 50d SMA by 6.7%; 20d > 50d > 200d trend stack; 60d momentum 62.9%; outperforming benchmark by 57.0%",
+            "mainRisk": "ATR high at 6.6%; pullback from recent high -13.6%",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 9.9,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 5,
+              "candlestick_score": 5,
+              "overheat_score": 6.6,
+              "risk_score": 5.3,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.5
+            }
+          }
+        },
+        {
+          "ticker": "300502.SZ",
+          "name": "新易盛",
+          "rank": 17,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.22,
+          "previousScore": 0,
+          "status": "Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "market backdrop supports offense | above 50d SMA by 10.5%; 20d > 50d > 200d trend stack; 60d momentum 46.4%; outperforming benchmark by 40.5%",
+          "mainRisk": "ATR high at 8.3%",
+          "analysisDate": "2026-07-09",
+          "close": 545.5,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 6.78,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 9.4,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 5,
+            "candlestick_score": 5,
+            "overheat_score": 7.2,
+            "risk_score": 5,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.5
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "market backdrop supports offense | above 50d SMA by 10.5%; 20d > 50d > 200d trend stack; 60d momentum 46.4%; outperforming benchmark by 40.5%",
+            "mainRisk": "ATR high at 8.3%",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 9.4,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 5,
+              "candlestick_score": 5,
+              "overheat_score": 7.2,
+              "risk_score": 5,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.5
+            }
+          }
+        },
+        {
+          "ticker": "300433.SZ",
+          "name": "蓝思科技",
+          "rank": 18,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.21,
+          "previousScore": 0,
+          "status": "High Risk Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "market backdrop supports offense | above 50d SMA by 12.7%; 20d > 50d > 200d trend stack; 20d momentum 12.2%; 60d momentum 57.4%; outperforming benchmark by 51.5%",
+          "mainRisk": "ATR high at 9.2%; pullback from recent high -15.5%",
+          "analysisDate": "2026-07-09",
+          "close": 46.73,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 1.48,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 10,
+            "livermore_breakout_score": 3.3,
+            "volume_price_score": 5.8,
+            "candlestick_score": 6.4,
+            "overheat_score": 5.3,
+            "risk_score": 4.3,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.5
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "High Risk Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "market backdrop supports offense | above 50d SMA by 12.7%; 20d > 50d > 200d trend stack; 20d momentum 12.2%; 60d momentum 57.4%; outperforming benchmark by 51.5%",
+            "mainRisk": "ATR high at 9.2%; pullback from recent high -15.5%",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 10,
+              "livermore_breakout_score": 3.3,
+              "volume_price_score": 5.8,
+              "candlestick_score": 6.4,
+              "overheat_score": 5.3,
+              "risk_score": 4.3,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.5
+            }
+          }
+        },
+        {
+          "ticker": "000938.SZ",
+          "name": "紫光股份",
+          "rank": 19,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.2,
+          "previousScore": 0,
+          "status": "High Risk Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "volume supports the trend; candlestick timing confirms demand; market backdrop supports offense | above 50d SMA by 20.9%; 20d momentum 38.0%; 60d momentum 32.0%; outperforming benchmark by 26.1% | cleared 55d pivot by 3.0%; breakout volume confirmed; latest up move came with volume | up days carry heavier volume than down days; latest advance came on strong volume; 20d price gain 38.0% is volume-supported | strong bullish candle closed near high; bullish engulfing pattern",
+          "mainRisk": "ATR high at 6.3%; wide stop distance 20.9%",
+          "analysisDate": "2026-07-09",
+          "close": 35.68,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 6.13,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 10,
+            "livermore_breakout_score": 8.1,
+            "volume_price_score": 7.8,
+            "candlestick_score": 8,
+            "overheat_score": 1,
+            "risk_score": 4.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 7
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "High Risk Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "volume supports the trend; candlestick timing confirms demand; market backdrop supports offense | above 50d SMA by 20.9%; 20d momentum 38.0%; 60d momentum 32.0%; outperforming benchmark by 26.1% | cleared 55d pivot by 3.0%; breakout volume confirmed; latest up move came with volume | up days carry heavier volume than down days; latest advance came on strong volume; 20d price gain 38.0% is volume-supported | strong bullish candle closed near high; bullish engulfing pattern",
+            "mainRisk": "ATR high at 6.3%; wide stop distance 20.9%",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 10,
+              "livermore_breakout_score": 8.1,
+              "volume_price_score": 7.8,
+              "candlestick_score": 8,
+              "overheat_score": 1,
+              "risk_score": 4.2,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 7
+            }
+          }
+        },
+        {
+          "ticker": "603501.SH",
+          "name": "韦尔股份",
+          "rank": 20,
+          "previousRank": null,
+          "rankDelta": null,
+          "changeType": "NEW",
+          "movement": "新晋",
+          "score": 6.2,
+          "previousScore": 0,
+          "status": "High Risk Watch",
+          "previousStatus": "",
+          "frontDeskInstruction": "BUY_TOP20_MANUAL",
+          "mainReason": "market backdrop supports offense | above 50d SMA by 10.2%; 20d momentum 18.8%; outperforming benchmark by 6.6% | 7 accumulation vs 1 distribution days; up days carry heavier volume than down days; latest advance came on strong volume; 20d price gain 18.8% is volume-supported",
+          "mainRisk": "ATR elevated at 5.7%; below 200d SMA",
+          "analysisDate": "2026-07-09",
+          "close": 107.14,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 6.13,
+          "dayChangePct": null,
+          "scores": {
+            "market_regime_score": 9.4,
+            "trend_score": 6.3,
+            "livermore_breakout_score": 6.2,
+            "volume_price_score": 9.2,
+            "candlestick_score": 6.4,
+            "overheat_score": 2.9,
+            "risk_score": 5.2,
+            "zhuge_orion_score": 5.5,
+            "final_chair_score": 6.7
+          },
+          "decision": {
+            "policy": "TOP20_TARGET_HOLDING",
+            "targetHolding": true,
+            "action": "ENTER_TOP20",
+            "basis": "Top 20 rank only"
+          },
+          "research": {
+            "finalStatus": "High Risk Watch",
+            "previousStatus": "",
+            "frontDeskInstruction": "BUY_TOP20_MANUAL",
+            "mainReason": "market backdrop supports offense | above 50d SMA by 10.2%; 20d momentum 18.8%; outperforming benchmark by 6.6% | 7 accumulation vs 1 distribution days; up days carry heavier volume than down days; latest advance came on strong volume; 20d price gain 18.8% is volume-supported",
+            "mainRisk": "ATR elevated at 5.7%; below 200d SMA",
+            "scores": {
+              "market_regime_score": 9.4,
+              "trend_score": 6.3,
+              "livermore_breakout_score": 6.2,
+              "volume_price_score": 9.2,
+              "candlestick_score": 6.4,
+              "overheat_score": 2.9,
+              "risk_score": 5.2,
+              "zhuge_orion_score": 5.5,
+              "final_chair_score": 6.7
+            }
+          }
+        }
+      ],
+      "dropped": [
+        {
+          "ticker": "601398.SH",
+          "name": "工商银行",
+          "previousRank": 4,
+          "previousScore": 7.12,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": 7.27,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -1.36,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "stop is tight and may shake out",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 7.12,
+            "mainRisk": "stop is tight and may shake out"
+          }
+        },
+        {
+          "ticker": "600919.SH",
+          "name": "江苏银行",
+          "previousRank": 5,
+          "previousScore": 6.96,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "stop is tight and may shake out",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.96,
+            "mainRisk": "stop is tight and may shake out"
+          }
+        },
+        {
+          "ticker": "601988.SH",
+          "name": "中国银行",
+          "previousRank": 6,
+          "previousScore": 6.83,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": 5.83,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -1.52,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "stop is tight and may shake out",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.83,
+            "mainRisk": "stop is tight and may shake out"
+          }
+        },
+        {
+          "ticker": "601939.SH",
+          "name": "建设银行",
+          "previousRank": 7,
+          "previousScore": 6.8,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": 9.89,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": -1.79,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "stop is tight and may shake out",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.8,
+            "mainRisk": "stop is tight and may shake out"
+          }
+        },
+        {
+          "ticker": "301308.SZ",
+          "name": "江波龙",
+          "previousRank": 12,
+          "previousScore": 6.56,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 10.1%; pullback from recent high -18.0%",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.56,
+            "mainRisk": "ATR high at 10.1%; pullback from recent high -18.0%"
+          }
+        },
+        {
+          "ticker": "002384.SZ",
+          "name": "东山精密",
+          "previousRank": 13,
+          "previousScore": 6.54,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 9.0%; pullback from recent high -13.9%",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.54,
+            "mainRisk": "ATR high at 9.0%; pullback from recent high -13.9%"
+          }
+        },
+        {
+          "ticker": "601628.SH",
+          "name": "中国人寿",
+          "previousRank": 14,
+          "previousScore": 6.52,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR elevated at 5.1%; below 200d SMA",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.52,
+            "mainRisk": "ATR elevated at 5.1%; below 200d SMA"
+          }
+        },
+        {
+          "ticker": "601066.SH",
+          "name": "中信建投",
+          "previousRank": 15,
+          "previousScore": 6.41,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR elevated at 5.9%",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.41,
+            "mainRisk": "ATR elevated at 5.9%"
+          }
+        },
+        {
+          "ticker": "688981.SH",
+          "name": "中芯国际",
+          "previousRank": 16,
+          "previousScore": 6.4,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": 173,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": 13.74,
+          "dayChangePct": null,
+          "exitAction": "HOLD_DROPPED_UP_DAY",
+          "exitText": "上涨不卖",
+          "mainRisk": "ATR high at 7.3%",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "HOLD_DROPPED_UP_DAY",
+            "basis": "Dropped from Top 20 but signal day closed up"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.4,
+            "mainRisk": "ATR high at 7.3%"
+          }
+        },
+        {
+          "ticker": "601336.SH",
+          "name": "新华保险",
+          "previousRank": 18,
+          "previousScore": 6.13,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR elevated at 5.4%; below 200d SMA",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.13,
+            "mainRisk": "ATR elevated at 5.4%; below 200d SMA"
+          }
+        },
+        {
+          "ticker": "002916.SZ",
+          "name": "深南电路",
+          "previousRank": 19,
+          "previousScore": 6.06,
+          "previousStatus": "Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 9.9%; pullback from recent high -12.1%",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "Watch",
+            "previousScore": 6.06,
+            "mainRisk": "ATR high at 9.9%; pullback from recent high -12.1%"
+          }
+        },
+        {
+          "ticker": "688525.SH",
+          "name": "佰维存储",
+          "previousRank": 20,
+          "previousScore": 6.02,
+          "previousStatus": "High Risk Watch",
+          "changeType": "DROPPED",
+          "movement": "退出",
+          "close": null,
+          "nextClose": null,
+          "returnDate": "",
+          "signalDayChangePct": null,
+          "dayChangePct": null,
+          "exitAction": "SELL_REVIEW_DROPPED",
+          "exitText": "卖出复核",
+          "mainRisk": "ATR high at 10.4%; 60d drawdown -21.9%",
+          "decision": {
+            "policy": "TOP20_ROTATION_EXIT_REVIEW",
+            "targetHolding": false,
+            "action": "SELL_REVIEW_DROPPED",
+            "basis": "Dropped from Top 20"
+          },
+          "research": {
+            "previousStatus": "High Risk Watch",
+            "previousScore": 6.02,
+            "mainRisk": "ATR high at 10.4%; 60d drawdown -21.9%"
+          }
+        }
       ]
     }
   ],
   "portfolio": {
     "method": "equal_weight_top20_next_trading_day_close_to_close",
     "initialValuePct": 100,
-    "latestValuePct": 94.07,
-    "latestReturnPct": -5.93,
+    "latestValuePct": 95.59,
+    "latestReturnPct": -4.41,
     "daily": [
       {
         "date": "2026-06-24",
@@ -15762,58 +18636,74 @@
       {
         "date": "2026-06-26",
         "returnDate": "2026-06-29",
-        "investedCount": 14,
-        "dailyReturnPct": 2.06,
-        "valuePct": 101.55,
-        "cumulativeReturnPct": 1.55
+        "investedCount": 19,
+        "dailyReturnPct": 1.73,
+        "valuePct": 101.22,
+        "cumulativeReturnPct": 1.22
       },
       {
         "date": "2026-06-29",
         "returnDate": "2026-06-30",
         "investedCount": 20,
         "dailyReturnPct": 1.89,
-        "valuePct": 103.46,
-        "cumulativeReturnPct": 3.46
+        "valuePct": 103.13,
+        "cumulativeReturnPct": 3.13
       },
       {
         "date": "2026-06-30",
         "returnDate": "2026-07-01",
         "investedCount": 20,
         "dailyReturnPct": -1.33,
-        "valuePct": 102.09,
-        "cumulativeReturnPct": 2.09
+        "valuePct": 101.76,
+        "cumulativeReturnPct": 1.76
       },
       {
         "date": "2026-07-01",
         "returnDate": "2026-07-02",
         "investedCount": 20,
         "dailyReturnPct": -6.65,
-        "valuePct": 95.3,
-        "cumulativeReturnPct": -4.7
+        "valuePct": 94.99,
+        "cumulativeReturnPct": -5.01
       },
       {
         "date": "2026-07-02",
         "returnDate": "2026-07-03",
         "investedCount": 20,
         "dailyReturnPct": 0.34,
-        "valuePct": 95.62,
-        "cumulativeReturnPct": -4.38
+        "valuePct": 95.31,
+        "cumulativeReturnPct": -4.69
       },
       {
         "date": "2026-07-03",
         "returnDate": "2026-07-06",
         "investedCount": 20,
         "dailyReturnPct": 0.37,
-        "valuePct": 95.98,
-        "cumulativeReturnPct": -4.02
+        "valuePct": 95.67,
+        "cumulativeReturnPct": -4.33
       },
       {
         "date": "2026-07-06",
         "returnDate": "2026-07-07",
         "investedCount": 19,
         "dailyReturnPct": -1.99,
-        "valuePct": 94.07,
-        "cumulativeReturnPct": -5.93
+        "valuePct": 93.76,
+        "cumulativeReturnPct": -6.24
+      },
+      {
+        "date": "2026-07-07",
+        "returnDate": "2026-07-08",
+        "investedCount": 19,
+        "dailyReturnPct": -0.9,
+        "valuePct": 92.92,
+        "cumulativeReturnPct": -7.08
+      },
+      {
+        "date": "2026-07-08",
+        "returnDate": "2026-07-09",
+        "investedCount": 12,
+        "dailyReturnPct": 2.87,
+        "valuePct": 95.59,
+        "cumulativeReturnPct": -4.41
       }
     ]
   },
@@ -15821,8 +18711,8 @@
     "method": "benchmark_next_trading_day_close_to_close",
     "ticker": "CSI300ETF",
     "initialValuePct": 100,
-    "latestValuePct": 97.16,
-    "latestReturnPct": -2.84,
+    "latestValuePct": 98.98,
+    "latestReturnPct": -1.02,
     "daily": [
       {
         "date": "2026-06-24",
@@ -15913,6 +18803,26 @@
         "dailyReturnPct": -1.05,
         "valuePct": 97.16,
         "cumulativeReturnPct": -2.84
+      },
+      {
+        "date": "2026-07-07",
+        "ticker": "CSI300ETF",
+        "returnDate": "2026-07-08",
+        "close": 4.83,
+        "nextClose": 4.8,
+        "dailyReturnPct": -0.58,
+        "valuePct": 96.6,
+        "cumulativeReturnPct": -3.4
+      },
+      {
+        "date": "2026-07-08",
+        "ticker": "CSI300ETF",
+        "returnDate": "2026-07-09",
+        "close": 4.8,
+        "nextClose": 4.92,
+        "dailyReturnPct": 2.46,
+        "valuePct": 98.98,
+        "cumulativeReturnPct": -1.02
       }
     ]
   },
@@ -15956,6 +18866,15 @@
           "changeType": "UNCHANGED",
           "returnDate": "",
           "dayChangePct": null
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 6,
+          "score": 6.83,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "2026-07-09",
+          "dayChangePct": -1.52
         }
       ]
     },
@@ -15995,6 +18914,15 @@
           "changeType": "NEW",
           "returnDate": "2026-06-25",
           "dayChangePct": -0.42
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 4,
+          "score": 7.12,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "2026-07-09",
+          "dayChangePct": -1.36
         }
       ]
     },
@@ -16089,6 +19017,24 @@
           "score": 7.22,
           "status": "Watch",
           "changeType": "UP",
+          "returnDate": "2026-07-08",
+          "dayChangePct": -1.58
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 1,
+          "score": 7.44,
+          "status": "Watch",
+          "changeType": "UNCHANGED",
+          "returnDate": "2026-07-09",
+          "dayChangePct": 2.43
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 1,
+          "score": 7.9,
+          "status": "Watch",
+          "changeType": "UNCHANGED",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -16160,6 +19106,24 @@
           "changeType": "DOWN",
           "returnDate": "2026-07-06",
           "dayChangePct": -0.93
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 17,
+          "score": 6.17,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "2026-07-09",
+          "dayChangePct": 4.91
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 7,
+          "score": 6.95,
+          "status": "Wait for Pullback",
+          "changeType": "UP",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -16182,8 +19146,8 @@
           "score": 7.72,
           "status": "High Risk Watch",
           "changeType": "UP",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-06-29",
+          "dayChangePct": -1.04
         },
         {
           "date": "2026-06-27",
@@ -16269,6 +19233,15 @@
           "score": 6.74,
           "status": "Watch",
           "changeType": "DOWN",
+          "returnDate": "2026-07-08",
+          "dayChangePct": -2.96
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 14,
+          "score": 6.44,
+          "status": "Watch",
+          "changeType": "NEW",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -16346,6 +19319,15 @@
           "changeType": "NEW",
           "returnDate": "2026-06-25",
           "dayChangePct": -1.11
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 7,
+          "score": 6.8,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "2026-07-09",
+          "dayChangePct": -1.79
         }
       ]
     },
@@ -16368,8 +19350,8 @@
           "score": 6.11,
           "status": "Watch",
           "changeType": "DOWN",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-06-29",
+          "dayChangePct": 1.46
         },
         {
           "date": "2026-06-27",
@@ -16393,7 +19375,7 @@
     },
     "601211.SH": {
       "ticker": "601211.SH",
-      "name": "国泰海通",
+      "name": "国泰君安",
       "appearances": [
         {
           "date": "2026-06-24",
@@ -16457,6 +19439,24 @@
           "changeType": "UP",
           "returnDate": "2026-07-07",
           "dayChangePct": -4.09
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 11,
+          "score": 6.59,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "2026-07-09",
+          "dayChangePct": 0.8
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 9,
+          "score": 6.84,
+          "status": "Watch",
+          "changeType": "UP",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -16471,7 +19471,7 @@
           "status": "Watch",
           "changeType": "NEW",
           "returnDate": "2026-06-25",
-          "dayChangePct": 4.62
+          "dayChangePct": 4.63
         },
         {
           "date": "2026-06-26",
@@ -16479,8 +19479,8 @@
           "score": 7.01,
           "status": "High Risk Watch",
           "changeType": "UP",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-06-29",
+          "dayChangePct": 1.64
         },
         {
           "date": "2026-06-27",
@@ -16497,6 +19497,15 @@
           "score": 6.6,
           "status": "Watch",
           "changeType": "UNCHANGED",
+          "returnDate": "",
+          "dayChangePct": null
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 2,
+          "score": 7.83,
+          "status": "Watch",
+          "changeType": "NEW",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -16536,8 +19545,8 @@
           "score": 7.8,
           "status": "Watch",
           "changeType": "UP",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-06-29",
+          "dayChangePct": 3.3
         },
         {
           "date": "2026-06-27",
@@ -16659,6 +19668,24 @@
           "score": 6.46,
           "status": "Wait for Pullback",
           "changeType": "DOWN",
+          "returnDate": "2026-07-08",
+          "dayChangePct": 0.12
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 10,
+          "score": 6.61,
+          "status": "Watch",
+          "changeType": "UP",
+          "returnDate": "2026-07-09",
+          "dayChangePct": 5.97
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 10,
+          "score": 6.79,
+          "status": "High Risk Watch",
+          "changeType": "UNCHANGED",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -16821,6 +19848,24 @@
           "score": 7.06,
           "status": "Watch",
           "changeType": "UP",
+          "returnDate": "2026-07-08",
+          "dayChangePct": 1.45
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 3,
+          "score": 7.15,
+          "status": "Watch",
+          "changeType": "DOWN",
+          "returnDate": "2026-07-09",
+          "dayChangePct": 3.03
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 3,
+          "score": 7.72,
+          "status": "Watch",
+          "changeType": "UNCHANGED",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -16898,6 +19943,24 @@
           "rank": 4,
           "score": 6.87,
           "status": "Watch",
+          "changeType": "UP",
+          "returnDate": "2026-07-08",
+          "dayChangePct": 1.84
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 9,
+          "score": 6.73,
+          "status": "Watch",
+          "changeType": "DOWN",
+          "returnDate": "2026-07-09",
+          "dayChangePct": 8.59
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 8,
+          "score": 6.92,
+          "status": "High Risk Watch",
           "changeType": "UP",
           "returnDate": "",
           "dayChangePct": null
@@ -17013,8 +20076,17 @@
           "score": 6.65,
           "status": "Watch",
           "changeType": "UP",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-07-08",
+          "dayChangePct": 4.59
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 16,
+          "score": 6.4,
+          "status": "Watch",
+          "changeType": "DOWN",
+          "returnDate": "2026-07-09",
+          "dayChangePct": 13.74
         }
       ]
     },
@@ -17075,6 +20147,15 @@
           "changeType": "DOWN",
           "returnDate": "2026-07-01",
           "dayChangePct": -3.69
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 16,
+          "score": 6.29,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -17359,7 +20440,7 @@
     },
     "000725.SZ": {
       "ticker": "000725.SZ",
-      "name": "京东方Ａ",
+      "name": "京东方A",
       "appearances": [
         {
           "date": "2026-06-25",
@@ -17445,6 +20526,15 @@
           "score": 6.58,
           "status": "Watch",
           "changeType": "NEW",
+          "returnDate": "2026-07-08",
+          "dayChangePct": 0.29
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 13,
+          "score": 6.54,
+          "status": "Watch",
+          "changeType": "DOWN",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -17514,8 +20604,8 @@
           "score": 6.22,
           "status": "Watch",
           "changeType": "UNCHANGED",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-07-08",
+          "dayChangePct": -1.17
         }
       ]
     },
@@ -17592,6 +20682,15 @@
           "score": 6.43,
           "status": "Watch",
           "changeType": "UP",
+          "returnDate": "2026-07-08",
+          "dayChangePct": -2.37
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 19,
+          "score": 6.06,
+          "status": "Watch",
+          "changeType": "DOWN",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -17634,8 +20733,8 @@
           "score": 6.25,
           "status": "High Risk Watch",
           "changeType": "NEW",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-07-08",
+          "dayChangePct": -6.84
         }
       ]
     },
@@ -17678,6 +20777,15 @@
           "changeType": "UP",
           "returnDate": "2026-07-03",
           "dayChangePct": 3.44
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 18,
+          "score": 6.21,
+          "status": "High Risk Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -17738,6 +20846,15 @@
           "changeType": "NEW",
           "returnDate": "2026-07-06",
           "dayChangePct": -3.63
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 17,
+          "score": 6.22,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -17847,6 +20964,15 @@
           "score": 6.25,
           "status": "High Risk Watch",
           "changeType": "NEW",
+          "returnDate": "2026-07-08",
+          "dayChangePct": -5.6
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 12,
+          "score": 6.56,
+          "status": "Watch",
+          "changeType": "UP",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -17860,6 +20986,15 @@
           "date": "2026-06-26",
           "rank": 12,
           "score": 6.56,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "2026-06-29",
+          "dayChangePct": -1.32
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 4,
+          "score": 7.68,
           "status": "Watch",
           "changeType": "NEW",
           "returnDate": "",
@@ -17888,6 +21023,15 @@
           "changeType": "NEW",
           "returnDate": "2026-07-07",
           "dayChangePct": -4.2
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 11,
+          "score": 6.65,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -17946,6 +21090,24 @@
           "score": 6.81,
           "status": "Watch",
           "changeType": "DOWN",
+          "returnDate": "2026-07-08",
+          "dayChangePct": 0.37
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 8,
+          "score": 6.76,
+          "status": "Watch",
+          "changeType": "DOWN",
+          "returnDate": "2026-07-09",
+          "dayChangePct": -0.1
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 6,
+          "score": 6.98,
+          "status": "Watch",
+          "changeType": "UP",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -18015,6 +21177,15 @@
           "score": 6.49,
           "status": "Watch",
           "changeType": "UP",
+          "returnDate": "2026-07-08",
+          "dayChangePct": -0.61
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 15,
+          "score": 6.41,
+          "status": "Watch",
+          "changeType": "DOWN",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -18171,8 +21342,8 @@
           "score": 6.4,
           "status": "High Risk Watch",
           "changeType": "UP",
-          "returnDate": "",
-          "dayChangePct": null
+          "returnDate": "2026-07-08",
+          "dayChangePct": -2.39
         }
       ]
     },
@@ -18218,6 +21389,15 @@
           "changeType": "NEW",
           "returnDate": "2026-07-03",
           "dayChangePct": 2.18
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 20,
+          "score": 6.02,
+          "status": "High Risk Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
         }
       ]
     },
@@ -18247,7 +21427,7 @@
           "status": "Watch",
           "changeType": "NEW",
           "returnDate": "2026-07-06",
-          "dayChangePct": 0.31
+          "dayChangePct": 0.32
         },
         {
           "date": "2026-07-06",
@@ -18256,12 +21436,21 @@
           "status": "Watch",
           "changeType": "DOWN",
           "returnDate": "2026-07-07",
-          "dayChangePct": -3.12
+          "dayChangePct": -3.17
         },
         {
           "date": "2026-07-07",
           "rank": 12,
           "score": 6.47,
+          "status": "Watch",
+          "changeType": "DOWN",
+          "returnDate": "2026-07-08",
+          "dayChangePct": -0.16
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 14,
+          "score": 6.52,
           "status": "Watch",
           "changeType": "DOWN",
           "returnDate": "",
@@ -18321,6 +21510,15 @@
           "score": 6.2,
           "status": "Watch",
           "changeType": "DOWN",
+          "returnDate": "2026-07-08",
+          "dayChangePct": -0.38
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 18,
+          "score": 6.13,
+          "status": "Watch",
+          "changeType": "UP",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -18345,6 +21543,15 @@
           "score": 6.89,
           "status": "Watch",
           "changeType": "UP",
+          "returnDate": "2026-07-08",
+          "dayChangePct": 0.35
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 5,
+          "score": 6.96,
+          "status": "Watch",
+          "changeType": "DOWN",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -18390,6 +21597,24 @@
           "score": 6.62,
           "status": "Watch",
           "changeType": "NEW",
+          "returnDate": "2026-07-08",
+          "dayChangePct": 1.53
+        },
+        {
+          "date": "2026-07-08",
+          "rank": 2,
+          "score": 7.33,
+          "status": "Breakout Pending",
+          "changeType": "UP",
+          "returnDate": "2026-07-09",
+          "dayChangePct": -0.22
+        },
+        {
+          "date": "2026-07-09",
+          "rank": 5,
+          "score": 7.12,
+          "status": "Breakout Pending",
+          "changeType": "DOWN",
           "returnDate": "",
           "dayChangePct": null
         }
@@ -18418,6 +21643,81 @@
           "date": "2026-07-07",
           "rank": 20,
           "score": 6.13,
+          "status": "High Risk Watch",
+          "changeType": "NEW",
+          "returnDate": "2026-07-08",
+          "dayChangePct": -3.52
+        }
+      ]
+    },
+    "600018.SH": {
+      "ticker": "600018.SH",
+      "name": "上港集团",
+      "appearances": [
+        {
+          "date": "2026-07-09",
+          "rank": 12,
+          "score": 6.63,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
+        }
+      ]
+    },
+    "600276.SH": {
+      "ticker": "600276.SH",
+      "name": "恒瑞医药",
+      "appearances": [
+        {
+          "date": "2026-07-09",
+          "rank": 13,
+          "score": 6.5,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
+        }
+      ]
+    },
+    "002236.SZ": {
+      "ticker": "002236.SZ",
+      "name": "大华股份",
+      "appearances": [
+        {
+          "date": "2026-07-09",
+          "rank": 15,
+          "score": 6.42,
+          "status": "Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
+        }
+      ]
+    },
+    "000938.SZ": {
+      "ticker": "000938.SZ",
+      "name": "紫光股份",
+      "appearances": [
+        {
+          "date": "2026-07-09",
+          "rank": 19,
+          "score": 6.2,
+          "status": "High Risk Watch",
+          "changeType": "NEW",
+          "returnDate": "",
+          "dayChangePct": null
+        }
+      ]
+    },
+    "603501.SH": {
+      "ticker": "603501.SH",
+      "name": "韦尔股份",
+      "appearances": [
+        {
+          "date": "2026-07-09",
+          "rank": 20,
+          "score": 6.2,
           "status": "High Risk Watch",
           "changeType": "NEW",
           "returnDate": "",
