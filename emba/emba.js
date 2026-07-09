@@ -27,13 +27,7 @@ const state = {
     selectedNoteId: "",
     markdownCache: {},
     filters: {
-      query: "",
-      year: "",
-      month: "",
-      course: "",
-      type: "",
-      tag: "",
-      keyword: ""
+      query: ""
     }
   }
 };
@@ -445,11 +439,6 @@ function setKnowledgeStatus(message = "", tone = "") {
   status.dataset.tone = tone;
 }
 
-function uniqueSorted(values = []) {
-  return [...new Set(values.map((value) => String(value || "").trim()).filter(Boolean))]
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
-}
-
 function noteSearchBlob(note = {}) {
   return [
     note.title,
@@ -474,14 +463,7 @@ function noteMatchesKnowledgeFilters(note = {}) {
   const filters = state.knowledge.filters;
   const terms = normalize(filters.query).split(/\s+/).filter(Boolean);
   const searchable = noteSearchBlob(note);
-  const matchesQuery = !terms.length || terms.every((term) => searchable.includes(term));
-  const matchesYear = !filters.year || String(note.year) === filters.year;
-  const matchesMonth = !filters.month || note.month === filters.month;
-  const matchesCourse = !filters.course || note.course === filters.course;
-  const matchesType = !filters.type || note.type === filters.type;
-  const matchesTag = !filters.tag || note.tags.includes(filters.tag);
-  const matchesKeyword = !filters.keyword || note.keywords.includes(filters.keyword);
-  return matchesQuery && matchesYear && matchesMonth && matchesCourse && matchesType && matchesTag && matchesKeyword;
+  return !terms.length || terms.every((term) => searchable.includes(term));
 }
 
 function filteredKnowledgeNotes() {
@@ -500,28 +482,11 @@ function formatKnowledgeMonth(value = "") {
   return value ? `${formatMonth(value)} (${value})` : "";
 }
 
-function optionTemplate(value, label, current) {
-  return `<option value="${escapeHtml(value)}"${String(value) === String(current) ? " selected" : ""}>${escapeHtml(label)}</option>`;
-}
-
-function setKnowledgeSelect(selector, values, current, allLabel) {
-  const select = $(selector);
-  if (!select) return;
-  select.innerHTML = [
-    optionTemplate("", allLabel, current),
-    ...values.map((value) => optionTemplate(value, value, current))
-  ].join("");
-  select.value = current;
-}
-
 function renderKnowledgeControls() {
-  const notes = state.knowledge.notes;
-  setKnowledgeSelect("#embaKnowledgeYear", uniqueSorted(notes.map((note) => note.year)), state.knowledge.filters.year, "All years");
-  setKnowledgeSelect("#embaKnowledgeMonth", uniqueSorted(notes.map((note) => note.month)), state.knowledge.filters.month, "All months");
-  setKnowledgeSelect("#embaKnowledgeCourse", uniqueSorted(notes.map((note) => note.course)), state.knowledge.filters.course, "All courses");
-  setKnowledgeSelect("#embaKnowledgeType", uniqueSorted(notes.map((note) => note.type)), state.knowledge.filters.type, "All types");
-  setKnowledgeSelect("#embaKnowledgeTag", uniqueSorted(notes.flatMap((note) => note.tags)), state.knowledge.filters.tag, "All tags");
-  setKnowledgeSelect("#embaKnowledgeKeyword", uniqueSorted(notes.flatMap((note) => note.keywords)), state.knowledge.filters.keyword, "All keywords");
+  const input = $("#embaKnowledgeSearch");
+  if (input && input.value !== state.knowledge.filters.query) {
+    input.value = state.knowledge.filters.query;
+  }
 }
 
 function noteMetaText(note = {}) {
@@ -1414,35 +1379,6 @@ function initKnowledgeInteractions() {
   $("#embaKnowledgeSearch")?.addEventListener("input", (event) => {
     state.knowledge.filters.query = event.target.value;
     renderKnowledgeResults();
-  });
-
-  [
-    ["#embaKnowledgeYear", "year"],
-    ["#embaKnowledgeMonth", "month"],
-    ["#embaKnowledgeCourse", "course"],
-    ["#embaKnowledgeType", "type"],
-    ["#embaKnowledgeTag", "tag"],
-    ["#embaKnowledgeKeyword", "keyword"]
-  ].forEach(([selector, key]) => {
-    $(selector)?.addEventListener("change", (event) => {
-      state.knowledge.filters[key] = event.target.value;
-      renderKnowledgeResults();
-    });
-  });
-
-  $("#embaKnowledgeClear")?.addEventListener("click", () => {
-    state.knowledge.filters = {
-      query: "",
-      year: "",
-      month: "",
-      course: "",
-      type: "",
-      tag: "",
-      keyword: ""
-    };
-    const search = $("#embaKnowledgeSearch");
-    if (search) search.value = "";
-    renderKnowledgeBase();
   });
 
   $("#embaKnowledgeResults")?.addEventListener("click", (event) => {

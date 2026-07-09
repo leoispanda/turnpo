@@ -77,9 +77,18 @@ assert.ok(embaHtml.includes('id="embaLightbox"'));
 assert.ok(embaHtml.includes("data-lightbox-close"));
 assert.ok(embaHtml.includes('id="embaKnowledge"'));
 assert.ok(embaHtml.includes('id="embaKnowledgeSearch"'));
+assert.ok(embaHtml.includes('placeholder="Search EMBA notes"'));
 assert.ok(embaHtml.includes('id="embaKnowledgeResults"'));
 assert.ok(embaHtml.includes('id="embaKnowledgePreview"'));
 assert.ok(embaHtml.includes("/emba/content/00_EMBA_Master_Index.md"));
+assert.ok(!embaHtml.includes('id="embaKnowledgeYear"'));
+assert.ok(!embaHtml.includes('id="embaKnowledgeMonth"'));
+assert.ok(!embaHtml.includes('id="embaKnowledgeCourse"'));
+assert.ok(!embaHtml.includes('id="embaKnowledgeType"'));
+assert.ok(!embaHtml.includes('id="embaKnowledgeTag"'));
+assert.ok(!embaHtml.includes('id="embaKnowledgeKeyword"'));
+assert.ok(!embaHtml.includes('id="embaKnowledgeClear"'));
+assert.ok(!embaJs.includes("setKnowledgeSelect"));
 
 assert.ok(classmateHtml.includes('src="/emba/linkedin-class-connect.js"'));
 assert.equal(classmateHtml.match(/<script(?![^>]*\bsrc=)/g)?.length || 0, 0);
