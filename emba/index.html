@@ -63,6 +63,53 @@
         </div>
         <section class="emba-month-detail" id="embaMonthDetail" aria-live="polite"></section>
       </section>
+      <section class="emba-knowledge" id="embaKnowledge" aria-label="EMBA knowledge base">
+        <div class="emba-knowledge-head">
+          <div>
+            <h2>EMBA Knowledge Base</h2>
+            <p>Search monthly indexes, converted Markdown mirrors, and their original source files.</p>
+          </div>
+          <a class="emba-file-link" href="/emba/content/00_EMBA_Master_Index.md" target="_blank" rel="noopener">Master index</a>
+        </div>
+        <div class="emba-knowledge-controls" aria-label="Knowledge base filters">
+          <label class="emba-knowledge-search">
+            <span>Search</span>
+            <input id="embaKnowledgeSearch" type="search" autocomplete="off" placeholder="Search course, topic, tag, keyword, or summary" />
+          </label>
+          <label>
+            <span>Year</span>
+            <select id="embaKnowledgeYear"></select>
+          </label>
+          <label>
+            <span>Month</span>
+            <select id="embaKnowledgeMonth"></select>
+          </label>
+          <label>
+            <span>Course</span>
+            <select id="embaKnowledgeCourse"></select>
+          </label>
+          <label>
+            <span>Type</span>
+            <select id="embaKnowledgeType"></select>
+          </label>
+          <label>
+            <span>Tag</span>
+            <select id="embaKnowledgeTag"></select>
+          </label>
+          <label>
+            <span>Keyword</span>
+            <select id="embaKnowledgeKeyword"></select>
+          </label>
+          <button class="emba-text-btn" id="embaKnowledgeClear" type="button">Clear</button>
+        </div>
+        <div class="emba-knowledge-status" id="embaKnowledgeStatus" aria-live="polite">Loading knowledge base.</div>
+        <div class="emba-knowledge-layout">
+          <div class="emba-knowledge-results" id="embaKnowledgeResults" aria-label="Knowledge base search results"></div>
+          <article class="emba-knowledge-preview" id="embaKnowledgePreview" aria-label="Markdown preview">
+            <p class="emba-empty-copy">Select a note to preview its searchable Markdown.</p>
+          </article>
+        </div>
+      </section>
       <section class="emba-private-tools" aria-label="Private EMBA tools">
         <a class="emba-classmate-tool-link" href="./linkedin-class-connect.html">Classmate detailed list</a>
       </section>

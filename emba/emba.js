@@ -3,6 +3,7 @@ const EMBA_PASSWORD = "emba2026";
 const EMBA_LIBRARY_KEY = "turnpo:emba-library";
 const EMBA_LIBRARY_API = "/api/emba/library";
 const EMBA_UPLOAD_API = "/api/emba/upload";
+const EMBA_KNOWLEDGE_INDEX = "/emba/content/knowledge-index.json";
 const DEFAULT_START_MONTH = "2026-07";
 const DEFAULT_END_MONTH = "2028-12";
 const CLOUD_SAVE_DELAY_MS = 700;
@@ -18,7 +19,23 @@ const state = {
   accessGranted: false,
   editMode: false,
   cloudReady: false,
-  cloudSaveTimer: 0
+  cloudSaveTimer: 0,
+  knowledge: {
+    loaded: false,
+    loading: false,
+    notes: [],
+    selectedNoteId: "",
+    markdownCache: {},
+    filters: {
+      query: "",
+      year: "",
+      month: "",
+      course: "",
+      type: "",
+      tag: "",
+      keyword: ""
+    }
+  }
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -345,6 +362,338 @@ function saveLibrary() {
   queueCloudSave();
 }
 
+function cleanStringList(value) {
+  if (Array.isArray(value)) return value.map((item) => String(item || "").trim()).filter(Boolean);
+  if (!value) return [];
+  return String(value).split(",").map((item) => item.trim()).filter(Boolean);
+}
+
+function normalizeKnowledgeNote(note = {}) {
+  const year = Number(note.year || monthKeyFromDate(note.date).slice(0, 4));
+  return {
+    id: note.id || slugify(note.title || note.md_file || "emba-note"),
+    title: note.title || "Untitled EMBA note",
+    type: note.type || "note",
+    program: note.program || "EMBA",
+    school: note.school || "Maastricht University",
+    course: note.course || "",
+    module: note.module || "",
+    session: note.session || "",
+    date: note.date || "",
+    year: Number.isFinite(year) ? year : "",
+    month: note.month || monthKeyFromDate(note.date),
+    source_type: note.source_type || "",
+    source_file: note.source_file || note.original_file || "",
+    source_files: cleanStringList(note.source_files || note.original_files),
+    converted_from: note.converted_from || "",
+    md_file: note.md_file || note.file || "",
+    visibility: note.visibility || "private",
+    status: note.status || "active",
+    tags: cleanStringList(note.tags),
+    keywords: cleanStringList(note.keywords),
+    summary: note.summary || "",
+    related_topics: cleanStringList(note.related_topics),
+    rag_include: note.rag_include !== false,
+    search_text: note.search_text || ""
+  };
+}
+
+function setKnowledgeStatus(message = "", tone = "") {
+  const status = $("#embaKnowledgeStatus");
+  if (!status) return;
+  status.textContent = message;
+  status.dataset.tone = tone;
+}
+
+function uniqueSorted(values = []) {
+  return [...new Set(values.map((value) => String(value || "").trim()).filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
+}
+
+function noteSearchBlob(note = {}) {
+  return [
+    note.title,
+    note.type,
+    note.course,
+    note.module,
+    note.session,
+    note.date,
+    note.year,
+    note.month,
+    note.source_type,
+    note.converted_from,
+    note.summary,
+    note.tags.join(" "),
+    note.keywords.join(" "),
+    note.related_topics.join(" "),
+    note.search_text
+  ].join(" ").toLowerCase();
+}
+
+function noteMatchesKnowledgeFilters(note = {}) {
+  const filters = state.knowledge.filters;
+  const terms = normalize(filters.query).split(/\s+/).filter(Boolean);
+  const searchable = noteSearchBlob(note);
+  const matchesQuery = !terms.length || terms.every((term) => searchable.includes(term));
+  const matchesYear = !filters.year || String(note.year) === filters.year;
+  const matchesMonth = !filters.month || note.month === filters.month;
+  const matchesCourse = !filters.course || note.course === filters.course;
+  const matchesType = !filters.type || note.type === filters.type;
+  const matchesTag = !filters.tag || note.tags.includes(filters.tag);
+  const matchesKeyword = !filters.keyword || note.keywords.includes(filters.keyword);
+  return matchesQuery && matchesYear && matchesMonth && matchesCourse && matchesType && matchesTag && matchesKeyword;
+}
+
+function filteredKnowledgeNotes() {
+  return state.knowledge.notes
+    .filter((note) => note.visibility !== "public" ? true : note.status !== "deleted")
+    .filter((note) => note.status !== "deleted")
+    .filter(noteMatchesKnowledgeFilters)
+    .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")) || a.title.localeCompare(b.title));
+}
+
+function formatKnowledgeType(value = "") {
+  return String(value || "note").replaceAll("_", " ");
+}
+
+function formatKnowledgeMonth(value = "") {
+  return value ? `${formatMonth(value)} (${value})` : "";
+}
+
+function optionTemplate(value, label, current) {
+  return `<option value="${escapeHtml(value)}"${String(value) === String(current) ? " selected" : ""}>${escapeHtml(label)}</option>`;
+}
+
+function setKnowledgeSelect(selector, values, current, allLabel) {
+  const select = $(selector);
+  if (!select) return;
+  select.innerHTML = [
+    optionTemplate("", allLabel, current),
+    ...values.map((value) => optionTemplate(value, value, current))
+  ].join("");
+  select.value = current;
+}
+
+function renderKnowledgeControls() {
+  const notes = state.knowledge.notes;
+  setKnowledgeSelect("#embaKnowledgeYear", uniqueSorted(notes.map((note) => note.year)), state.knowledge.filters.year, "All years");
+  setKnowledgeSelect("#embaKnowledgeMonth", uniqueSorted(notes.map((note) => note.month)), state.knowledge.filters.month, "All months");
+  setKnowledgeSelect("#embaKnowledgeCourse", uniqueSorted(notes.map((note) => note.course)), state.knowledge.filters.course, "All courses");
+  setKnowledgeSelect("#embaKnowledgeType", uniqueSorted(notes.map((note) => note.type)), state.knowledge.filters.type, "All types");
+  setKnowledgeSelect("#embaKnowledgeTag", uniqueSorted(notes.flatMap((note) => note.tags)), state.knowledge.filters.tag, "All tags");
+  setKnowledgeSelect("#embaKnowledgeKeyword", uniqueSorted(notes.flatMap((note) => note.keywords)), state.knowledge.filters.keyword, "All keywords");
+}
+
+function noteMetaText(note = {}) {
+  return [
+    note.month,
+    note.course,
+    formatKnowledgeType(note.type),
+    note.source_type
+  ].filter(Boolean).join(" · ");
+}
+
+function renderKnowledgeResult(note, isSelected) {
+  const sourceCount = note.source_files.length || (note.source_file ? 1 : 0);
+  return `
+    <article class="emba-knowledge-result${isSelected ? " selected" : ""}">
+      <button class="emba-knowledge-result-main" type="button" data-knowledge-note="${escapeHtml(note.id)}" aria-pressed="${isSelected}">
+        <span class="emba-knowledge-result-title">${escapeHtml(note.title)}</span>
+        <span class="emba-knowledge-result-meta">${escapeHtml(noteMetaText(note))}</span>
+        ${note.summary ? `<span class="emba-knowledge-result-summary">${escapeHtml(note.summary)}</span>` : ""}
+        <span class="emba-knowledge-tags">
+          ${note.tags.slice(0, 6).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
+        </span>
+      </button>
+      <div class="emba-knowledge-result-actions">
+        ${note.md_file ? `<a class="emba-file-link" href="${escapeHtml(note.md_file)}" target="_blank" rel="noopener">Open MD</a>` : ""}
+        ${note.source_file ? `<a class="emba-file-link" href="${escapeHtml(note.source_file)}" target="_blank" rel="noopener">Open source${sourceCount > 1 ? ` (${sourceCount})` : ""}</a>` : ""}
+        ${note.month ? `<button class="emba-text-btn" type="button" data-knowledge-month="${escapeHtml(note.month)}">Show month</button>` : ""}
+      </div>
+    </article>
+  `;
+}
+
+function renderKnowledgeResults() {
+  const results = $("#embaKnowledgeResults");
+  if (!results) return;
+  const notes = filteredKnowledgeNotes();
+  const count = notes.length;
+  setKnowledgeStatus(state.knowledge.loaded ? `${count} note${count === 1 ? "" : "s"} found.` : "Loading knowledge base.");
+  results.innerHTML = count ? notes.map((note) => renderKnowledgeResult(note, note.id === state.knowledge.selectedNoteId)).join("")
+    : `<div class="emba-empty-state">No EMBA notes match these filters.</div>`;
+}
+
+function renderKnowledgeBase() {
+  renderKnowledgeControls();
+  renderKnowledgeResults();
+}
+
+function safeMarkdownLink(value = "", basePath = "") {
+  const url = String(value || "").trim();
+  if (!url || /^javascript:/i.test(url) || /^data:/i.test(url)) return "";
+  if (url.startsWith("#")) return url;
+  if (url.startsWith("/") && !url.startsWith("//") && !url.includes("..")) return url;
+  if (/^https?:\/\//i.test(url)) return url;
+  if (!basePath) return url;
+  try {
+    const baseUrl = new URL(basePath, window.location.origin);
+    return new URL(url, baseUrl).pathname;
+  } catch {
+    return "";
+  }
+}
+
+function markdownInline(value = "", basePath = "") {
+  return escapeHtml(value)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, label, url) => {
+      const safeUrl = safeMarkdownLink(url, basePath);
+      return safeUrl ? `<a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener">${label}</a>` : label;
+    });
+}
+
+function splitFrontmatter(markdown = "") {
+  const source = String(markdown || "");
+  if (!source.startsWith("---\n")) return { frontmatter: "", body: source };
+  const closeIndex = source.indexOf("\n---\n", 4);
+  if (closeIndex === -1) return { frontmatter: "", body: source };
+  return {
+    frontmatter: source.slice(4, closeIndex).trim(),
+    body: source.slice(closeIndex + 5).trimStart()
+  };
+}
+
+function markdownToHtml(markdown = "", basePath = "") {
+  const { body } = splitFrontmatter(markdown);
+  const lines = body.split(/\r?\n/);
+  const html = [];
+  let listOpen = false;
+  let codeOpen = false;
+  let paragraph = [];
+
+  const flushParagraph = () => {
+    if (!paragraph.length) return;
+    html.push(`<p>${markdownInline(paragraph.join(" "), basePath)}</p>`);
+    paragraph = [];
+  };
+  const closeList = () => {
+    if (!listOpen) return;
+    html.push("</ul>");
+    listOpen = false;
+  };
+
+  lines.forEach((line) => {
+    if (line.trim().startsWith("```")) {
+      flushParagraph();
+      closeList();
+      if (codeOpen) {
+        html.push("</code></pre>");
+        codeOpen = false;
+      } else {
+        html.push("<pre><code>");
+        codeOpen = true;
+      }
+      return;
+    }
+    if (codeOpen) {
+      html.push(escapeHtml(line));
+      return;
+    }
+    if (!line.trim()) {
+      flushParagraph();
+      closeList();
+      return;
+    }
+    const heading = line.match(/^(#{1,4})\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      closeList();
+      const level = Math.min(heading[1].length + 2, 6);
+      html.push(`<h${level}>${markdownInline(heading[2], basePath)}</h${level}>`);
+      return;
+    }
+    const bullet = line.match(/^\s*[-*]\s+(.+)$/);
+    if (bullet) {
+      flushParagraph();
+      if (!listOpen) {
+        html.push("<ul>");
+        listOpen = true;
+      }
+      html.push(`<li>${markdownInline(bullet[1], basePath)}</li>`);
+      return;
+    }
+    paragraph.push(line.trim());
+  });
+
+  flushParagraph();
+  closeList();
+  if (codeOpen) html.push("</code></pre>");
+  return html.join("\n");
+}
+
+function renderKnowledgePreview(note, markdown) {
+  const preview = $("#embaKnowledgePreview");
+  if (!preview) return;
+  preview.innerHTML = `
+    <div class="emba-knowledge-preview-head">
+      <div>
+        <span class="emba-month-kicker">${escapeHtml(formatKnowledgeMonth(note.month) || "EMBA note")}</span>
+        <h3>${escapeHtml(note.title)}</h3>
+        <p>${escapeHtml(note.summary || noteMetaText(note))}</p>
+      </div>
+      <div class="emba-knowledge-preview-actions">
+        ${note.md_file ? `<a class="emba-file-link" href="${escapeHtml(note.md_file)}" target="_blank" rel="noopener">Open MD</a>` : ""}
+        ${note.source_file ? `<a class="emba-file-link" href="${escapeHtml(note.source_file)}" target="_blank" rel="noopener">Open source</a>` : ""}
+      </div>
+    </div>
+    <div class="emba-knowledge-preview-meta">
+      ${[note.course, formatKnowledgeType(note.type), note.source_type, note.rag_include ? "RAG included" : "RAG excluded"].filter(Boolean).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+    </div>
+    <div class="emba-markdown-rendered">${markdownToHtml(markdown, note.md_file)}</div>
+  `;
+}
+
+async function openKnowledgeNote(noteId) {
+  const note = state.knowledge.notes.find((item) => item.id === noteId);
+  if (!note || !note.md_file) return;
+  state.knowledge.selectedNoteId = note.id;
+  renderKnowledgeResults();
+  setKnowledgeStatus(`Opening ${note.title}.`);
+  try {
+    if (!state.knowledge.markdownCache[note.md_file]) {
+      const response = await fetch(note.md_file, { cache: "no-store" });
+      if (!response.ok) throw new Error(`Could not load Markdown (${response.status})`);
+      state.knowledge.markdownCache[note.md_file] = await response.text();
+    }
+    renderKnowledgePreview(note, state.knowledge.markdownCache[note.md_file]);
+    setKnowledgeStatus(`${filteredKnowledgeNotes().length} note${filteredKnowledgeNotes().length === 1 ? "" : "s"} found.`);
+  } catch (error) {
+    const preview = $("#embaKnowledgePreview");
+    if (preview) preview.innerHTML = `<p class="emba-empty-copy">${escapeHtml(error.message)}</p>`;
+    setKnowledgeStatus("Could not load Markdown preview.", "warn");
+  }
+}
+
+async function loadKnowledgeBase() {
+  if (state.knowledge.loading || state.knowledge.loaded) return;
+  state.knowledge.loading = true;
+  setKnowledgeStatus("Loading knowledge base.");
+  try {
+    const response = await fetch(EMBA_KNOWLEDGE_INDEX, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Could not load knowledge index (${response.status})`);
+    const payload = await response.json();
+    state.knowledge.notes = asArray(payload.notes).map(normalizeKnowledgeNote).filter((note) => note.md_file);
+    state.knowledge.loaded = true;
+    renderKnowledgeBase();
+  } catch (error) {
+    setKnowledgeStatus(error.message, "warn");
+  } finally {
+    state.knowledge.loading = false;
+  }
+}
+
 function readFileAsDataUrl(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -663,6 +1012,7 @@ function renderAccessState() {
   if (lock) lock.hidden = !granted;
   updateEditModeControl();
   if (granted && !state.libraryLoaded) loadLibrary();
+  if (granted && !state.knowledge.loaded) loadKnowledgeBase();
 }
 
 async function loadLibrary() {
@@ -899,4 +1249,54 @@ document.addEventListener("keydown", (event) => {
   closeMemoryLightbox();
 });
 
+function initKnowledgeInteractions() {
+  $("#embaKnowledgeSearch")?.addEventListener("input", (event) => {
+    state.knowledge.filters.query = event.target.value;
+    renderKnowledgeResults();
+  });
+
+  [
+    ["#embaKnowledgeYear", "year"],
+    ["#embaKnowledgeMonth", "month"],
+    ["#embaKnowledgeCourse", "course"],
+    ["#embaKnowledgeType", "type"],
+    ["#embaKnowledgeTag", "tag"],
+    ["#embaKnowledgeKeyword", "keyword"]
+  ].forEach(([selector, key]) => {
+    $(selector)?.addEventListener("change", (event) => {
+      state.knowledge.filters[key] = event.target.value;
+      renderKnowledgeResults();
+    });
+  });
+
+  $("#embaKnowledgeClear")?.addEventListener("click", () => {
+    state.knowledge.filters = {
+      query: "",
+      year: "",
+      month: "",
+      course: "",
+      type: "",
+      tag: "",
+      keyword: ""
+    };
+    const search = $("#embaKnowledgeSearch");
+    if (search) search.value = "";
+    renderKnowledgeBase();
+  });
+
+  $("#embaKnowledgeResults")?.addEventListener("click", (event) => {
+    const monthButton = event.target.closest("[data-knowledge-month]");
+    if (monthButton) {
+      setActiveMonth(monthButton.dataset.knowledgeMonth || "");
+      $("#embaMonthDetail")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    const noteButton = event.target.closest("[data-knowledge-note]");
+    if (!noteButton) return;
+    openKnowledgeNote(noteButton.dataset.knowledgeNote || "");
+  });
+}
+
+initKnowledgeInteractions();
 initAccessGate();
