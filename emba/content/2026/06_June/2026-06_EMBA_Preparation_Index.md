@@ -71,10 +71,19 @@ June is not yet a teaching month. It prepares for:
 ### Converted Markdown
 
 - [EMBA Preparation Documents Analysis - June 2026](./converted-md/2026-06-emba-preparation-documents-analysis.md)
+- Source document mirrors:
+  - [UM Certificate Of Enrolment - EMBA On-Campus 2026/27](./converted-md/source-documents/2026-06-um-certificate-of-enrolment.md)
+  - [MaastrichtMBA Onboarding Guideline - Access Setup](./converted-md/source-documents/2026-06-onboarding-guideline.md)
+  - [MaastrichtMBA Study Fees, Policies And Procedures](./converted-md/source-documents/2026-06-study-fees-policies-procedures.md)
+  - [MaastrichtMBA On-Campus Programme Outline 2026-2027](./converted-md/source-documents/2026-06-maastricht-on-campus-programme-outline.md)
+  - [MaastrichtMBA Online Programme Outline 2026-2027](./converted-md/source-documents/2026-06-maastricht-online-programme-outline.md)
+  - [MaastrichtMBA Curriculum Elective Modules](./converted-md/source-documents/2026-06-maastricht-curriculum-elective-modules.md)
+  - [The Lost Art Of Thinking In Large Organizations](./converted-md/source-documents/2026-06-lost-art-of-thinking-large-organizations.md)
+  - [Nyenrode Impact MBA Executive Brochure](./converted-md/source-documents/2026-06-nyenrode-impact-mba-executive-brochure.md)
 
 ### Original Files
 
-Original PDFs remain in the local MBA PDF folder. They were not copied into this repository because several are private administrative files and one brochure is large.
+Original PDFs remain in the local MBA PDF folder or the local Documents folder. They were not copied into this repository because several are private administrative files and one brochure is large.
 
 Source set reviewed:
 
@@ -97,6 +106,7 @@ Source handling rule: keep the PDFs as original evidence, and use Markdown only 
 ### Readings
 
 - The Lost Art of Thinking in Large Organizations is best treated as a pre-EMBA strategic-thinking primer.
+- Its searchable mirror is now stored as [The Lost Art Of Thinking In Large Organizations](./converted-md/source-documents/2026-06-lost-art-of-thinking-large-organizations.md).
 
 ### Case Studies
 
@@ -179,6 +189,6 @@ Keywords: offer of admission, certificate of enrolment, onboarding, Canvas, Team
 
 ## 11. RAG And Search Notes
 
-Use this monthly index as the entry point for broad June questions. Use the converted preparation analysis when the query asks for evidence, dates, document roles, risks, or concrete next actions.
+Use this monthly index as the entry point for broad June questions. Use the converted preparation analysis when the query asks for cross-document evidence, dates, document roles, risks, or concrete next actions. Use the source document mirrors when the query asks about one specific PDF.
 
 Useful Chinese search aliases: 录取, 注册证明, 入学准备, 学费, 选修课, 战略思考, Canvas, Teams.

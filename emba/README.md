@@ -80,6 +80,6 @@ emba/content/
 └── templates/
 ```
 
-Original PDF, PPT, Word, image, and case files should stay in `originals/` or the existing private material folder. Their Markdown mirrors should live in `converted-md/` with frontmatter that points back to the original file through `source_file` or `source_files`.
+Original PDF, PPT, Word, image, and case files should stay in `originals/`, the existing private material folder, or private R2 when they should be clickable on the site. Their Markdown mirrors should live in `converted-md/` with frontmatter that points back to the original file through `source_file` or `source_files`; timeline Material links should use protected `/api/emba/file/...` URLs for uploaded originals.
 
 `knowledge-index.json` is the machine-readable search index for the website. Update it whenever a new Markdown note is added so the page can search by year, month, course, type, tag, keyword, and summary. Later this same structure can feed a RAG pipeline by chunking Markdown files where `rag_include: true`.

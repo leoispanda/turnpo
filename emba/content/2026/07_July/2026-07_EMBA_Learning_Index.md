@@ -23,6 +23,7 @@ tags:
   - organizational-learning
 keywords:
   - Lead in Learning
+  - Leading in Learning Programme
   - memory making
   - listening
   - psychological safety
@@ -49,6 +50,8 @@ July 2026 starts the EMBA learning system with a practical leadership thread. Th
 
 July 2026 is best retrieved for questions about Lead in Learning, leadership posture, listening, coaching, memory making, psychological safety, blind spots, AI-assisted learning, organizational knowledge creation, inclusion, culture mapping, and storytelling.
 
+The official programme PDF should be used for schedule, room, speaker, location, travel, and session-overview questions. The handwritten-note mirrors should be used for Leo's learning interpretation and reflections.
+
 ## 2. Main Courses And Sessions
 
 - Lead in Learning
@@ -63,6 +66,7 @@ July 2026 is best retrieved for questions about Lead in Learning, leadership pos
 
 ### Converted Markdown
 
+- [MaastrichtMBA Leading In Learning Programme - July 2026](./converted-md/source-documents/2026-07-leading-in-learning-programme.md)
 - [EMBA July 2026 Handwritten Notes Analysis](./converted-md/2026-07-01-leadership-learning-handwritten-notes.md)
 - Per-image Markdown mirrors:
   - [IMG 6900 - Lead in Learning](./converted-md/image-notes/IMG_6900-lead-in-learning.md)
@@ -81,6 +85,7 @@ July 2026 is best retrieved for questions about Lead in Learning, leadership pos
 
 ### Original Files
 
+- The official programme PDF remains in the private local Documents folder: `September intake - MaastrichtMBA Leading in Learning Programme July 2026.pdf`.
 - Handwritten-note images remain in `/emba/materials/2026-07/handwritten-notes/images/`.
 - Each handwritten-note image now has its own Markdown mirror in `./converted-md/image-notes/`.
 - Future PDF, PPT, Word, and slide files should be stored in `./originals/` while their searchable Markdown mirrors go into `./converted-md/`.
@@ -183,6 +188,6 @@ Keywords: Lead in Learning, memory making, listening, psychological safety, 70/2
 
 ## 11. RAG And Search Notes
 
-Use this monthly index as the entry point for broad July questions. Use the converted handwritten-note analysis when the query asks for the actual class-note interpretation or personal action plan. Use the personal marker extract when the query asks for Leo:, I see, quoted lines, starred lines, question marks, source-image position, or original handwritten phrasing.
+Use this monthly index as the entry point for broad July questions. Use the official programme mirror when the query asks for July 1-3 schedule, room, speaker, location, travel, contact, or session overview. Use the converted handwritten-note analysis when the query asks for the actual class-note interpretation or personal action plan. Use the personal marker extract when the query asks for Leo:, I see, quoted lines, starred lines, question marks, source-image position, or original handwritten phrasing.
 
-Useful Chinese search aliases: 领导力, 倾听, 教练, 心理安全, 反思, 盲点, 人工智能, 组织学习, 包容性, 讲故事.
+Useful Chinese search aliases: 领导力, 日程, 课程安排, 倾听, 教练, 心理安全, 反思, 盲点, 人工智能, 组织学习, 包容性, 讲故事.

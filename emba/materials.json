@@ -21,6 +21,54 @@
           "type": "monthly_index",
           "file": "/emba/content/2026/06_June/2026-06_EMBA_Preparation_Index.md",
           "notes": "6 月准备期的月度索引，连接源文件组、综合分析和后续学习主题。"
+        },
+        {
+          "title": "UM Certificate Of Enrolment - EMBA On-Campus 2026/27",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-06/material/1783597890381-486576fc-60da-492c-be2b-1468f9a795f9-UM_Certificate_of_enrolment.PDF",
+          "notes": "原始 PDF 已上传至 EMBA_BUCKET，受 EMBA 登录保护；可检索 Markdown 镜像：/emba/content/2026/06_June/converted-md/source-documents/2026-06-um-certificate-of-enrolment.md。"
+        },
+        {
+          "title": "MaastrichtMBA Onboarding Guideline - Access Setup",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-06/material/1783597891190-cd4d11e7-d3c6-4688-a6c3-61273b1012db-Onboarding-guideline.pdf",
+          "notes": "原始 PDF 已上传至 EMBA_BUCKET，受 EMBA 登录保护；可检索 Markdown 镜像：/emba/content/2026/06_June/converted-md/source-documents/2026-06-onboarding-guideline.md。"
+        },
+        {
+          "title": "MaastrichtMBA Study Fees, Policies And Procedures",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-06/material/1783597891484-e3243a74-59a7-472e-85c7-40a3388e30f0-MaastrichtMBA---Study-fees-policies-procedures-Sept.pdf",
+          "notes": "原始 PDF 已上传至 EMBA_BUCKET，受 EMBA 登录保护；可检索 Markdown 镜像：/emba/content/2026/06_June/converted-md/source-documents/2026-06-study-fees-policies-procedures.md。"
+        },
+        {
+          "title": "MaastrichtMBA On-Campus Programme Outline 2026-2027",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-06/material/1783597892009-4870cc90-c28a-4736-8f87-9bf5d2eaa645-MaastrichtMBA---On-campus-MBA-Programme-Outline-2026-2027.pdf",
+          "notes": "原始 PDF 已上传至 EMBA_BUCKET，受 EMBA 登录保护；可检索 Markdown 镜像：/emba/content/2026/06_June/converted-md/source-documents/2026-06-maastricht-on-campus-programme-outline.md。"
+        },
+        {
+          "title": "MaastrichtMBA Online Programme Outline 2026-2027",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-06/material/1783597892454-40e37ff2-af27-4f99-aeb1-35a6066652f8-MaastrichtMBA---Online-MBA-Programme-Outline-2026-2027.pdf",
+          "notes": "原始 PDF 已上传至 EMBA_BUCKET，受 EMBA 登录保护；可检索 Markdown 镜像：/emba/content/2026/06_June/converted-md/source-documents/2026-06-maastricht-online-programme-outline.md。"
+        },
+        {
+          "title": "MaastrichtMBA Curriculum Elective Modules",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-06/material/1783597892872-7fdf05c3-4f0f-4270-a252-f1df549fccb9-MaastrichtMBA---Curriculum-Elective-Modules.pdf",
+          "notes": "原始 PDF 已上传至 EMBA_BUCKET，受 EMBA 登录保护；可检索 Markdown 镜像：/emba/content/2026/06_June/converted-md/source-documents/2026-06-maastricht-curriculum-elective-modules.md。"
+        },
+        {
+          "title": "The Lost Art Of Thinking In Large Organizations",
+          "type": "reading_pdf",
+          "file": "/api/emba/file/emba/2026-06/material/1783597893137-76819cbc-837b-4968-818d-833115b320bf-The_Lost_Art_of_Thinking_in_Large_Organi.pdf",
+          "notes": "原始 PDF 已上传至 EMBA_BUCKET，受 EMBA 登录保护；可检索 Markdown 镜像：/emba/content/2026/06_June/converted-md/source-documents/2026-06-lost-art-of-thinking-large-organizations.md。"
+        },
+        {
+          "title": "Nyenrode Impact MBA Executive Brochure",
+          "type": "comparison_document_mirror",
+          "file": "/emba/content/2026/06_June/converted-md/source-documents/2026-06-nyenrode-impact-mba-executive-brochure.md",
+          "notes": "选校对照资料，用于理解 impact、sustainability、career development 和 personal leadership language；原始 PDF 为 40.4MB，当前线上上传接口 25MB 上限下尚未进入 R2。"
         }
       ],
       "reflection": "EMBA 准备阶段｜2026.6\n\n这组文件把阶段从申请推进到已录取、已注册、待启动。6 月的关键词不是课堂学习，而是 readiness：确认身份、搭好 UM/Canvas/Teams 系统、锁定 7 月 introduction 和 9 月第一教学周、建立费用与取消风险意识，并开始形成 elective strategy。\n\n最重要的判断：这些文件应归档为 2026.6，因为 7 月是第一次学习事件，而 6 月是 EMBA 成为现实系统的月份。",
@@ -32,6 +80,12 @@
       "month": "2026-07",
       "title": "July 2026",
       "materials": [
+        {
+          "title": "MaastrichtMBA Leading In Learning Programme - July 2026",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-07/material/1783597895949-5ef84788-4985-4349-bd98-3299de634b61-September-intake---MaastrichtMBA-Leading-in-Learning-Programme-July-2026.pdf",
+          "notes": "原始 PDF 已上传至 EMBA_BUCKET，受 EMBA 登录保护；可检索 Markdown 镜像：/emba/content/2026/07_July/converted-md/source-documents/2026-07-leading-in-learning-programme.md。"
+        },
         {
           "title": "EMBA July 2026 full searchable notes - Lead in Learning, AI, Inclusion & Diversity",
           "type": "converted_md",

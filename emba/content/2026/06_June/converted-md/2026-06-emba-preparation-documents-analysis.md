@@ -96,15 +96,15 @@ So June's job is not "read everything." June's job is to make the EMBA runnable.
 
 | File | Role in the system | What it proves or gives | Action value |
 | --- | --- | --- | --- |
-| UM_Certificate_of_enrolment.PDF | Official enrolment proof | Enrolment for EMBA On-Campus in academic year 2026/27, valid until 2027-08-31 | Keep as proof for administration, employer, visa/residence/admin use if needed |
+| [UM_Certificate_of_enrolment.PDF](./source-documents/2026-06-um-certificate-of-enrolment.md) | Official enrolment proof | Enrolment for EMBA On-Campus in academic year 2026/27, valid until 2027-08-31 | Keep as proof for administration, employer, visa/residence/admin use if needed |
 | offer signed leo.pdf | Admission contract and commitment | Admission granted for EMBA, MSc degree, part-time on-campus, start September 2026 | Anchor document for programme, dates, fees, and accepted conditions |
-| Onboarding guideline.pdf | IT and communication setup manual | UM password, Microsoft Authenticator MFA, Canvas, UM email, Teams | Convert into a checklist and finish before the July introduction |
-| MaastrichtMBA - Study fees, policies & procedures Sept.pdf | Financial policy | On-campus fee, instalment rhythm, payment term, cancellation fee, continuation fee | Build payment calendar and cancellation-risk awareness |
-| MaastrichtMBA - On-campus MBA Programme Outline 2026-2027.pdf | Main programme calendar | Leading in Learning, five core modules, three elective weeks, rules for electives | Use as the main planning source for the chosen track |
-| MaastrichtMBA - Online MBA Programme Outline 2026-2027.pdf | Track comparison | Online track has ten online courses plus three face-to-face elective weeks | Useful only as comparison; not the chosen track |
-| MaastrichtMBA - Curriculum Elective Modules.pdf | Elective strategy source | Digital Business, Responsible Leadership, Sustainable Innovation | Use to form a provisional elective thesis |
-| The_Lost_Art_of_Thinking_in_Large_Organi.pdf | Pre-EMBA reading lens | Strategic thinking requires time, depth, use cases, delegation, and ambiguity tolerance | Treat as a personal operating principle before class starts |
-| nyenrode-impact-mba-executive-brochure.pdf | Alternative school comparison | Nyenrode Impact MBA positioning, modules, 24-month structure, career/community emphasis | Useful for reflection on why Maastricht and what "impact" should mean |
+| [Onboarding guideline.pdf](./source-documents/2026-06-onboarding-guideline.md) | IT and communication setup manual | UM password, Microsoft Authenticator MFA, Canvas, UM email, Teams | Convert into a checklist and finish before the July introduction |
+| [MaastrichtMBA - Study fees, policies & procedures Sept.pdf](./source-documents/2026-06-study-fees-policies-procedures.md) | Financial policy | On-campus fee, instalment rhythm, payment term, cancellation fee, continuation fee | Build payment calendar and cancellation-risk awareness |
+| [MaastrichtMBA - On-campus MBA Programme Outline 2026-2027.pdf](./source-documents/2026-06-maastricht-on-campus-programme-outline.md) | Main programme calendar | Leading in Learning, five core modules, three elective weeks, rules for electives | Use as the main planning source for the chosen track |
+| [MaastrichtMBA - Online MBA Programme Outline 2026-2027.pdf](./source-documents/2026-06-maastricht-online-programme-outline.md) | Track comparison | Online track has ten online courses plus three face-to-face elective weeks | Useful only as comparison; not the chosen track |
+| [MaastrichtMBA - Curriculum Elective Modules.pdf](./source-documents/2026-06-maastricht-curriculum-elective-modules.md) | Elective strategy source | Digital Business, Responsible Leadership, Sustainable Innovation | Use to form a provisional elective thesis |
+| [The_Lost_Art_of_Thinking_in_Large_Organi.pdf](./source-documents/2026-06-lost-art-of-thinking-large-organizations.md) | Pre-EMBA reading lens | Strategic thinking requires time, depth, use cases, delegation, and ambiguity tolerance | Treat as a personal operating principle before class starts |
+| [nyenrode-impact-mba-executive-brochure.pdf](./source-documents/2026-06-nyenrode-impact-mba-executive-brochure.md) | Alternative school comparison | Nyenrode Impact MBA positioning, modules, 24-month structure, career/community emphasis | Useful for reflection on why Maastricht and what "impact" should mean |
 
 Source preservation rule: this Markdown file is a searchable analytical mirror, not a replacement for the original PDFs. For contractual, fee, enrolment, or policy decisions, verify against the original PDF source before acting.
 
@@ -291,7 +291,7 @@ Why it is lower priority:
 | Teams/Canvas not fully set up before July | Medium | Missing announcements or pre-work would create avoidable friction | Finish MFA, Canvas, UM email, Teams before 2026-07-01 |
 | Elective strategy postponed too long | Low to medium | Elective weeks may need registration, travel, or employer planning | Create a provisional ranking now |
 | Payment schedule not calendared | Medium | Payment arrears can suspend participation | Add six invoice windows and 30-day payment reminders |
-| Original PDFs remain scattered | Low | Harder to retrieve proof later | Keep local source folder plus this searchable Markdown mirror |
+| Large original PDFs may exceed the live upload cap | Low | A file can remain searchable as Markdown while the original is not yet clickable in Material | Keep the Markdown mirror immediately; upload the original to private R2 once the larger upload limit is deployed |
 
 ## 11A. Retrieval Anchors
 
@@ -333,4 +333,12 @@ The folder is not merely administrative. It marks the moment the EMBA becomes a 
 
 ## 14. Future Updates
 
-When the original PDFs are copied into a private source folder later, add their final source paths to `source_files` and to the June monthly index. Keep this analysis as the stable retrieval layer, and create separate Markdown files only if a source document becomes complex enough to deserve its own note.
+When new MBA source documents are added, follow the durable two-layer rule:
+
+- keep the original file in the private source location or a controlled private materials folder;
+- create one source-document Markdown mirror in `converted-md/source-documents/`;
+- update the monthly index with the new mirror;
+- update the EMBA Master Index and `knowledge-index.json`;
+- add the private R2 `/api/emba/file/...` URL to `emba/materials.json` when the original should be clickable in the EMBA timeline UI, and keep the Markdown mirror path in the notes.
+
+This file remains the cross-document synthesis layer. The source-document mirrors are the evidence and retrieval layer for individual PDFs.

@@ -47,21 +47,23 @@ The rule is simple:
 
 | Month | Index | Main topics | Notes |
 | --- | --- | --- | --- |
-| 2026-06 | [June 2026 EMBA Preparation Index](./2026/06_June/2026-06_EMBA_Preparation_Index.md) | admission, enrolment, onboarding, programme planning, fees, electives | Preparation-stage document analysis. Admission and enrolment are confirmed; readiness work begins. |
-| 2026-07 | [July 2026 EMBA Learning Index](./2026/07_July/2026-07_EMBA_Learning_Index.md) | leadership, learning, coaching, AI, inclusion, organizational learning | First EMBA handwritten notes converted into searchable Markdown. |
+| 2026-06 | [June 2026 EMBA Preparation Index](./2026/06_June/2026-06_EMBA_Preparation_Index.md) | admission, enrolment, onboarding, programme planning, fees, electives | Preparation-stage document analysis plus source-document mirrors for the main June MBA preparation PDFs. |
+| 2026-07 | [July 2026 EMBA Learning Index](./2026/07_July/2026-07_EMBA_Learning_Index.md) | leadership, learning, coaching, AI, inclusion, organizational learning | Official Leading in Learning programme mirror plus handwritten notes converted into searchable Markdown. |
 
 ## Current Corpus
 
 | Month | Searchable Markdown | Original-source status | Retrieval role |
 | --- | --- | --- | --- |
-| 2026-06 | One monthly index and one preparation document analysis | Original PDFs remain in the private local MBA PDF folder; sensitive administrative files are referenced but not copied into the repo | Admission, enrolment, onboarding, fees, programme structure, elective strategy |
-| 2026-07 | One monthly index, one overall handwritten-note analysis, 13 per-image Markdown notes, one questions/reflections review queue, and one original personal-marker extract | Original handwritten images remain under `/emba/materials/2026-07/handwritten-notes/images/` | Leadership practice, listening, coaching, organizational learning, AI, inclusion, personal review, original Leo/I see/question/star markers |
+| 2026-06 | One monthly index, one preparation document analysis, and eight source-document mirrors | Seven June source PDFs are uploaded to private R2 under `emba/2026-06/material/` and served through `/api/emba/file/...`; the 40.4MB Nyenrode brochure remains a Markdown mirror until the larger upload limit is deployed | Admission, enrolment, onboarding, fees, programme structure, elective strategy, strategic thinking, alternative-MBA comparison |
+| 2026-07 | One monthly index, one official programme mirror, one overall handwritten-note analysis, 13 per-image Markdown notes, one questions/reflections review queue, and one original personal-marker extract | Original handwritten images remain under `/emba/materials/2026-07/handwritten-notes/images/`; the official programme PDF is uploaded to private R2 under `emba/2026-07/material/` and served through `/api/emba/file/...` | Official July schedule, leadership practice, listening, coaching, organizational learning, AI, inclusion, personal review, original Leo/I see/question/star markers |
 
 ## Courses And Sessions
 
 | Course or session | Month | Notes |
 | --- | --- | --- |
 | EMBA Preparation | 2026-06 | [EMBA Preparation Documents Analysis](./2026/06_June/converted-md/2026-06-emba-preparation-documents-analysis.md) |
+| EMBA Preparation Source Documents | 2026-06 | [June source-document mirrors](./2026/06_June/converted-md/source-documents/2026-06-maastricht-curriculum-elective-modules.md) and sibling files |
+| Lead in Learning Official Programme | 2026-07 | [MaastrichtMBA Leading In Learning Programme - July 2026](./2026/07_July/converted-md/source-documents/2026-07-leading-in-learning-programme.md) |
 | Lead in Learning | 2026-07 | [EMBA July 2026 Handwritten Notes Analysis](./2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md) |
 | Personal Review Queue | 2026-07 | [July 2026 Questions And Reflections Review Queue](./2026/07_July/reflections/2026-07-questions-and-reflections-review.md) |
 | Personal Marker Extract | 2026-07 | [July 2026 Personal Marker Original Extract](./2026/07_July/reflections/2026-07-personal-marker-original-extract.md) |
@@ -108,7 +110,8 @@ If retrieved content is insufficient, the assistant should say the EMBA knowledg
 
 Every future PDF, PPT, Word document, image set, assignment, or note should produce two durable layers:
 
-- The original file remains available in the right `originals/` or materials folder.
-- A Markdown mirror is created in the month folder so search, future RAG, and human review can find it quickly.
+- The original file remains available in the right private location, preferably R2 via `/api/emba/file/...` when it should be clickable on the EMBA site.
+- A Markdown mirror is created in the month folder, usually under `converted-md/source-documents/`, so search, future RAG, and human review can find it quickly.
 - The monthly index is updated with the file, summary, concepts, work applications, and retrieval keywords.
 - `knowledge-index.json` is updated only with private, search-safe metadata and paths.
+- `emba/materials.json` is updated with the private original-file URL for EMBA timeline Material clicks, while notes can point back to the Markdown mirror.
