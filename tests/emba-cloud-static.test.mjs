@@ -226,7 +226,8 @@ assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/20
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-leo-thinking-journey.md"));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-personal-marker-original-extract.md"));
 assert.equal(julyMaterials.thinkingQuestions.length, 12);
-assert.ok(julyMaterials.thinkingQuestions.includes("[总结] 领导力不是给更强答案，而是创造让别人更好思考、表达和学习的条件。"));
+assert.ok(julyMaterials.thinkingQuestions.includes("[总结] 领导力不是给更强答案，也不是让自己留在 comfortable room，而是创造让别人更好思考、表达和学习的条件。"));
+assert.ok(julyMaterials.thinkingQuestions.includes("[感悟] True leadership：领导力不只是职位或权力，而是你能影响多少人，以及他们是否真正愿意跟随你。"));
 assert.ok(julyMaterials.thinkingQuestions.includes("[问题] 未来如何测试一个人真正 master the knowledge，而不是只会让 AI summarize?"));
 assert.equal(julyMaterials.followUpPoints.length, 10);
 assert.ok(julyMaterials.followUpPoints.includes("[真实情境] 补写一个 personal struggle：当时发生了什么、谁参与、为什么对我重要？"));

@@ -75,8 +75,8 @@ updated_at: 2026-07-09
 
 这些适合放在网站里的「思考与问题」卡片，覆盖思考、总结、问题、反思四类；完整原文证据仍以表格为准：
 
-1. `[总结] 领导力不是给更强答案，而是创造让别人更好思考、表达和学习的条件。`
-2. `[思考] Not make your comfortable room; enabling others to think differently.`
+1. `[总结] 领导力不是给更强答案，也不是让自己留在 comfortable room，而是创造让别人更好思考、表达和学习的条件。`
+2. `[感悟] True leadership：领导力不只是职位或权力，而是你能影响多少人，以及他们是否真正愿意跟随你。`
 3. `[问题] 我带进 EMBA 和工作里的真实 leadership question，来自哪个 personal struggle / personal interest?`
 4. `[问题] 我在提问、判断或给建议之前，背后默认的 assumption 是什么？`
 5. `[反思] Wait until finish: 我有没有太早 interrupt，太快进入给答案模式？`
