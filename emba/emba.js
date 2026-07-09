@@ -505,11 +505,11 @@ function renderMarkdown(month) {
   if (!isEditMode()) {
     return markdown.trim()
       ? `<div class="emba-markdown-read">${escapeHtml(markdown)}</div>`
-      : `<p class="emba-empty-copy">No Markdown notes yet.</p>`;
+      : `<p class="emba-empty-copy">No class notes yet.</p>`;
   }
 
   return `
-    <textarea class="emba-markdown-editor" data-markdown-editor placeholder="Write searchable Markdown notes for this month...">${escapeHtml(markdown)}</textarea>
+    <textarea class="emba-markdown-editor" data-markdown-editor placeholder="Write class notes for this month...">${escapeHtml(markdown)}</textarea>
   `;
 }
 
@@ -572,7 +572,7 @@ function renderMonthDetail(month) {
     <div class="emba-block-grid">
       ${blockTemplate("memory", "Memory Moment", renderMemoryMoment(month))}
       ${blockTemplate("reflection", "Reflection", renderReflection(month))}
-      ${blockTemplate("markdown", "Markdown", renderMarkdown(month))}
+      ${blockTemplate("markdown", "课堂笔记", renderMarkdown(month))}
       ${blockTemplate("material", "Material", renderMaterials(month))}
     </div>
   `;

@@ -501,7 +501,6 @@ body::before {
 
 .emba-markdown-editor {
   min-height: 240px;
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   resize: vertical;
 }
 
@@ -700,8 +699,7 @@ body::before {
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.52);
   color: #1d1d1f;
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.6;
   padding: 14px;
   white-space: pre-wrap;
