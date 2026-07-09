@@ -733,6 +733,51 @@ body::before {
   white-space: pre-wrap;
 }
 
+.emba-note-reader {
+  display: grid;
+  gap: 12px;
+}
+
+.emba-note-reader-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.62);
+  padding: 12px 14px;
+}
+
+.emba-note-reader-kicker,
+.emba-note-reader-meta {
+  display: block;
+}
+
+.emba-note-reader-kicker {
+  color: #1d1d1f;
+  font-size: 13px;
+  font-weight: 740;
+}
+
+.emba-note-reader-meta {
+  margin-top: 3px;
+  color: #86868b;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.emba-note-source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.emba-note-reader .emba-markdown-read {
+  white-space: normal;
+}
+
 .emba-memory-gallery {
   display: grid;
   gap: 12px;
@@ -1321,6 +1366,12 @@ body::before {
   .emba-knowledge-head,
   .emba-knowledge-preview-head {
     display: grid;
+  }
+
+  .emba-note-reader-head,
+  .emba-note-source-actions {
+    display: grid;
+    justify-content: stretch;
   }
 
   .emba-knowledge-controls {

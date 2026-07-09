@@ -248,10 +248,50 @@ function savedLibrary() {
   }
 }
 
+function compactTextLength(value) {
+  return String(value || "").replace(/\s+/g, "").length;
+}
+
+function richerText(baseValue, overlayValue) {
+  const baseText = normalizeMarkdown(baseValue);
+  const overlayText = normalizeMarkdown(overlayValue);
+  if (!hasTextContent(baseText)) return overlayText;
+  if (!hasTextContent(overlayText)) return baseText;
+  return compactTextLength(baseText) > compactTextLength(overlayText) * 1.35 ? baseText : overlayText;
+}
+
+function mergeMaterialLists(baseMaterials = [], overlayMaterials = []) {
+  const seen = new Set();
+  return [...asArray(baseMaterials), ...asArray(overlayMaterials)]
+    .map(normalizeMaterial)
+    .filter(materialHasContent)
+    .filter((item) => {
+      const key = `${normalize(item.file)}|${normalize(item.title)}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
+  return {
+    ...baseMonth,
+    ...overlayMonth,
+    title: overlayMonth.title || baseMonth.title,
+    materials: mergeMaterialLists(baseMonth.materials, overlayMonth.materials),
+    reflection: richerText(baseMonth.reflection, overlayMonth.reflection),
+    markdown: richerText(baseMonth.markdown, overlayMonth.markdown),
+    memoryMoment: asArray(overlayMonth.memoryMoment).length ? overlayMonth.memoryMoment : asArray(baseMonth.memoryMoment)
+  };
+}
+
 function mergeLibrary(baseLibrary, saved) {
   if (!saved) return baseLibrary;
   const months = new Map(baseLibrary.months.map((month) => [month.month, month]));
-  saved.months.forEach((month) => months.set(month.month, month));
+  saved.months.forEach((month) => {
+    const baseMonth = months.get(month.month);
+    months.set(month.month, baseMonth ? mergeMonthData(baseMonth, month) : month);
+  });
   return {
     timeline: { ...baseLibrary.timeline, ...saved.timeline },
     months: [...months.values()].sort((a, b) => String(a.month || "").localeCompare(String(b.month || "")))
@@ -907,11 +947,74 @@ function renderReflection(month) {
   `;
 }
 
+function timelineMarkdownToDisplayMarkdown(markdown = "") {
+  const source = normalizeMarkdown(markdown).trim();
+  if (!source) return "";
+  if (/^#{1,6}\s+/m.test(source)) return source;
+  let titleSeen = false;
+  return source.split(/\r?\n/).map((line) => {
+    const trimmed = line.trim();
+    if (!trimmed) return "";
+    if (!titleSeen) {
+      titleSeen = true;
+      return `# ${trimmed}`;
+    }
+    if (/^IMG_\d{4}｜/.test(trimmed)) return `## ${trimmed}`;
+    if (/^\[[^\]]+\]\s+/.test(trimmed)) return `### ${trimmed}`;
+    return line;
+  }).join("\n");
+}
+
+function markdownSectionCount(markdown = "") {
+  const headings = normalizeMarkdown(markdown).match(/^#{1,6}\s+/gm);
+  if (headings?.length) return headings.length;
+  const imageSections = normalizeMarkdown(markdown).match(/^IMG_\d{4}｜/gm);
+  return imageSections?.length || 1;
+}
+
+function noteStatsText(markdown = "") {
+  const chars = compactTextLength(markdown);
+  const sections = markdownSectionCount(markdown);
+  return `${sections} section${sections === 1 ? "" : "s"} · ${chars.toLocaleString("en")} chars`;
+}
+
+function noteSourceLinks(month) {
+  return asArray(month?.materials)
+    .map(normalizeMaterial)
+    .filter((item) => item.file && (item.file.endsWith(".md") || /note|analysis|index/i.test(`${item.type} ${item.title}`)))
+    .slice(0, 4);
+}
+
+function sourceLinkLabel(item, index) {
+  const title = normalize(item.title);
+  if (title.includes("monthly") || title.includes("index")) return "Open index";
+  if (title.includes("analysis")) return "Open analysis";
+  if (title.includes("note")) return "Open notes";
+  return index === 0 ? "Open source" : `Open source ${index + 1}`;
+}
+
 function renderMarkdown(month) {
   const markdown = normalizeMarkdown(month?.markdown || month?.md || month?.searchNotes);
   if (!isEditMode()) {
-    return markdown.trim()
-      ? `<div class="emba-markdown-read">${escapeHtml(markdown)}</div>`
+    const displayMarkdown = timelineMarkdownToDisplayMarkdown(markdown);
+    const sources = noteSourceLinks(month);
+    return displayMarkdown.trim()
+      ? `
+        <div class="emba-note-reader">
+          <div class="emba-note-reader-head">
+            <div>
+              <span class="emba-note-reader-kicker">Structured note</span>
+              <span class="emba-note-reader-meta">${escapeHtml(noteStatsText(displayMarkdown))}</span>
+            </div>
+            ${sources.length ? `
+              <div class="emba-note-source-actions">
+                ${sources.map((item, index) => `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener">${escapeHtml(sourceLinkLabel(item, index))}</a>`).join("")}
+              </div>
+            ` : ""}
+          </div>
+          <div class="emba-markdown-read emba-markdown-rendered">${markdownToHtml(displayMarkdown)}</div>
+        </div>
+      `
       : `<p class="emba-empty-copy">No class notes yet.</p>`;
   }
 
