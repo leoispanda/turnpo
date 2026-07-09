@@ -299,6 +299,54 @@
       "search_text": "July 2026 EMBA questions reflections review queue personal questions insights leadership listening coaching blind spot psychological safety AI organizational learning inclusion storytelling 问题 感悟 复盘 反思 自我觉察 领导力问题 倾听 教练 盲点 心理安全 AI 学习 组织学习 包容 逐条查看"
     },
     {
+      "id": "emba-2026-07-personal-marker-original-extract",
+      "title": "EMBA July 2026 Personal Marker Original Extract",
+      "type": "personal_reflection",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "course": "Lead in Learning",
+      "module": "Intro Programme",
+      "session": "Original personal markers extracted from handwritten notes",
+      "date": "2026-07-09",
+      "year": 2026,
+      "month": "2026-07",
+      "source_type": "handwritten_marker_extract",
+      "source_file": "/emba/materials/2026-07/handwritten-notes/images/IMG_6900.jpeg",
+      "md_file": "/emba/content/2026/07_July/reflections/2026-07-personal-marker-original-extract.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "questions",
+        "reflections",
+        "original-markers",
+        "handwritten-notes",
+        "leo",
+        "ai",
+        "leadership"
+      ],
+      "keywords": [
+        "Leo:",
+        "I see",
+        "question marks",
+        "quoted sentences",
+        "star markers",
+        "original text",
+        "personal insight",
+        "handwritten extraction",
+        "Turnpo"
+      ],
+      "summary": "A source-faithful extraction of Leo personal markers from the July 2026 handwritten notes, including original fragments, date, page position, context, and completed sentences.",
+      "related_topics": [
+        "leadership",
+        "decision-making",
+        "personal-growth",
+        "ai-and-digital-transformation"
+      ],
+      "language": "zh",
+      "rag_include": true,
+      "search_text": "July 2026 EMBA personal marker original extract Leo: I see See quoted sentence question mark star marker original text completed sentence IMG_6900 IMG_6912 Not make your comfortable room enabling others to think differently Show your work in Turnpo sparks and ideas come true AI 80 120 human in the lead Ready speech less is more 原文 感悟 问号 星号 引号 Leo I see 补齐句 手写笔记 产生时间 上下文 位置"
+    },
+    {
       "id": "emba-2026-07-img-6900-lead-in-learning",
       "title": "IMG 6900 - Lead in Learning",
       "type": "source_note",

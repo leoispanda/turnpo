@@ -43,6 +43,12 @@
           "type": "notes",
           "file": "/emba/materials/2026-07/handwritten-notes/leadership-learning-notes-analysis.md",
           "notes": "整理自 2026-07-01 至 2026-07-03 的 13 张手写笔记照片；原图已归档在同一目录的 images 文件夹。"
+        },
+        {
+          "title": "EMBA July 2026 personal marker original extract",
+          "type": "personal_reflection",
+          "file": "/emba/content/2026/07_July/reflections/2026-07-personal-marker-original-extract.md",
+          "notes": "从手写笔记中单独提取 Leo:, I see, 引号、问号和星号等个人感悟标记，保留原文、日期、页面位置和补齐句。"
         }
       ],
       "reflection": "手写笔记整理｜2026-07-01 至 2026-07-03\n\n这几页笔记的主线，是我对 leadership 的理解从“领导者要给出更好的答案”，转向“领导者要创造让别人更好思考、表达和学习的环境”。真正的领导力不是把大家留在舒适房间里，而是让人看见盲点、暂停自动反应、敢于表达不同意见，并把经验转化成可重复的学习。\n\n1. Lead in Learning：从真实问题开始\n\nEMBA 的学习不是收集框架，而是把真实工作中的个人挣扎、个人兴趣和现实情境带进课堂。Leadership question 应该来自 daily work 和 personal struggle。Coaching 的价值，是帮助我看见自己的 autopattern、assumption 和 habitual response。一个重要提醒是：不要只是让自己或别人舒服，而是 enable others to think differently。\n\n2. Memory Making：从点到线，再到图像\n\nMemory making 的练习提醒我：经验本身只是 points，反思把点连成 lines，最终我们才形成 picture。风险在于，我很容易把自己的 picture 当成事实。笔记里反复出现的句子是：what we hear is an opinion, not a fact；everything we see is a perspective, not the truth。所以 blind spot 不是羞耻，而是 input。反思、diary shadowing、appointment with myself，是把经验变成学习的机制。\n\n3. Listening 与 Coaching：先理解，再回应\n\n倾听不是等别人说完以后马上给建议，而是先让对方感到被理解、被信任。我的具体练习包括：wait until finish，不要太早 interrupt；先 summary and reflection，再进入 clarification；分享问题时，先 only listening；让 coachee 自己修复问题，而不是由 coach 提供答案。这里也出现了 three voices of judgment, cynicism, fear。它们提醒我，在真正听见别人之前，我常常已经开始评价、防御或害怕失控。\n\n4. AI：放大能力，但不替代判断\n\nAI 的位置不是替代人，而是提高准备、反思和表达的质量。笔记里的 60 -> 80 normal、80 -> 120 with AI，可以理解成：AI 应该帮助我把工作标准提高，而不是让人偷懒。使用 AI 时，人必须 in the lead。AI 可以做 summary、roleplay、pressure test、generate options，但最终判断、责任和学习仍然属于人。直接复制 generative content 不是 learning。\n\n5. Organizational Learning：把个人洞察变成组织能力\n\n学习不只发生在课堂。笔记里有 70/20/10：on-the-job learning、informal learning、formal learning。真正重要的是把个人经验通过 observe -> explain -> practice -> combine 变成团队语言和组织习惯。Nonaka and Takeuchi 的 knowledge-creating company 也提醒我：知识要有 home，要能被保存、分享、练习和再创造。组织学习不是一次 workshop，而是持续的 practice until it becomes second nature。\n\n6. Inclusion & Diversity：让差异被看见、被听见、被转化\n\n7 月 3 日的 Inclusion & Diversity 笔记，把 culture map、communication、country difference 和 storytelling 放在一起。多元不是口号，而是具体行为：我是否知道对方来自哪里、现在处在什么语境；我是否意识到不同文化对直接表达、反馈、权威、沉默和 disagreement 的理解不同；我是否能让不同视角进入讨论。好的表达也不是堆数据，而是 make it personal、keep it authentic、target the audience、create stickiness。\n\n7. 我的行动清单\n\n会前：写下我想要的 outcome，也写下我可能带入房间的 assumption。\n\n会中：少打断，先总结，再回应；先听完事实、情绪和对方的解释；至少问一个能帮助别人 think differently 的问题。\n\n会后：用三句话复盘：what happened；what did I make it mean；what else could be true。\n\n使用 AI：让 AI 帮我找盲点、模拟不同利益相关者、整理事实和选项，但最后判断必须由我负责。\n\n团队学习：把好的实践留下来，变成 shared language、meeting rhythm、checklist 或 story。领导力不是我一个人变强，而是让团队更会学习。",
@@ -55,10 +61,10 @@
         }
       ],
       "thinkingQuestions": [
-        "领导力不是给更好的答案，而是创造更好的思考条件。",
-        "我在提问前，背后的假设是什么？",
-        "我有没有太快给建议，而不是先倾听？",
-        "AI 应该放大我的判断，不能替代我的学习。"
+        "Not make your comfortable room; enabling others to think differently.",
+        "Show your work in Turnpo: sparks and ideas come true?",
+        "AI: 80 -> 120, but human in the lead.",
+        "Ready speech -> need check: less is more."
       ]
     }
   ]

@@ -106,6 +106,7 @@ Source handling rule: keep source images and future original files intact. Markd
 ### Reflections
 
 - [Questions And Reflections Review Queue](./reflections/2026-07-questions-and-reflections-review.md)
+- [Personal Marker Original Extract](./reflections/2026-07-personal-marker-original-extract.md)
 - Monthly reflection is captured in the EMBA timeline, summarized here, and now separated into a review queue for one-by-one reading.
 
 ### Work Applications
@@ -150,6 +151,7 @@ Leadership is not mainly about stronger answers. It is about creating the condit
 Detailed one-by-one review file:
 
 - [July 2026 Questions And Reflections Review Queue](./reflections/2026-07-questions-and-reflections-review.md)
+- [July 2026 Personal Marker Original Extract](./reflections/2026-07-personal-marker-original-extract.md)
 
 ## 7. Work Applications
 
@@ -181,6 +183,6 @@ Keywords: Lead in Learning, memory making, listening, psychological safety, 70/2
 
 ## 11. RAG And Search Notes
 
-Use this monthly index as the entry point for broad July questions. Use the converted handwritten-note analysis when the query asks for the actual class-note interpretation, personal action plan, or source-image trace.
+Use this monthly index as the entry point for broad July questions. Use the converted handwritten-note analysis when the query asks for the actual class-note interpretation or personal action plan. Use the personal marker extract when the query asks for Leo:, I see, quoted lines, starred lines, question marks, source-image position, or original handwritten phrasing.
 
 Useful Chinese search aliases: 领导力, 倾听, 教练, 心理安全, 反思, 盲点, 人工智能, 组织学习, 包容性, 讲故事.

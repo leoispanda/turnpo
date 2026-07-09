@@ -57,6 +57,7 @@ Source layer:
 
 - Overall note: `converted-md/2026-07-01-leadership-learning-handwritten-notes.md`
 - Per-image mirrors: `converted-md/image-notes/IMG_6900` to `IMG_6912`
+- Original marker extract: `reflections/2026-07-personal-marker-original-extract.md`
 - Main themes: leadership, listening, coaching, memory making, AI, organizational learning, inclusion, storytelling
 
 ## A. 我想到的问题
