@@ -47,6 +47,8 @@ updated_at: 2026-07-09
 
 这个文件只做一件事：把 2026 年 7 月 EMBA 笔记里「我想到的问题」和「我的感悟」单独拎出来，变成可以逐条复盘的清单。
 
+如果想先理解这些问题是怎样一步步形成的，请先看 [我的心得与思考过程](./2026-07-leo-thinking-journey.md)；如果想核对手写原文、日期和图片位置，请看 [Personal Marker Original Extract](./2026-07-personal-marker-original-extract.md)。
+
 使用方式：
 
 - 先不要急着总结，逐条看。

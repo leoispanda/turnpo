@@ -110,9 +110,10 @@ Source handling rule: keep source images and future original files intact. Markd
 
 ### Reflections
 
+- [Leo's EMBA Thinking Journey - July 2026](./reflections/2026-07-leo-thinking-journey.md)
 - [Questions And Reflections Review Queue](./reflections/2026-07-questions-and-reflections-review.md)
 - [Personal Marker Original Extract](./reflections/2026-07-personal-marker-original-extract.md)
-- Monthly reflection is captured in the EMBA timeline, summarized here, and now separated into a review queue for one-by-one reading.
+- Monthly reflection is captured in the EMBA timeline, reconstructed as a source-linked thinking journey, and separated into a review queue for one-by-one reading.
 
 ### Work Applications
 
@@ -155,6 +156,7 @@ Leadership is not mainly about stronger answers. It is about creating the condit
 
 Detailed one-by-one review file:
 
+- [July 2026 Leo Thinking Journey](./reflections/2026-07-leo-thinking-journey.md)
 - [July 2026 Questions And Reflections Review Queue](./reflections/2026-07-questions-and-reflections-review.md)
 - [July 2026 Personal Marker Original Extract](./reflections/2026-07-personal-marker-original-extract.md)
 

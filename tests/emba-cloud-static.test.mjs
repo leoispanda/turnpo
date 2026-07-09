@@ -19,6 +19,7 @@ const embaJuneIndex = fs.readFileSync(new URL("../emba/content/2026/06_June/2026
 const embaJuneAnalysis = fs.readFileSync(new URL("../emba/content/2026/06_June/converted-md/2026-06-emba-preparation-documents-analysis.md", import.meta.url), "utf8");
 const embaJulyIndex = fs.readFileSync(new URL("../emba/content/2026/07_July/2026-07_EMBA_Learning_Index.md", import.meta.url), "utf8");
 const embaConvertedNote = fs.readFileSync(new URL("../emba/content/2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md", import.meta.url), "utf8");
+const embaLeoThinkingJourney = fs.readFileSync(new URL("../emba/content/2026/07_July/reflections/2026-07-leo-thinking-journey.md", import.meta.url), "utf8");
 const embaPersonalMarkerExtract = fs.readFileSync(new URL("../emba/content/2026/07_July/reflections/2026-07-personal-marker-original-extract.md", import.meta.url), "utf8");
 const embaLeadershipTheme = fs.readFileSync(new URL("../emba/content/themes/leadership.md", import.meta.url), "utf8");
 const embaStrategyTheme = fs.readFileSync(new URL("../emba/content/themes/strategy.md", import.meta.url), "utf8");
@@ -153,6 +154,7 @@ assert.ok(indexedNoteIds.has("emba-2026-06-nyenrode-impact-mba-executive-brochur
 assert.ok(indexedNoteIds.has("emba-2026-07-learning-index"));
 assert.ok(indexedNoteIds.has("emba-2026-07-leading-in-learning-programme"));
 assert.ok(indexedNoteIds.has("emba-2026-07-leadership-learning-handwritten-notes"));
+assert.ok(indexedNoteIds.has("emba-2026-07-leo-thinking-journey"));
 assert.ok(indexedNoteIds.has("emba-2026-07-personal-marker-original-extract"));
 assert.ok(indexedNoteIds.has("emba-theme-leadership"));
 assert.ok(indexedNoteIds.has("emba-theme-strategy"));
@@ -175,12 +177,19 @@ assert.ok(embaJuneAnalysis.includes("./source-documents/2026-06-study-fees-polic
 assert.ok(embaJulyIndex.includes("# EMBA Monthly Learning Index - July 2026"));
 assert.ok(embaJulyIndex.includes("## 5A. Knowledge Map"));
 assert.ok(embaJulyIndex.includes("./converted-md/source-documents/2026-07-leading-in-learning-programme.md"));
+assert.ok(embaJulyIndex.includes("Leo's EMBA Thinking Journey"));
 assert.ok(embaJulyIndex.includes("Personal Marker Original Extract"));
 assert.ok(embaConvertedNote.startsWith("---\n"));
 assert.ok(embaConvertedNote.includes("rag_include: true"));
 assert.ok(embaConvertedNote.includes("source_files:"));
 assert.ok(embaConvertedNote.includes("## 1A. Search Card"));
 assert.ok(embaConvertedNote.includes("## 4A. Knowledge Map"));
+assert.ok(embaLeoThinkingJourney.includes("id: emba-2026-07-leo-thinking-journey"));
+assert.ok(embaLeoThinkingJourney.includes("## 思考过程总览"));
+assert.ok(embaLeoThinkingJourney.includes("## P01-P78 覆盖地图"));
+assert.ok(embaLeoThinkingJourney.includes("## 我的个人思考闭环"));
+assert.ok(embaLeoThinkingJourney.includes("P58, 2026-07-02, IMG_6909 middle"));
+assert.ok(embaLeoThinkingJourney.includes("human-in-the-lead"));
 assert.ok(embaPersonalMarkerExtract.includes("id: emba-2026-07-personal-marker-original-extract"));
 assert.ok(embaPersonalMarkerExtract.includes("## Original Marker Table"));
 assert.ok(embaPersonalMarkerExtract.includes("Not make your comfortable room"));
@@ -202,6 +211,7 @@ assert.ok(juneMaterials.materials.some((item) => item.notes.includes("/emba/cont
 assert.ok(julyMaterials.materials.some((item) => item.file.includes("/api/emba/file/emba/2026-07/material/") && item.file.endsWith("September-intake---MaastrichtMBA-Leading-in-Learning-Programme-July-2026.pdf")));
 assert.ok(julyMaterials.materials.some((item) => item.notes.includes("/emba/content/2026/07_July/converted-md/source-documents/2026-07-leading-in-learning-programme.md")));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md"));
+assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-leo-thinking-journey.md"));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-personal-marker-original-extract.md"));
 assert.equal(julyMaterials.thinkingQuestions.length, 12);
 assert.ok(julyMaterials.thinkingQuestions.includes("[总结] 领导力不是给更强答案，而是创造让别人更好思考、表达和学习的条件。"));
