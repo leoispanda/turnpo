@@ -60,6 +60,7 @@ assert.ok(embaJs.includes('data-block-panel="${escapeHtml(state.openBlockId)}"')
 assert.ok(embaJs.includes('blockTemplate("thinking", "思考与问题", month)'));
 assert.ok(embaJs.includes("function renderThinkingQuestions"));
 assert.ok(embaJs.includes("[data-thinking-editor]"));
+assert.ok(embaJs.includes("items.slice(0, 12)"));
 assert.ok(embaJs.includes('blockTemplate("markdown", "课堂笔记", month)'));
 assert.ok(embaJs.includes("[data-markdown-editor]"));
 assert.ok(embaJs.includes("Write class notes for this month..."));
@@ -182,8 +183,8 @@ assert.ok(embaConvertedNote.includes("## 4A. Knowledge Map"));
 assert.ok(embaPersonalMarkerExtract.includes("id: emba-2026-07-personal-marker-original-extract"));
 assert.ok(embaPersonalMarkerExtract.includes("## Original Marker Table"));
 assert.ok(embaPersonalMarkerExtract.includes("Not make your comfortable room"));
-assert.ok(embaPersonalMarkerExtract.includes("Show your work in Turnpo"));
-assert.ok(embaPersonalMarkerExtract.includes("AI: 80 -> 120, but human in the lead."));
+assert.ok(embaPersonalMarkerExtract.includes("我带进 EMBA 和工作里的真实 leadership question"));
+assert.ok(embaPersonalMarkerExtract.includes("AI: 80 -> 120, but human in the lead"));
 assert.ok(embaLeadershipTheme.includes("## Current Synthesis"));
 assert.ok(embaStrategyTheme.includes("## Current Synthesis"));
 
@@ -201,8 +202,9 @@ assert.ok(julyMaterials.materials.some((item) => item.file.includes("/api/emba/f
 assert.ok(julyMaterials.materials.some((item) => item.notes.includes("/emba/content/2026/07_July/converted-md/source-documents/2026-07-leading-in-learning-programme.md")));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md"));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-personal-marker-original-extract.md"));
-assert.equal(julyMaterials.thinkingQuestions.length, 4);
-assert.ok(julyMaterials.thinkingQuestions.includes("Show your work in Turnpo: sparks and ideas come true?"));
+assert.equal(julyMaterials.thinkingQuestions.length, 12);
+assert.ok(julyMaterials.thinkingQuestions.includes("[总结] 领导力不是给更强答案，而是创造让别人更好思考、表达和学习的条件。"));
+assert.ok(julyMaterials.thinkingQuestions.includes("[问题] 未来如何测试一个人真正 master the knowledge，而不是只会让 AI summarize?"));
 assert.ok(julyMaterials.markdown.includes("## 7. Image Index"));
 assert.ok(julyMaterials.markdown.includes("## 8. Recognition Notes"));
 assert.ok(julyMaterials.markdown.includes("## 4A. Knowledge Map"));

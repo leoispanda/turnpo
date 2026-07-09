@@ -938,7 +938,7 @@ function renderThinkingQuestions(month) {
     return items.length
       ? `
         <ol class="emba-thinking-list">
-          ${items.slice(0, 6).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+          ${items.slice(0, 12).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
         </ol>
       `
       : `<p class="emba-empty-copy">No thoughts or questions yet.</p>`;

@@ -71,12 +71,20 @@ updated_at: 2026-07-09
 
 ## Website Card Candidates
 
-这些适合放在网站里的精简「思考与问题」卡片，不放太多内容：
+这些适合放在网站里的「思考与问题」卡片，覆盖思考、总结、问题、反思四类；完整原文证据仍以表格为准：
 
-1. `Not make your comfortable room; enabling others to think differently.`
-2. `Show your work in Turnpo: sparks and ideas come true?`
-3. `AI: 80 -> 120, but human in the lead.`
-4. `Ready speech -> need check: less is more.`
+1. `[总结] 领导力不是给更强答案，而是创造让别人更好思考、表达和学习的条件。`
+2. `[思考] Not make your comfortable room; enabling others to think differently.`
+3. `[问题] 我带进 EMBA 和工作里的真实 leadership question，来自哪个 personal struggle / personal interest?`
+4. `[问题] 我在提问、判断或给建议之前，背后默认的 assumption 是什么？`
+5. `[反思] Wait until finish: 我有没有太早 interrupt，太快进入给答案模式？`
+6. `[反思] 我听反馈时出现的是 judgment、cynicism，还是 fear？我是在学习，还是在防御？`
+7. `[总结] Blind spot as input: 盲点不是羞耻，而是下一步学习材料。`
+8. `[总结] Everything we hear is an opinion, not a fact; everything we see is a perspective, not the truth.`
+9. `[反思] Appointment with me: 每周要给自己留出 diary shadowing 和复盘时间。`
+10. `[问题] 哪些知识和 insight 还没有在组织里找到 home，不能沉淀成 shared language / checklist / routine?`
+11. `[思考] AI: 80 -> 120, but human in the lead; content copy from generate content is not learning.`
+12. `[问题] 未来如何测试一个人真正 master the knowledge，而不是只会让 AI summarize?`
 
 ## Original Marker Table
 
