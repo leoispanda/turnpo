@@ -67,6 +67,17 @@ Topic cluster: Lead in Learning, Memory Making, Listening/Coaching, AI, Organiza
 
 This set of notes is less about "learning leadership theory" and more about practicing a different leadership posture: create safety, listen longer, surface blind spots, help people think differently, and use AI as a mirror or assistant rather than as a substitute for human judgment.
 
+## 1A. Search Card
+
+| Field | Value |
+| --- | --- |
+| Best month | 2026-07 |
+| Best use | Answer questions about the first EMBA leadership-learning notes, coaching posture, listening, psychological safety, AI use, organizational learning, inclusion, and storytelling |
+| Original source layer | Handwritten-note images IMG_6900 to IMG_6912 |
+| Markdown layer | Searchable analysis and personal action plan |
+| Core leadership shift | From giving sharper answers to creating better thinking conditions |
+| Chinese aliases | 领导力, 倾听, 教练, 心理安全, 反思, AI, 组织学习, 包容 |
+
 ## 2. Main Thread
 
 The notes move through three connected layers:
@@ -300,6 +311,17 @@ The notes are not anti-AI, but they are anti-laziness. AI is useful when it help
 ### Insight 5: Inclusion Is A Leadership Practice, Not A Slogan
 
 Inclusion appears in the notes as listening, cultural mapping, communication, and making others feel understood. It is behavioral: who gets heard, who feels safe, whose perspective becomes visible, and how differences are translated into better collective work.
+
+## 4A. Knowledge Map
+
+| Cluster | Core idea | Work application |
+| --- | --- | --- |
+| Self-observation | Notice autopilot, assumptions, judgment, cynicism, fear, and blind spots | Before meetings, write the assumption I may be bringing into the room |
+| Listening and coaching | Listen longer and help others repair or reframe their own problem | Summarize before responding and ask one better question |
+| Psychological safety | Leadership creates conditions where people can speak, learn, and disagree productively | Make meetings safer without lowering standards |
+| AI-assisted learning | AI should raise preparation, reflection, and pressure testing while humans stay accountable | Use AI to roleplay, summarize, and find blind spots, then decide myself |
+| Organizational learning | Personal insight becomes valuable only when turned into shared routines or language | Convert one insight into a team checklist, story, or meeting rhythm |
+| Inclusion and culture | Culture and difference appear in communication norms, authority, feedback, and belonging | Map audience differences before presenting or leading a mixed group |
 
 ## 5. Suggested Personal Action Plan
 

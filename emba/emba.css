@@ -1113,6 +1113,47 @@ body::before {
   padding-left: 20px;
 }
 
+.emba-markdown-rendered ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 22px;
+}
+
+.emba-markdown-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.emba-markdown-rendered table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.emba-markdown-rendered th,
+.emba-markdown-rendered td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.emba-markdown-rendered th {
+  background: rgba(245, 245, 247, 0.92);
+  color: #1d1d1f;
+  font-weight: 740;
+}
+
+.emba-markdown-rendered tr:last-child td {
+  border-bottom: 0;
+}
+
 .emba-markdown-rendered a {
   color: #9a772a;
   font-weight: 650;

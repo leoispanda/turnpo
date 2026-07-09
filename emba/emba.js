@@ -4,7 +4,7 @@ const EMBA_LIBRARY_KEY = "turnpo:emba-library";
 const EMBA_LIBRARY_API = "/api/emba/library";
 const EMBA_UPLOAD_API = "/api/emba/upload";
 const EMBA_KNOWLEDGE_INDEX = "/emba/content/knowledge-index.json";
-const DEFAULT_START_MONTH = "2026-07";
+const DEFAULT_START_MONTH = "2026-06";
 const DEFAULT_END_MONTH = "2028-12";
 const CLOUD_SAVE_DELAY_MS = 700;
 
@@ -570,8 +570,10 @@ function markdownToHtml(markdown = "", basePath = "") {
   const lines = body.split(/\r?\n/);
   const html = [];
   let listOpen = false;
+  let orderedListOpen = false;
   let codeOpen = false;
   let paragraph = [];
+  let tableRows = [];
 
   const flushParagraph = () => {
     if (!paragraph.length) return;
@@ -583,11 +585,42 @@ function markdownToHtml(markdown = "", basePath = "") {
     html.push("</ul>");
     listOpen = false;
   };
+  const closeOrderedList = () => {
+    if (!orderedListOpen) return;
+    html.push("</ol>");
+    orderedListOpen = false;
+  };
+  const tableCells = (line) => String(line || "")
+    .trim()
+    .replace(/^\|/, "")
+    .replace(/\|$/, "")
+    .split("|")
+    .map((cell) => cell.trim());
+  const isTableSeparator = (line) => /^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$/.test(String(line || "").trim());
+  const flushTable = () => {
+    if (!tableRows.length) return;
+    const rows = tableRows.slice();
+    tableRows = [];
+    const hasHeader = rows.length > 1 && isTableSeparator(rows[1]);
+    const header = hasHeader ? tableCells(rows[0]) : [];
+    const bodyRows = (hasHeader ? rows.slice(2) : rows).map(tableCells);
+    html.push("<div class=\"emba-markdown-table-wrap\"><table>");
+    if (header.length) {
+      html.push(`<thead><tr>${header.map((cell) => `<th>${markdownInline(cell, basePath)}</th>`).join("")}</tr></thead>`);
+    }
+    html.push("<tbody>");
+    bodyRows.forEach((cells) => {
+      html.push(`<tr>${cells.map((cell) => `<td>${markdownInline(cell, basePath)}</td>`).join("")}</tr>`);
+    });
+    html.push("</tbody></table></div>");
+  };
 
   lines.forEach((line) => {
     if (line.trim().startsWith("```")) {
       flushParagraph();
       closeList();
+      closeOrderedList();
+      flushTable();
       if (codeOpen) {
         html.push("</code></pre>");
         codeOpen = false;
@@ -604,12 +637,23 @@ function markdownToHtml(markdown = "", basePath = "") {
     if (!line.trim()) {
       flushParagraph();
       closeList();
+      closeOrderedList();
+      flushTable();
       return;
     }
+    if (/^\s*\|.+\|\s*$/.test(line)) {
+      flushParagraph();
+      closeList();
+      closeOrderedList();
+      tableRows.push(line);
+      return;
+    }
+    flushTable();
     const heading = line.match(/^(#{1,4})\s+(.+)$/);
     if (heading) {
       flushParagraph();
       closeList();
+      closeOrderedList();
       const level = Math.min(heading[1].length + 2, 6);
       html.push(`<h${level}>${markdownInline(heading[2], basePath)}</h${level}>`);
       return;
@@ -617,6 +661,7 @@ function markdownToHtml(markdown = "", basePath = "") {
     const bullet = line.match(/^\s*[-*]\s+(.+)$/);
     if (bullet) {
       flushParagraph();
+      closeOrderedList();
       if (!listOpen) {
         html.push("<ul>");
         listOpen = true;
@@ -624,11 +669,24 @@ function markdownToHtml(markdown = "", basePath = "") {
       html.push(`<li>${markdownInline(bullet[1], basePath)}</li>`);
       return;
     }
+    const numbered = line.match(/^\s*\d+\.\s+(.+)$/);
+    if (numbered) {
+      flushParagraph();
+      closeList();
+      if (!orderedListOpen) {
+        html.push("<ol>");
+        orderedListOpen = true;
+      }
+      html.push(`<li>${markdownInline(numbered[1], basePath)}</li>`);
+      return;
+    }
     paragraph.push(line.trim());
   });
 
   flushParagraph();
   closeList();
+  closeOrderedList();
+  flushTable();
   if (codeOpen) html.push("</code></pre>");
   return html.join("\n");
 }

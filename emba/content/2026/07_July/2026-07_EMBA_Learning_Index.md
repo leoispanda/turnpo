@@ -45,6 +45,10 @@ updated_at: 2026-07-09
 
 July 2026 starts the EMBA learning system with a practical leadership thread. The strongest move is from "leader as answer giver" toward "leader as builder of better thinking conditions." The notes connect leadership, coaching, listening, reflection, inclusion, AI use, and organizational learning.
 
+## 1A. Searchable Summary
+
+July 2026 is best retrieved for questions about Lead in Learning, leadership posture, listening, coaching, memory making, psychological safety, blind spots, AI-assisted learning, organizational knowledge creation, inclusion, culture mapping, and storytelling.
+
 ## 2. Main Courses And Sessions
 
 - Lead in Learning
@@ -65,6 +69,8 @@ July 2026 starts the EMBA learning system with a practical leadership thread. Th
 
 - Handwritten-note images remain in `/emba/materials/2026-07/handwritten-notes/images/`.
 - Future PDF, PPT, Word, and slide files should be stored in `./originals/` while their searchable Markdown mirrors go into `./converted-md/`.
+
+Source handling rule: keep source images and future original files intact. Markdown files are the searchable interpretation layer and should point back to the image, PDF, PPT, or Word source whenever possible.
 
 ### Course Notes
 
@@ -110,6 +116,17 @@ July 2026 starts the EMBA learning system with a practical leadership thread. Th
 - Culture Map.
 - Storytelling with personal, authentic, audience-specific framing.
 
+## 5A. Knowledge Map
+
+| Cluster | What It Contains | Retrieval Keywords |
+| --- | --- | --- |
+| Self-observation | Autopilot, assumptions, blind spots, judgment, cynicism, fear | self-awareness, blind spot, three voices, reflection |
+| Leadership environment | Safety, trust, focus, listening, accountability | psychological safety, better thinking, leadership posture |
+| Coaching practice | Listening before advising, helping the coachee reframe the problem | coaching, listening levels, question, coachee |
+| Learning loops | Repetition, reflection, 70/20/10, organizational learning | learning loop, 70/20/10, knowledge creation |
+| AI practice | AI as mirror, assistant, pressure tester, and learning amplifier | AI, human judgment, roleplay, pressure-test |
+| Inclusion and communication | Culture Map, storytelling, audience-specific communication | inclusion, diversity, culture, storytelling |
+
 ## 6. Personal Reflections
 
 Leadership is not mainly about stronger answers. It is about creating the conditions for better thinking: safety, trust, listening, reflection, and courage to question assumptions.
@@ -141,3 +158,9 @@ Leadership is not mainly about stronger answers. It is about creating the condit
 Tags: leadership, learning, coaching, AI, inclusion, organizational-learning.
 
 Keywords: Lead in Learning, memory making, listening, psychological safety, 70/20/10, Nonaka Takeuchi, Culture Map, storytelling.
+
+## 11. RAG And Search Notes
+
+Use this monthly index as the entry point for broad July questions. Use the converted handwritten-note analysis when the query asks for the actual class-note interpretation, personal action plan, or source-image trace.
+
+Useful Chinese search aliases: 领导力, 倾听, 教练, 心理安全, 反思, 盲点, 人工智能, 组织学习, 包容性, 讲故事.

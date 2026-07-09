@@ -1,10 +1,32 @@
 {
   "updated": "2026-07-09",
   "timeline": {
-    "startMonth": "2026-07",
+    "startMonth": "2026-06",
     "endMonth": "2028-12"
   },
   "months": [
+    {
+      "id": "2026-06",
+      "month": "2026-06",
+      "title": "June 2026",
+      "materials": [
+        {
+          "title": "EMBA preparation documents analysis - admission, onboarding, fees, electives",
+          "type": "analysis",
+          "file": "/emba/content/2026/06_June/converted-md/2026-06-emba-preparation-documents-analysis.md",
+          "notes": "定义为 2026.6 的 EMBA 准备阶段：录取与注册确认、onboarding 系统接入、费用政策、课程日历、选课战略和预备阅读。"
+        },
+        {
+          "title": "June 2026 EMBA preparation index",
+          "type": "monthly_index",
+          "file": "/emba/content/2026/06_June/2026-06_EMBA_Preparation_Index.md",
+          "notes": "6 月准备期的月度索引，连接源文件组、综合分析和后续学习主题。"
+        }
+      ],
+      "reflection": "EMBA 准备阶段｜2026.6\n\n这组文件把阶段从申请推进到已录取、已注册、待启动。6 月的关键词不是课堂学习，而是 readiness：确认身份、搭好 UM/Canvas/Teams 系统、锁定 7 月 introduction 和 9 月第一教学周、建立费用与取消风险意识，并开始形成 elective strategy。\n\n最重要的判断：这些文件应归档为 2026.6，因为 7 月是第一次学习事件，而 6 月是 EMBA 成为现实系统的月份。",
+      "markdown": "EMBA 准备阶段文件分析｜2026.6\n\n核心判断：这组 PDF 属于 EMBA preparation stage，而不是正式课程笔记。\n\n证据链：2026-06-05 offer of admission，2026-06-08 certificate of enrolment，随后进入 onboarding、课程日历、费用政策和选课战略。\n\n行政侧：Maastricht EMBA On-Campus, part-time, academic year 2026/27；offer 与 enrolment 已形成正式状态。\n\n执行侧：先完成 UM password、Microsoft Authenticator MFA、Canvas、UM email、Teams，并打开 General、Electives、On-campus 等 Teams channel notifications。\n\n财务侧：on-campus track EUR 34,500，六期 instalments，每期 EUR 5,750；September/November start rhythm 对应 September、January、May、September、January、May；注意 30 天 payment term、late cancellation EUR 500、premature termination 25% remaining instalments。\n\n课程侧：on-campus track 是 Leading in Learning、5 个 face-to-face core modules、3 个 face-to-face elective weeks、Leadership Development Trajectory、Business Research Methods、Business Consulting Project。Offer 与 programme outline 对 2026 年 9 月第一教学周结束日存在 9/12 vs 9/11 的差异，建议向 MBA office 确认。\n\n选课侧：Digital Business、Responsible Leadership、Sustainable Innovation 三个方向各有三周；总共选三周，至少一周 Maastricht 附近，至少一周 abroad。对 Leo 来说，Digital Business 与 AI/product/company-building 高度相关，Responsible Leadership 与 founder/leadership growth 高度相关，Sustainable Innovation 更适合 impact/business-model redesign。\n\n阅读侧：The Lost Art of Thinking in Large Organizations 提醒我，EMBA 不只是补框架，而是重建 strategic thinking muscle：保护思考时间、从具体 use case 开始、测试假设边界、通过 delegation 释放 thinking capacity。",
+      "memoryMoment": []
+    },
     {
       "id": "2026-07",
       "month": "2026-07",

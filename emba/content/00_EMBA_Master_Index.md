@@ -6,7 +6,7 @@ program: EMBA
 school: Maastricht University
 date: 2026-07-09
 year: 2026
-month: 2026-07
+month:
 visibility: private
 status: active
 tags:
@@ -47,12 +47,21 @@ The rule is simple:
 
 | Month | Index | Main topics | Notes |
 | --- | --- | --- | --- |
+| 2026-06 | [June 2026 EMBA Preparation Index](./2026/06_June/2026-06_EMBA_Preparation_Index.md) | admission, enrolment, onboarding, programme planning, fees, electives | Preparation-stage document analysis. Admission and enrolment are confirmed; readiness work begins. |
 | 2026-07 | [July 2026 EMBA Learning Index](./2026/07_July/2026-07_EMBA_Learning_Index.md) | leadership, learning, coaching, AI, inclusion, organizational learning | First EMBA handwritten notes converted into searchable Markdown. |
+
+## Current Corpus
+
+| Month | Searchable Markdown | Original-source status | Retrieval role |
+| --- | --- | --- | --- |
+| 2026-06 | One monthly index and one preparation document analysis | Original PDFs remain in the private local MBA PDF folder; sensitive administrative files are referenced but not copied into the repo | Admission, enrolment, onboarding, fees, programme structure, elective strategy |
+| 2026-07 | One monthly index and one handwritten-note analysis | Original handwritten images remain under `/emba/materials/2026-07/handwritten-notes/images/` | Leadership practice, listening, coaching, organizational learning, AI, inclusion |
 
 ## Courses And Sessions
 
 | Course or session | Month | Notes |
 | --- | --- | --- |
+| EMBA Preparation | 2026-06 | [EMBA Preparation Documents Analysis](./2026/06_June/converted-md/2026-06-emba-preparation-documents-analysis.md) |
 | Lead in Learning | 2026-07 | [EMBA July 2026 Handwritten Notes Analysis](./2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md) |
 
 ## Content Types
@@ -92,3 +101,12 @@ When RAG is added, use Markdown files with `rag_include: true`, split content by
 - section heading
 
 If retrieved content is insufficient, the assistant should say the EMBA knowledge base does not contain enough information instead of guessing.
+
+## Operating Rule For New Documents
+
+Every future PDF, PPT, Word document, image set, assignment, or note should produce two durable layers:
+
+- The original file remains available in the right `originals/` or materials folder.
+- A Markdown mirror is created in the month folder so search, future RAG, and human review can find it quickly.
+- The monthly index is updated with the file, summary, concepts, work applications, and retrieval keywords.
+- `knowledge-index.json` is updated only with private, search-safe metadata and paths.

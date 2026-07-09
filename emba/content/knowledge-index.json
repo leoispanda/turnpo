@@ -5,6 +5,148 @@
   "source_root": "/emba/content",
   "notes": [
     {
+      "id": "emba-master-index",
+      "title": "EMBA Master Index",
+      "type": "master_index",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "date": "2026-07-09",
+      "year": 2026,
+      "month": "",
+      "source_type": "master_index",
+      "source_file": "",
+      "md_file": "/emba/content/00_EMBA_Master_Index.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "emba",
+        "learning-system",
+        "knowledge-base"
+      ],
+      "keywords": [
+        "monthly index",
+        "searchable markdown",
+        "source files",
+        "future RAG",
+        "master index"
+      ],
+      "summary": "Top-level map for the private EMBA knowledge base, linking monthly indexes, converted Markdown mirrors, original-source rules, and theme pages.",
+      "related_topics": [
+        "leadership",
+        "strategy",
+        "finance",
+        "ai-and-digital-transformation",
+        "decision-making",
+        "personal-growth"
+      ],
+      "rag_include": true,
+      "search_text": "EMBA master index knowledge base monthly indexes source files searchable markdown future RAG themes leadership strategy finance AI decision making personal growth 总索引 知识库 检索 月度索引 原始文件 Markdown."
+    },
+    {
+      "id": "emba-2026-06-preparation-index",
+      "title": "EMBA Monthly Learning Index - June 2026",
+      "type": "monthly_index",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "course": "EMBA Preparation",
+      "module": "June 2026",
+      "date": "2026-06-30",
+      "year": 2026,
+      "month": "2026-06",
+      "source_type": "monthly_index",
+      "source_file": "",
+      "md_file": "/emba/content/2026/06_June/2026-06_EMBA_Preparation_Index.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "emba",
+        "preparation",
+        "admission",
+        "onboarding",
+        "programme-planning",
+        "electives"
+      ],
+      "keywords": [
+        "offer of admission",
+        "certificate of enrolment",
+        "onboarding",
+        "Canvas",
+        "Teams",
+        "study fees",
+        "elective strategy",
+        "strategic thinking"
+      ],
+      "summary": "June 2026 is the EMBA preparation stage: admission and enrolment are confirmed, onboarding and calendar readiness become immediate tasks, and the first elective strategy begins.",
+      "related_topics": [
+        "leadership",
+        "strategy",
+        "ai-and-digital-transformation",
+        "personal-growth"
+      ],
+      "rag_include": true,
+      "search_text": "June 2026 EMBA preparation admission enrolment certificate offer onboarding Canvas Teams MFA study fees programme outline electives Digital Business Responsible Leadership Sustainable Innovation strategic thinking 入学准备 录取 注册证明 学费 选修课 战略思考."
+    },
+    {
+      "id": "emba-2026-06-preparation-documents-analysis",
+      "title": "EMBA Preparation Documents Analysis - June 2026",
+      "type": "preparation_analysis",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "course": "EMBA Preparation",
+      "module": "Admission, onboarding, programme planning, electives, fees",
+      "session": "Preparation document review",
+      "date": "2026-06-30",
+      "year": 2026,
+      "month": "2026-06",
+      "source_type": "pdf_set",
+      "source_file": "",
+      "source_files": [
+        "UM_Certificate_of_enrolment.PDF",
+        "offer signed leo.pdf",
+        "Onboarding guideline.pdf",
+        "MaastrichtMBA - Study fees, policies & procedures Sept.pdf",
+        "MaastrichtMBA - On-campus MBA Programme Outline 2026-2027.pdf",
+        "MaastrichtMBA - Online MBA Programme Outline 2026-2027.pdf",
+        "MaastrichtMBA - Curriculum Elective Modules.pdf",
+        "The_Lost_Art_of_Thinking_in_Large_Organi.pdf",
+        "nyenrode-impact-mba-executive-brochure.pdf"
+      ],
+      "converted_from": "Nine local EMBA preparation PDFs reviewed on 2026-07-09 and assigned to month 2026-06",
+      "md_file": "/emba/content/2026/06_June/converted-md/2026-06-emba-preparation-documents-analysis.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "emba",
+        "preparation",
+        "admission",
+        "onboarding",
+        "programme-planning",
+        "electives",
+        "fees",
+        "strategic-thinking"
+      ],
+      "keywords": [
+        "Leading in Learning",
+        "Microsoft Authenticator",
+        "Teams notifications",
+        "Digital Business",
+        "Responsible Leadership",
+        "Sustainable Innovation",
+        "study fees",
+        "strategic thinking"
+      ],
+      "summary": "Analysis of nine EMBA preparation PDFs, defining June 2026 as the accepted/enrolled/onboarding stage before the July introduction and September first teaching week.",
+      "related_topics": [
+        "leadership",
+        "strategy",
+        "ai-and-digital-transformation",
+        "personal-growth"
+      ],
+      "language": "en",
+      "rag_include": true,
+      "search_text": "EMBA preparation documents June 2026 Maastricht offer admission certificate enrolment onboarding UM password MFA Canvas UM email Teams fees instalments cancellation continuation on-campus programme outline online comparison electives Digital Business Responsible Leadership Sustainable Innovation Nyenrode MIT Sloan Lost Art Thinking Large Organizations strategic thinking 录取 注册 入学准备 学费 付款 课程安排 选修 战略思考."
+    },
+    {
       "id": "emba-2026-07-learning-index",
       "title": "EMBA Monthly Learning Index - July 2026",
       "type": "monthly_index",
@@ -20,12 +162,33 @@
       "md_file": "/emba/content/2026/07_July/2026-07_EMBA_Learning_Index.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["leadership", "learning", "coaching", "ai", "inclusion", "organizational-learning"],
-      "keywords": ["Lead in Learning", "memory making", "listening", "psychological safety", "70/20/10", "Nonaka Takeuchi", "Culture Map", "storytelling"],
+      "tags": [
+        "leadership",
+        "learning",
+        "coaching",
+        "ai",
+        "inclusion",
+        "organizational-learning"
+      ],
+      "keywords": [
+        "Lead in Learning",
+        "memory making",
+        "listening",
+        "psychological safety",
+        "70/20/10",
+        "Nonaka Takeuchi",
+        "Culture Map",
+        "storytelling"
+      ],
       "summary": "July 2026 captures the first EMBA learning thread: leadership as a practice of better listening, reflection, psychological safety, organizational learning, inclusion, and responsible AI use.",
-      "related_topics": ["leadership", "ai-and-digital-transformation", "decision-making", "personal-growth"],
+      "related_topics": [
+        "leadership",
+        "ai-and-digital-transformation",
+        "decision-making",
+        "personal-growth"
+      ],
       "rag_include": true,
-      "search_text": "July 2026 EMBA Lead in Learning memory making listening coaching psychological safety AI organizational learning inclusion diversity storytelling 70/20/10 Nonaka Takeuchi Culture Map leadership reflection work application."
+      "search_text": "July 2026 EMBA Lead in Learning memory making listening coaching psychological safety AI organizational learning inclusion diversity storytelling 70/20/10 Nonaka Takeuchi Culture Map leadership reflection work application 领导力 倾听 教练 心理安全 反思 盲点 人工智能 组织学习 包容 讲故事."
     },
     {
       "id": "emba-2026-07-leadership-learning-handwritten-notes",
@@ -60,13 +223,236 @@
       "md_file": "/emba/content/2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["leadership", "learning", "coaching", "ai", "inclusion", "organizational-learning"],
-      "keywords": ["psychological safety", "listening levels", "coaching groups", "memory making", "Nonaka Takeuchi", "70/20/10", "AI as learning amplifier"],
+      "tags": [
+        "leadership",
+        "learning",
+        "coaching",
+        "ai",
+        "inclusion",
+        "organizational-learning"
+      ],
+      "keywords": [
+        "psychological safety",
+        "listening levels",
+        "coaching groups",
+        "memory making",
+        "Nonaka Takeuchi",
+        "70/20/10",
+        "AI as learning amplifier"
+      ],
       "summary": "July's first EMBA notes show a shift from leadership as having better answers to leadership as creating better conditions for thinking, reflection, psychological safety, learning, and responsible AI use.",
-      "related_topics": ["leadership", "ai-and-digital-transformation", "decision-making", "personal-growth"],
+      "related_topics": [
+        "leadership",
+        "ai-and-digital-transformation",
+        "decision-making",
+        "personal-growth"
+      ],
       "language": "en",
       "rag_include": true,
-      "search_text": "Lead in Learning leadership coaching auto pattern shifting perspective levels of listening generative listening three voices judgment cynicism fear memory making blind spot perspective reflection AI human in the lead organizational learning knowledge home communities of practice inclusion diversity Culture Map storytelling psychological safety trust."
+      "search_text": "Lead in Learning leadership coaching auto pattern shifting perspective levels of listening generative listening three voices judgment cynicism fear memory making blind spot perspective reflection AI human in the lead organizational learning knowledge home communities of practice inclusion diversity Culture Map storytelling psychological safety trust 领导力 倾听 教练 心理安全 盲点 反思 人工智能 组织学习 包容性 跨文化 讲故事."
+    },
+    {
+      "id": "emba-theme-leadership",
+      "title": "Leadership",
+      "type": "theme_index",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "date": "2026-07-09",
+      "year": 2026,
+      "month": "",
+      "source_type": "theme_index",
+      "source_file": "",
+      "md_file": "/emba/content/themes/leadership.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "leadership",
+        "coaching",
+        "psychological-safety"
+      ],
+      "keywords": [
+        "listening",
+        "coaching",
+        "psychological safety",
+        "reflection",
+        "inclusion",
+        "organizational learning"
+      ],
+      "summary": "Theme page connecting leadership preparation, coaching, listening, psychological safety, inclusion, and organizational learning.",
+      "related_topics": [
+        "leadership",
+        "decision-making",
+        "personal-growth"
+      ],
+      "rag_include": true,
+      "search_text": "Leadership listening coaching psychological safety inclusion organizational learning better thinking conditions autopilot team routine 领导力 倾听 教练 心理安全 包容 组织学习."
+    },
+    {
+      "id": "emba-theme-strategy",
+      "title": "Strategy",
+      "type": "theme_index",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "date": "2026-07-09",
+      "year": 2026,
+      "month": "",
+      "source_type": "theme_index",
+      "source_file": "",
+      "md_file": "/emba/content/themes/strategy.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "strategy"
+      ],
+      "keywords": [
+        "strategic thinking",
+        "protected thinking time",
+        "elective strategy",
+        "decision boundary",
+        "work application"
+      ],
+      "summary": "Theme page for strategic thinking, protected thinking time, elective choices, and real work questions.",
+      "related_topics": [
+        "strategy",
+        "decision-making",
+        "ai-and-digital-transformation"
+      ],
+      "rag_include": true,
+      "search_text": "Strategy strategic thinking protected thinking time elective strategy decision boundary work application Turnpo MapKAI DishKAI 战略 战略思考 选修策略 决策边界."
+    },
+    {
+      "id": "emba-theme-finance",
+      "title": "Finance",
+      "type": "theme_index",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "date": "2026-07-09",
+      "year": 2026,
+      "month": "",
+      "source_type": "theme_index",
+      "source_file": "",
+      "md_file": "/emba/content/themes/finance.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "finance",
+        "study-fees"
+      ],
+      "keywords": [
+        "study fees",
+        "instalments",
+        "cancellation",
+        "continuation fee",
+        "payment calendar"
+      ],
+      "summary": "Theme page for EMBA fee obligations, payment planning, cancellation risk, and source-verification reminders.",
+      "related_topics": [
+        "finance",
+        "decision-making"
+      ],
+      "rag_include": true,
+      "search_text": "Finance study fees tuition instalments cancellation continuation fee payment calendar official PDF source 学费 付款 分期 取消费用 财务规划."
+    },
+    {
+      "id": "emba-theme-ai-and-digital-transformation",
+      "title": "AI And Digital Transformation",
+      "type": "theme_index",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "date": "2026-07-09",
+      "year": 2026,
+      "month": "",
+      "source_type": "theme_index",
+      "source_file": "",
+      "md_file": "/emba/content/themes/ai-and-digital-transformation.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "ai",
+        "digital-transformation"
+      ],
+      "keywords": [
+        "human in the lead",
+        "AI as learning amplifier",
+        "Digital Business",
+        "pressure testing",
+        "product strategy"
+      ],
+      "summary": "Theme page for AI as a learning amplifier, Digital Business elective planning, and product strategy work applications.",
+      "related_topics": [
+        "ai-and-digital-transformation",
+        "strategy",
+        "leadership"
+      ],
+      "rag_include": true,
+      "search_text": "AI artificial intelligence digital transformation Digital Business pressure testing product strategy human in the lead Turnpo MapKAI DishKAI 人工智能 数字化转型 数字商业 产品策略."
+    },
+    {
+      "id": "emba-theme-decision-making",
+      "title": "Decision Making",
+      "type": "theme_index",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "date": "2026-07-09",
+      "year": 2026,
+      "month": "",
+      "source_type": "theme_index",
+      "source_file": "",
+      "md_file": "/emba/content/themes/decision-making.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "decision-making"
+      ],
+      "keywords": [
+        "assumptions",
+        "blind spots",
+        "perspective",
+        "date mismatch",
+        "elective choice",
+        "judgment"
+      ],
+      "summary": "Theme page for evidence chains, assumptions, blind spots, date checks, elective choices, and reflective judgment.",
+      "related_topics": [
+        "decision-making",
+        "strategy",
+        "personal-growth"
+      ],
+      "rag_include": true,
+      "search_text": "Decision making assumptions blind spots judgment evidence chain elective decision date mismatch perspective source verification 决策 假设 盲点 判断 证据链 选修决策."
+    },
+    {
+      "id": "emba-theme-personal-growth",
+      "title": "Personal Growth",
+      "type": "theme_index",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "date": "2026-07-09",
+      "year": 2026,
+      "month": "",
+      "source_type": "theme_index",
+      "source_file": "",
+      "md_file": "/emba/content/themes/personal-growth.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "personal-growth"
+      ],
+      "keywords": [
+        "reflection",
+        "diary shadowing",
+        "appointment with myself",
+        "self-observation",
+        "founder development"
+      ],
+      "summary": "Theme page for EMBA as a learning architecture, self-observation, reflection, and founder development.",
+      "related_topics": [
+        "personal-growth",
+        "leadership",
+        "decision-making"
+      ],
+      "rag_include": true,
+      "search_text": "Personal growth reflection self-observation founder development protected thinking time learning system weekly practice Turnpo MapKAI DishKAI 个人成长 反思 自我觉察 创始人成长 学习系统."
     }
   ]
 }
