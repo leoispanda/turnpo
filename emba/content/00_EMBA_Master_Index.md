@@ -54,7 +54,7 @@ The rule is simple:
 
 | Month | Searchable Markdown | Original-source status | Retrieval role |
 | --- | --- | --- | --- |
-| 2026-06 | One monthly index, one preparation document analysis, and eight source-document mirrors | Seven June source PDFs are uploaded to private R2 under `emba/2026-06/material/` and served through `/api/emba/file/...`; the 40.4MB Nyenrode brochure remains a Markdown mirror until the larger upload limit is deployed | Admission, enrolment, onboarding, fees, programme structure, elective strategy, strategic thinking, alternative-MBA comparison |
+| 2026-06 | One monthly index, one preparation document analysis, and eight source-document mirrors | Eight June source PDFs are uploaded to private R2 under `emba/2026-06/material/` and served through `/api/emba/file/...`; Markdown mirrors remain the searchable retrieval layer | Admission, enrolment, onboarding, fees, programme structure, elective strategy, strategic thinking, alternative-MBA comparison |
 | 2026-07 | One monthly index, one official programme mirror, one overall handwritten-note analysis, 13 per-image Markdown notes, one questions/reflections review queue, and one original personal-marker extract | Original handwritten images remain under `/emba/materials/2026-07/handwritten-notes/images/`; the official programme PDF is uploaded to private R2 under `emba/2026-07/material/` and served through `/api/emba/file/...` | Official July schedule, leadership practice, listening, coaching, organizational learning, AI, inclusion, personal review, original Leo/I see/question/star markers |
 
 ## Courses And Sessions

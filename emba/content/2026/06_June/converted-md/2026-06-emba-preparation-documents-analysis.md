@@ -291,7 +291,7 @@ Why it is lower priority:
 | Teams/Canvas not fully set up before July | Medium | Missing announcements or pre-work would create avoidable friction | Finish MFA, Canvas, UM email, Teams before 2026-07-01 |
 | Elective strategy postponed too long | Low to medium | Elective weeks may need registration, travel, or employer planning | Create a provisional ranking now |
 | Payment schedule not calendared | Medium | Payment arrears can suspend participation | Add six invoice windows and 30-day payment reminders |
-| Large original PDFs may exceed the live upload cap | Low | A file can remain searchable as Markdown while the original is not yet clickable in Material | Keep the Markdown mirror immediately; upload the original to private R2 once the larger upload limit is deployed |
+| Very large original files may exceed the upload cap | Low | A file can remain searchable as Markdown while the original is not yet clickable in Material | Keep the Markdown mirror immediately; upload the original to private R2 when the file size is within the deployed cap |
 
 ## 11A. Retrieval Anchors
 

@@ -195,6 +195,7 @@ assert.ok(julyMaterials);
 const juneMaterials = parsedMaterials.months.find((month) => month.month === "2026-06");
 assert.ok(juneMaterials.materials.some((item) => item.file.includes("/api/emba/file/emba/2026-06/material/") && item.file.endsWith("Onboarding-guideline.pdf")));
 assert.ok(juneMaterials.materials.some((item) => item.file.includes("/api/emba/file/emba/2026-06/material/") && item.file.endsWith("MaastrichtMBA---Curriculum-Elective-Modules.pdf")));
+assert.ok(juneMaterials.materials.some((item) => item.file.includes("/api/emba/file/emba/2026-06/material/") && item.file.endsWith("nyenrode-impact-mba-executive-brochure.pdf")));
 assert.ok(juneMaterials.materials.some((item) => item.notes.includes("/emba/content/2026/06_June/converted-md/source-documents/2026-06-onboarding-guideline.md")));
 assert.ok(julyMaterials.materials.some((item) => item.file.includes("/api/emba/file/emba/2026-07/material/") && item.file.endsWith("September-intake---MaastrichtMBA-Leading-in-Learning-Programme-July-2026.pdf")));
 assert.ok(julyMaterials.materials.some((item) => item.notes.includes("/emba/content/2026/07_July/converted-md/source-documents/2026-07-leading-in-learning-programme.md")));
