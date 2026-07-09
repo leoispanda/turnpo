@@ -370,7 +370,7 @@ body::before {
 
 .emba-block-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
   align-items: start;
 }
@@ -1250,6 +1250,10 @@ body::before {
 .emba-thinking-list li::marker {
   color: #9a772a;
   font-weight: 760;
+}
+
+.emba-follow-up-list li::marker {
+  color: #6e6e73;
 }
 
 .emba-private-tools {

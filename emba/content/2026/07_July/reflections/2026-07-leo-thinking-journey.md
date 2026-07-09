@@ -347,6 +347,21 @@ Culture Map 又增加了一个约束：同一种表达在不同文化中可能�
 
 这条闭环也和我已有的个人原则相连：long-term direction、action over waiting、fast iteration、consistency，以及不做 fake effort。
 
+## 后续补充与验证清单
+
+这些不是已经完成的结论，而是以后继续补写、验证和修正这组笔记的入口：
+
+1. `[真实情境]` 补写一个 personal struggle：当时发生了什么、谁参与、为什么对我重要？
+2. `[情绪证据]` 回到 P13 / P27：什么反馈让我愤怒、防御、energized 或觉得浪费？我实际做了什么？
+3. `[因果验证]` 找一个真实案例，验证 listening 是否真的带来 trust、更完整的信息和更好的决定。
+4. `[适用边界]` 区分 decision、listening、coaching 和 crisis command；什么时候不应该继续提问？
+5. `[领导力定义]` True leadership 除了有人愿意跟随，还要补上方向、伦理、结果和长期 accountability。
+6. `[证据分类]` 将 opinion / fact / perspective / truth 拆成 observation、sourced fact、interpretation 和 inference。
+7. `[AI 标准]` 定义 60 / 80 / 120、human-in-the-lead 和 mastery test 的可观察标准。
+8. `[权力与资源]` 深挖 P38-P39、P66、P71：部门价值、资源稀缺、支持者、权力和冲突如何影响领导力？
+9. `[课程缺口]` 补齐 Leadership Development goal、Visualisation & Prototyping 产物、Inclusion & Diversity 练习与权力维度。
+10. `[行动闭环]` 每个重要 insight 增加 baseline、行为实验、成功信号和 review date。
+
 ## 接下来 30 天的五个小实验
 
 1. 每个重要会议前写一句：`我可能默认相信了什么？`

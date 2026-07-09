@@ -154,6 +154,8 @@ Source handling rule: keep source images and future original files intact. Markd
 
 Leadership is not mainly about stronger answers. It is about creating the conditions for better thinking: safety, trust, listening, reflection, and courage to question assumptions.
 
+The website now keeps a separate `待补充与验证` queue for missing personal context, emotional evidence, causal tests, leadership boundaries, AI standards, power and resource questions, course gaps, and measurable action reviews.
+
 Detailed one-by-one review file:
 
 - [July 2026 Leo Thinking Journey](./reflections/2026-07-leo-thinking-journey.md)

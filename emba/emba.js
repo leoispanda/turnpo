@@ -143,6 +143,7 @@ function normalizeMonth(month) {
     materials,
     reflection: month.reflection || month.notes || "",
     thinkingQuestions: normalizeThinkingQuestions(month.thinkingQuestions || month.questions || month.thoughts),
+    followUpPoints: normalizeThinkingQuestions(month.followUpPoints || month.followUps || month.openQuestions),
     markdown: normalizeMarkdown(month.markdown || month.md || month.searchNotes),
     memoryMoment: memories
   };
@@ -160,6 +161,7 @@ function legacyDaysToMonths(days = []) {
       materials: [],
       reflection: "",
       thinkingQuestions: [],
+      followUpPoints: [],
       markdown: "",
       memoryMoment: []
     };
@@ -190,6 +192,7 @@ function monthHasContent(month = {}) {
   return asArray(month.materials).some(materialHasContent)
     || hasTextContent(month.reflection)
     || asArray(month.thinkingQuestions).some(hasTextContent)
+    || asArray(month.followUpPoints).some(hasTextContent)
     || hasTextContent(month.markdown)
     || asArray(month.memoryMoment).some(memoryHasContent);
 }
@@ -208,6 +211,7 @@ function createEmptyMonth(monthKey) {
     materials: [],
     reflection: "",
     thinkingQuestions: [],
+    followUpPoints: [],
     markdown: "",
     memoryMoment: []
   };
@@ -230,6 +234,7 @@ function editableMonth() {
   month.memoryMoment = asArray(month.memoryMoment);
   if (typeof month.reflection !== "string") month.reflection = "";
   month.thinkingQuestions = normalizeThinkingQuestions(month.thinkingQuestions);
+  month.followUpPoints = normalizeThinkingQuestions(month.followUpPoints);
   if (typeof month.markdown !== "string") month.markdown = "";
   return month;
 }
@@ -298,6 +303,7 @@ function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
     materials: mergeMaterialLists(baseMonth.materials, overlayMonth.materials),
     reflection: richerText(baseMonth.reflection, overlayMonth.reflection),
     thinkingQuestions: mergeThinkingLists(baseMonth.thinkingQuestions, overlayMonth.thinkingQuestions),
+    followUpPoints: mergeThinkingLists(baseMonth.followUpPoints, overlayMonth.followUpPoints),
     markdown: richerText(baseMonth.markdown, overlayMonth.markdown),
     memoryMoment: asArray(overlayMonth.memoryMoment).length ? overlayMonth.memoryMoment : asArray(baseMonth.memoryMoment)
   };
@@ -960,6 +966,23 @@ function renderThinkingQuestions(month) {
   `;
 }
 
+function renderFollowUpPoints(month) {
+  const items = normalizeThinkingQuestions(month?.followUpPoints);
+  if (!isEditMode()) {
+    return items.length
+      ? `
+        <ol class="emba-thinking-list emba-follow-up-list">
+          ${items.slice(0, 12).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+        </ol>
+      `
+      : `<p class="emba-empty-copy">No follow-up points yet.</p>`;
+  }
+
+  return `
+    <textarea class="emba-thinking-editor" data-follow-up-editor placeholder="One follow-up or verification point per line...">${escapeHtml(items.join("\n"))}</textarea>
+  `;
+}
+
 function timelineMarkdownToDisplayMarkdown(markdown = "") {
   const source = normalizeMarkdown(markdown).trim();
   if (!source) return "";
@@ -1082,6 +1105,10 @@ function blockSummary(id, month) {
     const count = normalizeThinkingQuestions(month?.thinkingQuestions).length;
     return count ? `${count} short item${count === 1 ? "" : "s"}` : "No thoughts yet";
   }
+  if (id === "followup") {
+    const count = normalizeThinkingQuestions(month?.followUpPoints).length;
+    return count ? `${count} open point${count === 1 ? "" : "s"}` : "Nothing pending";
+  }
   if (id === "markdown") {
     return hasTextContent(month?.markdown) ? "Notes saved" : "No class notes yet";
   }
@@ -1096,6 +1123,7 @@ function renderBlockContent(id, month) {
   if (id === "memory") return renderMemoryMoment(month);
   if (id === "reflection") return renderReflection(month);
   if (id === "thinking") return renderThinkingQuestions(month);
+  if (id === "followup") return renderFollowUpPoints(month);
   if (id === "markdown") return renderMarkdown(month);
   if (id === "material") return renderMaterials(month);
   return "";
@@ -1139,6 +1167,7 @@ function renderMonthDetail(month) {
       ${blockTemplate("memory", "Memory Moment", month)}
       ${blockTemplate("reflection", "Reflection", month)}
       ${blockTemplate("thinking", "思考与问题", month)}
+      ${blockTemplate("followup", "待补充与验证", month)}
       ${blockTemplate("markdown", "课堂笔记", month)}
       ${blockTemplate("material", "Material", month)}
       ${renderOpenBlockPanel(month)}
@@ -1380,6 +1409,13 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
   if (target.matches("[data-thinking-editor]")) {
     const month = editableMonth();
     month.thinkingQuestions = target.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
+    saveLibrary();
+    return;
+  }
+
+  if (target.matches("[data-follow-up-editor]")) {
+    const month = editableMonth();
+    month.followUpPoints = target.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
     saveLibrary();
     return;
   }

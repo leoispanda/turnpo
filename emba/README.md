@@ -18,7 +18,7 @@ EMBA_ACCESS_CODE=emba2026
 
 EMBA edits sync through Pages Functions:
 
-- `functions/api/emba/library.js` stores month structure, reflections, searchable Markdown notes, material metadata, and memory captions in D1.
+- `functions/api/emba/library.js` stores month structure, reflections, short thinking items, follow-up and verification points, searchable Markdown notes, material metadata, and memory captions in D1.
 - `functions/api/emba/upload.js` stores photos and material files in R2.
 - `functions/api/emba/file/[[key]].js` serves R2 files behind the same EMBA access cookie.
 
@@ -52,6 +52,7 @@ After entering the access code:
 3. Open `Reflection` to write notes.
 4. Open `Markdown` to keep searchable monthly notes in plain Markdown.
 5. Open `Material` to upload class files or add links/notes.
+6. Use `待补充与验证` to keep unfinished context, evidence checks, boundaries, and later review points separate from finished reflections.
 
 Uploaded files are stored in R2 and referenced by private `/api/emba/file/...` URLs.
 
