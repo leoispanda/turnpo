@@ -547,14 +547,52 @@ function renderMemoryMoment(month) {
   `;
 }
 
-function blockTemplate(id, title, body) {
+function blockSummary(id, month) {
+  if (id === "memory") {
+    const count = asArray(month?.memoryMoment).filter((item) => normalizeMemory(item, month?.month).image).length;
+    return count ? `${count} photo${count === 1 ? "" : "s"}` : "No photos yet";
+  }
+  if (id === "reflection") {
+    return hasTextContent(month?.reflection) ? "Reflection saved" : "No reflection yet";
+  }
+  if (id === "markdown") {
+    return hasTextContent(month?.markdown) ? "Notes saved" : "No class notes yet";
+  }
+  if (id === "material") {
+    const count = asArray(month?.materials).filter(materialHasContent).length;
+    return count ? `${count} material${count === 1 ? "" : "s"}` : "No materials yet";
+  }
+  return "";
+}
+
+function renderBlockContent(id, month) {
+  if (id === "memory") return renderMemoryMoment(month);
+  if (id === "reflection") return renderReflection(month);
+  if (id === "markdown") return renderMarkdown(month);
+  if (id === "material") return renderMaterials(month);
+  return "";
+}
+
+function blockTemplate(id, title, month) {
   const isOpen = state.openBlockId === id;
+  const summary = blockSummary(id, month);
   return `
-    <article class="emba-content-block${isOpen ? " open" : ""}" data-block-id="${escapeHtml(id)}">
+    <article class="emba-content-block${isOpen ? " open" : ""}" data-block-id="${escapeHtml(id)}" data-block-card="${escapeHtml(id)}">
       <button class="emba-block-toggle" type="button" aria-expanded="${isOpen}" data-block-toggle="${escapeHtml(id)}">
         <span class="emba-block-title">${escapeHtml(title)}</span>
+        <span class="emba-block-meta">${escapeHtml(summary)}</span>
       </button>
-      <div class="emba-block-body" ${isOpen ? "" : "hidden"}>${body}</div>
+    </article>
+  `;
+}
+
+function renderOpenBlockPanel(month) {
+  if (!state.openBlockId) return "";
+  const content = renderBlockContent(state.openBlockId, month);
+  if (!content) return "";
+  return `
+    <article class="emba-block-panel" data-block-panel="${escapeHtml(state.openBlockId)}">
+      <div class="emba-block-body">${content}</div>
     </article>
   `;
 }
@@ -570,10 +608,11 @@ function renderMonthDetail(month) {
   detail.innerHTML = `
     <div class="emba-month-kicker">${escapeHtml(formatMonth(month.month))}</div>
     <div class="emba-block-grid">
-      ${blockTemplate("memory", "Memory Moment", renderMemoryMoment(month))}
-      ${blockTemplate("reflection", "Reflection", renderReflection(month))}
-      ${blockTemplate("markdown", "课堂笔记", renderMarkdown(month))}
-      ${blockTemplate("material", "Material", renderMaterials(month))}
+      ${blockTemplate("memory", "Memory Moment", month)}
+      ${blockTemplate("reflection", "Reflection", month)}
+      ${blockTemplate("markdown", "课堂笔记", month)}
+      ${blockTemplate("material", "Material", month)}
+      ${renderOpenBlockPanel(month)}
     </div>
   `;
 }
@@ -768,7 +807,7 @@ $("#embaMonthDetail")?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-block-toggle]");
   if (!button) return;
   const blockId = button.dataset.blockToggle || "";
-  state.openBlockId = state.openBlockId === blockId ? "" : blockId;
+  state.openBlockId = blockId;
   renderMonthDetail(selectedMonth());
 });
 
