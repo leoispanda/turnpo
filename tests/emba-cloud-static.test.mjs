@@ -43,6 +43,7 @@ assert.ok(embaJs.includes("function monthHasContent"));
 assert.ok(embaJs.includes(".filter(monthHasContent)"));
 assert.ok(embaJs.includes("No EMBA month has content yet."));
 assert.ok(embaJs.includes("function mergeMonthData"));
+assert.ok(embaJs.includes("function mergeThinkingLists"));
 assert.ok(embaJs.includes("function richerText"));
 assert.ok(embaJs.includes("editMode: false"));
 assert.ok(embaJs.includes("function setEditMode"));

@@ -279,6 +279,17 @@ function mergeMaterialLists(baseMaterials = [], overlayMaterials = []) {
     });
 }
 
+function mergeThinkingLists(baseItems = [], overlayItems = []) {
+  const seen = new Set();
+  return [...normalizeThinkingQuestions(baseItems), ...normalizeThinkingQuestions(overlayItems)]
+    .filter((item) => {
+      const key = normalize(item);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
 function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
   return {
     ...baseMonth,
@@ -286,7 +297,7 @@ function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
     title: overlayMonth.title || baseMonth.title,
     materials: mergeMaterialLists(baseMonth.materials, overlayMonth.materials),
     reflection: richerText(baseMonth.reflection, overlayMonth.reflection),
-    thinkingQuestions: asArray(overlayMonth.thinkingQuestions).length ? normalizeThinkingQuestions(overlayMonth.thinkingQuestions) : normalizeThinkingQuestions(baseMonth.thinkingQuestions),
+    thinkingQuestions: mergeThinkingLists(baseMonth.thinkingQuestions, overlayMonth.thinkingQuestions),
     markdown: richerText(baseMonth.markdown, overlayMonth.markdown),
     memoryMoment: asArray(overlayMonth.memoryMoment).length ? overlayMonth.memoryMoment : asArray(baseMonth.memoryMoment)
   };
