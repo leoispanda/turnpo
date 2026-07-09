@@ -125,6 +125,13 @@ function normalizeMarkdown(value) {
   return String(value || "");
 }
 
+function normalizeThinkingQuestions(value) {
+  return asArray(value)
+    .map((item) => typeof item === "string" ? item : item?.body || item?.title || "")
+    .map((item) => String(item || "").trim())
+    .filter(Boolean);
+}
+
 function normalizeMonth(month) {
   const monthKey = month.month || monthKeyFromDate(month.date) || DEFAULT_START_MONTH;
   const materials = asArray(month.materials || month.material || month.documents).map(normalizeMaterial);
@@ -135,6 +142,7 @@ function normalizeMonth(month) {
     title: month.title || formatMonth(monthKey),
     materials,
     reflection: month.reflection || month.notes || "",
+    thinkingQuestions: normalizeThinkingQuestions(month.thinkingQuestions || month.questions || month.thoughts),
     markdown: normalizeMarkdown(month.markdown || month.md || month.searchNotes),
     memoryMoment: memories
   };
@@ -151,6 +159,7 @@ function legacyDaysToMonths(days = []) {
       title: formatMonth(monthKey),
       materials: [],
       reflection: "",
+      thinkingQuestions: [],
       markdown: "",
       memoryMoment: []
     };
@@ -180,6 +189,7 @@ function memoryHasContent(item = {}) {
 function monthHasContent(month = {}) {
   return asArray(month.materials).some(materialHasContent)
     || hasTextContent(month.reflection)
+    || asArray(month.thinkingQuestions).some(hasTextContent)
     || hasTextContent(month.markdown)
     || asArray(month.memoryMoment).some(memoryHasContent);
 }
@@ -197,6 +207,7 @@ function createEmptyMonth(monthKey) {
     title: formatMonth(monthKey),
     materials: [],
     reflection: "",
+    thinkingQuestions: [],
     markdown: "",
     memoryMoment: []
   };
@@ -218,6 +229,7 @@ function editableMonth() {
   month.materials = asArray(month.materials);
   month.memoryMoment = asArray(month.memoryMoment);
   if (typeof month.reflection !== "string") month.reflection = "";
+  month.thinkingQuestions = normalizeThinkingQuestions(month.thinkingQuestions);
   if (typeof month.markdown !== "string") month.markdown = "";
   return month;
 }
@@ -274,6 +286,7 @@ function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
     title: overlayMonth.title || baseMonth.title,
     materials: mergeMaterialLists(baseMonth.materials, overlayMonth.materials),
     reflection: richerText(baseMonth.reflection, overlayMonth.reflection),
+    thinkingQuestions: asArray(overlayMonth.thinkingQuestions).length ? normalizeThinkingQuestions(overlayMonth.thinkingQuestions) : normalizeThinkingQuestions(baseMonth.thinkingQuestions),
     markdown: richerText(baseMonth.markdown, overlayMonth.markdown),
     memoryMoment: asArray(overlayMonth.memoryMoment).length ? overlayMonth.memoryMoment : asArray(baseMonth.memoryMoment)
   };
@@ -919,6 +932,23 @@ function renderReflection(month) {
   `;
 }
 
+function renderThinkingQuestions(month) {
+  const items = normalizeThinkingQuestions(month?.thinkingQuestions);
+  if (!isEditMode()) {
+    return items.length
+      ? `
+        <ol class="emba-thinking-list">
+          ${items.slice(0, 6).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+        </ol>
+      `
+      : `<p class="emba-empty-copy">No thoughts or questions yet.</p>`;
+  }
+
+  return `
+    <textarea class="emba-thinking-editor" data-thinking-editor placeholder="One thought or question per line...">${escapeHtml(items.join("\n"))}</textarea>
+  `;
+}
+
 function timelineMarkdownToDisplayMarkdown(markdown = "") {
   const source = normalizeMarkdown(markdown).trim();
   if (!source) return "";
@@ -1037,6 +1067,10 @@ function blockSummary(id, month) {
   if (id === "reflection") {
     return hasTextContent(month?.reflection) ? "Reflection saved" : "No reflection yet";
   }
+  if (id === "thinking") {
+    const count = normalizeThinkingQuestions(month?.thinkingQuestions).length;
+    return count ? `${count} short item${count === 1 ? "" : "s"}` : "No thoughts yet";
+  }
   if (id === "markdown") {
     return hasTextContent(month?.markdown) ? "Notes saved" : "No class notes yet";
   }
@@ -1050,6 +1084,7 @@ function blockSummary(id, month) {
 function renderBlockContent(id, month) {
   if (id === "memory") return renderMemoryMoment(month);
   if (id === "reflection") return renderReflection(month);
+  if (id === "thinking") return renderThinkingQuestions(month);
   if (id === "markdown") return renderMarkdown(month);
   if (id === "material") return renderMaterials(month);
   return "";
@@ -1092,6 +1127,7 @@ function renderMonthDetail(month) {
     <div class="emba-block-grid">
       ${blockTemplate("memory", "Memory Moment", month)}
       ${blockTemplate("reflection", "Reflection", month)}
+      ${blockTemplate("thinking", "思考与问题", month)}
       ${blockTemplate("markdown", "课堂笔记", month)}
       ${blockTemplate("material", "Material", month)}
       ${renderOpenBlockPanel(month)}
@@ -1326,6 +1362,13 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
   if (target.matches("[data-reflection-editor]")) {
     const month = editableMonth();
     month.reflection = target.value;
+    saveLibrary();
+    return;
+  }
+
+  if (target.matches("[data-thinking-editor]")) {
+    const month = editableMonth();
+    month.thinkingQuestions = target.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
     saveLibrary();
     return;
   }

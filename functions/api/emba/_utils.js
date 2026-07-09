@@ -14,6 +14,7 @@ const MAX_UPLOAD_BYTES = 25 * 1024 * 1024;
 const MAX_MONTHS = 60;
 const MAX_MATERIALS_PER_MONTH = 100;
 const MAX_MEMORIES_PER_MONTH = 100;
+const MAX_THINKING_ITEMS_PER_MONTH = 12;
 
 export { json, MAX_UPLOAD_BYTES };
 
@@ -121,6 +122,11 @@ function normalizeMemory(item = {}, monthKey = "") {
   };
 }
 
+function normalizeThinkingQuestion(item = "") {
+  const text = typeof item === "string" ? item : item?.body || item?.title || "";
+  return cleanText(text, 400);
+}
+
 export function normalizeLibraryPayload(payload = {}) {
   const timeline = {
     startMonth: cleanMonthKey(payload?.timeline?.startMonth, DEFAULT_START_MONTH),
@@ -139,6 +145,10 @@ export function normalizeLibraryPayload(payload = {}) {
           .slice(0, MAX_MATERIALS_PER_MONTH)
           .map(normalizeMaterial),
         reflection: cleanText(month?.reflection || month?.notes || "", 120000),
+        thinkingQuestions: (Array.isArray(month?.thinkingQuestions) ? month.thinkingQuestions : [])
+          .slice(0, MAX_THINKING_ITEMS_PER_MONTH)
+          .map(normalizeThinkingQuestion)
+          .filter(Boolean),
         markdown: cleanText(month?.markdown || month?.md || month?.searchNotes || "", 180000),
         memoryMoment: (Array.isArray(month?.memoryMoment) ? month.memoryMoment : [])
           .slice(0, MAX_MEMORIES_PER_MONTH)

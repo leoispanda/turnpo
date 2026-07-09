@@ -370,7 +370,7 @@ body::before {
 
 .emba-block-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
   align-items: start;
 }
@@ -495,6 +495,7 @@ body::before {
 .emba-edit-input,
 .emba-edit-textarea,
 .emba-reflection-editor,
+.emba-thinking-editor,
 .emba-markdown-editor {
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -511,6 +512,7 @@ body::before {
 .emba-edit-input:focus,
 .emba-edit-textarea:focus,
 .emba-reflection-editor:focus,
+.emba-thinking-editor:focus,
 .emba-markdown-editor:focus {
   border-color: rgba(177, 138, 47, 0.5);
   background: #ffffff;
@@ -524,6 +526,11 @@ body::before {
 
 .emba-reflection-editor {
   min-height: 180px;
+  resize: vertical;
+}
+
+.emba-thinking-editor {
+  min-height: 160px;
   resize: vertical;
 }
 
@@ -1228,6 +1235,21 @@ body::before {
   background: transparent;
   color: inherit;
   padding: 0;
+}
+
+.emba-thinking-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 22px;
+  color: #1d1d1f;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.emba-thinking-list li::marker {
+  color: #9a772a;
+  font-weight: 760;
 }
 
 .emba-private-tools {
