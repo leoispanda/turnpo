@@ -302,7 +302,8 @@ function setSyncStatus(message = "", tone = "") {
 function updateEditModeControl() {
   const button = $("#embaEditToggle");
   if (!button) return;
-  button.hidden = true;
+  const granted = hasEmbaAccess();
+  button.hidden = !granted;
   button.setAttribute("aria-pressed", String(isEditMode()));
   button.textContent = isEditMode() ? "Editing" : "Edit mode";
   button.setAttribute("aria-label", isEditMode() ? "Turn off EMBA editing" : "Turn on EMBA editing");
@@ -512,6 +513,7 @@ function renderKnowledgeResult(note, isSelected) {
       <div class="emba-knowledge-result-actions">
         ${note.md_file ? `<a class="emba-file-link" href="${escapeHtml(note.md_file)}" target="_blank" rel="noopener">Open MD</a>` : ""}
         ${note.source_file ? `<a class="emba-file-link" href="${escapeHtml(note.source_file)}" target="_blank" rel="noopener">Open source${sourceCount > 1 ? ` (${sourceCount})` : ""}</a>` : ""}
+        ${note.month ? `<button class="emba-text-btn" type="button" data-knowledge-month="${escapeHtml(note.month)}">Show month</button>` : ""}
       </div>
     </article>
   `;
@@ -1135,6 +1137,7 @@ function renderAccessState() {
   if (app) app.hidden = !granted;
   if (lock) lock.hidden = !granted;
   updateEditModeControl();
+  if (granted && !state.libraryLoaded) loadLibrary();
   if (granted && !state.knowledge.loaded) loadKnowledgeBase();
 }
 
@@ -1379,6 +1382,13 @@ function initKnowledgeInteractions() {
   });
 
   $("#embaKnowledgeResults")?.addEventListener("click", (event) => {
+    const monthButton = event.target.closest("[data-knowledge-month]");
+    if (monthButton) {
+      setActiveMonth(monthButton.dataset.knowledgeMonth || "");
+      $("#embaMonthDetail")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
     const noteButton = event.target.closest("[data-knowledge-note]");
     if (!noteButton) return;
     openKnowledgeNote(noteButton.dataset.knowledgeNote || "");
