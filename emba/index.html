@@ -63,27 +63,15 @@
         </div>
         <section class="emba-month-detail" id="embaMonthDetail" aria-live="polite"></section>
       </section>
-      <section class="emba-knowledge" id="embaKnowledge" aria-label="EMBA knowledge base">
-        <div class="emba-knowledge-head">
-          <div>
-            <h2>EMBA Knowledge Base</h2>
-            <p>Search monthly indexes, converted Markdown mirrors, and their original source files.</p>
-          </div>
-          <a class="emba-file-link" href="/emba/content/00_EMBA_Master_Index.md" target="_blank" rel="noopener">Master index</a>
-        </div>
+      <section class="emba-knowledge" id="embaKnowledge" aria-label="EMBA knowledge base search">
         <div class="emba-knowledge-controls" aria-label="Knowledge base search">
           <label class="emba-knowledge-search">
             <span class="sr-only">Search EMBA knowledge base</span>
             <input id="embaKnowledgeSearch" type="search" autocomplete="off" placeholder="Search EMBA notes" />
           </label>
         </div>
-        <div class="emba-knowledge-status" id="embaKnowledgeStatus" aria-live="polite">Loading knowledge base.</div>
-        <div class="emba-knowledge-layout">
-          <div class="emba-knowledge-results" id="embaKnowledgeResults" aria-label="Knowledge base search results"></div>
-          <article class="emba-knowledge-preview" id="embaKnowledgePreview" aria-label="Markdown preview">
-            <p class="emba-empty-copy">Select a note to preview its searchable Markdown.</p>
-          </article>
-        </div>
+        <div class="emba-knowledge-status" id="embaKnowledgeStatus" aria-live="polite" hidden></div>
+        <div class="emba-knowledge-results" id="embaKnowledgeResults" aria-label="Knowledge base search results" hidden></div>
       </section>
       <section class="emba-private-tools" aria-label="Private EMBA tools">
         <a class="emba-classmate-tool-link" href="./linkedin-class-connect.html">Classmate detailed list</a>

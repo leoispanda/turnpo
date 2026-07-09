@@ -437,6 +437,7 @@ function setKnowledgeStatus(message = "", tone = "") {
   if (!status) return;
   status.textContent = message;
   status.dataset.tone = tone;
+  status.hidden = !message;
 }
 
 function noteSearchBlob(note = {}) {
@@ -467,6 +468,7 @@ function noteMatchesKnowledgeFilters(note = {}) {
 }
 
 function filteredKnowledgeNotes() {
+  if (!normalize(state.knowledge.filters.query)) return [];
   return state.knowledge.notes
     .filter((note) => note.visibility !== "public" ? true : note.status !== "deleted")
     .filter((note) => note.status !== "deleted")
@@ -502,14 +504,10 @@ function renderKnowledgeResult(note, isSelected) {
   const sourceCount = note.source_files.length || (note.source_file ? 1 : 0);
   return `
     <article class="emba-knowledge-result${isSelected ? " selected" : ""}">
-      <button class="emba-knowledge-result-main" type="button" data-knowledge-note="${escapeHtml(note.id)}" aria-pressed="${isSelected}">
+      <div class="emba-knowledge-result-main">
         <span class="emba-knowledge-result-title">${escapeHtml(note.title)}</span>
         <span class="emba-knowledge-result-meta">${escapeHtml(noteMetaText(note))}</span>
-        ${note.summary ? `<span class="emba-knowledge-result-summary">${escapeHtml(note.summary)}</span>` : ""}
-        <span class="emba-knowledge-tags">
-          ${note.tags.slice(0, 6).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
-        </span>
-      </button>
+      </div>
       <div class="emba-knowledge-result-actions">
         ${note.md_file ? `<a class="emba-file-link" href="${escapeHtml(note.md_file)}" target="_blank" rel="noopener">Open MD</a>` : ""}
         ${note.source_file ? `<a class="emba-file-link" href="${escapeHtml(note.source_file)}" target="_blank" rel="noopener">Open source${sourceCount > 1 ? ` (${sourceCount})` : ""}</a>` : ""}
@@ -522,8 +520,17 @@ function renderKnowledgeResult(note, isSelected) {
 function renderKnowledgeResults() {
   const results = $("#embaKnowledgeResults");
   if (!results) return;
+  const hasQuery = Boolean(normalize(state.knowledge.filters.query));
+  if (!hasQuery) {
+    state.knowledge.selectedNoteId = "";
+    setKnowledgeStatus("");
+    results.innerHTML = "";
+    results.hidden = true;
+    return;
+  }
   const notes = filteredKnowledgeNotes();
   const count = notes.length;
+  results.hidden = false;
   setKnowledgeStatus(state.knowledge.loaded ? `${count} note${count === 1 ? "" : "s"} found.` : "Loading knowledge base.");
   results.innerHTML = count ? notes.map((note) => renderKnowledgeResult(note, note.id === state.knowledge.selectedNoteId)).join("")
     : `<div class="emba-empty-state">No EMBA notes match these filters.</div>`;
@@ -742,7 +749,7 @@ async function openKnowledgeNote(noteId) {
 async function loadKnowledgeBase() {
   if (state.knowledge.loading || state.knowledge.loaded) return;
   state.knowledge.loading = true;
-  setKnowledgeStatus("Loading knowledge base.");
+  if (normalize(state.knowledge.filters.query)) setKnowledgeStatus("Loading knowledge base.");
   try {
     const response = await fetch(EMBA_KNOWLEDGE_INDEX, { cache: "no-store" });
     if (!response.ok) throw new Error(`Could not load knowledge index (${response.status})`);

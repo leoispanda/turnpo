@@ -895,15 +895,11 @@ body::before {
 }
 
 .emba-knowledge {
-  width: min(1180px, 100%);
+  width: min(560px, 100%);
   display: grid;
-  gap: 16px;
-  margin: clamp(18px, 4vw, 40px) auto 0;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 22px 64px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.88);
-  padding: clamp(18px, 2.4vw, 26px);
+  gap: 10px;
+  margin: clamp(18px, 4vw, 34px) auto 0;
+  padding: 0;
 }
 
 .emba-knowledge-head {
@@ -930,7 +926,7 @@ body::before {
 }
 
 .emba-knowledge-controls {
-  width: min(560px, 100%);
+  width: 100%;
   display: block;
 }
 
@@ -949,7 +945,7 @@ body::before {
 }
 
 .emba-knowledge-controls input {
-  min-height: 44px;
+  min-height: 48px;
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -968,10 +964,14 @@ body::before {
 }
 
 .emba-knowledge-status {
-  min-height: 18px;
   color: #86868b;
   font-size: 12px;
   font-weight: 650;
+}
+
+.emba-knowledge-status[hidden],
+.emba-knowledge-results[hidden] {
+  display: none;
 }
 
 .emba-knowledge-status[data-tone="warn"] {
@@ -986,20 +986,26 @@ body::before {
 }
 
 .emba-knowledge-results {
-  max-height: 720px;
+  max-height: 420px;
   display: grid;
-  gap: 10px;
+  gap: 8px;
   overflow: auto;
-  padding-right: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.86);
+  padding: 8px;
 }
 
 .emba-knowledge-result {
   display: grid;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.7);
-  padding: 12px;
+  padding: 10px 12px;
   transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
 }
 
@@ -1012,7 +1018,8 @@ body::before {
 
 .emba-knowledge-result-main {
   display: grid;
-  gap: 6px;
+  min-width: 0;
+  gap: 4px;
   border: 0;
   background: transparent;
   color: inherit;
@@ -1032,7 +1039,7 @@ body::before {
 
 .emba-knowledge-result-title {
   color: #1d1d1f;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 720;
   line-height: 1.25;
 }
@@ -1078,6 +1085,7 @@ body::before {
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .emba-knowledge-preview {
@@ -1372,6 +1380,14 @@ body::before {
 
   .emba-knowledge-controls {
     gap: 12px;
+  }
+
+  .emba-knowledge-result {
+    grid-template-columns: 1fr;
+  }
+
+  .emba-knowledge-result-actions {
+    justify-content: flex-start;
   }
 }
 
