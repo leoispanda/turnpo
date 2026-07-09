@@ -466,7 +466,8 @@ body::before {
 
 .emba-edit-input,
 .emba-edit-textarea,
-.emba-reflection-editor {
+.emba-reflection-editor,
+.emba-markdown-editor {
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -481,7 +482,8 @@ body::before {
 
 .emba-edit-input:focus,
 .emba-edit-textarea:focus,
-.emba-reflection-editor:focus {
+.emba-reflection-editor:focus,
+.emba-markdown-editor:focus {
   border-color: rgba(177, 138, 47, 0.5);
   background: #ffffff;
   box-shadow: 0 0 0 4px rgba(177, 138, 47, 0.1);
@@ -494,6 +496,12 @@ body::before {
 
 .emba-reflection-editor {
   min-height: 180px;
+  resize: vertical;
+}
+
+.emba-markdown-editor {
+  min-height: 240px;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   resize: vertical;
 }
 
@@ -681,6 +689,19 @@ body::before {
   background: rgba(255, 255, 255, 0.52);
   color: #1d1d1f;
   font-size: 14px;
+  line-height: 1.6;
+  padding: 14px;
+  white-space: pre-wrap;
+}
+
+.emba-markdown-read {
+  min-height: 72px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.52);
+  color: #1d1d1f;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 13px;
   line-height: 1.6;
   padding: 14px;
   white-space: pre-wrap;

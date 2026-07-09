@@ -139,6 +139,7 @@ export function normalizeLibraryPayload(payload = {}) {
           .slice(0, MAX_MATERIALS_PER_MONTH)
           .map(normalizeMaterial),
         reflection: cleanText(month?.reflection || month?.notes || "", 120000),
+        markdown: cleanText(month?.markdown || month?.md || month?.searchNotes || "", 180000),
         memoryMoment: (Array.isArray(month?.memoryMoment) ? month.memoryMoment : [])
           .slice(0, MAX_MEMORIES_PER_MONTH)
           .map((item) => normalizeMemory(item, monthKey))

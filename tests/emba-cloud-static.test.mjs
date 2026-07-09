@@ -25,6 +25,10 @@ assert.ok(embaJs.includes("No EMBA month has content yet."));
 assert.ok(embaJs.includes("editMode: false"));
 assert.ok(embaJs.includes("function setEditMode"));
 assert.ok(embaJs.includes("function openMemoryLightbox"));
+assert.ok(embaJs.includes("function renderMarkdown"));
+assert.ok(embaJs.includes('blockTemplate("markdown", "Markdown", renderMarkdown(month))'));
+assert.ok(embaJs.includes("[data-markdown-editor]"));
+assert.ok(embaJs.includes("month.markdown = target.value"));
 assert.ok(embaJs.includes('data-memory-preview="${item.originalIndex}"'));
 assert.ok(embaJs.includes("if (!isEditMode()) return;"));
 assert.ok(embaJs.includes('detail.dataset.mode = isEditMode() ? "edit" : "read";'));
@@ -50,6 +54,7 @@ assert.ok(embaApiUtils.includes("validateSameOriginRequest"));
 assert.ok(embaApiUtils.includes("validR2Key"));
 assert.ok(embaApiUtils.includes("data:"));
 assert.ok(embaApiUtils.includes("MAX_MEMORIES_PER_MONTH = 100"));
+assert.ok(embaApiUtils.includes("markdown: cleanText"));
 
 assert.ok(embaLibraryApi.includes("env.EMBA_DB"));
 assert.ok(embaLibraryApi.includes("CREATE TABLE IF NOT EXISTS emba_state"));

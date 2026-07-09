@@ -110,6 +110,10 @@ function normalizeMemory(item, monthKey) {
   };
 }
 
+function normalizeMarkdown(value) {
+  return String(value || "");
+}
+
 function normalizeMonth(month) {
   const monthKey = month.month || monthKeyFromDate(month.date) || DEFAULT_START_MONTH;
   const materials = asArray(month.materials || month.material || month.documents).map(normalizeMaterial);
@@ -120,6 +124,7 @@ function normalizeMonth(month) {
     title: month.title || formatMonth(monthKey),
     materials,
     reflection: month.reflection || month.notes || "",
+    markdown: normalizeMarkdown(month.markdown || month.md || month.searchNotes),
     memoryMoment: memories
   };
 }
@@ -135,6 +140,7 @@ function legacyDaysToMonths(days = []) {
       title: formatMonth(monthKey),
       materials: [],
       reflection: "",
+      markdown: "",
       memoryMoment: []
     };
     entry.materials.push(...asArray(day.documents).map(normalizeMaterial));
@@ -163,6 +169,7 @@ function memoryHasContent(item = {}) {
 function monthHasContent(month = {}) {
   return asArray(month.materials).some(materialHasContent)
     || hasTextContent(month.reflection)
+    || hasTextContent(month.markdown)
     || asArray(month.memoryMoment).some(memoryHasContent);
 }
 
@@ -179,6 +186,7 @@ function createEmptyMonth(monthKey) {
     title: formatMonth(monthKey),
     materials: [],
     reflection: "",
+    markdown: "",
     memoryMoment: []
   };
 }
@@ -199,6 +207,7 @@ function editableMonth() {
   month.materials = asArray(month.materials);
   month.memoryMoment = asArray(month.memoryMoment);
   if (typeof month.reflection !== "string") month.reflection = "";
+  if (typeof month.markdown !== "string") month.markdown = "";
   return month;
 }
 
@@ -491,6 +500,19 @@ function renderReflection(month) {
   `;
 }
 
+function renderMarkdown(month) {
+  const markdown = normalizeMarkdown(month?.markdown || month?.md || month?.searchNotes);
+  if (!isEditMode()) {
+    return markdown.trim()
+      ? `<div class="emba-markdown-read">${escapeHtml(markdown)}</div>`
+      : `<p class="emba-empty-copy">No Markdown notes yet.</p>`;
+  }
+
+  return `
+    <textarea class="emba-markdown-editor" data-markdown-editor placeholder="Write searchable Markdown notes for this month...">${escapeHtml(markdown)}</textarea>
+  `;
+}
+
 function memoryInitials(monthKey) {
   const date = parseMonth(monthKey);
   if (!date) return "EMBA";
@@ -550,6 +572,7 @@ function renderMonthDetail(month) {
     <div class="emba-block-grid">
       ${blockTemplate("memory", "Memory Moment", renderMemoryMoment(month))}
       ${blockTemplate("reflection", "Reflection", renderReflection(month))}
+      ${blockTemplate("markdown", "Markdown", renderMarkdown(month))}
       ${blockTemplate("material", "Material", renderMaterials(month))}
     </div>
   `;
@@ -781,6 +804,13 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
   if (target.matches("[data-reflection-editor]")) {
     const month = editableMonth();
     month.reflection = target.value;
+    saveLibrary();
+    return;
+  }
+
+  if (target.matches("[data-markdown-editor]")) {
+    const month = editableMonth();
+    month.markdown = target.value;
     saveLibrary();
     return;
   }
