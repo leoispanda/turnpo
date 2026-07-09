@@ -55,7 +55,7 @@ The rule is simple:
 | Month | Searchable Markdown | Original-source status | Retrieval role |
 | --- | --- | --- | --- |
 | 2026-06 | One monthly index and one preparation document analysis | Original PDFs remain in the private local MBA PDF folder; sensitive administrative files are referenced but not copied into the repo | Admission, enrolment, onboarding, fees, programme structure, elective strategy |
-| 2026-07 | One monthly index and one handwritten-note analysis | Original handwritten images remain under `/emba/materials/2026-07/handwritten-notes/images/` | Leadership practice, listening, coaching, organizational learning, AI, inclusion |
+| 2026-07 | One monthly index, one overall handwritten-note analysis, 13 per-image Markdown notes, and one questions/reflections review queue | Original handwritten images remain under `/emba/materials/2026-07/handwritten-notes/images/` | Leadership practice, listening, coaching, organizational learning, AI, inclusion, personal review |
 
 ## Courses And Sessions
 
@@ -63,6 +63,7 @@ The rule is simple:
 | --- | --- | --- |
 | EMBA Preparation | 2026-06 | [EMBA Preparation Documents Analysis](./2026/06_June/converted-md/2026-06-emba-preparation-documents-analysis.md) |
 | Lead in Learning | 2026-07 | [EMBA July 2026 Handwritten Notes Analysis](./2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md) |
+| Personal Review Queue | 2026-07 | [July 2026 Questions And Reflections Review Queue](./2026/07_July/reflections/2026-07-questions-and-reflections-review.md) |
 
 ## Content Types
 

@@ -64,10 +64,25 @@ July 2026 is best retrieved for questions about Lead in Learning, leadership pos
 ### Converted Markdown
 
 - [EMBA July 2026 Handwritten Notes Analysis](./converted-md/2026-07-01-leadership-learning-handwritten-notes.md)
+- Per-image Markdown mirrors:
+  - [IMG 6900 - Lead in Learning](./converted-md/image-notes/IMG_6900-lead-in-learning.md)
+  - [IMG 6901 - Listening Habits And Outside-In Perspective](./converted-md/image-notes/IMG_6901-listening-habits.md)
+  - [IMG 6902 - Three Voices Of Resistance](./converted-md/image-notes/IMG_6902-three-voices.md)
+  - [IMG 6903 - Coaching Through Listening](./converted-md/image-notes/IMG_6903-coaching-listening.md)
+  - [IMG 6904 - Memory Making And Reflection](./converted-md/image-notes/IMG_6904-memory-making-reflection.md)
+  - [IMG 6905 - Perspective, Process, And Truth](./converted-md/image-notes/IMG_6905-perspective-and-truth.md)
+  - [IMG 6906 - Organizational Learning And Change](./converted-md/image-notes/IMG_6906-organizational-learning-change.md)
+  - [IMG 6907 - Psychological Safety And Trust](./converted-md/image-notes/IMG_6907-psychological-safety.md)
+  - [IMG 6908 - 70/20/10 And Knowledge Creation](./converted-md/image-notes/IMG_6908-70-20-10-nonaka.md)
+  - [IMG 6909 - AI As A Learning Amplifier](./converted-md/image-notes/IMG_6909-ai-learning-amplifier.md)
+  - [IMG 6910 - Storytelling And Presentation Practice](./converted-md/image-notes/IMG_6910-storytelling-presentation.md)
+  - [IMG 6911 - Data, Culture, And Communication](./converted-md/image-notes/IMG_6911-data-culture-communication.md)
+  - [IMG 6912 - Inclusion And Diversity](./converted-md/image-notes/IMG_6912-inclusion-diversity.md)
 
 ### Original Files
 
 - Handwritten-note images remain in `/emba/materials/2026-07/handwritten-notes/images/`.
+- Each handwritten-note image now has its own Markdown mirror in `./converted-md/image-notes/`.
 - Future PDF, PPT, Word, and slide files should be stored in `./originals/` while their searchable Markdown mirrors go into `./converted-md/`.
 
 Source handling rule: keep source images and future original files intact. Markdown files are the searchable interpretation layer and should point back to the image, PDF, PPT, or Word source whenever possible.
@@ -90,7 +105,8 @@ Source handling rule: keep source images and future original files intact. Markd
 
 ### Reflections
 
-- Monthly reflection is currently captured in the EMBA timeline and summarized here.
+- [Questions And Reflections Review Queue](./reflections/2026-07-questions-and-reflections-review.md)
+- Monthly reflection is captured in the EMBA timeline, summarized here, and now separated into a review queue for one-by-one reading.
 
 ### Work Applications
 
@@ -130,6 +146,10 @@ Source handling rule: keep source images and future original files intact. Markd
 ## 6. Personal Reflections
 
 Leadership is not mainly about stronger answers. It is about creating the conditions for better thinking: safety, trust, listening, reflection, and courage to question assumptions.
+
+Detailed one-by-one review file:
+
+- [July 2026 Questions And Reflections Review Queue](./reflections/2026-07-questions-and-reflections-review.md)
 
 ## 7. Work Applications
 

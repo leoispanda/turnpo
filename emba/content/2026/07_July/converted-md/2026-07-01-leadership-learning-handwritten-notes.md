@@ -352,25 +352,33 @@ Inclusion appears in the notes as listening, cultural mapping, communication, an
 - What did AI help me see, and what did I decide myself?
 - What practice should I repeat next week?
 
+## 5A. Questions And Reflections Review Queue
+
+The personal questions and reflections from this note are separated into a one-by-one review file:
+
+- [July 2026 Questions And Reflections Review Queue](../reflections/2026-07-questions-and-reflections-review.md)
+
+Use that file when the goal is not broad search, but slow review: one question, one reflection, one action at a time.
+
 ## 6. Possible Cleaned-Up Reflection For July EMBA Page
 
 July's first EMBA notes show a clear shift in my understanding of leadership. Leadership is not mainly about having sharper answers. It is about creating the conditions for better thinking: safety, trust, listening, reflection, and the courage to question assumptions. The strongest learning for me is to notice my autopilot, wait longer before responding, and help others find their own answers instead of rushing to provide solutions. AI can raise the standard of preparation and reflection, but only if human judgment remains in the lead. Inclusion and diversity also become practical through listening, cultural awareness, and communication that makes different perspectives visible.
 
 ## 7. Image Index
 
-- `images/IMG_6900.jpeg` - Lead in Learning, 2026-07-01.
-- `images/IMG_6901.jpeg` - Levels of listening / habits / outside-in perspective.
-- `images/IMG_6902.jpeg` - Three voices of judgment, cynicism, fear.
-- `images/IMG_6903.jpeg` - Listening, coaching, being understood and trusted.
-- `images/IMG_6904.jpeg` - Alumni introduction, memory making, blind spots, reflection.
-- `images/IMG_6905.jpeg` - Leadership, perspective, process, creativity, minority feeling.
-- `images/IMG_6906.jpeg` - Organizational learning, courage, comfort zone, change.
-- `images/IMG_6907.jpeg` - Psychological safety, trust, open-mindedness, leadership boundaries.
-- `images/IMG_6908.jpeg` - 70/20/10 learning and Nonaka/Takeuchi knowledge creation.
-- `images/IMG_6909.jpeg` - AI usage, assessment, human-in-the-lead.
-- `images/IMG_6910.jpeg` - Storytelling, friendly speech, presentation practice.
-- `images/IMG_6911.jpeg` - Country differences, leadership communication, AI and resources.
-- `images/IMG_6912.jpeg` - Inclusion & Diversity, 2026-07-03.
+- `images/IMG_6900.jpeg` - [Lead in Learning, 2026-07-01](./image-notes/IMG_6900-lead-in-learning.md).
+- `images/IMG_6901.jpeg` - [Levels of listening / habits / outside-in perspective](./image-notes/IMG_6901-listening-habits.md).
+- `images/IMG_6902.jpeg` - [Three voices of judgment, cynicism, fear](./image-notes/IMG_6902-three-voices.md).
+- `images/IMG_6903.jpeg` - [Listening, coaching, being understood and trusted](./image-notes/IMG_6903-coaching-listening.md).
+- `images/IMG_6904.jpeg` - [Alumni introduction, memory making, blind spots, reflection](./image-notes/IMG_6904-memory-making-reflection.md).
+- `images/IMG_6905.jpeg` - [Leadership, perspective, process, creativity, minority feeling](./image-notes/IMG_6905-perspective-and-truth.md).
+- `images/IMG_6906.jpeg` - [Organizational learning, courage, comfort zone, change](./image-notes/IMG_6906-organizational-learning-change.md).
+- `images/IMG_6907.jpeg` - [Psychological safety, trust, open-mindedness, leadership boundaries](./image-notes/IMG_6907-psychological-safety.md).
+- `images/IMG_6908.jpeg` - [70/20/10 learning and Nonaka/Takeuchi knowledge creation](./image-notes/IMG_6908-70-20-10-nonaka.md).
+- `images/IMG_6909.jpeg` - [AI usage, assessment, human-in-the-lead](./image-notes/IMG_6909-ai-learning-amplifier.md).
+- `images/IMG_6910.jpeg` - [Storytelling, friendly speech, presentation practice](./image-notes/IMG_6910-storytelling-presentation.md).
+- `images/IMG_6911.jpeg` - [Country differences, leadership communication, AI and resources](./image-notes/IMG_6911-data-culture-communication.md).
+- `images/IMG_6912.jpeg` - [Inclusion & Diversity, 2026-07-03](./image-notes/IMG_6912-inclusion-diversity.md).
 
 ## 8. Recognition Notes
 
