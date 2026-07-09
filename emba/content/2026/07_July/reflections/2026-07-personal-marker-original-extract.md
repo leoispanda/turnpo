@@ -1,17 +1,17 @@
 ---
 id: emba-2026-07-personal-marker-original-extract
-title: EMBA July 2026 Personal Marker Original Extract
+title: EMBA July 2026 Personal Reflection Evidence Ledger
 slug: 2026-07-personal-marker-original-extract
 type: personal_reflection
 program: EMBA
 school: Maastricht University
 course: Lead in Learning
 module: Intro Programme
-session: Original personal markers extracted from handwritten notes
+session: Page-by-page audit of personal markers and nearby context
 date: 2026-07-09
 year: 2026
 month: 2026-07
-source_type: handwritten_marker_extract
+source_type: handwritten_evidence_ledger
 source_file: /emba/materials/2026-07/handwritten-notes/images/IMG_6900.jpeg
 source_files:
   - /emba/materials/2026-07/handwritten-notes/images/IMG_6900.jpeg
@@ -33,20 +33,19 @@ tags:
   - questions
   - reflections
   - original-markers
+  - evidence-ledger
   - handwritten-notes
   - leo
-  - ai
-  - leadership
 keywords:
   - Leo:
   - I see
+  - original text
   - question marks
   - quoted sentences
   - star markers
-  - original text
-  - personal insight
-  - handwritten extraction
-summary: A source-faithful extraction of Leo's personal markers from the July 2026 handwritten notes, including original fragments, date, page position, context, and completed sentences.
+  - source audit
+  - handwritten evidence
+summary: A page-by-page evidence ledger that preserves Leo's original July 2026 handwriting, dates, image positions, nearby context, classification, and uncertainty without mixing in reconstructed arguments.
 related_topics:
   - leadership
   - decision-making
@@ -58,121 +57,250 @@ created_at: 2026-07-09
 updated_at: 2026-07-09
 ---
 
-# EMBA July 2026 - Personal Marker Original Extract
+# 2026 年 7 月个人思考原文证据账本
 
-这个文件专门整理手写笔记里带有个人感悟性质的原文标记：`Leo:`、`I see` / `See:`、引号、问号、星号，以及明显像自我提醒的问题句。
+这份文件只回答一个问题：**手写原图上究竟写了什么？**
 
-按“触发 -> 觉察 -> 转向 -> 判断 -> 待验证问题”整理后的阅读版见 [我的心得与思考过程](./2026-07-leo-thinking-journey.md)。本文件继续作为原文证据层。
+完整论述不写进原文列。需要逐条看 Codex 怎样补齐、哪些地方只是推论，请进入 [T01-T19 逐条 Review](./2026-07-questions-and-reflections-review.md)。想看跨页形成的整体思考，再看 [我的思考过程](./2026-07-leo-thinking-journey.md)。
 
-整理原则：
+## 审核规则
 
-- `Original text` 尽量保留手写原文和拼写。
-- `Completed sentence` 是补齐后的可读句，不替代原文。
-- `[unclear]` 表示手写不完全确定，需要以后回看原图。
-- 日期来自页面手写日期和已建立的逐图 Markdown metadata。
+- `个人明确`：有 `Leo:`、`I see`、`Leo thinking`、第一人称或明显个人产品指向。
+- `个人候选`：问号、引号、星号、自我提醒，但仍可能来自课堂练习。
+- `课堂框架`：课程模型或老师给出的要点，不直接冒充 Leo 的原创观点。
+- `外部引语`：笔记中的引用句，不归为 Leo 原创。
+- `上下文`：用来说明个人句子如何产生，本身不一定是感悟。
+- `待核原字`：图片可见但某个词无法可靠辨认；不强行补字。
 
-## Website Card Candidates
+## 本次纠正
 
-这些适合放在网站里的「思考与问题」卡片，覆盖思考、总结、问题、反思四类；完整原文证据仍以表格为准：
+1. IMG_6901 的四层倾听、IMG_6907 的 psychological safety matrix、IMG_6908 的 70/20/10 都改回 `课堂框架`。
+2. `"Use AI summarize my thought."` 是引号原句，不是 `I see`。
+3. 故事结构是 `Who? Why? How? -> What`，不是 `What? Why? How? What`。
+4. 个人故事写的是 `1997 China`，不是 1992。
+5. `Truth?` 与 `"PDC"` 只是两个短记号，原图没有完整 PDC 论证。
+6. IMG_6911 的关键词可能是 `Gender` 或 `Leader`，本次保留歧义。
+7. `True leadership` 原句已逐字恢复，不再用别的页面内容替代。
 
-1. `[总结] 领导力不是给更强答案，也不是让自己留在 comfortable room，而是创造让别人更好思考、表达和学习的条件。`
-2. `[感悟] True leadership：领导力不只是职位或权力，而是你能影响多少人，以及他们是否真正愿意跟随你。`
-3. `[问题] 我带进 EMBA 和工作里的真实 leadership question，来自哪个 personal struggle / personal interest?`
-4. `[问题] 我在提问、判断或给建议之前，背后默认的 assumption 是什么？`
-5. `[反思] Wait until finish: 我有没有太早 interrupt，太快进入给答案模式？`
-6. `[反思] 我听反馈时出现的是 judgment、cynicism，还是 fear？我是在学习，还是在防御？`
-7. `[总结] Blind spot as input: 盲点不是羞耻，而是下一步学习材料。`
-8. `[总结] Everything we hear is an opinion, not a fact; everything we see is a perspective, not the truth.`
-9. `[反思] Appointment with me: 每周要给自己留出 diary shadowing 和复盘时间。`
-10. `[问题] 哪些知识和 insight 还没有在组织里找到 home，不能沉淀成 shared language / checklist / routine?`
-11. `[思考] AI: 80 -> 120, but human in the lead; content copy from generate content is not learning.`
-12. `[问题] 未来如何测试一个人真正 master the knowledge，而不是只会让 AI summarize?`
+## IMG_6900 - 2026-07-01 - Lead in Learning
 
-## Original Marker Table
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E001 | 个人候选 | 下半页 | `Q/A: 5min, personal strggle, personal interest` | 课堂提问练习；`strggle` 按原拼写保留。 |
+| E002 | 个人候选 | 下半页 | `why we develop in leader role` | 与 E001 连续。 |
+| E003 | 上下文 | 下半页 | `situation in real daily work` | 说明问题要落到真实工作。 |
+| E004 | 上下文 | 下半页 | `1min and give answer` | 课堂作答要求，不是个人结论。 |
+| E005 | 个人候选 | 页底 | `Coaching -> auto pattern. be aware` | coaching 对自动模式的提醒。 |
+| E006 | 个人候选 / 引号 | 页底 | `"shifting perspective" of assumption` | `shifting perspective` 有引号。 |
+| E007 | 个人候选 / 引号 | 页底 | `"Not make your comfortable room"` | 语法不完整，原样保留。 |
+| E008 | 个人候选 | 最后一行 | `enabling others to think differently` | 与 E007 相邻，可形成 T02，但关联仍是整理判断。 |
 
-| ID | Marker | Date | Source / Position | Context | Original text | Completed sentence |
-| --- | --- | --- | --- | --- | --- | --- |
-| P01 | Q/A | 2026-07-01 | IMG_6900, lower third | Lead in Learning opening exercise | `Q/A: 5min, personal strggle, personal interest` | A useful EMBA leadership question should come from a real personal struggle and personal interest. |
-| P02 | Question | 2026-07-01 | IMG_6900, lower third | Why leadership development matters | `why we develop in leader role` | Why do we develop ourselves in a leader role? |
-| P03 | Reflection | 2026-07-01 | IMG_6900, lower third | Bringing class into work | `situation in real daily work` | The leadership question should be grounded in a real daily work situation. |
-| P04 | Quoted phrase | 2026-07-01 | IMG_6900, bottom | Coaching and assumptions | `"shifting perspective" of assumption` | Coaching helps me become aware of automatic patterns and shift perspective on my assumptions. |
-| P05 | Quoted phrase | 2026-07-01 | IMG_6900, bottom | Leadership posture | `"Not make your comfortable room"` / `enabling others to think differently` | Leadership is not about making my own room comfortable; it is about enabling others to think differently. |
-| P06 | Reflection | 2026-07-01 | IMG_6901, page center | Levels of listening | `Downloading habits -> reconfirming old opinions & judgment` | If I only listen from habit, I may simply reconfirm old opinions and judgments. |
-| P07 | Reflection | 2026-07-01 | IMG_6901, page center | Factual listening | `Fact, notice diff -> open mind -> disconfirming data [new]` | Factual listening means opening my mind to different data, especially data that disconfirms what I already think. |
-| P08 | Reflection | 2026-07-01 | IMG_6901, lower center | Empathic listening | `empathic listening -> open heart -> seeing through emotional connection` | Empathic listening asks me to see through emotional connection, not only through logic. |
-| P09 | Reflection | 2026-07-01 | IMG_6901, lower right | Generative listening | `generative listening -> open will -> connecting to an emerging future` | Generative listening means opening my will and connecting to an emerging future. |
-| P10 | Direct reminder | 2026-07-01 | IMG_6902, top | Listening discipline | `wait until finish -> don't interact too early` | Wait until the other person finishes; do not interact too early. |
-| P11 | Reflection | 2026-07-01 | IMG_6902, upper half | Inner blockers to listening | `Three Voice of judgement / Cynicism / fear` | When listening, I need to notice the inner voices of judgment, cynicism, and fear. |
-| P12 | Quoted phrase | 2026-07-01 | IMG_6902, lower half | Feedback and generation gap | `Young people not "willing"` | The phrase "young people are not willing" may be a judgment I need to examine before accepting it as fact. |
-| P13 | Reflection | 2026-07-01 | IMG_6902, lower half | Receiving comments | `take things personally and angry with the comments, I also emotional` | I may take comments personally and become emotional; I need to separate feedback from self-defense. |
-| P14 | Reflection | 2026-07-01 | IMG_6902, bottom | Feedback timing | `be open to advice not to refuse improv[e] ... feedback not everywhere/anytime` | Be open to advice, but remember feedback is useful only when it is needed, timely, and placed in the right context. |
-| P15 | Star / Question | 2026-07-01 | IMG_6903, top | Coaching scenario | `share your expectation with child.` | Share expectations clearly before judging the child's behavior. |
-| P16 | Reflection | 2026-07-01 | IMG_6903, upper third | Misunderstanding | `Common area of the misunderstanding` | Find the common area of misunderstanding before trying to fix the problem. |
-| P17 | Reflection | 2026-07-01 | IMG_6903, upper third | Feedback | `listen to others feedback` | Listen to other people's feedback before deciding what should be done. |
-| P18 | Reflection | 2026-07-01 | IMG_6903, middle | Meeting attention | `no more distractions in the meeting and ... more focus to let others feel about you` | Remove distractions in the meeting and stay focused so others feel heard. |
-| P19 | Reflection | 2026-07-01 | IMG_6903, middle | Trust | `being understand / being trusted` | Being understood and being trusted are connected. |
-| P20 | Quoted phrase | 2026-07-01 | IMG_6903, middle | Coaching method | `"Summary and reflection"` | Use summary and reflection before moving into advice. |
-| P21 | Reflection | 2026-07-01 | IMG_6903, lower half | Listening exercise | `Only listening No clarification questions.` | Start with listening only, without clarification questions too early. |
-| P22 | Question / unclear | 2026-07-01 | IMG_6903, lower half | Coaching depth | `essence?` or `[unclear] "assumptions"` | Ask whether I am hearing the essence of the problem or only my assumption about it. |
-| P23 | Reflection | 2026-07-01 | IMG_6903, lower half | Coaching boundary | `let the coachee fix his problem not provide solutions.` | Let the coachee fix their own problem; do not provide solutions too quickly. |
-| P24 | Star / Question | 2026-07-01 | IMG_6903, bottom | Turnpo learning system | `Show your work in Turnpo < sparks and ideas come true?` | Show my work in Turnpo so sparks and ideas can become true. |
-| P25 | Reflection | 2026-07-02 | IMG_6904, middle | Memory making | `blind spot as input` | Treat blind spots as input, not as shame. |
-| P26 | Reflection | 2026-07-02 | IMG_6904, middle | Perspective | `open my perspective` | Reflection should open my perspective instead of confirming what I already believe. |
-| P27 | Reflection | 2026-07-02 | IMG_6904, middle | Meeting meaning | `meeting -> OK! let's go` / `oh! no another hour waste` | The same meeting can feel energizing or wasteful depending on whether it creates meaning and action. |
-| P28 | Reflection | 2026-07-02 | IMG_6904, middle | Reflection and brain links | `Neuro, reflecting -> make neuros link` | Reflection helps connect experience into stronger mental links. |
-| P29 | Core sentence | 2026-07-02 | IMG_6904, lower half | Fact versus interpretation | `Everything we hear is an opinion, not a fact` | Everything we hear is an opinion, not necessarily a fact. |
-| P30 | Core sentence | 2026-07-02 | IMG_6904, lower half | Perspective versus truth | `Everything we see is a perspective, not the truth` | Everything we see is a perspective, not the whole truth. |
-| P31 | Question | 2026-07-02 | IMG_6904, lower half | Energy and repetition | `energized -> next? -> find what you excited and summary and do again` | When I feel energized, ask what excited me, summarize it, and repeat the loop. |
-| P32 | Quoted phrase | 2026-07-02 | IMG_6904, bottom | Reflective practice | `"diary shadowing"` | Diary shadowing can help me observe my own experience and turn it into learning. |
-| P33 | Reflection | 2026-07-02 | IMG_6904, bottom | Personal rhythm | `appointment with me` | Keep a regular appointment with myself for reflection. |
-| P34 | Leo / Quoted | 2026-07-02 | IMG_6905, upper right | Leadership definition | `leo: "True leadership": people want to follow you ... how many people you can influence and they are willing to follow you` | True leadership is shown by whether people want to follow you and are willing to be influenced by you. |
-| P35 | Reflection | 2026-07-02 | IMG_6905, upper right | Leadership bases | `positional / relational / process perspective` | Leadership can come from position, relationship, or process, not only hierarchy. |
-| P36 | Quoted / Exercise | 2026-07-02 | IMG_6905, middle | Creativity pressure | `"I want a Creativity idea in 1 min" / Nothing happen, need check the situation` | When creativity is demanded instantly, nothing may happen; I need to check the situation and conditions first. |
-| P37 | Question | 2026-07-02 | IMG_6905, middle | Class or group design | `"How many classes in the same time?"` | How many classes or learning groups are operating at the same time, and how does that shape attention? |
-| P38 | Question | 2026-07-02 | IMG_6905, lower half | Department comparison | `Topic: How do you think your department in your organization important?` | How important is my department in the organization, and by what logic am I judging that importance? |
-| P39 | Quoted phrase | 2026-07-02 | IMG_6905, lower half | Power versus essence | `"Not powerwise, the essential wise"` | Compare departments by their essential contribution, not only by power. |
-| P40 | See | 2026-07-02 | IMG_6906, upper half | Complexity | `See: If a company feel complex, too easy if a company is simple, learn difficult` | If a company feels complex, do not oversimplify it; if it looks simple, learning may actually be difficult. |
-| P41 | Quoted phrase | 2026-07-02 | IMG_6906, upper half | Practice and change | `"practice" changes items physical ... let each check` | Practice makes change physical and observable, so each person can check it. |
-| P42 | Quoted idea | 2026-07-02 | IMG_6906, middle | Courage | `To dare is ... / To not dare is ...` | To dare is to lose footing momentarily; to not dare is to lose oneself. |
-| P43 | Reflection | 2026-07-02 | IMG_6906, middle | Inclusion | `Stand up habit everyone stand up` | Small habits can include everyone when the group practices them together. |
-| P44 | Reflection | 2026-07-02 | IMG_6906, lower left | Change blindness | `8 changes in the movie, the magic` | Change can be invisible while it is happening; I need to train myself to notice it. |
-| P45 | Reflection | 2026-07-02 | IMG_6906, bottom | Blind spots over time | `Market changes (always find blind spot)` / `bias -> changed overtime` | Market change and personal bias both evolve over time; keep looking for blind spots. |
-| P46 | Question | 2026-07-02 | IMG_6907, top | Truth and decision process | `Truth?` / `"PDC"` | What do I treat as truth, and how should a PDC-style process test it? |
-| P47 | Reflection | 2026-07-02 | IMG_6907, upper half | Smart people and bad decisions | `Smart People -> stupid decision` | Smart people can still make bad decisions if the system blocks learning or truth-telling. |
-| P48 | Reflection | 2026-07-02 | IMG_6907, middle | Psychological safety | `Good leadership behavior: Control the goal not process, unbiased, set boundary, clear goals, team building` | Good leadership controls the goal and boundaries, not every step of the process. |
-| P49 | Reflection | 2026-07-02 | IMG_6907, lower half | Trust | `I have your back ... trust and removing fear` | Trust means people feel I have their back, which removes fear and supports learning. |
-| P50 | I see | 2026-07-02 | IMG_6908, top | Organization layers | `I see: different layers focus` | I see that different organizational layers focus on different kinds of learning and execution. |
-| P51 | Reflection | 2026-07-02 | IMG_6908, upper half | Learning culture | `e-level, mid-management, execution layer / learning + culture` | Learning culture must connect executive, middle-management, and execution layers. |
-| P52 | Reflection | 2026-07-02 | IMG_6908, middle | Listener perspective | `Take the listener's perspective` | Take the listener's perspective before explaining or teaching. |
-| P53 | Reflection | 2026-07-02 | IMG_6908, middle | Practice loop | `observe -> explain -> practice -> combination until it become second nature` | Observe, explain, practice, and combine until the behavior becomes second nature. |
-| P54 | Reflection | 2026-07-02 | IMG_6908, bottom | 70/20/10 | `Formal learning -> 10 / Informal learning -> 20 / On-the-job learning -> 70` | Most learning should be converted into work practice, not left only in formal class. |
-| P55 | Reflection | 2026-07-02 | IMG_6909, top | Knowledge home | `Make sure knowledge and insight get a home in your organisation` | Knowledge and insight need a home in the organization, or they disappear. |
-| P56 | Quoted phrase | 2026-07-02 | IMG_6909, upper half | AI and learning | `Not -> content copy from "generate content"` | Copying generated content is not learning. |
-| P57 | Quoted phrase | 2026-07-02 | IMG_6909, upper half | AI practice | `"What you learn speak up and test"` | Say what I learned out loud and test it, especially when AI is involved. |
-| P58 | Leo | 2026-07-02 | IMG_6909, middle | AI use standard | `Leo: How to define AI usage. 60 -> 80 normal. 80 -> 120 with AI.` | Define AI usage by whether it raises the work from good to excellent, not by whether it replaces thinking. |
-| P59 | Reflection | 2026-07-02 | IMG_6909, middle | Human in the lead | `Not let AI guide or generate, all human in the lead.` | Do not let AI guide or generate everything; humans must stay in the lead. |
-| P60 | Question | 2026-07-02 | IMG_6909, lower half | Assessment | `How to test in the future` | How should future assessments test real mastery when AI is available? |
-| P61 | I see | 2026-07-02 | IMG_6909, lower half | Assessment design | `I see: same as qualification test how people master the knowledge.` | I see assessment like a qualification test: it should test how people master the knowledge. |
-| P62 | I see | 2026-07-02 | IMG_6909, bottom | AI prompt design | `I see: AI summarize my thought, business input -> prompt for generating thinking (logic)` | AI can summarize my thought and business input, then turn them into prompts that generate better thinking logic. |
-| P63 | Leo | 2026-07-03 | IMG_6910, upper half | Work and learning | `learning is the process / working is the result -> Leo` | Learning is the process; working is the result. |
-| P64 | Star | 2026-07-03 | IMG_6910, middle | Presentation prep | `Ready speech -> need check! less is more` | Before a ready speech, check it again: less is more. |
-| P65 | Question | 2026-07-03 | IMG_6910, middle | Audience | `Target Audience -> ... what information you want share` | What information do I actually want to share with this target audience? |
-| P66 | Question | 2026-07-03 | IMG_6910, lower half | Resource constraints | `Resource if limited, the battle will happen.` | If resources are limited, conflict will happen; plan for the battle before it starts. |
-| P67 | Question pattern | 2026-07-03 | IMG_6910, lower half | Story structure | `What? why? how? what` | Build the story through what happened, why it matters, how it works, and what comes next. |
-| P68 | Reflection | 2026-07-03 | IMG_6910, bottom | Story durability | `Visual story stand the test of time` | A visual story should stand the test of time. |
-| P69 | Star / Leo | 2026-07-03 | IMG_6911, upper left | Data communication | `Leo's think: [unclear] visualization + AI gen` | My thought is that visualization plus AI generation can make data communication more vivid. |
-| P70 | Reflection | 2026-07-03 | IMG_6911, top | Data and leadership | `data can be fun` | Data can be fun when it becomes visual, personal, and meaningful. |
-| P71 | Reflection | 2026-07-03 | IMG_6911, upper half | Leadership support | `Leader is not possible if nobody support or not human resource` | Leadership is not possible without people and resources behind it. |
-| P72 | Reflection | 2026-07-03 | IMG_6911, middle | Storytelling checklist | `Make it personal / keep it Authentic / Target the Audience / Stickiness / wow factor` | Make the story personal, authentic, audience-targeted, sticky, and memorable. |
-| P73 | Reflection | 2026-07-03 | IMG_6911, lower half | Personal story | `You are in 1992 China, a 3rdline city, 7yrs old ... city evolves ...` | A personal story about 1992 China and city change can make the data emotionally concrete. |
-| P74 | Reflection | 2026-07-03 | IMG_6911, lower half | Emotional storytelling | `personal feeling more emotion with the story` | Personal feeling brings more emotion into the story. |
-| P75 | Quoted / Question | 2026-07-03 | IMG_6911, bottom | Remote communication | `"Teams online meeting -> How to storytell"` | How can I tell a story effectively in a Teams online meeting? |
-| P76 | Reflection | 2026-07-03 | IMG_6912, upper half | Inclusion and identity | `Where you home. current` | Ask where someone feels at home now, not only where they are originally from. |
-| P77 | Reflection | 2026-07-03 | IMG_6912, middle | Autopilot | `1st feeling Autopilot -> 2st feeling focus` | Move from the first autopilot feeling into a second, more focused feeling. |
-| P78 | Reflection | 2026-07-03 | IMG_6912, lower half | Culture Map | `The culture MAP / different form` | Use the Culture Map to notice that the same behavior can take different forms across cultures. |
+## IMG_6901 - 2026-07-01 - Four Levels of Listening
 
-## Follow-Up Review Notes
+本页没有明确 `Leo:` 或第一人称标记。它是后续 listening 反思的课堂背景，不应拆成四条个人感悟。
 
-- High-confidence original markers: P01-P05, P10-P13, P20-P24, P29-P34, P55-P64, P75.
-- Lower-confidence handwriting that should be checked against the original images before public reuse: P22, P37, P40, P41, P42, P69.
-- Best next step: review the table one row at a time and decide which items should become actions, reflections, LinkedIn drafts, or Turnpo product ideas.
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E009 | 课堂框架 | 上部 | `Listen 1: Downloading habits -> reconfirming old opinions & judgement` | Listening level 1。 |
+| E010 | 课堂框架 | 中上部 | `Listen 2: Fact; notice diff -> open mind -> disconfirming [new] data` | Listening level 2，部分箭头词序按版面读取。 |
+| E011 | 课堂框架 | 中下部 | `Listen 3: Empathic listening -> open heart -> seeing through emotional connection` | Listening level 3。 |
+| E012 | 课堂框架 | 下部 | `Listen 4: Generative listening -> open will -> emerging future / completely different expert` | 最后几个词的连接关系不完全清楚。 |
+
+## IMG_6902 - 2026-07-01 - Listening, Feedback, Emotion
+
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E013 | 个人候选 | 页顶 | `wait until finish -> don't interact too early` | 明确行为提醒。 |
+| E014 | 课堂框架 | 上半页 | `Three Voice of judgement / Cynicism / fear` | 课程概念，不直接算个人原创。 |
+| E015 | 上下文 | 中部 | `Completely happy -> point out a problem` | 可能是 feedback 情境例子。 |
+| E016 | 上下文 | 中部 | `well ... -> straight not wait` | 原句不完整。 |
+| E017 | 待核原字 | 中部 | `proud -> things clear less comple...` | 末尾无法可靠辨认。 |
+| E018 | 个人候选 / 引号 | 下半页 | `Young people not "willing"` | 可能是待检验的代际标签。 |
+| E019 | 个人明确 | 下半页 | `take things personally and angry with the comments, I also emotional` | 明确第一人称，是 T03 的核心证据。 |
+| E020 | 个人候选 | 页底 | `be open to advice not to refuse improv[e]` | 末词不完整。 |
+| E021 | 个人候选 | 页底 | `feedback not everywhere/anytime` | 更像对 feedback 使用时机的提醒。 |
+
+## IMG_6903 - 2026-07-01 - Coaching and Trust
+
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E022 | 个人候选 / 问号 | 页顶 | `share your expectation with child.` | 左侧有圈记 / 问号状标记。 |
+| E023 | 个人候选 | 上部 | `Common area of the misunderstanding` | 误解情境。 |
+| E024 | 上下文 | 上部 | `to understand father's situation` | 与 child/father 情境连续。 |
+| E025 | 个人候选 | 上部 | `listen to others feedback` | 行动提醒。 |
+| E026 | 待核原字 | 中上部 | `understand by others behave us what he should do.` | 英文结构不完整，不补成确定含义。 |
+| E027 | 个人候选 | 中部 | `no more distractions in the meeting` | 会议注意力。 |
+| E028 | 个人候选 | 中部 | `and behave more focus to let others feel about you` | 原句照录；`feel about you` 的具体含义待 Leo 确认。 |
+| E029 | 个人候选 | 中部 | `being understand / being trusted` | 理解与信任的并列关系。 |
+| E030 | 个人候选 / 引号 | 中部 | `"Summary and reflection"` | coaching/listening 方法。 |
+| E031 | 上下文 | 中下部 | `Share your problem to others` | 课堂练习提示。 |
+| E032 | 个人候选 | 中下部 | `Only listening No clarification questions.` | 明确练习边界。 |
+| E033 | 个人候选 | 中下部 | `Still following when misunderstood` | 此句此前遗漏；`following` 按原字保留。 |
+| E034 | 待核原字 | 中下部 | `eisence? or assen...` | 可能是 `essence?` / `assumptions`，不能确定。 |
+| E035 | 个人候选 | 下部 | `let the coachee fix his problem / not provide solutions.` | T04 核心证据。 |
+| E036 | 课堂关键词 | 下部方框 | `Listening` | 对本页主题的框选总结。 |
+| E037 | 个人明确 / 星号 | 页底 | `Show your work in Turnpo < sparks and ideas come true?` | 明确指向 Turnpo，是 T05 核心证据。 |
+
+## IMG_6904 - 2026-07-02 - Memory Making and Reflection
+
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E038 | 课堂框架 | 中上部 | `Memory Making -> Professor Sonja / Connect points to lines to picture to a Cat` | memory-making 练习。 |
+| E039 | 个人候选 | 中部 | `blind spot as input` | 原文清楚。 |
+| E040 | 个人明确 | 中部 | `open my perspective` | 第一人称。 |
+| E041 | 个人候选 | 中部 | `meeting -> OK! let's go / Oh! no another hour waste` | 同一 meeting 的两种反应。 |
+| E042 | 课堂 / 个人候选 | 中下部 | `Neuro, reflecting -> make neuros link` | 可能记录老师解释，非可靠神经科学结论。 |
+| E043 | 外部引语 | 下半页 | `Everything we hear is an opinion, not a fact` | 不归为 Leo 原创。 |
+| E044 | 外部引语 | 下半页 | `Everything we see is a perspective, not the truth` | 不归为 Leo 原创。 |
+| E045 | 个人候选 / 问号 | 下部 | `energized -> next? -> find what you excited and summary and do again` | 能量与重复练习。 |
+| E046 | 个人候选 / 引号 | 页底 | `"diary shadowing"` | 原词可能来自课堂。 |
+| E047 | 个人明确 | 页底 | `appointment with me` | 第一人称式行动提醒。 |
+
+## IMG_6905 - 2026-07-02 - True Leadership and Department Value
+
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E048 | 待核原字 | 页顶 | `When you meet a ... you get angry quick / how to expand and respect your feeling / according to the Alpha moments` | 前半句和 `Alpha` 词需回看。 |
+| E049 | 课堂框架 | 右上部 | `different perspective` | 引出三种 leadership perspective。 |
+| E050 | 个人明确 / Leo / 引号 | 右上部 | `Leo: "True leadership": people want to follow you / how many people you can influence and / they are willing to follow you` | T07 的完整原文证据。 |
+| E051 | 课堂框架 | 中上部 | `positional perspective -> Hierarchical / Relational perspective -> common goal / Process perspective -> progress learning` | 不是三条独立个人感悟。 |
+| E052 | 上下文 | 中部 | `leadership -> creativity` | 连接下一段 creativity exercise。 |
+| E053 | 个人候选 / 引号 | 中部 | `"I want a Creativity idea in 1 min!!!"` | 可能模拟领导者命令。 |
+| E054 | 个人候选 | 中部 | `Nothing happen. Need check the situation` | 与 E053 连续。 |
+| E055 | 个人候选 / 问号 | 中下部 | `"How many classes in the same time?"` | 具体含义待 Leo 补回。 |
+| E056 | 上下文 | 中下部 | `feels minority` | 与 E055 的连接不确定。 |
+| E057 | 课堂问题 | 下半页 | `Topic: How do you think your department in your organization important.` | 部门重要性练习。 |
+| E058 | 个人候选 / 问题 | 下半页 | `How do you feel which is more important than yours and less important` | 此句此前遗漏。 |
+| E059 | 个人候选 / 引号 | 下部 | `"Not powerwise, the essential wise"` | T08 核心证据；`wise` 按原文保留。 |
+| E060 | 上下文 | 页底 | `In interview` | 可能说明使用场景。 |
+
+## IMG_6906 - 2026-07-02 - Change, Inclusion, Blind Spots
+
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E061 | 个人明确 / I see / 待核 | 上半页 | `I see: If a company too complex, too easy / If a company is simple, learn difficult` | 字词和逻辑均需 Leo 核对，不据此扩写结论。 |
+| E062 | 外部引语 | 中部 | `To dare is to lose one's footing momentarily / To not dare is ...` | 引语未完整抄完，不归为 Leo 原创。 |
+| E063 | 个人候选 | 中部 | `Mirror others feel included` | 此句此前遗漏。 |
+| E064 | 个人候选 | 中部 | `Stand up habit everyone stand up` | 可能来自 inclusion/change 练习。 |
+| E065 | 个人候选 | 中下部 | `Find the meanings` | 原文清楚，具体对象不明。 |
+| E066 | 上下文 | 中下部 | `Audience test` | 课堂情境。 |
+| E067 | 个人候选 | 下部 | `8 changes in the movie, the magic` | change-blindness 练习记录。 |
+| E068 | 上下文 | 下部 | `EMBA, surrounding changes, Positive/Neg` | 原句缩写。 |
+| E069 | 个人候选 | 页底 | `Market changes, always find blind spot` | T09 证据。 |
+| E070 | 个人候选 | 页底 | `bias -> changed overtime` | `overtime` 按原文保留。 |
+
+## IMG_6907 - 2026-07-02 - Psychological Safety and Leadership Behavior
+
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E071 | 个人候选 / 问号 | 页顶 | `Truth?` | 只有一个词，不能推演成完整真理框架。 |
+| E072 | 个人候选 / 引号 | 页顶 | `"PDC"` | 只有缩写，和 E071 的关系待 Leo 确认。 |
+| E073 | 课堂命题 | 上部 | `Smart People <-> stupid decision` | 邻近 Chris Argyris 与 psychological safety。 |
+| E074 | 课堂框架 | 上半页 | `psychological Safety` 四象限：`comfort zone / learning zone / apathy zone / anxiety zone` | 框架记录。 |
+| E075 | 课堂框架 / 候选原则 | 中下部 | `Control the goal not process / Unbiased, set boundary / clear goals / team building / one to one meeting follow-up / clear framework / Trust` | 领导行为清单。 |
+| E076 | 课堂框架 / 候选原则 | 下部 | `Listen / Not be judgemental / Open-minded / Safety` | 此组此前未完整呈现。 |
+| E077 | 个人候选 | 下部 | `I have your back` | 信任行为。 |
+| E078 | 个人候选 | 页底 | `知行合一 - do what you do and say what you do` | 英文按可辨字保留。 |
+| E079 | 个人候选 | 页底 | `Trust and removing fear` | 与 psychological safety 连续。 |
+
+## IMG_6908 - 2026-07-02 - Organizational Layers and Learning
+
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E080 | 个人明确 / I see | 页顶 | `I see: Different layers focus.` | T11 核心证据。 |
+| E081 | 课堂上下文 | 上部 | `C-level, mid-management, execution layer / learning culture` | 给 E080 提供对象。 |
+| E082 | 课堂提示 | 中部 | `Take the listener's perspective` | tap-a-song exercise 附近。 |
+| E083 | 课堂框架 | 中下部 | `Observe -> Explain -> Practise <- combination / until it becomes second nature` | 箭头布局按页面读取。 |
+| E084 | 课堂框架 | 下部 | `Formal learning -> 10 / Informal learning -> 20 / On-the-job learning -> 70` | 70/20/10，不归为个人原创。 |
+| E085 | 课堂来源 | 中部 | `Nonaka Takeushi (1994)` | 原文姓氏拼写如此；应指 Nonaka / Takeuchi，需外部核实后再引用。 |
+
+## IMG_6909 - 2026-07-02 - Knowledge Home and AI
+
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E086 | 课堂要点 / 候选原则 | 页顶 | `Make sure knowledge and insight get a "home" in your organisation` | T12 原文。 |
+| E087 | 课堂要点 | 上部 | `Allocate reflection time / be a storyteller, sparring partner or mentor / build communities of practice` | 与 E086 连续。 |
+| E088 | 课堂要点 | 上部 | `be conscious about AI use` | 引出 AI 段落。 |
+| E089 | 个人候选 / 引号 | 中上部 | `Not -> content copy from "generate content"` | 语法不完整，含义接近“不直接复制生成内容”。 |
+| E090 | 个人候选 / 引号 | 中上部 | `What you learn / speak up and test` | 可能与 E089 连成一组。 |
+| E091 | 个人明确 / Leo | 中部 | `Leo: How to define AI usage.` | AI 思考链开头。 |
+| E092 | 个人明确 | 中部 | `60 -> 80 normal. / 80 -> 120 with AI` | 数字含义未在原图定义。 |
+| E093 | 个人明确 | 中部 | `Not let AI guide or generate all / human in the lead` | T13 核心边界。 |
+| E094 | 个人候选 / 问号 | 下半部 | `How to test in the future` | assessment 问题。 |
+| E095 | 个人明确 / I see | 下半部 | `I see: Same as qualification test how people master the knowledge` | T14 核心证据。 |
+| E096 | 个人候选 / 问号 | 下部 | `How the future assessment.` | 语法不完整。 |
+| E097 | 个人明确 / 引号 | 页底 | `"Use AI summarize my thought."` | 此前误标为 I see；本次纠正。 |
+| E098 | 个人明确 | 页底 | `Business input -> Prompt for generating / thinking logic` | 与 E097 连成 T15。 |
+
+## IMG_6910 - 2026-07-03 - Storytelling, Work, Resources
+
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E099 | 课堂要点 | 页顶 | `Interact with real person.` | storytelling 开头。 |
+| E100 | 课堂框架 | 上部 | `Mirror -> picture the story / Story telling is interactive` | 故事与互动。 |
+| E101 | 个人明确 / Leo | 上部方框 | `Learning is the process / Working is the Result -> Leo` | T16 核心证据。 |
+| E102 | 个人候选 / 星号 / 待核 | 中部 | `[word unclear] speech -> need check! / less is more` | 第一个词可能是 `Ready` 或 `Friendly`，不强行确定。 |
+| E103 | 课堂 / 个人候选 | 中部 | `Target Audience` | 后面连着信息与 presentation。 |
+| E104 | 个人候选 / 问题 | 中下部 | `What information you want share` | 目标听众问题。 |
+| E105 | 课堂练习 | 中下部 | `Practice for the presentation -> 2min + eye contact + gesture` | 演讲练习。 |
+| E106 | 个人明确 / Leo thinking | 下半部 | `Resource if limited, the battle will happen -> Leo thinking` | T17 核心证据。 |
+| E107 | 个人候选 / 问题结构 | 下部 | `Who? Why? How? -> What` | 此前词序转录错误；本次按原图纠正。 |
+| E108 | 个人候选 | 页底 | `Visual story stand the test of time` | 故事耐久性。 |
+
+## IMG_6911 - 2026-07-03 - Data, Personal Story, Online Storytelling
+
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E109 | 个人候选 | 上部 | `data can be fun` | country difference animation 之后。 |
+| E110 | 个人明确 / Leo think / 待核 | 上部星号旁 | `[Gender or Leader] is not possible if nobody support / or no human resource could use` | 关键词无法可靠区分；此前直接写成 Leader 过度确定。 |
+| E111 | 课堂工具 | 上部 | `unsplash.com + AI gen` | 与 E110 的关系不确定，不能补成“visualization + AI”个人论点。 |
+| E112 | 课堂 / 个人候选 | 中部 | `Make it personal / keep it Authentic / wow factor / Target the Audience / Stickiness` | storytelling checklist。 |
+| E113 | 个人故事草图 | 中下部 | `You are in 1997 China, a 3rd line city, 7 yrs old` | 年份明确是 1997。 |
+| E114 | 个人故事草图 | 中下部 | `Then the city evolves ... ride a bike / 9 yrs later, you feel more traffic and more busy / You had own computer ...` | 中间部分字迹不全，保留可辨片段。 |
+| E115 | 个人候选 | 下部 | `personal feeling more / emotion with the story` | 个人经历与情绪。 |
+| E116 | 课堂表达提示 | 下部 | `gesture / eye movement / voice higher/lower / sequence -> dog happy -> farm picture` | presentation delivery。 |
+| E117 | 个人候选 / 引号 / 问号 | 页底 | `"Teams online meeting -> How to storytell"` | T18 的 online follow-up。 |
+
+## IMG_6912 - 2026-07-03 - Inclusion and Culture Map
+
+| ID | 分类 | 原图位置 | 原文 | 上下文 / 审核备注 |
+| --- | --- | --- | --- | --- |
+| E118 | 个人候选 / 问号 | 上部 | `Where you home. current?` | 可能在问当前归属。 |
+| E119 | 课堂练习 / 个人候选 | 中部 | `Communication / 1st feeling Autopilot -> / 2st feeling focus` | 没有具体情境，需 Leo 补回。 |
+| E120 | 课堂框架 | 下部 | `The culture MAP / different form` | Culture Map 提示，原图未写完整结论。 |
+
+## 由证据形成的 19 条审阅主线
+
+| Review ID | 主要证据 | 主题 |
+| --- | --- | --- |
+| T01 | E001-E003 | 真实问题是学习入口 |
+| T02 | E005-E008 | 自动模式、假设与帮助别人换角度 |
+| T03 | E019-E021 | 反馈、个人化与情绪 |
+| T04 | E013, E029-E035 | 听完、总结、信任与 coaching 边界 |
+| T05 | E037 | Turnpo 让 sparks and ideas 变成成果 |
+| T06 | E039-E047 | blind spot、perspective 与 reflection rhythm |
+| T07 | E050-E052 | True leadership 与愿意跟随 |
+| T08 | E057-E060 | 部门权力与 essential contribution |
+| T09 | E067-E070 | 变化、bias 与持续盲点检查 |
+| T10 | E063-E064, E075-E079 | inclusion、safety 与知行合一 |
+| T11 | E080-E085 | 不同组织层级的 focus |
+| T12 | E086-E088 | knowledge needs a home |
+| T13 | E089-E093 | AI usage 与 human in the lead |
+| T14 | E094-E096 | AI 时代的 mastery assessment |
+| T15 | E097-E098 | AI summarize my thought |
+| T16 | E101 | learning process 与 working result |
+| T17 | E106 | resource limited 与 battle |
+| T18 | E099-E108, E112-E117 | audience、story structure 与 personal story |
+| T19 | E118-E120 | autopilot、focus 与 Culture Map |
+
+## 仍需 Leo 亲自核对的原字
+
+1. E017：`proud -> things clear less comple...` 的完整句。
+2. E034：`essence?` / `assumptions` 一行究竟写了什么。
+3. E048：`Alpha moments` 是否正确。
+4. E055：`How many classes in the same time?` 指什么情境。
+5. E061：公司 complex/simple 的完整逻辑。
+6. E102：speech 前面的词是 `Ready`、`Friendly` 还是别的词。
+7. E110：关键词是 `Gender`、`Leader` 还是其他词。
+
+这些待核项在确认前不会进入“确定结论”。

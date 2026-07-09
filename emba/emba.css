@@ -1256,6 +1256,220 @@ body::before {
   color: #6e6e73;
 }
 
+.emba-thinking-review-list {
+  display: grid;
+  gap: 8px;
+}
+
+.emba-thinking-review-card {
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.emba-thinking-review-card[open] {
+  border-color: rgba(154, 119, 42, 0.34);
+  background: #ffffff;
+}
+
+.emba-thinking-review-summary {
+  position: relative;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 20px;
+  gap: 12px;
+  align-items: center;
+  min-height: 72px;
+  padding: 12px 16px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.emba-thinking-review-summary::-webkit-details-marker {
+  display: none;
+}
+
+.emba-thinking-review-summary::after {
+  content: "+";
+  color: #6e6e73;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+}
+
+.emba-thinking-review-card[open] > .emba-thinking-review-summary::after {
+  content: "−";
+}
+
+.emba-thinking-review-summary:focus-visible {
+  outline: 2px solid rgba(154, 119, 42, 0.65);
+  outline-offset: -2px;
+}
+
+.emba-thinking-review-id {
+  color: #9a772a;
+  font-size: 12px;
+  font-weight: 780;
+}
+
+.emba-thinking-review-heading {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.emba-thinking-review-title {
+  color: #1d1d1f;
+  font-size: 14px;
+  font-weight: 720;
+  line-height: 1.4;
+}
+
+.emba-thinking-review-meta {
+  color: #6e6e73;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.emba-thinking-review-body {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.emba-thinking-evidence {
+  padding: 16px;
+  background: rgba(245, 245, 247, 0.64);
+}
+
+.emba-thinking-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #6e6e73;
+  font-size: 11px;
+  font-weight: 760;
+}
+
+.emba-thinking-evidence blockquote {
+  margin: 0;
+  border-left: 3px solid #9a772a;
+  color: #1d1d1f;
+  padding-left: 12px;
+  font-size: 14px;
+  line-height: 1.58;
+}
+
+.emba-thinking-source {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: center;
+  margin-top: 10px;
+  color: #6e6e73;
+  font-size: 12px;
+}
+
+.emba-thinking-source a {
+  color: #8a681f;
+  font-weight: 680;
+}
+
+.emba-thinking-review-details {
+  margin: 0;
+}
+
+.emba-thinking-review-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.28fr) minmax(0, 1fr);
+  gap: 18px;
+  margin: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  padding: 14px 16px;
+}
+
+.emba-thinking-review-row:first-child {
+  border-top: 0;
+}
+
+.emba-thinking-review-row dt,
+.emba-thinking-review-row dd {
+  margin: 0;
+}
+
+.emba-thinking-review-row dt {
+  color: #6e6e73;
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1.5;
+}
+
+.emba-thinking-review-row dd {
+  color: #2c2c2e;
+  font-size: 13px;
+  line-height: 1.58;
+}
+
+.emba-thinking-review-row.is-reconstruction {
+  background: rgba(154, 119, 42, 0.06);
+}
+
+.emba-thinking-review-row.is-review dd {
+  color: #1d1d1f;
+  font-weight: 650;
+}
+
+.emba-thinking-review-row.is-personal-note {
+  background: rgba(245, 245, 247, 0.5);
+}
+
+.emba-thinking-review-row.is-editable dd {
+  min-width: 0;
+}
+
+.emba-thinking-note-editor {
+  width: 100%;
+  min-height: 86px;
+  resize: vertical;
+  border: 1px solid rgba(0, 0, 0, 0.13);
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1d1d1f;
+  padding: 10px 11px;
+  font: inherit;
+  line-height: 1.5;
+}
+
+.emba-thinking-note-editor:focus {
+  border-color: rgba(154, 119, 42, 0.65);
+  outline: 2px solid rgba(154, 119, 42, 0.15);
+  outline-offset: 1px;
+}
+
+.emba-thinking-legacy-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 10px 0;
+  color: #1d1d1f;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .emba-thinking-review-summary {
+    grid-template-columns: 34px minmax(0, 1fr) 18px;
+    gap: 8px;
+    padding: 11px 12px;
+  }
+
+  .emba-thinking-review-row {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 13px 14px;
+  }
+
+  .emba-thinking-evidence {
+    padding: 14px;
+  }
+}
+
 .emba-private-tools {
   width: min(1180px, 100%);
   display: flex;

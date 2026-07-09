@@ -125,17 +125,70 @@ function normalizeMarkdown(value) {
   return String(value || "");
 }
 
+function normalizeThinkingItem(item) {
+  if (typeof item === "string") return item.trim();
+  if (!item || typeof item !== "object") return "";
+
+  const normalizedItem = {
+    id: String(item.id || "").trim(),
+    kind: String(item.kind || item.type || "思考").trim(),
+    title: String(item.title || item.body || item.original || "").trim(),
+    date: String(item.date || "").trim(),
+    source: String(item.source || "").trim(),
+    position: String(item.position || "").trim(),
+    original: String(item.original || item.raw || "").trim(),
+    context: String(item.context || "").trim(),
+    reconstruction: String(item.reconstruction || item.completedArgument || item.completed || "").trim(),
+    evidenceBoundary: String(item.evidenceBoundary || item.boundary || "").trim(),
+    reviewPrompt: String(item.reviewPrompt || item.review || "").trim(),
+    reviewNotes: String(item.reviewNotes || "").trim(),
+    followUp: String(item.followUp || item.followup || "").trim(),
+    followUpNotes: String(item.followUpNotes || "").trim(),
+    learningReflection: String(item.learningReflection || item.reflection || "").trim(),
+    learningNotes: String(item.learningNotes || "").trim(),
+    confidence: String(item.confidence || "").trim().toLowerCase(),
+    image: String(item.image || item.sourceImage || "").trim()
+  };
+
+  return normalizedItem.title || normalizedItem.original ? normalizedItem : "";
+}
+
 function normalizeThinkingQuestions(value) {
-  return asArray(value)
-    .map((item) => typeof item === "string" ? item : item?.body || item?.title || "")
-    .map((item) => String(item || "").trim())
-    .filter(Boolean);
+  return asArray(value).map(normalizeThinkingItem).filter(Boolean);
+}
+
+function thinkingItemText(item) {
+  if (typeof item === "string") return item;
+  if (!item || typeof item !== "object") return "";
+  return [
+    item.id,
+    item.kind,
+    item.title,
+    item.date,
+    item.source,
+    item.position,
+    item.original,
+    item.context,
+    item.reconstruction,
+    item.evidenceBoundary,
+    item.reviewPrompt,
+    item.reviewNotes,
+    item.followUp,
+    item.followUpNotes,
+    item.learningReflection,
+    item.learningNotes
+  ].filter(Boolean).join(" ");
+}
+
+function thinkingItemHasContent(item) {
+  return hasTextContent(thinkingItemText(item));
 }
 
 function normalizeMonth(month) {
   const monthKey = month.month || monthKeyFromDate(month.date) || DEFAULT_START_MONTH;
   const materials = asArray(month.materials || month.material || month.documents).map(normalizeMaterial);
   const memories = asArray(month.memoryMoment || month.memoryMoments || month.photos).map((item) => normalizeMemory(item, monthKey));
+  const markdownRevision = Number(month.markdownRevision || 0);
   return {
     id: month.id || monthKey,
     month: monthKey,
@@ -144,7 +197,8 @@ function normalizeMonth(month) {
     reflection: month.reflection || month.notes || "",
     thinkingQuestions: normalizeThinkingQuestions(month.thinkingQuestions || month.questions || month.thoughts),
     followUpPoints: normalizeThinkingQuestions(month.followUpPoints || month.followUps || month.openQuestions),
-    markdown: normalizeMarkdown(month.markdown || month.md || month.searchNotes),
+    markdown: normalizeMarkdown(month.reviewedMarkdown || month.markdown || month.md || month.searchNotes),
+    markdownRevision: Number.isFinite(markdownRevision) ? markdownRevision : 0,
     memoryMoment: memories
   };
 }
@@ -163,6 +217,7 @@ function legacyDaysToMonths(days = []) {
       thinkingQuestions: [],
       followUpPoints: [],
       markdown: "",
+      markdownRevision: 0,
       memoryMoment: []
     };
     entry.materials.push(...asArray(day.documents).map(normalizeMaterial));
@@ -191,8 +246,8 @@ function memoryHasContent(item = {}) {
 function monthHasContent(month = {}) {
   return asArray(month.materials).some(materialHasContent)
     || hasTextContent(month.reflection)
-    || asArray(month.thinkingQuestions).some(hasTextContent)
-    || asArray(month.followUpPoints).some(hasTextContent)
+    || asArray(month.thinkingQuestions).some(thinkingItemHasContent)
+    || asArray(month.followUpPoints).some(thinkingItemHasContent)
     || hasTextContent(month.markdown)
     || asArray(month.memoryMoment).some(memoryHasContent);
 }
@@ -213,6 +268,7 @@ function createEmptyMonth(monthKey) {
     thinkingQuestions: [],
     followUpPoints: [],
     markdown: "",
+    markdownRevision: 0,
     memoryMoment: []
   };
 }
@@ -236,6 +292,7 @@ function editableMonth() {
   month.thinkingQuestions = normalizeThinkingQuestions(month.thinkingQuestions);
   month.followUpPoints = normalizeThinkingQuestions(month.followUpPoints);
   if (typeof month.markdown !== "string") month.markdown = "";
+  if (!Number.isFinite(month.markdownRevision)) month.markdownRevision = 0;
   return month;
 }
 
@@ -285,10 +342,38 @@ function mergeMaterialLists(baseMaterials = [], overlayMaterials = []) {
 }
 
 function mergeThinkingLists(baseItems = [], overlayItems = []) {
+  const base = normalizeThinkingQuestions(baseItems);
+  const overlay = normalizeThinkingQuestions(overlayItems);
+  const baseIsStructured = base.some((item) => typeof item === "object");
+  if (baseIsStructured) {
+    const merged = base.map((item) => typeof item === "object" ? { ...item } : item);
+    const indexesById = new Map(merged
+      .map((item, index) => [typeof item === "object" ? normalize(item.id) : "", index])
+      .filter(([id]) => id));
+    overlay.filter((item) => typeof item === "object").forEach((item) => {
+      const key = normalize(item.id);
+      const existingIndex = indexesById.get(key);
+      if (existingIndex === undefined) {
+        indexesById.set(key, merged.length);
+        merged.push(item);
+        return;
+      }
+      merged[existingIndex] = {
+        ...merged[existingIndex],
+        reviewNotes: item.reviewNotes,
+        followUpNotes: item.followUpNotes,
+        learningNotes: item.learningNotes
+      };
+    });
+    return merged;
+  }
+
   const seen = new Set();
-  return [...normalizeThinkingQuestions(baseItems), ...normalizeThinkingQuestions(overlayItems)]
+  return [...base, ...overlay]
     .filter((item) => {
-      const key = normalize(item);
+      const key = typeof item === "object" && item.id
+        ? `id:${normalize(item.id)}`
+        : normalize(thinkingItemText(item));
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
@@ -296,6 +381,8 @@ function mergeThinkingLists(baseItems = [], overlayItems = []) {
 }
 
 function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
+  const baseMarkdownRevision = Number(baseMonth.markdownRevision || 0);
+  const overlayMarkdownRevision = Number(overlayMonth.markdownRevision || 0);
   return {
     ...baseMonth,
     ...overlayMonth,
@@ -304,7 +391,10 @@ function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
     reflection: richerText(baseMonth.reflection, overlayMonth.reflection),
     thinkingQuestions: mergeThinkingLists(baseMonth.thinkingQuestions, overlayMonth.thinkingQuestions),
     followUpPoints: mergeThinkingLists(baseMonth.followUpPoints, overlayMonth.followUpPoints),
-    markdown: richerText(baseMonth.markdown, overlayMonth.markdown),
+    markdown: baseMarkdownRevision > overlayMarkdownRevision
+      ? normalizeMarkdown(baseMonth.markdown)
+      : richerText(baseMonth.markdown, overlayMonth.markdown),
+    markdownRevision: Math.max(baseMarkdownRevision, overlayMarkdownRevision),
     memoryMoment: asArray(overlayMonth.memoryMoment).length ? overlayMonth.memoryMoment : asArray(baseMonth.memoryMoment)
   };
 }
@@ -949,20 +1039,110 @@ function renderReflection(month) {
   `;
 }
 
+function thinkingConfidenceLabel(value = "") {
+  if (value === "high") return "原文清晰";
+  if (value === "medium") return "语义可辨";
+  if (value === "unclear") return "待核原图";
+  return "";
+}
+
+function textWithBreaks(value = "") {
+  return escapeHtml(String(value || "")).replace(/\r?\n/g, "<br>");
+}
+
+function renderThinkingReviewRow(label, value, className = "") {
+  if (!hasTextContent(value)) return "";
+  return `
+    <div class="emba-thinking-review-row${className ? ` ${className}` : ""}">
+      <dt>${escapeHtml(label)}</dt>
+      <dd>${textWithBreaks(value)}</dd>
+    </div>
+  `;
+}
+
+function renderThinkingNotesRow(label, field, value, index) {
+  if (!isEditMode()) return renderThinkingReviewRow(label, value, "is-personal-note");
+  return `
+    <div class="emba-thinking-review-row is-personal-note is-editable">
+      <dt><label for="thinking-${escapeHtml(field)}-${index}">${escapeHtml(label)}</label></dt>
+      <dd>
+        <textarea
+          id="thinking-${escapeHtml(field)}-${index}"
+          class="emba-thinking-note-editor"
+          data-thinking-item-field="${escapeHtml(field)}"
+          data-index="${index}"
+        >${escapeHtml(value || "")}</textarea>
+      </dd>
+    </div>
+  `;
+}
+
+function renderStructuredThinkingItem(item, index) {
+  const itemId = item.id || `T${String(index + 1).padStart(2, "0")}`;
+  const confidence = thinkingConfidenceLabel(item.confidence);
+  const meta = [item.kind, item.date, confidence].filter(Boolean).join(" · ");
+  const sourceMeta = [item.date, item.source, item.position].filter(Boolean).join(" · ");
+  return `
+    <details class="emba-thinking-review-card" data-thinking-item="${escapeHtml(itemId)}">
+      <summary class="emba-thinking-review-summary">
+        <span class="emba-thinking-review-id">${escapeHtml(itemId)}</span>
+        <span class="emba-thinking-review-heading">
+          <span class="emba-thinking-review-title">${escapeHtml(item.title)}</span>
+          ${meta ? `<span class="emba-thinking-review-meta">${escapeHtml(meta)}</span>` : ""}
+        </span>
+      </summary>
+      <div class="emba-thinking-review-body">
+        <div class="emba-thinking-evidence">
+          <span class="emba-thinking-label">原文证据</span>
+          <blockquote>${textWithBreaks(item.original || item.title)}</blockquote>
+          ${sourceMeta || item.image ? `
+            <div class="emba-thinking-source">
+              ${sourceMeta ? `<span>${escapeHtml(sourceMeta)}</span>` : ""}
+              ${item.image ? `<a href="${escapeHtml(item.image)}" target="_blank" rel="noopener">查看原图</a>` : ""}
+            </div>
+          ` : ""}
+        </div>
+        <dl class="emba-thinking-review-details">
+          ${renderThinkingReviewRow("当时上下文", item.context)}
+          ${renderThinkingReviewRow("补齐后的完整论述", item.reconstruction, "is-reconstruction")}
+          ${renderThinkingReviewRow("证据边界", item.evidenceBoundary)}
+          ${renderThinkingReviewRow("你的 Review", item.reviewPrompt, "is-review")}
+          ${renderThinkingNotesRow("Review 记录", "reviewNotes", item.reviewNotes, index)}
+          ${renderThinkingReviewRow("Follow-up", item.followUp)}
+          ${renderThinkingNotesRow("Follow-up 记录", "followUpNotes", item.followUpNotes, index)}
+          ${renderThinkingReviewRow("Self-learning reflection", item.learningReflection)}
+          ${renderThinkingNotesRow("Reflection 记录", "learningNotes", item.learningNotes, index)}
+        </dl>
+      </div>
+    </details>
+  `;
+}
+
 function renderThinkingQuestions(month) {
   const items = normalizeThinkingQuestions(month?.thinkingQuestions);
+  const hasStructuredItems = items.some((item) => typeof item === "object");
+  if (hasStructuredItems) {
+    return `
+      <div class="emba-thinking-review-list">
+        ${items.map((item, index) => typeof item === "object"
+          ? renderStructuredThinkingItem(item, index)
+          : `<div class="emba-thinking-legacy-item">${escapeHtml(item)}</div>`).join("")}
+      </div>
+    `;
+  }
+
   if (!isEditMode()) {
     return items.length
       ? `
         <ol class="emba-thinking-list">
-          ${items.slice(0, 12).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+          ${items.map((item) => `<li>${escapeHtml(thinkingItemText(item))}</li>`).join("")}
         </ol>
       `
       : `<p class="emba-empty-copy">No thoughts or questions yet.</p>`;
   }
 
   return `
-    <textarea class="emba-thinking-editor" data-thinking-editor placeholder="One thought or question per line...">${escapeHtml(items.join("\n"))}</textarea>
+    <textarea class="emba-thinking-editor" data-thinking-editor placeholder="One thought or question per line...">${escapeHtml(items.map(thinkingItemText).join("\n"))}</textarea>
   `;
 }
 
@@ -972,14 +1152,14 @@ function renderFollowUpPoints(month) {
     return items.length
       ? `
         <ol class="emba-thinking-list emba-follow-up-list">
-          ${items.slice(0, 12).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+          ${items.map((item) => `<li>${escapeHtml(thinkingItemText(item))}</li>`).join("")}
         </ol>
       `
       : `<p class="emba-empty-copy">No follow-up points yet.</p>`;
   }
 
   return `
-    <textarea class="emba-thinking-editor" data-follow-up-editor placeholder="One follow-up or verification point per line...">${escapeHtml(items.join("\n"))}</textarea>
+    <textarea class="emba-thinking-editor" data-follow-up-editor placeholder="One follow-up or verification point per line...">${escapeHtml(items.map(thinkingItemText).join("\n"))}</textarea>
   `;
 }
 
@@ -1402,6 +1582,16 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
   if (target.matches("[data-reflection-editor]")) {
     const month = editableMonth();
     month.reflection = target.value;
+    saveLibrary();
+    return;
+  }
+
+  if (target.matches("[data-thinking-item-field]")) {
+    const month = editableMonth();
+    const item = month.thinkingQuestions[Number(target.dataset.index)];
+    const field = target.dataset.thinkingItemField;
+    if (!item || typeof item !== "object" || !["reviewNotes", "followUpNotes", "learningNotes"].includes(field)) return;
+    item[field] = target.value;
     saveLibrary();
     return;
   }

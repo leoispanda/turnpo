@@ -1,6 +1,6 @@
 ---
 id: emba-2026-07-img-6903-coaching-listening
-title: IMG 6903 - Coaching Through Listening
+title: IMG 6903 - Coaching Through Listening And Trust
 slug: img-6903-coaching-listening
 type: source_note
 program: EMBA
@@ -19,14 +19,16 @@ status: active
 tags:
   - coaching
   - listening
-  - leadership
+  - trust
+  - turnpo
 keywords:
+  - summary and reflection
+  - only listening
+  - still following when misunderstood
   - coachee
-  - no early advice
-  - summary
-  - reflection
   - being understood
-summary: This image turns listening into a concrete coaching discipline: wait, summarize, and let the coachee work on their own problem.
+  - show your work in Turnpo
+summary: A source-faithful page covering expectation, misunderstanding, meeting attention, listening-only practice, coachee ownership, trust, and a starred Turnpo idea.
 related_topics:
   - leadership
   - personal-growth
@@ -36,33 +38,38 @@ created_at: 2026-07-09
 updated_at: 2026-07-09
 ---
 
-# IMG 6903 - Coaching Through Listening
+# IMG 6903 - Coaching Through Listening And Trust
 
 ## Source
 
+- Date: `2026-07-01`
 - Original image: `/emba/materials/2026-07/handwritten-notes/images/IMG_6903.jpeg`
-- Overall Markdown: `../2026-07-01-leadership-learning-handwritten-notes.md`
+- Evidence ledger: [E022-E037](../../reflections/2026-07-personal-marker-original-extract.md)
 
-## Clean Markdown Text
+## Source-Faithful Transcription
 
-This page captures the practical rules of a coaching-style conversation.
+- `share your expectation with child.`
+- `Common area of the misunderstanding`
+- `to understand father's situation`
+- `listen to others feedback`
+- `understand by others behave us what he should do.` `[unclear meaning]`
+- `no more distractions in the meeting`
+- `and behave more focus to let others feel about you`
+- `being understand / being trusted`
+- `"Summary and reflection"`
+- `Share your problem to others`
+- `Only listening No clarification questions.`
+- `Still following when misunderstood`
+- `eisence? or assen...` `[unclear]`
+- `let the coachee fix his problem / not provide solutions.`
+- boxed: `Listening`
+- starred: `Show your work in Turnpo < sparks and ideas come true?`
 
-Key points:
+## Classification
 
-- Start with listening.
-- Do not rush into clarification questions.
-- Let the coachee work on the problem instead of providing solutions too early.
-- Wait until the person finishes before interacting.
-- Use summary and reflection.
-- Help the other person feel understood and trusted.
+Most of the page is a coaching exercise and behavior list. The starred Turnpo line is a clear personal/product marker. `Still following when misunderstood` was omitted from the earlier synthesis and is now preserved without forcing an interpretation.
 
-## Interpretation
+## Review Links
 
-The leader's role is not to disappear, but to hold the conversation long enough for the other person to think. Early advice can steal the coachee's ownership of the problem.
-
-## Personal Application
-
-- In coaching mode, listen first and advise later.
-- Summarize the other person's words before adding interpretation.
-- Ask questions that help the other person identify their own next step.
-
+- Listening and coaching: [T04](../../reflections/2026-07-questions-and-reflections-review.md)
+- Turnpo product thought: [T05](../../reflections/2026-07-questions-and-reflections-review.md)

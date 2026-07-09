@@ -1,13 +1,13 @@
 ---
 id: emba-2026-07-img-6911-data-culture-communication
-title: IMG 6911 - Data, Culture, And Communication
+title: IMG 6911 - Personal Storytelling, Data, And Online Communication
 slug: img-6911-data-culture-communication
 type: source_note
 program: EMBA
 school: Maastricht University
 course: Lead in Learning
 module: Intro Programme
-session: Inclusion and communication
+session: Storytelling and communication
 date: 2026-07-03
 year: 2026
 month: 2026-07
@@ -17,16 +17,18 @@ converted_from: IMG_6911.jpeg
 visibility: private
 status: active
 tags:
-  - inclusion
+  - storytelling
   - communication
   - data
+  - personal-story
 keywords:
-  - country differences
-  - culture map
   - data can be fun
-  - resources
-  - body support
-summary: This image connects country differences, data, culture, resources, and leadership communication.
+  - 1997 China
+  - third line city
+  - make it personal
+  - keep it authentic
+  - Teams online meeting
+summary: A source-faithful storytelling page built around data, a 1997 China childhood example, authenticity, emotion, delivery, and the question of storytelling in Teams meetings.
 related_topics:
   - leadership
   - personal-growth
@@ -36,32 +38,39 @@ created_at: 2026-07-09
 updated_at: 2026-07-09
 ---
 
-# IMG 6911 - Data, Culture, And Communication
+# IMG 6911 - Personal Storytelling, Data, And Online Communication
 
 ## Source
 
+- Date: `2026-07-03`
 - Original image: `/emba/materials/2026-07/handwritten-notes/images/IMG_6911.jpeg`
-- Overall Markdown: `../2026-07-01-leadership-learning-handwritten-notes.md`
+- Evidence ledger: [E109-E117](../../reflections/2026-07-personal-marker-original-extract.md)
 
-## Clean Markdown Text
+## Source-Faithful Transcription
 
-This page appears to connect country differences, communication, and the use of data.
+- `Country difference animation / Life / income / population`
+- `data can be fun`
+- starred, beside `Leo think`: `[Gender or Leader] is not possible if nobody support / or no human resource could use` `[unclear key word]`
+- `unsplash.com + AI gen`
+- `Make it personal`
+- `keep it Authentic`
+- `wow factor`
+- `Target the Audience`
+- `Stickiness`
+- example: `You are in 1997 China, a 3rd line city, 7 yrs old`
+- `Then the city evolves ... ride a bike`
+- `9 yrs later, you feel more traffic and more busy`
+- `You had own computer ...` `[middle words unclear]`
+- `personal feeling more / emotion with the story`
+- `gesture / eye movement / voice higher/lower`
+- `sequence -> dog happy -> farm picture`
+- `"Teams online meeting -> How to storytell"`
 
-Key points:
+## Corrections And Boundary
 
-- Country differences can be explored through animation, life, income, and population.
-- Data can be made engaging.
-- Culture shapes communication.
-- Leadership communication depends on the audience and the resources available.
-- Leadership is supported by practical conditions, not only intention.
+- The year is `1997`, not 1992.
+- The unclear `Gender/Leader` line cannot support a definite leadership-resource conclusion.
+- `unsplash.com + AI gen` is a tool note. It does not by itself establish a personal “visualization + AI” theory.
+- The Culture Map is on IMG_6912, not this page.
 
-## Interpretation
-
-The page is a reminder that cross-cultural leadership needs translation. Data, examples, stories, and resources all shape whether people understand and trust the message.
-
-## Personal Application
-
-- When presenting across cultures, avoid assuming the same communication norms.
-- Use data to open curiosity, not to overwhelm.
-- Check whether the audience has the resources needed to act on the message.
-
+See [T18](../../reflections/2026-07-questions-and-reflections-review.md) for the completed storytelling argument and its source limits.

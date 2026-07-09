@@ -1,13 +1,13 @@
 ---
 id: emba-2026-07-img-6901-listening-habits
-title: IMG 6901 - Listening Habits And Outside-In Perspective
+title: IMG 6901 - Four Levels Of Listening
 slug: img-6901-listening-habits
 type: source_note
 program: EMBA
 school: Maastricht University
 course: Lead in Learning
 module: Intro Programme
-session: Listening and coaching
+session: Four levels of listening
 date: 2026-07-01
 year: 2026
 month: 2026-07
@@ -18,15 +18,17 @@ visibility: private
 status: active
 tags:
   - listening
-  - coaching
+  - course-framework
   - leadership
 keywords:
-  - levels of listening
-  - outside-in perspective
-  - misunderstanding
-  - feedback
-  - focus
-summary: This image focuses on listening habits, misunderstanding, feedback, and the leadership move of seeing a situation from another person's side.
+  - downloading habits
+  - factual listening
+  - empathic listening
+  - generative listening
+  - open mind
+  - open heart
+  - open will
+summary: A source-faithful transcription of the four-level listening framework; this page is classroom context, not four separate Leo reflections.
 related_topics:
   - leadership
   - personal-growth
@@ -36,34 +38,30 @@ created_at: 2026-07-09
 updated_at: 2026-07-09
 ---
 
-# IMG 6901 - Listening Habits And Outside-In Perspective
+# IMG 6901 - Four Levels Of Listening
 
 ## Source
 
+- Date: `2026-07-01`
 - Original image: `/emba/materials/2026-07/handwritten-notes/images/IMG_6901.jpeg`
-- Overall Markdown: `../2026-07-01-leadership-learning-handwritten-notes.md`
+- Evidence ledger: [E009-E012](../../reflections/2026-07-personal-marker-original-extract.md)
 
-## Clean Markdown Text
+## Source-Faithful Transcription
 
-This page centers on listening, expectations, misunderstanding, and taking the other person's perspective. Several notes point toward a family or coaching example where the task is not to win the argument, but to understand the other person's situation.
+1. `Listen 1: Downloading habits -> reconfirming old opinions & judgement`
+2. `Listen 2: Fact; notice diff -> open mind -> disconfirming [new] data`
+3. `Listen 3: Empathic listening -> open heart -> seeing through emotional connection`
+4. `Listen 4: Generative listening -> open will -> emerging future / completely different expert`
 
-Key points:
+## Classification
 
-- Share expectations clearly.
-- Find the common area of misunderstanding.
-- Understand the other person's situation before reacting.
-- Listen to feedback from others.
-- Reduce distractions in meetings.
-- Focus so the other person feels heard.
-- Trust grows when people feel understood.
+This page records a **course framework**. It has no visible `Leo:`, `I see`, question, or first-person marker. The previous version incorrectly blended content from IMG_6903 about misunderstanding, feedback, and trust into this image.
 
-## Interpretation
+## Personal Reflection Boundary
 
-The leadership habit being trained is outside-in attention. Instead of starting from "what do I want to say?", the leader starts from "what is the other person experiencing, and what have I not understood yet?"
+Leo's personal listening reflection begins more clearly on IMG_6902 and IMG_6903 with `wait until finish`, `I also emotional`, `Summary and reflection`, and `let the coachee fix his problem`.
 
-## Personal Application
+## Uncertainty
 
-- In a tense conversation, summarize the other person's situation before giving a view.
-- Remove distractions when the conversation requires trust.
-- Treat misunderstanding as shared territory to map, not as blame to assign.
+The final words on level 4 are not fully connected by the handwriting. They are retained as visible fragments rather than converted into a new claim.
 

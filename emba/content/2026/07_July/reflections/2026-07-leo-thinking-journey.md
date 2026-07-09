@@ -7,7 +7,7 @@ program: EMBA
 school: Maastricht University
 course: Lead in Learning
 module: Intro Programme
-session: Personal insights and thinking process synthesized from handwritten notes
+session: Source-first reconstruction of Leo's personal thinking process
 date: 2026-07-09
 year: 2026
 month: 2026-07
@@ -32,21 +32,20 @@ status: active
 tags:
   - personal-reflection
   - thinking-process
+  - source-first
   - leadership
-  - listening
-  - organizational-learning
   - ai
-  - storytelling
+  - organizational-learning
 keywords:
   - 我的心得
-  - 思考过程
-  - 认知转变
-  - leadership posture
-  - thinking environment
-  - blind spot
+  - 思考逻辑
+  - True leadership
+  - feedback emotion
   - human in the lead
   - knowledge home
-summary: A source-linked reconstruction of how Leo's July EMBA observations developed into judgments, open questions, and practical leadership experiments.
+  - learning process
+  - evidence boundary
+summary: A cautious source-first reconstruction of Leo's July EMBA thinking, separating confirmed personal statements, classroom triggers, Codex synthesis, logical gaps, and next learning tests.
 related_topics:
   - leadership
   - decision-making
@@ -60,318 +59,257 @@ updated_at: 2026-07-09
 
 # 我的心得与思考过程 - 2026 年 7 月 EMBA
 
-## 先说结论
+## 先回答：我的思考有逻辑吗？
 
-这组笔记真正形成的，不是一堆零散的 leadership 知识点，而是一条逐渐清晰的个人判断：
+**有，而且已经出现一条反复回到的主线；但它目前更像逻辑骨架，还不是完成的论证。**
 
-> 领导者的价值，不只是自己给出更好的答案，而是创造一个让别人能够看见事实、说出不同意见、完成思考、形成判断并持续学习的环境。
+可以从原文确认的骨架是：
 
-围绕这条主线，我的思考继续向三个方向展开：
+1. 我希望学习从真实工作问题开始，而不是停在课程内容。
+2. 我开始注意自己的 auto pattern、assumption、情绪与 blind spot。
+3. 我把 leadership 从职位推向 influence、willingness to follow 和帮助别人思考。
+4. 我关心怎样把个人学习变成组织知识，并给 knowledge 一个 home。
+5. 我对 AI 的判断不是“要不要用”，而是如何 human in the lead、如何测试 mastery。
+6. 我开始把 storytelling 理解成让过程、信息和个人经验被听众理解。
 
-1. 对自己：先看见 assumption、autopilot、judgment、cynicism、fear 和 blind spot。
-2. 对他人：先听完、先总结、先理解，再决定是否提问或给建议。
-3. 对组织：把个人 insight 变成 shared language、routine、checklist、story 和可以被复用的知识。
+尚未完成的部分也很清楚：真实案例太少、因果关系没有验证、一些概念缺定义、适用边界没有写、课堂框架和个人观点曾经混在一起。
 
-AI、storytelling、inclusion 和 organizational learning 并不是分散主题。它们都在回答同一个问题：怎样让人的思考质量提高，并让这种提高留在组织里。
+所以这份笔记不是“不完整到没有价值”，而是**洞察密度高，论证证据薄**。下一步不需要再增加更多漂亮总结，而是给每条判断补事件、反证、边界与结果。
 
-## 证据边界
+## 三层证据
 
-- `原文`：来自 13 张手写笔记照片，保留在 [Personal Marker Original Extract](./2026-07-personal-marker-original-extract.md) 的 P01-P78。
-- `整理出的思考链`：根据原文出现的先后和上下文，把触发、觉察、转向、判断和问题串起来。
-- `待验证`：是我现在还没有写下最终答案的问题，不应被当成已经确定的结论。
-
-## 思考过程总览
-
-| 阶段 | 原始触发 | 认知转向 | 现在形成的判断 |
-| --- | --- | --- | --- |
-| 1. 学习从哪里开始 | personal struggle, personal interest, daily work | 从收集课程内容转向带着真实问题学习 | 没有真实 tension，EMBA 很容易只剩知识消费 |
-| 2. 领导者做什么 | assumptions, comfort room, enabling others | 从给答案转向创造思考条件 | 领导力首先是一种 environment design |
-| 3. 如何真正听见 | wait until finish, three voices, summary and reflection | 从快速互动转向延迟判断 | 倾听质量决定信息质量，也决定信任质量 |
-| 4. 如何校正自己 | blind spot, opinion/fact, perspective/truth | 从相信第一解释转向持续验证 | 反思是一种认知校准机制 |
-| 5. 如何让团队学习 | psychological safety, 70/20/10, knowledge home | 从个人 insight 转向组织 routine | 没有载体的知识不会形成组织能力 |
-| 6. AI 应该放在哪里 | 80 -> 120, human in the lead, mastery test | 从生成内容转向放大思考与验证 | AI 可以提高上限，但不能接管判断责任 |
-| 7. 如何让别人理解 | less is more, target audience, personal story, Culture Map | 从传递信息转向为听众设计理解 | 好表达是让信息进入记忆和行动 |
-
-## 1. 从“来上课”到“带着真实问题学习”
-
-### 原文触发
-
-- P01, 2026-07-01, IMG_6900 lower third: `Q/A: 5min, personal strggle, personal interest`
-- P03, 2026-07-01, IMG_6900 lower third: `situation in real daily work`
-- P04, 2026-07-01, IMG_6900 bottom: `"shifting perspective" of assumption`
-
-### 我的思考过程
-
-第一步不是寻找“这门课有什么框架”，而是确认我到底带着什么现实问题进入课堂。只有问题来自 personal struggle、personal interest 和 daily work，课堂内容才会与我的判断系统发生碰撞。
-
-接着我意识到，现实问题并不等于问题本身。问题通常已经被我的 assumption 包裹。我以为自己在寻找答案，实际上可能只是在寻找证据来维护原有判断。因此，学习的第一动作不是加知识，而是看见自己站在哪个假设上。
-
-### 当前判断
-
-EMBA 对我的价值，不应以记住多少理论衡量，而应以真实问题是否被重新定义、真实行为是否改变来衡量。这也连接到我已有的原则：不做 fake effort，学习必须回到现实 output。
-
-### 待验证
-
-- 我当前最值得带进 EMBA 的一个 live leadership question 是什么？
-- 这个问题背后，我默认相信了什么？
-- 什么现实证据会让我改变这个判断？
-
-## 2. 从“领导者给答案”到“领导者创造思考条件”
-
-### 原文触发
-
-- P05, 2026-07-01, IMG_6900 bottom: `"Not make your comfortable room" / enabling others to think differently`
-- P23, 2026-07-01, IMG_6903 lower half: `let the coachee fix his problem not provide solutions.`
-- P34, 2026-07-02, IMG_6905 upper right: `leo: "True leadership": people want to follow you ...`
-- P48, 2026-07-02, IMG_6907 middle: `Control the goal not process ... set boundary, clear goals`
-
-### 我的思考过程
-
-我原来比较容易把领导者的价值理解成判断更快、答案更强、能把事情推进。但笔记里连续出现了几个反方向的信号：不要让房间只对自己舒服；不要过早替 coachee 解决问题；控制目标和边界，而不是控制每一步。
-
-这让我把领导力重新拆成两部分：
-
-1. 方向责任仍然属于领导者，包括目标、边界、标准和最终判断。
-2. 思考过程不能全部被领导者占据，要给别人形成观点、表达不同意见和解决问题的空间。
-
-“True leadership” 因而不只是职位权力，而是别人是否愿意跟随、是否相信这个环境值得投入。
-
-### 当前判断
-
-真正的 leadership posture 是“清晰但不抢夺”：目标清晰、边界清晰、责任清晰，同时不抢走别人的思考权。领导者不是退出，而是把自己的存在从 answer machine 变成 thinking environment designer。
-
-### 待验证
-
-- 我最近一次会议，是在增加团队的思考空间，还是因为焦虑而压缩它？
-- 哪些决策必须由我直接给答案，哪些问题更适合让团队先形成判断？
-- 团队愿意跟随我，是因为职位、关系，还是因为过程本身建立了信任？
-
-## 3. 从“听见内容”到“管理自己的内在声音”
-
-### 原文触发
-
-- P06-P09, 2026-07-01, IMG_6901: downloading, factual, empathic and generative listening
-- P10, 2026-07-01, IMG_6902 top: `wait until finish -> don't interact too early`
-- P11, 2026-07-01, IMG_6902 upper half: `Three Voice of judgement / Cynicism / fear`
-- P20, 2026-07-01, IMG_6903 middle: `"Summary and reflection"`
-- P21, 2026-07-01, IMG_6903 lower half: `Only listening No clarification questions.`
-
-### 我的思考过程
-
-倾听最初看起来是沟通技巧，但笔记把问题推回了自己：我不是没有听到声音，而是 judgment、cynicism 和 fear 太早进入，把新信息翻译成了旧结论。
-
-`wait until finish` 因此不是礼貌提醒，而是一种认知纪律。它给对方时间完成表达，也给我时间区分“对方真正说了什么”和“我已经开始解释什么”。`Summary and reflection` 是中间的校验动作：先确认理解，再进入 clarification 或 advice。
-
-### 当前判断
-
-倾听不是被动沉默，而是延迟判断、保持注意力并提高信息质量。被理解会产生信任；信任会降低恐惧；恐惧降低后，真实信息才更可能进入决策。
-
-### 待验证
-
-- 我最容易在哪类人、哪类意见面前进入 judgment、cynicism 或 fear？
-- 我打断别人时，是因为效率需要，还是因为自己害怕失去控制？
-- 我是否能在下一次重要对话里，只做“听完 -> 总结 -> 确认”，暂时不建议？
-
-## 4. 从“我的看法”到“持续校准事实、解释与盲点”
-
-### 原文触发
-
-- P25, 2026-07-02, IMG_6904 middle: `blind spot as input`
-- P29, 2026-07-02, IMG_6904 lower half: `Everything we hear is an opinion, not a fact`
-- P30, 2026-07-02, IMG_6904 lower half: `Everything we see is a perspective, not the truth`
-- P31, 2026-07-02, IMG_6904 lower half: `energized -> next? -> find what you excited and summary and do again`
-- P32-P33, 2026-07-02, IMG_6904 bottom: `"diary shadowing"` / `appointment with me`
-- P46, 2026-07-02, IMG_6907 top: `Truth? / "PDC"`
-
-### 我的思考过程
-
-经验不会自动变成学习。人会把 points 连成 lines，再形成自己的 picture，但这个 picture 只是解释，不是完整 truth。这样一来，blind spot 就不再是“我做错了”的羞耻证据，而是“我的 picture 还缺什么”的输入。
-
-我由此把 reflection 理解成一种 decision-quality practice：先区分发生了什么、我赋予了什么意义、还有什么解释可能成立，再决定是否行动。`diary shadowing` 和 `appointment with me` 是为这种校准保留固定空间。
-
-### 当前判断
-
-反思不是泛泛写感受，也不是事后替自己辩护。它的任务是让事实、解释、情绪、假设和下一步分开。PDC 的价值也在这里：让一个人的 perspective 接受多个角度和反证压力。
-
-### 待验证
-
-- 我目前最确信的一件事，哪些部分是 fact，哪些部分只是 interpretation？
-- 最近出现的 blind spot 指向能力问题、信息问题，还是系统问题？
-- 每周一次的 `appointment with me` 应该固定在什么时间，产出什么记录？
-
-## 5. 从“聪明个人”到“能让真实信息流动的组织”
-
-### 原文触发
-
-- P47, 2026-07-02, IMG_6907 upper half: `Smart People -> stupid decision`
-- P49, 2026-07-02, IMG_6907 lower half: `I have your back ... trust and removing fear`
-- P50-P51, 2026-07-02, IMG_6908: `I see: different layers focus` / executive, middle-management and execution layers
-- P53, 2026-07-02, IMG_6908 middle: `observe -> explain -> practice -> combination until it become second nature`
-- P54, 2026-07-02, IMG_6908 bottom: `Formal learning -> 10 / Informal learning -> 20 / On-the-job learning -> 70`
-- P55, 2026-07-02, IMG_6909 top: `Make sure knowledge and insight get a home in your organisation`
-
-### 我的思考过程
-
-如果聪明人仍会做出愚蠢决策，问题就不只在个人能力，而在信息能否流动、不同层级能否理解彼此，以及组织是否允许坏消息和不同意见出现。
-
-心理安全不是“大家感觉舒服”，而是 `I have your back` 所带来的真实表达空间。与此同时，安全必须与 clear goals、boundary 和 accountability 同时存在。只有表达，没有练习和标准，仍然不会形成能力。
-
-70/20/10 又把学习从课堂推回工作现场。个人 insight 必须经过 observe、explain、practice、combine，并最终拥有一个 `home`，否则它只会停留在某个人的脑子里。
-
-### 当前判断
-
-组织学习的最小单位不是课程，而是一个可以重复的行为；组织学习的载体不是口号，而是 shared language、routine、checklist、template、story 或 decision process。
-
-### 待验证
-
-- Turnpo 现在有哪些关键知识仍然没有 `home`？
-- 哪些经验只在我脑子里，团队离开我就无法复用？
-- 哪一个个人 insight 可以在两周内变成团队 routine？
-
-## 6. 从“AI 帮我生成”到“AI 帮我提高思考上限”
-
-### 原文触发
-
-- P56, 2026-07-02, IMG_6909 upper half: `Not -> content copy from "generate content"`
-- P57, 2026-07-02, IMG_6909 upper half: `"What you learn speak up and test"`
-- P58, 2026-07-02, IMG_6909 middle: `Leo: How to define AI usage. 60 -> 80 normal. 80 -> 120 with AI.`
-- P59, 2026-07-02, IMG_6909 middle: `Not let AI guide or generate, all human in the lead.`
-- P60-P61, 2026-07-02, IMG_6909 lower half: `How to test in the future` / qualification test for mastery
-- P62, 2026-07-02, IMG_6909 bottom: `AI summarize my thought, business input -> prompt for generating thinking (logic)`
-
-### 我的思考过程
-
-生成内容很容易制造一种“已经完成”的错觉，但能复制结果不等于掌握知识。真正的 learning 仍需要我说出来、接受质疑、在不同情境里使用，并为最终判断负责。
-
-`80 -> 120 with AI` 不是让 AI 替代 80 分的人，而是让已经具备判断能力的人获得更大的比较、模拟、总结和 pressure-test 能力。因此 AI 的边界不应只按“用了多少”定义，而要按 human ownership 是否仍然存在来定义。
-
-这也带来一个新的 assessment 问题：当答案随时可以生成，未来必须测试一个人能否解释、迁移、质疑和实际应用，而不只是复述答案。
-
-### 当前判断
-
-AI 的最佳位置是 mirror、sparring partner、summarizer 和 accelerator。人必须定义问题、提供业务语境、检查事实、做取舍并承担结果。没有 human judgment 的高质量文本，仍然可能是假学习。
-
-### 待验证
-
-- 哪些任务可以完全交给 AI，哪些必须保留 human-in-the-loop，哪些必须 human-in-the-lead？
-- 如何设计一个“掌握度测试”，区分会生成答案和真正理解？
-- 每次使用 AI 后，我应该留下什么个人判断，证明自己没有退出思考过程？
-
-## 7. 从“把信息讲完”到“为听众设计理解”
-
-### 原文触发
-
-- P63, 2026-07-03, IMG_6910 upper half: `learning is the process / working is the result -> Leo`
-- P64, 2026-07-03, IMG_6910 middle: `Ready speech -> need check! less is more`
-- P65, 2026-07-03, IMG_6910 middle: `Target Audience -> ... what information you want share`
-- P67, 2026-07-03, IMG_6910 lower half: `What? why? how? what`
-- P72-P74, 2026-07-03, IMG_6911: personal, authentic, target audience, stickiness and personal emotion
-- P75, 2026-07-03, IMG_6911 bottom: `"Teams online meeting -> How to storytell"`
-- P76-P78, 2026-07-03, IMG_6912: current home, autopilot -> focus, Culture Map
-
-### 我的思考过程
-
-工作展示的是 result，但 result 背后的 learning process 通常不可见。Storytelling 的价值，是把过程、选择和意义组织成别人能够理解和记住的结构。
-
-这让我从“我想说什么”转向“这个 audience 需要理解什么”。`less is more` 不是简单删字，而是围绕一个目标听众保留最能推动理解和行动的信息。personal、authentic 和 emotion 让抽象数据获得记忆点。
-
-Culture Map 又增加了一个约束：同一种表达在不同文化中可能被读成不同含义。因此，好的沟通不是把同一套话说得更响，而是根据对方的语境设计表达方式。
-
-### 当前判断
-
-表达质量不取决于信息量，而取决于听众是否能抓住重点、形成画面、理解意义并知道下一步。数据需要故事，故事需要真实经历，跨文化故事还需要翻译语境。
-
-### 待验证
-
-- 下一次分享，目标听众只需要带走哪一句话？
-- 哪个个人经历能够让抽象数据变得具体，但又不会喧宾夺主？
-- 在 Teams online meeting 里，怎样用更短结构制造互动和记忆？
-
-## 不应丢掉的旁支思考
-
-这些内容不是七条主线的标题，但它们补足了我的判断边界：
-
-1. `Young people not "willing"`（P12）首先是一个需要验证的 label，不应直接当成事实。代际判断很容易掩盖 expectation、context 或 trust 的问题。
-2. `share your expectation with child`、`common area of misunderstanding`、`being understood / being trusted`（P15-P19）说明，很多关系问题开始于期待没有被说清，而不是对方故意不配合。
-3. `Show your work in Turnpo < sparks and ideas come true?`（P24）把记录本身变成行动：想法只有被展示、连接和继续加工，才可能从 spark 变成 reality。
-4. `I want a Creativity idea in 1 min`（P36）提醒我，创造力不能只靠命令。领导者需要设计情境、时间和心理空间，而不是只要求即时结果。
-5. `Not powerwise, the essential wise`（P38-P39）说明评价部门或个人贡献时，应该看 essential contribution，而不只看职位和权力。
-6. 对 company complexity 的观察（P40）提醒我，不要为了感觉可控而过度简化系统；简单叙事有时会隐藏真正的学习难度。
-7. `practice`、`to dare` 和共同站起来的习惯（P41-P43）指向同一点：改变必须进入身体、行为和共同动作，才不只是口头认同。
-8. 电影里的八处变化、market change 和 bias over time（P44-P45）说明，环境和自己的偏差都在移动，blind-spot review 不能只做一次。
-9. `Resource if limited, the battle will happen`（P66）提醒我，很多冲突并非人格问题，而是稀缺资源和目标竞争的结构性结果。
-10. `Visual story stand the test of time`、`visualization + AI`、`data can be fun`（P68-P70）形成一个 Turnpo/MapKAI 方向：让复杂信息可视、可记忆，但不能为了 wow factor 牺牲事实。
-11. `Leader is not possible if nobody support or not human resource`（P71）补上领导力的现实条件：影响力不只来自个人能力，也来自愿意支持的人和可调动的资源。
-
-## P01-P78 覆盖地图
-
-| 原文范围 | 主要内容 | 在本文件中的归属 |
+| 层级 | 这里代表什么 | 使用规则 |
 | --- | --- | --- |
-| P01-P05 | 真实问题、assumption、shifting perspective、comfort room | 思考链 1-2 |
-| P06-P24 | 四层倾听、three voices、反馈、coaching、Turnpo idea | 思考链 3 + 旁支 1-3 |
-| P25-P33 | blind spot、fact/opinion、perspective/truth、reflection rhythm | 思考链 4 |
-| P34-P49 | true leadership、power/essence、complexity、change、truth、psychological safety | 思考链 2、4、5 + 旁支 4-8 |
-| P50-P55 | organizational layers、practice loop、70/20/10、knowledge home | 思考链 5 |
-| P56-P62 | generated content、80 -> 120、human in the lead、mastery test | 思考链 6 |
-| P63-P78 | learning/work、audience、resources、storytelling、data、inclusion、Culture Map | 思考链 7 + 旁支 9-11 |
+| 原文证据 | E001-E120 中的手写原句 | 可以逐字核对，不做静默润色 |
+| Leo 思考 | 有 `Leo:`、`I see`、第一人称、Leo thinking 或明确 Turnpo 指向 | 可作为个人观点候选，仍需确认完整含义 |
+| Codex 补齐 | 把碎片补成可讨论论述 | 必须接受 Leo 的 Review，不能倒写成“原来就这样想” |
 
-## 我现在形成的 12 条心得
+完整证据见 [原文证据账本](./2026-07-personal-marker-original-extract.md)，逐条补齐见 [T01-T19 Review](./2026-07-questions-and-reflections-review.md)。
 
-1. 真实问题比漂亮框架更重要；没有 real tension，学习很容易变成收藏。
-2. 问题背后的 assumption，常常比问题本身更值得检查。
-3. 领导力不是占据所有思考，而是对方向负责、为他人保留思考空间。
-4. `wait until finish` 是一个小动作，却能同时提高信息、信任和判断质量。
-5. judgment、cynicism 和 fear 是倾听失败之前的三个早期信号。
-6. blind spot 不是羞耻，而是更新认知模型的 input。
-7. opinion 不是 fact，perspective 不是 truth；重要判断必须主动寻找反证。
-8. 心理安全不是降低标准，而是让真实问题更早出现。
-9. insight 没有经过 practice 和 repetition，就还不是能力。
-10. 知识没有 `home`，就不会成为组织资产。
-11. AI 可以把 80 提高到 120，但不能替人定义问题、做判断和承担责任。
-12. 好表达不是把内容讲完，而是让特定听众理解、记住并愿意行动。
+## 思考链 1：学习必须回到真实问题
 
-## 我的个人思考闭环
+**原文起点**
 
-以后整理课堂、工作或 AI 产生的新 insight，可以统一放进这条闭环：
+- `personal strggle, personal interest`（E001）
+- `why we develop in leader role`（E002）
+- `situation in real daily work`（E003）
 
-1. `Real tension`：这件事与哪个真实问题有关？
-2. `Observe`：实际发生了什么？
-3. `Notice self`：我的 assumption、情绪和 autopilot 是什么？
-4. `Listen`：别人看到了什么？我是否听完并准确总结？
-5. `Separate`：哪些是 fact，哪些是 interpretation？
-6. `Judge`：我目前的判断是什么？什么证据会改变它？
-7. `Practice`：下一次要测试哪个具体行为？
-8. `Give it a home`：它应进入哪个文档、routine、checklist 或 story？
-9. `Amplify with AI`：AI 能怎样比较、模拟、反驳或整理，而不接管判断？
-10. `Review`：结果怎样？下一轮要保留、修改还是放弃什么？
+**可以确认的转向**
 
-这条闭环也和我已有的个人原则相连：long-term direction、action over waiting、fast iteration、consistency，以及不做 fake effort。
+你没有只记课程主题，而是立刻把 leadership question 与 personal struggle、interest 和 daily work 放在一起。这说明你对学习价值的判断偏向应用，而不是记忆。
 
-## 后续补充与验证清单
+**补齐后的论述**
 
-这些不是已经完成的结论，而是以后继续补写、验证和修正这组笔记的入口：
+EMBA 的价值不应只按学过多少框架衡量，而应看一个真实问题是否被重新定义、一个隐藏假设是否被看见、一个行为是否因此改变。学习的入口是 live tension，出口是可观察的实践结果。
 
-1. `[真实情境]` 补写一个 personal struggle：当时发生了什么、谁参与、为什么对我重要？
-2. `[情绪证据]` 回到 P13 / P27：什么反馈让我愤怒、防御、energized 或觉得浪费？我实际做了什么？
-3. `[因果验证]` 找一个真实案例，验证 listening 是否真的带来 trust、更完整的信息和更好的决定。
-4. `[适用边界]` 区分 decision、listening、coaching 和 crisis command；什么时候不应该继续提问？
-5. `[领导力定义]` True leadership 除了有人愿意跟随，还要补上方向、伦理、结果和长期 accountability。
-6. `[证据分类]` 将 opinion / fact / perspective / truth 拆成 observation、sourced fact、interpretation 和 inference。
-7. `[AI 标准]` 定义 60 / 80 / 120、human-in-the-lead 和 mastery test 的可观察标准。
-8. `[权力与资源]` 深挖 P38-P39、P66、P71：部门价值、资源稀缺、支持者、权力和冲突如何影响领导力？
-9. `[课程缺口]` 补齐 Leadership Development goal、Visualisation & Prototyping 产物、Inclusion & Diversity 练习与权力维度。
-10. `[行动闭环]` 每个重要 insight 增加 baseline、行为实验、成功信号和 review date。
+**缺口**
 
-## 接下来 30 天的五个小实验
+笔记没有写出那个具体 personal struggle。没有事件、人物和后果，这条目前仍是学习原则，不是个人案例。
 
-1. 每个重要会议前写一句：`我可能默认相信了什么？`
-2. 每周选择一次对话，只练习 `听完 -> 总结 -> 确认`，不急着建议。
-3. 每周做一次三栏复盘：`Fact / My interpretation / What else could be true`。
-4. 选一个团队经验，把它变成 shared checklist、meeting rhythm 或 decision note。
-5. 每次用 AI 完成重要工作后，追加一段 `Leo final judgment`：保留什么、拒绝什么、为什么。
+**Review 对应：** T01
 
-## 逐条复盘入口
+## 思考链 2：领导力从给答案转向影响思考，但没有放弃责任
 
-- 想看原文、日期和图片位置：[Personal Marker Original Extract](./2026-07-personal-marker-original-extract.md)
-- 想逐条审阅 16 个问题与 16 个感悟：[Questions And Reflections Review Queue](./2026-07-questions-and-reflections-review.md)
-- 想回到完整课程笔记：[Handwritten Notes Analysis](../converted-md/2026-07-01-leadership-learning-handwritten-notes.md)
+**原文起点**
+
+- `Coaching -> auto pattern. be aware`（E005）
+- `"shifting perspective" of assumption`（E006）
+- `"Not make your comfortable room"`（E007）
+- `enabling others to think differently`（E008）
+- `let the coachee fix his problem / not provide solutions`（E035）
+- `Leo: "True leadership": people want to follow you...`（E050）
+
+**可以确认的转向**
+
+这里有两个互相连接的动作。第一个是领导者先看自己：auto pattern 与 assumption。第二个是领导者不占据所有答案，而是让别人能 differently think、拥有问题并愿意跟随。
+
+**补齐后的论述**
+
+真正的领导力不只靠职位让人执行，而在于清楚方向之后，别人仍愿意投入判断与行动。领导者要创造思考空间，但不能把责任包装成 coaching 后推出去；目标、边界、伦理和最终 accountability 仍然需要有人承担。
+
+**缺口**
+
+原文明确写了 willingness to follow，却没有写方向是否正确、影响是否合乎伦理、结果如何承担。它是有力量的定义核心，但还不是完整定义。
+
+**Review 对应：** T02、T07
+
+## 思考链 3：真正的障碍不只是不会听，而是情绪和内在声音抢先进入
+
+**原文起点**
+
+- `wait until finish -> don't interact too early`（E013）
+- `Three Voice of judgement / Cynicism / fear`（E014，课堂框架）
+- `take things personally and angry with the comments, I also emotional`（E019）
+- `being understand / being trusted`（E029）
+- `Only listening No clarification questions`（E032）
+
+**可以确认的转向**
+
+这一组里最个人化的证据不是倾听模型，而是 `I also emotional`。它说明你已经把问题从“别人表达得好不好”拉回到“我怎样接收反馈”。
+
+**补齐后的论述**
+
+当反馈触碰自我形象时，judgment、cynicism 或 fear 可能比理解更早出现。`wait until finish` 因此不只是礼貌，而是延迟反应的认知纪律。先总结并确认，可以把对方原意与自己的第一解释分开，再决定是否建议或行动。
+
+**缺口**
+
+没有具体反馈案例，也没有证据说明“先听完”已经改善了 trust 或 decision quality。当前是一个值得实验的假设。
+
+**Review 对应：** T03、T04
+
+## 思考链 4：反思是更新 picture，不是替旧 picture 辩护
+
+**原文起点**
+
+- `blind spot as input`（E039）
+- `open my perspective`（E040）
+- `Everything we hear is an opinion, not a fact`（E043，外部引语）
+- `Everything we see is a perspective, not the truth`（E044，外部引语）
+- `appointment with me`（E047）
+- `Market changes, always find blind spot`（E069）
+- `bias -> changed overtime`（E070）
+
+**可以确认的转向**
+
+你把 blind spot 写成 input，并把 reflection 写成需要固定时间的 appointment。这比“我要更有自知”更具体：盲点被当作更新认知的材料，而不是人格羞耻。
+
+**补齐后的论述**
+
+经验经过记忆会被连成 picture，但 picture 只是解释。反思的任务，是区分 observation、interpretation、emotion 与 alternative，而不是事后为第一反应找理由。由于市场和 bias 都会变化，这种校准需要周期发生。
+
+**缺口**
+
+`Everything...` 两句是引用，不应当成个人原创；`appointment with me` 也还没有频率、产出和复查记录。
+
+**Review 对应：** T06、T09
+
+## 思考链 5：个人 insight 只有进入组织，才会变成能力
+
+**原文起点**
+
+- `I see: Different layers focus.`（E080）
+- `Make sure knowledge and insight get a "home" in your organisation`（E086）
+- `Allocate reflection time`（E087）
+- `build communities of practice`（E087）
+
+**可以确认的转向**
+
+你同时注意到两件事：不同组织层级拥有不同 focus；知识如果没有 home 就会消失。它们组合成一个组织学习问题：知识怎样跨层被翻译、保存和再使用。
+
+**补齐后的论述**
+
+组织学习不是把课程资料发给所有人，而是让经验在 C-level、middle management 与 execution 之间被翻译、反馈和重组。知识的 home 也不只是文件夹，而要有 owner、复用场景、检索入口、更新机制与验证结果。
+
+**缺口**
+
+目前没有 Turnpo 的实际 knowledge flow，也没有一项知识被别人独立复用的证据。
+
+**Review 对应：** T11、T12
+
+## 思考链 6：AI 的核心不是生成，而是 ownership 与 mastery
+
+**原文起点**
+
+- `Leo: How to define AI usage.`（E091）
+- `60 -> 80 normal. / 80 -> 120 with AI`（E092）
+- `human in the lead`（E093）
+- `How to test in the future`（E094）
+- `I see: Same as qualification test how people master the knowledge`（E095）
+- `"Use AI summarize my thought."`（E097）
+
+**可以确认的转向**
+
+这是一条相对完整的个人思考链：先问如何定义 AI usage，再提出 human in the lead，然后追问未来怎样测试 mastery，最后画出“先有我的 thought 和 business input，再让 AI summarize / generate thinking logic”的工作流。
+
+**补齐后的论述**
+
+AI 应该放大已经存在的理解和判断，而不是用完整文本掩盖认知空缺。Human in the lead 至少包括：人定义问题、提供业务语境、核查事实、做取舍并承担结果。未来 assessment 需要测试解释、纠错、迁移与实际应用，而不只看最终答案。
+
+**缺口**
+
+60、80、120 还没有可观察定义；哪些任务是 AI-led、human-in-the-loop 或 human-in-the-lead 也没有边界。
+
+**Review 对应：** T13、T14、T15
+
+## 思考链 7：工作展示结果，故事让学习过程被理解
+
+**原文起点**
+
+- `Learning is the process / Working is the Result -> Leo`（E101）
+- `Target Audience`（E103）
+- `Who? Why? How? -> What`（E107）
+- `You are in 1997 China, a 3rd line city, 7 yrs old`（E113）
+- `"Teams online meeting -> How to storytell"`（E117）
+
+**可以确认的转向**
+
+你把 learning 与 working 做了过程/结果的区分，又立刻转向 audience、story structure 和个人经历。这暗示 storytelling 对你不只是演讲技巧，也可能是让隐藏过程被别人理解的方法。
+
+**补齐后的论述**
+
+工作结果告诉别人发生了什么，故事则可以呈现为什么、怎样发生以及人经历了什么。好的表达先确定听众需要理解什么，再选择真实经历与必要数据。Personal 和 emotion 提高记忆，但必须受事实约束，不能让 wow factor 取代真实性。
+
+**缺口**
+
+`Who? Why? How? -> What` 的最后一个 What 仍需确认；1997 China 的故事只有骨架，Teams online storytelling 也只是问题。
+
+**Review 对应：** T16、T18
+
+## 两条尚未形成逻辑链的开放思考
+
+### Resource limited -> battle
+
+原文 E106 明确写了 `Resource if limited, the battle will happen -> Leo thinking`，但没有说明资源、参与者或冲突类型。它现在是一个直觉，不足以证明“稀缺必然导致冲突”。需要补真实案例，并区分 scarcity、priority、role、power 与 communication。
+
+**Review 对应：** T17
+
+### Autopilot -> focus -> Culture Map
+
+E118-E120 只有 `Where you home. current?`、`1st feeling Autopilot`、`2st feeling focus`、`The culture MAP`。可以谨慎推断你在注意第一反应与第二次观察，但不能确认具体对象或结论。
+
+**Review 对应：** T19
+
+## 课堂笔记的完整性评估
+
+| 维度 | 当前状态 | 主要遗漏 |
+| --- | --- | --- |
+| 课堂主题 | 较完整 | 多数主线和关键词都在 |
+| 个人触发 | 丰富 | 很多短句没有写触发事件 |
+| 个人立场 | 部分形成 | True leadership、AI、learning/work 较清晰；其他仍是问题 |
+| 推理过程 | 不完整 | 常从关键词直接跳到结论，缺中间理由 |
+| 事实证据 | 偏少 | 缺原话、人物、场景、结果、反例 |
+| 适用边界 | 很少 | listening、coaching、AI、safety 都未写何时不适用 |
+| 行动与复查 | 初步出现 | appointment、practice、test 有方向，缺日期和结果 |
+| 课程来源 | 曾混杂 | 本次已将课堂框架、外部引语与个人观点分开 |
+
+## 你最容易忽视的六个维度
+
+1. **具体事件。** 你很快抓住抽象结构，但容易跳过谁、何时、说了什么、造成什么后果。
+2. **因果证据。** `listening -> trust`、`safety -> better decision` 等关系合理，但笔记还没有证明。
+3. **边界条件。** Coaching 不适合所有紧急场景；open-minded 也不等于不做决定。
+4. **权力与伦理。** 愿意跟随可能来自信任，也可能来自依赖、压力或信息不对称。
+5. **结果指标。** Insight 是否改变行为、团队信息质量、决策或产出，需要可观察信号。
+6. **自己的反例。** 每个原则都应找一个失败案例或不适用案例，防止它变成漂亮口号。
+
+## 建议的个人论述模板
+
+以后每条课堂感悟都可以补成八步：
+
+1. `Raw note`：原句是什么？
+2. `Trigger`：当时谁说了什么，或发生了什么？
+3. `My first reaction`：我为什么特别记下它？
+4. `Claim`：我现在真正主张什么？
+5. `Reasoning`：为什么？中间的因果链是什么？
+6. `Boundary`：什么时候不成立？谁可能不同意？
+7. `Experiment`：下一次测试什么行为？
+8. `Review date`：结果怎样，我要保留、修改还是放弃？
+
+## 接下来 30 天，只做五个验证
+
+1. 为 T01 补一个正在发生的 leadership struggle。
+2. 为 T03 还原一次真实 feedback 情境。
+3. 用一次对话测试 T04 的 `听完 -> 总结 -> 确认`。
+4. 用一个任务定义 T13 的 60 / 80 / 120 和 human ownership。
+5. 完成 T18 的 1997 China 90 秒故事，并验证听众记住了什么。
+
+这五个验证完成后，再扩展剩余条目。这样 review 不会变成又一轮内容生产，而会真正进入 self-learning loop。

@@ -14,8 +14,8 @@ const MAX_UPLOAD_BYTES = 64 * 1024 * 1024;
 const MAX_MONTHS = 60;
 const MAX_MATERIALS_PER_MONTH = 100;
 const MAX_MEMORIES_PER_MONTH = 100;
-const MAX_THINKING_ITEMS_PER_MONTH = 12;
-const MAX_FOLLOW_UP_ITEMS_PER_MONTH = 12;
+const MAX_THINKING_ITEMS_PER_MONTH = 100;
+const MAX_FOLLOW_UP_ITEMS_PER_MONTH = 100;
 
 export { json, MAX_UPLOAD_BYTES };
 
@@ -124,8 +124,37 @@ function normalizeMemory(item = {}, monthKey = "") {
 }
 
 function normalizeThinkingQuestion(item = "") {
-  const text = typeof item === "string" ? item : item?.body || item?.title || "";
-  return cleanText(text, 400);
+  if (typeof item === "string") return cleanText(item, 400);
+  if (!item || typeof item !== "object") return "";
+
+  const normalized = {
+    id: cleanText(item.id || "", 40),
+    kind: cleanText(item.kind || item.type || "思考", 80),
+    title: cleanText(item.title || item.body || item.original || "", 240),
+    date: cleanText(item.date || "", 10),
+    source: cleanText(item.source || "", 120),
+    position: cleanText(item.position || "", 240),
+    original: cleanText(item.original || item.raw || "", 8000),
+    context: cleanText(item.context || "", 12000),
+    reconstruction: cleanText(item.reconstruction || item.completedArgument || item.completed || "", 20000),
+    evidenceBoundary: cleanText(item.evidenceBoundary || item.boundary || "", 10000),
+    reviewPrompt: cleanText(item.reviewPrompt || item.review || "", 6000),
+    reviewNotes: cleanText(item.reviewNotes || "", 20000),
+    followUp: cleanText(item.followUp || item.followup || "", 6000),
+    followUpNotes: cleanText(item.followUpNotes || "", 20000),
+    learningReflection: cleanText(item.learningReflection || item.reflection || "", 6000),
+    learningNotes: cleanText(item.learningNotes || "", 20000),
+    confidence: cleanText(item.confidence || "", 20).toLowerCase(),
+    image: safePrivateUrl(item.image || item.sourceImage || "")
+  };
+
+  return normalized.title || normalized.original ? normalized : "";
+}
+
+function cleanRevision(value = 0) {
+  const revision = Number(value || 0);
+  if (!Number.isFinite(revision)) return 0;
+  return Math.max(0, Math.min(9999, Math.trunc(revision)));
 }
 
 export function normalizeLibraryPayload(payload = {}) {
@@ -154,7 +183,8 @@ export function normalizeLibraryPayload(payload = {}) {
           .slice(0, MAX_FOLLOW_UP_ITEMS_PER_MONTH)
           .map(normalizeThinkingQuestion)
           .filter(Boolean),
-        markdown: cleanText(month?.markdown || month?.md || month?.searchNotes || "", 180000),
+        markdown: cleanText(month?.reviewedMarkdown || month?.markdown || month?.md || month?.searchNotes || "", 180000),
+        markdownRevision: cleanRevision(month?.markdownRevision),
         memoryMoment: (Array.isArray(month?.memoryMoment) ? month.memoryMoment : [])
           .slice(0, MAX_MEMORIES_PER_MONTH)
           .map((item) => normalizeMemory(item, monthKey))

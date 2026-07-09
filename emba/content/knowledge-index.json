@@ -470,41 +470,43 @@
     },
     {
       "id": "emba-2026-07-questions-and-reflections-review",
-      "title": "EMBA July 2026 Questions And Reflections Review Queue",
+      "title": "EMBA July 2026 Source-First Personal Reflection Review",
       "type": "personal_reflection",
       "program": "EMBA",
       "school": "Maastricht University",
       "course": "Lead in Learning",
       "module": "Intro Programme",
-      "session": "Questions and reflections extracted from handwritten notes",
+      "session": "One-by-one source-first review of Leo's questions and reflections",
       "date": "2026-07-09",
       "year": 2026,
       "month": "2026-07",
-      "source_type": "reflection_index",
-      "source_file": "/emba/content/2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md",
+      "source_type": "source_first_reflection_review",
+      "source_file": "/emba/content/2026/07_July/reflections/2026-07-personal-marker-original-extract.md",
       "md_file": "/emba/content/2026/07_July/reflections/2026-07-questions-and-reflections-review.md",
       "visibility": "private",
       "status": "active",
       "tags": [
         "questions",
         "reflections",
-        "leadership",
-        "learning",
-        "coaching",
-        "personal-growth"
+        "source-first",
+        "review",
+        "follow-up",
+        "self-learning"
       ],
       "keywords": [
-        "personal questions",
-        "learning reflections",
-        "leadership reflection",
+        "original evidence",
+        "completed argument",
+        "evidence boundary",
         "review queue",
-        "questions and insights",
-        "问题",
-        "感悟",
-        "复盘",
-        "反思"
+        "follow-up",
+        "self-learning reflection",
+        "True leadership",
+        "human in the lead",
+        "原文",
+        "补齐论述",
+        "逐条复盘"
       ],
-      "summary": "A separate review queue that extracts Leo personal questions and reflections from the July 2026 EMBA handwritten-note analysis, so each item can be reviewed one by one.",
+      "summary": "Nineteen source-first review cards that keep Leo's original handwriting separate from Codex reconstruction, evidence boundaries, review questions, follow-up actions, and self-learning reflections.",
       "related_topics": [
         "leadership",
         "decision-making",
@@ -513,7 +515,7 @@
       ],
       "language": "zh",
       "rag_include": true,
-      "search_text": "July 2026 EMBA questions reflections review queue personal questions insights leadership listening coaching blind spot psychological safety AI organizational learning inclusion storytelling 问题 感悟 复盘 反思 自我觉察 领导力问题 倾听 教练 盲点 心理安全 AI 学习 组织学习 包容 逐条查看"
+      "search_text": "July 2026 EMBA source-first personal reflection review T01 T19 original evidence completed argument evidence boundary review follow-up self-learning True leadership willing to follow feedback emotional Turnpo sparks blind spot department essential contribution human in the lead AI mastery assessment learning process working result resource battle Who Why How What 1997 China Culture Map 原文 补齐论述 证据边界 逐条复盘 自我学习"
     },
     {
       "id": "emba-2026-07-leo-thinking-journey",
@@ -551,7 +553,7 @@
         "human in the lead",
         "knowledge home"
       ],
-      "summary": "A source-linked reconstruction of how Leo's July EMBA observations developed into judgments, open questions, and practical leadership experiments.",
+      "summary": "A cautious source-first reconstruction of Leo's July EMBA thinking, separating confirmed personal statements, classroom triggers, Codex synthesis, logical gaps, and next learning tests.",
       "related_topics": [
         "leadership",
         "decision-making",
@@ -560,21 +562,21 @@
       ],
       "language": "zh",
       "rag_include": true,
-      "search_text": "Leo EMBA July 2026 我的心得 思考过程 认知转变 思考链 触发 觉察 当前判断 True leadership people want to follow 愿意跟随 影响力 职位 权力 待补充 待验证 后续思考 真实情境 情绪证据 因果验证 适用边界 领导力定义 证据分类 AI 标准 权力资源 课程缺口 行动闭环 baseline review date personal struggle assumption not make your comfortable room enabling others to think differently wait until finish judgment cynicism fear blind spot opinion fact perspective truth psychological safety knowledge home AI 60 80 120 human in the lead mastery test decision listening coaching crisis command accountability observation sourced fact interpretation inference Leadership Development Visualisation Prototyping Inclusion Diversity less is more target audience storytelling Culture Map Young people not willing Show your work in Turnpo creativity essential contribution complexity resource limited visualization data can be fun P01 P78"
+      "search_text": "Leo EMBA July 2026 我的心得 思考逻辑 source-first confirmed personal statement classroom trigger Codex synthesis logical gap next learning test personal struggle assumption auto pattern True leadership people want to follow willing to follow feedback I also emotional wait until finish blind spot appointment with me different layers focus knowledge home AI 60 80 120 human in the lead mastery assessment Use AI summarize my thought learning process working result resource limited battle storytelling Who Why How What 1997 China Culture Map T01 T19 E001 E120"
     },
     {
       "id": "emba-2026-07-personal-marker-original-extract",
-      "title": "EMBA July 2026 Personal Marker Original Extract",
+      "title": "EMBA July 2026 Personal Reflection Evidence Ledger",
       "type": "personal_reflection",
       "program": "EMBA",
       "school": "Maastricht University",
       "course": "Lead in Learning",
       "module": "Intro Programme",
-      "session": "Original personal markers extracted from handwritten notes",
+      "session": "Page-by-page audit of personal markers and nearby context",
       "date": "2026-07-09",
       "year": 2026,
       "month": "2026-07",
-      "source_type": "handwritten_marker_extract",
+      "source_type": "handwritten_evidence_ledger",
       "source_file": "/emba/materials/2026-07/handwritten-notes/images/IMG_6900.jpeg",
       "md_file": "/emba/content/2026/07_July/reflections/2026-07-personal-marker-original-extract.md",
       "visibility": "private",
@@ -583,23 +585,21 @@
         "questions",
         "reflections",
         "original-markers",
+        "evidence-ledger",
         "handwritten-notes",
-        "leo",
-        "ai",
-        "leadership"
+        "leo"
       ],
       "keywords": [
         "Leo:",
         "I see",
+        "original text",
         "question marks",
         "quoted sentences",
         "star markers",
-        "original text",
-        "personal insight",
-        "handwritten extraction",
-        "Turnpo"
+        "source audit",
+        "handwritten evidence"
       ],
-      "summary": "A source-faithful extraction of Leo personal markers from the July 2026 handwritten notes, including original fragments, date, page position, context, and completed sentences.",
+      "summary": "A page-by-page evidence ledger that preserves Leo's original July 2026 handwriting, dates, image positions, nearby context, classification, and uncertainty without mixing in reconstructed arguments.",
       "related_topics": [
         "leadership",
         "decision-making",
@@ -608,7 +608,7 @@
       ],
       "language": "zh",
       "rag_include": true,
-      "search_text": "July 2026 EMBA personal marker original extract Leo: I see See quoted sentence question mark star marker original text completed sentence IMG_6900 IMG_6912 True leadership people want to follow how many people you can influence 愿意跟随 影响力 Not make your comfortable room enabling others to think differently Show your work in Turnpo sparks and ideas come true AI 80 120 human in the lead Ready speech less is more 原文 感悟 问号 星号 引号 Leo I see 补齐句 手写笔记 产生时间 上下文 位置"
+      "search_text": "July 2026 EMBA personal reflection evidence ledger E001 E120 Leo I see question quoted star original text source audit IMG_6900 IMG_6912 True leadership people want to follow Show your work in Turnpo blind spot appointment with me department essential knowledge home human in the lead Use AI summarize my thought Who Why How What 1997 China 原文证据 产生时间 上下文 图片位置 课堂框架 外部引语 待核原字"
     },
     {
       "id": "emba-2026-07-img-6900-lead-in-learning",
@@ -651,13 +651,13 @@
     },
     {
       "id": "emba-2026-07-img-6901-listening-habits",
-      "title": "IMG 6901 - Listening Habits And Outside-In Perspective",
+      "title": "IMG 6901 - Four Levels Of Listening",
       "type": "source_note",
       "program": "EMBA",
       "school": "Maastricht University",
       "course": "Lead in Learning",
       "module": "Intro Programme",
-      "session": "Listening and coaching",
+      "session": "Four levels of listening",
       "date": "2026-07-01",
       "year": 2026,
       "month": "2026-07",
@@ -669,34 +669,36 @@
       "status": "active",
       "tags": [
         "listening",
-        "coaching",
+        "course-framework",
         "leadership"
       ],
       "keywords": [
-        "levels of listening",
-        "outside-in perspective",
-        "misunderstanding",
-        "feedback",
-        "focus"
+        "downloading habits",
+        "factual listening",
+        "empathic listening",
+        "generative listening",
+        "open mind",
+        "open heart",
+        "open will"
       ],
-      "summary": "This image focuses on listening habits, misunderstanding, feedback, and the leadership move of seeing a situation from another person's side.",
+      "summary": "A source-faithful transcription of the four-level listening framework; this page is classroom context, not four separate Leo reflections.",
       "related_topics": [
         "leadership",
         "personal-growth"
       ],
       "language": "en",
       "rag_include": true,
-      "search_text": "IMG 6901 listening habits outside-in perspective misunderstanding feedback focus trust being understood 倾听 误解 反馈 专注 信任."
+      "search_text": "IMG 6901 four levels listening downloading habits factual listening empathic listening generative listening open mind open heart open will classroom framework 四层倾听 课堂框架."
     },
     {
       "id": "emba-2026-07-img-6902-three-voices",
-      "title": "IMG 6902 - Three Voices Of Resistance",
+      "title": "IMG 6902 - Listening Resistance, Feedback, And Emotion",
       "type": "source_note",
       "program": "EMBA",
       "school": "Maastricht University",
       "course": "Lead in Learning",
       "module": "Intro Programme",
-      "session": "Listening and coaching",
+      "session": "Listening, feedback, and emotion",
       "date": "2026-07-01",
       "year": 2026,
       "month": "2026-07",
@@ -708,18 +710,19 @@
       "status": "active",
       "tags": [
         "listening",
-        "self-awareness",
-        "leadership"
+        "feedback",
+        "emotion",
+        "self-awareness"
       ],
       "keywords": [
+        "wait until finish",
         "judgment",
         "cynicism",
         "fear",
-        "open mind",
-        "open heart",
-        "open will"
+        "take things personally",
+        "I also emotional"
       ],
-      "summary": "This image captures the three voices that block deeper listening: judgment, cynicism, and fear.",
+      "summary": "This page combines a listening reminder, the classroom Three Voices framework, and Leo's explicit observation that comments can feel personal and trigger emotion.",
       "related_topics": [
         "leadership",
         "decision-making",
@@ -727,11 +730,11 @@
       ],
       "language": "en",
       "rag_include": true,
-      "search_text": "IMG 6902 three voices judgment cynicism fear open mind open heart open will listening resistance 判断 犬儒 恐惧 开放心态."
+      "search_text": "IMG 6902 wait until finish listening feedback emotion Three Voices judgment cynicism fear Young people not willing take things personally angry comments I also emotional 反馈 情绪 防御."
     },
     {
       "id": "emba-2026-07-img-6903-coaching-listening",
-      "title": "IMG 6903 - Coaching Through Listening",
+      "title": "IMG 6903 - Coaching Through Listening And Trust",
       "type": "source_note",
       "program": "EMBA",
       "school": "Maastricht University",
@@ -750,23 +753,25 @@
       "tags": [
         "coaching",
         "listening",
-        "leadership"
+        "trust",
+        "turnpo"
       ],
       "keywords": [
+        "summary and reflection",
+        "only listening",
+        "still following when misunderstood",
         "coachee",
-        "no early advice",
-        "summary",
-        "reflection",
-        "being understood"
+        "being understood",
+        "show your work in Turnpo"
       ],
-      "summary": "This image turns listening into a concrete coaching discipline: wait, summarize, and let the coachee work on their own problem.",
+      "summary": "A source-faithful page covering expectation, misunderstanding, meeting attention, listening-only practice, coachee ownership, trust, and a starred Turnpo idea.",
       "related_topics": [
         "leadership",
         "personal-growth"
       ],
       "language": "en",
       "rag_include": true,
-      "search_text": "IMG 6903 coaching listening coachee no early advice summary reflection being understood trusted 教练 倾听 总结 反思 不急于建议."
+      "search_text": "IMG 6903 coaching listening trust expectation child misunderstanding father feedback distractions meeting being understood being trusted Summary and reflection Only listening Still following when misunderstood coachee Show your work in Turnpo sparks ideas come true."
     },
     {
       "id": "emba-2026-07-img-6904-memory-making-reflection",
@@ -809,13 +814,13 @@
     },
     {
       "id": "emba-2026-07-img-6905-perspective-and-truth",
-      "title": "IMG 6905 - Perspective, Process, And Truth",
+      "title": "IMG 6905 - True Leadership And Department Value",
       "type": "source_note",
       "program": "EMBA",
       "school": "Maastricht University",
       "course": "Lead in Learning",
       "module": "Intro Programme",
-      "session": "Perspective and reflection",
+      "session": "Leadership perspectives and organizational value",
       "date": "2026-07-02",
       "year": 2026,
       "month": "2026-07",
@@ -826,18 +831,20 @@
       "visibility": "private",
       "status": "active",
       "tags": [
-        "perspective",
-        "reflection",
-        "leadership"
+        "true-leadership",
+        "influence",
+        "creativity",
+        "department-value"
       ],
       "keywords": [
-        "opinion not fact",
-        "perspective not truth",
-        "creativity",
-        "minority feeling",
-        "process"
+        "people want to follow you",
+        "willing to follow",
+        "positional relational process",
+        "creativity idea",
+        "not powerwise",
+        "essential wise"
       ],
-      "summary": "This image emphasizes the difference between opinion, perspective, and truth, with leadership implications for creativity and minority experience.",
+      "summary": "The page containing Leo's True leadership statement, three leadership perspectives, a creativity-pressure example, and questions about department importance beyond power.",
       "related_topics": [
         "leadership",
         "decision-making",
@@ -845,17 +852,17 @@
       ],
       "language": "en",
       "rag_include": true,
-      "search_text": "IMG 6905 perspective truth opinion not fact perspective not truth creativity minority feeling process 观点 事实 视角 真相 创造力 少数体验."
+      "search_text": "IMG 6905 True leadership people want to follow you how many people influence willing to follow positional relational process perspective creativity idea one minute department importance not powerwise essential wise 真正领导力 愿意跟随 部门价值."
     },
     {
       "id": "emba-2026-07-img-6906-organizational-learning-change",
-      "title": "IMG 6906 - Organizational Learning And Change",
+      "title": "IMG 6906 - Change, Inclusion, And Blind Spots",
       "type": "source_note",
       "program": "EMBA",
       "school": "Maastricht University",
       "course": "Lead in Learning",
       "module": "Intro Programme",
-      "session": "Organizational learning",
+      "session": "Learning, change, and inclusion exercises",
       "date": "2026-07-02",
       "year": 2026,
       "month": "2026-07",
@@ -866,35 +873,36 @@
       "visibility": "private",
       "status": "active",
       "tags": [
-        "organizational-learning",
         "change",
-        "leadership"
+        "inclusion",
+        "blind-spots",
+        "bias"
       ],
       "keywords": [
-        "learning process",
-        "courage",
-        "comfort zone",
-        "change",
-        "practice"
+        "I see company complex simple",
+        "mirror others feel included",
+        "eight changes",
+        "market changes",
+        "bias changed over time"
       ],
-      "summary": "This image frames organizational learning as a change practice that requires courage, repetition, and movement beyond the comfortable room.",
+      "summary": "A source-faithful page of change exercises, inclusion reminders, an unclear I see observation, and the clearer conclusion that markets, blind spots, and bias change over time.",
       "related_topics": [
         "leadership",
         "organizational-learning"
       ],
       "language": "en",
       "rag_include": true,
-      "search_text": "IMG 6906 organizational learning change courage comfort zone practice learning process enabling others think differently 组织学习 改变 勇气 舒适区 练习."
+      "search_text": "IMG 6906 change inclusion blind spots bias I see company complex simple courage Mirror others feel included Stand up habit eight changes movie Market changes always find blind spot bias changed overtime 变化 包容 盲点 偏差."
     },
     {
       "id": "emba-2026-07-img-6907-psychological-safety",
-      "title": "IMG 6907 - Psychological Safety And Trust",
+      "title": "IMG 6907 - Psychological Safety And Leadership Behaviors",
       "type": "source_note",
       "program": "EMBA",
       "school": "Maastricht University",
       "course": "Lead in Learning",
       "module": "Intro Programme",
-      "session": "Psychological safety",
+      "session": "Psychological safety and leadership behavior",
       "date": "2026-07-02",
       "year": 2026,
       "month": "2026-07",
@@ -907,23 +915,25 @@
       "tags": [
         "psychological-safety",
         "trust",
-        "leadership"
+        "leadership-behavior",
+        "course-framework"
       ],
       "keywords": [
-        "trust",
-        "open-mindedness",
-        "clean goals",
-        "clean framework",
-        "leadership boundary"
+        "Truth question",
+        "PDC",
+        "Smart People stupid decision",
+        "I have your back",
+        "not judgemental",
+        "知行合一"
       ],
-      "summary": "This image treats psychological safety as a practical leadership condition built through trust, clarity, and open-mindedness.",
+      "summary": "A psychological-safety classroom framework plus a leadership-behavior list; the isolated Truth and PDC markers are preserved without inventing a full decision method.",
       "related_topics": [
         "leadership",
         "organizational-learning"
       ],
       "language": "en",
       "rag_include": true,
-      "search_text": "IMG 6907 psychological safety trust open-mindedness clean goals clean framework leadership boundary 心理安全 信任 清晰目标 框架 开放心态."
+      "search_text": "IMG 6907 Truth PDC Smart People stupid decision psychological safety comfort learning apathy anxiety zone Control goal not process unbiased boundary clear goals Trust Listen Not judgemental Open-minded Safety I have your back 知行合一 removing fear."
     },
     {
       "id": "emba-2026-07-img-6908-70-20-10-nonaka",
@@ -967,13 +977,13 @@
     },
     {
       "id": "emba-2026-07-img-6909-ai-learning-amplifier",
-      "title": "IMG 6909 - AI As A Learning Amplifier",
+      "title": "IMG 6909 - Knowledge Home, AI Usage, And Mastery",
       "type": "source_note",
       "program": "EMBA",
       "school": "Maastricht University",
       "course": "Lead in Learning",
       "module": "Intro Programme",
-      "session": "AI in learning and work",
+      "session": "Organizational knowledge and AI-assisted learning",
       "date": "2026-07-02",
       "year": 2026,
       "month": "2026-07",
@@ -986,27 +996,29 @@
       "tags": [
         "ai",
         "learning",
+        "assessment",
         "organizational-learning"
       ],
       "keywords": [
+        "knowledge and insight get a home",
         "human in the lead",
-        "AI summary",
-        "AI assessment",
-        "communities of practice",
-        "knowledge home"
+        "60 80 120",
+        "qualification test",
+        "Use AI summarize my thought",
+        "business input thinking logic"
       ],
-      "summary": "This image frames AI as a tool for raising learning quality while keeping human judgment and mastery in the lead.",
+      "summary": "The most complete personal thought chain in the notes: knowledge needs a home, generated content is not learning, AI should raise the standard with humans in the lead, and assessment must test mastery.",
       "related_topics": [
         "ai-and-digital-transformation",
         "organizational-learning"
       ],
       "language": "en",
       "rag_include": true,
-      "search_text": "IMG 6909 AI learning amplifier human in the lead AI summary assessment communities of practice knowledge home 60 80 120 人工智能 学习放大器 人类判断 知识沉淀."
+      "search_text": "IMG 6909 knowledge insight home organisation reflection time storyteller sparring partner mentor communities practice conscious AI content copy generate content speak up test Leo define AI usage 60 80 120 human in the lead future assessment qualification test master knowledge Use AI summarize my thought Business input Prompt thinking logic."
     },
     {
       "id": "emba-2026-07-img-6910-storytelling-presentation",
-      "title": "IMG 6910 - Storytelling And Presentation Practice",
+      "title": "IMG 6910 - Storytelling, Work, And Resource Tension",
       "type": "source_note",
       "program": "EMBA",
       "school": "Maastricht University",
@@ -1025,33 +1037,35 @@
       "tags": [
         "storytelling",
         "communication",
-        "leadership"
+        "learning-process",
+        "resources"
       ],
       "keywords": [
-        "friendly speech",
+        "Learning is the process",
+        "Working is the Result",
+        "resource limited battle",
+        "Who Why How What",
         "target audience",
-        "presentation practice",
-        "eye contact",
-        "gesture"
+        "visual story"
       ],
-      "summary": "This image turns communication into an audience-specific storytelling practice with attention to clarity, authenticity, eye contact, and gesture.",
+      "summary": "A storytelling page containing two explicit Leo thoughts about learning versus working and resource scarcity, plus audience, presentation, and story-structure notes.",
       "related_topics": [
         "leadership",
         "personal-growth"
       ],
       "language": "en",
       "rag_include": true,
-      "search_text": "IMG 6910 storytelling presentation practice friendly speech target audience eye contact gesture authentic message 讲故事 演讲 目标受众 眼神交流 手势."
+      "search_text": "IMG 6910 storytelling interact real person mirror picture story interactive Learning is process Working is Result Leo speech word unclear less is more Target Audience information share presentation 2min eye contact gesture Resource limited battle Leo thinking Who Why How What Visual story test time."
     },
     {
       "id": "emba-2026-07-img-6911-data-culture-communication",
-      "title": "IMG 6911 - Data, Culture, And Communication",
+      "title": "IMG 6911 - Personal Storytelling, Data, And Online Communication",
       "type": "source_note",
       "program": "EMBA",
       "school": "Maastricht University",
       "course": "Lead in Learning",
       "module": "Intro Programme",
-      "session": "Inclusion and communication",
+      "session": "Storytelling and communication",
       "date": "2026-07-03",
       "year": 2026,
       "month": "2026-07",
@@ -1062,25 +1076,27 @@
       "visibility": "private",
       "status": "active",
       "tags": [
-        "inclusion",
+        "storytelling",
         "communication",
-        "data"
+        "data",
+        "personal-story"
       ],
       "keywords": [
-        "country differences",
-        "culture map",
         "data can be fun",
-        "resources",
-        "body support"
+        "1997 China",
+        "third line city",
+        "make it personal",
+        "keep it authentic",
+        "Teams online meeting"
       ],
-      "summary": "This image connects country differences, data, culture, resources, and leadership communication.",
+      "summary": "A source-faithful storytelling page built around data, a 1997 China childhood example, authenticity, emotion, delivery, and the question of storytelling in Teams meetings.",
       "related_topics": [
         "leadership",
         "personal-growth"
       ],
       "language": "en",
       "rag_include": true,
-      "search_text": "IMG 6911 country differences data culture communication resources body support data can be fun Culture Map 国家差异 数据 文化 沟通 资源."
+      "search_text": "IMG 6911 country difference animation life income population data can be fun Gender or Leader unclear support human resource unsplash AI gen Make it personal keep Authentic wow factor Target Audience Stickiness 1997 China third line city 7 yrs old traffic computer personal feeling emotion gesture eye movement voice Teams online meeting How to storytell."
     },
     {
       "id": "emba-2026-07-img-6912-inclusion-diversity",

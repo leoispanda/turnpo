@@ -70,17 +70,17 @@ The official programme PDF should be used for schedule, room, speaker, location,
 - [EMBA July 2026 Handwritten Notes Analysis](./converted-md/2026-07-01-leadership-learning-handwritten-notes.md)
 - Per-image Markdown mirrors:
   - [IMG 6900 - Lead in Learning](./converted-md/image-notes/IMG_6900-lead-in-learning.md)
-  - [IMG 6901 - Listening Habits And Outside-In Perspective](./converted-md/image-notes/IMG_6901-listening-habits.md)
-  - [IMG 6902 - Three Voices Of Resistance](./converted-md/image-notes/IMG_6902-three-voices.md)
-  - [IMG 6903 - Coaching Through Listening](./converted-md/image-notes/IMG_6903-coaching-listening.md)
+  - [IMG 6901 - Four Levels Of Listening](./converted-md/image-notes/IMG_6901-listening-habits.md)
+  - [IMG 6902 - Listening Resistance, Feedback, And Emotion](./converted-md/image-notes/IMG_6902-three-voices.md)
+  - [IMG 6903 - Coaching Through Listening And Trust](./converted-md/image-notes/IMG_6903-coaching-listening.md)
   - [IMG 6904 - Memory Making And Reflection](./converted-md/image-notes/IMG_6904-memory-making-reflection.md)
-  - [IMG 6905 - Perspective, Process, And Truth](./converted-md/image-notes/IMG_6905-perspective-and-truth.md)
-  - [IMG 6906 - Organizational Learning And Change](./converted-md/image-notes/IMG_6906-organizational-learning-change.md)
-  - [IMG 6907 - Psychological Safety And Trust](./converted-md/image-notes/IMG_6907-psychological-safety.md)
+  - [IMG 6905 - True Leadership And Department Value](./converted-md/image-notes/IMG_6905-perspective-and-truth.md)
+  - [IMG 6906 - Change, Inclusion, And Blind Spots](./converted-md/image-notes/IMG_6906-organizational-learning-change.md)
+  - [IMG 6907 - Psychological Safety And Leadership Behaviors](./converted-md/image-notes/IMG_6907-psychological-safety.md)
   - [IMG 6908 - 70/20/10 And Knowledge Creation](./converted-md/image-notes/IMG_6908-70-20-10-nonaka.md)
-  - [IMG 6909 - AI As A Learning Amplifier](./converted-md/image-notes/IMG_6909-ai-learning-amplifier.md)
-  - [IMG 6910 - Storytelling And Presentation Practice](./converted-md/image-notes/IMG_6910-storytelling-presentation.md)
-  - [IMG 6911 - Data, Culture, And Communication](./converted-md/image-notes/IMG_6911-data-culture-communication.md)
+  - [IMG 6909 - Knowledge Home, AI Usage, And Mastery](./converted-md/image-notes/IMG_6909-ai-learning-amplifier.md)
+  - [IMG 6910 - Storytelling, Work, And Resource Tension](./converted-md/image-notes/IMG_6910-storytelling-presentation.md)
+  - [IMG 6911 - Personal Storytelling, Data, And Online Communication](./converted-md/image-notes/IMG_6911-data-culture-communication.md)
   - [IMG 6912 - Inclusion And Diversity](./converted-md/image-notes/IMG_6912-inclusion-diversity.md)
 
 ### Original Files
@@ -111,9 +111,9 @@ Source handling rule: keep source images and future original files intact. Markd
 ### Reflections
 
 - [Leo's EMBA Thinking Journey - July 2026](./reflections/2026-07-leo-thinking-journey.md)
-- [Questions And Reflections Review Queue](./reflections/2026-07-questions-and-reflections-review.md)
-- [Personal Marker Original Extract](./reflections/2026-07-personal-marker-original-extract.md)
-- Monthly reflection is captured in the EMBA timeline, reconstructed as a source-linked thinking journey, and separated into a review queue for one-by-one reading.
+- [Source-First Personal Reflection Review](./reflections/2026-07-questions-and-reflections-review.md)
+- [Personal Reflection Evidence Ledger](./reflections/2026-07-personal-marker-original-extract.md)
+- Monthly reflection is captured in the EMBA timeline, rebuilt from E001-E120 source evidence, and separated into T01-T19 cards for one-by-one review.
 
 ### Work Applications
 
@@ -154,13 +154,13 @@ Source handling rule: keep source images and future original files intact. Markd
 
 Leadership is not mainly about stronger answers. It is about creating the conditions for better thinking: safety, trust, listening, reflection, and courage to question assumptions.
 
-The website now keeps a separate `待补充与验证` queue for missing personal context, emotional evidence, causal tests, leadership boundaries, AI standards, power and resource questions, course gaps, and measurable action reviews.
+The website now keeps the original handwriting, Codex reconstruction, evidence boundary, Review, Follow-up, and Self-learning reflection separate. Classroom frameworks remain context rather than being counted as Leo's original reflections.
 
 Detailed one-by-one review file:
 
 - [July 2026 Leo Thinking Journey](./reflections/2026-07-leo-thinking-journey.md)
-- [July 2026 Questions And Reflections Review Queue](./reflections/2026-07-questions-and-reflections-review.md)
-- [July 2026 Personal Marker Original Extract](./reflections/2026-07-personal-marker-original-extract.md)
+- [July 2026 Source-First Personal Reflection Review](./reflections/2026-07-questions-and-reflections-review.md)
+- [July 2026 Personal Reflection Evidence Ledger](./reflections/2026-07-personal-marker-original-extract.md)
 
 ## 7. Work Applications
 

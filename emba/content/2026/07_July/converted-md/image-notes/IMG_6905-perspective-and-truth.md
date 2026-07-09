@@ -1,13 +1,13 @@
 ---
 id: emba-2026-07-img-6905-perspective-and-truth
-title: IMG 6905 - Perspective, Process, And Truth
+title: IMG 6905 - True Leadership And Department Value
 slug: img-6905-perspective-and-truth
 type: source_note
 program: EMBA
 school: Maastricht University
 course: Lead in Learning
 module: Intro Programme
-session: Perspective and reflection
+session: Leadership perspectives and organizational value
 date: 2026-07-02
 year: 2026
 month: 2026-07
@@ -17,16 +17,18 @@ converted_from: IMG_6905.jpeg
 visibility: private
 status: active
 tags:
-  - perspective
-  - reflection
-  - leadership
-keywords:
-  - opinion not fact
-  - perspective not truth
+  - true-leadership
+  - influence
   - creativity
-  - minority feeling
-  - process
-summary: This image emphasizes the difference between opinion, perspective, and truth, with leadership implications for creativity and minority experience.
+  - department-value
+keywords:
+  - people want to follow you
+  - willing to follow
+  - positional relational process
+  - creativity idea
+  - not powerwise
+  - essential wise
+summary: The page containing Leo's True leadership statement, three leadership perspectives, a creativity-pressure example, and questions about department importance beyond power.
 related_topics:
   - leadership
   - decision-making
@@ -37,32 +39,43 @@ created_at: 2026-07-09
 updated_at: 2026-07-09
 ---
 
-# IMG 6905 - Perspective, Process, And Truth
+# IMG 6905 - True Leadership And Department Value
 
 ## Source
 
+- Date: `2026-07-02`
 - Original image: `/emba/materials/2026-07/handwritten-notes/images/IMG_6905.jpeg`
-- Overall Markdown: `../2026-07-01-leadership-learning-handwritten-notes.md`
+- Evidence ledger: [E048-E060](../../reflections/2026-07-personal-marker-original-extract.md)
 
-## Clean Markdown Text
+## Source-Faithful Transcription
 
-This page focuses on perspective and the danger of mistaking interpretation for reality.
+- `[unclear opening] When you meet a ... you get angry quick`
+- `how to expand and respect your feeling`
+- `according to the Alpha moments` `[word uncertain]`
+- `different perspective`
+- `Leo: "True leadership": people want to follow you`
+- `how many people you can influence and`
+- `they are willing to follow you`
+- `positional perspective -> Hierarchical`
+- `Relational perspective -> common goal`
+- `Process perspective -> progress learning`
+- `leadership -> creativity`
+- `"I want a Creativity idea in 1 min!!!"`
+- `Nothing happen. Need check the situation`
+- `"How many classes in the same time?"` `[meaning unclear]`
+- `feels minority`
+- `Topic: How do you think your department in your organization important.`
+- `How do you feel which is more important than yours and less important`
+- `"Not powerwise, the essential wise"`
+- `In interview`
 
-Key points:
+## Correction From The Earlier Note
 
-- What we hear is an opinion, not a fact.
-- What we see is a perspective, not the whole truth.
-- Leadership involves process, not only outcome.
-- Creativity and minority experience require openness to different views.
-- A leader needs to make room for perspectives that are not already comfortable.
+The opinion/fact and perspective/truth quotations are on **IMG_6904**, not this image. The previous title and interpretation were therefore materially wrong.
 
-## Interpretation
+## Personal Markers
 
-The core warning is epistemic humility. Leaders often act as if their picture of the situation is the situation. This page pushes against that habit.
-
-## Personal Application
-
-- Separate facts, interpretations, and emotions after difficult conversations.
-- Ask which perspective is missing from the room.
-- Treat disagreement as a possible source of better seeing.
+1. `Leo: "True leadership"...` is an explicit Leo statement. See [T07](../../reflections/2026-07-questions-and-reflections-review.md).
+2. `"Not powerwise, the essential wise"` is a personal reflection candidate about department value. See [T08](../../reflections/2026-07-questions-and-reflections-review.md).
+3. The creativity sentence is likely an exercise example; it is not automatically a personal leadership principle.
 

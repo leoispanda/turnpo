@@ -63,6 +63,8 @@ Source photos: IMG_6900 to IMG_6912
 Dates inferred from notes: 2026-07-01 to 2026-07-03  
 Topic cluster: Lead in Learning, Memory Making, Listening/Coaching, AI, Organizational Learning, Inclusion & Diversity
 
+Source boundary: this file is a course-level synthesis. For exact handwriting, dates, image positions, classroom/personal classification, and uncertain words, use the [E001-E120 Personal Reflection Evidence Ledger](../reflections/2026-07-personal-marker-original-extract.md). For Codex-completed arguments, use the [T01-T19 Source-First Review](../reflections/2026-07-questions-and-reflections-review.md).
+
 ## 1. One-Line Summary
 
 This set of notes is less about "learning leadership theory" and more about practicing a different leadership posture: create safety, listen longer, surface blind spots, help people think differently, and use AI as a mirror or assistant rather than as a substitute for human judgment.
@@ -273,7 +275,7 @@ Key raw points:
 - The culture map; different forms.
 - Country differences: animation, life, income, population.
 - Data can be fun.
-- Leadership is not possible without body support / resources.
+- `[Gender or Leader] is not possible if nobody support / or no human resource could use` `[key word unclear; do not treat as a confirmed leadership conclusion]`.
 - Make it personal, keep it authentic, wow factor, target audience, stickiness.
 - Friendly speech: target audience, share information, practice presentation, eye contact and gesture.
 - Storytelling: mirror -> picture the story; storytelling is interactive.
@@ -367,17 +369,17 @@ July's first EMBA notes show a clear shift in my understanding of leadership. Le
 ## 7. Image Index
 
 - `images/IMG_6900.jpeg` - [Lead in Learning, 2026-07-01](./image-notes/IMG_6900-lead-in-learning.md).
-- `images/IMG_6901.jpeg` - [Levels of listening / habits / outside-in perspective](./image-notes/IMG_6901-listening-habits.md).
-- `images/IMG_6902.jpeg` - [Three voices of judgment, cynicism, fear](./image-notes/IMG_6902-three-voices.md).
-- `images/IMG_6903.jpeg` - [Listening, coaching, being understood and trusted](./image-notes/IMG_6903-coaching-listening.md).
+- `images/IMG_6901.jpeg` - [Four levels of listening (course framework)](./image-notes/IMG_6901-listening-habits.md).
+- `images/IMG_6902.jpeg` - [Listening resistance, feedback, and emotion](./image-notes/IMG_6902-three-voices.md).
+- `images/IMG_6903.jpeg` - [Coaching through listening, trust, and a Turnpo idea](./image-notes/IMG_6903-coaching-listening.md).
 - `images/IMG_6904.jpeg` - [Alumni introduction, memory making, blind spots, reflection](./image-notes/IMG_6904-memory-making-reflection.md).
-- `images/IMG_6905.jpeg` - [Leadership, perspective, process, creativity, minority feeling](./image-notes/IMG_6905-perspective-and-truth.md).
-- `images/IMG_6906.jpeg` - [Organizational learning, courage, comfort zone, change](./image-notes/IMG_6906-organizational-learning-change.md).
-- `images/IMG_6907.jpeg` - [Psychological safety, trust, open-mindedness, leadership boundaries](./image-notes/IMG_6907-psychological-safety.md).
+- `images/IMG_6905.jpeg` - [True leadership, creativity, and department value](./image-notes/IMG_6905-perspective-and-truth.md).
+- `images/IMG_6906.jpeg` - [Change, inclusion, blind spots, and bias](./image-notes/IMG_6906-organizational-learning-change.md).
+- `images/IMG_6907.jpeg` - [Psychological safety and leadership behaviors](./image-notes/IMG_6907-psychological-safety.md).
 - `images/IMG_6908.jpeg` - [70/20/10 learning and Nonaka/Takeuchi knowledge creation](./image-notes/IMG_6908-70-20-10-nonaka.md).
-- `images/IMG_6909.jpeg` - [AI usage, assessment, human-in-the-lead](./image-notes/IMG_6909-ai-learning-amplifier.md).
-- `images/IMG_6910.jpeg` - [Storytelling, friendly speech, presentation practice](./image-notes/IMG_6910-storytelling-presentation.md).
-- `images/IMG_6911.jpeg` - [Country differences, leadership communication, AI and resources](./image-notes/IMG_6911-data-culture-communication.md).
+- `images/IMG_6909.jpeg` - [Knowledge home, AI usage, and mastery assessment](./image-notes/IMG_6909-ai-learning-amplifier.md).
+- `images/IMG_6910.jpeg` - [Storytelling, learning/work, and resource tension](./image-notes/IMG_6910-storytelling-presentation.md).
+- `images/IMG_6911.jpeg` - [Personal storytelling, data, and online communication](./image-notes/IMG_6911-data-culture-communication.md).
 - `images/IMG_6912.jpeg` - [Inclusion & Diversity, 2026-07-03](./image-notes/IMG_6912-inclusion-diversity.md).
 
 ## 8. Recognition Notes

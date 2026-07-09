@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
+const { normalizeLibraryPayload } = await import("../functions/api/emba/_utils.js");
+
 const embaJs = fs.readFileSync(new URL("../emba/emba.js", import.meta.url), "utf8");
 const embaCss = fs.readFileSync(new URL("../emba/emba.css", import.meta.url), "utf8");
 const embaHtml = fs.readFileSync(new URL("../emba/index.html", import.meta.url), "utf8");
@@ -63,7 +65,11 @@ assert.ok(embaJs.includes('data-block-panel="${escapeHtml(state.openBlockId)}"')
 assert.ok(embaJs.includes('blockTemplate("thinking", "思考与问题", month)'));
 assert.ok(embaJs.includes("function renderThinkingQuestions"));
 assert.ok(embaJs.includes("[data-thinking-editor]"));
-assert.ok(embaJs.includes("items.slice(0, 12)"));
+assert.ok(embaJs.includes("function renderStructuredThinkingItem"));
+assert.ok(embaJs.includes("data-thinking-item-field"));
+assert.ok(embaJs.includes("Review 记录"));
+assert.ok(embaJs.includes("Self-learning reflection"));
+assert.ok(!embaJs.includes("items.slice(0, 12)"));
 assert.ok(embaJs.includes('blockTemplate("followup", "待补充与验证", month)'));
 assert.ok(embaJs.includes("function renderFollowUpPoints"));
 assert.ok(embaJs.includes("[data-follow-up-editor]"));
@@ -84,6 +90,8 @@ assert.ok(embaCss.includes(".emba-note-reader"));
 assert.ok(embaCss.includes(".emba-note-source-actions"));
 assert.ok(embaCss.includes(".emba-thinking-list"));
 assert.ok(embaCss.includes(".emba-follow-up-list"));
+assert.ok(embaCss.includes(".emba-thinking-review-card"));
+assert.ok(embaCss.includes(".emba-thinking-note-editor"));
 assert.ok(embaHtml.includes('id="embaSyncStatus"'));
 assert.ok(embaHtml.includes('id="embaEditToggle"'));
 assert.ok(embaHtml.includes('id="embaLightbox"'));
@@ -124,12 +132,16 @@ assert.ok(embaApiUtils.includes("validateSameOriginRequest"));
 assert.ok(embaApiUtils.includes("validR2Key"));
 assert.ok(embaApiUtils.includes("data:"));
 assert.ok(embaApiUtils.includes("MAX_MEMORIES_PER_MONTH = 100"));
-assert.ok(embaApiUtils.includes("MAX_THINKING_ITEMS_PER_MONTH = 12"));
-assert.ok(embaApiUtils.includes("MAX_FOLLOW_UP_ITEMS_PER_MONTH = 12"));
+assert.ok(embaApiUtils.includes("MAX_THINKING_ITEMS_PER_MONTH = 100"));
+assert.ok(embaApiUtils.includes("MAX_FOLLOW_UP_ITEMS_PER_MONTH = 100"));
 assert.ok(embaApiUtils.includes("MAX_UPLOAD_BYTES = 64 * 1024 * 1024"));
 assert.ok(embaApiUtils.includes("thinkingQuestions"));
 assert.ok(embaApiUtils.includes("followUpPoints"));
 assert.ok(embaApiUtils.includes("markdown: cleanText"));
+assert.ok(embaApiUtils.includes("reviewNotes: cleanText"));
+assert.ok(embaApiUtils.includes("followUpNotes: cleanText"));
+assert.ok(embaApiUtils.includes("learningNotes: cleanText"));
+assert.ok(embaApiUtils.includes("markdownRevision: cleanRevision"));
 
 assert.ok(embaLibraryApi.includes("env.EMBA_DB"));
 assert.ok(embaLibraryApi.includes("CREATE TABLE IF NOT EXISTS emba_state"));
@@ -165,6 +177,7 @@ assert.ok(indexedNoteIds.has("emba-2026-06-nyenrode-impact-mba-executive-brochur
 assert.ok(indexedNoteIds.has("emba-2026-07-learning-index"));
 assert.ok(indexedNoteIds.has("emba-2026-07-leading-in-learning-programme"));
 assert.ok(indexedNoteIds.has("emba-2026-07-leadership-learning-handwritten-notes"));
+assert.ok(indexedNoteIds.has("emba-2026-07-questions-and-reflections-review"));
 assert.ok(indexedNoteIds.has("emba-2026-07-leo-thinking-journey"));
 assert.ok(indexedNoteIds.has("emba-2026-07-personal-marker-original-extract"));
 assert.ok(indexedNoteIds.has("emba-theme-leadership"));
@@ -189,24 +202,28 @@ assert.ok(embaJulyIndex.includes("# EMBA Monthly Learning Index - July 2026"));
 assert.ok(embaJulyIndex.includes("## 5A. Knowledge Map"));
 assert.ok(embaJulyIndex.includes("./converted-md/source-documents/2026-07-leading-in-learning-programme.md"));
 assert.ok(embaJulyIndex.includes("Leo's EMBA Thinking Journey"));
-assert.ok(embaJulyIndex.includes("Personal Marker Original Extract"));
+assert.ok(embaJulyIndex.includes("Personal Reflection Evidence Ledger"));
 assert.ok(embaConvertedNote.startsWith("---\n"));
 assert.ok(embaConvertedNote.includes("rag_include: true"));
 assert.ok(embaConvertedNote.includes("source_files:"));
 assert.ok(embaConvertedNote.includes("## 1A. Search Card"));
 assert.ok(embaConvertedNote.includes("## 4A. Knowledge Map"));
 assert.ok(embaLeoThinkingJourney.includes("id: emba-2026-07-leo-thinking-journey"));
-assert.ok(embaLeoThinkingJourney.includes("## 思考过程总览"));
-assert.ok(embaLeoThinkingJourney.includes("## P01-P78 覆盖地图"));
-assert.ok(embaLeoThinkingJourney.includes("## 我的个人思考闭环"));
-assert.ok(embaLeoThinkingJourney.includes("## 后续补充与验证清单"));
-assert.ok(embaLeoThinkingJourney.includes("P58, 2026-07-02, IMG_6909 middle"));
-assert.ok(embaLeoThinkingJourney.includes("human-in-the-lead"));
+assert.ok(embaLeoThinkingJourney.includes("## 先回答：我的思考有逻辑吗？"));
+assert.ok(embaLeoThinkingJourney.includes("## 三层证据"));
+assert.ok(embaLeoThinkingJourney.includes("## 思考链 6：AI 的核心不是生成，而是 ownership 与 mastery"));
+assert.ok(embaLeoThinkingJourney.includes("## 课堂笔记的完整性评估"));
+assert.ok(embaLeoThinkingJourney.includes("E001-E120"));
+assert.ok(embaLeoThinkingJourney.includes("human in the lead"));
 assert.ok(embaPersonalMarkerExtract.includes("id: emba-2026-07-personal-marker-original-extract"));
-assert.ok(embaPersonalMarkerExtract.includes("## Original Marker Table"));
+assert.ok(embaPersonalMarkerExtract.includes("## 审核规则"));
+assert.ok(embaPersonalMarkerExtract.includes("E001"));
+assert.ok(embaPersonalMarkerExtract.includes("E120"));
 assert.ok(embaPersonalMarkerExtract.includes("Not make your comfortable room"));
-assert.ok(embaPersonalMarkerExtract.includes("我带进 EMBA 和工作里的真实 leadership question"));
-assert.ok(embaPersonalMarkerExtract.includes("AI: 80 -> 120, but human in the lead"));
+assert.ok(embaPersonalMarkerExtract.includes("True Leadership and Department Value"));
+assert.ok(embaPersonalMarkerExtract.includes("Use AI summarize my thought"));
+assert.ok(embaPersonalMarkerExtract.includes("Who? Why? How? -> What"));
+assert.ok(embaPersonalMarkerExtract.includes("1997 China"));
 assert.ok(embaLeadershipTheme.includes("## Current Synthesis"));
 assert.ok(embaStrategyTheme.includes("## Current Synthesis"));
 
@@ -225,15 +242,53 @@ assert.ok(julyMaterials.materials.some((item) => item.notes.includes("/emba/cont
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md"));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-leo-thinking-journey.md"));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-personal-marker-original-extract.md"));
-assert.equal(julyMaterials.thinkingQuestions.length, 12);
-assert.ok(julyMaterials.thinkingQuestions.includes("[总结] 领导力不是给更强答案，也不是让自己留在 comfortable room，而是创造让别人更好思考、表达和学习的条件。"));
-assert.ok(julyMaterials.thinkingQuestions.includes("[感悟] True leadership：领导力不只是职位或权力，而是你能影响多少人，以及他们是否真正愿意跟随你。"));
-assert.ok(julyMaterials.thinkingQuestions.includes("[问题] 未来如何测试一个人真正 master the knowledge，而不是只会让 AI summarize?"));
-assert.equal(julyMaterials.followUpPoints.length, 10);
-assert.ok(julyMaterials.followUpPoints.includes("[真实情境] 补写一个 personal struggle：当时发生了什么、谁参与、为什么对我重要？"));
-assert.ok(julyMaterials.followUpPoints.includes("[行动闭环] 每个重要 insight 增加 baseline、行为实验、成功信号和 review date。"));
-assert.ok(julyMaterials.markdown.includes("## 7. Image Index"));
-assert.ok(julyMaterials.markdown.includes("## 8. Recognition Notes"));
-assert.ok(julyMaterials.markdown.includes("## 4A. Knowledge Map"));
+assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-questions-and-reflections-review.md"));
+assert.equal(julyMaterials.thinkingQuestions.length, 19);
+assert.equal(new Set(julyMaterials.thinkingQuestions.map((item) => item.id)).size, 19);
+assert.ok(julyMaterials.thinkingQuestions.every((item) => item.original && item.context && item.reconstruction && item.evidenceBoundary));
+assert.equal(julyMaterials.thinkingQuestions.find((item) => item.id === "T07")?.original, 'Leo: "True leadership": people want to follow you ... how many people you can influence and they are willing to follow you');
+assert.ok(julyMaterials.thinkingQuestions.find((item) => item.id === "T15")?.original.includes("Use AI summarize my thought"));
+assert.equal(julyMaterials.followUpPoints.length, 12);
+assert.ok(julyMaterials.followUpPoints.some((item) => item.startsWith("[T01]")));
+assert.ok(julyMaterials.followUpPoints.some((item) => item.startsWith("[行动闭环]")));
+assert.equal(julyMaterials.markdownRevision, 2);
+assert.ok(julyMaterials.reviewedMarkdown.includes("# EMBA July 2026 - Source-First Reviewed Notes"));
+assert.ok(julyMaterials.reviewedMarkdown.includes("## Current Logic Assessment"));
+
+const normalizedLibrary = normalizeLibraryPayload(parsedMaterials);
+const normalizedJuly = normalizedLibrary.months.find((month) => month.month === "2026-07");
+assert.ok(normalizedJuly);
+assert.equal(normalizedJuly.thinkingQuestions.length, 19);
+assert.equal(normalizedJuly.thinkingQuestions[6].id, "T07");
+assert.ok(normalizedJuly.thinkingQuestions[6].original.includes("people want to follow you"));
+assert.ok(Object.hasOwn(normalizedJuly.thinkingQuestions[6], "reviewNotes"));
+assert.equal(normalizedJuly.markdownRevision, 2);
+assert.ok(normalizedJuly.markdown.includes("# EMBA July 2026 - Source-First Reviewed Notes"));
+
+const reviewRoundTrip = normalizeLibraryPayload({
+  months: [{
+    month: "2026-07",
+    thinkingQuestions: [{
+      id: "T07",
+      title: "True leadership",
+      original: "people want to follow you",
+      reviewNotes: "Confirmed after review.",
+      followUpNotes: "Add three real cases.",
+      learningNotes: "Revisit next month."
+    }]
+  }]
+});
+assert.deepEqual(
+  {
+    reviewNotes: reviewRoundTrip.months[0].thinkingQuestions[0].reviewNotes,
+    followUpNotes: reviewRoundTrip.months[0].thinkingQuestions[0].followUpNotes,
+    learningNotes: reviewRoundTrip.months[0].thinkingQuestions[0].learningNotes
+  },
+  {
+    reviewNotes: "Confirmed after review.",
+    followUpNotes: "Add three real cases.",
+    learningNotes: "Revisit next month."
+  }
+);
 
 console.log("EMBA cloud static checks passed");

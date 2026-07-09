@@ -1,13 +1,13 @@
 ---
 id: emba-2026-07-img-6909-ai-learning-amplifier
-title: IMG 6909 - AI As A Learning Amplifier
+title: IMG 6909 - Knowledge Home, AI Usage, And Mastery
 slug: img-6909-ai-learning-amplifier
 type: source_note
 program: EMBA
 school: Maastricht University
 course: Lead in Learning
 module: Intro Programme
-session: AI in learning and work
+session: Organizational knowledge and AI-assisted learning
 date: 2026-07-02
 year: 2026
 month: 2026-07
@@ -19,14 +19,16 @@ status: active
 tags:
   - ai
   - learning
+  - assessment
   - organizational-learning
 keywords:
+  - knowledge and insight get a home
   - human in the lead
-  - AI summary
-  - AI assessment
-  - communities of practice
-  - knowledge home
-summary: This image frames AI as a tool for raising learning quality while keeping human judgment and mastery in the lead.
+  - 60 80 120
+  - qualification test
+  - Use AI summarize my thought
+  - business input thinking logic
+summary: The most complete personal thought chain in the notes: knowledge needs a home, generated content is not learning, AI should raise the standard with humans in the lead, and assessment must test mastery.
 related_topics:
   - ai-and-digital-transformation
   - organizational-learning
@@ -36,35 +38,46 @@ created_at: 2026-07-09
 updated_at: 2026-07-09
 ---
 
-# IMG 6909 - AI As A Learning Amplifier
+# IMG 6909 - Knowledge Home, AI Usage, And Mastery
 
 ## Source
 
+- Date: `2026-07-02`
 - Original image: `/emba/materials/2026-07/handwritten-notes/images/IMG_6909.jpeg`
-- Overall Markdown: `../2026-07-01-leadership-learning-handwritten-notes.md`
+- Evidence ledger: [E086-E098](../../reflections/2026-07-personal-marker-original-extract.md)
 
-## Clean Markdown Text
+## Source-Faithful Transcription
 
-This page records the AI learning discussion.
+- `Make sure knowledge and insight get a "home" in your organisation`
+- `Allocate reflection time`
+- `be a storyteller, sparring partner or mentor`
+- `build communities of practice`
+- `be conscious about AI use`
+- `generate idea` `[context fragment]`
+- `polish papers`
+- `Not -> content copy from "generate content"`
+- `What you learn / speak up and test`
+- `Leo: How to define AI usage.`
+- `60 -> 80 normal.`
+- `80 -> 120 with AI`
+- `Not let AI guide or generate all`
+- `human in the lead`
+- `How to test in the future`
+- `I see: Same as qualification test how people master the knowledge`
+- `How the future assessment.`
+- `"Use AI summarize my thought."`
+- `Business input -> Prompt for generating / thinking logic`
 
-Key points:
+## Corrections
 
-- Define AI usage clearly.
-- Human work can move from 60 to 80, and AI-assisted work can move from 80 to 120, but only with human judgment.
-- Do not let AI guide or generate everything.
-- Test whether people master the knowledge.
-- AI can summarize and provide business inputs.
-- Copying generative content is not the same as learning.
-- Knowledge and insight need a home in the organization.
-- Communities of practice help AI-assisted learning become shared learning.
+1. `"Use AI summarize my thought."` is an exact quoted line, not an `I see` statement.
+2. The notes do not define what 60, 80, and 120 measure. Any scoring interpretation must remain labeled as reconstruction.
+3. `human in the lead` is explicit; roleplay, pressure testing, or other AI uses are later suggestions, not source text.
 
-## Interpretation
+## Review Links
 
-The strongest point is that AI should raise the standard of preparation and reflection, not replace thinking. The test is whether people become more capable after using AI.
-
-## Personal Application
-
-- Use AI for roleplay, summary, and pressure testing.
-- Keep final judgment and authorship human.
-- Save useful prompts and outputs as reusable learning assets.
+- Knowledge home: [T12](../../reflections/2026-07-questions-and-reflections-review.md)
+- AI usage: [T13](../../reflections/2026-07-questions-and-reflections-review.md)
+- Mastery assessment: [T14](../../reflections/2026-07-questions-and-reflections-review.md)
+- Thought-first AI workflow: [T15](../../reflections/2026-07-questions-and-reflections-review.md)
 

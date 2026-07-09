@@ -1,13 +1,13 @@
 ---
 id: emba-2026-07-img-6902-three-voices
-title: IMG 6902 - Three Voices Of Resistance
+title: IMG 6902 - Listening Resistance, Feedback, And Emotion
 slug: img-6902-three-voices
 type: source_note
 program: EMBA
 school: Maastricht University
 course: Lead in Learning
 module: Intro Programme
-session: Listening and coaching
+session: Listening, feedback, and emotion
 date: 2026-07-01
 year: 2026
 month: 2026-07
@@ -18,16 +18,17 @@ visibility: private
 status: active
 tags:
   - listening
+  - feedback
+  - emotion
   - self-awareness
-  - leadership
 keywords:
+  - wait until finish
   - judgment
   - cynicism
   - fear
-  - open mind
-  - open heart
-  - open will
-summary: This image captures the three voices that block deeper listening: judgment, cynicism, and fear.
+  - take things personally
+  - I also emotional
+summary: This page combines a listening reminder, the classroom Three Voices framework, and Leo's explicit observation that comments can feel personal and trigger emotion.
 related_topics:
   - leadership
   - decision-making
@@ -38,30 +39,35 @@ created_at: 2026-07-09
 updated_at: 2026-07-09
 ---
 
-# IMG 6902 - Three Voices Of Resistance
+# IMG 6902 - Listening Resistance, Feedback, And Emotion
 
 ## Source
 
+- Date: `2026-07-01`
 - Original image: `/emba/materials/2026-07/handwritten-notes/images/IMG_6902.jpeg`
-- Overall Markdown: `../2026-07-01-leadership-learning-handwritten-notes.md`
+- Evidence ledger: [E013-E021](../../reflections/2026-07-personal-marker-original-extract.md)
 
-## Clean Markdown Text
+## Source-Faithful Transcription
 
-This page records the three internal voices that can block listening and learning:
+- `wait until finish -> don't interact too early`
+- `Three Voice of judgement / Cynicism / fear`
+- `Completely happy -> point out a problem`
+- `well ... -> straight not wait`
+- `proud -> things clear less comple...` `[unclear]`
+- `Young people not "willing"`
+- `take things personally and angry with the comments, I also emotional`
+- `be open to advice not to refuse improv[e]`
+- `feedback not everywhere/anytime`
 
-- Judgment: deciding too early whether something is right or wrong.
-- Cynicism: assuming the effort will not work or is not sincere.
-- Fear: avoiding openness because vulnerability may feel risky.
+## Classification
 
-The implied counter-move is to stay open long enough for real information to arrive before defending, dismissing, or retreating.
+- `Three Voice...` is a classroom framework.
+- `take things personally... I also emotional` is explicit first-person evidence and the strongest personal marker on this page.
+- The remaining fragments are examples or behavior reminders; their ownership is not certain.
 
-## Interpretation
+## Personal Reflection Candidate
 
-The page is useful as a diagnostic before important conversations. If the leader is judging, becoming cynical, or acting from fear, the conversation will shrink before the other person has had enough space to think.
+The source supports a question, not a finished answer: when feedback feels personal, does judgment, cynicism, fear, or anger close learning before the content is understood?
 
-## Personal Application
-
-- Before responding, ask: am I judging, dismissing, or protecting myself?
-- Name the resistance privately before acting on it.
-- Use the three voices as a meeting reflection checklist.
+See [T03](../../reflections/2026-07-questions-and-reflections-review.md) for the reconstructed argument and its evidence boundary.
 
