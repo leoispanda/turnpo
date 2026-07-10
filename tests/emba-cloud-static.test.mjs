@@ -239,6 +239,11 @@ assert.ok(indexedNoteIds.has("emba-2026-06-lost-art-of-thinking-large-organizati
 assert.ok(indexedNoteIds.has("emba-2026-06-nyenrode-impact-mba-executive-brochure"));
 assert.ok(indexedNoteIds.has("emba-2026-07-learning-index"));
 assert.ok(indexedNoteIds.has("emba-2026-07-leading-in-learning-programme"));
+assert.ok(indexedNoteIds.has("emba-2026-07-leadership-development-trajectory"));
+assert.ok(indexedNoteIds.has("emba-2026-07-team-building"));
+assert.ok(indexedNoteIds.has("emba-2026-07-welcome-mba"));
+assert.ok(indexedNoteIds.has("emba-2026-07-alumni-forum"));
+assert.ok(indexedNoteIds.has("emba-2026-07-mba-need-to-knows"));
 assert.ok(indexedNoteIds.has("emba-2026-07-leadership-learning-handwritten-notes"));
 assert.ok(indexedNoteIds.has("emba-2026-07-questions-and-reflections-review"));
 assert.ok(indexedNoteIds.has("emba-2026-07-leo-thinking-journey"));
@@ -270,6 +275,8 @@ assert.ok(embaOfferMirror.includes("2026-09-12"));
 assert.ok(embaJulyIndex.includes("# EMBA Monthly Learning Index - July 2026"));
 assert.ok(embaJulyIndex.includes("## 5A. Knowledge Map"));
 assert.ok(embaJulyIndex.includes("./converted-md/source-documents/2026-07-leading-in-learning-programme.md"));
+assert.ok(embaJulyIndex.includes("./converted-md/source-documents/2026-07-leadership-development-trajectory.md"));
+assert.ok(embaJulyIndex.includes("./converted-md/source-documents/2026-07-mba-need-to-knows.md"));
 assert.ok(embaJulyIndex.includes("Leo's EMBA Thinking Journey"));
 assert.ok(embaJulyIndex.includes("Personal Reflection Evidence Ledger"));
 assert.ok(embaConvertedNote.startsWith("---\n"));
@@ -310,11 +317,17 @@ assert.ok(juneMaterials.materials.some((item) => item.notes.includes("/emba/cont
 assert.ok(juneMaterials.materials.some((item) => item.notes.includes("/emba/content/2026/06_June/converted-md/source-documents/2026-06-onboarding-guideline.md")));
 assert.ok(julyMaterials.materials.some((item) => item.file.includes("/api/emba/file/emba/2026-07/material/") && item.file.endsWith("September-intake---MaastrichtMBA-Leading-in-Learning-Programme-July-2026.pdf")));
 assert.ok(julyMaterials.materials.some((item) => item.notes.includes("/emba/content/2026/07_July/converted-md/source-documents/2026-07-leading-in-learning-programme.md")));
+assert.ok(julyMaterials.materials.some((item) => item.file.endsWith("Leadership-Development-Trajectory---Micole-Smits.pdf") && item.notes.includes("2026-07-leadership-development-trajectory.md")));
+assert.ok(julyMaterials.materials.some((item) => item.file.endsWith("Team-building---Diana-Mingo-Berdun.pdf") && item.notes.includes("2026-07-team-building.md")));
+assert.ok(julyMaterials.materials.some((item) => item.file.endsWith("Welcome-MBA---Ron-Jacobs.pdf") && item.notes.includes("2026-07-welcome-mba.md")));
+assert.ok(julyMaterials.materials.some((item) => item.file.endsWith("Alumni-Forum---Jeroen-Duijsinx.pdf") && item.notes.includes("2026-07-alumni-forum.md")));
+assert.ok(julyMaterials.materials.some((item) => item.file.endsWith("MBA-need-to-knows---Jesca-Rijpkema.pdf") && item.notes.includes("2026-07-mba-need-to-knows.md")));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md"));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-leo-thinking-journey.md"));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-personal-marker-original-extract.md"));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-questions-and-reflections-review.md"));
 assert.ok(!julyMaterials.materials.some((item) => item.file.includes("leadership-learning-notes-analysis.md")));
+assert.equal(julyMaterials.materials.length, 10);
 const legacyDuplicateMaterial = normalizeLibraryPayload({
   months: [{
     month: "2026-07",
@@ -407,6 +420,19 @@ parsedKnowledgeIndex.notes
     const markdown = fs.readFileSync(path.join(contentRoot, path.relative("/emba/content", note.md_file)), "utf8");
     assert.ok(markdown.includes(`source_file: ${note.source_file}`), `${note.id} source URL must match its Markdown frontmatter`);
   });
+parsedMaterials.months.flatMap((month) => month.materials)
+  .filter((item) => /\.pdf$/i.test(item.file || ""))
+  .forEach((item) => {
+    const indexedSource = parsedKnowledgeIndex.notes.find((note) => note.source_file === item.file);
+    assert.ok(indexedSource, `${item.title} must have an indexed Markdown mirror`);
+    assert.ok(item.notes.includes(indexedSource.md_file), `${item.title} Material notes must link its Markdown mirror`);
+  });
+const welcomeMirror = fs.readFileSync(path.join(contentRoot, "2026/07_July/converted-md/source-documents/2026-07-welcome-mba.md"), "utf8");
+const teamBuildingMirror = fs.readFileSync(path.join(contentRoot, "2026/07_July/converted-md/source-documents/2026-07-team-building.md"), "utf8");
+const needToKnowsMirror = fs.readFileSync(path.join(contentRoot, "2026/07_July/converted-md/source-documents/2026-07-mba-need-to-knows.md"), "utf8");
+assert.ok(welcomeMirror.includes("exact percentages remain unverified"));
+assert.ok(teamBuildingMirror.includes("Classmate names are intentionally not reproduced"));
+assert.ok(needToKnowsMirror.includes("participant roster and profile-picture groups"));
 
 const browserContext = {
   console,

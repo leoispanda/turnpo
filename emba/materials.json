@@ -102,6 +102,36 @@
           "notes": "原始 PDF 已上传至 EMBA_BUCKET，受 EMBA 登录保护；可检索 Markdown 镜像：/emba/content/2026/07_July/converted-md/source-documents/2026-07-leading-in-learning-programme.md。"
         },
         {
+          "title": "Leadership Development Trajectory - Micole Smits",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-07/material/1783544367333-97066f3b-9caa-4214-8527-db62180165f1-Leadership-Development-Trajectory---Micole-Smits.pdf",
+          "notes": "LDT 课程原始课件；可检索 Markdown 镜像：/emba/content/2026/07_July/converted-md/source-documents/2026-07-leadership-development-trajectory.md。"
+        },
+        {
+          "title": "Team Building - Diana Mingo Berdun",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-07/material/1783544367641-da5bc0bb-f278-4d73-92de-0606914242ca-Team-building---Diana-Mingo-Berdun.pdf",
+          "notes": "团队建设原始课件；可检索 Markdown 镜像：/emba/content/2026/07_July/converted-md/source-documents/2026-07-team-building.md。"
+        },
+        {
+          "title": "Welcome MBA - Ron Jacobs",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-07/material/1783544368039-b0070d6b-2f05-408d-ad22-e2079d7a3e08-Welcome-MBA---Ron-Jacobs.pdf",
+          "notes": "MBA welcome 与 PBL 原始课件；可检索 Markdown 镜像：/emba/content/2026/07_July/converted-md/source-documents/2026-07-welcome-mba.md。"
+        },
+        {
+          "title": "Alumni Forum - Jeroen Duijsinx",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-07/material/1783544368579-a756e8dc-6765-47e8-98f8-61f8a43ffe06-Alumni-Forum---Jeroen-Duijsinx.pdf",
+          "notes": "校友论坛原始课件；可检索 Markdown 镜像：/emba/content/2026/07_July/converted-md/source-documents/2026-07-alumni-forum.md。"
+        },
+        {
+          "title": "MBA Need To Knows - Jesca Rijpkema",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-07/material/1783544368963-759b054a-4954-4cf1-9a2d-b66ef3353004-MBA-need-to-knows---Jesca-Rijpkema.pdf",
+          "notes": "MBA 行政与学习操作原始课件；可检索 Markdown 镜像：/emba/content/2026/07_July/converted-md/source-documents/2026-07-mba-need-to-knows.md。"
+        },
+        {
           "title": "EMBA July 2026 full searchable notes - Lead in Learning, AI, Inclusion & Diversity",
           "type": "converted_md",
           "file": "/emba/content/2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md",
