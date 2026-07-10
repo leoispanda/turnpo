@@ -1344,12 +1344,10 @@ function renderMonthDetail(month) {
   detail.innerHTML = `
     <div class="emba-month-kicker">${escapeHtml(formatMonth(month.month))}</div>
     <div class="emba-block-grid">
-      ${blockTemplate("memory", "Memory Moment", month)}
-      ${blockTemplate("reflection", "Reflection", month)}
-      ${blockTemplate("thinking", "思考与问题", month)}
-      ${blockTemplate("followup", "待补充与验证", month)}
-      ${blockTemplate("markdown", "课堂笔记", month)}
-      ${blockTemplate("material", "Material", month)}
+      ${blockTemplate("reflection", "Reflection（我的思考）", month)}
+      ${blockTemplate("memory", "照片", month)}
+      ${blockTemplate("material", "资料", month)}
+      ${blockTemplate("markdown", "课堂笔记（完全内容整合版）", month)}
       ${renderOpenBlockPanel(month)}
     </div>
   `;
