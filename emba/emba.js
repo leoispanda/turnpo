@@ -15,6 +15,7 @@ const state = {
     months: []
   },
   openBlockId: "",
+  reflectionView: "review",
   libraryLoaded: false,
   accessGranted: false,
   editMode: false,
@@ -1035,34 +1036,70 @@ function renderReflection(month) {
     : reflection.trim()
       ? `<div class="emba-reflection-read">${escapeHtml(reflection)}</div>`
       : `<p class="emba-empty-copy">No reflection yet.</p>`;
+  const availableViews = [
+    ...(thinkingItems.length || isEditMode() ? ["review"] : []),
+    ...(reflection.trim() || isEditMode() ? ["summary"] : []),
+    ...(followUpItems.length || isEditMode() ? ["followup"] : [])
+  ];
+  const activeView = availableViews.includes(state.reflectionView)
+    ? state.reflectionView
+    : availableViews[0] || "summary";
+  const tabs = [
+    { id: "review", label: "逐条反思", count: thinkingItems.length },
+    { id: "summary", label: "综合反思", count: 0 },
+    { id: "followup", label: "后续补充", count: followUpItems.length }
+  ].filter((item) => availableViews.includes(item.id));
+  let activeContent = `
+    <section class="emba-reflection-section" data-reflection-section="summary" role="tabpanel" aria-label="综合反思">
+      <div class="emba-reflection-section-head">
+        <h3>本月综合反思</h3>
+        <span>我的完整总结</span>
+      </div>
+      ${reflectionContent}
+    </section>
+  `;
+
+  if (activeView === "review") {
+    activeContent = `
+      <section class="emba-reflection-section" data-reflection-section="thinking" role="tabpanel" aria-label="逐条反思">
+        <div class="emba-reflection-section-head">
+          <h3>我的反思、问题与思考</h3>
+          <span>${thinkingItems.length} 条 · 原文、上下文与 Codex 补充</span>
+        </div>
+        ${renderThinkingQuestions(month)}
+      </section>
+    `;
+  } else if (activeView === "followup") {
+    activeContent = `
+      <section class="emba-reflection-section" data-reflection-section="followup" role="tabpanel" aria-label="后续补充与验证">
+        <div class="emba-reflection-section-head">
+          <h3>后续补充与验证</h3>
+          <span>${followUpItems.length} 个待继续思考的点</span>
+        </div>
+        ${renderFollowUpPoints(month)}
+      </section>
+    `;
+  }
 
   return `
     <div class="emba-reflection-workspace" data-reflection-workspace>
-      <section class="emba-reflection-section" data-reflection-section="summary">
-        <div class="emba-reflection-section-head">
-          <h3>本月反思</h3>
-          <span>我的完整总结</span>
+      ${tabs.length > 1 ? `
+        <div class="emba-reflection-view-tabs" role="tablist" aria-label="Reflection views" style="--reflection-view-count: ${tabs.length}">
+          ${tabs.map((item) => `
+            <button
+              class="emba-reflection-view-tab${activeView === item.id ? " active" : ""}"
+              type="button"
+              role="tab"
+              aria-selected="${activeView === item.id}"
+              data-reflection-view="${item.id}"
+            >
+              <span>${item.label}</span>
+              ${item.count ? `<strong>${item.count}</strong>` : ""}
+            </button>
+          `).join("")}
         </div>
-        ${reflectionContent}
-      </section>
-      ${thinkingItems.length || isEditMode() ? `
-        <section class="emba-reflection-section" data-reflection-section="thinking">
-          <div class="emba-reflection-section-head">
-            <h3>我的思考与问题</h3>
-            <span>${thinkingItems.length} 条 · 原文、上下文与 Codex 补充</span>
-          </div>
-          ${renderThinkingQuestions(month)}
-        </section>
       ` : ""}
-      ${followUpItems.length || isEditMode() ? `
-        <section class="emba-reflection-section" data-reflection-section="followup">
-          <div class="emba-reflection-section-head">
-            <h3>后续补充与验证</h3>
-            <span>${followUpItems.length} 个待继续思考的点</span>
-          </div>
-          ${renderFollowUpPoints(month)}
-        </section>
-      ` : ""}
+      ${activeContent}
     </div>
   `;
 }
@@ -1307,11 +1344,11 @@ function blockSummary(id, month) {
     return count ? `${count} photo${count === 1 ? "" : "s"}` : "No photos yet";
   }
   if (id === "reflection") {
-    const parts = [];
     const thinkingCount = normalizeThinkingQuestions(month?.thinkingQuestions).length;
     const followUpCount = normalizeThinkingQuestions(month?.followUpPoints).length;
-    if (hasTextContent(month?.reflection)) parts.push("反思");
-    if (thinkingCount) parts.push(`${thinkingCount} 条思考`);
+    const parts = [];
+    if (thinkingCount) parts.push(`${thinkingCount} 条逐条反思`);
+    else if (hasTextContent(month?.reflection)) parts.push("综合反思");
     if (followUpCount) parts.push(`${followUpCount} 个待补充`);
     return parts.length ? parts.join(" · ") : "暂无个人思考";
   }
@@ -1391,6 +1428,7 @@ function setActiveMonth(monthIdValue) {
   if (!monthIdValue || state.selectedMonthId === monthIdValue) return;
   state.selectedMonthId = monthIdValue;
   state.openBlockId = "";
+  state.reflectionView = "review";
   document.querySelectorAll("[data-month-id]").forEach((button) => {
     const isActive = button.dataset.monthId === state.selectedMonthId;
     button.classList.toggle("active", isActive);
@@ -1533,6 +1571,13 @@ $("#embaTimeline")?.addEventListener("click", (event) => {
 });
 
 $("#embaMonthDetail")?.addEventListener("click", (event) => {
+  const reflectionView = event.target.closest("[data-reflection-view]");
+  if (reflectionView) {
+    state.reflectionView = reflectionView.dataset.reflectionView || "review";
+    renderMonthDetail(selectedMonth());
+    return;
+  }
+
   const memoryDelete = event.target.closest("[data-memory-delete]");
   if (memoryDelete) {
     if (!isEditMode()) return;
@@ -1564,6 +1609,9 @@ $("#embaMonthDetail")?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-block-toggle]");
   if (!button) return;
   const blockId = button.dataset.blockToggle || "";
+  if (blockId === "reflection" && state.openBlockId !== "reflection") {
+    state.reflectionView = "review";
+  }
   state.openBlockId = blockId;
   renderMonthDetail(selectedMonth());
 });

@@ -740,20 +740,62 @@ body::before {
 
 .emba-reflection-workspace {
   display: grid;
-  gap: 24px;
+  gap: 18px;
+}
+
+.emba-reflection-view-tabs {
+  width: min(100%, 520px);
+  display: grid;
+  grid-template-columns: repeat(var(--reflection-view-count, 3), minmax(0, 1fr));
+  gap: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  background: rgba(245, 245, 247, 0.82);
+  padding: 4px;
+}
+
+.emba-reflection-view-tab {
+  min-width: 0;
+  min-height: 36px;
+  display: inline-flex;
+  justify-content: center;
+  gap: 6px;
+  align-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #6e6e73;
+  font-size: 12px;
+  font-weight: 680;
+  line-height: 1.2;
+  padding: 7px 9px;
+}
+
+.emba-reflection-view-tab:hover {
+  color: #1d1d1f;
+}
+
+.emba-reflection-view-tab.active {
+  background: #ffffff;
+  color: #1d1d1f;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09);
+}
+
+.emba-reflection-view-tab:focus-visible {
+  outline: 2px solid rgba(154, 119, 42, 0.56);
+  outline-offset: 1px;
+}
+
+.emba-reflection-view-tab strong {
+  color: #9a772a;
+  font-size: 11px;
+  font-weight: 780;
 }
 
 .emba-reflection-section {
   min-width: 0;
   display: grid;
   gap: 12px;
-  border-top: 1px solid rgba(0, 0, 0, 0.09);
-  padding-top: 24px;
-}
-
-.emba-reflection-section:first-child {
-  border-top: 0;
-  padding-top: 0;
 }
 
 .emba-reflection-section-head {
@@ -1504,6 +1546,16 @@ body::before {
 }
 
 @media (max-width: 640px) {
+  .emba-reflection-view-tabs {
+    width: 100%;
+  }
+
+  .emba-reflection-view-tab {
+    gap: 4px;
+    font-size: 11px;
+    padding-inline: 5px;
+  }
+
   .emba-reflection-section-head {
     display: grid;
     gap: 4px;
