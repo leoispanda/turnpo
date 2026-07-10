@@ -1028,14 +1028,42 @@ function renderReflection(month) {
   const reflection = typeof month?.reflection === "string"
     ? month.reflection
     : asArray(month?.reflection).map((item) => item.body || item.title || item).filter(Boolean).join("\n\n");
-  if (!isEditMode()) {
-    return reflection.trim()
+  const thinkingItems = normalizeThinkingQuestions(month?.thinkingQuestions);
+  const followUpItems = normalizeThinkingQuestions(month?.followUpPoints);
+  const reflectionContent = isEditMode()
+    ? `<textarea class="emba-reflection-editor" data-reflection-editor placeholder="Write reflection for this month...">${escapeHtml(reflection)}</textarea>`
+    : reflection.trim()
       ? `<div class="emba-reflection-read">${escapeHtml(reflection)}</div>`
       : `<p class="emba-empty-copy">No reflection yet.</p>`;
-  }
 
   return `
-    <textarea class="emba-reflection-editor" data-reflection-editor placeholder="Write reflection for this month...">${escapeHtml(reflection)}</textarea>
+    <div class="emba-reflection-workspace" data-reflection-workspace>
+      <section class="emba-reflection-section" data-reflection-section="summary">
+        <div class="emba-reflection-section-head">
+          <h3>本月反思</h3>
+          <span>我的完整总结</span>
+        </div>
+        ${reflectionContent}
+      </section>
+      ${thinkingItems.length || isEditMode() ? `
+        <section class="emba-reflection-section" data-reflection-section="thinking">
+          <div class="emba-reflection-section-head">
+            <h3>我的思考与问题</h3>
+            <span>${thinkingItems.length} 条 · 原文、上下文与 Codex 补充</span>
+          </div>
+          ${renderThinkingQuestions(month)}
+        </section>
+      ` : ""}
+      ${followUpItems.length || isEditMode() ? `
+        <section class="emba-reflection-section" data-reflection-section="followup">
+          <div class="emba-reflection-section-head">
+            <h3>后续补充与验证</h3>
+            <span>${followUpItems.length} 个待继续思考的点</span>
+          </div>
+          ${renderFollowUpPoints(month)}
+        </section>
+      ` : ""}
+    </div>
   `;
 }
 
@@ -1104,7 +1132,7 @@ function renderStructuredThinkingItem(item, index) {
         </div>
         <dl class="emba-thinking-review-details">
           ${renderThinkingReviewRow("当时上下文", item.context)}
-          ${renderThinkingReviewRow("补齐后的完整论述", item.reconstruction, "is-reconstruction")}
+          ${renderThinkingReviewRow("Codex 补齐后的完整论述", item.reconstruction, "is-reconstruction")}
           ${renderThinkingReviewRow("证据边界", item.evidenceBoundary)}
           ${renderThinkingReviewRow("你的 Review", item.reviewPrompt, "is-review")}
           ${renderThinkingNotesRow("Review 记录", "reviewNotes", item.reviewNotes, index)}
@@ -1279,7 +1307,13 @@ function blockSummary(id, month) {
     return count ? `${count} photo${count === 1 ? "" : "s"}` : "No photos yet";
   }
   if (id === "reflection") {
-    return hasTextContent(month?.reflection) ? "Reflection saved" : "No reflection yet";
+    const parts = [];
+    const thinkingCount = normalizeThinkingQuestions(month?.thinkingQuestions).length;
+    const followUpCount = normalizeThinkingQuestions(month?.followUpPoints).length;
+    if (hasTextContent(month?.reflection)) parts.push("反思");
+    if (thinkingCount) parts.push(`${thinkingCount} 条思考`);
+    if (followUpCount) parts.push(`${followUpCount} 个待补充`);
+    return parts.length ? parts.join(" · ") : "暂无个人思考";
   }
   if (id === "thinking") {
     const count = normalizeThinkingQuestions(month?.thinkingQuestions).length;

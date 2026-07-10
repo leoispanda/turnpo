@@ -738,6 +738,47 @@ body::before {
   white-space: pre-wrap;
 }
 
+.emba-reflection-workspace {
+  display: grid;
+  gap: 24px;
+}
+
+.emba-reflection-section {
+  min-width: 0;
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.09);
+  padding-top: 24px;
+}
+
+.emba-reflection-section:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.emba-reflection-section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.emba-reflection-section-head h3 {
+  margin: 0;
+  color: #1d1d1f;
+  font-size: 17px;
+  font-weight: 740;
+  line-height: 1.35;
+}
+
+.emba-reflection-section-head span {
+  color: #6e6e73;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.45;
+  text-align: right;
+}
+
 .emba-markdown-read {
   min-height: 72px;
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -1463,6 +1504,15 @@ body::before {
 }
 
 @media (max-width: 640px) {
+  .emba-reflection-section-head {
+    display: grid;
+    gap: 4px;
+  }
+
+  .emba-reflection-section-head span {
+    text-align: left;
+  }
+
   .emba-thinking-review-summary {
     grid-template-columns: 34px minmax(0, 1fr) 18px;
     gap: 8px;
