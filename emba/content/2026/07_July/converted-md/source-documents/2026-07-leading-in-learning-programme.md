@@ -12,8 +12,8 @@ date: 2026-07-01
 year: 2026
 month: 2026-07
 source_type: pdf
-source_file: September intake - MaastrichtMBA Leading in Learning Programme July 2026.pdf
-source_path: private local Documents folder
+source_file: /api/emba/file/emba/2026-07/material/1783597895949-5ef84788-4985-4349-bd98-3299de634b61-September-intake---MaastrichtMBA-Leading-in-Learning-Programme-July-2026.pdf
+source_path: private R2 EMBA bucket
 converted_from: September intake - MaastrichtMBA Leading in Learning Programme July 2026.pdf
 visibility: private
 status: active
@@ -149,4 +149,3 @@ Train option:
 - "Visualisation and Prototyping"
 - "Inclusion and Diversity"
 - "Tapijnkazerne"
-

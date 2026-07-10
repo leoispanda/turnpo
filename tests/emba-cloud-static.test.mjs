@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import path from "node:path";
+import vm from "node:vm";
+import { fileURLToPath } from "node:url";
 
-const { normalizeLibraryPayload } = await import("../functions/api/emba/_utils.js");
+const { normalizeLibraryPayload, requireEmbaAccess } = await import("../functions/api/emba/_utils.js");
 
 const embaJs = fs.readFileSync(new URL("../emba/emba.js", import.meta.url), "utf8");
 const embaCss = fs.readFileSync(new URL("../emba/emba.css", import.meta.url), "utf8");
@@ -20,6 +23,7 @@ const embaKnowledgeIndex = fs.readFileSync(new URL("../emba/content/knowledge-in
 const embaMasterIndex = fs.readFileSync(new URL("../emba/content/00_EMBA_Master_Index.md", import.meta.url), "utf8");
 const embaJuneIndex = fs.readFileSync(new URL("../emba/content/2026/06_June/2026-06_EMBA_Preparation_Index.md", import.meta.url), "utf8");
 const embaJuneAnalysis = fs.readFileSync(new URL("../emba/content/2026/06_June/converted-md/2026-06-emba-preparation-documents-analysis.md", import.meta.url), "utf8");
+const embaOfferMirror = fs.readFileSync(new URL("../emba/content/2026/06_June/converted-md/source-documents/2026-06-offer-of-admission.md", import.meta.url), "utf8");
 const embaJulyIndex = fs.readFileSync(new URL("../emba/content/2026/07_July/2026-07_EMBA_Learning_Index.md", import.meta.url), "utf8");
 const embaConvertedNote = fs.readFileSync(new URL("../emba/content/2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md", import.meta.url), "utf8");
 const embaLeoThinkingJourney = fs.readFileSync(new URL("../emba/content/2026/07_July/reflections/2026-07-leo-thinking-journey.md", import.meta.url), "utf8");
@@ -36,6 +40,9 @@ assert.ok(embaJs.includes("uploadEmbaFile(file, month.month, \"material\")"));
 assert.ok(embaJs.includes("libraryForCloud"));
 assert.ok(embaJs.includes("loadKnowledgeBase"));
 assert.ok(embaJs.includes("renderKnowledgeResults"));
+assert.ok(embaJs.includes("liveMonthSearchText"));
+assert.ok(embaJs.includes("note.search_body"));
+assert.ok(embaJs.includes("splitFrontmatter(markdown).body"));
 assert.ok(embaJs.includes("openKnowledgeNote"));
 assert.ok(embaJs.includes("markdownToHtml"));
 assert.ok(embaJs.includes("orderedListOpen"));
@@ -89,6 +96,15 @@ assert.ok(embaJs.includes('reflectionView: "review"'));
 assert.ok(embaJs.includes('parts.push(`${thinkingCount} 条逐条反思`)'));
 assert.ok(embaJs.includes("Review 记录"));
 assert.ok(embaJs.includes("Self-learning reflection"));
+assert.ok(embaJs.includes("Review 管理"));
+assert.ok(embaJs.includes("reviewStatus"));
+assert.ok(embaJs.includes("reviewDate"));
+assert.ok(embaJs.includes("bumpRevision"));
+assert.ok(embaJs.includes("materialsRevision"));
+assert.ok(embaJs.includes("reflectionRevision"));
+assert.ok(embaJs.includes("followUpRevision"));
+assert.ok(embaJs.includes("memoryRevision"));
+assert.ok(embaJs.includes("HIDDEN_MATERIAL_FILES"));
 assert.ok(!embaJs.includes("items.slice(0, 12)"));
 assert.ok(embaJs.includes("function renderFollowUpPoints"));
 assert.ok(embaJs.includes("[data-follow-up-editor]"));
@@ -115,6 +131,8 @@ assert.ok(embaCss.includes(".emba-reflection-section-head"));
 assert.ok(embaCss.includes(".emba-reflection-view-tabs"));
 assert.ok(embaCss.includes(".emba-reflection-view-tab.active"));
 assert.ok(embaCss.includes(".emba-thinking-note-editor"));
+assert.ok(embaCss.includes(".emba-thinking-review-management"));
+assert.ok(embaCss.includes(".emba-thinking-review-control"));
 assert.ok(embaCss.includes(".emba-timeline-item.active::before"));
 assert.ok(embaCss.includes(".emba-timeline-item:not(.active):hover::before"));
 assert.ok(embaHtml.includes('id="embaSyncStatus"'));
@@ -151,6 +169,8 @@ assert.ok(classmateJs.includes("renderRows();"));
 assert.ok(embaFunction.includes('accessCookie(token, path = "/")'));
 assert.ok(embaFunction.includes('clearAccessCookie(path = "/")'));
 assert.ok(embaFunction.includes("appendClearCookies"));
+assert.ok(embaFunction.includes("EMBA access is not configured."));
+assert.ok(!embaFunction.includes('env.EMBA_ACCESS_CODE || "emba2026"'));
 
 assert.ok(embaApiUtils.includes("turnpo_emba_access"));
 assert.ok(embaApiUtils.includes("validateSameOriginRequest"));
@@ -166,10 +186,24 @@ assert.ok(embaApiUtils.includes("markdown: cleanText"));
 assert.ok(embaApiUtils.includes("reviewNotes: cleanText"));
 assert.ok(embaApiUtils.includes("followUpNotes: cleanText"));
 assert.ok(embaApiUtils.includes("learningNotes: cleanText"));
+assert.ok(embaApiUtils.includes("reviewStatus:"));
+assert.ok(embaApiUtils.includes("reviewDate:"));
+assert.ok(embaApiUtils.includes("materialsRevision: cleanRevision"));
+assert.ok(embaApiUtils.includes("reflectionRevision: cleanRevision"));
+assert.ok(embaApiUtils.includes("followUpRevision: cleanRevision"));
 assert.ok(embaApiUtils.includes("markdownRevision: cleanRevision"));
+assert.ok(embaApiUtils.includes("memoryRevision: cleanRevision"));
+assert.ok(embaApiUtils.includes("EMBA access is not configured."));
+assert.ok(!embaApiUtils.includes('env.EMBA_ACCESS_CODE || "emba2026"'));
+const unconfiguredAccess = await requireEmbaAccess(new Request("https://www.turnpo.com/api/emba/library"), {});
+assert.equal(unconfiguredAccess.status, 503);
+assert.equal((await unconfiguredAccess.json()).error, "EMBA access is not configured.");
 
 assert.ok(embaLibraryApi.includes("env.EMBA_DB"));
 assert.ok(embaLibraryApi.includes("CREATE TABLE IF NOT EXISTS emba_state"));
+assert.ok(embaLibraryApi.includes("CREATE TABLE IF NOT EXISTS emba_state_history"));
+assert.ok(embaLibraryApi.includes("INSERT INTO emba_state_history"));
+assert.ok(embaLibraryApi.includes("HISTORY_LIMIT = 50"));
 assert.ok(embaLibraryApi.includes("ON CONFLICT(key) DO UPDATE"));
 
 assert.ok(embaUploadApi.includes("env.EMBA_BUCKET"));
@@ -184,6 +218,9 @@ assert.ok(embaReadme.includes("D1 database binding name: EMBA_DB"));
 assert.ok(embaReadme.includes("R2 bucket binding name: EMBA_BUCKET"));
 assert.ok(embaReadme.includes("The private knowledge base lives under `emba/content/`"));
 assert.ok(embaReadme.includes("Original PDF, PPT, Word, image, and case files should stay"));
+assert.ok(embaReadme.includes("## Canonical Layers"));
+assert.ok(embaReadme.includes("one search input"));
+assert.ok(embaReadme.includes("newest 50 snapshots"));
 
 const parsedKnowledgeIndex = JSON.parse(embaKnowledgeIndex);
 assert.ok(Array.isArray(parsedKnowledgeIndex.notes));
@@ -191,6 +228,7 @@ const indexedNoteIds = new Set(parsedKnowledgeIndex.notes.map((note) => note.id)
 assert.ok(indexedNoteIds.has("emba-master-index"));
 assert.ok(indexedNoteIds.has("emba-2026-06-preparation-index"));
 assert.ok(indexedNoteIds.has("emba-2026-06-preparation-documents-analysis"));
+assert.ok(indexedNoteIds.has("emba-2026-06-offer-of-admission"));
 assert.ok(indexedNoteIds.has("emba-2026-06-um-certificate-of-enrolment"));
 assert.ok(indexedNoteIds.has("emba-2026-06-onboarding-guideline"));
 assert.ok(indexedNoteIds.has("emba-2026-06-study-fees-policies-procedures"));
@@ -219,10 +257,16 @@ assert.ok(embaMasterIndex.includes("## Operating Rule For New Documents"));
 assert.ok(embaJuneIndex.includes("# EMBA Monthly Learning Index - June 2026"));
 assert.ok(embaJuneIndex.includes("## 5A. Knowledge Map"));
 assert.ok(embaJuneIndex.includes("./converted-md/source-documents/2026-06-onboarding-guideline.md"));
+assert.ok(embaJuneIndex.includes("./converted-md/source-documents/2026-06-offer-of-admission.md"));
 assert.ok(embaJuneIndex.includes("./converted-md/source-documents/2026-06-maastricht-curriculum-elective-modules.md"));
 assert.ok(embaJuneAnalysis.includes("## 1A. Search Card"));
 assert.ok(embaJuneAnalysis.includes("## 11A. Retrieval Anchors"));
 assert.ok(embaJuneAnalysis.includes("./source-documents/2026-06-study-fees-policies-procedures.md"));
+assert.ok(embaJuneAnalysis.includes("./source-documents/2026-06-offer-of-admission.md"));
+assert.ok(embaOfferMirror.includes("id: emba-2026-06-offer-of-admission"));
+assert.ok(embaOfferMirror.includes("Personal address details, signatures, and private contact details are intentionally omitted"));
+assert.ok(embaOfferMirror.includes("2026-09-11"));
+assert.ok(embaOfferMirror.includes("2026-09-12"));
 assert.ok(embaJulyIndex.includes("# EMBA Monthly Learning Index - July 2026"));
 assert.ok(embaJulyIndex.includes("## 5A. Knowledge Map"));
 assert.ok(embaJulyIndex.includes("./converted-md/source-documents/2026-07-leading-in-learning-programme.md"));
@@ -261,6 +305,8 @@ const juneMaterials = parsedMaterials.months.find((month) => month.month === "20
 assert.ok(juneMaterials.materials.some((item) => item.file.includes("/api/emba/file/emba/2026-06/material/") && item.file.endsWith("Onboarding-guideline.pdf")));
 assert.ok(juneMaterials.materials.some((item) => item.file.includes("/api/emba/file/emba/2026-06/material/") && item.file.endsWith("MaastrichtMBA---Curriculum-Elective-Modules.pdf")));
 assert.ok(juneMaterials.materials.some((item) => item.file.includes("/api/emba/file/emba/2026-06/material/") && item.file.endsWith("nyenrode-impact-mba-executive-brochure.pdf")));
+assert.ok(juneMaterials.materials.some((item) => item.file.includes("/api/emba/file/emba/2026-06/material/") && item.file.endsWith("offer-signed-leo.pdf")));
+assert.ok(juneMaterials.materials.some((item) => item.notes.includes("/emba/content/2026/06_June/converted-md/source-documents/2026-06-offer-of-admission.md")));
 assert.ok(juneMaterials.materials.some((item) => item.notes.includes("/emba/content/2026/06_June/converted-md/source-documents/2026-06-onboarding-guideline.md")));
 assert.ok(julyMaterials.materials.some((item) => item.file.includes("/api/emba/file/emba/2026-07/material/") && item.file.endsWith("September-intake---MaastrichtMBA-Leading-in-Learning-Programme-July-2026.pdf")));
 assert.ok(julyMaterials.materials.some((item) => item.notes.includes("/emba/content/2026/07_July/converted-md/source-documents/2026-07-leading-in-learning-programme.md")));
@@ -268,6 +314,17 @@ assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/20
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-leo-thinking-journey.md"));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-personal-marker-original-extract.md"));
 assert.ok(julyMaterials.materials.some((item) => item.file === "/emba/content/2026/07_July/reflections/2026-07-questions-and-reflections-review.md"));
+assert.ok(!julyMaterials.materials.some((item) => item.file.includes("leadership-learning-notes-analysis.md")));
+const legacyDuplicateMaterial = normalizeLibraryPayload({
+  months: [{
+    month: "2026-07",
+    materials: [{
+      title: "Legacy duplicate",
+      file: "/emba/materials/2026-07/handwritten-notes/leadership-learning-notes-analysis.md"
+    }]
+  }]
+});
+assert.equal(legacyDuplicateMaterial.months[0].materials.length, 0);
 assert.equal(julyMaterials.thinkingQuestions.length, 19);
 assert.equal(new Set(julyMaterials.thinkingQuestions.map((item) => item.id)).size, 19);
 assert.ok(julyMaterials.thinkingQuestions.every((item) => item.original && item.context && item.reconstruction && item.evidenceBoundary));
@@ -277,6 +334,10 @@ assert.equal(julyMaterials.followUpPoints.length, 12);
 assert.ok(julyMaterials.followUpPoints.some((item) => item.startsWith("[T01]")));
 assert.ok(julyMaterials.followUpPoints.some((item) => item.startsWith("[行动闭环]")));
 assert.equal(julyMaterials.markdownRevision, 2);
+assert.equal(julyMaterials.materialsRevision, 0);
+assert.equal(julyMaterials.reflectionRevision, 0);
+assert.equal(julyMaterials.followUpRevision, 0);
+assert.equal(julyMaterials.memoryRevision, 0);
 assert.ok(julyMaterials.reviewedMarkdown.includes("# EMBA July 2026 - Source-First Reviewed Notes"));
 assert.ok(julyMaterials.reviewedMarkdown.includes("## Current Logic Assessment"));
 
@@ -287,6 +348,8 @@ assert.equal(normalizedJuly.thinkingQuestions.length, 19);
 assert.equal(normalizedJuly.thinkingQuestions[6].id, "T07");
 assert.ok(normalizedJuly.thinkingQuestions[6].original.includes("people want to follow you"));
 assert.ok(Object.hasOwn(normalizedJuly.thinkingQuestions[6], "reviewNotes"));
+assert.equal(normalizedJuly.thinkingQuestions[6].reviewStatus, "pending");
+assert.equal(normalizedJuly.thinkingQuestions[6].reviewDate, "");
 assert.equal(normalizedJuly.markdownRevision, 2);
 assert.ok(normalizedJuly.markdown.includes("# EMBA July 2026 - Source-First Reviewed Notes"));
 
@@ -299,7 +362,9 @@ const reviewRoundTrip = normalizeLibraryPayload({
       original: "people want to follow you",
       reviewNotes: "Confirmed after review.",
       followUpNotes: "Add three real cases.",
-      learningNotes: "Revisit next month."
+      learningNotes: "Revisit next month.",
+      reviewStatus: "action",
+      reviewDate: "2026-07-10"
     }]
   }]
 });
@@ -307,13 +372,118 @@ assert.deepEqual(
   {
     reviewNotes: reviewRoundTrip.months[0].thinkingQuestions[0].reviewNotes,
     followUpNotes: reviewRoundTrip.months[0].thinkingQuestions[0].followUpNotes,
-    learningNotes: reviewRoundTrip.months[0].thinkingQuestions[0].learningNotes
+    learningNotes: reviewRoundTrip.months[0].thinkingQuestions[0].learningNotes,
+    reviewStatus: reviewRoundTrip.months[0].thinkingQuestions[0].reviewStatus,
+    reviewDate: reviewRoundTrip.months[0].thinkingQuestions[0].reviewDate
   },
   {
     reviewNotes: "Confirmed after review.",
     followUpNotes: "Add three real cases.",
-    learningNotes: "Revisit next month."
+    learningNotes: "Revisit next month.",
+    reviewStatus: "action",
+    reviewDate: "2026-07-10"
   }
 );
+
+const contentRoot = fileURLToPath(new URL("../emba/content/", import.meta.url));
+function markdownFiles(directory) {
+  return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const file = path.join(directory, entry.name);
+    return entry.isDirectory() ? markdownFiles(file) : file.endsWith(".md") ? [file] : [];
+  });
+}
+const substantiveMarkdown = markdownFiles(contentRoot)
+  .filter((file) => !file.includes(`${path.sep}templates${path.sep}`))
+  .filter((file) => !file.endsWith(`${path.sep}originals${path.sep}README.md`))
+  .map((file) => `/emba/content/${path.relative(contentRoot, file).split(path.sep).join("/")}`)
+  .sort();
+const indexedMarkdown = parsedKnowledgeIndex.notes.map((note) => note.md_file).sort();
+assert.deepEqual(indexedMarkdown, substantiveMarkdown);
+assert.equal(new Set(indexedMarkdown).size, indexedMarkdown.length);
+parsedKnowledgeIndex.notes
+  .filter((note) => note.source_type === "pdf")
+  .forEach((note) => {
+    assert.ok(note.source_file.startsWith("/api/emba/file/"), `${note.id} must use a protected source URL`);
+    const markdown = fs.readFileSync(path.join(contentRoot, path.relative("/emba/content", note.md_file)), "utf8");
+    assert.ok(markdown.includes(`source_file: ${note.source_file}`), `${note.id} source URL must match its Markdown frontmatter`);
+  });
+
+const browserContext = {
+  console,
+  document: {
+    body: { classList: { add() {}, remove() {}, toggle() {} } },
+    cookie: "",
+    querySelector() { return null; },
+    querySelectorAll() { return []; },
+    addEventListener() {}
+  },
+  window: {
+    clearTimeout() {},
+    setTimeout() { return 1; },
+    location: { origin: "https://www.turnpo.com" }
+  },
+  localStorage: { getItem() { return null; }, setItem() {} },
+  sessionStorage: { getItem() { return null; }, setItem() {}, removeItem() {} },
+  URL,
+  Date,
+  Intl,
+  setTimeout,
+  clearTimeout
+};
+vm.createContext(browserContext);
+vm.runInContext(embaJs, browserContext);
+const revisionMerge = vm.runInContext(`mergeMonthData(
+  {
+    month: "2026-07",
+    materialsRevision: 0,
+    reflectionRevision: 0,
+    followUpRevision: 0,
+    markdownRevision: 2,
+    memoryRevision: 0,
+    materials: [{ title: "A", file: "/a" }, { title: "B", file: "/b" }],
+    reflection: "A much longer base reflection that should not override a deliberate edit.",
+    thinkingQuestions: [{ id: "T01", title: "Base", original: "Original", reconstruction: "Keep this" }],
+    followUpPoints: ["One", "Two"],
+    markdown: "Long canonical markdown",
+    memoryMoment: [{ title: "Photo", image: "/photo.jpg" }]
+  },
+  {
+    month: "2026-07",
+    materialsRevision: 1,
+    reflectionRevision: 1,
+    followUpRevision: 1,
+    markdownRevision: 3,
+    memoryRevision: 1,
+    materials: [{ title: "A", file: "/a" }],
+    reflection: "Short edit",
+    thinkingQuestions: [{ id: "T01", title: "Base", reviewNotes: "Leo review", reviewStatus: "keep", reviewDate: "2026-07-10" }],
+    followUpPoints: ["One"],
+    markdown: "Short note",
+    memoryMoment: []
+  }
+)`, browserContext);
+assert.deepEqual(JSON.parse(JSON.stringify({
+  materialFiles: revisionMerge.materials.map((item) => item.file),
+  reflection: revisionMerge.reflection,
+  followUpPoints: revisionMerge.followUpPoints,
+  markdown: revisionMerge.markdown,
+  memories: revisionMerge.memoryMoment,
+  original: revisionMerge.thinkingQuestions[0].original,
+  reconstruction: revisionMerge.thinkingQuestions[0].reconstruction,
+  reviewNotes: revisionMerge.thinkingQuestions[0].reviewNotes,
+  reviewStatus: revisionMerge.thinkingQuestions[0].reviewStatus,
+  reviewDate: revisionMerge.thinkingQuestions[0].reviewDate
+})), {
+  materialFiles: ["/a"],
+  reflection: "Short edit",
+  followUpPoints: ["One"],
+  markdown: "Short note",
+  memories: [],
+  original: "Original",
+  reconstruction: "Keep this",
+  reviewNotes: "Leo review",
+  reviewStatus: "keep",
+  reviewDate: "2026-07-10"
+});
 
 console.log("EMBA cloud static checks passed");

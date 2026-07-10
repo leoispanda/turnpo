@@ -8,6 +8,7 @@ import {
 } from "./_utils.js";
 
 const STATE_KEY = "library";
+const HISTORY_LIMIT = 50;
 
 async function embaDb(env) {
   if (!env.EMBA_DB) return null;
@@ -17,6 +18,19 @@ async function embaDb(env) {
       value TEXT NOT NULL,
       updated_at TEXT NOT NULL
     )
+  `).run();
+  await env.EMBA_DB.prepare(`
+    CREATE TABLE IF NOT EXISTS emba_state_history (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      key TEXT NOT NULL,
+      value TEXT NOT NULL,
+      updated_at TEXT NOT NULL,
+      archived_at TEXT NOT NULL
+    )
+  `).run();
+  await env.EMBA_DB.prepare(`
+    CREATE INDEX IF NOT EXISTS emba_state_history_key_id
+    ON emba_state_history (key, id DESC)
   `).run();
   return env.EMBA_DB;
 }
@@ -76,13 +90,33 @@ export async function onRequestPut({ request, env }) {
   }
 
   const now = new Date().toISOString();
-  await db.prepare(`
-    INSERT INTO emba_state (key, value, updated_at)
-    VALUES (?, ?, ?)
-    ON CONFLICT(key) DO UPDATE SET
-      value = excluded.value,
-      updated_at = excluded.updated_at
-  `).bind(STATE_KEY, JSON.stringify(library), now).run();
+  const serializedLibrary = JSON.stringify(library);
+  await db.batch([
+    db.prepare(`
+      INSERT INTO emba_state_history (key, value, updated_at, archived_at)
+      SELECT key, value, updated_at, ?
+      FROM emba_state
+      WHERE key = ?
+    `).bind(now, STATE_KEY),
+    db.prepare(`
+      INSERT INTO emba_state (key, value, updated_at)
+      VALUES (?, ?, ?)
+      ON CONFLICT(key) DO UPDATE SET
+        value = excluded.value,
+        updated_at = excluded.updated_at
+    `).bind(STATE_KEY, serializedLibrary, now),
+    db.prepare(`
+      DELETE FROM emba_state_history
+      WHERE key = ?
+        AND id NOT IN (
+          SELECT id
+          FROM emba_state_history
+          WHERE key = ?
+          ORDER BY id DESC
+          LIMIT ?
+        )
+    `).bind(STATE_KEY, STATE_KEY, HISTORY_LIMIT)
+  ]);
 
   return json({
     ok: true,

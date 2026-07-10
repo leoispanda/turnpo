@@ -3,7 +3,7 @@ const UI_COOKIE = "turnpo_emba_ui";
 const COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
 
 function configuredAccessCode(env) {
-  return String(env.EMBA_ACCESS_CODE || "emba2026").trim();
+  return String(env.EMBA_ACCESS_CODE || "").trim();
 }
 
 function html(body, init = {}) {
@@ -61,6 +61,7 @@ async function createToken(secret) {
 }
 
 async function isValidToken(token, secret) {
+  if (!secret) return false;
   const [expiresAt, signature] = String(token || "").split(".");
   const expiry = Number(expiresAt);
   if (!Number.isFinite(expiry) || expiry < Math.floor(Date.now() / 1000) || !signature) return false;
@@ -164,6 +165,10 @@ export async function onRequestGet(context) {
     return new Response(null, { status: 303, headers });
   }
 
+  if (!configuredAccessCode(env)) {
+    return accessPage("EMBA access is not configured.");
+  }
+
   const token = await authorizedToken(request, env);
   if (token) {
     const response = await context.next();
@@ -191,6 +196,9 @@ export async function onRequestPost(context) {
   const formData = await request.formData();
   const accessCode = String(formData.get("accessCode") || "").trim();
   const expectedCode = configuredAccessCode(env);
+  if (!expectedCode) {
+    return accessPage("EMBA access is not configured.");
+  }
   if (!timingSafeEqual(accessCode, expectedCode)) {
     return accessPage("Access code is incorrect.");
   }

@@ -12,8 +12,8 @@ date: 2026-06-08
 year: 2026
 month: 2026-06
 source_type: pdf
-source_file: UM_Certificate_of_enrolment.PDF
-source_path: private local MBA PDF folder
+source_file: /api/emba/file/emba/2026-06/material/1783597890381-486576fc-60da-492c-be2b-1468f9a795f9-UM_Certificate_of_enrolment.PDF
+source_path: private R2 EMBA bucket
 converted_from: UM_Certificate_of_enrolment.PDF
 visibility: private
 status: active
@@ -82,7 +82,7 @@ The certificate anchors the 2026-06 folder as the administrative start of the EM
 
 ## 5. Action Value
 
-- Keep the source PDF in the private MBA PDF folder.
+- Keep the source PDF in the private R2 EMBA bucket.
 - Use this Markdown only as a search and retrieval mirror.
 - For employer, visa, residence, tax, or formal administrative use, open the original PDF.
 
@@ -93,4 +93,3 @@ The certificate anchors the 2026-06 folder as the administrative start of the EM
 - "EMBA On-Campus"
 - "part-time"
 - "ISAT 75143"
-

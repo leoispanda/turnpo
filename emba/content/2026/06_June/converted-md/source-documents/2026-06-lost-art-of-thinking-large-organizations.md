@@ -12,8 +12,8 @@ date: 2026-06-30
 year: 2026
 month: 2026-06
 source_type: pdf
-source_file: The_Lost_Art_of_Thinking_in_Large_Organi.pdf
-source_path: private local MBA PDF folder
+source_file: /api/emba/file/emba/2026-06/material/1783597893137-76819cbc-837b-4968-818d-833115b320bf-The_Lost_Art_of_Thinking_in_Large_Organi.pdf
+source_path: private R2 EMBA bucket
 converted_from: The_Lost_Art_of_Thinking_in_Large_Organi.pdf
 visibility: private
 status: active
@@ -99,4 +99,3 @@ Before each EMBA module:
 - "delegation"
 - "protected thinking time"
 - "Think Week"
-

@@ -7,7 +7,7 @@ import {
 } from "../auth/_utils.js";
 
 const ACCESS_COOKIE = "turnpo_emba_access";
-const DEFAULT_START_MONTH = "2026-07";
+const DEFAULT_START_MONTH = "2026-06";
 const DEFAULT_END_MONTH = "2028-12";
 const MAX_LIBRARY_BODY_BYTES = 900 * 1024;
 const MAX_UPLOAD_BYTES = 64 * 1024 * 1024;
@@ -16,11 +16,14 @@ const MAX_MATERIALS_PER_MONTH = 100;
 const MAX_MEMORIES_PER_MONTH = 100;
 const MAX_THINKING_ITEMS_PER_MONTH = 100;
 const MAX_FOLLOW_UP_ITEMS_PER_MONTH = 100;
+const HIDDEN_MATERIAL_FILES = new Set([
+  "/emba/materials/2026-07/handwritten-notes/leadership-learning-notes-analysis.md"
+]);
 
 export { json, MAX_UPLOAD_BYTES };
 
 function configuredAccessCode(env) {
-  return String(env.EMBA_ACCESS_CODE || "emba2026").trim();
+  return String(env.EMBA_ACCESS_CODE || "").trim();
 }
 
 function cookieValue(request, name) {
@@ -57,6 +60,7 @@ async function hmacHex(secret, value) {
 }
 
 async function isValidToken(token, secret) {
+  if (!secret) return false;
   const [expiresAt, signature] = String(token || "").split(".");
   const expiry = Number(expiresAt);
   if (!Number.isFinite(expiry) || expiry < Math.floor(Date.now() / 1000) || !signature) return false;
@@ -65,8 +69,12 @@ async function isValidToken(token, secret) {
 }
 
 export async function requireEmbaAccess(request, env) {
+  const accessCode = configuredAccessCode(env);
+  if (!accessCode) {
+    return json({ error: "EMBA access is not configured.", configured: false }, { status: 503 });
+  }
   const token = cookieValue(request, ACCESS_COOKIE);
-  if (await isValidToken(token, configuredAccessCode(env))) return null;
+  if (await isValidToken(token, accessCode)) return null;
   return json({ error: "EMBA access required." }, { status: 401 });
 }
 
@@ -144,6 +152,12 @@ function normalizeThinkingQuestion(item = "") {
     followUpNotes: cleanText(item.followUpNotes || "", 20000),
     learningReflection: cleanText(item.learningReflection || item.reflection || "", 6000),
     learningNotes: cleanText(item.learningNotes || "", 20000),
+    reviewStatus: ["pending", "keep", "rewrite", "action", "complete"].includes(cleanText(item.reviewStatus || item.status || "", 20).toLowerCase())
+      ? cleanText(item.reviewStatus || item.status || "", 20).toLowerCase()
+      : "pending",
+    reviewDate: /^\d{4}-\d{2}-\d{2}$/.test(cleanText(item.reviewDate || item.reviewedAt || "", 10))
+      ? cleanText(item.reviewDate || item.reviewedAt || "", 10)
+      : "",
     confidence: cleanText(item.confidence || "", 20).toLowerCase(),
     image: safePrivateUrl(item.image || item.sourceImage || "")
   };
@@ -171,9 +185,15 @@ export function normalizeLibraryPayload(payload = {}) {
         id: cleanText(month?.id || monthKey, 80),
         month: monthKey,
         title: cleanText(month?.title || monthKey, 180),
+        materialsRevision: cleanRevision(month?.materialsRevision),
+        reflectionRevision: cleanRevision(month?.reflectionRevision),
+        followUpRevision: cleanRevision(month?.followUpRevision),
+        markdownRevision: cleanRevision(month?.markdownRevision),
+        memoryRevision: cleanRevision(month?.memoryRevision),
         materials: (Array.isArray(month?.materials) ? month.materials : [])
           .slice(0, MAX_MATERIALS_PER_MONTH)
-          .map(normalizeMaterial),
+          .map(normalizeMaterial)
+          .filter((item) => !HIDDEN_MATERIAL_FILES.has(item.file)),
         reflection: cleanText(month?.reflection || month?.notes || "", 120000),
         thinkingQuestions: (Array.isArray(month?.thinkingQuestions) ? month.thinkingQuestions : [])
           .slice(0, MAX_THINKING_ITEMS_PER_MONTH)
@@ -184,7 +204,6 @@ export function normalizeLibraryPayload(payload = {}) {
           .map(normalizeThinkingQuestion)
           .filter(Boolean),
         markdown: cleanText(month?.reviewedMarkdown || month?.markdown || month?.md || month?.searchNotes || "", 180000),
-        markdownRevision: cleanRevision(month?.markdownRevision),
         memoryMoment: (Array.isArray(month?.memoryMoment) ? month.memoryMoment : [])
           .slice(0, MAX_MEMORIES_PER_MONTH)
           .map((item) => normalizeMemory(item, monthKey))

@@ -14,15 +14,15 @@ month: 2026-06
 source_type: pdf_set
 source_file:
 source_files:
-  - UM_Certificate_of_enrolment.PDF
-  - offer signed leo.pdf
-  - Onboarding guideline.pdf
-  - MaastrichtMBA - Study fees, policies & procedures Sept.pdf
-  - MaastrichtMBA - On-campus MBA Programme Outline 2026-2027.pdf
-  - MaastrichtMBA - Online MBA Programme Outline 2026-2027.pdf
-  - MaastrichtMBA - Curriculum Elective Modules.pdf
-  - The_Lost_Art_of_Thinking_in_Large_Organi.pdf
-  - nyenrode-impact-mba-executive-brochure.pdf
+  - /api/emba/file/emba/2026-06/material/1783714462138-028bcf6b-1089-4d1d-b0eb-a6709e21c39d-offer-signed-leo.pdf
+  - /api/emba/file/emba/2026-06/material/1783597890381-486576fc-60da-492c-be2b-1468f9a795f9-UM_Certificate_of_enrolment.PDF
+  - /api/emba/file/emba/2026-06/material/1783597891190-cd4d11e7-d3c6-4688-a6c3-61273b1012db-Onboarding-guideline.pdf
+  - /api/emba/file/emba/2026-06/material/1783597891484-e3243a74-59a7-472e-85c7-40a3388e30f0-MaastrichtMBA---Study-fees-policies-procedures-Sept.pdf
+  - /api/emba/file/emba/2026-06/material/1783597892009-4870cc90-c28a-4736-8f87-9bf5d2eaa645-MaastrichtMBA---On-campus-MBA-Programme-Outline-2026-2027.pdf
+  - /api/emba/file/emba/2026-06/material/1783597892454-40e37ff2-af27-4f99-aeb1-35a6066652f8-MaastrichtMBA---Online-MBA-Programme-Outline-2026-2027.pdf
+  - /api/emba/file/emba/2026-06/material/1783597892872-7fdf05c3-4f0f-4270-a252-f1df549fccb9-MaastrichtMBA---Curriculum-Elective-Modules.pdf
+  - /api/emba/file/emba/2026-06/material/1783597893137-76819cbc-837b-4968-818d-833115b320bf-The_Lost_Art_of_Thinking_in_Large_Organi.pdf
+  - /api/emba/file/emba/2026-06/material/1783598418352-3172a136-13fa-4bf8-8954-55516e437b6a-nyenrode-impact-mba-executive-brochure.pdf
 converted_from: Nine local EMBA preparation PDFs reviewed on 2026-07-09 and assigned to month 2026-06
 visibility: private
 status: active
@@ -55,7 +55,7 @@ related_topics:
 language: zh
 rag_include: true
 created_at: 2026-07-09
-updated_at: 2026-07-09
+updated_at: 2026-07-10
 ---
 
 # EMBA Preparation Documents Analysis - June 2026
@@ -70,7 +70,7 @@ These documents should be classified as `2026-06 EMBA Preparation`: the core tra
 | --- | --- |
 | Best month | 2026-06 |
 | Best use | Answer questions about EMBA admission status, enrolment proof, onboarding setup, fee obligations, programme calendar, and elective planning |
-| Original source layer | Nine local preparation PDFs, kept outside this repo when private or large |
+| Original source layer | Nine protected preparation PDFs in the private EMBA R2 bucket |
 | Markdown layer | Searchable mirror for quick retrieval and future RAG |
 | Highest-risk checks | September 2026 date mismatch, access setup before July, payment/cancellation calendar |
 | Chinese aliases | 录取, 注册, 入学准备, 学费, 选修, 课程安排, 战略思考 |
@@ -97,7 +97,7 @@ So June's job is not "read everything." June's job is to make the EMBA runnable.
 | File | Role in the system | What it proves or gives | Action value |
 | --- | --- | --- | --- |
 | [UM_Certificate_of_enrolment.PDF](./source-documents/2026-06-um-certificate-of-enrolment.md) | Official enrolment proof | Enrolment for EMBA On-Campus in academic year 2026/27, valid until 2027-08-31 | Keep as proof for administration, employer, visa/residence/admin use if needed |
-| offer signed leo.pdf | Admission contract and commitment | Admission granted for EMBA, MSc degree, part-time on-campus, start September 2026 | Anchor document for programme, dates, fees, and accepted conditions |
+| [offer signed leo.pdf](./source-documents/2026-06-offer-of-admission.md) | Admission contract and commitment | Admission granted for EMBA, MSc degree, part-time on-campus, start September 2026 | Anchor document for programme, dates, fees, and accepted conditions |
 | [Onboarding guideline.pdf](./source-documents/2026-06-onboarding-guideline.md) | IT and communication setup manual | UM password, Microsoft Authenticator MFA, Canvas, UM email, Teams | Convert into a checklist and finish before the July introduction |
 | [MaastrichtMBA - Study fees, policies & procedures Sept.pdf](./source-documents/2026-06-study-fees-policies-procedures.md) | Financial policy | On-campus fee, instalment rhythm, payment term, cancellation fee, continuation fee | Build payment calendar and cancellation-risk awareness |
 | [MaastrichtMBA - On-campus MBA Programme Outline 2026-2027.pdf](./source-documents/2026-06-maastricht-on-campus-programme-outline.md) | Main programme calendar | Leading in Learning, five core modules, three elective weeks, rules for electives | Use as the main planning source for the chosen track |

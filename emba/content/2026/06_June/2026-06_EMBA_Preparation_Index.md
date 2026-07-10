@@ -38,7 +38,7 @@ related_topics:
   - personal-growth
 rag_include: true
 created_at: 2026-07-09
-updated_at: 2026-07-09
+updated_at: 2026-07-10
 ---
 
 # EMBA Monthly Learning Index - June 2026
@@ -72,6 +72,7 @@ June is not yet a teaching month. It prepares for:
 
 - [EMBA Preparation Documents Analysis - June 2026](./converted-md/2026-06-emba-preparation-documents-analysis.md)
 - Source document mirrors:
+  - [MaastrichtMBA Offer Of Admission - Executive MBA](./converted-md/source-documents/2026-06-offer-of-admission.md)
   - [UM Certificate Of Enrolment - EMBA On-Campus 2026/27](./converted-md/source-documents/2026-06-um-certificate-of-enrolment.md)
   - [MaastrichtMBA Onboarding Guideline - Access Setup](./converted-md/source-documents/2026-06-onboarding-guideline.md)
   - [MaastrichtMBA Study Fees, Policies And Procedures](./converted-md/source-documents/2026-06-study-fees-policies-procedures.md)
@@ -83,9 +84,9 @@ June is not yet a teaching month. It prepares for:
 
 ### Original Files
 
-Original PDFs remain in the local MBA PDF folder or the local Documents folder. They were not copied into this repository because several are private administrative files and one brochure is large.
+All nine original PDFs are stored in the private EMBA R2 bucket and served only through protected `/api/emba/file/...` URLs after login. The repository keeps search-safe Markdown mirrors rather than duplicate binaries.
 
-Source set reviewed:
+Protected source set reviewed:
 
 - UM_Certificate_of_enrolment.PDF
 - offer signed leo.pdf
@@ -97,7 +98,7 @@ Source set reviewed:
 - The_Lost_Art_of_Thinking_in_Large_Organi.pdf
 - nyenrode-impact-mba-executive-brochure.pdf
 
-Source handling rule: keep the PDFs as original evidence, and use Markdown only as the searchable, RAG-readable mirror. If a future answer needs legal, financial, or administrative precision, open the source PDF before treating the Markdown summary as final.
+Source handling rule: keep the protected PDFs as original evidence, and use Markdown only as the searchable, RAG-readable mirror. If a future answer needs legal, financial, or administrative precision, open the protected source PDF before treating the Markdown summary as final.
 
 ### Course Notes
 

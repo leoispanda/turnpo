@@ -37,7 +37,7 @@ related_topics:
   - personal-growth
 rag_include: true
 created_at: 2026-07-09
-updated_at: 2026-07-09
+updated_at: 2026-07-10
 ---
 
 # EMBA Monthly Learning Index - July 2026
@@ -85,7 +85,7 @@ The official programme PDF should be used for schedule, room, speaker, location,
 
 ### Original Files
 
-- The official programme PDF remains in the private local Documents folder: `September intake - MaastrichtMBA Leading in Learning Programme July 2026.pdf`.
+- The official programme PDF is stored in the private EMBA R2 bucket and served through its protected `/api/emba/file/...` URL after login.
 - Handwritten-note images remain in `/emba/materials/2026-07/handwritten-notes/images/`.
 - Each handwritten-note image now has its own Markdown mirror in `./converted-md/image-notes/`.
 - Future PDF, PPT, Word, and slide files should be stored in `./originals/` while their searchable Markdown mirrors go into `./converted-md/`.

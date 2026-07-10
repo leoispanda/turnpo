@@ -12,8 +12,8 @@ date: 2026-06-30
 year: 2026
 month: 2026-06
 source_type: pdf
-source_file: MaastrichtMBA - Study fees, policies & procedures Sept.pdf
-source_path: private local MBA PDF folder
+source_file: /api/emba/file/emba/2026-06/material/1783597891484-e3243a74-59a7-472e-85c7-40a3388e30f0-MaastrichtMBA---Study-fees-policies-procedures-Sept.pdf
+source_path: private R2 EMBA bucket
 converted_from: MaastrichtMBA - Study fees, policies & procedures Sept.pdf
 visibility: private
 status: active
@@ -119,4 +119,3 @@ The important behavior is to treat every invitation or confirmation from the MBA
 - "cancellation fee"
 - "premature termination"
 - "continuation fee"
-

@@ -7,6 +7,10 @@ const EMBA_KNOWLEDGE_INDEX = "/emba/content/knowledge-index.json";
 const DEFAULT_START_MONTH = "2026-06";
 const DEFAULT_END_MONTH = "2028-12";
 const CLOUD_SAVE_DELAY_MS = 700;
+const THINKING_REVIEW_STATUSES = ["pending", "keep", "rewrite", "action", "complete"];
+const HIDDEN_MATERIAL_FILES = new Set([
+  "/emba/materials/2026-07/handwritten-notes/leadership-learning-notes-analysis.md"
+]);
 
 const state = {
   selectedMonthId: "",
@@ -126,6 +130,32 @@ function normalizeMarkdown(value) {
   return String(value || "");
 }
 
+function normalizeRevision(value = 0) {
+  const revision = Number(value || 0);
+  if (!Number.isFinite(revision)) return 0;
+  return Math.max(0, Math.min(9999, Math.trunc(revision)));
+}
+
+function bumpRevision(month, field) {
+  month[field] = Math.min(9999, normalizeRevision(month[field]) + 1);
+}
+
+function bumpInputRevision(target, month, field) {
+  if (target.dataset.revisionBumped === "true") return;
+  target.dataset.revisionBumped = "true";
+  bumpRevision(month, field);
+}
+
+function normalizeThinkingReviewStatus(value = "") {
+  const status = String(value || "").trim().toLowerCase();
+  return THINKING_REVIEW_STATUSES.includes(status) ? status : "pending";
+}
+
+function normalizeReviewDate(value = "") {
+  const date = String(value || "").trim();
+  return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "";
+}
+
 function normalizeThinkingItem(item) {
   if (typeof item === "string") return item.trim();
   if (!item || typeof item !== "object") return "";
@@ -147,6 +177,8 @@ function normalizeThinkingItem(item) {
     followUpNotes: String(item.followUpNotes || "").trim(),
     learningReflection: String(item.learningReflection || item.reflection || "").trim(),
     learningNotes: String(item.learningNotes || "").trim(),
+    reviewStatus: normalizeThinkingReviewStatus(item.reviewStatus || item.status),
+    reviewDate: normalizeReviewDate(item.reviewDate || item.reviewedAt),
     confidence: String(item.confidence || "").trim().toLowerCase(),
     image: String(item.image || item.sourceImage || "").trim()
   };
@@ -177,7 +209,9 @@ function thinkingItemText(item) {
     item.followUp,
     item.followUpNotes,
     item.learningReflection,
-    item.learningNotes
+    item.learningNotes,
+    item.reviewStatus,
+    item.reviewDate
   ].filter(Boolean).join(" ");
 }
 
@@ -187,19 +221,24 @@ function thinkingItemHasContent(item) {
 
 function normalizeMonth(month) {
   const monthKey = month.month || monthKeyFromDate(month.date) || DEFAULT_START_MONTH;
-  const materials = asArray(month.materials || month.material || month.documents).map(normalizeMaterial);
+  const materials = asArray(month.materials || month.material || month.documents)
+    .map(normalizeMaterial)
+    .filter(materialHasContent);
   const memories = asArray(month.memoryMoment || month.memoryMoments || month.photos).map((item) => normalizeMemory(item, monthKey));
-  const markdownRevision = Number(month.markdownRevision || 0);
   return {
     id: month.id || monthKey,
     month: monthKey,
     title: month.title || formatMonth(monthKey),
+    materialsRevision: normalizeRevision(month.materialsRevision),
+    reflectionRevision: normalizeRevision(month.reflectionRevision),
+    followUpRevision: normalizeRevision(month.followUpRevision),
+    markdownRevision: normalizeRevision(month.markdownRevision),
+    memoryRevision: normalizeRevision(month.memoryRevision),
     materials,
     reflection: month.reflection || month.notes || "",
     thinkingQuestions: normalizeThinkingQuestions(month.thinkingQuestions || month.questions || month.thoughts),
     followUpPoints: normalizeThinkingQuestions(month.followUpPoints || month.followUps || month.openQuestions),
     markdown: normalizeMarkdown(month.reviewedMarkdown || month.markdown || month.md || month.searchNotes),
-    markdownRevision: Number.isFinite(markdownRevision) ? markdownRevision : 0,
     memoryMoment: memories
   };
 }
@@ -213,12 +252,16 @@ function legacyDaysToMonths(days = []) {
       id: monthKey,
       month: monthKey,
       title: formatMonth(monthKey),
+      materialsRevision: 0,
+      reflectionRevision: 0,
+      followUpRevision: 0,
+      markdownRevision: 0,
+      memoryRevision: 0,
       materials: [],
       reflection: "",
       thinkingQuestions: [],
       followUpPoints: [],
       markdown: "",
-      markdownRevision: 0,
       memoryMoment: []
     };
     entry.materials.push(...asArray(day.documents).map(normalizeMaterial));
@@ -235,6 +278,7 @@ function hasTextContent(value) {
 }
 
 function materialHasContent(item = {}) {
+  if (HIDDEN_MATERIAL_FILES.has(String(item.file || ""))) return false;
   return hasTextContent(item.file)
     || hasTextContent(item.notes)
     || (hasTextContent(item.title) && item.title !== "Material");
@@ -264,12 +308,16 @@ function createEmptyMonth(monthKey) {
     id: monthKey,
     month: monthKey,
     title: formatMonth(monthKey),
+    materialsRevision: 0,
+    reflectionRevision: 0,
+    followUpRevision: 0,
+    markdownRevision: 0,
+    memoryRevision: 0,
     materials: [],
     reflection: "",
     thinkingQuestions: [],
     followUpPoints: [],
     markdown: "",
-    markdownRevision: 0,
     memoryMoment: []
   };
 }
@@ -293,7 +341,10 @@ function editableMonth() {
   month.thinkingQuestions = normalizeThinkingQuestions(month.thinkingQuestions);
   month.followUpPoints = normalizeThinkingQuestions(month.followUpPoints);
   if (typeof month.markdown !== "string") month.markdown = "";
-  if (!Number.isFinite(month.markdownRevision)) month.markdownRevision = 0;
+  ["materialsRevision", "reflectionRevision", "followUpRevision", "markdownRevision", "memoryRevision"]
+    .forEach((field) => {
+      month[field] = normalizeRevision(month[field]);
+    });
   return month;
 }
 
@@ -363,7 +414,9 @@ function mergeThinkingLists(baseItems = [], overlayItems = []) {
         ...merged[existingIndex],
         reviewNotes: item.reviewNotes,
         followUpNotes: item.followUpNotes,
-        learningNotes: item.learningNotes
+        learningNotes: item.learningNotes,
+        reviewStatus: item.reviewStatus,
+        reviewDate: item.reviewDate
       };
     });
     return merged;
@@ -381,22 +434,54 @@ function mergeThinkingLists(baseItems = [], overlayItems = []) {
     });
 }
 
+function revisionWinner(baseMonth = {}, overlayMonth = {}, field = "") {
+  const baseRevision = normalizeRevision(baseMonth[field]);
+  const overlayRevision = normalizeRevision(overlayMonth[field]);
+  if (baseRevision === overlayRevision) return "";
+  return baseRevision > overlayRevision ? "base" : "overlay";
+}
+
 function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
-  const baseMarkdownRevision = Number(baseMonth.markdownRevision || 0);
-  const overlayMarkdownRevision = Number(overlayMonth.markdownRevision || 0);
+  const materialsWinner = revisionWinner(baseMonth, overlayMonth, "materialsRevision");
+  const reflectionWinner = revisionWinner(baseMonth, overlayMonth, "reflectionRevision");
+  const followUpWinner = revisionWinner(baseMonth, overlayMonth, "followUpRevision");
+  const markdownWinner = revisionWinner(baseMonth, overlayMonth, "markdownRevision");
+  const memoryWinner = revisionWinner(baseMonth, overlayMonth, "memoryRevision");
+  const baseThinking = normalizeThinkingQuestions(baseMonth.thinkingQuestions);
+  const baseThinkingIsStructured = baseThinking.some((item) => typeof item === "object");
+  const exactMaterials = (items) => asArray(items).map(normalizeMaterial).filter(materialHasContent);
+  const exactMemories = (items) => asArray(items).map((item) => normalizeMemory(item, overlayMonth.month || baseMonth.month));
   return {
     ...baseMonth,
     ...overlayMonth,
     title: overlayMonth.title || baseMonth.title,
-    materials: mergeMaterialLists(baseMonth.materials, overlayMonth.materials),
-    reflection: richerText(baseMonth.reflection, overlayMonth.reflection),
-    thinkingQuestions: mergeThinkingLists(baseMonth.thinkingQuestions, overlayMonth.thinkingQuestions),
-    followUpPoints: mergeThinkingLists(baseMonth.followUpPoints, overlayMonth.followUpPoints),
-    markdown: baseMarkdownRevision > overlayMarkdownRevision
-      ? normalizeMarkdown(baseMonth.markdown)
+    materials: materialsWinner
+      ? exactMaterials(materialsWinner === "base" ? baseMonth.materials : overlayMonth.materials)
+      : mergeMaterialLists(baseMonth.materials, overlayMonth.materials),
+    materialsRevision: Math.max(normalizeRevision(baseMonth.materialsRevision), normalizeRevision(overlayMonth.materialsRevision)),
+    reflection: reflectionWinner
+      ? normalizeMarkdown(reflectionWinner === "base" ? baseMonth.reflection : overlayMonth.reflection)
+      : richerText(baseMonth.reflection, overlayMonth.reflection),
+    reflectionRevision: Math.max(normalizeRevision(baseMonth.reflectionRevision), normalizeRevision(overlayMonth.reflectionRevision)),
+    thinkingQuestions: baseThinkingIsStructured
+      ? mergeThinkingLists(baseMonth.thinkingQuestions, overlayMonth.thinkingQuestions)
+      : reflectionWinner
+        ? normalizeThinkingQuestions(reflectionWinner === "base" ? baseMonth.thinkingQuestions : overlayMonth.thinkingQuestions)
+        : mergeThinkingLists(baseMonth.thinkingQuestions, overlayMonth.thinkingQuestions),
+    followUpPoints: followUpWinner
+      ? normalizeThinkingQuestions(followUpWinner === "base" ? baseMonth.followUpPoints : overlayMonth.followUpPoints)
+      : mergeThinkingLists(baseMonth.followUpPoints, overlayMonth.followUpPoints),
+    followUpRevision: Math.max(normalizeRevision(baseMonth.followUpRevision), normalizeRevision(overlayMonth.followUpRevision)),
+    markdown: markdownWinner
+      ? normalizeMarkdown(markdownWinner === "base" ? baseMonth.markdown : overlayMonth.markdown)
       : richerText(baseMonth.markdown, overlayMonth.markdown),
-    markdownRevision: Math.max(baseMarkdownRevision, overlayMarkdownRevision),
-    memoryMoment: asArray(overlayMonth.memoryMoment).length ? overlayMonth.memoryMoment : asArray(baseMonth.memoryMoment)
+    markdownRevision: Math.max(normalizeRevision(baseMonth.markdownRevision), normalizeRevision(overlayMonth.markdownRevision)),
+    memoryMoment: memoryWinner
+      ? exactMemories(memoryWinner === "base" ? baseMonth.memoryMoment : overlayMonth.memoryMoment)
+      : asArray(overlayMonth.memoryMoment).length
+        ? exactMemories(overlayMonth.memoryMoment)
+        : exactMemories(baseMonth.memoryMoment),
+    memoryRevision: Math.max(normalizeRevision(baseMonth.memoryRevision), normalizeRevision(overlayMonth.memoryRevision))
   };
 }
 
@@ -549,7 +634,8 @@ function normalizeKnowledgeNote(note = {}) {
     summary: note.summary || "",
     related_topics: cleanStringList(note.related_topics),
     rag_include: note.rag_include !== false,
-    search_text: note.search_text || ""
+    search_text: note.search_text || "",
+    search_body: note.search_body || ""
   };
 }
 
@@ -559,6 +645,36 @@ function setKnowledgeStatus(message = "", tone = "") {
   status.textContent = message;
   status.dataset.tone = tone;
   status.hidden = !message;
+}
+
+function liveMonthSearchText(note = {}) {
+  if (!note.month) return "";
+  const month = state.library.months.find((item) => item.month === note.month);
+  if (!month) return "";
+
+  const thinkingItems = normalizeThinkingQuestions(month.thinkingQuestions);
+  const followUpItems = normalizeThinkingQuestions(month.followUpPoints);
+  if (note.id === "emba-2026-07-personal-marker-original-extract") {
+    return thinkingItems
+      .map((item) => typeof item === "object"
+        ? [item.id, item.original, item.context, item.source, item.position].filter(Boolean).join(" ")
+        : item)
+      .join(" ");
+  }
+  if (note.id === "emba-2026-07-questions-and-reflections-review") {
+    return [
+      ...thinkingItems.map(thinkingItemText),
+      ...followUpItems.map(thinkingItemText)
+    ].join(" ");
+  }
+  if (note.type === "personal_reflection") {
+    return [month.reflection, ...thinkingItems.map(thinkingItemText)].join(" ");
+  }
+  if (note.type === "course_note") return month.markdown;
+  if (note.type === "monthly_index") {
+    return [month.reflection, month.markdown, ...followUpItems.map(thinkingItemText)].join(" ");
+  }
+  return "";
 }
 
 function noteSearchBlob(note = {}) {
@@ -577,7 +693,9 @@ function noteSearchBlob(note = {}) {
     note.tags.join(" "),
     note.keywords.join(" "),
     note.related_topics.join(" "),
-    note.search_text
+    note.search_text,
+    note.search_body,
+    liveMonthSearchText(note)
   ].join(" ").toLowerCase();
 }
 
@@ -876,6 +994,22 @@ async function loadKnowledgeBase() {
     if (!response.ok) throw new Error(`Could not load knowledge index (${response.status})`);
     const payload = await response.json();
     state.knowledge.notes = asArray(payload.notes).map(normalizeKnowledgeNote).filter((note) => note.md_file);
+    renderKnowledgeBase();
+    const batchSize = 6;
+    for (let index = 0; index < state.knowledge.notes.length; index += batchSize) {
+      const batch = state.knowledge.notes.slice(index, index + batchSize);
+      await Promise.all(batch.map(async (note) => {
+        try {
+          const response = await fetch(note.md_file, { cache: "no-store" });
+          if (!response.ok) return;
+          const markdown = await response.text();
+          state.knowledge.markdownCache[note.md_file] = markdown;
+          note.search_body = splitFrontmatter(markdown).body;
+        } catch {
+          // Metadata search remains available when one Markdown file cannot load.
+        }
+      }));
+    }
     state.knowledge.loaded = true;
     renderKnowledgeBase();
   } catch (error) {
@@ -1111,6 +1245,17 @@ function thinkingConfidenceLabel(value = "") {
   return "";
 }
 
+function thinkingReviewStatusLabel(value = "") {
+  const labels = {
+    pending: "待复盘",
+    keep: "确认保留",
+    rewrite: "需要重写",
+    action: "转为行动",
+    complete: "已完成"
+  };
+  return labels[normalizeThinkingReviewStatus(value)] || labels.pending;
+}
+
 function textWithBreaks(value = "") {
   return escapeHtml(String(value || "")).replace(/\r?\n/g, "<br>");
 }
@@ -1142,10 +1287,40 @@ function renderThinkingNotesRow(label, field, value, index) {
   `;
 }
 
+function renderThinkingReviewManagement(item, index) {
+  if (!isEditMode()) return "";
+  const status = normalizeThinkingReviewStatus(item.reviewStatus);
+  return `
+    <div class="emba-thinking-review-row is-personal-note is-editable">
+      <dt>Review 管理</dt>
+      <dd class="emba-thinking-review-management">
+        <select
+          class="emba-thinking-review-control"
+          data-thinking-item-field="reviewStatus"
+          data-index="${index}"
+          aria-label="Review status"
+        >
+          ${THINKING_REVIEW_STATUSES.map((value) => `<option value="${value}"${status === value ? " selected" : ""}>${thinkingReviewStatusLabel(value)}</option>`).join("")}
+        </select>
+        <input
+          class="emba-thinking-review-control"
+          type="date"
+          value="${escapeHtml(item.reviewDate || "")}"
+          data-thinking-item-field="reviewDate"
+          data-index="${index}"
+          aria-label="Review date"
+        />
+      </dd>
+    </div>
+  `;
+}
+
 function renderStructuredThinkingItem(item, index) {
   const itemId = item.id || `T${String(index + 1).padStart(2, "0")}`;
   const confidence = thinkingConfidenceLabel(item.confidence);
-  const meta = [item.kind, item.date, confidence].filter(Boolean).join(" · ");
+  const reviewStatus = thinkingReviewStatusLabel(item.reviewStatus);
+  const reviewDate = item.reviewDate ? `复查 ${item.reviewDate}` : "";
+  const meta = [item.kind, item.date, confidence, reviewStatus, reviewDate].filter(Boolean).join(" · ");
   const sourceMeta = [item.date, item.source, item.position].filter(Boolean).join(" · ");
   return `
     <details class="emba-thinking-review-card" data-thinking-item="${escapeHtml(itemId)}">
@@ -1171,6 +1346,7 @@ function renderStructuredThinkingItem(item, index) {
           ${renderThinkingReviewRow("当时上下文", item.context)}
           ${renderThinkingReviewRow("Codex 补齐后的完整论述", item.reconstruction, "is-reconstruction")}
           ${renderThinkingReviewRow("证据边界", item.evidenceBoundary)}
+          ${renderThinkingReviewManagement(item, index)}
           ${renderThinkingReviewRow("你的 Review", item.reviewPrompt, "is-review")}
           ${renderThinkingNotesRow("Review 记录", "reviewNotes", item.reviewNotes, index)}
           ${renderThinkingReviewRow("Follow-up", item.followUp)}
@@ -1498,6 +1674,7 @@ async function loadLibrary() {
     }
     state.selectedMonthId = timelineMonths()[0] ? monthId(timelineMonths()[0]) : "";
     renderTimeline();
+    if (state.knowledge.notes.length) renderKnowledgeBase();
   } catch (error) {
     state.libraryLoaded = false;
     const timeline = $("#embaTimeline");
@@ -1583,6 +1760,7 @@ $("#embaMonthDetail")?.addEventListener("click", (event) => {
     if (!isEditMode()) return;
     const month = editableMonth();
     month.memoryMoment.splice(Number(memoryDelete.dataset.memoryDelete), 1);
+    bumpRevision(month, "memoryRevision");
     saveLibrary();
     renderMonthDetail(selectedMonth());
     return;
@@ -1593,6 +1771,7 @@ $("#embaMonthDetail")?.addEventListener("click", (event) => {
     if (!isEditMode()) return;
     const month = editableMonth();
     month.materials.splice(Number(materialDelete.dataset.materialDelete), 1);
+    bumpRevision(month, "materialsRevision");
     saveLibrary();
     renderMonthDetail(selectedMonth());
     return;
@@ -1626,6 +1805,7 @@ $("#embaMonthDetail")?.addEventListener("change", async (event) => {
   const files = [...(target.files || [])].filter((file) => file.type.startsWith("image/"));
   if (!files.length) return;
   const month = editableMonth();
+  let photosAdded = 0;
   for (const file of files) {
     const uploaded = await uploadEmbaFile(file, month.month, "memory");
     const image = uploaded?.url || await imageFileToDataUrl(file);
@@ -1636,7 +1816,9 @@ $("#embaMonthDetail")?.addEventListener("change", async (event) => {
       caption: "",
       month: month.month
     });
+    photosAdded += 1;
   }
+  if (photosAdded) bumpRevision(month, "memoryRevision");
   saveLibrary();
   renderMonthDetail(selectedMonth());
 });
@@ -1648,6 +1830,7 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
   if (target.matches("[data-reflection-editor]")) {
     const month = editableMonth();
     month.reflection = target.value;
+    bumpInputRevision(target, month, "reflectionRevision");
     saveLibrary();
     return;
   }
@@ -1656,8 +1839,12 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
     const month = editableMonth();
     const item = month.thinkingQuestions[Number(target.dataset.index)];
     const field = target.dataset.thinkingItemField;
-    if (!item || typeof item !== "object" || !["reviewNotes", "followUpNotes", "learningNotes"].includes(field)) return;
-    item[field] = target.value;
+    if (!item || typeof item !== "object" || !["reviewNotes", "followUpNotes", "learningNotes", "reviewStatus", "reviewDate"].includes(field)) return;
+    item[field] = field === "reviewStatus"
+      ? normalizeThinkingReviewStatus(target.value)
+      : field === "reviewDate"
+        ? normalizeReviewDate(target.value)
+        : target.value;
     saveLibrary();
     return;
   }
@@ -1665,6 +1852,7 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
   if (target.matches("[data-thinking-editor]")) {
     const month = editableMonth();
     month.thinkingQuestions = target.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
+    bumpInputRevision(target, month, "reflectionRevision");
     saveLibrary();
     return;
   }
@@ -1672,6 +1860,7 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
   if (target.matches("[data-follow-up-editor]")) {
     const month = editableMonth();
     month.followUpPoints = target.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
+    bumpInputRevision(target, month, "followUpRevision");
     saveLibrary();
     return;
   }
@@ -1679,6 +1868,7 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
   if (target.matches("[data-markdown-editor]")) {
     const month = editableMonth();
     month.markdown = target.value;
+    bumpInputRevision(target, month, "markdownRevision");
     saveLibrary();
     return;
   }
@@ -1688,6 +1878,7 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
     const item = month.materials[Number(target.dataset.index)];
     if (!item) return;
     item[target.dataset.materialField] = target.value;
+    bumpInputRevision(target, month, "materialsRevision");
     saveLibrary();
   }
 });
@@ -1712,6 +1903,7 @@ $("#embaMonthDetail")?.addEventListener("submit", async (event) => {
       file: uploaded?.url || "",
       notes
     });
+    bumpRevision(month, "materialsRevision");
     saveLibrary();
     form.reset();
     renderMonthDetail(selectedMonth());

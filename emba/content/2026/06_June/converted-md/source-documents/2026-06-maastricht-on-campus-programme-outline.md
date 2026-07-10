@@ -12,8 +12,8 @@ date: 2026-06-30
 year: 2026
 month: 2026-06
 source_type: pdf
-source_file: MaastrichtMBA - On-campus MBA Programme Outline 2026-2027.pdf
-source_path: private local MBA PDF folder
+source_file: /api/emba/file/emba/2026-06/material/1783597892009-4870cc90-c28a-4736-8f87-9bf5d2eaa645-MaastrichtMBA---On-campus-MBA-Programme-Outline-2026-2027.pdf
+source_path: private R2 EMBA bucket
 converted_from: MaastrichtMBA - On-campus MBA Programme Outline 2026-2027.pdf
 visibility: private
 status: active
@@ -134,4 +134,3 @@ This outline supports a provisional elective thesis:
 - "D1 D2 D3"
 - "L1 L2 L3"
 - "S1 S2 S3"
-

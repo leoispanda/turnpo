@@ -12,8 +12,8 @@ date: 2026-06-30
 year: 2026
 month: 2026-06
 source_type: pdf
-source_file: nyenrode-impact-mba-executive-brochure.pdf
-source_path: private local MBA PDF folder
+source_file: /api/emba/file/emba/2026-06/material/1783598418352-3172a136-13fa-4bf8-8954-55516e437b6a-nyenrode-impact-mba-executive-brochure.pdf
+source_path: private R2 EMBA bucket
 converted_from: nyenrode-impact-mba-executive-brochure.pdf
 visibility: private
 status: active
@@ -127,4 +127,3 @@ The brochure is most useful as a mirror:
 - "Meet the CEO"
 - "global immersion"
 - "MBA comparison"
-

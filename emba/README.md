@@ -1,14 +1,14 @@
 # EMBA Timeline
 
-This folder powers the private Turnpo EMBA timeline at `/emba/`.
+This folder powers the private Turnpo EMBA timeline and searchable learning archive at `/emba/`.
 
-The local page has a lightweight browser password gate. Current local password:
+The static page keeps this browser-only code for local preview:
 
 ```text
 emba2026
 ```
 
-On Cloudflare Pages, `/emba/*` is protected by `functions/emba/[[path]].js`. Set the Pages environment variable:
+This browser constant is not production security. On Cloudflare Pages, `/emba/*` and `/api/emba/*` fail closed unless the Pages environment variable is configured:
 
 ```text
 EMBA_ACCESS_CODE=emba2026
@@ -39,7 +39,17 @@ CREATE TABLE IF NOT EXISTS emba_state (
   value TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS emba_state_history (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  key TEXT NOT NULL,
+  value TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  archived_at TEXT NOT NULL
+);
 ```
+
+Before each overwrite, the previous library state is copied into `emba_state_history`. The newest 50 snapshots are retained.
 
 If either binding is missing, the page still works locally using browser storage, but edits will not sync to the cloud.
 
@@ -47,13 +57,14 @@ If either binding is missing, the page still works locally using browser storage
 
 After entering the access code:
 
-1. Hover the monthly timeline to select a month.
-2. Open `Memory Moment` to upload photos and captions.
-3. Open `Reflection` to write notes.
-4. Open `Markdown` to keep searchable monthly notes in plain Markdown.
-5. Open `Material` to upload class files or add links/notes.
-6. Open `思考与问题` to review the original evidence, reconstructed argument, and evidence boundary; in edit mode, personal Review, Follow-up, and Reflection records sync with the library.
-7. Use `待补充与验证` to keep unfinished context, evidence checks, boundaries, and later review points separate from finished reflections.
+1. Click a date on the monthly timeline; the selection stays fixed until another date is clicked.
+2. Open `Reflection（我的思考）` for the source-first reflection cards, the monthly synthesis, and follow-up points. Each detailed card can store a Review note, Follow-up note, Reflection note, review status, and review date.
+3. Open `照片` to upload and review class memories.
+4. Open `资料` for protected originals and their searchable Markdown mirrors.
+5. Open `课堂笔记（完全内容整合版）` for the reviewed monthly learning record.
+6. Turn on `Edit mode` only when changing personal notes or month content; changes save locally first and sync to D1 when available.
+
+The page intentionally keeps only these four month cards. The knowledge section intentionally keeps one search input. That input searches index metadata, the full Markdown bodies, and current D1-backed Reflection and class-note text.
 
 Uploaded files are stored in R2 and referenced by private `/api/emba/file/...` URLs.
 
@@ -82,6 +93,26 @@ emba/content/
 └── templates/
 ```
 
-Original PDF, PPT, Word, image, and case files should stay in `originals/`, the existing private material folder, or private R2 when they should be clickable on the site. Their Markdown mirrors should live in `converted-md/` with frontmatter that points back to the original file through `source_file` or `source_files`; timeline Material links should use protected `/api/emba/file/...` URLs for uploaded originals.
+Original PDF, PPT, Word, image, and case files should stay in private R2 when they need to be clickable on the site. Their Markdown mirrors should live in `converted-md/` with frontmatter that points back to the original through `source_file` or `source_files`; all clickable private originals use protected `/api/emba/file/...` URLs.
 
-`knowledge-index.json` is the machine-readable search index for the website. Update it whenever a new Markdown note is added so the page can search by year, month, course, type, tag, keyword, and summary. Later this same structure can feed a RAG pipeline by chunking Markdown files where `rag_include: true`.
+## Canonical Layers
+
+Each piece of learning has one owner per layer:
+
+- R2 original: authoritative evidence for PDFs, PPTs, Word files, images, and other binaries.
+- `emba/content/**/*.md`: canonical searchable and future-RAG mirror; one substantive Markdown file is indexed once.
+- `emba/materials.json`: shipped month structure and protected links, not a second prose archive.
+- D1 `emba_state`: Leo's live edits, Review records, statuses, dates, follow-ups, and uploaded-file references.
+- `knowledge-index.json`: machine-readable discovery metadata; Markdown body text is loaded at search time.
+
+Older duplicate notes may remain in the repository as an archive, but they should not appear as a separate Material card or a second `knowledge-index.json` entry.
+
+`knowledge-index.json` is the machine-readable search index for the website. Update it whenever a new substantive Markdown note is added. Keep `md_file` unique, and keep `source_file` on protected `/api/emba/file/...` URLs for private originals. Later this same structure can feed a RAG pipeline by chunking Markdown files where `rag_include: true`.
+
+For every new PDF or PPT:
+
+1. Upload the original to private R2.
+2. Create a search-safe Markdown mirror in the correct month.
+3. Add the original and mirror link to `emba/materials.json`.
+4. Add the Markdown exactly once to `knowledge-index.json`.
+5. Update the monthly index and run `tests/emba-cloud-static.test.mjs`.

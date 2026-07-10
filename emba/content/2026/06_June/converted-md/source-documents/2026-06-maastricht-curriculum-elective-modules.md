@@ -12,8 +12,8 @@ date: 2026-06-30
 year: 2026
 month: 2026-06
 source_type: pdf
-source_file: MaastrichtMBA - Curriculum Elective Modules.pdf
-source_path: private local MBA PDF folder
+source_file: /api/emba/file/emba/2026-06/material/1783597892872-7fdf05c3-4f0f-4270-a252-f1df549fccb9-MaastrichtMBA---Curriculum-Elective-Modules.pdf
+source_path: private R2 EMBA bucket
 converted_from: MaastrichtMBA - Curriculum Elective Modules.pdf
 visibility: private
 status: active
@@ -129,4 +129,3 @@ Do not finalize this in June. Use July and the first core module to test which t
 - "Sustainability and Business Ethics"
 - "Future-Proof Business Models"
 - "elective strategy"
-

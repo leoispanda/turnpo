@@ -12,8 +12,8 @@ date: 2026-06-08
 year: 2026
 month: 2026-06
 source_type: pdf
-source_file: Onboarding guideline.pdf
-source_path: private local MBA PDF folder and Documents folder duplicate
+source_file: /api/emba/file/emba/2026-06/material/1783597891190-cd4d11e7-d3c6-4688-a6c3-61273b1012db-Onboarding-guideline.pdf
+source_path: private R2 EMBA bucket
 converted_from: Onboarding guideline.pdf
 visibility: private
 status: active
@@ -119,4 +119,3 @@ Treat onboarding as an operating-system setup, not an admin chore. Before any co
 - "Teams"
 - "General Electives On-campus"
 - "onboarding"
-

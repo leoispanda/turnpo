@@ -12,8 +12,8 @@ date: 2026-06-30
 year: 2026
 month: 2026-06
 source_type: pdf
-source_file: MaastrichtMBA - Online MBA Programme Outline 2026-2027.pdf
-source_path: private local MBA PDF folder
+source_file: /api/emba/file/emba/2026-06/material/1783597892454-40e37ff2-af27-4f99-aeb1-35a6066652f8-MaastrichtMBA---Online-MBA-Programme-Outline-2026-2027.pdf
+source_path: private R2 EMBA bucket
 converted_from: MaastrichtMBA - Online MBA Programme Outline 2026-2027.pdf
 visibility: private
 status: active
@@ -103,4 +103,3 @@ When answering Leo's own schedule questions, prefer the on-campus programme outl
 - "six-week journeys"
 - "track comparison"
 - "shared elective rules"
-

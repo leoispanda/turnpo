@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-09",
+  "updated": "2026-07-10",
   "timeline": {
     "startMonth": "2026-06",
     "endMonth": "2028-12"
@@ -9,6 +9,11 @@
       "id": "2026-06",
       "month": "2026-06",
       "title": "June 2026",
+      "materialsRevision": 0,
+      "reflectionRevision": 0,
+      "followUpRevision": 0,
+      "markdownRevision": 0,
+      "memoryRevision": 0,
       "materials": [
         {
           "title": "EMBA preparation documents analysis - admission, onboarding, fees, electives",
@@ -21,6 +26,12 @@
           "type": "monthly_index",
           "file": "/emba/content/2026/06_June/2026-06_EMBA_Preparation_Index.md",
           "notes": "6 月准备期的月度索引，连接源文件组、综合分析和后续学习主题。"
+        },
+        {
+          "title": "MaastrichtMBA Offer Of Admission - Executive MBA",
+          "type": "source_pdf",
+          "file": "/api/emba/file/emba/2026-06/material/1783714462138-028bcf6b-1089-4d1d-b0eb-a6709e21c39d-offer-signed-leo.pdf",
+          "notes": "录取与签署接受的正式原件，已上传至 EMBA_BUCKET 并受登录保护；可检索 Markdown 镜像：/emba/content/2026/06_June/converted-md/source-documents/2026-06-offer-of-admission.md。"
         },
         {
           "title": "UM Certificate Of Enrolment - EMBA On-Campus 2026/27",
@@ -79,6 +90,10 @@
       "id": "2026-07",
       "month": "2026-07",
       "title": "July 2026",
+      "materialsRevision": 0,
+      "reflectionRevision": 0,
+      "followUpRevision": 0,
+      "memoryRevision": 0,
       "materials": [
         {
           "title": "MaastrichtMBA Leading In Learning Programme - July 2026",
@@ -91,12 +106,6 @@
           "type": "converted_md",
           "file": "/emba/content/2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md",
           "notes": "完整整理版：包含一行总结、主线、逐日分析、知识地图、行动清单、图片索引和识别备注。"
-        },
-        {
-          "title": "Handwritten notes analysis - Lead in Learning, AI, Inclusion & Diversity",
-          "type": "notes",
-          "file": "/emba/materials/2026-07/handwritten-notes/leadership-learning-notes-analysis.md",
-          "notes": "整理自 2026-07-01 至 2026-07-03 的 13 张手写笔记照片；原图已归档在同一目录的 images 文件夹。"
         },
         {
           "title": "我的心得与思考过程 - July 2026",
