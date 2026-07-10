@@ -969,7 +969,7 @@ function renderTimeline() {
     const monthName = formatMonth(month.month, { month: "short" });
     const year = formatMonth(month.month, { year: "numeric" });
     return `
-      <button class="emba-timeline-item${isActive ? " active" : ""}" type="button" data-month-id="${escapeHtml(id)}" aria-pressed="${isActive}" aria-label="${escapeHtml(formatMonth(month.month))}">
+      <button class="emba-timeline-item${isActive ? " active" : ""}" type="button" data-month-id="${escapeHtml(id)}" aria-pressed="${isActive}"${isActive ? ' aria-current="date"' : ""} aria-label="${escapeHtml(formatMonth(month.month))}">
         <span class="emba-timeline-title">
           <span>${escapeHtml(monthName)}</span>
           <span>${escapeHtml(year)}</span>
@@ -1363,6 +1363,8 @@ function setActiveMonth(monthIdValue) {
     const isActive = button.dataset.monthId === state.selectedMonthId;
     button.classList.toggle("active", isActive);
     button.setAttribute("aria-pressed", String(isActive));
+    if (isActive) button.setAttribute("aria-current", "date");
+    else button.removeAttribute("aria-current");
   });
   renderMonthDetail(selectedMonth());
 }
@@ -1493,22 +1495,6 @@ function initAccessGate() {
 }
 
 $("#embaTimeline")?.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-month-id]");
-  if (!button) return;
-  setActiveMonth(button.dataset.monthId || "");
-});
-
-function handleTimelineHover(event) {
-  const button = event.target.closest("[data-month-id]");
-  if (!button) return;
-  setActiveMonth(button.dataset.monthId || "");
-}
-
-$("#embaTimeline")?.addEventListener("pointerover", handleTimelineHover);
-$("#embaTimeline")?.addEventListener("mouseover", handleTimelineHover);
-$("#embaTimeline")?.addEventListener("mousemove", handleTimelineHover);
-
-$("#embaTimeline")?.addEventListener("focusin", (event) => {
   const button = event.target.closest("[data-month-id]");
   if (!button) return;
   setActiveMonth(button.dataset.monthId || "");

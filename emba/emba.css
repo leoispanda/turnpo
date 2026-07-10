@@ -307,39 +307,49 @@ body::before {
 }
 
 .emba-timeline-item.active::before {
-  opacity: 0.68;
-}
-
-.emba-timeline-item.active::after {
-  opacity: 0.62;
-}
-
-.emba-timeline-item.active .emba-timeline-title {
-  opacity: 0.84;
-}
-
-.emba-timeline-item:hover::before,
-.emba-timeline-item:focus-visible::before {
   opacity: 1;
   transform: translateX(-50%) scale(1.04);
   background:
     radial-gradient(circle at 34% 25%, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.74) 38%, rgba(255, 255, 255, 0.52) 72%),
-    rgba(255, 255, 255, 0.72);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    rgba(255, 255, 255, 0.76);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.92);
 }
 
-.emba-timeline-item:hover::after,
-.emba-timeline-item:focus-visible::after {
+.emba-timeline-item.active::after {
   background: #b18a2f;
   opacity: 1;
   transform: translateX(-50%) scale(1);
-  box-shadow: 0 0 0 5px rgba(177, 138, 47, 0.13);
+  box-shadow: 0 0 0 5px rgba(177, 138, 47, 0.15);
 }
 
-.emba-timeline-item:hover .emba-timeline-title,
-.emba-timeline-item:focus-visible .emba-timeline-title {
-  color: #b18a2f;
+.emba-timeline-item.active .emba-timeline-title {
+  color: #9a772a;
   opacity: 1;
+  font-weight: 720;
+}
+
+.emba-timeline-item:not(.active):hover::before,
+.emba-timeline-item:not(.active):focus-visible::before {
+  opacity: 0.84;
+  transform: translateX(-50%) scale(0.9);
+  background:
+    radial-gradient(circle at 34% 25%, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.66) 44%, rgba(222, 222, 226, 0.54) 78%),
+    rgba(232, 232, 236, 0.68);
+  box-shadow: 0 15px 34px rgba(0, 0, 0, 0.085), inset 0 1px 0 rgba(255, 255, 255, 0.84);
+}
+
+.emba-timeline-item:not(.active):hover::after,
+.emba-timeline-item:not(.active):focus-visible::after {
+  background: #6e6e73;
+  opacity: 0.82;
+  transform: translateX(-50%) scale(0.94);
+  box-shadow: 0 0 0 4px rgba(110, 110, 115, 0.09);
+}
+
+.emba-timeline-item:not(.active):hover .emba-timeline-title,
+.emba-timeline-item:not(.active):focus-visible .emba-timeline-title {
+  color: #3a3a3c;
+  opacity: 0.94;
   transform: translateY(0);
 }
 
