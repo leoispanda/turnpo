@@ -119,7 +119,7 @@ Source handling rule: keep source images and future original files intact. Markd
 ### Reflections
 
 - [Leo's EMBA Thinking Journey - July 2026](./reflections/2026-07-leo-thinking-journey.md)
-- [Source-First Personal Reflection Review](./reflections/2026-07-questions-and-reflections-review.md)
+- [Personal Reflections - Source, Context, Codex Completion](./reflections/2026-07-questions-and-reflections-review.md)
 - [Personal Reflection Evidence Ledger](./reflections/2026-07-personal-marker-original-extract.md)
 - Monthly reflection is captured in the EMBA timeline, rebuilt from E001-E120 source evidence, and separated into T01-T19 cards for one-by-one review.
 
@@ -167,12 +167,12 @@ Source handling rule: keep source images and future original files intact. Markd
 
 Leadership is not mainly about stronger answers. It is about creating the conditions for better thinking: safety, trust, listening, reflection, and courage to question assumptions.
 
-The website now keeps the original handwriting, Codex reconstruction, evidence boundary, Review, Follow-up, and Self-learning reflection separate. Classroom frameworks remain context rather than being counted as Leo's original reflections.
+The website presents each personal reflection in three layers only: Leo's original handwriting, the context in which it appeared, and Codex's completed argument. Classroom frameworks remain context rather than being counted as Leo's original reflections.
 
 Detailed one-by-one review file:
 
 - [July 2026 Leo Thinking Journey](./reflections/2026-07-leo-thinking-journey.md)
-- [July 2026 Source-First Personal Reflection Review](./reflections/2026-07-questions-and-reflections-review.md)
+- [July 2026 Personal Reflections - Source, Context, Codex Completion](./reflections/2026-07-questions-and-reflections-review.md)
 - [July 2026 Personal Reflection Evidence Ledger](./reflections/2026-07-personal-marker-original-extract.md)
 
 ## 7. Work Applications

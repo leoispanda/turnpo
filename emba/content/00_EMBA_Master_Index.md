@@ -68,7 +68,7 @@ The rule is simple:
 | Lead in Learning Classroom Decks | 2026-07 | [Leadership Development Trajectory](./2026/07_July/converted-md/source-documents/2026-07-leadership-development-trajectory.md), [Team Building](./2026/07_July/converted-md/source-documents/2026-07-team-building.md), [Welcome MBA](./2026/07_July/converted-md/source-documents/2026-07-welcome-mba.md), [Alumni Forum](./2026/07_July/converted-md/source-documents/2026-07-alumni-forum.md), and [MBA Need To Knows](./2026/07_July/converted-md/source-documents/2026-07-mba-need-to-knows.md) |
 | Lead in Learning | 2026-07 | [EMBA July 2026 Handwritten Notes Analysis](./2026/07_July/converted-md/2026-07-01-leadership-learning-handwritten-notes.md) |
 | Personal Thinking Journey | 2026-07 | [Leo's EMBA Thinking Journey - July 2026](./2026/07_July/reflections/2026-07-leo-thinking-journey.md) |
-| Personal Review Queue | 2026-07 | [July 2026 Source-First Personal Reflection Review](./2026/07_July/reflections/2026-07-questions-and-reflections-review.md) |
+| Personal Reflections | 2026-07 | [July 2026 Personal Reflections - Source, Context, Codex Completion](./2026/07_July/reflections/2026-07-questions-and-reflections-review.md) |
 | Personal Evidence Ledger | 2026-07 | [July 2026 Personal Reflection Evidence Ledger](./2026/07_July/reflections/2026-07-personal-marker-original-extract.md) |
 
 ## Content Types

@@ -58,7 +58,7 @@ If either binding is missing, the page still works locally using browser storage
 After entering the access code:
 
 1. Click a date on the monthly timeline; the selection stays fixed until another date is clicked.
-2. Open `Reflection（我的思考）` for the source-first reflection cards, the monthly synthesis, and follow-up points. Each detailed card can store a Review note, Follow-up note, Reflection note, review status, and review date.
+2. Open `Reflection（我的思考）` for source-first personal reflections. Each detailed card contains only Leo's original words, the context in which they appeared, and Codex's completed argument.
 3. Open `照片` to upload and review class memories.
 4. Open `资料` for protected originals and their searchable Markdown mirrors.
 5. Open `课堂笔记（完全内容整合版）` for the reviewed monthly learning record.
@@ -102,7 +102,7 @@ Each piece of learning has one owner per layer:
 - R2 original: authoritative evidence for PDFs, PPTs, Word files, images, and other binaries.
 - `emba/content/**/*.md`: canonical searchable and future-RAG mirror; one substantive Markdown file is indexed once.
 - `emba/materials.json`: shipped month structure and protected links, not a second prose archive.
-- D1 `emba_state`: Leo's live edits, Review records, statuses, dates, follow-ups, and uploaded-file references.
+- D1 `emba_state`: Leo's live month edits and uploaded-file references. Older reflection workflow fields remain in history but are not displayed as personal reflection content.
 - `knowledge-index.json`: machine-readable discovery metadata; Markdown body text is loaded at search time.
 
 Older duplicate notes may remain in the repository as an archive, but they should not appear as a separate Material card or a second `knowledge-index.json` entry.

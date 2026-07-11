@@ -19,7 +19,6 @@ const state = {
     months: []
   },
   openBlockId: "",
-  reflectionView: "review",
   libraryLoaded: false,
   accessGranted: false,
   editMode: false,
@@ -202,16 +201,7 @@ function thinkingItemText(item) {
     item.position,
     item.original,
     item.context,
-    item.reconstruction,
-    item.evidenceBoundary,
-    item.reviewPrompt,
-    item.reviewNotes,
-    item.followUp,
-    item.followUpNotes,
-    item.learningReflection,
-    item.learningNotes,
-    item.reviewStatus,
-    item.reviewDate
+    item.reconstruction
   ].filter(Boolean).join(" ");
 }
 
@@ -653,7 +643,6 @@ function liveMonthSearchText(note = {}) {
   if (!month) return "";
 
   const thinkingItems = normalizeThinkingQuestions(month.thinkingQuestions);
-  const followUpItems = normalizeThinkingQuestions(month.followUpPoints);
   if (note.id === "emba-2026-07-personal-marker-original-extract") {
     return thinkingItems
       .map((item) => typeof item === "object"
@@ -662,17 +651,14 @@ function liveMonthSearchText(note = {}) {
       .join(" ");
   }
   if (note.id === "emba-2026-07-questions-and-reflections-review") {
-    return [
-      ...thinkingItems.map(thinkingItemText),
-      ...followUpItems.map(thinkingItemText)
-    ].join(" ");
+    return thinkingItems.map(thinkingItemText).join(" ");
   }
   if (note.type === "personal_reflection") {
     return [month.reflection, ...thinkingItems.map(thinkingItemText)].join(" ");
   }
   if (note.type === "course_note") return month.markdown;
   if (note.type === "monthly_index") {
-    return [month.reflection, month.markdown, ...followUpItems.map(thinkingItemText)].join(" ");
+    return [month.reflection, month.markdown].join(" ");
   }
   return "";
 }
@@ -1164,76 +1150,33 @@ function renderReflection(month) {
     ? month.reflection
     : asArray(month?.reflection).map((item) => item.body || item.title || item).filter(Boolean).join("\n\n");
   const thinkingItems = normalizeThinkingQuestions(month?.thinkingQuestions);
-  const followUpItems = normalizeThinkingQuestions(month?.followUpPoints);
+  if (thinkingItems.length) {
+    return `
+      <div class="emba-reflection-workspace" data-reflection-workspace>
+        <section class="emba-reflection-section" data-reflection-section="thinking" aria-label="个人反思">
+          <div class="emba-reflection-section-head">
+            <h3>个人反思</h3>
+            <span>${thinkingItems.length} 条 · 原文、当时上下文、Codex 补齐</span>
+          </div>
+          ${renderThinkingQuestions(month)}
+        </section>
+      </div>
+    `;
+  }
+
   const reflectionContent = isEditMode()
     ? `<textarea class="emba-reflection-editor" data-reflection-editor placeholder="Write reflection for this month...">${escapeHtml(reflection)}</textarea>`
     : reflection.trim()
       ? `<div class="emba-reflection-read">${escapeHtml(reflection)}</div>`
       : `<p class="emba-empty-copy">No reflection yet.</p>`;
-  const availableViews = [
-    ...(thinkingItems.length || isEditMode() ? ["review"] : []),
-    ...(reflection.trim() || isEditMode() ? ["summary"] : []),
-    ...(followUpItems.length || isEditMode() ? ["followup"] : [])
-  ];
-  const activeView = availableViews.includes(state.reflectionView)
-    ? state.reflectionView
-    : availableViews[0] || "summary";
-  const tabs = [
-    { id: "review", label: "逐条反思", count: thinkingItems.length },
-    { id: "summary", label: "综合反思", count: 0 },
-    { id: "followup", label: "后续补充", count: followUpItems.length }
-  ].filter((item) => availableViews.includes(item.id));
-  let activeContent = `
-    <section class="emba-reflection-section" data-reflection-section="summary" role="tabpanel" aria-label="综合反思">
-      <div class="emba-reflection-section-head">
-        <h3>本月综合反思</h3>
-        <span>我的完整总结</span>
-      </div>
-      ${reflectionContent}
-    </section>
-  `;
-
-  if (activeView === "review") {
-    activeContent = `
-      <section class="emba-reflection-section" data-reflection-section="thinking" role="tabpanel" aria-label="逐条反思">
-        <div class="emba-reflection-section-head">
-          <h3>我的反思、问题与思考</h3>
-          <span>${thinkingItems.length} 条 · 原文、上下文与 Codex 补充</span>
-        </div>
-        ${renderThinkingQuestions(month)}
-      </section>
-    `;
-  } else if (activeView === "followup") {
-    activeContent = `
-      <section class="emba-reflection-section" data-reflection-section="followup" role="tabpanel" aria-label="后续补充与验证">
-        <div class="emba-reflection-section-head">
-          <h3>后续补充与验证</h3>
-          <span>${followUpItems.length} 个待继续思考的点</span>
-        </div>
-        ${renderFollowUpPoints(month)}
-      </section>
-    `;
-  }
-
   return `
     <div class="emba-reflection-workspace" data-reflection-workspace>
-      ${tabs.length > 1 ? `
-        <div class="emba-reflection-view-tabs" role="tablist" aria-label="Reflection views" style="--reflection-view-count: ${tabs.length}">
-          ${tabs.map((item) => `
-            <button
-              class="emba-reflection-view-tab${activeView === item.id ? " active" : ""}"
-              type="button"
-              role="tab"
-              aria-selected="${activeView === item.id}"
-              data-reflection-view="${item.id}"
-            >
-              <span>${item.label}</span>
-              ${item.count ? `<strong>${item.count}</strong>` : ""}
-            </button>
-          `).join("")}
+      <section class="emba-reflection-section" data-reflection-section="summary" aria-label="综合反思">
+        <div class="emba-reflection-section-head">
+          <h3>本月综合反思</h3>
         </div>
-      ` : ""}
-      ${activeContent}
+        ${reflectionContent}
+      </section>
     </div>
   `;
 }
@@ -1243,17 +1186,6 @@ function thinkingConfidenceLabel(value = "") {
   if (value === "medium") return "语义可辨";
   if (value === "unclear") return "待核原图";
   return "";
-}
-
-function thinkingReviewStatusLabel(value = "") {
-  const labels = {
-    pending: "待复盘",
-    keep: "确认保留",
-    rewrite: "需要重写",
-    action: "转为行动",
-    complete: "已完成"
-  };
-  return labels[normalizeThinkingReviewStatus(value)] || labels.pending;
 }
 
 function textWithBreaks(value = "") {
@@ -1270,57 +1202,10 @@ function renderThinkingReviewRow(label, value, className = "") {
   `;
 }
 
-function renderThinkingNotesRow(label, field, value, index) {
-  if (!isEditMode()) return renderThinkingReviewRow(label, value, "is-personal-note");
-  return `
-    <div class="emba-thinking-review-row is-personal-note is-editable">
-      <dt><label for="thinking-${escapeHtml(field)}-${index}">${escapeHtml(label)}</label></dt>
-      <dd>
-        <textarea
-          id="thinking-${escapeHtml(field)}-${index}"
-          class="emba-thinking-note-editor"
-          data-thinking-item-field="${escapeHtml(field)}"
-          data-index="${index}"
-        >${escapeHtml(value || "")}</textarea>
-      </dd>
-    </div>
-  `;
-}
-
-function renderThinkingReviewManagement(item, index) {
-  if (!isEditMode()) return "";
-  const status = normalizeThinkingReviewStatus(item.reviewStatus);
-  return `
-    <div class="emba-thinking-review-row is-personal-note is-editable">
-      <dt>Review 管理</dt>
-      <dd class="emba-thinking-review-management">
-        <select
-          class="emba-thinking-review-control"
-          data-thinking-item-field="reviewStatus"
-          data-index="${index}"
-          aria-label="Review status"
-        >
-          ${THINKING_REVIEW_STATUSES.map((value) => `<option value="${value}"${status === value ? " selected" : ""}>${thinkingReviewStatusLabel(value)}</option>`).join("")}
-        </select>
-        <input
-          class="emba-thinking-review-control"
-          type="date"
-          value="${escapeHtml(item.reviewDate || "")}"
-          data-thinking-item-field="reviewDate"
-          data-index="${index}"
-          aria-label="Review date"
-        />
-      </dd>
-    </div>
-  `;
-}
-
 function renderStructuredThinkingItem(item, index) {
   const itemId = item.id || `T${String(index + 1).padStart(2, "0")}`;
   const confidence = thinkingConfidenceLabel(item.confidence);
-  const reviewStatus = thinkingReviewStatusLabel(item.reviewStatus);
-  const reviewDate = item.reviewDate ? `复查 ${item.reviewDate}` : "";
-  const meta = [item.kind, item.date, confidence, reviewStatus, reviewDate].filter(Boolean).join(" · ");
+  const meta = [item.kind, item.date, confidence].filter(Boolean).join(" · ");
   const sourceMeta = [item.date, item.source, item.position].filter(Boolean).join(" · ");
   return `
     <details class="emba-thinking-review-card" data-thinking-item="${escapeHtml(itemId)}">
@@ -1333,7 +1218,7 @@ function renderStructuredThinkingItem(item, index) {
       </summary>
       <div class="emba-thinking-review-body">
         <div class="emba-thinking-evidence">
-          <span class="emba-thinking-label">原文证据</span>
+          <span class="emba-thinking-label">原文</span>
           <blockquote>${textWithBreaks(item.original || item.title)}</blockquote>
           ${sourceMeta || item.image ? `
             <div class="emba-thinking-source">
@@ -1344,15 +1229,7 @@ function renderStructuredThinkingItem(item, index) {
         </div>
         <dl class="emba-thinking-review-details">
           ${renderThinkingReviewRow("当时上下文", item.context)}
-          ${renderThinkingReviewRow("Codex 补齐后的完整论述", item.reconstruction, "is-reconstruction")}
-          ${renderThinkingReviewRow("证据边界", item.evidenceBoundary)}
-          ${renderThinkingReviewManagement(item, index)}
-          ${renderThinkingReviewRow("你的 Review", item.reviewPrompt, "is-review")}
-          ${renderThinkingNotesRow("Review 记录", "reviewNotes", item.reviewNotes, index)}
-          ${renderThinkingReviewRow("Follow-up", item.followUp)}
-          ${renderThinkingNotesRow("Follow-up 记录", "followUpNotes", item.followUpNotes, index)}
-          ${renderThinkingReviewRow("Self-learning reflection", item.learningReflection)}
-          ${renderThinkingNotesRow("Reflection 记录", "learningNotes", item.learningNotes, index)}
+          ${renderThinkingReviewRow("Codex 补齐", item.reconstruction, "is-reconstruction")}
         </dl>
       </div>
     </details>
@@ -1384,23 +1261,6 @@ function renderThinkingQuestions(month) {
 
   return `
     <textarea class="emba-thinking-editor" data-thinking-editor placeholder="One thought or question per line...">${escapeHtml(items.map(thinkingItemText).join("\n"))}</textarea>
-  `;
-}
-
-function renderFollowUpPoints(month) {
-  const items = normalizeThinkingQuestions(month?.followUpPoints);
-  if (!isEditMode()) {
-    return items.length
-      ? `
-        <ol class="emba-thinking-list emba-follow-up-list">
-          ${items.map((item) => `<li>${escapeHtml(thinkingItemText(item))}</li>`).join("")}
-        </ol>
-      `
-      : `<p class="emba-empty-copy">No follow-up points yet.</p>`;
-  }
-
-  return `
-    <textarea class="emba-thinking-editor" data-follow-up-editor placeholder="One follow-up or verification point per line...">${escapeHtml(items.map(thinkingItemText).join("\n"))}</textarea>
   `;
 }
 
@@ -1521,20 +1381,8 @@ function blockSummary(id, month) {
   }
   if (id === "reflection") {
     const thinkingCount = normalizeThinkingQuestions(month?.thinkingQuestions).length;
-    const followUpCount = normalizeThinkingQuestions(month?.followUpPoints).length;
-    const parts = [];
-    if (thinkingCount) parts.push(`${thinkingCount} 条逐条反思`);
-    else if (hasTextContent(month?.reflection)) parts.push("综合反思");
-    if (followUpCount) parts.push(`${followUpCount} 个待补充`);
-    return parts.length ? parts.join(" · ") : "暂无个人思考";
-  }
-  if (id === "thinking") {
-    const count = normalizeThinkingQuestions(month?.thinkingQuestions).length;
-    return count ? `${count} short item${count === 1 ? "" : "s"}` : "No thoughts yet";
-  }
-  if (id === "followup") {
-    const count = normalizeThinkingQuestions(month?.followUpPoints).length;
-    return count ? `${count} open point${count === 1 ? "" : "s"}` : "Nothing pending";
+    if (thinkingCount) return `${thinkingCount} 条个人反思`;
+    return hasTextContent(month?.reflection) ? "综合反思" : "暂无个人思考";
   }
   if (id === "markdown") {
     return hasTextContent(month?.markdown) ? "Notes saved" : "No class notes yet";
@@ -1549,8 +1397,6 @@ function blockSummary(id, month) {
 function renderBlockContent(id, month) {
   if (id === "memory") return renderMemoryMoment(month);
   if (id === "reflection") return renderReflection(month);
-  if (id === "thinking") return renderThinkingQuestions(month);
-  if (id === "followup") return renderFollowUpPoints(month);
   if (id === "markdown") return renderMarkdown(month);
   if (id === "material") return renderMaterials(month);
   return "";
@@ -1604,7 +1450,6 @@ function setActiveMonth(monthIdValue) {
   if (!monthIdValue || state.selectedMonthId === monthIdValue) return;
   state.selectedMonthId = monthIdValue;
   state.openBlockId = "";
-  state.reflectionView = "review";
   document.querySelectorAll("[data-month-id]").forEach((button) => {
     const isActive = button.dataset.monthId === state.selectedMonthId;
     button.classList.toggle("active", isActive);
@@ -1748,13 +1593,6 @@ $("#embaTimeline")?.addEventListener("click", (event) => {
 });
 
 $("#embaMonthDetail")?.addEventListener("click", (event) => {
-  const reflectionView = event.target.closest("[data-reflection-view]");
-  if (reflectionView) {
-    state.reflectionView = reflectionView.dataset.reflectionView || "review";
-    renderMonthDetail(selectedMonth());
-    return;
-  }
-
   const memoryDelete = event.target.closest("[data-memory-delete]");
   if (memoryDelete) {
     if (!isEditMode()) return;
@@ -1788,9 +1626,6 @@ $("#embaMonthDetail")?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-block-toggle]");
   if (!button) return;
   const blockId = button.dataset.blockToggle || "";
-  if (blockId === "reflection" && state.openBlockId !== "reflection") {
-    state.reflectionView = "review";
-  }
   state.openBlockId = blockId;
   renderMonthDetail(selectedMonth());
 });
@@ -1835,32 +1670,10 @@ $("#embaMonthDetail")?.addEventListener("input", (event) => {
     return;
   }
 
-  if (target.matches("[data-thinking-item-field]")) {
-    const month = editableMonth();
-    const item = month.thinkingQuestions[Number(target.dataset.index)];
-    const field = target.dataset.thinkingItemField;
-    if (!item || typeof item !== "object" || !["reviewNotes", "followUpNotes", "learningNotes", "reviewStatus", "reviewDate"].includes(field)) return;
-    item[field] = field === "reviewStatus"
-      ? normalizeThinkingReviewStatus(target.value)
-      : field === "reviewDate"
-        ? normalizeReviewDate(target.value)
-        : target.value;
-    saveLibrary();
-    return;
-  }
-
   if (target.matches("[data-thinking-editor]")) {
     const month = editableMonth();
     month.thinkingQuestions = target.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
     bumpInputRevision(target, month, "reflectionRevision");
-    saveLibrary();
-    return;
-  }
-
-  if (target.matches("[data-follow-up-editor]")) {
-    const month = editableMonth();
-    month.followUpPoints = target.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
-    bumpInputRevision(target, month, "followUpRevision");
     saveLibrary();
     return;
   }

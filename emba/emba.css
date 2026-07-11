@@ -743,55 +743,6 @@ body::before {
   gap: 18px;
 }
 
-.emba-reflection-view-tabs {
-  width: min(100%, 520px);
-  display: grid;
-  grid-template-columns: repeat(var(--reflection-view-count, 3), minmax(0, 1fr));
-  gap: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
-  background: rgba(245, 245, 247, 0.82);
-  padding: 4px;
-}
-
-.emba-reflection-view-tab {
-  min-width: 0;
-  min-height: 36px;
-  display: inline-flex;
-  justify-content: center;
-  gap: 6px;
-  align-items: center;
-  border: 0;
-  border-radius: 6px;
-  background: transparent;
-  color: #6e6e73;
-  font-size: 12px;
-  font-weight: 680;
-  line-height: 1.2;
-  padding: 7px 9px;
-}
-
-.emba-reflection-view-tab:hover {
-  color: #1d1d1f;
-}
-
-.emba-reflection-view-tab.active {
-  background: #ffffff;
-  color: #1d1d1f;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09);
-}
-
-.emba-reflection-view-tab:focus-visible {
-  outline: 2px solid rgba(154, 119, 42, 0.56);
-  outline-offset: 1px;
-}
-
-.emba-reflection-view-tab strong {
-  color: #9a772a;
-  font-size: 11px;
-  font-weight: 780;
-}
-
 .emba-reflection-section {
   min-width: 0;
   display: grid;
@@ -1345,10 +1296,6 @@ body::before {
   font-weight: 760;
 }
 
-.emba-follow-up-list li::marker {
-  color: #6e6e73;
-}
-
 .emba-thinking-review-list {
   display: grid;
   gap: 8px;
@@ -1505,62 +1452,6 @@ body::before {
   background: rgba(154, 119, 42, 0.06);
 }
 
-.emba-thinking-review-row.is-review dd {
-  color: #1d1d1f;
-  font-weight: 650;
-}
-
-.emba-thinking-review-row.is-personal-note {
-  background: rgba(245, 245, 247, 0.5);
-}
-
-.emba-thinking-review-row.is-editable dd {
-  min-width: 0;
-}
-
-.emba-thinking-note-editor {
-  width: 100%;
-  min-height: 86px;
-  resize: vertical;
-  border: 1px solid rgba(0, 0, 0, 0.13);
-  border-radius: 6px;
-  background: #ffffff;
-  color: #1d1d1f;
-  padding: 10px 11px;
-  font: inherit;
-  line-height: 1.5;
-}
-
-.emba-thinking-note-editor:focus {
-  border-color: rgba(154, 119, 42, 0.65);
-  outline: 2px solid rgba(154, 119, 42, 0.15);
-  outline-offset: 1px;
-}
-
-.emba-thinking-review-management {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.emba-thinking-review-control {
-  min-width: 0;
-  width: 100%;
-  min-height: 40px;
-  border: 1px solid rgba(0, 0, 0, 0.13);
-  border-radius: 6px;
-  background: #ffffff;
-  color: #1d1d1f;
-  padding: 0 10px;
-  font: inherit;
-}
-
-.emba-thinking-review-control:focus {
-  border-color: rgba(154, 119, 42, 0.65);
-  outline: 2px solid rgba(154, 119, 42, 0.15);
-  outline-offset: 1px;
-}
-
 .emba-thinking-legacy-item {
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding: 10px 0;
@@ -1570,16 +1461,6 @@ body::before {
 }
 
 @media (max-width: 640px) {
-  .emba-reflection-view-tabs {
-    width: 100%;
-  }
-
-  .emba-reflection-view-tab {
-    gap: 4px;
-    font-size: 11px;
-    padding-inline: 5px;
-  }
-
   .emba-reflection-section-head {
     display: grid;
     gap: 4px;
@@ -1605,9 +1486,6 @@ body::before {
     padding: 14px;
   }
 
-  .emba-thinking-review-management {
-    grid-template-columns: 1fr;
-  }
 }
 
 .emba-private-tools {
