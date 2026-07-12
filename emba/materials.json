@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-10",
+  "updated": "2026-07-12",
   "timeline": {
     "startMonth": "2026-06",
     "endMonth": "2028-12"
@@ -506,6 +506,50 @@
         "[待核原字] 回看 IMG_6906 的公司复杂度句、IMG_6910 的 speech 前置词、IMG_6911 的 Gender/Leader 词。",
         "[行动闭环] 每条确认保留的 insight 增加 baseline、行为实验、成功信号和 review date。"
       ]
+    },
+    {
+      "id": "2026-09",
+      "month": "2026-09",
+      "title": "September 2026",
+      "materialsRevision": 1,
+      "reflectionRevision": 1,
+      "followUpRevision": 0,
+      "markdownRevision": 1,
+      "memoryRevision": 0,
+      "materials": [
+        {
+          "title": "Corporate Finance and Accounting - Course Syllabus",
+          "type": "course_overview",
+          "file": "/emba/materials/2026-09/September-26-Syllabus-Overview.md",
+          "notes": "September 7-11, 2026 course syllabus: financial management, accounting, management control, ERM, compliance and sustainability reporting."
+        },
+        {
+          "title": "September CFA reading checklist",
+          "type": "monthly_index",
+          "file": "/emba/materials/2026-09/readings/README.md",
+          "notes": "Complete syllabus cross-check: 16 required readings, three sessions with no preparatory reading, access routes, and local-file status."
+        },
+        {
+          "title": "CFA Chinese study-card index - 11 reading summaries",
+          "type": "study_guide",
+          "file": "/emba/materials/2026-09/readings/summaries/README.md",
+          "notes": "Each card covers the main argument, what must be learned, how to use it in class/final case work, and a self-test question."
+        },
+        {
+          "title": "COSO 2017 ERM Executive Summary",
+          "type": "study_guide",
+          "file": "/emba/materials/2026-09/readings/summaries/coso-2017-erm-executive-summary.md",
+          "notes": "Required ERM executive summary; use with the COSO study card to learn the five ERM components."
+        },
+        {
+          "title": "Tennessee Controls: The Strategic Ranking Problem",
+          "type": "case_study",
+          "file": "/emba/materials/2026-09/readings/summaries/tennessee-controls-1991-rev-2010.md",
+          "notes": "Required management accounting and control case (HBS 9-191-083, revised 2010)."
+        }
+      ],
+      "reflection": "September 2026 is the first core finance week. The learning goal is financial leadership: connect investment and financing choices, accounting information, performance control, enterprise risk, compliance and ESG reporting into one decision framework. The priority is not memorising isolated models, but using them to diagnose a real company and make a well-supported recommendation.",
+      "markdown": "# Corporate Finance and Accounting - September 2026\n\n## Course week\n\n7-11 September 2026. The module covers Financial Management, Compliance, Sustainability Reporting, Financial Accounting and Analysis, Enterprise Risk Management, and Management Accounting and Control.\n\n## What I need to master\n\n1. Make investment, financing and risk decisions using risk-return, discounting and downside-protection logic.\n2. Read financial statements and use accounting information, ratios and KPIs for decisions.\n3. Design management controls that support strategy without creating false precision or harmful incentives.\n4. Apply COSO ERM: governance and culture, strategy/objectives, performance, review/revision, and information/reporting.\n5. Diagnose compliance failure through controls, culture, accountability, data and escalation.\n6. Assess sustainability reporting through double materiality, IROs, value-chain coverage, metrics, targets and assurance.\n\n## Assessment focus\n\nThe individual final assignment is a real-life integrated case. Content and application carry 75%; critical reflection on choices, assumptions, limitations and AI use carries 15%; form, concise writing and APA references carry 10%. Use the study cards to turn each reading into evidence for a recommendation, rather than a standalone summary."
     }
   ]
 }
