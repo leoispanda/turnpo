@@ -2,11 +2,11 @@
 
 ## Session 1｜今日学习地图
 
-### 今日核心问题
+### 今天要学习什么
 
 怎样把一周内分散的财务、风险、治理、控制和可持续信息压缩成一个可辩护、可执行、可监测的 recommendation？今天的 financial-management 重点是比较纪律：无论比较基金、项目还是战略，都必须先定义 benchmark、risk、period、cost、assumption 和 evidence boundary。
 
-### 本日课程逻辑
+### 今日重点
 
 1. **Compare correctly**：用 SCP、benchmark、risk-adjusted return、fees、currency 和 survivorship bias 判断表现。
 2. **Integrate the decision**：把 NPV/value、risk appetite、controls/compliance、material ESG impacts 与 governance owner 放进同一建议。
@@ -14,16 +14,21 @@
 
 Otten & Schweitzer 不只是基金史材料，它训练你避免“回报高所以更好”的简单结论；本周其他阅读则提供一组 challenge lenses，帮助你说明推荐方案为什么在 downside、behaviour 和 stakeholder consequences 下仍成立。
 
-### 完成 Session 1 后，你应该能够
+### 需要特别关注的点
+
+- historical return 不能直接证明未来能力，必须检查 benchmark、risk、fees、period 与 sample bias。
+- 方案比较要使用相同口径；不能让一个方案只展示收益、另一个方案只展示风险。
+- recommendation 必须说明 material assumption、limitation 和可能推翻结论的 evidence。
+- presentation 的结论要落到 owner、action、leading indicator、threshold 和 review date。
+
+### 你可以提升哪些方面
 
 - 识别一个 performance comparison 中不合理的 benchmark 或 sample bias。
 - 用一页结构比较至少两个可行方案及其 value-risk trade-off。
 - 提出明确 recommendation，并指定 owner、leading indicator、threshold 与 review date。
 - 在 group presentation 中主动说明一个 material assumption、limitation 和反方观点。
 
-### 与本周的连接
-
-Day 5 是整合日：Day 1 提供价值与风险语言，Day 2 提供 conduct/ESG evidence，Day 3 提供治理架构，Day 4 提供行为与控制设计；今天把它们变成一个 management decision。
+**本周位置**：Day 5 是整合日；它把 Day 1 的价值语言、Day 2 的 conduct/ESG evidence、Day 3 的治理架构和 Day 4 的行为控制变成一个 management decision。
 
 ## Session 2｜指定阅读与学习重点
 

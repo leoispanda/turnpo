@@ -2,11 +2,11 @@
 
 ## Session 1｜今日学习地图
 
-### 今日核心问题
+### 今天要学习什么
 
 管理层和董事会如何把财务信息、非财务风险与治理责任连成一个会触发行动的 decision system？今天不把 accounting、ERM 和 governance 分开学习：财务数据说明价值与资源发生了什么，ERM 解释未来可能偏离目标的原因，governance 决定谁必须挑战、决定和负责。
 
-### 本日课程逻辑
+### 今日重点
 
 1. **Accounting evidence**：检查 profit、cash flow、working capital、provisions、impairment 与 KPIs 是否讲述一致故事。
 2. **ERM architecture**：用 COSO 五组件把 risk appetite、risk identification、response、portfolio view、review 和 reporting 串起来。
@@ -14,16 +14,21 @@
 
 核心区别是：风险框架的 **design** 可以在年报中描述，但 **operating effectiveness** 必须由 breach、incident、audit finding、response time 和 management action 证明。
 
-### 完成 Session 1 后，你应该能够
+### 需要特别关注的点
+
+- profit、cash flow、working capital 与 KPI 若方向不一致，必须解释差异，不能只选最好看的数字。
+- 年报披露可以证明 framework design，却不能单独证明 controls 在压力下真正有效。
+- board oversight、management ownership、second-line challenge 与 internal-audit assurance 是不同责任。
+- KRI 必须连接 threshold 和 action；只汇报风险颜色而没有触发机制，不是有效管理信息。
+
+### 你可以提升哪些方面
 
 - 从财务与运营数据中识别一个可能被利润数字掩盖的风险信号。
 - 用 COSO 五组件诊断一家公司的 ERM evidence 和 gap。
 - 区分 board oversight、business ownership、second-line challenge 与 third-line assurance。
 - 把一个风险写成 event、root cause、owner、control、KRI、threshold 和 escalation action。
 
-### 与本周的连接
-
-Day 3 把 Day 1 的价值判断和 Day 2 的风险案例制度化；Day 4 将继续追问，当指标、预算和排名成为控制工具后，会怎样影响经理人的行为。
+**本周位置**：Day 3 把 Day 1 的价值判断和 Day 2 的风险案例制度化；Day 4 会继续追问指标、预算和排名如何影响经理行为。
 
 ## Session 2｜指定阅读与学习重点
 

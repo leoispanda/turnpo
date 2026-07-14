@@ -2,11 +2,11 @@
 
 ## Session 1｜今日学习地图
 
-### 今日核心问题
+### 今天要学习什么
 
 当资本和管理注意力有限时，组织怎样用预算、KPI、排名和 review process 提高执行质量，同时避免 false precision、gaming 与短期主义？今天的重点不是选择“控制”或“自由”，而是让 control design 匹配战略不确定性与项目成熟阶段。
 
-### 本日课程逻辑
+### 今日重点
 
 1. **Measure**：判断哪些结果可以可靠量化，哪些战略、互补性或 option value 无法被单一分数表达。
 2. **Behaviour**：分析指标、奖金和 ranking 会诱发什么 effort allocation、信息隐藏或 gaming。
@@ -14,16 +14,21 @@
 
 Tennessee Controls 展示 SRI 模型如何提高一致性、又可能替代判断；Davila 解释 control 如何支持 innovation and strategic change；Quinn & Thakor 则提醒 purpose 必须反映在 resource allocation、promotion 与 consequence management 中。
 
-### 完成 Session 1 后，你应该能够
+### 需要特别关注的点
+
+- 一个分数看起来精确，不代表输入、权重和战略假设可靠；警惕 false precision。
+- KPI 一旦连接预算、奖金或晋升，就会改变行为，必须预判 gaming 和被遗漏的长期结果。
+- 创新早期更适合 learning metric 与 milestone，成熟阶段才适合稳定的 ROI、margin 和 cash 指标。
+- purpose 只有在 resource allocation、promotion、decision rights 和 consequences 中得到体现才有控制作用。
+
+### 你可以提升哪些方面
 
 - 评价一个 ranking/KPI 的数据质量、权重、可操纵性和行为后果。
 - 说明何时使用 diagnostic control，何时必须增加 interactive review。
 - 为创新项目设计 learning metric、funding gate 与例外治理。
 - 判断组织宣称的 purpose 是否真正改变 incentives 和 decision rights。
 
-### 与本周的连接
-
-Day 4 把前几天的 strategy、risk appetite 与 governance 落到日常行为：再好的战略和风险框架，如果控制系统奖励相反行为，也不会被执行。
+**本周位置**：Day 4 把 strategy、risk appetite 与 governance 落到日常行为；如果控制系统奖励相反行为，再好的战略和风险框架也不会被执行。
 
 ## Session 2｜指定阅读与学习重点
 
