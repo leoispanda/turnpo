@@ -1,6 +1,6 @@
 # Nocco & Stulz (2006) - Enterprise Risk Management: Theory and Practice
 
-Source PDF: `../184_nocco-u7sc9u.pdf`  
+Source PDF: `../Nocco-Stulz-2006-Enterprise-Risk-Management-Journal.pdf` (formal 15-page journal version). The author-hosted 13-page version `../184_nocco-u7sc9u.pdf` is retained as an accessible alternative.
 Course area: Financial Management / Enterprise Risk Management
 
 ## 一句话结论

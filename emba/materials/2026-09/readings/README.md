@@ -18,6 +18,10 @@ Source: `September-26 Syllabus CFA (1).pdf`, pp. 11-12. This is the complete pre
 - `ING pays fine of EUR 775 mio for non-compliance with Wwft legislation.pdf` — **matches item 6** (ING settlement release; 4 pages).
 - `Tennessee Controls.pdf` — **matches item 16** (HBS case 9-191-083, revised 30 November 2010; 17 pages).
 - `Enterprise risk management Integrating with strategy and performance COSO.pdf` — **collected as supplementary COSO material**. Despite the filename, it is a 17-page extract from COSO's 2012 *Internal Control - Integrated Framework*, beginning at “Definition of Internal Control”; retain it alongside the 2017 ERM readings.
+- `dsm-integrated-annual-report-2021.pdf` — **matches item 14**. Use printed pp. 123-146 (PDF pp. 124-147); the full 309-page annual report is retained for context.
+- `Engineering a Deception - Volkswagen Diesel Scandal - NYT.pdf` — **matches item 5** (Ewing 2017; 4-page saved NYT article).
+- `Nocco-Stulz-2006-Enterprise-Risk-Management-Journal.pdf` — **matches item 3** (15-page formal journal version). The existing 13-page author-hosted copy is retained as an accessible alternative.
+- `Stulz-2022-Rethinking-Risk-Management-supplementary.pdf` — **supplementary only**. It is a different 2022 article with the same title, not the assigned Stulz (1996) reading.
 
 ## Monday 7 September - Financial Management
 

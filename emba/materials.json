@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-12",
+  "updated": "2026-07-14",
   "timeline": {
     "startMonth": "2026-06",
     "endMonth": "2028-12"
@@ -511,12 +511,18 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 1,
+      "materialsRevision": 2,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
       "memoryRevision": 0,
       "materials": [
+        {
+          "title": "课程需要｜Corporate Finance and Accounting 自习总导读（中英混合）",
+          "type": "course_requirements",
+          "file": "/emba/materials/2026-09/Course-Requirements-and-Self-Study-Guide.md",
+          "notes": "完整五天 self-study route：课程目标、16 项指定阅读、每篇学习卡入口、案例/作业写作框架与自测问题。"
+        },
         {
           "title": "Corporate Finance and Accounting - Course Syllabus",
           "type": "course_overview",
