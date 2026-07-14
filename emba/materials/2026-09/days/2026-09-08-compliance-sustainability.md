@@ -1,14 +1,14 @@
 # Tuesday 8 September｜Compliance & Sustainability Reporting
 
-## 今天学什么
+## Session 1｜今日学习地图
 
 今天看两种常被低估的管理能力：**compliance** 防止不当行为演变成法律、财务和声誉危机；**sustainability reporting** 把企业对人、环境与自身价值的重大影响变成可治理、可验证的信息。
 
-## 课堂前的目标
+### 课堂前目标
 
 不要把 VW 或 ING 简化成“员工违法”。你要能找出 pressure、incentives、data、control override、speak-up 和 board oversight 的失效链。读 ESRS 时，能区分 impact materiality 和 financial materiality，并说明 IRO、value chain、metric、target 和 assurance 如何衔接。
 
-## 今日阅读｜逐篇点开学习
+## Session 2｜指定阅读与学习重点
 
 1. [COSO 2017｜Full framework 学习路线](../readings/summaries/coso-2017-erm-full-framework-study-guide.md) — strategy、risk appetite 与 performance 的总框架。
 2. [Ewing (2017)｜Volkswagen Diesel Scandal](../readings/summaries/ewing-2017-volkswagen-deception.md) — engineering pressure 如何变成 deception。
@@ -16,28 +16,30 @@
 4. [De Micco et al. (2021)｜Estra](../readings/summaries/de-micco-2021-estra-sustainability.md) — 让 sustainability reporting 成为组织流程。
 5. [KPMG (2025)｜ESRS Learnings](../readings/summaries/kpmg-2025-esrs-learnings.md) — DMA、IROs 与 Dutch CSRD practice。
 
-## 今天的概念主线｜从行为失效到可验证披露
+### 概念主线｜从行为失效到可验证披露
 
 VW 和 ING 都说明，重大违规通常不是某一天突然发生。它从不现实目标、弱 challenge、模糊责任、数据/系统缺口和“不要把问题往上报”的文化逐步累积。合规框架的好坏，要在压力下看：员工能否 speak up、二线是否独立 challenge、管理层是否愿意牺牲短期业绩、board 是否获得 early warning。
 
 可持续报告面对相同问题：如果 data owner 不清楚、指标口径每年变、重要性选择说不清，报告就只能是叙事。ESRS 的 double materiality 要你双向看：企业造成什么 impact，以及 ESG 议题如何反过来影响企业的 cash flows、access to finance 或 licence to operate。两条链都要有 evidence。
 
-## 逐篇阅读时必须回答
+### 逐篇阅读时必须回答
 
 - VW：哪一个目标或激励把 engineering constraint 变成了 misconduct？最早可以在哪个 gate 阻止？
 - ING：KYC、monitoring 和 investigation 中哪一步失效会让 AML 体系失去意义？谁应该看到 KRI？
 - Estra：报告流程是否进入了预算、风险与绩效节奏，还是年末临时收集？
 - KPMG：DMA 是否说明 IRO 的 value-chain location、time horizon、method 和 financial relevance？
 
-## 课堂讨论与 mini case
+## Session 3｜课堂讨论案例
+
+### 快速练习
 
 假设一家公司承诺“net zero”，但没有供应链排放数据，也未说明投资和利润影响。不要只建议“多披露”。你要建议 DMA owner、数据收集范围、baseline、target year、董事会 review、assurance plan；并说明哪些 IRO 已经是财务风险、哪些仍是影响责任。把此框架套回 VW/ING，可看见 compliance 与 ESG 都是 governance and information problem。
 
-## 课前检查｜避免把合规和 ESG 写成口号
+### 案例讨论前检查
 
 你应能说出一个 control 的 objective、owner、evidence 和 failure signal；也能说出一项 ESG disclosure 的 materiality method、data source、boundary 和 target。若建议只是“加强培训”或“提高透明度”，还没有形成可执行答案。复习 due diligence、escalation、double materiality、IRO 和 value chain。
 
-## 课堂带入案例｜“增长优先”的数字银行与 AML 队列
+### 重点案例 A｜“增长优先”的数字银行与 AML 队列
 
 **情境**：一家快速增长的 digital bank 把“十分钟开户”设为核心增长 KPI。客户数大涨，但 high-risk customer reviews 的积压从 12 天变成 47 天，transaction alerts 的关闭率下降；业务团队要求风险团队不要影响 onboarding conversion。管理层说已购买新 monitoring software，因此风险可控。
 
@@ -53,7 +55,7 @@ VW 和 ING 都说明，重大违规通常不是某一天突然发生。它从不
 
 **来自阅读**：[De Micco et al. (2021)](../readings/summaries/de-micco-2021-estra-sustainability.md)。一家公司每年请外部顾问做漂亮报告，却没有业务单元的数据 owner。**讨论切入**：应先投资报告软件、设立 sustainability team，还是把指标嵌进预算和业务 review？为什么？
 
-## 今日词汇｜Compliance & Sustainability
+## Session 4｜今日专业词汇
 
 - **compliance** /kəmˈplaɪəns/：合规；遵守法律、监管和内部规则的能力。
 - **due diligence** /ˌdjuː ˈdɪlɪdʒəns/：尽职调查；理解客户、交易或供应商风险。
@@ -66,6 +68,6 @@ VW 和 ING 都说明，重大违规通常不是某一天突然发生。它从不
 - **value chain** /ˈvæljuː tʃeɪn/：价值链；上游、运营和下游的影响范围。
 - **greenwashing** /ˈɡriːnwɒʃɪŋ/：漂绿；用不充分或误导性叙事夸大 ESG 表现。
 
-## 自习产出
+## Session 5｜学习验证与课堂准备
 
 选一个 ESG 议题，写两栏：公司造成的 impact 和该议题造成的 financial risk/opportunity。每栏加一个 evidence source 与一个 metric；若无法写清，说明报告不能支持管理。
