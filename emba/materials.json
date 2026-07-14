@@ -511,12 +511,18 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 3,
+      "materialsRevision": 4,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
       "memoryRevision": 0,
       "materials": [
+        {
+          "title": "逐篇学习重点｜每份材料要学什么",
+          "type": "reading_learning_map",
+          "file": "/emba/materials/2026-09/Reading-Learning-Map.md",
+          "notes": "16 项指定阅读逐篇拆解：学习问题、必须掌握的概念、课堂/作业输出，以及自测方向。"
+        },
         {
           "title": "Day 1｜Financial Management",
           "type": "daily_course_intro",

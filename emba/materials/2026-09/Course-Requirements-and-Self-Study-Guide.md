@@ -8,6 +8,8 @@
 
 期末 individual case 的高分答案不是“复述理论”。先界定 decision question，再给证据和假设；说明 cash flow、capital、risk appetite、controls、stakeholders 各受什么影响；比较可行方案；最后给出 owner、指标、threshold、review rhythm。内容和应用占 75%，所以每一次阅读都要回答：**这篇材料能让我对现实公司的哪一个决定说得更清楚？** 同时保留你使用 AI 时如何核验来源、何处是你的判断、何处仍有不确定性；这对应 critical reflection/AI use 的 15%。
 
+想一次看清每份材料要学什么、要输出什么，请打开 [逐篇学习重点｜每份材料你到底要学什么](Reading-Learning-Map.md)。
+
 ## 五天学习路线｜不要按文件名乱读
 
 ### Day 1 — Financial Management：价值不是消除所有波动
