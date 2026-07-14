@@ -511,12 +511,18 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 5,
+      "materialsRevision": 6,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
       "memoryRevision": 0,
       "materials": [
+        {
+          "title": "Case 选题灵感｜8 个可展开方向",
+          "type": "case_inspiration",
+          "file": "/emba/materials/2026-09/Case-Topic-Inspiration.md",
+          "notes": "为最终 integrated case 准备：每题的决策冲突、可用框架、证据来源、范围风险与优先建议。"
+        },
         {
           "title": "专业词汇｜英文、音标、解释与句型",
           "type": "vocabulary",

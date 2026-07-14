@@ -15,7 +15,8 @@ const PREPARATION_MATERIAL_TYPES = new Set([
   "course_overview",
   "course_requirements",
   "daily_course_intro",
-  "reading_learning_map"
+  "reading_learning_map",
+  "case_inspiration"
 ]);
 
 const state = {
