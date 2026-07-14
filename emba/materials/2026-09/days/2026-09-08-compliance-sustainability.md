@@ -45,6 +45,14 @@ VW 和 ING 都说明，重大违规通常不是某一天突然发生。它从不
 
 **讨论三问**：(1) 哪个 KRI 最能在罚款前预警？(2) 谁是 risk owner，业务是否可替风险团队决定阈值？(3) 增加 20 名调查员与降低 onboarding speed，怎样比较价值和风险？
 
+### 案例 B｜Volkswagen：不可能的产品目标
+
+**来自阅读**：[Ewing (2017) Volkswagen case](../readings/summaries/ewing-2017-volkswagen-deception.md)。当成本、性能和排放标准无法同时满足时，工程团队并未把问题升级为战略选择。**讨论切入**：管理层应在何时承认目标不可行？一个 independent technical review 与 speak-up channel 如何避免 control override？
+
+### 案例 C｜Estra：ESG 报告是项目还是能力？
+
+**来自阅读**：[De Micco et al. (2021)](../readings/summaries/de-micco-2021-estra-sustainability.md)。一家公司每年请外部顾问做漂亮报告，却没有业务单元的数据 owner。**讨论切入**：应先投资报告软件、设立 sustainability team，还是把指标嵌进预算和业务 review？为什么？
+
 ## 今日词汇｜Compliance & Sustainability
 
 - **compliance** /kəmˈplaɪəns/：合规；遵守法律、监管和内部规则的能力。

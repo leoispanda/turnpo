@@ -44,6 +44,14 @@ COSO 让你把“风险管理”从专业部门的事情变成经营系统。Gov
 
 **讨论三问**：(1) 年报中哪一句最能证明 ownership，哪一句仍是 assertion？(2) board 最该追问哪一种 risk report？(3) 什么数据会让你降低对 framework 的信心？
 
+### 案例 B｜COSO：战略选定后才做风险清单
+
+**来自阅读**：[COSO (2017)](../readings/summaries/coso-2017-erm-executive-summary.md)。公司先决定进入高监管新市场，之后才要求 risk team 填 register。**讨论切入**：它错过了哪一个 COSO component？如果在战略选择前介入，board 应比较哪些替代方案与 risk appetite？
+
+### 案例 C｜Deloitte：一次网络事件是否只是 IT 问题？
+
+**来自阅读**：[Deloitte NFR](../readings/summaries/deloitte-2017-non-financial-risk.md)。供应商泄露客户数据，业务称由 IT 修复即可。**讨论切入**：如何把事件拆成 third-party、data、legal、conduct、reputation 风险？三道防线各该交付什么？
+
 ## 今日词汇｜Accounting, ERM & Governance
 
 - **governance** /ˈɡʌvənəns/：治理；监督、决策、问责和信息流的安排。

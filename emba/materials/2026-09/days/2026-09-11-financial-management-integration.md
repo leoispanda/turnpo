@@ -42,6 +42,14 @@ Otten & Schweitzer 的直接主题是共同基金行业，但真正训练的是�
 
 **讨论三问**：(1) 什么 benchmark 才公平？(2) 哪些信息不展示会构成 conduct risk？(3) 若客户仍选择该基金，平台应保留什么 evidence 证明 recommendation 合适？
 
+### 案例 B｜Otten & Schweitzer：欧洲基金更多，是否代表竞争更强？
+
+**来自阅读**：[Otten & Schweitzer (2002)](../readings/summaries/otten-schweitzer-2002-mutual-funds.md)。欧洲市场基金数量多但平均规模小，美国基金规模更大。**讨论切入**：数量、规模、费用、distribution channel、pension system 分别会怎样影响竞争和投资者结果？不要直接把规模当成质量。
+
+### 案例 C｜KPMG ESRS：可持续风险能否进入基金推荐？
+
+**来自阅读**：[KPMG (2025)](../readings/summaries/kpmg-2025-esrs-learnings.md)。基金希望宣传“低风险 ESG portfolio”，但成分公司 DMA、targets 和 value-chain data 的质量参差不齐。**讨论切入**：投资平台应如何说明 disclosure limitation？ESG information 是 marketing label，还是应成为 risk-adjusted analysis 的输入？
+
 ## 今日词汇｜Integration & Presentation
 
 - **benchmark** /ˈbentʃmɑːk/：基准；必须和风险、风格、期间匹配。

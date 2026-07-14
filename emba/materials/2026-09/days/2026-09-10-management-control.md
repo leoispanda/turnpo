@@ -44,6 +44,14 @@ Quinn & Thakor 进一步提醒，purpose 在 KPI 无法覆盖的地方影响 dis
 
 **讨论三问**：(1) 什么变量不能被可靠压成一个分数？(2) B 的基础设施价值怎样进入判断？(3) 哪些 KPI 会诱发项目负责人美化 ROI？
 
+### 案例 B｜Tennessee Controls：SRI 应否推翻高层判断？
+
+**来自阅读**：[Tennessee Controls](../readings/summaries/tennessee-controls-1991-rev-2010.md)。一个项目 SRI 很低，却是客户进入新市场的必要基础设施。**讨论切入**：这是合理例外还是 manager bias？你会要求什么 evidence、谁批准例外、何时 post-investment review？
+
+### 案例 C｜Davila：创新失败是否等于预算失控？
+
+**来自阅读**：[Davila (2005) 学习路线](../readings/summaries/davila-2005-management-control-innovation-study-guide.md)。研发项目未达到原 revenue forecast，却证明核心客户根本不愿付费。**讨论切入**：这算 failure 还是 valuable learning？下一阶段 funding gate 应根据 revenue、experiment quality 还是新假设？
+
 ## 今日词汇｜Management Control
 
 - **management control system** /ˈmænɪdʒmənt kənˈtrəʊl ˈsɪstəm/：使战略落地的目标、指标、预算与问责系统。

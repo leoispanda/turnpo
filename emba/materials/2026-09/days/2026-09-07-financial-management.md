@@ -44,6 +44,14 @@
 
 **讨论三问**：(1) 哪个是 core risk，哪个是可转移 market risk？(2) 100% hedge 是保护还是过度锁死？(3) 如果 USD 继续下跌，哪一项指标应触发延后扩产？
 
+### 案例 B｜Stulz 的“选择性对冲”陷阱
+
+**来自阅读**：[Stulz (1996)](../readings/summaries/stulz-1996-rethinking-risk-management.md)。假设 treasury team 不完全对冲，因为它相信美元会升值；结果季度利润很好，但这其实把 hedge 变成了 market bet。**讨论切入**：若允许选择性对冲，怎样用 benchmark 和 risk-adjusted performance 判断 treasury 是创造价值还是碰巧押对？
+
+### 案例 C｜Nocco & Stulz 的风险组合选择
+
+**来自阅读**：[Nocco & Stulz (2006)](../readings/summaries/nocco-stulz-2006-erm-theory-practice.md)。公司可购买昂贵的 cyber insurance，或保留部分风险、把预算投向核心产品研发。**讨论切入**：cyber risk 是应转移的 non-core risk，还是在数据型公司中已变成 core strategic risk？答案取决于什么？
+
 ## 今日词汇｜Financial Management
 
 - **cash flow** /kæʃ fləʊ/：现金流；决策看实际流入流出，不只看利润。
