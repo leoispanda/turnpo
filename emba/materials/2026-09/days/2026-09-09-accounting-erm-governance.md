@@ -2,11 +2,28 @@
 
 ## Session 1｜今日学习地图
 
-今天把 accounting information、enterprise risk management 和 corporate governance 连在一起。财报不是年末合规产物，而是判断现金、资本、风险与绩效的 evidence；ERM 不是风险清单，而是在战略选择中管理价值创造与保护。
+### 今日核心问题
 
-### 课堂前目标
+管理层和董事会如何把财务信息、非财务风险与治理责任连成一个会触发行动的 decision system？今天不把 accounting、ERM 和 governance 分开学习：财务数据说明价值与资源发生了什么，ERM 解释未来可能偏离目标的原因，governance 决定谁必须挑战、决定和负责。
 
-看财务信息时问：profit、cash flow、working capital 和 KPI 是否一致？看 ERM 时问：董事会如何 challenge，管理层谁拥有风险，风险数据如何触发行动。你应熟悉 COSO 的五个 components，以及 risk taxonomy、three lines、KRI 和 escalation 的用法。
+### 本日课程逻辑
+
+1. **Accounting evidence**：检查 profit、cash flow、working capital、provisions、impairment 与 KPIs 是否讲述一致故事。
+2. **ERM architecture**：用 COSO 五组件把 risk appetite、risk identification、response、portfolio view、review 和 reporting 串起来。
+3. **Governance in practice**：用 Grant Thornton、Deloitte 与 DSM 检验 board oversight、management ownership、three lines、KRI 和 internal assurance。
+
+核心区别是：风险框架的 **design** 可以在年报中描述，但 **operating effectiveness** 必须由 breach、incident、audit finding、response time 和 management action 证明。
+
+### 完成 Session 1 后，你应该能够
+
+- 从财务与运营数据中识别一个可能被利润数字掩盖的风险信号。
+- 用 COSO 五组件诊断一家公司的 ERM evidence 和 gap。
+- 区分 board oversight、business ownership、second-line challenge 与 third-line assurance。
+- 把一个风险写成 event、root cause、owner、control、KRI、threshold 和 escalation action。
+
+### 与本周的连接
+
+Day 3 把 Day 1 的价值判断和 Day 2 的风险案例制度化；Day 4 将继续追问，当指标、预算和排名成为控制工具后，会怎样影响经理人的行为。
 
 ## Session 2｜指定阅读与学习重点
 

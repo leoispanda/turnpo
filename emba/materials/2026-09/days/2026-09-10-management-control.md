@@ -2,11 +2,28 @@
 
 ## Session 1｜今日学习地图
 
-今天讨论 control 的边界：数字、预算、排名和 KPI 能提高资源配置的一致性，却也可能制造 **false precision**、gaming 和短期主义。优秀管理控制应帮助企业在执行纪律与战略学习之间保持张力。
+### 今日核心问题
 
-### 课堂前目标
+当资本和管理注意力有限时，组织怎样用预算、KPI、排名和 review process 提高执行质量，同时避免 false precision、gaming 与短期主义？今天的重点不是选择“控制”或“自由”，而是让 control design 匹配战略不确定性与项目成熟阶段。
 
-你应能区分 diagnostic control 与 interactive control：前者跟踪关键目标，后者让管理层围绕重大不确定性持续对话。创新项目不能只拿短期 ROI 排名；purpose 也不是口号，而要反映在 incentives、decision rights 和 speak-up 行为中。
+### 本日课程逻辑
+
+1. **Measure**：判断哪些结果可以可靠量化，哪些战略、互补性或 option value 无法被单一分数表达。
+2. **Behaviour**：分析指标、奖金和 ranking 会诱发什么 effort allocation、信息隐藏或 gaming。
+3. **Learning**：区分 diagnostic control 与 interactive control，并为创新设置 experiment、milestone、staged funding 和 pivot/stop rule。
+
+Tennessee Controls 展示 SRI 模型如何提高一致性、又可能替代判断；Davila 解释 control 如何支持 innovation and strategic change；Quinn & Thakor 则提醒 purpose 必须反映在 resource allocation、promotion 与 consequence management 中。
+
+### 完成 Session 1 后，你应该能够
+
+- 评价一个 ranking/KPI 的数据质量、权重、可操纵性和行为后果。
+- 说明何时使用 diagnostic control，何时必须增加 interactive review。
+- 为创新项目设计 learning metric、funding gate 与例外治理。
+- 判断组织宣称的 purpose 是否真正改变 incentives 和 decision rights。
+
+### 与本周的连接
+
+Day 4 把前几天的 strategy、risk appetite 与 governance 落到日常行为：再好的战略和风险框架，如果控制系统奖励相反行为，也不会被执行。
 
 ## Session 2｜指定阅读与学习重点
 

@@ -2,11 +2,28 @@
 
 ## Session 1｜今日学习地图
 
-今天看两种常被低估的管理能力：**compliance** 防止不当行为演变成法律、财务和声誉危机；**sustainability reporting** 把企业对人、环境与自身价值的重大影响变成可治理、可验证的信息。
+### 今日核心问题
 
-### 课堂前目标
+当增长、成本或技术目标与法律、伦理及可持续要求发生冲突时，组织怎样及时发现、升级并纠正问题？今天把 compliance 与 sustainability reporting 放在一起，是因为二者都依赖治理、数据、责任、challenge 和可信披露，而不只是政策文件。
 
-不要把 VW 或 ING 简化成“员工违法”。你要能找出 pressure、incentives、data、control override、speak-up 和 board oversight 的失效链。读 ESRS 时，能区分 impact materiality 和 financial materiality，并说明 IRO、value chain、metric、target 和 assurance 如何衔接。
+### 本日课程逻辑
+
+1. **行为与控制**：用 Volkswagen 和 ING 识别 pressure、incentives、control override、weak challenge 与 failed escalation。
+2. **影响与重要性**：用 double materiality 区分企业对人/环境的 impact，以及 ESG 议题对企业的 financial risk/opportunity。
+3. **数据与问责**：把 IRO、value-chain boundary、metric、target、owner 和 assurance 连成可验证流程。
+
+VW 说明技术问题如何在文化压力下变成 deception；ING 说明有 AML policy/system 仍可能发生系统性失败；Estra 与 KPMG 则把 ESG 从漂亮报告推进到 data governance、organizational routines 和 decision-useful reporting。
+
+### 完成 Session 1 后，你应该能够
+
+- 画出从业务压力到 misconduct、罚款、声誉与战略损害的 causal chain。
+- 为一项 compliance risk 指定 control、owner、KRI、threshold 与 escalation route。
+- 区分 impact materiality 与 financial materiality，并各给一个 evidence source。
+- 判断一份 ESG 报告是在描述活动，还是已经形成可追溯、可鉴证的管理信息。
+
+### 与本周的连接
+
+Day 2 把 Day 1 的 downside risk 具体化：法律、conduct、data 与 ESG 问题都会转化成现金流、融资能力和 licence to operate；Day 3 将用 COSO/DSM 把这些问题放进正式治理体系。
 
 ## Session 2｜指定阅读与学习重点
 

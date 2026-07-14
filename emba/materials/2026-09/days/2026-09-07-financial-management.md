@@ -2,11 +2,28 @@
 
 ## Session 1｜今日学习地图
 
-今天建立整周的 **value - risk - capital** 语言。问题不是“怎样让公司没有风险”，而是公司该承担哪些能创造价值的 core risks、转移哪些 non-core risks，以及怎样避免坏情境迫使公司放弃正 NPV 项目。
+### 今日核心问题
 
-### 课堂前目标
+公司应怎样同时判断一项投资是否创造价值，以及该投资带来的风险是否会破坏未来融资和继续投资的能力？今天的重点不是“风险越低越好”，而是确定企业应该主动承担哪些 **core risks**、可以转移哪些 **non-core risks**，以及用什么 downside boundary 保护正 NPV 战略。
 
-你应能把一个决策拆成：incremental cash flows、time value of money、risk-adjusted discount rate、downside scenario 和 financing capacity。看到 hedging 时，先问它是否保护已识别 exposure；若它基于市场涨跌观点，它可能是 speculation。
+### 本日课程逻辑
+
+1. **Value**：先识别 incremental cash flows，用 time value of money 和 risk-matched discount rate 计算项目价值。
+2. **Exposure**：再识别项目对 FX、interest rate、commodity price、liquidity 与 operating risk 的敏感性。
+3. **Risk response**：最后判断风险应保留、降低、保险、对冲还是退出，并说明成本、残余风险及责任人。
+
+Stulz 的关键贡献是把 hedging 从“减少利润波动”改写为“保护 investment capacity”；Nocco & Stulz 则把单项风险推进到 enterprise portfolio、risk appetite 和 capital allocation。两篇文章共同回答：风险管理服务的是价值创造，不是表面稳定。
+
+### 完成 Session 1 后，你应该能够
+
+- 把一个投资决策拆成 cash flow、timing、discount rate、downside scenario 和 financing capacity。
+- 用一句话解释 NPV 为什么比 accounting profit 更适合资本预算。
+- 区分 hedging 与 speculation，并指出被保护的具体 exposure。
+- 给出一个会触发延后投资、减少风险或升级董事会的 measurable threshold。
+
+### 与本周的连接
+
+Day 1 建立后面四天的经济底座：合规、ERM、controls 和 ESG 最终都需要回答“它如何影响 cash flow、capital、risk exposure 与长期价值”。
 
 ## Session 2｜指定阅读与学习重点
 
