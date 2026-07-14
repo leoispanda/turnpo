@@ -36,6 +36,19 @@
 
 你应能解释：为什么 accounting profit 不等于 project cash flow；为什么 discount rate 不是银行贷款利率；为什么“股东可分散化”不能消除公司 financial distress 的代价；以及为什么一个 hedge 可能降低波动却不一定创造价值。若不能回答，先回到词汇表复习 NPV、opportunity cost、tail risk、hedging 和 risk appetite。
 
+## 今日词汇｜Financial Management
+
+- **cash flow** /kæʃ fləʊ/：现金流；决策看实际流入流出，不只看利润。
+- **incremental** /ˌɪnkrəˈmentl/：增量的；只计因项目而改变的现金流。
+- **net present value** /net ˈprezənt ˈvæljuː/：净现值；正 NPV 才增加价值。
+- **discount rate** /ˈdɪskaʊnt reɪt/：折现率；应匹配未来现金流的风险。
+- **opportunity cost** /ˌɒpəˈtjuːnəti kɒst/：机会成本；资源投向 A 就放弃 B 的价值。
+- **exposure** /ɪkˈspəʊʒə(r)/：风险暴露；例如公司对美元汇率的敏感程度。
+- **hedging** /ˈhedʒɪŋ/：对冲；降低已识别风险，不是押注市场方向。
+- **speculation** /ˌspekjuˈleɪʃn/：投机；基于价格观点承担额外风险。
+- **tail risk** /teɪl rɪsk/：尾部风险；低概率但会破坏投资能力的极端损失。
+- **covenant** /ˈkʌvənənt/：契约条款；贷款中触发违约或限制行动的财务条件。
+
 ## 自习产出
 
 为一家公司写 150 字 memo：一个核心风险、一个可转移风险，以及“坏到什么程度公司会停止投资”的 threshold。用英文补一句：**The purpose of risk management is to protect the firm's ability to create value, not to eliminate all volatility.**

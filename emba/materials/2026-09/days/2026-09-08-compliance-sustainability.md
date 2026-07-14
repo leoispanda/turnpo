@@ -37,6 +37,19 @@ VW 和 ING 都说明，重大违规通常不是某一天突然发生。它从不
 
 你应能说出一个 control 的 objective、owner、evidence 和 failure signal；也能说出一项 ESG disclosure 的 materiality method、data source、boundary 和 target。若建议只是“加强培训”或“提高透明度”，还没有形成可执行答案。复习 due diligence、escalation、double materiality、IRO 和 value chain。
 
+## 今日词汇｜Compliance & Sustainability
+
+- **compliance** /kəmˈplaɪəns/：合规；遵守法律、监管和内部规则的能力。
+- **due diligence** /ˌdjuː ˈdɪlɪdʒəns/：尽职调查；理解客户、交易或供应商风险。
+- **beneficial owner** /ˌbenɪˈfɪʃl ˈəʊnə(r)/：最终受益所有人；真正控制实体的人。
+- **whistleblowing** /ˈwɪslbləʊɪŋ/：吹哨/举报；员工安全报告不当行为。
+- **escalation** /ˌeskəˈleɪʃn/：升级上报；风险跨阈值后的正式报告路径。
+- **materiality** /məˌtɪəriˈælɪti/：重要性；足以影响判断或造成重大影响的议题。
+- **double materiality** /ˈdʌbl məˌtɪəriˈælɪti/：双重重要性；同时看影响与财务后果。
+- **assurance** /əˈʃʊərəns/：鉴证/保证；独立检验披露或数据可信度。
+- **value chain** /ˈvæljuː tʃeɪn/：价值链；上游、运营和下游的影响范围。
+- **greenwashing** /ˈɡriːnwɒʃɪŋ/：漂绿；用不充分或误导性叙事夸大 ESG 表现。
+
 ## 自习产出
 
 选一个 ESG 议题，写两栏：公司造成的 impact 和该议题造成的 financial risk/opportunity。每栏加一个 evidence source 与一个 metric；若无法写清，说明报告不能支持管理。

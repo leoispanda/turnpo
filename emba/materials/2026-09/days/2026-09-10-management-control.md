@@ -36,6 +36,19 @@ Quinn & Thakor 进一步提醒，purpose 在 KPI 无法覆盖的地方影响 dis
 
 每看到一个 KPI、ranking 或 bonus，你都要问：它希望员工做什么？员工可能怎样 gaming？哪些长期后果被漏掉？什么 qualitative discussion 能修正它？复习 diagnostic control、interactive control、false precision、staged funding 与 trade-off。
 
+## 今日词汇｜Management Control
+
+- **management control system** /ˈmænɪdʒmənt kənˈtrəʊl ˈsɪstəm/：使战略落地的目标、指标、预算与问责系统。
+- **key performance indicator (KPI)** /kiː pəˈfɔːməns ˈɪndɪkeɪtə(r)/：关键绩效指标；只量化重要部分，不等于全部目标。
+- **diagnostic control** /ˌdaɪəɡˈnɒstɪk kənˈtrəʊl/：诊断式控制；追踪结果和偏差。
+- **interactive control** /ˌɪntərˈæktɪv kənˈtrəʊl/：互动式控制；围绕重大不确定性持续讨论。
+- **false precision** /fɔːls prɪˈsɪʒn/：虚假精确性；主观判断被伪装成精确分数。
+- **gaming** /ˈɡeɪmɪŋ/：指标博弈；优化分数而非真实目标。
+- **incentive** /ɪnˈsentɪv/：激励；会改变行为，应检查副作用。
+- **milestone** /ˈmaɪlstəʊn/：里程碑；创新阶段的可检验学习节点。
+- **pivot** /ˈpɪvət/：转向；依据新证据改变产品或商业模式方向。
+- **staged funding** /steɪdʒd ˈfʌndɪŋ/：分阶段拨款；达到学习门槛才进入下一轮投资。
+
 ## 自习产出
 
 选一个 KPI，写下它驱动的 good behaviour、可能的 gaming、被遗漏的 long-term consequence，以及你会增加的 qualitative review。结论不是废除数字，而是让数字被正确挑战。

@@ -36,6 +36,19 @@ COSO 让你把“风险管理”从专业部门的事情变成经营系统。Gov
 
 不要只背 COSO 五组件。你需要能从 annual report、KPI trend、incident log 或 audit finding 中各找一条 evidence，再解释它指向 governance、strategy、performance、review 或 information 的哪一环。复习 governance、oversight、KRI、three lines 与 reasonable assurance。
 
+## 今日词汇｜Accounting, ERM & Governance
+
+- **governance** /ˈɡʌvənəns/：治理；监督、决策、问责和信息流的安排。
+- **oversight** /ˈəʊvəsaɪt/：监督；董事会 challenge 管理层，而非替代日常管理。
+- **accountability** /əˌkaʊntəˈbɪləti/：问责；谁必须解释并承担结果。
+- **risk owner** /rɪsk ˈəʊnə(r)/：风险负责人；对风险应对和报告负责的人。
+- **key risk indicator** /kiː rɪsk ˈɪndɪkeɪtə(r)/：关键风险指标；损失发生前的预警度量。
+- **threshold** /ˈθreʃhəʊld/：阈值；触发升级或行动的界线。
+- **internal audit** /ɪnˈtɜːnl ˈɔːdɪt/：内部审计；独立评价控制是否有效。
+- **reasonable assurance** /ˈriːznəbl əˈʃʊərəns/：合理保证；降低而非消灭失败风险。
+- **impairment** /ɪmˈpeəmənt/：减值；资产可收回价值下降的会计确认。
+- **provision** /prəˈvɪʒn/：准备金；为可能发生的义务/损失确认估计负债。
+
 ## 自习产出
 
 为一个风险建立六格卡：risk event｜root cause｜owner｜control｜KRI/threshold｜escalation action。最后问：这个指标超限时，谁会在几天内采取什么行动？

@@ -34,6 +34,19 @@ Otten & Schweitzer 的直接主题是共同基金行业，但真正训练的是�
 
 提交前删掉“应该加强”“需要重视”这种句子，改为 owner、action、metric、threshold、date。再检查你的 benchmark 是否合理、是否说明了 survivorship bias 和资料局限、是否写清 material assumption。复习 benchmark、risk-adjusted return、leading indicator、trade-off 和 material assumption。
 
+## 今日词汇｜Integration & Presentation
+
+- **benchmark** /ˈbentʃmɑːk/：基准；必须和风险、风格、期间匹配。
+- **risk-adjusted return** /rɪsk əˈdʒʌstɪd rɪˈtɜːn/：风险调整后回报；不能只看名义收益。
+- **survivorship bias** /səˈvaɪvəʃɪp ˈbaɪəs/：幸存者偏差；只看到留下来的成功样本。
+- **trade-off** /ˈtreɪd ɒf/：权衡；不能同时最大化的目标间取舍。
+- **material assumption** /məˈtɪəriəl əˈsʌmpʃn/：重大假设；变化会改写结论的前提。
+- **leading indicator** /ˈliːdɪŋ ˈɪndɪkeɪtə(r)/：领先指标；在损失前给出预警。
+- **recommendation** /ˌrekəmenˈdeɪʃn/：建议；必须包含 action、owner 与证据。
+- **implementation** /ˌɪmplɪmenˈteɪʃn/：实施；把建议转成时间、资源和责任。
+- **limitation** /ˌlɪmɪˈteɪʃn/：局限；说明证据或模型不能支持什么结论。
+- **scenario analysis** /səˈnɑːriəʊ əˈnæləsɪs/：情景分析；比较不同假设下的结果和风险。
+
 ## 自习产出
 
 完成一页 recommendation memo：Decision｜Value impact｜Risk appetite/downside｜Control & compliance｜Sustainability materiality｜Owner, KPI and review date。英文收尾可用：**The recommendation is robust only if the stated assumptions are monitored and the escalation trigger is owned.**
