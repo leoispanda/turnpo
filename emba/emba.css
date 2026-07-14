@@ -630,6 +630,38 @@ body::before {
   padding-top: 10px;
 }
 
+.emba-material-open {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.emba-material-open:hover .emba-read-title,
+.emba-material-open:focus-visible .emba-read-title {
+  color: #9a772a;
+}
+
+.emba-material-open:focus-visible,
+.emba-markdown-link:focus-visible {
+  outline: 2px solid rgba(154, 119, 42, 0.5);
+  outline-offset: 4px;
+}
+
+.emba-read-action {
+  color: #9a772a;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .emba-material-read-item:first-child {
   border-top: 0;
   padding-top: 0;
@@ -686,6 +718,38 @@ body::before {
 .emba-file-spacer {
   width: 1px;
   height: 1px;
+}
+
+.emba-material-reader {
+  display: grid;
+  gap: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: clamp(18px, 3vw, 32px);
+}
+
+.emba-material-reader-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding-bottom: 16px;
+}
+
+.emba-material-reader-head h3 {
+  margin: 4px 0 0;
+  color: #1d1d1f;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.1;
+}
+
+.emba-material-reader-head p {
+  margin: 8px 0 0;
+  color: #6e6e73;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .emba-list {
@@ -1257,6 +1321,18 @@ body::before {
 .emba-markdown-rendered a {
   color: #9a772a;
   font-weight: 650;
+}
+
+.emba-markdown-link {
+  border: 0;
+  background: transparent;
+  color: #9a772a;
+  font: inherit;
+  font-weight: 650;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
 }
 
 .emba-markdown-rendered code {

@@ -19,6 +19,7 @@ const state = {
     months: []
   },
   openBlockId: "",
+  materialReader: null,
   libraryLoaded: false,
   accessGranted: false,
   editMode: false,
@@ -787,6 +788,9 @@ function markdownInline(value = "", basePath = "") {
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, label, url) => {
       const safeUrl = safeMarkdownLink(url, basePath);
+      if (/^\/emba\/materials\/.*\.md$/i.test(safeUrl)) {
+        return `<button class="emba-markdown-link" type="button" data-material-open="${escapeHtml(safeUrl)}" data-material-title="${label}">${label}</button>`;
+      }
       return safeUrl ? `<a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener">${label}</a>` : label;
     });
 }
@@ -1105,15 +1109,19 @@ function renderTimeline() {
 function renderMaterials(month) {
   const materials = asArray(month?.materials);
   if (!isEditMode()) {
+    if (state.materialReader?.file) return renderMaterialReader();
     return materials.length ? `
       <ul class="emba-read-list emba-material-read-list">
         ${materials.map((item) => `
           <li class="emba-material-read-item">
-            <div class="emba-read-copy">
+            ${isReadableMaterial(item.file) ? `<button class="emba-material-open" type="button" data-material-open="${escapeHtml(item.file)}" data-material-title="${escapeHtml(item.title || "Material")}" data-material-notes="${escapeHtml(item.notes || "")}">` : `<div class="emba-read-copy">`}
+              <div class="emba-read-copy">
               <span class="emba-read-title">${escapeHtml(item.title || "Material")}</span>
               ${item.notes ? `<span class="emba-read-note">${escapeHtml(item.notes)}</span>` : ""}
-            </div>
-            ${item.file ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener">Open file</a>` : ""}
+              </div>
+              ${isReadableMaterial(item.file) ? `<span class="emba-read-action">阅读介绍 →</span>` : ""}
+            ${isReadableMaterial(item.file) ? `</button>` : `</div>`}
+            ${item.file && !isReadableMaterial(item.file) ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener">Open file</a>` : ""}
           </li>
         `).join("")}
       </ul>
@@ -1143,6 +1151,50 @@ function renderMaterials(month) {
       </ul>
     ` : `<p class="emba-empty-copy">No material yet.</p>`}
   `;
+}
+
+function isReadableMaterial(file = "") {
+  return /^\/emba\/materials\/.*\.md$/i.test(String(file || ""));
+}
+
+function renderMaterialReader() {
+  const reader = state.materialReader;
+  if (!reader) return "";
+  const body = reader.loading
+    ? `<p class="emba-empty-copy">正在打开课程介绍…</p>`
+    : reader.error
+      ? `<p class="emba-empty-copy">无法打开这份介绍：${escapeHtml(reader.error)}</p>`
+      : `<div class="emba-markdown-rendered">${markdownToHtml(reader.markdown || "", reader.file)}</div>`;
+  return `
+    <article class="emba-material-reader">
+      <div class="emba-material-reader-head">
+        <div>
+          <span class="emba-month-kicker">课程介绍</span>
+          <h3>${escapeHtml(reader.title || "Material")}</h3>
+          ${reader.notes ? `<p>${escapeHtml(reader.notes)}</p>` : ""}
+        </div>
+        <button class="emba-file-link" type="button" data-material-back>← 返回资料</button>
+      </div>
+      ${body}
+    </article>
+  `;
+}
+
+async function openMaterialReader(file, title = "Material", notes = "") {
+  if (!isReadableMaterial(file)) return;
+  state.materialReader = { file, title, notes, markdown: "", loading: true, error: "" };
+  renderMonthDetail(selectedMonth());
+  try {
+    const response = await fetch(file, { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const markdown = await response.text();
+    if (state.materialReader?.file !== file) return;
+    state.materialReader = { file, title, notes, markdown, loading: false, error: "" };
+  } catch (error) {
+    if (state.materialReader?.file !== file) return;
+    state.materialReader = { file, title, notes, markdown: "", loading: false, error: error?.message || "Unknown error" };
+  }
+  renderMonthDetail(selectedMonth());
 }
 
 function renderReflection(month) {
@@ -1450,6 +1502,7 @@ function setActiveMonth(monthIdValue) {
   if (!monthIdValue || state.selectedMonthId === monthIdValue) return;
   state.selectedMonthId = monthIdValue;
   state.openBlockId = "";
+  state.materialReader = null;
   document.querySelectorAll("[data-month-id]").forEach((button) => {
     const isActive = button.dataset.monthId === state.selectedMonthId;
     button.classList.toggle("active", isActive);
@@ -1593,6 +1646,24 @@ $("#embaTimeline")?.addEventListener("click", (event) => {
 });
 
 $("#embaMonthDetail")?.addEventListener("click", (event) => {
+  const materialBack = event.target.closest("[data-material-back]");
+  if (materialBack) {
+    state.materialReader = null;
+    renderMonthDetail(selectedMonth());
+    return;
+  }
+
+  const materialOpen = event.target.closest("[data-material-open]");
+  if (materialOpen) {
+    event.preventDefault();
+    openMaterialReader(
+      materialOpen.dataset.materialOpen || "",
+      materialOpen.dataset.materialTitle || materialOpen.textContent?.trim() || "Material",
+      materialOpen.dataset.materialNotes || ""
+    );
+    return;
+  }
+
   const memoryDelete = event.target.closest("[data-memory-delete]");
   if (memoryDelete) {
     if (!isEditMode()) return;
