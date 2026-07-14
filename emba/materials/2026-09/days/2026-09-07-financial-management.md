@@ -36,6 +36,14 @@
 
 你应能解释：为什么 accounting profit 不等于 project cash flow；为什么 discount rate 不是银行贷款利率；为什么“股东可分散化”不能消除公司 financial distress 的代价；以及为什么一个 hedge 可能降低波动却不一定创造价值。若不能回答，先回到词汇表复习 NPV、opportunity cost、tail risk、hedging 和 risk appetite。
 
+## 课堂带入案例｜欧洲制造商的美元风险与美国扩产
+
+**情境**：一家欧洲设备制造商的成本主要是 EUR、美国销售收入主要是 USD。管理层准备投 EUR 80m 在美国扩建服务中心，项目 base-case NPV 为正；但若 USD 贬值 15%，前三年 operating cash flow 会下降，且公司接近贷款 covenant。CFO 提议把未来两年美元收入 100% hedge；业务负责人认为这样会错失 USD 升值的 upside。
+
+**你带去课堂的观点**：不要把问题讲成“要不要对冲”，而是“公司如何在不牺牲核心美国增长战略的前提下，保护 investment capacity”。可主张分层：已签约收入 hedge 比例高、远期不确定收入 hedge 比例低；同时以 covenant headroom、cash-flow-at-risk 和 capex flexibility 作为 threshold。
+
+**讨论三问**：(1) 哪个是 core risk，哪个是可转移 market risk？(2) 100% hedge 是保护还是过度锁死？(3) 如果 USD 继续下跌，哪一项指标应触发延后扩产？
+
 ## 今日词汇｜Financial Management
 
 - **cash flow** /kæʃ fləʊ/：现金流；决策看实际流入流出，不只看利润。

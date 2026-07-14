@@ -34,6 +34,14 @@ Otten & Schweitzer 的直接主题是共同基金行业，但真正训练的是�
 
 提交前删掉“应该加强”“需要重视”这种句子，改为 owner、action、metric、threshold、date。再检查你的 benchmark 是否合理、是否说明了 survivorship bias 和资料局限、是否写清 material assumption。复习 benchmark、risk-adjusted return、leading indicator、trade-off 和 material assumption。
 
+## 课堂带入案例｜应该向客户推荐“过去三年冠军基金”吗？
+
+**情境**：投资平台想把过去三年回报最高的欧洲科技基金放在首页。它的回报显著领先同类基金，但费用更高、基金规模迅速变大、期间恰好受益于少数 mega-cap stocks；比较中没有纳入已经关闭的同类基金。销售团队认为客户只看回报，复杂的风险说明会降低 conversion。
+
+**你带去课堂的观点**：Otten & Schweitzer 提醒，表现必须放进 structure、benchmark 和 data limitation。你的建议可以不是“不能推荐”，而是把展示改为 risk-adjusted comparison：匹配 benchmark、费用后回报、concentration、period、survivorship limitation，并让 product governance 对 suitability 和 marketing wording 负责。
+
+**讨论三问**：(1) 什么 benchmark 才公平？(2) 哪些信息不展示会构成 conduct risk？(3) 若客户仍选择该基金，平台应保留什么 evidence 证明 recommendation 合适？
+
 ## 今日词汇｜Integration & Presentation
 
 - **benchmark** /ˈbentʃmɑːk/：基准；必须和风险、风格、期间匹配。

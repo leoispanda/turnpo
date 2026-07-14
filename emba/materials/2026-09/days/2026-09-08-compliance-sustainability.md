@@ -37,6 +37,14 @@ VW 和 ING 都说明，重大违规通常不是某一天突然发生。它从不
 
 你应能说出一个 control 的 objective、owner、evidence 和 failure signal；也能说出一项 ESG disclosure 的 materiality method、data source、boundary 和 target。若建议只是“加强培训”或“提高透明度”，还没有形成可执行答案。复习 due diligence、escalation、double materiality、IRO 和 value chain。
 
+## 课堂带入案例｜“增长优先”的数字银行与 AML 队列
+
+**情境**：一家快速增长的 digital bank 把“十分钟开户”设为核心增长 KPI。客户数大涨，但 high-risk customer reviews 的积压从 12 天变成 47 天，transaction alerts 的关闭率下降；业务团队要求风险团队不要影响 onboarding conversion。管理层说已购买新 monitoring software，因此风险可控。
+
+**你带去课堂的观点**：这与 ING reading 的关键不是“有没有系统”，而是 CDD、alert investigation、人员容量、升级与管理层挑战是否形成闭环。建议不要用“零容忍”掩盖取舍，而是设置明确 risk appetite：高风险客户必须在何时完成 review、alert ageing 超限后谁有权限制开户、board 要看哪些趋势。
+
+**讨论三问**：(1) 哪个 KRI 最能在罚款前预警？(2) 谁是 risk owner，业务是否可替风险团队决定阈值？(3) 增加 20 名调查员与降低 onboarding speed，怎样比较价值和风险？
+
 ## 今日词汇｜Compliance & Sustainability
 
 - **compliance** /kəmˈplaɪəns/：合规；遵守法律、监管和内部规则的能力。

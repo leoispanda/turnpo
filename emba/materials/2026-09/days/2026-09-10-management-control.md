@@ -36,6 +36,14 @@ Quinn & Thakor 进一步提醒，purpose 在 KPI 无法覆盖的地方影响 dis
 
 每看到一个 KPI、ranking 或 bonus，你都要问：它希望员工做什么？员工可能怎样 gaming？哪些长期后果被漏掉？什么 qualitative discussion 能修正它？复习 diagnostic control、interactive control、false precision、staged funding 与 trade-off。
 
+## 课堂带入案例｜AI 产品组合应该由 ROI 排名决定吗？
+
+**情境**：一家 B2B software 公司有五个 AI 项目，只能投资两个。项目 A 的 ROI 最高但客户集中；B 的短期 ROI 低却可复用数据基础设施；C 有很高增长想象但 data/privacy risk 未解决；D、E 是改善现有客户 retention 的小项目。CEO 要一个 single score 排名，以便“客观决策”。
+
+**你带去课堂的观点**：这是 Tennessee 的现代版本。single score 可以作为 diagnostic screen，却不应替代 interactive discussion。建议先设 minimum gates（法律/数据风险、资源、基本 NPV），再讨论 strategic complementarity、option value、风险相关性和 learning milestone；给 C 分阶段 funding 而非一次性否决或全押。
+
+**讨论三问**：(1) 什么变量不能被可靠压成一个分数？(2) B 的基础设施价值怎样进入判断？(3) 哪些 KPI 会诱发项目负责人美化 ROI？
+
 ## 今日词汇｜Management Control
 
 - **management control system** /ˈmænɪdʒmənt kənˈtrəʊl ˈsɪstəm/：使战略落地的目标、指标、预算与问责系统。

@@ -36,6 +36,14 @@ COSO 让你把“风险管理”从专业部门的事情变成经营系统。Gov
 
 不要只背 COSO 五组件。你需要能从 annual report、KPI trend、incident log 或 audit finding 中各找一条 evidence，再解释它指向 governance、strategy、performance、review 或 information 的哪一环。复习 governance、oversight、KRI、three lines 与 reasonable assurance。
 
+## 课堂带入案例｜DSM 年报披露够不够证明 ERM 有效？
+
+**情境**：使用 DSM 2021 年报指定页。公司披露 board、Managing Board、risk framework、Code of Business Conduct、internal control 和 sustainability governance，语言完整而专业。假设一位投资者问：这些披露是否证明公司在面对供应链中断、通胀或 climate transition 时一定能做出好决定？
+
+**你带去课堂的观点**：年报能证明 design 和 governance intent，却不自动证明 operating effectiveness。你可以认可 DSM 在责任架构和信息披露上的证据，同时要求更强的运行证据：KRI trend、重大 incident closure time、internal audit findings、risk appetite breach 及 corrective actions。这样把 COSO 的 Information、Performance、Review & Revision 连起来。
+
+**讨论三问**：(1) 年报中哪一句最能证明 ownership，哪一句仍是 assertion？(2) board 最该追问哪一种 risk report？(3) 什么数据会让你降低对 framework 的信心？
+
 ## 今日词汇｜Accounting, ERM & Governance
 
 - **governance** /ˈɡʌvənəns/：治理；监督、决策、问责和信息流的安排。
