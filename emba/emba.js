@@ -1206,6 +1206,7 @@ async function openMaterialReader(file, title = "Material", notes = "") {
   if (!isReadableMaterial(file)) return;
   state.materialReader = { file, title, notes, markdown: "", loading: true, error: "" };
   renderMonthDetail(selectedMonth());
+  scrollToMonthTarget("[data-block-panel]");
   try {
     const response = await fetch(file, { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -1217,6 +1218,7 @@ async function openMaterialReader(file, title = "Material", notes = "") {
     state.materialReader = { file, title, notes, markdown: "", loading: false, error: error?.message || "Unknown error" };
   }
   renderMonthDetail(selectedMonth());
+  scrollToMonthTarget("[data-block-panel]");
 }
 
 function renderReflection(month) {
@@ -1505,9 +1507,18 @@ function renderOpenBlockPanel(month) {
   if (!content) return "";
   return `
     <article class="emba-block-panel" data-block-panel="${escapeHtml(state.openBlockId)}">
+      <div class="emba-block-panel-nav">
+        <button class="emba-panel-back" type="button" data-block-close>← 返回课程入口</button>
+      </div>
       <div class="emba-block-body">${content}</div>
     </article>
   `;
+}
+
+function scrollToMonthTarget(selector) {
+  requestAnimationFrame(() => {
+    document.querySelector(selector)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 }
 
 function renderMonthDetail(month) {
@@ -1520,6 +1531,7 @@ function renderMonthDetail(month) {
   }
   detail.innerHTML = `
     <div class="emba-month-kicker">${escapeHtml(formatMonth(month.month))}</div>
+    ${renderOpenBlockPanel(month)}
     <div class="emba-block-grid">
       ${blockTemplate("preparation", "课前准备", month)}
       ${blockTemplate("vocabulary", "专业词汇", month)}
@@ -1527,7 +1539,6 @@ function renderMonthDetail(month) {
       ${blockTemplate("memory", "照片", month)}
       ${blockTemplate("material", "资料", month)}
       ${blockTemplate("markdown", "课堂笔记（完全内容整合版）", month)}
-      ${renderOpenBlockPanel(month)}
     </div>
   `;
 }
@@ -1680,10 +1691,20 @@ $("#embaTimeline")?.addEventListener("click", (event) => {
 });
 
 $("#embaMonthDetail")?.addEventListener("click", (event) => {
+  const blockClose = event.target.closest("[data-block-close]");
+  if (blockClose) {
+    state.openBlockId = "";
+    state.materialReader = null;
+    renderMonthDetail(selectedMonth());
+    scrollToMonthTarget("#embaMonthDetail");
+    return;
+  }
+
   const materialBack = event.target.closest("[data-material-back]");
   if (materialBack) {
     state.materialReader = null;
     renderMonthDetail(selectedMonth());
+    scrollToMonthTarget("[data-block-panel]");
     return;
   }
 
@@ -1732,7 +1753,9 @@ $("#embaMonthDetail")?.addEventListener("click", (event) => {
   if (!button) return;
   const blockId = button.dataset.blockToggle || "";
   state.openBlockId = blockId;
+  state.materialReader = null;
   renderMonthDetail(selectedMonth());
+  scrollToMonthTarget("[data-block-panel]");
 });
 
 $("#embaMonthDetail")?.addEventListener("change", async (event) => {

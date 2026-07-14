@@ -480,6 +480,30 @@ body::before {
   overflow: hidden;
 }
 
+.emba-block-panel-nav {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 10px 14px;
+}
+
+.emba-panel-back {
+  border: 0;
+  background: transparent;
+  color: #9a772a;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.emba-panel-back:hover {
+  color: #6d5318;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .emba-block-body {
   display: grid;
   gap: 12px;
