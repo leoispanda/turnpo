@@ -11,6 +11,12 @@ const THINKING_REVIEW_STATUSES = ["pending", "keep", "rewrite", "action", "compl
 const HIDDEN_MATERIAL_FILES = new Set([
   "/emba/materials/2026-07/handwritten-notes/leadership-learning-notes-analysis.md"
 ]);
+const PREPARATION_MATERIAL_TYPES = new Set([
+  "course_overview",
+  "course_requirements",
+  "daily_course_intro",
+  "reading_learning_map"
+]);
 
 const state = {
   selectedMonthId: "",
@@ -1106,8 +1112,14 @@ function renderTimeline() {
   renderMonthDetail(selectedMonth());
 }
 
-function renderMaterials(month) {
+function materialsForSection(month, section = "materials") {
   const materials = asArray(month?.materials);
+  if (section === "preparation") return materials.filter((item) => PREPARATION_MATERIAL_TYPES.has(item.type));
+  return materials.filter((item) => !PREPARATION_MATERIAL_TYPES.has(item.type));
+}
+
+function renderMaterials(month, section = "materials") {
+  const materials = isEditMode() ? asArray(month?.materials) : materialsForSection(month, section);
   if (!isEditMode()) {
     if (state.materialReader?.file) return renderMaterialReader();
     return materials.length ? `
@@ -1151,6 +1163,11 @@ function renderMaterials(month) {
       </ul>
     ` : `<p class="emba-empty-copy">No material yet.</p>`}
   `;
+}
+
+function renderPreparation(month) {
+  if (isEditMode()) return `<p class="emba-empty-copy">课前准备的资料分类会在阅读模式中显示；编辑模式下请在“资料”中管理文件。</p>`;
+  return renderMaterials(month, "preparation");
 }
 
 function isReadableMaterial(file = "") {
@@ -1440,8 +1457,12 @@ function blockSummary(id, month) {
     return hasTextContent(month?.markdown) ? "Notes saved" : "No class notes yet";
   }
   if (id === "material") {
-    const count = asArray(month?.materials).filter(materialHasContent).length;
+    const count = materialsForSection(month, "materials").filter(materialHasContent).length;
     return count ? `${count} material${count === 1 ? "" : "s"}` : "No materials yet";
+  }
+  if (id === "preparation") {
+    const count = materialsForSection(month, "preparation").filter(materialHasContent).length;
+    return count ? `${count} 个学习入口` : "暂无课前准备";
   }
   return "";
 }
@@ -1451,6 +1472,7 @@ function renderBlockContent(id, month) {
   if (id === "reflection") return renderReflection(month);
   if (id === "markdown") return renderMarkdown(month);
   if (id === "material") return renderMaterials(month);
+  if (id === "preparation") return renderPreparation(month);
   return "";
 }
 
@@ -1489,6 +1511,7 @@ function renderMonthDetail(month) {
   detail.innerHTML = `
     <div class="emba-month-kicker">${escapeHtml(formatMonth(month.month))}</div>
     <div class="emba-block-grid">
+      ${blockTemplate("preparation", "课前准备", month)}
       ${blockTemplate("reflection", "Reflection（我的思考）", month)}
       ${blockTemplate("memory", "照片", month)}
       ${blockTemplate("material", "资料", month)}
