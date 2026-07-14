@@ -511,7 +511,7 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 7,
+      "materialsRevision": 8,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
@@ -546,6 +546,12 @@
           "type": "daily_course_intro",
           "file": "/emba/materials/2026-09/days/2026-09-11-financial-management-integration.md",
           "notes": "共同基金比较、整合判断与 group presentation 准备。"
+        },
+        {
+          "title": "Course Syllabus｜原始 PDF 与详细解读",
+          "type": "syllabus_guide",
+          "file": "/emba/materials/2026-09/September-26-Syllabus-Overview.md",
+          "notes": "原始 syllabus 入口，以及 6 ECTS 学习范围、五天日程、课程能力、16 项阅读、考核规则、出勤红线与高分策略。"
         },
         {
           "title": "September CFA reading checklist",
