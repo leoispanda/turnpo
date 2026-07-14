@@ -511,12 +511,18 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 4,
+      "materialsRevision": 5,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
       "memoryRevision": 0,
       "materials": [
+        {
+          "title": "专业词汇｜英文、音标、解释与句型",
+          "type": "vocabulary",
+          "file": "/emba/materials/2026-09/Professional-Vocabulary-Guide.md",
+          "notes": "按五天课程整理的 30 个高频术语：IPA、中文解释、课堂用法与可直接套用的英文句型。"
+        },
         {
           "title": "逐篇学习重点｜每份材料要学什么",
           "type": "reading_learning_map",

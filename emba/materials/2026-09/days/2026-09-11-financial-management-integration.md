@@ -30,6 +30,10 @@ Otten & Schweitzer 的直接主题是共同基金行业，但真正训练的是�
 
 第一分钟说 decision 和 evidence，不讲背景故事；第二分钟讲 option comparison 与 risk trade-off；第三分钟讲 recommendation、owner、KRI、threshold 和 review date。结尾主动说一个 limitation：**“This recommendation depends on …; if the leading indicator moves beyond …, management should revisit … .”** 这会显示你理解判断不是确定性预言，而是可监测、可修正的选择。
 
+## 课前检查｜让建议可被反驳也可被执行
+
+提交前删掉“应该加强”“需要重视”这种句子，改为 owner、action、metric、threshold、date。再检查你的 benchmark 是否合理、是否说明了 survivorship bias 和资料局限、是否写清 material assumption。复习 benchmark、risk-adjusted return、leading indicator、trade-off 和 material assumption。
+
 ## 自习产出
 
 完成一页 recommendation memo：Decision｜Value impact｜Risk appetite/downside｜Control & compliance｜Sustainability materiality｜Owner, KPI and review date。英文收尾可用：**The recommendation is robust only if the stated assumptions are monitored and the escalation trigger is owned.**

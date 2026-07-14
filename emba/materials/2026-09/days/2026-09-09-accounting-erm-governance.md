@@ -32,6 +32,10 @@ COSO 让你把“风险管理”从专业部门的事情变成经营系统。Gov
 
 以一家快速增长公司为例：收入增长却现金流转弱、客户投诉上升、供应商集中。把它写成 integrated diagnosis：accounting evidence 是什么；主要 risk events 与 root causes 是什么；哪个 board committee 应监督；哪些 KRI 预警；若 threshold 被突破，业务必须暂停/复核什么。这样才能把 report、risk 与 governance 连接起来。
 
+## 课前检查｜把框架变成证据链
+
+不要只背 COSO 五组件。你需要能从 annual report、KPI trend、incident log 或 audit finding 中各找一条 evidence，再解释它指向 governance、strategy、performance、review 或 information 的哪一环。复习 governance、oversight、KRI、three lines 与 reasonable assurance。
+
 ## 自习产出
 
 为一个风险建立六格卡：risk event｜root cause｜owner｜control｜KRI/threshold｜escalation action。最后问：这个指标超限时，谁会在几天内采取什么行动？

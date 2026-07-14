@@ -32,6 +32,10 @@
 
 假设一家欧洲制造商向美国销售，成本以欧元计、收入以美元计，同时准备投资新产线。不要马上说“对冲 100%”。依次讨论：现有 USD exposure 是多少；新产线的 NPV 是否依赖汇率；100% hedge 的成本和失去的 upside 是什么；若美元下跌，现金流低到什么程度会影响融资 covenant 或投资计划；董事会应为谁设定哪个 limit。这样回答才同时覆盖 valuation、hedging 和 ERM。
 
+## 课前检查｜不要带着模糊概念进课堂
+
+你应能解释：为什么 accounting profit 不等于 project cash flow；为什么 discount rate 不是银行贷款利率；为什么“股东可分散化”不能消除公司 financial distress 的代价；以及为什么一个 hedge 可能降低波动却不一定创造价值。若不能回答，先回到词汇表复习 NPV、opportunity cost、tail risk、hedging 和 risk appetite。
+
 ## 自习产出
 
 为一家公司写 150 字 memo：一个核心风险、一个可转移风险，以及“坏到什么程度公司会停止投资”的 threshold。用英文补一句：**The purpose of risk management is to protect the firm's ability to create value, not to eliminate all volatility.**

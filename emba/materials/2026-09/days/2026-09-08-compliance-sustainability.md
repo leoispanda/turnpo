@@ -33,6 +33,10 @@ VW 和 ING 都说明，重大违规通常不是某一天突然发生。它从不
 
 假设一家公司承诺“net zero”，但没有供应链排放数据，也未说明投资和利润影响。不要只建议“多披露”。你要建议 DMA owner、数据收集范围、baseline、target year、董事会 review、assurance plan；并说明哪些 IRO 已经是财务风险、哪些仍是影响责任。把此框架套回 VW/ING，可看见 compliance 与 ESG 都是 governance and information problem。
 
+## 课前检查｜避免把合规和 ESG 写成口号
+
+你应能说出一个 control 的 objective、owner、evidence 和 failure signal；也能说出一项 ESG disclosure 的 materiality method、data source、boundary 和 target。若建议只是“加强培训”或“提高透明度”，还没有形成可执行答案。复习 due diligence、escalation、double materiality、IRO 和 value chain。
+
 ## 自习产出
 
 选一个 ESG 议题，写两栏：公司造成的 impact 和该议题造成的 financial risk/opportunity。每栏加一个 evidence source 与一个 metric；若无法写清，说明报告不能支持管理。

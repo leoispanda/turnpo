@@ -1115,7 +1115,8 @@ function renderTimeline() {
 function materialsForSection(month, section = "materials") {
   const materials = asArray(month?.materials);
   if (section === "preparation") return materials.filter((item) => PREPARATION_MATERIAL_TYPES.has(item.type));
-  return materials.filter((item) => !PREPARATION_MATERIAL_TYPES.has(item.type));
+  if (section === "vocabulary") return materials.filter((item) => item.type === "vocabulary");
+  return materials.filter((item) => !PREPARATION_MATERIAL_TYPES.has(item.type) && item.type !== "vocabulary");
 }
 
 function renderMaterials(month, section = "materials") {
@@ -1168,6 +1169,10 @@ function renderMaterials(month, section = "materials") {
 function renderPreparation(month) {
   if (isEditMode()) return `<p class="emba-empty-copy">课前准备的资料分类会在阅读模式中显示；编辑模式下请在“资料”中管理文件。</p>`;
   return renderMaterials(month, "preparation");
+}
+
+function renderVocabulary(month) {
+  return renderMaterials(month, "vocabulary");
 }
 
 function isReadableMaterial(file = "") {
@@ -1464,6 +1469,10 @@ function blockSummary(id, month) {
     const count = materialsForSection(month, "preparation").filter(materialHasContent).length;
     return count ? `${count} 个学习入口` : "暂无课前准备";
   }
+  if (id === "vocabulary") {
+    const count = materialsForSection(month, "vocabulary").filter(materialHasContent).length;
+    return count ? "30 个术语 · IPA 音标" : "暂无专业词汇";
+  }
   return "";
 }
 
@@ -1473,6 +1482,7 @@ function renderBlockContent(id, month) {
   if (id === "markdown") return renderMarkdown(month);
   if (id === "material") return renderMaterials(month);
   if (id === "preparation") return renderPreparation(month);
+  if (id === "vocabulary") return renderVocabulary(month);
   return "";
 }
 
@@ -1512,6 +1522,7 @@ function renderMonthDetail(month) {
     <div class="emba-month-kicker">${escapeHtml(formatMonth(month.month))}</div>
     <div class="emba-block-grid">
       ${blockTemplate("preparation", "课前准备", month)}
+      ${blockTemplate("vocabulary", "专业词汇", month)}
       ${blockTemplate("reflection", "Reflection（我的思考）", month)}
       ${blockTemplate("memory", "照片", month)}
       ${blockTemplate("material", "资料", month)}

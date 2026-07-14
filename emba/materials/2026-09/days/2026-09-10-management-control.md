@@ -32,6 +32,10 @@ Quinn & Thakor 进一步提醒，purpose 在 KPI 无法覆盖的地方影响 dis
 
 假设公司有五个 AI 产品项目，却只能投资两个。不要先把 ROI 排序。先用 quantitative screen 淘汰明显不合格项；再开 interactive review，讨论 strategic fit、互补关系、option value、data/privacy risk 和团队能力；最后记录例外决定与复盘日期。这个流程既保留 discipline，又避免 false precision。
 
+## 课前检查｜识别控制的副作用
+
+每看到一个 KPI、ranking 或 bonus，你都要问：它希望员工做什么？员工可能怎样 gaming？哪些长期后果被漏掉？什么 qualitative discussion 能修正它？复习 diagnostic control、interactive control、false precision、staged funding 与 trade-off。
+
 ## 自习产出
 
 选一个 KPI，写下它驱动的 good behaviour、可能的 gaming、被遗漏的 long-term consequence，以及你会增加的 qualitative review。结论不是废除数字，而是让数字被正确挑战。
