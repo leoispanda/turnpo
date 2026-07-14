@@ -1,94 +1,89 @@
-# Wednesday 9 September｜Financial Accounting, ERM & Governance
+# Wednesday 9 September｜Financial Accounting, ERM & Finance in a Non-profit
+
+> 08:30-11:30 Financial Accounting and Analysis；12:30-15:30 Enterprise Risk Management；16:00-19:00 Limburg Regional Police organisational visit and guest talk。
 
 ## Session 1｜今日学习地图
 
 ### 今天要学习什么
 
-管理层和董事会如何把财务信息、非财务风险与治理责任连成一个会触发行动的 decision system？今天不把 accounting、ERM 和 governance 分开学习：财务数据说明价值与资源发生了什么，ERM 解释未来可能偏离目标的原因，governance 决定谁必须挑战、决定和负责。
+今天把 accounting evidence、enterprise risks 与 governance responsibilities 连成一个会触发行动的 decision system。财务报表说明资源和绩效发生了什么；ERM 解释什么可能阻碍目标；governance 决定谁挑战、谁拥有、谁保证。
 
 ### 今日重点
 
-1. **Accounting evidence**：检查 profit、cash flow、working capital、provisions、impairment 与 KPIs 是否讲述一致故事。
-2. **ERM architecture**：用 COSO 五组件把 risk appetite、risk identification、response、portfolio view、review 和 reporting 串起来。
-3. **Governance in practice**：用 Grant Thornton、Deloitte 与 DSM 检验 board oversight、management ownership、three lines、KRI 和 internal assurance。
+1. 读取 income statement、balance sheet、cash flow 与 KPIs 之间的关系。
+2. 用 COSO 五组件评价 ERM，而不是只看 risk register。
+3. 区分 board oversight、management ownership、second-line challenge 与 third-line assurance。
+4. 理解 non-profit/public organisation 中 value、budget、accountability 与 risk appetite 的不同表达。
 
-核心区别是：风险框架的 **design** 可以在年报中描述，但 **operating effectiveness** 必须由 breach、incident、audit finding、response time 和 management action 证明。
+### 需要特别关注
 
-### 需要特别关注的点
+- Profit、cash flow 与 working capital 不一致时必须解释差异。
+- Disclosure 能说明 framework design，但不能证明 operating effectiveness。
+- KRI 必须连接 threshold 与 action；颜色报告本身不是控制。
+- Public/non-profit finance 不能只用 shareholder return 衡量，但仍需资源纪律与透明问责。
 
-- profit、cash flow、working capital 与 KPI 若方向不一致，必须解释差异，不能只选最好看的数字。
-- 年报披露可以证明 framework design，却不能单独证明 controls 在压力下真正有效。
-- board oversight、management ownership、second-line challenge 与 internal-audit assurance 是不同责任。
-- KRI 必须连接 threshold 和 action；只汇报风险颜色而没有触发机制，不是有效管理信息。
+### 你可以提升
 
-### 你可以提升哪些方面
-
-- 从财务与运营数据中识别一个可能被利润数字掩盖的风险信号。
-- 用 COSO 五组件诊断一家公司的 ERM evidence 和 gap。
-- 区分 board oversight、business ownership、second-line challenge 与 third-line assurance。
-- 把一个风险写成 event、root cause、owner、control、KRI、threshold 和 escalation action。
-
-**本周位置**：Day 3 把 Day 1 的价值判断和 Day 2 的风险案例制度化；Day 4 会继续追问指标、预算和排名如何影响经理行为。
+报表解读、风险证据链、治理责任划分、KRI 设计，以及把 private-sector framework 调整到 public/non-profit context 的能力。
 
 ## Session 2｜指定阅读与学习重点
 
-1. [COSO (2017)｜Executive Summary](../readings/summaries/coso-2017-erm-executive-summary.md) — 五组件与 portfolio view。
-2. [Grant Thornton (2017)｜Risk Frameworks](../readings/summaries/grant-thornton-2017-risk-frameworks.md) — 把 risk appetite 变成 owner、limits 与 reports。
-3. [Deloitte (2017)｜Non-Financial Risk](../readings/summaries/deloitte-2017-non-financial-risk.md) — NFR operating model 与三道防线。
-4. [Royal DSM (2021)｜Corporate Governance & Risk Management](../readings/summaries/dsm-2021-corporate-governance-risk-management.md) — 用真实年报检验框架如何落地。
+### Financial Accounting and Analysis
 
-### 概念主线｜信息必须导向行动
+无指定预读。课前复习 accrual、matching、revenue recognition、EBITDA、working capital，以及 IFRS/US GAAP 差异的基本含义。课堂重点是用 accounting information 支持 managerial judgment，而不是机械计算 ratios。
 
-Accounting 的角色不是替管理层确认过去，而是让 board 和 managers 看清 future decision 的约束：profit 是否真正转化为 cash、增长是否占用 working capital、风险是否可能变成 provision、fine、impairment 或更高 financing cost。读报表时，任何 KPI 都要追问其 definition、trend、comparison 和 management response。
+### Enterprise Risk Management
 
-COSO 让你把“风险管理”从专业部门的事情变成经营系统。Governance & Culture 决定谁能挑战；Strategy & Objective-Setting 决定风险是否在选择方向时被考虑；Performance 决定识别和应对；Review & Revision 决定事故后是否学习；Information/Communication/Reporting 决定坏消息是否及时到达决策者。
+- [COSO Executive Summary](../readings/summaries/coso-2017-erm-executive-summary.md)：五组件、risk appetite、portfolio view。
+- [Grant Thornton](../readings/summaries/grant-thornton-2017-risk-frameworks.md)：把 framework 变成 owner、limit、KRI、reporting 和 assurance。
+- [Deloitte NFR](../readings/summaries/deloitte-2017-non-financial-risk.md)：taxonomy、three lines、culture、monitoring 与 technology。
+- [DSM 2021](../readings/summaries/dsm-2021-corporate-governance-risk-management.md)：用年报 pp. 123-146 检验真实治理披露。
 
-### 逐篇阅读时必须回答
+### Police visit 准备
 
-- COSO：公司的风险讨论发生在 strategy 之前还是 strategy 之后？
-- Grant Thornton：risk appetite 被翻译成了什么 limit、KRI 和 escalation？
-- Deloitte：一线、二线、三线各自能做什么，哪些责任不能外包给 compliance？
-- DSM：年报中的 governance statement 有什么 operating evidence 支撑？什么仍只是 assertion？
+无指定阅读。观察公共组织如何定义 value、处理预算刚性、优先安排风险、向多方 stakeholders 问责，并比较它与上市公司治理的不同。
 
 ## Session 3｜课堂讨论案例
 
-### 快速练习
+### 重点案例 A｜DSM 披露是否证明 ERM 有效
 
-以一家快速增长公司为例：收入增长却现金流转弱、客户投诉上升、供应商集中。把它写成 integrated diagnosis：accounting evidence 是什么；主要 risk events 与 root causes 是什么；哪个 board committee 应监督；哪些 KRI 预警；若 threshold 被突破，业务必须暂停/复核什么。这样才能把 report、risk 与 governance 连接起来。
+DSM 详细披露 board、risk framework、code of conduct 和 internal control。你的判断应区分 governance intent 与 operating proof；进一步要求 KRI trends、breaches、audit findings、incident closure 与 corrective actions。
 
-### 案例讨论前检查
+**讨论**：哪项披露证明 ownership？哪项仍是 assertion？什么证据会降低你的信心？
 
-不要只背 COSO 五组件。你需要能从 annual report、KPI trend、incident log 或 audit finding 中各找一条 evidence，再解释它指向 governance、strategy、performance、review 或 information 的哪一环。复习 governance、oversight、KRI、three lines 与 reasonable assurance。
+### 案例 B｜战略确定后才做 risk register
 
-### 重点案例 A｜DSM 年报披露够不够证明 ERM 有效？
+公司先决定进入高监管市场，之后才让 risk team 填 register。用 COSO 说明其遗漏 Strategy & Objective-Setting，并讨论 board 在选择战略前应比较的 risk profile。
 
-**情境**：使用 DSM 2021 年报指定页。公司披露 board、Managing Board、risk framework、Code of Business Conduct、internal control 和 sustainability governance，语言完整而专业。假设一位投资者问：这些披露是否证明公司在面对供应链中断、通胀或 climate transition 时一定能做出好决定？
+### 案例 C｜供应商网络事件
 
-**你带去课堂的观点**：年报能证明 design 和 governance intent，却不自动证明 operating effectiveness。你可以认可 DSM 在责任架构和信息披露上的证据，同时要求更强的运行证据：KRI trend、重大 incident closure time、internal audit findings、risk appetite breach 及 corrective actions。这样把 COSO 的 Information、Performance、Review & Revision 连起来。
-
-**讨论三问**：(1) 年报中哪一句最能证明 ownership，哪一句仍是 assertion？(2) board 最该追问哪一种 risk report？(3) 什么数据会让你降低对 framework 的信心？
-
-### 案例 B｜COSO：战略选定后才做风险清单
-
-**来自阅读**：[COSO (2017)](../readings/summaries/coso-2017-erm-executive-summary.md)。公司先决定进入高监管新市场，之后才要求 risk team 填 register。**讨论切入**：它错过了哪一个 COSO component？如果在战略选择前介入，board 应比较哪些替代方案与 risk appetite？
-
-### 案例 C｜Deloitte：一次网络事件是否只是 IT 问题？
-
-**来自阅读**：[Deloitte NFR](../readings/summaries/deloitte-2017-non-financial-risk.md)。供应商泄露客户数据，业务称由 IT 修复即可。**讨论切入**：如何把事件拆成 third-party、data、legal、conduct、reputation 风险？三道防线各该交付什么？
+供应商泄露客户数据，业务称交给 IT 即可。用 Deloitte taxonomy 拆成 third-party、data、legal、conduct、reputation risks，并分配三道防线责任。
 
 ## Session 4｜今日专业词汇
 
-- **governance** /ˈɡʌvənəns/：治理；监督、决策、问责和信息流的安排。
-- **oversight** /ˈəʊvəsaɪt/：监督；董事会 challenge 管理层，而非替代日常管理。
-- **accountability** /əˌkaʊntəˈbɪləti/：问责；谁必须解释并承担结果。
-- **risk owner** /rɪsk ˈəʊnə(r)/：风险负责人；对风险应对和报告负责的人。
-- **key risk indicator** /kiː rɪsk ˈɪndɪkeɪtə(r)/：关键风险指标；损失发生前的预警度量。
-- **threshold** /ˈθreʃhəʊld/：阈值；触发升级或行动的界线。
-- **internal audit** /ɪnˈtɜːnl ˈɔːdɪt/：内部审计；独立评价控制是否有效。
-- **reasonable assurance** /ˈriːznəbl əˈʃʊərəns/：合理保证；降低而非消灭失败风险。
-- **impairment** /ɪmˈpeəmənt/：减值；资产可收回价值下降的会计确认。
-- **provision** /prəˈvɪʒn/：准备金；为可能发生的义务/损失确认估计负债。
+- **accrual** /əˈkruːəl/：按经济发生而非收付款确认事项。
+- **working capital** /ˈwɜːkɪŋ ˈkæpɪtl/：日常经营占用的流动资金。
+- **provision** /prəˈvɪʒn/：对可能义务确认的估计负债。
+- **impairment** /ɪmˈpeəmənt/：资产可收回价值下降的确认。
+- **governance** /ˈɡʌvənəns/：监督、决策和问责安排。
+- **oversight** /ˈəʊvəsaɪt/：董事会对管理层的监督与挑战。
+- **risk owner** /rɪsk ˈəʊnə(r)/：对风险应对负责的人。
+- **key risk indicator** /kiː rɪsk ˈɪndɪkeɪtə(r)/：风险累积的预警指标。
+- **reasonable assurance** /ˈriːznəbl əˈʃʊərəns/：降低但不能消灭风险的保证。
+- **accountability** /əˌkaʊntəˈbɪləti/：解释并承担决策结果的责任。
 
 ## Session 5｜学习验证与课堂准备
 
-为一个风险建立六格卡：risk event｜root cause｜owner｜control｜KRI/threshold｜escalation action。最后问：这个指标超限时，谁会在几天内采取什么行动？
+### 课前产出
+
+选择一个组织，写六格风险卡：event、root cause、owner、control、KRI/threshold、escalation；再列一项财务证据与一项非财务证据。
+
+### 现场提问
+
+向 police finance guest speaker 询问：预算压力下如何决定优先级？谁接受残余风险？什么指标能证明公共价值而非仅“预算未超支”？
+
+### 完成标准
+
+- 能从 accounting evidence 识别风险信号。
+- 能用 COSO 五组件找 evidence 与 gap。
+- 能清楚区分 oversight、ownership、challenge 与 assurance。
