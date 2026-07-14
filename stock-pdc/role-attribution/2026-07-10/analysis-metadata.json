@@ -1,0 +1,50 @@
+{
+  "quality": {
+    "source": "/private/tmp/stock-pdc-role-attribution-replay/2018-10-29_to_2026-06-26/daily_replay_trades.csv",
+    "input_rows": 7445,
+    "valid_rows": 7445,
+    "signal_days": 297,
+    "first_signal_date": "2019-08-20",
+    "last_signal_date": "2026-06-26",
+    "min_rows_per_day": 20,
+    "max_rows_per_day": 30,
+    "days_with_more_than_20_rows": 248,
+    "duplicate_date_ticker_rows": 0,
+    "invalid_date_rows": 0,
+    "invalid_score_rows": 0,
+    "invalid_return_counts": {
+      "return_1d_pct": 0,
+      "return_5d_pct": 0
+    },
+    "years_with_signals": [
+      2019,
+      2020,
+      2021,
+      2023,
+      2024,
+      2025,
+      2026
+    ]
+  },
+  "validation": {
+    "exact_stored_final_score_match_pct": 98.4553391537945,
+    "mean_top20_membership_overlap_pct": 100.0,
+    "exact_top20_membership_days": 297,
+    "signal_days": 297
+  },
+  "weights": {
+    "market_regime": 0.09,
+    "trend": 0.18,
+    "livermore": 0.17,
+    "volume_price": 0.14,
+    "candlestick": 0.08,
+    "overheat": 0.11,
+    "risk": 0.18,
+    "zhuge_orion": 0.0,
+    "chair": 0.05
+  },
+  "bootstrap_repetitions": 1000,
+  "seed": 20260710,
+  "benchmark_csv": "/Users/leoyang/Documents/financial freedom/stock-pdc-local/data_a_share_live_mcap_2020_em/CSI300.csv",
+  "interpretation": "Exploratory historical association and structural ablation; not causal and not a trading instruction."
+}

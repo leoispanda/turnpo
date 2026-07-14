@@ -6,6 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TURNPO_ROOT = path.resolve(__dirname, "..");
 const DEFAULT_SOURCE_ROOT = "/Users/leoyang/Documents/financial freedom/stock-pdc-local";
 const OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "rank-flow.json");
+const AB_OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "ab-flow.json");
 const BACKFILL_WATCHLIST_DIR = path.join(TURNPO_ROOT, "stock-pdc", "backfill", "daily_watchlists");
 const DEFAULT_BENCHMARK_TICKER = "CSI300ETF";
 const SCORE_FIELDS = [
@@ -634,15 +635,139 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
   };
 }
 
+function buildAbSnapshot(sourceRoot, aLatestDate) {
+  const abRoot = path.join(sourceRoot, "outputs_ab");
+  const experimentPath = path.join(abRoot, "experiment.json");
+  const statusPath = path.join(abRoot, "status.json");
+  const summaryPath = path.join(abRoot, "summary.json");
+  const comparisonPath = path.join(abRoot, "comparison.csv");
+  const requiredPaths = [experimentPath, statusPath, summaryPath, comparisonPath];
+  const generatedAt = new Date().toISOString();
+  const missing = requiredPaths.filter((filePath) => !fs.existsSync(filePath));
+  if (missing.length) {
+    return {
+      schemaVersion: "stock-pdc-ab-v1",
+      generatedAt,
+      availability: "UNAVAILABLE",
+      latestDate: "",
+      validationErrors: missing.map((filePath) => `missing ${path.relative(sourceRoot, filePath)}`),
+      experiment: null,
+      runStatus: null,
+      latestSignal: null,
+      summary: null,
+      comparison: []
+    };
+  }
+
+  try {
+    const experiment = JSON.parse(fs.readFileSync(experimentPath, "utf8"));
+    const runStatus = JSON.parse(fs.readFileSync(statusPath, "utf8"));
+    const summary = JSON.parse(fs.readFileSync(summaryPath, "utf8"));
+    const latestDate = clean(runStatus.latestSignalDate);
+    const signalPath = path.join(abRoot, "signals", `signal_${latestDate}.csv`);
+    const errors = [];
+    if (!latestDate || !fs.existsSync(signalPath)) {
+      errors.push(`missing latest frozen signal for ${latestDate || "unknown date"}`);
+    }
+    const signalRows = fs.existsSync(signalPath)
+      ? readCsv(signalPath).map((row) => ({
+          ...row,
+          rank: intOrNull(row.rank),
+          target_weight_pct: numberOrNull(row.target_weight_pct),
+          initial_stop: numberOrNull(row.initial_stop),
+          active_stop: numberOrNull(row.active_stop),
+          stop_distance_pct: numberOrNull(row.stop_distance_pct)
+        }))
+      : [];
+    const comparison = readCsv(comparisonPath).map((row) => ({
+      comparison_track: clean(row.comparison_track),
+      valuation_date: clean(row.valuation_date),
+      a_nav: numberOrNull(row.a_nav),
+      b_nav: numberOrNull(row.b_nav),
+      b_minus_a_return_pct_points: numberOrNull(row.b_minus_a_return_pct_points),
+      relative_nav_b_vs_a_pct: numberOrNull(row.relative_nav_b_vs_a_pct),
+      a_drawdown_pct: numberOrNull(row.a_drawdown_pct),
+      b_drawdown_pct: numberOrNull(row.b_drawdown_pct),
+      drawdown_improvement_pct_points: numberOrNull(row.drawdown_improvement_pct_points)
+    }));
+
+    if (aLatestDate !== latestDate) errors.push(`A latestDate ${aLatestDate} != A/B latestDate ${latestDate}`);
+    if (experiment.status !== "active_prospective") errors.push("experiment is not active_prospective");
+    if (experiment.noBackfill !== true) errors.push("experiment noBackfill is not true");
+    if (experiment.priceMode !== "public_tencent_unadjusted_fail_closed") errors.push("unexpected A/B price mode");
+    if (summary.experimentStatus !== experiment.status) errors.push("summary experiment status mismatch");
+    if (summary.effectiveSignalDate !== experiment.effectiveSignalDate) errors.push("effective signal date mismatch");
+    if (runStatus.status !== experiment.status) errors.push("run status mismatch");
+    if (Object.keys(runStatus.publicPriceFailures || {}).length) errors.push("public raw price failures are present");
+    if (signalRows.some((row) => row.signal_date !== latestDate)) errors.push("latest signal contains mixed dates");
+    const snapshotIds = [...new Set(signalRows.map((row) => clean(row.snapshot_id)).filter(Boolean))];
+    if (snapshotIds.length !== 1 || snapshotIds[0] !== clean(runStatus.latestSnapshotId)) {
+      errors.push("latest signal snapshot mismatch");
+    }
+    const expectedGroups = ["A_PORTFOLIO", "A_SELECTION", "B_PORTFOLIO", "B_SELECTION"];
+    const groups = [...new Set(signalRows.map((row) => clean(row.strategy_id)))].sort();
+    if (JSON.stringify(groups) !== JSON.stringify(expectedGroups)) errors.push("latest signal does not contain exactly four A/B groups");
+    expectedGroups.forEach((group) => {
+      const total = signalRows
+        .filter((row) => row.strategy_id === group)
+        .reduce((sum, row) => sum + (row.target_weight_pct || 0), 0);
+      if (group.endsWith("_SELECTION") && Math.abs(total - 100) > 0.001) {
+        errors.push(`${group} weights total ${total}, expected 100`);
+      }
+      if (group.endsWith("_PORTFOLIO") && total > 100.0001) {
+        errors.push(`${group} weights exceed 100`);
+      }
+    });
+    const comparisonLastDate = comparison.map((row) => row.valuation_date).filter(Boolean).sort().at(-1) || "";
+    if (clean(summary.lastValuationDate) !== comparisonLastDate) errors.push("comparison tail date mismatch");
+
+    return {
+      schemaVersion: "stock-pdc-ab-v1",
+      generatedAt,
+      availability: errors.length ? "STALE" : "ACTIVE",
+      latestDate,
+      validationErrors: errors,
+      experiment,
+      runStatus,
+      latestSignal: {
+        date: latestDate,
+        snapshotId: snapshotIds[0] || "",
+        sourceFile: fs.existsSync(signalPath) ? path.relative(sourceRoot, signalPath) : "",
+        rows: signalRows
+      },
+      summary,
+      comparison
+    };
+  } catch (error) {
+    return {
+      schemaVersion: "stock-pdc-ab-v1",
+      generatedAt,
+      availability: "STALE",
+      latestDate: "",
+      validationErrors: [String(error?.message || error)],
+      experiment: null,
+      runStatus: null,
+      latestSignal: null,
+      summary: null,
+      comparison: []
+    };
+  }
+}
+
 const sourceRoot = path.resolve(argValue("--source-root", process.env.STOCK_PDC_ROOT || DEFAULT_SOURCE_ROOT));
 const outputPath = path.resolve(argValue("--output", OUTPUT_PATH));
+const abOutputPath = path.resolve(argValue("--ab-output", AB_OUTPUT_PATH));
 const priceDataDir = argValue("--price-data-dir", process.env.STOCK_PDC_PRICE_DATA_DIR || "");
 const snapshot = buildSnapshot(sourceRoot, priceDataDir);
+const abSnapshot = buildAbSnapshot(sourceRoot, snapshot.latestDate);
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, `${JSON.stringify(snapshot, null, 2)}\n`);
+fs.mkdirSync(path.dirname(abOutputPath), { recursive: true });
+fs.writeFileSync(abOutputPath, `${JSON.stringify(abSnapshot, null, 2)}\n`);
 
 console.log(`Wrote ${outputPath}`);
 console.log(`Dates: ${snapshot.dates.join(", ") || "none"}`);
 console.log(`Latest: ${snapshot.latestDate || "none"}`);
 console.log(`Price data: ${snapshot.priceDataDir || "none"}`);
+console.log(`A/B: ${abSnapshot.availability} -> ${abOutputPath}`);

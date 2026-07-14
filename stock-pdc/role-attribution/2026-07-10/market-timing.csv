@@ -1,0 +1,3 @@
+horizon_days,signal_days,unique_market_scores,market_score_vs_portfolio_spearman,market_score_vs_excess_spearman,high_minus_low_market_score_portfolio_return_pct
+1,297,3,0.08812843108955365,0.06368281696306524,1.777232128995434
+5,297,3,0.07432281245746612,0.026432113264173013,2.757243107638889

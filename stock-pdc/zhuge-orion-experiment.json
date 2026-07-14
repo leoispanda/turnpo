@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "status": "active_prospective",
+  "startedOn": "2026-07-10",
+  "researchOnly": true,
+  "weight": 0.02,
+  "fundedFrom": "final_chair",
+  "finalChairWeight": 0.03,
+  "mode": "close_tail_five_elements",
+  "posture": "derived_after_close",
+  "postureEffectiveFrom": "next_trading_session",
+  "postureSource": "CSI300ETF_close_tail_three_decimals",
+  "benchmark": "CSI300ETF",
+  "tailDecimals": 3,
+  "lockFrequency": "daily_after_close",
+  "digitElementMapping": {
+    "1/6": "water",
+    "2/7": "fire",
+    "3/8": "wood",
+    "4/9": "metal",
+    "0/5": "earth"
+  },
+  "elementPostureMapping": {
+    "water": { "posture": "defensive", "score": 3.4 },
+    "fire": { "posture": "aggressive", "score": 7.6 },
+    "wood": { "posture": "balanced", "score": 6.3 },
+    "metal": { "posture": "conservative", "score": 4.2 },
+    "earth": { "posture": "neutral", "score": 5.5 }
+  },
+  "rules": {
+    "deriveOnlyAfterBenchmarkClose": true,
+    "applyOnlyToNextTradingSession": true,
+    "neverBackfillPosturesAfterSeeingReturns": true,
+    "neverOverrideMarketRiskOrOverheatVetoes": true,
+    "allowedPostures": [
+      "aggressive",
+      "balanced",
+      "neutral",
+      "conservative",
+      "defensive"
+    ]
+  },
+  "notes": [
+    "This is an auditable close-tail five-elements overlay, not a traditional Zi Wei Dou Shu natal chart.",
+    "The benchmark close is rounded half up to three decimals, and the final digit determines the posture.",
+    "The digit-to-element mapping follows the He Tu number associations; element-to-posture scores are experimental choices.",
+    "The 2% weight is funded by reducing the derived Final Chair from 5% to 3%."
+  ]
+}
