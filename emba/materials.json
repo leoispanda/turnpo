@@ -511,12 +511,42 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 2,
+      "materialsRevision": 3,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
       "memoryRevision": 0,
       "materials": [
+        {
+          "title": "Day 1｜Financial Management",
+          "type": "daily_course_intro",
+          "file": "/emba/materials/2026-09/days/2026-09-07-financial-management.md",
+          "notes": "价值、风险、资本与对冲：点击后进入当天介绍，并逐篇打开 Berk、Stulz 与 Nocco & Stulz 学习卡。"
+        },
+        {
+          "title": "Day 2｜Compliance & Sustainability Reporting",
+          "type": "daily_course_intro",
+          "file": "/emba/materials/2026-09/days/2026-09-08-compliance-sustainability.md",
+          "notes": "VW、ING、COSO、Estra 与 ESRS：从合规失效到双重重要性。"
+        },
+        {
+          "title": "Day 3｜Financial Accounting, ERM & Governance",
+          "type": "daily_course_intro",
+          "file": "/emba/materials/2026-09/days/2026-09-09-accounting-erm-governance.md",
+          "notes": "财务信息、COSO、risk framework、NFR 与 DSM 年报。"
+        },
+        {
+          "title": "Day 4｜Management Accounting & Strategic Control",
+          "type": "daily_course_intro",
+          "file": "/emba/materials/2026-09/days/2026-09-10-management-control.md",
+          "notes": "Tennessee Controls、创新控制与 purpose-driven organization。"
+        },
+        {
+          "title": "Day 5｜Financial Management Integration & Presentation",
+          "type": "daily_course_intro",
+          "file": "/emba/materials/2026-09/days/2026-09-11-financial-management-integration.md",
+          "notes": "共同基金比较、整合判断与 group presentation 准备。"
+        },
         {
           "title": "课程需要｜Corporate Finance and Accounting 自习总导读（中英混合）",
           "type": "course_requirements",
