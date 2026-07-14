@@ -82,6 +82,13 @@
 
 Decision（10 秒）→ Evidence（20 秒）→ Options/trade-off（25 秒）→ Recommendation（20 秒）→ Assumption、KRI 与 review trigger（15 秒）。
 
+### 本课程考核要求
+
+- Group presentation：课程成绩 25%，9 月 11 日课堂完成。
+- Individual final case：课程成绩 75%，Canvas 将公布 central real-life case；四位核心教师各提出一题，按届时限制选择其中三题作答。
+- 每一题独立评分：content/application 75%，critical reflection（含 AI 使用）15%，form/APA 10%。
+- 截止时间：2026 年 10 月 25 日 23:59；每一题分别保存和上传 PDF，并按 syllabus 命名规则提交。
+
 ### 完成标准
 
 - 能识别一个不公平 benchmark 或 sample bias。

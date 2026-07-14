@@ -1534,8 +1534,8 @@ function renderMonthDetail(month) {
     <div class="emba-month-kicker">${escapeHtml(formatMonth(month.month))}</div>
     ${renderOpenBlockPanel(month)}
     <div class="emba-block-grid">
-      ${blockTemplate("preparation", "课前准备", month)}
-      ${blockTemplate("vocabulary", "专业词汇", month)}
+      ${materialsForSection(month, "preparation").some(materialHasContent) ? blockTemplate("preparation", "课前准备", month) : ""}
+      ${materialsForSection(month, "vocabulary").some(materialHasContent) ? blockTemplate("vocabulary", "专业词汇", month) : ""}
       ${blockTemplate("reflection", "Reflection（我的思考）", month)}
       ${blockTemplate("memory", "照片", month)}
       ${blockTemplate("material", "资料", month)}

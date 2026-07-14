@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-14",
+  "updated": "2026-07-15",
   "timeline": {
     "startMonth": "2026-06",
     "endMonth": "2028-12"
@@ -511,30 +511,12 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 6,
+      "materialsRevision": 7,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
       "memoryRevision": 0,
       "materials": [
-        {
-          "title": "Case 选题灵感｜8 个可展开方向",
-          "type": "case_inspiration",
-          "file": "/emba/materials/2026-09/Case-Topic-Inspiration.md",
-          "notes": "为最终 integrated case 准备：每题的决策冲突、可用框架、证据来源、范围风险与优先建议。"
-        },
-        {
-          "title": "专业词汇｜英文、音标、解释与句型",
-          "type": "vocabulary",
-          "file": "/emba/materials/2026-09/Professional-Vocabulary-Guide.md",
-          "notes": "按五天课程整理的 30 个高频术语：IPA、中文解释、课堂用法与可直接套用的英文句型。"
-        },
-        {
-          "title": "逐篇学习重点｜每份材料要学什么",
-          "type": "reading_learning_map",
-          "file": "/emba/materials/2026-09/Reading-Learning-Map.md",
-          "notes": "16 项指定阅读逐篇拆解：学习问题、必须掌握的概念、课堂/作业输出，以及自测方向。"
-        },
         {
           "title": "Day 1｜Financial Management",
           "type": "daily_course_intro",
@@ -564,18 +546,6 @@
           "type": "daily_course_intro",
           "file": "/emba/materials/2026-09/days/2026-09-11-financial-management-integration.md",
           "notes": "共同基金比较、整合判断与 group presentation 准备。"
-        },
-        {
-          "title": "课程需要｜Corporate Finance and Accounting 自习总导读（中英混合）",
-          "type": "course_requirements",
-          "file": "/emba/materials/2026-09/Course-Requirements-and-Self-Study-Guide.md",
-          "notes": "完整五天 self-study route：课程目标、16 项指定阅读、每篇学习卡入口、案例/作业写作框架与自测问题。"
-        },
-        {
-          "title": "Corporate Finance and Accounting - Course Syllabus",
-          "type": "course_overview",
-          "file": "/emba/materials/2026-09/September-26-Syllabus-Overview.md",
-          "notes": "September 7-11, 2026 course syllabus: financial management, accounting, management control, ERM, compliance and sustainability reporting."
         },
         {
           "title": "September CFA reading checklist",
