@@ -6,6 +6,17 @@ Source: `September-26 Syllabus CFA (1).pdf`, pp. 11-12. This is the complete pre
 
 每份已收录 PDF 的核心论点、必学概念、案例/作业使用方式与自测题，见 [summaries/README.md](summaries/README.md)。
 
+## 原文完整度｜12 / 16
+
+所有 16 项指定阅读都已有学习入口；其中 12 项已有对应原文，以下 4 项暂以明确标注的简要学习包补位：
+
+- [Berk, DeMarzo & Harford (2025)｜指定章节简要学习包](summaries/berk-demarzo-harford-2025-reading-roadmap.md) — 第六版教材原文待补。
+- [COSO (2017)｜Full ERM Framework 简要学习包](summaries/coso-2017-erm-full-framework-study-guide.md) — full framework 待补；Executive Summary 不能完全替代。
+- [Davila (2005)｜Innovation & Management Control 简要学习包](summaries/davila-2005-management-control-innovation-study-guide.md) — Oxford chapter pp. 37–61 待补。
+- [Quinn & Thakor (2018)｜Purpose-Driven Organization 简要学习包](summaries/quinn-thakor-2018-purpose-driven-organization-study-guide.md) — HBR 正式文章待补。
+
+这些页面足以先理解概念、准备课堂问题和练习案例，但正式作业引用前必须取得并核对原文。
+
 ## How to use this checklist
 
 - **Public**: can be downloaded from the linked publisher, author, company, or university source.

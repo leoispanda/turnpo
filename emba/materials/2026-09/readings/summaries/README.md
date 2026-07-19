@@ -2,6 +2,8 @@
 
 每份学习卡对应 `../` 中的一份 PDF；没有取得受限原文的项目，则明确标记为 **study guide**，不可当作原文引用。完整的五天自习路线见 [课程需要｜自习总导读](../../Course-Requirements-and-Self-Study-Guide.md)。阅读顺序建议按上课日安排，而不是按文件名。
 
+目前 16 项指定阅读全部已有学习卡，12 项已有原文。Berk 教材、COSO full framework、Davila chapter、Quinn & Thakor article 仍缺正式原文，但已经补充可直接自习的简要学习包，并在页面顶部保留 `原文待补` 标识。
+
 ## Financial Management
 
 - [Berk, DeMarzo & Harford (2025): textbook reading roadmap](berk-demarzo-harford-2025-reading-roadmap.md)

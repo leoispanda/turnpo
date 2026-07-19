@@ -30,8 +30,10 @@
 
 ### 1. [Berk, DeMarzo & Harford (2025)](../readings/summaries/berk-demarzo-harford-2025-reading-roadmap.md)
 
-**用途**：建立 corporate finance 工具箱。按 syllabus 阅读指定章节，重点掌握公司目标与 agency tension、discounting、risk-return、capital budgeting、financing 与 risk management。
-**读完必须会**：画 cash-flow timeline；说明 discount rate 来源；比较 NPV 与 IRR/payback 的角色；识别 financing choice 对投资和激励的影响。
+**原文状态**：Study guide｜第六版教材原文待从图书馆或 Pearson 补齐。
+**指定范围**：Ch. 1 §§1.3–1.5；Ch. 3 §§3.3–3.4；Ch. 4；Ch. 6 §§6.1–6.2；Ch. 7 §7.1；Chs. 10、20、21。
+**准确主题**：financial manager、time value of money、bonds、stock valuation、DCF/comparables、short-term financial planning 和 option applications。
+**读完必须会**：画 cash-flow timeline；从 FCF 连接 enterprise/equity value；识别 liquidity gap；说明 delay、expand 或 abandon flexibility 为什么有价值。
 
 ### 2. [Stulz (1996)](../readings/summaries/stulz-1996-rethinking-risk-management.md)
 

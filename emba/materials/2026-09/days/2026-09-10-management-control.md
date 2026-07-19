@@ -33,11 +33,11 @@
 
 理解 Strategic Ranking Index 如何尝试比较 return、risk 和 proposal credibility；检查输入是否可观察、权重是否合理、变量是否重复、经理是否会操纵。结论不是废除模型，而是限定模型的决策角色。
 
-### [Davila (2005)](../readings/summaries/davila-2005-management-control-innovation-study-guide.md)
+### [Davila (2005)｜简要学习包·原文待补](../readings/summaries/davila-2005-management-control-innovation-study-guide.md)
 
 理解 control 可以支持 innovation learning。比较 early-stage learning measures 与 later-stage financial measures，设计 experiment、milestone、funding gate 和 review rhythm。原章节未本地取得时，本卡只作为预读路线。
 
-### [Quinn & Thakor (2018)](../readings/summaries/quinn-thakor-2018-purpose-driven-organization-study-guide.md)
+### [Quinn & Thakor (2018)｜简要学习包·原文待补](../readings/summaries/quinn-thakor-2018-purpose-driven-organization-study-guide.md)
 
 理解 purpose 如何影响 discretionary effort 与 ethical choice；检查 leader behaviour、resource allocation、promotion 和 consequences 是否与 purpose 一致。原文未本地取得时，不把学习卡当作可直接引用的原文证据。
 

@@ -30,7 +30,7 @@ Root-cause analysis、合规控制设计、ESG materiality 判断、数据治理
 
 ### Compliance
 
-- [COSO full-framework 学习路线](../readings/summaries/coso-2017-erm-full-framework-study-guide.md)：用 governance、strategy、performance、review 和 information 观察 compliance。
+- [COSO full-framework 简要学习包｜原文待补](../readings/summaries/coso-2017-erm-full-framework-study-guide.md)：掌握五组件、二十原则，以及 risk appetite、performance variation、portfolio view 与 review 的连接；Tuesday 要求的 full framework 不能由 Wednesday 的 Executive Summary 完全替代。
 - [Ewing / Volkswagen](../readings/summaries/ewing-2017-volkswagen-deception.md)：识别不可能目标、工程压力、control override 与沉默文化。
 - [ING settlement](../readings/summaries/ing-2018-compliance-case.md)：掌握 CDD/KYC、transaction monitoring、alert investigation 与 management accountability。
 

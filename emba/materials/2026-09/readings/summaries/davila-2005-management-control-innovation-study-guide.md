@@ -1,23 +1,84 @@
-# Davila (2005) - Management Control Systems for Innovation and Strategic Change
+# Davila (2005)｜Innovation & Management Control 简要学习包
 
-Status: assigned Oxford chapter is not locally available; this is a **pre-reading study guide** based on the assigned topic, not a substitute for the chapter.  
-Course area: Management accounting and strategic control
+> **Status｜原文待补**：Oxford chapter pp. 37–61 尚未保存在本地。本页严格区分“官方 abstract 能确认的主张”和“用于课堂准备的应用推演”，不能代替原章节引用。
+>
+> [Oxford Academic 章节页与 Abstract](https://academic.oup.com/book/54789/chapter-abstract/422690119)｜DOI: 10.1093/oso/9780199283231.003.0003
 
-## 一句话准备
+## 1. 官方摘要能确认什么
 
-创新与控制不是 opposites。没有控制，创新项目容易失去资源纪律、学习记录和责任边界；控制过早或过死，又会把探索压成对短期 KPI 的服从。你需要讨论的是 **fit**：在不确定性、组织阶段和战略变化不同的情况下，什么控制能促进 learning 而非扼杀它。
+Davila 提出一个 framework，用来分析 **formal management control systems (MCS)** 在不同类型 innovation 中可能扮演的不同角色，以及 innovation 如何进一步推动 business strategy 改变。
 
-## 带着问题读
+传统观点常把 MCS 与 mechanistic organization、standardization 和 reduction of variety 联系起来，因此认为 control 会阻碍 innovation。章节的关键问题不是简单支持或反对控制，而是重新研究：**什么控制、在什么创新与战略情境下、发挥什么作用。**
 
-- 创新项目最重要的不确定性是技术、市场、商业模式还是执行？不同不确定性需要不同 review。
-- 哪些 measures 适合 early stage（milestones、learning velocity、experiment quality），哪些只适合 later stage（margin、cash conversion、scale）？
-- 谁可以 challenge assumptions？项目负责人是否既拥有数据又拥有评价权？
-- 当项目 pivot 时，budget、governance 和 performance review 如何随之调整？
+## 2. 你课前应该形成的核心判断
 
-## 与 Tennessee 的连接
+> Innovation and control are not natural enemies; the quality of the fit matters more than the amount of control.
 
-Tennessee case 警示 single ranking score 的 false precision。Davila 的问题会进一步追问：若所有 innovation 都以同一 ROI 阈值排队，会不会系统性排除 long-horizon 或 option-like projects？一个较好的设计是 quantitative screen + staged funding + cross-functional review + explicit learning criteria。
+控制不足可能造成：资源不断投入但没有学习证据、assumptions 不透明、项目无法比较、责任边界模糊。控制过早或过硬则可能造成：把探索项目伪装成可预测业务、只奖励短期数字、隐瞒失败实验、过早停止 long-horizon opportunities。
 
-## 自测
+因此需要区分：
 
-为什么“没有达到原预算就停止”未必是好的创新控制？因为在高不确定环境里，学习到原假设错误也可能是有价值结果；关键是能否及时、透明地将学习转成资源重配。
+- **Execution uncertainty**：路径已知，重点是按成本、时间和质量交付。
+- **Learning uncertainty**：技术、客户或商业模式尚未验证，重点是快速产生可靠学习。
+- **Strategic change**：创新可能改变公司竞争方式，控制系统需要帮助管理层重新讨论战略，而不只是监督既定计划。
+
+以上三分法是本学习卡的应用整理；拿到原文后，需要用作者的准确 typology 和 framework 替换或校正。
+
+## 3. 如何选择适合创新阶段的控制
+
+### Early exploration
+
+适合观察：hypothesis quality、experiment speed、customer evidence、technical feasibility、critical unknowns。此时精确收入预算通常是 fragile assumption，而不是事实。
+
+### Validation
+
+适合观察：repeatable demand、unit economics direction、risk clearance、milestone completion、资源消耗与学习产出的比例。
+
+### Scaling
+
+适合逐步增加：margin、cash conversion、capacity utilization、quality、delivery reliability 和 standard operating controls。
+
+关键是 **control migration**：项目从探索走向规模化时，指标和 decision rights 也必须变化。
+
+## 4. 与 Tennessee Controls 的连接
+
+Tennessee case 显示 single ranking score 容易制造 false precision。放到 innovation portfolio 中，如果所有项目都使用同一 ROI、payback 或 confidence score，组织可能系统性淘汰：
+
+- long-horizon projects；
+- platform capabilities；
+- option-like investments；
+- 暂时无法量化但对战略转型关键的 experiments。
+
+更好的课堂方案是：
+
+1. 先用 minimum gates 排除安全、伦理或战略不符合项；
+2. 再区分 exploration、validation、scaling；
+3. 为不同阶段使用不同 evidence；
+4. 使用 staged funding，而不是一次性全投或全停；
+5. 由 cross-functional review challenge assumptions。
+
+这是一种基于章节主题的管理应用，不应写成 Davila 的逐字结论。
+
+## 5. 案例练习｜AI 项目组合
+
+公司只能选择两个 AI 项目：
+
+- A：短期 ROI 最高，但依赖单一客户和未经验证的数据许可；
+- B：直接收入低，却建立未来所有产品需要的数据基础；
+- C：客户兴趣强，但 privacy risk 尚未解决。
+
+不应立即给三项打一个总分。先判断每个项目属于哪种 uncertainty，再分别定义：下一阶段最重要的 learning、可以投入多少资金、什么 evidence 解锁下一笔资金、什么 threshold 必须停止。
+
+## 6. 拿到原章节后必须补核
+
+- [ ] 作者区分了哪些 innovation types？
+- [ ] Formal MCS 被赋予哪些准确 roles？
+- [ ] 每种 role 与 strategic change 的关系是什么？
+- [ ] 章节使用了哪些理论、案例或命题支持 framework？
+- [ ] 哪些内容是作者主张，哪些只是本学习卡的实践延伸？
+
+## 7. 课堂表达与自测
+
+> I would not remove controls; I would redesign them around the uncertainty that the project must resolve at this stage.
+
+为什么“没有达到原预算就停止”未必是好的创新控制？请分别从 learning value、stage、option value 和 resource discipline 回答，并提出一个下一阶段 funding gate。

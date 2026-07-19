@@ -511,7 +511,7 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 8,
+      "materialsRevision": 9,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
@@ -560,10 +560,10 @@
           "notes": "Complete syllabus cross-check: 16 required readings, three sessions with no preparatory reading, access routes, and local-file status."
         },
         {
-          "title": "CFA Chinese study-card index - 11 reading summaries",
+          "title": "CFA Chinese study-card index｜16 项指定阅读",
           "type": "study_guide",
           "file": "/emba/materials/2026-09/readings/summaries/README.md",
-          "notes": "Each card covers the main argument, what must be learned, how to use it in class/final case work, and a self-test question."
+          "notes": "16 项指定阅读全部有学习入口：12 项已有原文，4 项以明确标注的简要学习包补位；每卡包含核心观点、必学概念、课堂/作业用法与自测。"
         },
         {
           "title": "COSO 2017 ERM Executive Summary",
