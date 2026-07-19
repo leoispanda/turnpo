@@ -6,23 +6,13 @@
 
 ## 第一部分｜今天讲什么
 
-### 今天最终要形成的能力
+### 今天只解决一个管理决定
 
-今天不是分别学习 NPV、hedging 和 ERM，而是要把它们连接成一个完整的管理判断：
+假设一家公司发现了一个看起来很赚钱的新项目。今天要解决的不是“NPV 是什么”“对冲是什么”这类彼此分开的知识点，而是一个完整决定：**这个项目是否真的创造价值，公司有没有能力把它做完，又应该怎样避免可转移的金融风险毁掉这个好项目？**
 
-> **增量现金流 → 现值 → 融资需求 → 风险敞口 → 现金缺口 → 投资不足 → 风险应对 → 投资能力**
+你会依次完成五步判断。第一步确认项目真正改变了哪些现金流；第二步理解投资者如何给风险定价，以及债务或股权会带来什么融资条件；第三步检查项目早期是否会造成现金短缺，使公司无法坚持到项目开始赚钱；第四步只处理那些可能破坏投资能力、又可以低成本转移的金融风险；第五步把项目放回公司全部投资中，检查多个好项目合在一起是否仍然安全。
 
-对应的英文逻辑是：
-
-> **Incremental cash flow → present value → financing need → risk exposure → cash shortfall → underinvestment → risk response → investment capacity**
-
-学完以后，你应该能够对一个陌生公司说清楚：
-
-1. 这项投资为什么创造价值，融资选择如何反过来影响投资；
-2. 金融市场与 investor expectations 如何影响 required return、价格和融资条件；
-3. risk-return trade-off 与 diversification 的作用和边界；
-4. 什么坏情境会让公司无法实现项目价值；
-5. 哪些金融风险应该承担，哪些可以通过 derivatives、保险或合同转移。
+学完后，你应该能够把上述判断讲成一段连续的管理逻辑，而不是分别背诵几个金融术语。
 
 ### Syllabus 范围｜今天只学 Financial Management
 
@@ -56,9 +46,9 @@ Nocco & Stulz 虽然标题包含 ERM，但它是 Monday 的指定阅读。Day 1 
 | **D. Financial risk management** | exposure、derivatives、hedging、core/non-core risk | risk management、derivatives |
 | **E. Enterprise bridge** | investment capacity、macro/micro ERM、portfolio effect | Nocco & Stulz 对整体价值的连接 |
 
-学习顺序是 A → B → C → D → E。完成细节学习后，再归纳核心模型和争议；现在只需要知道每个概念将放在哪里。
+学习顺序是 A → B → C → D → E。第一部分负责把这条主线讲清楚；第二部分再告诉你每一段逻辑来自哪一篇指定阅读。
 
-### 逻辑一｜先判断项目是否创造价值
+### 第一步｜先判断项目是否创造价值
 
 第一步不是看 accounting profit（会计利润），而是找 **incremental cash flow（增量现金流）**：与“不做这个项目”相比，哪些现金流因为接受项目才发生变化。
 
@@ -82,7 +72,7 @@ Nocco & Stulz 虽然标题包含 ERM，但它是 Monday 的指定阅读。Day 1 
 
 NPV > 0 表示：在当前现金流和折现率假设下，项目预计创造超过资本机会成本的价值。但它只是判断起点，因为 base case（基准情境）可能没有充分反映融资限制、tail scenario（尾部情境）和 managerial flexibility（管理灵活性）。
 
-### 逻辑二｜理解金融市场、投资者预期与 risk-return
+### 第二步｜理解金融市场如何给风险定价
 
 Syllabus 明确要求理解 financial markets 和 investor expectations。金融市场的作用不只是“买卖股票”，而是把不同投资者对未来 cash flow、risk 和 required return 的判断反映到 securities prices 与 financing terms 中。
 
@@ -98,7 +88,7 @@ Diversification（分散化）通过把不完全同步变化的资产放在一�
 
 今天对金融市场的掌握标准是：能说明 investor expectations 如何进入 discount rate，bond/equity financing 如何改变现金承诺，以及 diversification 能消除什么、不能消除什么。
 
-### 逻辑三｜再判断公司能否活到价值实现的那一天
+### 第三步｜判断公司能否坚持到项目创造现金的那一天
 
 长期 NPV 为正，不代表短期不会出现 liquidity problem（流动性问题）。项目早期现金流为负时，公司可能：
 
@@ -117,7 +107,7 @@ Diversification（分散化）通过把不完全同步变化的资产放在一�
 
 如果不确定性很高，公司也不一定只能“立刻全部投资”或“完全不投资”。它可以 delay（延迟）、stage（分阶段）、expand（扩张）、contract（收缩）、switch（转换）或 abandon（退出）。这些选择构成 real options（实物期权）。
 
-### 逻辑四｜理解 financial risk management 与 derivatives
+### 第四步｜只管理可能破坏投资能力的金融风险
 
 如果股东可以自行分散投资，公司为什么还要花钱管理风险？Stulz 的关键回答是：现实世界存在 financing frictions（融资摩擦）。
 
@@ -136,7 +126,7 @@ Derivative（衍生品）是价值取决于某项 underlying variable（标的�
 
 Hedging（对冲）是降低已经存在的 exposure（敞口）；speculation（投机）则是因为市场方向判断而主动增加风险。一个交易是否属于对冲，取决于它相对什么 exposure 和 policy benchmark，而不是取决于它用了哪一种金融工具。
 
-### 逻辑五｜Nocco & Stulz 的 enterprise bridge
+### 第五步｜把单个项目放回公司整体风险组合
 
 Nocco & Stulz 进一步说明：即使 CFO 正确决定了某个 hedge ratio（对冲比例），不同部门仍可能各自优化、合起来却让公司承担过多集中风险。
 
@@ -146,128 +136,6 @@ Nocco & Stulz 进一步说明：即使 CFO 正确决定了某个 hedge ratio（�
 - **Micro level（业务决定层面）**：让项目评价同时考虑 expected return 与它对公司整体 exposure、financing capacity 和 capital allocation 的影响。
 
 Day 1 需要知道 portfolio effect（组合效应）：多个项目可能共同依赖 USD、利率或同一客户，单独看都合理，合起来却形成 concentration。详细的 risk appetite、CRO/board governance、risk categories、COSO framework 与 implementation 不在今天展开，它们属于 Day 3。
-
-### 学完细节后再归纳｜五个稳定的核心模型
-
-这里的“核心模型”不是需要背诵的英文口号，而是五种可以反复用于真实决策的思考方式。它们是根据 Day 1 的 syllabus 和三项指定阅读归纳出的课程共识，并不表示所有学者在任何情境下都完全同意。
-
-#### 模型一｜一项投资是否创造价值，要看“做”与“不做”之间的未来现金流差异
-
-管理层不能因为项目会增加销售额或会计利润，就直接认定它值得投资。正确的比较是：如果公司接受项目，未来会多收到哪些现金、必须多支付哪些现金；如果拒绝项目，这些现金流是否仍会发生。已经无法收回的市场调研费通常不应影响今天的决定，但项目占用的厂房、增加的库存、对旧产品销售的蚕食和最终可回收的设备价值都可能影响判断。把这些增量现金流折现后，才能判断项目是否真正创造价值。
-
-**掌握标准：** 面对一个新项目，你能从销售额和利润叙述中筛出真正相关的现金流，并解释为什么 NPV 是决策起点，而不是一个自动批准项目的按钮。主要依据：Berk。
-
-#### 模型二｜金融市场把投资者对风险的判断，转化为公司必须达到的回报要求
-
-投资者愿意为一项资产支付多少价格，取决于他们对未来现金流、风险以及替代投资机会的判断。风险越难通过持有其他资产来分散，投资者通常要求的 expected return 越高，公司用于估值的 discount rate 也会受到影响。分散化可以降低单一公司特有事件对投资组合的冲击，却不能自动消除整个市场共同面对的利率、经济衰退等系统性风险，也不能为一家缺现金的公司补回现金。
-
-**掌握标准：** 你能用自己的话说明 investor expectations 如何影响 required return、security price 和 financing terms，也能说明 diversification 有什么作用、边界在哪里。主要依据：Syllabus 与 Berk，并由 Stulz 引出企业层面的边界。
-
-#### 模型三｜投资与融资不是两个先后独立的决定
-
-一个项目即使长期 NPV 为正，也可能因为前两年大量消耗现金而无法顺利完成。债务会带来固定利息、还本期限和 covenant；股权不会要求固定还本，却可能带来所有权稀释和控制权变化。因此，融资方式会改变公司在坏情境下能否继续投资，而项目的现金流时间、风险和资产性质也会反过来影响公司能够获得什么融资。好的投资分析必须同时检查价值、现金缺口、债务期限和财务弹性。
-
-**掌握标准：** 你能解释“有价值”为什么不等于“现在就能安全地全部投入”，并能比较债务、股权、分阶段投资和延迟投资对项目的不同影响。主要依据：Syllabus 与 Berk。
-
-#### 模型四｜风险管理的目的，是保护公司继续创造价值的能力
-
-公司不需要消除所有波动，也不应该把所有风险都转移出去。真正需要关注的是：某个坏情境是否会让现金余额跌破安全水平、触发 covenant、迫使公司以很高成本融资，或放弃原本具有正 NPV 的项目。如果答案是肯定的，hedging、保险、合同安排或 natural hedge 才可能创造价值。公司应优先管理自己没有竞争优势、却可能破坏投资能力的风险，而保留与产品、客户和能力建设直接相关的核心经营风险。
-
-**掌握标准：** 你能从一个具体的现金流危险点出发，说明要保护什么、为什么保护、使用什么工具，以及保护到什么程度，而不是笼统地说“对冲可以降低风险”。主要依据：Stulz。
-
-#### 模型五｜单个项目看起来合理，不代表所有项目合在一起仍然安全
-
-不同部门可能各自批准了回报不错的项目，但这些项目也许同时依赖美元汇率、同一个大客户、相同供应商或同一条融资渠道。一旦共同风险发生，多个项目可能同时恶化，并一起占用公司的现金和借款能力。因此，公司既要看每个项目自身的 expected return，也要看它给企业整体增加了什么集中风险，以及是否挤压其他更重要的投资机会。
-
-**掌握标准：** 你能把单个项目放回 company-wide portfolio 中，检查共同风险因子、集中度和对 financing capacity 的占用。主要依据：Nocco & Stulz。
-
-### 学完细节后再讨论｜三个关键争议
-
-这些争议不是让你在还没有基础知识时猜答案，而是用来检查你是否已经能够识别假设、比较两方逻辑，并根据公司的具体处境作出有条件的判断。
-
-#### 争议一｜只要项目 NPV 为正，公司是否就应该立即全部投资？
-
-这个问题看似简单：既然 NPV 大于零代表项目预计创造价值，推迟投资似乎只会错失机会。但这个结论建立在现金流预测、折现率和融资条件都足够可靠，而且公司能够承受早期现金流出的前提上。现实中，项目可能长期有价值，却在短期耗尽现金、触发 covenant，或者让公司失去应对新机会的能力。等待更多信息或分阶段投入虽然可能延迟收益，却也能限制损失并保留选择权。
-
-**你真正要判断的是：** 项目本身是否创造价值；公司现在是否有能力承担它；延迟或分阶段带来的信息价值，是否超过等待成本。Day 1 的结论不是“正 NPV 就投”或“有风险就等”，而是把 valuation、liquidity、financing constraint 和 real option 放在同一个决定中。主要依据：Berk。
-
-#### 争议二｜既然股东可以自己分散风险，公司为什么还要花钱对冲？
-
-反对企业对冲的一方认为，股东可以通过持有许多公司的股票降低单一公司的风险，公司再花钱平滑利润，可能只是重复工作。支持企业对冲的一方则指出，股东能够分散自己的财富，却不能在公司现金不足时自动把钱送回公司。汇率、利率或商品价格的剧烈变化可能导致公司违反债务条件、支付高昂融资成本，甚至放弃好项目；这些损失不能靠股东的投资组合消除。
-
-**你真正要判断的是：** 该风险是否会通过现金短缺或融资摩擦破坏公司的投资能力。如果会，对冲可能创造价值；如果只是让报表数字更平滑，对冲理由就不充分。对冲比例也不是越高越好：尚未确定的 forecast revenue 若被 100% 对冲，实际销量不足时反而会产生新的风险。主要依据：Stulz。
-
-#### 争议三｜每个部门分别管好自己的风险，是否就等于公司整体风险已经管好？
-
-分项管理有明显优势：外汇、利率和商品风险需要不同专业知识，业务部门也最了解自己的客户和经营条件。但局部最优不一定形成整体最优。三个部门可能各自认为自己的美元敞口可以承受，合在一起却让公司对美元形成巨大集中风险；两个正 NPV 项目也可能在同一坏情境下同时需要资金，超过企业的融资能力。
-
-**你真正要判断的是：** 单项风险之间是否相关、是否共同占用稀缺资本，以及一个项目是否挤压了其他更有价值的选择。Day 1 的结论是保留专业化管理，同时用 enterprise portfolio view 检查合计影响；谁负责、如何设定 risk appetite 和完整 governance framework 留到 Day 3。主要依据：Nocco & Stulz。
-
-### 一个案例把今天全部知识连起来
-
-一家欧洲设备公司考虑投资 **EUR 80m** 在美国扩产：
-
-- Base-case NPV：+EUR 14m；
-- 前两年 free cash flow 为负；
-- 收入主要为 USD，成本主要为 EUR；
-- USD 贬值 15% 时，项目 NPV 仍略为正，但公司 liquidity buffer 会低于 EUR 15m；
-- 债务 covenant 要求 net debt / EBITDA 不超过 3.5×；
-- 100% hedge 需要 EUR 1.8m，但第三至第五年的销量尚未完全签约；
-- 公司可支付 EUR 3m，保留一年后再决定是否扩建第二条产线的 option。
-
-按照今天的四层逻辑分析：
-
-#### 1. Value
-
-项目 base-case NPV 为正，但必须复核 incremental revenue、working capital、tax、capex、terminal value 和 discount-rate assumptions。
-
-#### 2. Investment capacity
-
-真正危险的不是“USD 下跌导致利润不好看”，而是 liquidity buffer 和 covenant headroom 消失，导致公司高成本融资或放弃其他好项目。
-
-#### 3. Risk classification and response
-
-- 产品需求、客户采用和生产执行属于公司需要主动管理的 core risks；
-- 裸露的美元方向押注不是制造商的 comparative advantage，可以转移；
-- 未签约销量仍不确定，因此 100% hedge 可能造成 over-hedging；
-- 可对 committed revenue 使用较高 hedge ratio，对 forecast revenue 分阶段提高对冲；
-- 可用 USD debt、local sourcing 或 pricing clause 建立 natural hedge；
-- 保留第二条产线的 expansion option，避免第一天承诺全部资本。
-
-#### 4. Governance and threshold
-
-Business owner 负责 demand 和 margin assumptions；Treasury 负责 currency exposure；CFO 负责 liquidity 和 financing；CRO 汇总组合风险；investment committee 批准越界后的重新决策。
-
-可使用明确触发点：
-
-> If forecast liquidity falls below EUR 15m or covenant headroom falls below 0.3×, the investment must be resized, delayed or re-approved.
-
-#### 完整建议
-
-> Proceed with the base investment, but stage the expansion and hedge the portion of USD cash flows that is sufficiently committed. The objective is not to eliminate currency volatility; it is to preserve liquidity and covenant headroom so that the firm can continue funding positive-NPV opportunities.
-
-### 今天怎样才算真正学会
-
-你需要完成一页、不超过 300 字的 decision memo：
-
-1. 选择一家企业与一项真实投资；
-2. 写出最重要的 incremental cash flows；
-3. 指出一个 core risk 和一个 transferable risk；
-4. 说明哪种 downside 会威胁 liquidity、covenant 或未来投资；
-5. 给出 response、owner、cost、residual risk 和 threshold；
-6. 写出一条可能推翻建议的新证据。
-
-必须能够解释这句话：
-
-> **The purpose of risk management is to protect the firm's ability to create value, not to eliminate all risk.**
-
-最终掌握标准分为五级：
-
-- **Explain**：能用自己的话说明 NPV、hedging 与 ERM 的因果关系；
-- **Calculate**：能计算 NPV，并在 downside scenario 中检查 cash 与 covenant；
-- **Diagnose**：能从“汇率波动”追到真正的 value-destruction mechanism；
-- **Decide**：能写出 decision、owner、response 和 threshold；
-- **Challenge**：能指出自己的假设和可能推翻结论的证据。
 
 ## 第二部分｜指定阅读：原文、框架及概述
 
@@ -359,9 +227,9 @@ Berk 提供的是 Day 1 的基础语言。企业价值来自未来现金流，�
 | **option** | /ˈɒpʃn/ | 期权；给予权利而非义务，在条件满足时交易。 |
 | **swap** | /swɒp/ | 互换；双方交换不同现金流，如固定与浮动利息。 |
 
-#### 阅读后必须能回答
+#### 这篇阅读在今天的作用
 
-一个项目 NPV 为正，但第二年现金余额为负。为什么这不是“只要借钱就可以解决”的问题？你应同时讨论 financing cost、liquidity、covenant 和 real option。
+Berk 为今天的前半段提供基础。它先教你辨认项目真正改变的现金流，再用折现判断这些现金流今天值多少钱；随后解释债务、股权和短期资金安排为什么会影响项目能否完成。读完这一部分，你应该形成一个清楚的认识：**正 NPV 只说明项目在给定假设下可能创造价值，并不保证公司一定有足够现金把价值实现出来。**
 
 ### 阅读二｜Stulz (1996), “Rethinking Risk Management”
 
@@ -409,9 +277,9 @@ Stulz 不把风险管理理解为“降低所有波动”。如果 downside loss
 | **natural hedge** | /ˈnætʃrəl hedʒ/ | 通过收入、成本或债务币种匹配降低风险。 |
 | **counterparty risk** | /ˈkaʊntəpɑːti rɪsk/ | 合同另一方不能履约的风险。 |
 
-#### 阅读后必须能回答
+#### 这篇阅读在今天的作用
 
-“股东已经分散投资，所以公司不需要管理总风险。”这句话错在哪里？答案必须包含 financing friction、underinvestment 和 investment capacity，而不是只说“公司怕亏损”。
+Stulz 接在 Berk 之后，解释为什么一个原本有价值的项目仍可能因为风险而失败。关键不在于公司是否出现波动，而在于坏情境是否会造成严重现金损失，使外部融资变得昂贵或无法取得，最终迫使公司放弃好项目。因此，风险管理的价值来自保护公司继续投资的能力，而不是让每一期利润都保持平稳。
 
 ### 阅读三｜Nocco & Stulz (2006), “Enterprise Risk Management: Theory and Practice”
 
@@ -425,61 +293,42 @@ Stulz 不把风险管理理解为“降低所有波动”。如果 downside loss
 
 1. **Macro ERM**：怎样保护公司整体资本、融资和战略执行能力？
 2. **Micro ERM**：怎样让业务经理在每个决定中考虑风险？
-3. **Risk appetite**：企业愿意承担多少风险，边界如何进入真实决定？
-4. **Risk ownership**：Board、CRO、CFO 与 business owner 分别负责什么？
-5. **Portfolio view**：多个风险合起来是否形成 concentration 和 correlation？
-6. **Risk-adjusted allocation**：有限资本应配置给哪些风险—回报组合？
+3. **Portfolio view**：多个单独看来合理的项目，合起来是否依赖同一种风险？
+4. **Capital allocation**：公司的现金和融资能力有限时，应该优先支持哪些项目？
 
 #### 内容概述
 
-Nocco & Stulz 把 Stulz 的价值逻辑升级为组织系统。宏观层面，ERM 保护公司在坏情境下仍能获得资本并执行战略；微观层面，风险判断必须进入业务日常决定，而不能全部交给 CRO。Risk appetite 需要通过 limits、metrics 和 thresholds 进入资本预算与绩效评价。Portfolio view 则防止不同部门各自看起来合理、公司整体却集中依赖同一个货币、客户、利率或供应商。ERM 的目标不是降低所有风险，而是把有限 risk capacity 配置给公司最有优势的核心风险。
+Nocco & Stulz 把视角从“某一个风险是否需要对冲”提高到“公司所有项目合在一起是否仍然安全”。宏观层面，企业要保护整体资本和融资能力；微观层面，每个项目除了看自己的回报，还要说明它会占用多少公司整体的风险承受能力。多个部门可能分别作出合理决定，却共同依赖同一个货币、客户或供应商。Portfolio view 的作用，就是发现这种单项目分析看不到的集中风险，并帮助公司把有限资本优先配置给最值得承担的风险。
 
 **Day 1 的停止点**：理解 enterprise view 为什么改善 financing capacity 与 capital allocation，即可。Risk appetite 的正式设计、风险类别、COSO components、board/CRO governance 和 ERM implementation 将在 Day 3 结合 COSO、Grant Thornton、Deloitte 与 DSM 深入学习；今天不提前替代那一课。
 
-#### 必懂词汇
+#### 词汇｜Day 1 必须掌握
 
 | 词汇 | 音标 | 白话解释 |
 |---|---|---|
 | **enterprise risk management** | /ˈentəpraɪz rɪsk ˈmænɪdʒmənt/ | 将风险—回报判断嵌入战略和经营决定。 |
 | **macro level** | /ˈmækrəʊ ˈlevl/ | 从公司整体资本与风险组合看问题。 |
 | **micro level** | /ˈmaɪkrəʊ ˈlevl/ | 从单个业务或项目决定看问题。 |
-| **risk appetite** | /rɪsk ˈæpɪtaɪt/ | 企业为实现战略愿意承担的风险范围。 |
 | **risk capacity** | /rɪsk kəˈpæsəti/ | 企业客观上最多能承受多少风险。 |
-| **boundary** | /ˈbaʊndri/ | 不应越过的界线。 |
-| **threshold** | /ˈθreʃhəʊld/ | 达到某个数字后触发行动的阈值。 |
-| **risk owner** | /rɪsk ˈəʊnə/ | 对某项风险的识别、应对和报告负责的人。 |
-| **CRO** | /ˌsiː ɑːr ˈəʊ/ | Chief Risk Officer，首席风险官。 |
 | **portfolio view** | /pɔːtˈfəʊliəʊ vjuː/ | 把不同风险放在公司整体一起观察。 |
 | **concentration** | /ˌkɒnsnˈtreɪʃn/ | 风险过度依赖同一客户、货币或供应商。 |
 | **correlation** | /ˌkɒrəˈleɪʃn/ | 多项风险是否容易同时变化。 |
-| **stress scenario** | /stres səˈnɑːriəʊ/ | 检验严重但合理坏情境的压力测试情境。 |
 | **capital allocation** | /ˈkæpɪtl ˌæləˈkeɪʃn/ | 决定有限资本投入哪些业务或项目。 |
 | **risk-adjusted capital** | /rɪsk əˈdʒʌstɪd ˈkæpɪtl/ | 根据风险大小调整后用于评价或配置的资本。 |
-| **metric** | /ˈmetrɪk/ | 观察结果或风险变化的衡量指标。 |
-| **escalation** | /ˌeskəˈleɪʃn/ | 风险越界后提交给更高权限处理。 |
-| **review date** | /rɪˈvjuː deɪt/ | 预先确定重新检查决定的日期。 |
 | **liquidity buffer** | /lɪˈkwɪdəti ˈbʌfə/ | 为意外情况保留的现金或融资额度。 |
 | **covenant headroom** | /ˈkʌvənənt ˈhedruːm/ | 距离违反债务条款还剩多少空间。 |
-| **cash-flow-at-risk** | /kæʃ fləʊ ət rɪsk/ | 在给定期间和置信水平下现金流可能下降的程度。 |
-| **committed order** | /kəˈmɪtɪd ˈɔːdə/ | 客户已有较强合同义务的订单，不只是预测。 |
-| **cash burn** | /kæʃ bɜːn/ | 项目或公司消耗现金的速度。 |
-| **re-approval** | /ˌriː əˈpruːvl/ | 条件改变或越界后重新获得批准。 |
 
-#### 阅读后必须能回答
+Risk appetite、risk ownership、CRO、limits 和完整 governance framework 虽然在文章中出现，但属于 Day 3 的重点。Day 1 先不展开，避免把“金融管理为什么创造价值”与“风险治理体系怎样落地”混成一课。
 
-为什么把项目放回 enterprise portfolio，会改变原本只看 NPV 的投资判断？答案应说明共同 exposure、concentration、financing capacity 和 capital allocation；不需要提前展开 Day 3 的完整 COSO governance。
+#### 这篇阅读在今天的作用
 
-### 三篇阅读合起来怎样使用
+Nocco & Stulz 完成今天的最后一步：一个项目不能只证明自己 NPV 为正，还要说明它是否与其他项目共同依赖同一种风险，以及它会占用多少公司的现金、借款能力和风险承受空间。这就是从单项目估值进入企业整体资本配置，但今天不延伸到 Day 3 的 COSO 和治理设计。
 
-面对任何 Day 1 案例，按三个作者顺序写：
+### 最后把三篇阅读连成一条主线
 
-1. **Berk**：项目的 incremental cash flows、NPV、liquidity 和 flexibility 是什么？
-2. **Stulz**：哪个 downside 会造成 financing constraint 和 underinvestment？风险应保留还是转移？
-3. **Nocco & Stulz**：这个决定如何改变 enterprise portfolio、financing capacity 和 capital allocation？Risk appetite 与 ownership 在今天只识别概念，Day 3 再系统应用。
+三篇阅读不是三个平行主题。Berk 先帮助公司判断项目是否创造价值，并看清完成项目需要多少资金；Stulz 接着解释，某些金融风险为什么会通过现金短缺和融资困难，使公司失去完成好项目的能力；Nocco & Stulz 最后提醒，管理层还要把这个项目放回公司全部项目中，检查共同风险和有限资本应该如何分配。
 
-最终答案必须包含：
-
-> **Decision + value logic + risk classification + response + owner + threshold + residual risk**
+因此，Day 1 最重要的逻辑只有一句话：**先确认价值，再确认公司能否为价值持续提供资金；随后管理那些会破坏这种能力的风险，最后检查单个好决定放到公司整体以后是否仍然合理。**
 
 ### 跨文章证据地图｜每个结论应该回到哪里
 
@@ -492,63 +341,3 @@ Nocco & Stulz 把 Stulz 的价值逻辑升级为组织系统。宏观层面，ER
 | Portfolio view 与 risk-adjusted capital allocation | Nocco & Stulz (2006) | Journal PDF 已有；Day 1 bridge | 不要只看单项风险，要检查 concentration 与 correlation。 |
 
 这张表的目的，是防止 AI 把看似合理但来源不清的内容混入答案。正式作业中，每个关键判断都应能回到具体 reading、case fact 或额外可靠资料。
-
-### 反向测试｜10 道区分“理解”与“背诵”的问题
-
-先关闭本页，用自己的话作答。每题写 3–6 句完整的话。不要只列术语：你需要说明事情为什么会发生、不同选择各自要付出什么代价，以及坏到什么程度时公司必须改变决定。完成后再看后面的答案锚点。
-
-1. **识别真正相关的现金流。** 一家公司去年已经支付 EUR 2m 做市场调研，现在才决定是否建设新工厂。请判断这笔钱通常是否应该进入今天的投资分析，并说明判断标准。然后设想一种例外情形：今天的决定能够改变未来可收回的金额或现金流，此时你的处理为什么可能不同？
-2. **区分“项目有价值”与“现在应该全部投入”。** 某项目的 base-case NPV 为正，但前两年需要持续投入现金，而且关键市场需求还没有得到验证。请说明管理层为什么仍可能选择延迟或分阶段投资，并比较等待获得新信息的价值与延迟收益的代价。
-3. **选择与风险匹配的折现率。** 一家公司可以按 5% 的利率借款，于是管理层想用 5% 折现所有新项目。请解释这种做法为什么可能高估高风险项目，并说明项目风险、投资者要求的回报与贷款利率之间分别是什么关系。
-4. **解释企业对冲为什么可能创造价值。** 假设股东已经持有充分分散的投资组合，公司仍计划为美元收入做外汇对冲。请不要只回答“降低波动”，而要完整说明汇率损失如何经过现金短缺、融资困难或投资不足，最终损害公司价值。
-5. **区分好结果与好决定。** Treasury 因为预测美元会上升而降低了原定对冲比例，最后公司因此多赚了钱。请判断这个结果能否证明当初的决定正确，并说明你会使用哪些事前信息和政策标准评价决策质量。
-6. **理解过度对冲。** 公司预计明年有 USD 100m 销售，因此提前对冲全部金额，但最终实际销售只有 USD 60m。请解释为什么剩余的 USD 40m 不再是对冲，而会变成新的市场头寸；再说明公司如何根据 committed revenue 与 forecast revenue 设计更合理的比例。
-7. **说明分散化的能力与边界。** 一位股东通过持有很多股票降低了单一公司事件对个人财富的影响。请解释这种分散化能够降低哪类风险、不能消除哪类风险，以及为什么它不能直接解决某一家公司的 cash shortfall。
-8. **把投资者预期连接到公司融资。** 如果投资者认为某行业未来现金流更不确定，他们要求的回报会发生什么变化？请沿着 investor expectations → required return → security price → financing terms 的顺序，完整解释这种变化如何影响公司的投资决定。
-9. **从单个好项目转向企业组合。** 两个项目单独计算都有正 NPV，但它们的收入都依赖美元、同一个美国客户，而且在坏情境下会同时需要额外资金。请说明公司为什么可能延迟其中一个项目，并明确指出 portfolio view 比单项目 NPV 多看见了什么。
-10. **形成一段可以执行的管理建议。** 回到美国扩产案例，写一段完整 recommendation。先说明是否投资及价值依据，再区分公司应承担的 core risk 与可转移的 non-core risk，最后写清 response、负责人、触发重新决策的 threshold，以及采取措施后仍然存在的 residual risk。不要只罗列这些英文词，要把它们写成一条连续的因果链。
-
-#### 答案锚点｜用于纠错，不是标准范文
-
-1. 已支付且不可收回通常是 sunk cost；只有当决定会改变未来可收回价值或后续现金流时才重新分析。
-2. Base-case NPV 可能忽略 liquidity gap、covenant pressure 与新信息价值；staging 可以限制 downside 并保留 upside。
-3. Discount rate 应匹配项目现金流风险；贷款利率只反映债务请求权与借款条件，且可能造成 financing effect 重复计算。
-4. Financing friction 可能让 downside cash loss 造成 underinvestment；hedging 可保护 investment capacity。
-5. 不能。结果好可能来自 market luck；需要按 mandate、benchmark、limit 和 risk-adjusted result 评价 decision quality。
-6. 实际销量低于 forecast 时，hedge position 可能超过真实 exposure，原本的 hedge 会创造新的市场头寸。
-7. Diversification 可以降低 company-specific risk，但不能自动消除 systematic risk，也不能把公司内部缺失的现金转回公司。
-8. 投资者对 cash flow 与 risk 的预期影响 required return；required return 进入 discount rate，并通过市场定价和融资条件影响公司决定。
-9. 两个项目可能共同依赖 USD、同一客户或供应商，在坏情境下同时恶化，形成 concentration 并占用相同 financing capacity。
-10. 没有唯一答案；检查是否形成完整因果链，而不是只列术语。
-
-### 错题闭环｜每错一题只做四步
-
-1. **定位错误类型**：定义错、因果断裂、遗漏 trade-off、缺少 evidence，还是没有 threshold？
-2. **回到原文**：找到 Berk、Stulz 或 Nocco & Stulz 中真正支持该判断的位置。
-3. **重写答案**：不复制解释，用自己的公司案例重新回答。
-4. **迁移一次**：换一个行业，检验同一逻辑是否仍成立，以及边界在哪里。
-
-可以把下面这段直接交给 AI，当作纠偏提示词：
-
-> 只依据 Day 1 的三份指定资料检查我的答案。不要直接给标准答案。先指出我遗漏的因果环节、混淆的概念和没有证据支持的推论；再问我一个追问，逼我自己修正。最后分别标记：原文事实、合理推论、仍需核实。
-
-AI 的作用是指出知识漏洞，不是替你完成最后判断。真正的完成标准是：关闭页面后，你仍能用新的案例重建同一条逻辑。
-
-### 课堂问题中的常见指令词
-
-| 指令词 | 音标 | 老师真正要求你做什么 |
-|---|---|---|
-| **explain** | /ɪkˈspleɪn/ | 解释因果，不只是给定义。 |
-| **calculate** | /ˈkælkjuleɪt/ | 完成计算并解释结果含义。 |
-| **assess** | /əˈses/ | 根据标准评价严重性或质量。 |
-| **compare** | /kəmˈpeə/ | 指出相同点、差异及差异为何重要。 |
-| **diagnose** | /ˌdaɪəɡˈnəʊz/ | 找到表面现象背后的机制。 |
-| **recommend** | /ˌrekəˈmend/ | 提出具体选择并用证据支持。 |
-| **justify** | /ˈdʒʌstɪfaɪ/ | 说明为什么选择比替代方案合理。 |
-| **challenge** | /ˈtʃælɪndʒ/ | 质疑假设并寻找反方证据。 |
-| **implement** | /ˈɪmplɪment/ | 把建议转化为 owner、步骤、资源和时间。 |
-| **preserve** | /prɪˈzɜːv/ | 保护并保留，如 preserve investment capacity。 |
-| **proceed** | /prəˈsiːd/ | 继续执行，如 proceed with the investment。 |
-| **trigger** | /ˈtrɪɡə/ | 达到条件后触发预先规定的行动。 |
-
-如果你能在不回看页面的情况下，用三篇阅读依次解释美国扩产案例，并正确使用上述关键词，Day 1 才算从“看懂”进入“掌握”。
