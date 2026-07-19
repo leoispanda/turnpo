@@ -511,7 +511,7 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 12,
+      "materialsRevision": 14,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
@@ -521,7 +521,7 @@
           "title": "Day 1｜Financial Management",
           "type": "daily_course_intro",
           "file": "/emba/materials/2026-09/days/2026-09-07-financial-management.md",
-          "notes": "只分两部分：第一部分讲清今天的知识与贯穿案例；第二部分逐篇提供指定阅读的原文入口、作者框架、中文概述、必懂词汇和验证问题。"
+          "notes": "严格按 Syllabus 的 Financial Management outcomes：先建地图再学习投资/融资、金融市场、risk-return、diversification、derivatives 与 financial risk management；Nocco & Stulz 只作 Day 3 ERM 的桥接。"
         },
         {
           "title": "Day 2｜Compliance & Sustainability Reporting",
