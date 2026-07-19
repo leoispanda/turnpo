@@ -742,8 +742,8 @@ function renderKnowledgeResult(note, isSelected) {
         <span class="emba-knowledge-result-meta">${escapeHtml(noteMetaText(note))}</span>
       </div>
       <div class="emba-knowledge-result-actions">
-        ${note.md_file ? `<a class="emba-file-link" href="${escapeHtml(note.md_file)}" target="_blank" rel="noopener">Open MD</a>` : ""}
-        ${note.source_file ? `<a class="emba-file-link" href="${escapeHtml(note.source_file)}" target="_blank" rel="noopener">Open source${sourceCount > 1 ? ` (${sourceCount})` : ""}</a>` : ""}
+        ${note.md_file ? `<a class="emba-file-link" href="${escapeHtml(note.md_file)}" target="_blank" rel="noopener noreferrer">Open MD</a>` : ""}
+        ${note.source_file ? `<a class="emba-file-link" href="${escapeHtml(note.source_file)}" target="_blank" rel="noopener noreferrer">Open source${sourceCount > 1 ? ` (${sourceCount})` : ""}</a>` : ""}
         ${note.month ? `<button class="emba-text-btn" type="button" data-knowledge-month="${escapeHtml(note.month)}">Show month</button>` : ""}
       </div>
     </article>
@@ -795,10 +795,7 @@ function markdownInline(value = "", basePath = "") {
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, label, url) => {
       const safeUrl = safeMarkdownLink(url, basePath);
-      if (/^\/emba\/materials\/.*\.md$/i.test(safeUrl)) {
-        return `<button class="emba-markdown-link" type="button" data-material-open="${escapeHtml(safeUrl)}" data-material-title="${label}">${label}</button>`;
-      }
-      return safeUrl ? `<a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener">${label}</a>` : label;
+      return safeUrl ? `<a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer">${label}</a>` : label;
     });
 }
 
@@ -950,8 +947,8 @@ function renderKnowledgePreview(note, markdown) {
         <p>${escapeHtml(note.summary || noteMetaText(note))}</p>
       </div>
       <div class="emba-knowledge-preview-actions">
-        ${note.md_file ? `<a class="emba-file-link" href="${escapeHtml(note.md_file)}" target="_blank" rel="noopener">Open MD</a>` : ""}
-        ${note.source_file ? `<a class="emba-file-link" href="${escapeHtml(note.source_file)}" target="_blank" rel="noopener">Open source</a>` : ""}
+        ${note.md_file ? `<a class="emba-file-link" href="${escapeHtml(note.md_file)}" target="_blank" rel="noopener noreferrer">Open MD</a>` : ""}
+        ${note.source_file ? `<a class="emba-file-link" href="${escapeHtml(note.source_file)}" target="_blank" rel="noopener noreferrer">Open source</a>` : ""}
       </div>
     </div>
     <div class="emba-knowledge-preview-meta">
@@ -1135,7 +1132,7 @@ function renderMaterials(month, section = "materials") {
               </div>
               ${isReadableMaterial(item.file) ? `<span class="emba-read-action">阅读介绍 →</span>` : ""}
             ${isReadableMaterial(item.file) ? `</button>` : `</div>`}
-            ${item.file && !isReadableMaterial(item.file) ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener">Open file</a>` : ""}
+            ${item.file && !isReadableMaterial(item.file) ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener noreferrer">Open file</a>` : ""}
           </li>
         `).join("")}
       </ul>
@@ -1158,7 +1155,7 @@ function renderMaterials(month, section = "materials") {
           <li class="emba-edit-item">
             <input class="emba-edit-input" value="${escapeHtml(item.title)}" data-material-field="title" data-index="${index}" aria-label="Material title" />
             <input class="emba-edit-input" value="${escapeHtml(item.notes || "")}" data-material-field="notes" data-index="${index}" aria-label="Material notes" />
-            ${item.file ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener">Open file</a>` : `<span class="emba-file-spacer" aria-hidden="true"></span>`}
+            ${item.file ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener noreferrer">Open file</a>` : `<span class="emba-file-spacer" aria-hidden="true"></span>`}
             <button class="emba-text-btn" type="button" data-material-delete="${index}">Delete</button>
           </li>
         `).join("")}
@@ -1300,7 +1297,7 @@ function renderStructuredThinkingItem(item, index) {
           ${sourceMeta || item.image ? `
             <div class="emba-thinking-source">
               ${sourceMeta ? `<span>${escapeHtml(sourceMeta)}</span>` : ""}
-              ${item.image ? `<a href="${escapeHtml(item.image)}" target="_blank" rel="noopener">查看原图</a>` : ""}
+              ${item.image ? `<a href="${escapeHtml(item.image)}" target="_blank" rel="noopener noreferrer">查看原图</a>` : ""}
             </div>
           ` : ""}
         </div>
@@ -1402,7 +1399,7 @@ function renderMarkdown(month) {
             </div>
             ${sources.length ? `
               <div class="emba-note-source-actions">
-                ${sources.map((item, index) => `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener">${escapeHtml(sourceLinkLabel(item, index))}</a>`).join("")}
+                ${sources.map((item, index) => `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener noreferrer">${escapeHtml(sourceLinkLabel(item, index))}</a>`).join("")}
               </div>
             ` : ""}
           </div>
