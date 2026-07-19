@@ -55,6 +55,32 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+async function copyPlainText(value = "") {
+  const text = String(value || "");
+  if (!text) return false;
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.setAttribute("readonly", "");
+    textArea.style.position = "fixed";
+    textArea.style.left = "-9999px";
+    textArea.style.top = "0";
+    document.body.append(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      return document.execCommand("copy");
+    } catch {
+      return false;
+    } finally {
+      textArea.remove();
+    }
+  }
+}
+
 function normalize(value) {
   return String(value || "").trim().toLowerCase();
 }
@@ -1180,6 +1206,7 @@ function isReadableMaterial(file = "") {
 function renderMaterialReader() {
   const reader = state.materialReader;
   if (!reader) return "";
+  const canCopy = !reader.loading && !reader.error && Boolean(reader.markdown);
   const body = reader.loading
     ? `<p class="emba-empty-copy">正在打开课程介绍…</p>`
     : reader.error
@@ -1193,7 +1220,11 @@ function renderMaterialReader() {
           <h3>${escapeHtml(reader.title || "Material")}</h3>
           ${reader.notes ? `<p>${escapeHtml(reader.notes)}</p>` : ""}
         </div>
-        <button class="emba-file-link" type="button" data-material-back>← 返回资料</button>
+        <div class="emba-material-reader-actions">
+          ${canCopy ? `<button class="emba-file-link emba-material-copy" type="button" data-material-copy>一键复制给 GPT</button>` : ""}
+          <button class="emba-file-link" type="button" data-material-back>← 返回资料</button>
+          <span class="emba-material-copy-status" data-material-copy-status role="status" aria-live="polite"></span>
+        </div>
       </div>
       ${body}
     </article>
@@ -1688,13 +1719,29 @@ $("#embaTimeline")?.addEventListener("click", (event) => {
   setActiveMonth(button.dataset.monthId || "");
 });
 
-$("#embaMonthDetail")?.addEventListener("click", (event) => {
+$("#embaMonthDetail")?.addEventListener("click", async (event) => {
   const blockClose = event.target.closest("[data-block-close]");
   if (blockClose) {
     state.openBlockId = "";
     state.materialReader = null;
     renderMonthDetail(selectedMonth());
     scrollToMonthTarget("#embaMonthDetail");
+    return;
+  }
+
+  const materialCopy = event.target.closest("[data-material-copy]");
+  if (materialCopy) {
+    event.preventDefault();
+    const status = $("[data-material-copy-status]");
+    const originalLabel = materialCopy.textContent;
+    const copied = await copyPlainText(state.materialReader?.markdown || "");
+    materialCopy.textContent = copied ? "已复制" : "复制失败";
+    if (status) status.textContent = copied ? "完整 Markdown 已复制，可直接粘贴给 GPT。" : "请选中文档内容手动复制。";
+    window.setTimeout(() => {
+      if (!materialCopy.isConnected) return;
+      materialCopy.textContent = originalLabel;
+      if (status) status.textContent = "";
+    }, 2400);
     return;
   }
 

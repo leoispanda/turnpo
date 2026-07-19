@@ -511,12 +511,18 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 18,
+      "materialsRevision": 19,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
       "memoryRevision": 0,
       "materials": [
+        {
+          "title": "September CFA｜Knowledge Map + GPT Copy Pack",
+          "type": "course_overview",
+          "file": "/emba/materials/2026-09/2026-09-cfa-knowledge-map-gpt-pack.md",
+          "notes": "五天知识依赖图、16 项阅读证据状态、核心术语、integrated case 分析顺序与 GPT 教学指令；打开后可一键复制完整 Markdown。"
+        },
         {
           "title": "Day 1｜Financial Management",
           "type": "daily_course_intro",

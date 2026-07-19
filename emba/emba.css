@@ -776,6 +776,28 @@ body::before {
   line-height: 1.5;
 }
 
+.emba-material-reader-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.emba-material-copy {
+  border-color: rgba(154, 119, 42, 0.34);
+  background: rgba(177, 138, 47, 0.1);
+  color: #785c20;
+}
+
+.emba-material-copy-status {
+  flex-basis: 100%;
+  min-height: 16px;
+  color: #6e6e73;
+  font-size: 11px;
+  line-height: 1.35;
+  text-align: right;
+}
+
 .emba-list {
   display: grid;
   gap: 10px;
@@ -1731,9 +1753,22 @@ body::before {
   }
 
   .emba-note-reader-head,
+  .emba-material-reader-head,
   .emba-note-source-actions {
     display: grid;
     justify-content: stretch;
+  }
+
+  .emba-material-reader-actions {
+    justify-content: stretch;
+  }
+
+  .emba-material-reader-actions .emba-file-link {
+    width: 100%;
+  }
+
+  .emba-material-copy-status {
+    text-align: left;
   }
 
   .emba-knowledge-controls {
