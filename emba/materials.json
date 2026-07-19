@@ -511,7 +511,7 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 10,
+      "materialsRevision": 11,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
@@ -521,7 +521,7 @@
           "title": "Day 1｜Financial Management",
           "type": "daily_course_intro",
           "file": "/emba/materials/2026-09/days/2026-09-07-financial-management.md",
-          "notes": "一条完整认知链：从项目价值、融资与流动性，到 Stulz 的风险管理价值逻辑，再到 Nocco & Stulz 的 ERM 系统；以一个贯穿案例达到迁移与决策级掌握。"
+          "notes": "一条完整认知链：价值、融资、风险与 ERM；重点英语首次出现即给中文，并附词族、音标与白话解释的 Day 1 全量词汇支持。"
         },
         {
           "title": "Day 2｜Compliance & Sustainability Reporting",
