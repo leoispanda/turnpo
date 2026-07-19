@@ -511,7 +511,7 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 9,
+      "materialsRevision": 10,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
@@ -521,7 +521,7 @@
           "title": "Day 1｜Financial Management",
           "type": "daily_course_intro",
           "file": "/emba/materials/2026-09/days/2026-09-07-financial-management.md",
-          "notes": "价值、风险、资本与对冲：点击后进入当天介绍，并逐篇打开 Berk、Stulz 与 Nocco & Stulz 学习卡。"
+          "notes": "一条完整认知链：从项目价值、融资与流动性，到 Stulz 的风险管理价值逻辑，再到 Nocco & Stulz 的 ERM 系统；以一个贯穿案例达到迁移与决策级掌握。"
         },
         {
           "title": "Day 2｜Compliance & Sustainability Reporting",
