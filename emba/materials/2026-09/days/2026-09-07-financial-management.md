@@ -1,506 +1,384 @@
-# Day 1｜Financial Management：从“项目有价值”到“公司有能力实现价值”
+# Day 1｜Financial Management
 
 > **Monday 7 September｜08:30–19:00**
 >
-> 指定阅读：[Berk, DeMarzo & Harford](../readings/summaries/berk-demarzo-harford-2025-reading-roadmap.md) → [Stulz (1996)](../readings/summaries/stulz-1996-rethinking-risk-management.md) → [Nocco & Stulz (2006)](../readings/summaries/nocco-stulz-2006-erm-theory-practice.md)
+> 今天的核心问题：**当一个项目看起来能够创造价值时，公司如何融资、管理风险，并确保自己在坏情境下仍有能力把价值实现出来？**
 
-## 今天只解决一个问题
+## 第一部分｜今天讲什么
 
-> **当一个投资项目看起来能够创造价值时，公司应该如何融资、管理风险，并确保自己在坏情境下仍有能力把价值实现出来？**
+### 今天最终要形成的能力
 
-这是 Day 1 的唯一主线。三份阅读不是三个独立知识点：
-
-- **Berk** 回答：项目和公司价值怎样被识别、计算与解释？
-- **Stulz** 回答：如果股东可以自己分散风险，公司为什么还需要 risk management？
-- **Nocco & Stulz** 回答：如何把一次对冲判断升级为董事会、CRO 和业务共同运行的 ERM system？
-
-把整天内容记成一条因果链即可：
-
-> **Incremental cash flow → present value → financing need → risk exposure → cash shortfall → underinvestment → risk response → investment capacity**
-
-中文意思是：
+今天不是分别学习 NPV、hedging 和 ERM，而是要把它们连接成一个完整的管理判断：
 
 > **增量现金流 → 现值 → 融资需求 → 风险敞口 → 现金缺口 → 投资不足 → 风险应对 → 投资能力**
 
-### 本页的英语辅助规则
+对应的英文逻辑是：
 
-你不需要离开页面查词。重要术语第一次出现时会直接给中文解释；页面后部的“Day 1 全量重点词汇表”按知识链收录词形、音标和白话含义。遇到不认识的词时，先继续理解句子的因果关系，再回到词汇表确认，不把学习主线切断。
+> **Incremental cash flow → present value → financing need → risk exposure → cash shortfall → underinvestment → risk response → investment capacity**
 
-学完后，你不只要会说“项目 NPV 为正”，还要能够完成一个更高级的判断：
+学完以后，你应该能够对一个陌生公司说清楚：
 
-> The project creates value in the base case, but the company should proceed only with a financing and risk design that preserves its ability to invest under adverse conditions.
+1. 这项投资为什么创造价值；
+2. 什么坏情境会让公司无法实现这份价值；
+3. 哪些风险应该承担，哪些应该对冲、保险或转移；
+4. 谁负责风险，什么指标越界后必须改变决定。
 
----
+### 逻辑一｜先判断项目是否创造价值
 
-## 第一章｜先建立价值：Berk 提供的是一套决策语言
+第一步不是看 accounting profit（会计利润），而是找 **incremental cash flow（增量现金流）**：与“不做这个项目”相比，哪些现金流因为接受项目才发生变化。
 
-### 1. 从 accounting profit（会计利润）切换到 incremental cash flow（增量现金流）
+需要排除：
 
-企业不是因为某项投资“看起来盈利”就获得价值。第一步要问：**如果接受这个决定，哪些未来现金流会因此改变？**
+- sunk cost（沉没成本）：已经发生且无法收回的成本；
+- 与决定无关的共同成本；
+- 只改变会计呈现、没有改变现金的项目。
 
-这就是 **incremental cash flow** /ˌɪnkrəˈmentl kæʃ fləʊ/，即“因这项决定而新增或减少的现金流”。
+需要加入：
 
-分析时要剔除：
+- opportunity cost（机会成本）；
+- cannibalization（新产品蚕食旧产品销售）；
+- working capital（营运资本）；
+- tax（税）与 capex（资本性支出）；
+- 项目结束时的回收现金流。
 
-- 已经发生、无论是否投资都无法收回的 **sunk cost（沉没成本）**；
-- 本来就会发生、与决定无关的共同成本；
-- 只改变会计分类但不改变现金流的项目。
-
-同时要加入：
-
-- 被项目占用的土地、设备或管理时间的 **opportunity cost（机会成本）**；
-- 项目挤压现有产品销售形成的 **cannibalization（内部蚕食）**；
-- **working capital（营运资本）**、tax（税）、maintenance capex（维护性资本开支）和结束项目时的回收现金流。
-
-高级学习者的判断标准不是“我会列现金流”，而是能解释：**为什么这笔现金流只有在接受项目时才存在。**
-
-### 2. 把不同时间的现金流放到同一个价值时点
-
-今天的一欧元与五年后的一欧元不可直接相加，因为今天的资金可以投资，未来现金流也带有不确定性。Berk 的 **time value of money（资金时间价值）** 内容要求你先画 timeline（时间线），再进行 discounting（折现）。
-
-最小公式是：
+然后使用 time value of money（资金时间价值）把不同时间的现金流放到同一个价值时点：
 
 > **NPV = − Initial investment + Σ [Incremental FCFₜ ÷ (1 + r)ᵗ]**
 
-其中：
+NPV > 0 表示：在当前现金流和折现率假设下，项目预计创造超过资本机会成本的价值。但它只是判断起点，因为 base case（基准情境）可能没有充分反映融资限制、tail scenario（尾部情境）和 managerial flexibility（管理灵活性）。
 
-- **net present value (NPV)** /net ˈprezənt ˈvæljuː/：所有增量现金流折现后的净价值；
-- **discount rate** /ˈdɪskaʊnt reɪt/：承担同等风险的投资者要求的回报；
-- `t`：现金流发生的时间，而不是财务报表列示的顺序。
+### 逻辑二｜再判断公司能否活到价值实现的那一天
 
-关键不是记住公式，而是避免三个常见错误：
+长期 NPV 为正，不代表短期不会出现 liquidity problem（流动性问题）。项目早期现金流为负时，公司可能：
 
-1. 用贷款利率直接折现所有项目现金流；
-2. 将 nominal cash flow 与 real discount rate 混用；
-3. 在现金流里扣除 financing cost 后，又通过 discount rate 重复计算融资影响。
+- 需要昂贵的 external financing（外部融资）；
+- 违反债务 covenant（契约条款）；
+- 被迫削减其他必要投资；
+- 放弃后来出现的正 NPV 项目。
 
-**NPV > 0** 表示：在给定现金流和风险假设下，项目预计创造超过资本机会成本的价值。但它不是让管理层停止思考的按钮，因为 **base-case forecast（基准情境预测）** 可能尚未充分纳入融资限制、tail scenario（尾部情境）和 real options（实物期权）。
+所以 valuation（估值）之后还要检查：
 
-### 3. 从项目价值走到债券、股票与公司价值
+- 最低 cash balance（现金余额）；
+- liquidity buffer（流动性缓冲）；
+- covenant headroom（契约余量）；
+- 债务 maturity（到期时间）是否与项目 cash generation（现金创造时间）匹配；
+- 缺口是 temporary（暂时性）还是 structural（结构性）。
 
-Berk 的指定范围并不只讲 project valuation，还要求理解 Bonds、Stock Valuation 和 Stock Valuation: A Second Look。它们都建立在同一原则上：**金融资产价值等于投资者未来可获得现金流的现值。**
+如果不确定性很高，公司也不一定只能“立刻全部投资”或“完全不投资”。它可以 delay（延迟）、stage（分阶段）、expand（扩张）、contract（收缩）、switch（转换）或 abandon（退出）。这些选择构成 real options（实物期权）。
 
-- **Bond（债券）** 是对 coupon（票息）和 principal（本金）的合约性请求权；市场利率上升时，既有固定现金流的 present value（现值）通常下降。
-- **Equity（股权）** 是扣除其他请求权后对剩余现金流和增长机会的请求权；其价值取决于未来 cash generation（现金创造能力），而不是过去利润。
-- **Enterprise value（企业价值）** 是经营资产未来 free cash flows（自由现金流）的价值；从 enterprise value 调整 debt（债务）、cash（现金）等项目后，才能连接到 equity value（股权价值）。
-- **Comparable multiples（可比公司估值倍数）** 可以作为估值 sanity check（合理性检查），但同行的 growth（增长）、risk、accounting policy（会计政策）和 capital intensity（资本密集度）不同，不能把平均倍数当作事实。
+### 逻辑三｜理解公司为什么需要管理风险
 
-这一步建立一个重要连接：一个投资项目的 NPV，会通过改变未来 free cash flow 影响 enterprise value；但如果项目迫使公司在坏时点出售资产、紧急融资或放弃其他好项目，最初的价值估计就可能过度乐观。
+如果股东可以自行分散投资，公司为什么还要花钱管理风险？Stulz 的关键回答是：现实世界存在 financing frictions（融资摩擦）。
 
-### 4. 长期有价值，不等于短期活得下来
+风险管理创造价值的路径是：
 
-Chapter 20 的 **Short-Term Financial Planning（短期财务规划）** 要求你同时看 **价值** 与 **liquidity（流动性）**。
+> **风险敞口 → 严重现金损失 → 融资受限 → 放弃好项目 → 长期价值损失**
 
-一个项目可以长期 NPV 为正，却在第二年造成现金余额低于经营所需底线。此时公司可能需要：
+因此，风险管理的目标不是让利润曲线最平滑，而是避免 downside（下行情境）和 tail risk（尾部风险）破坏公司的 investment capacity（投资能力）。
 
-- 以很高成本紧急融资；
-- 违反债务 **covenant** /ˈkʌvənənt/；
-- 延迟供应商付款或削减必要维护；
-- 放弃另一个后来出现、价值更高的项目。
+企业还要区分：
 
-因此，完成 valuation（估值）后必须再做 cash forecast（现金预测）：什么时候出现资金缺口？缺口是 temporary（暂时性）、seasonal（季节性），还是 business model 本身造成的 structural gap（结构性缺口）？可用融资的 maturity（到期期限）与项目 cash generation 是否匹配？
+- **Core business risk（核心经营风险）**：企业依靠知识、能力和战略优势承担并获得回报的风险；
+- **Transferable / non-core risk（可转移／非核心风险）**：企业没有特别优势，但可通过市场工具、保险或合同转移的风险。
 
-### 5. 不确定性不只需要更高折现率，也可能需要 flexibility
+Hedging（对冲）是降低已经存在的 exposure（敞口）；speculation（投机）则是因为市场方向判断而主动增加风险。一个交易是否属于对冲，取决于它相对什么 exposure 和 policy benchmark，而不是取决于它用了哪一种金融工具。
 
-Chapter 21 的 **Option Applications（期权应用）** 把管理者的选择权放回估值：面对高度不确定的项目，公司可以 delay（延迟）、stage（分阶段）、expand（扩张）、contract（收缩）、switch（转换）或 abandon（退出）。
+### 逻辑四｜把一次对冲判断升级为 ERM
 
-例如，公司不必今天一次投入 EUR 80m；可以先投入 EUR 25m 验证需求，再在订单、汇率和 liquidity 达到 threshold 时追加资本。这种 flexibility 可能有价值，因为 downside 被限制，而 upside 仍然保留。
+Nocco & Stulz 进一步说明：即使 CFO 正确决定了某个 hedge ratio（对冲比例），不同部门仍可能各自优化、合起来却让公司承担过多集中风险。
 
-到这里，Berk 留下了 Day 1 的第一个关键问题：
+ERM（Enterprise Risk Management，企业风险管理）需要同时在两个层面运行：
 
-> 如果一个项目 NPV 为正，但汇率、利率或商品价格变化可能让公司在最需要资金时发生 cash shortfall，公司是否应该对冲？
+- **Macro level（公司整体层面）**：保护资本、流动性、信用和战略执行能力；
+- **Micro level（业务决定层面）**：让每个投资、产品和运营决定考虑它对企业整体风险的边际影响。
 
-这正是 Stulz 的起点。
-
----
-
-## 第二章｜为什么公司需要管理风险：Stulz 解释价值机制
-
-### 1. 先理解一个表面矛盾
-
-如果股东持有 **diversified portfolio（分散化投资组合）**，他们可以自行分散公司特有风险。公司花钱降低波动，为什么会创造价值？
-
-Stulz 的回答不是“股东不喜欢风险”，而是：现实市场存在 **financing frictions（融资摩擦）**。严重 downside（下行情境）可能让公司内部现金不足，而 external financing（外部融资）又昂贵或无法及时获得，于是公司被迫放弃正 NPV 项目。这就是 **underinvestment（投资不足）** /ˌʌndərɪnˈvestmənt/。
-
-风险管理创造价值的因果链是：
-
-> Exposure → severe cash-flow loss → financing constraint → cancelled positive-NPV investment → lost long-term value
-
-所以真正需要保护的不是季度利润的平滑，而是 **investment capacity（投资能力）**：企业在坏情境下仍有能力执行好战略的能力。
-
-### 2. 风险管理不等于消除所有风险
-
-企业通过承担风险获得回报。若一家汽车企业不愿承担产品创新、品牌定位和市场需求风险，它也失去了竞争优势的来源。
-
-更合理的区分是：
-
-- **Core business risk（核心经营风险）**：企业有知识、能力或战略优势，必须主动承担并管理的风险；
-- **Transferable / non-core risk（可转移／非核心风险）**：企业没有预测优势，但可以通过市场工具、合同或保险低成本转移的风险。
-
-例如，对制造商而言，设计新产品可能是 core risk；随机押注美元方向通常不是。分类并非永久不变：cyber capability 对普通制造商可能是需要降低/转移的风险，对 cybersecurity company 却可能属于核心能力。
-
-### 3. Hedging 与 speculation 的边界
-
-**Exposure** /ɪkˈspəʊʒə(r)/ 是企业价值或现金流对某个风险因子的敏感程度。**Hedging** /ˈhedʒɪŋ/ 是降低已识别 exposure；**speculation** /ˌspekjuˈleɪʃn/ 则是因为市场方向观点而主动增加风险。
-
-判断一个交易是 hedge 还是 speculation，不看它使用了什么工具，而看它相对哪个 exposure 和 policy benchmark：
-
-- 公司有 USD receivable，卖出 USD forward，通常是在降低 exposure；
-- 公司因为预测美元会升值而故意少对冲，已经加入 market view；
-- 公司没有真实 USD exposure 却买入大量美元衍生品，则是在创造新风险。
-
-“这次押对了”不能证明 decision quality 高。选择性对冲必须有 mandate、limit、benchmark 和 risk-adjusted performance evaluation，否则 treasury 的好运会被误认为能力。
-
-### 4. 对冲决策的五步规则
-
-面对“要不要 hedge”，依次回答：
-
-1. **Identify exposure**：什么变量会通过什么机制影响 cash flow 或 covenant？
-2. **Find the value threshold**：坏到什么程度会影响融资或迫使公司放弃好项目？
-3. **Classify the risk**：公司对承担该风险是否有 comparative advantage？
-4. **Compare responses**：accept、reduce、hedge、insure、contract、stage 或 abandon 各自成本是什么？
-5. **Define residual risk**：采取措施后仍剩什么风险，由谁监控，何时复核？
-
-这里的 **tail risk** /teɪl rɪsk/ 不是“发生概率低，所以不用管”，而是低概率但足以破坏战略执行能力的结果。
-
-Stulz 又留下第二个问题：即使 CFO 正确决定了 hedge ratio，如何确保不同业务单元不会各自优化、合起来却让公司承担过多集中风险？
-
-这就是 Nocco & Stulz 的起点。
-
----
-
-## 第三章｜从一次对冲升级为 ERM：Nocco & Stulz 建立组织系统
-
-### 1. ERM 不只是“所有风险放进一个表”
-
-**Enterprise Risk Management, ERM（企业风险管理）** 的价值在于把 risk-return trade-off（风险—回报权衡）嵌入 strategy（战略）、capital allocation（资本配置）和 daily decisions（日常决策）。它不追求每项风险最小，而是让企业整体风险组合与价值创造目标一致。
-
-两个层面必须同时存在：
-
-- **Macro level**：公司保持足够资本、流动性和市场信任，避免重大 shortfall 破坏战略；
-- **Micro level**：每个 business decision 都考虑它对企业整体风险的边际贡献，而不是只看本部门利润。
-
-### 2. Risk appetite（风险偏好）要进入真实决定
-
-**Risk appetite** /rɪsk ˈæpətaɪt/ 是企业为了实现战略愿意承担的风险范围。它不是“low / medium / high”的装饰性标签，而应转化为可以改变决定的 boundaries，例如：
+其中 risk appetite（风险偏好）不能只是“低、中、高”的标签，而要变成能够改变决定的 boundary（边界）和 threshold（阈值），例如：
 
 - minimum liquidity buffer；
 - maximum cash-flow-at-risk；
-- net debt / EBITDA covenant headroom；
-- maximum single-customer or single-currency concentration；
+- minimum covenant headroom；
+- maximum customer/currency concentration；
 - stop-investment trigger。
 
-如果指标越界后没有明确行动，risk appetite 就没有进入 management system。
+责任也必须清楚：
 
-### 3. 风险所有权不能全部交给 CRO
+- Board / senior management 决定战略、风险偏好和不可接受的结果；
+- CRO 建立共同语言、汇总 exposures 并 challenge assumptions；
+- Business owner 在真实业务决定中拥有风险；
+- CFO 将 risk、liquidity 与 capital allocation 连接起来。
 
-董事会、CRO 和业务负责人承担不同责任：
+### 一个案例把今天全部知识连起来
 
-- **Board / senior management**：决定战略、risk appetite 和不可接受的 enterprise outcomes；
-- **CRO / risk function**：建立共同语言、aggregate exposures、challenge assumptions，并报告组合风险；
-- **Business owner**：在产品、定价、采购、投资和运营决定中真正拥有风险及应对结果。
+一家欧洲设备公司考虑投资 **EUR 80m** 在美国扩产：
 
-CRO 可以提供 framework，但不能替业务部门作每一个 risk-return decision。否则业务可能把风险当成“风险部门的问题”，风险信息也无法进入资源配置。
-
-### 4. Portfolio view（组合视角）改变单个项目的评价
-
-三个单独看都“可接受”的项目，可能同时依赖美元走强、低利率或同一个 cloud provider。单独审批会忽略 concentration 和 correlation。
-
-ERM 因此追问：
-
-- 新项目增加的是公司已经高度集中的 exposure，还是带来 diversification？
-- stress scenario 下哪些风险会同时发生？
-- 某业务的高 accounting return 是否只是因为占用了大量 enterprise risk capacity？
-- 风险被转移后，释放的 capital capacity 应配置给哪个更有优势的项目？
-
-这就是 **risk-adjusted capital allocation**：不是只奖励收益最高的项目，而是比较它创造的价值与占用的整体风险能力。
-
-### 5. 把 ERM 变成一个循环
-
-一个可运行的 ERM decision loop 可以写成：
-
-1. 明确战略目标与 value driver；
-2. 识别决定产生的 exposures 和 dependencies；
-3. 评估 base、downside、tail scenarios 对 cash、covenant 和投资能力的影响；
-4. 比较 risk response 的成本、收益和 residual risk；
-5. 指定 owner、metric、limit、escalation 和 review date；
-6. 将结果放回 enterprise portfolio 和 capital allocation 重新判断。
-
-注意它是循环：新信息、事故或战略变化出现后，原决定必须可以重新打开。
-
----
-
-## 第四章｜用一个贯穿案例完成整天学习
-
-### 案例｜欧洲制造商的美国扩产
-
-一家欧洲精密设备公司考虑投资 **EUR 80m** 在美国扩产。成本主要以 EUR 支付，未来收入主要为 USD。
-
-- Base-case project NPV：**+EUR 14m**；
-- 前两年为负 free cash flow；
-- USD 贬值 15% 时，项目 NPV 仍略为正，但公司 liquidity buffer 会跌破 EUR 15m；
+- Base-case NPV：+EUR 14m；
+- 前两年 free cash flow 为负；
+- 收入主要为 USD，成本主要为 EUR；
+- USD 贬值 15% 时，项目 NPV 仍略为正，但公司 liquidity buffer 会低于 EUR 15m；
 - 债务 covenant 要求 net debt / EBITDA 不超过 3.5×；
-- 100% hedge 预计成本 EUR 1.8m，但第三至第五年收入尚未全部签约；
-- 公司可以用 EUR 3m 获得一年后再决定是否扩大第二条产线的 option。
+- 100% hedge 需要 EUR 1.8m，但第三至第五年的销量尚未完全签约；
+- 公司可支付 EUR 3m，保留一年后再决定是否扩建第二条产线的 option。
 
-不要立即回答“投”或“不投”。沿整天的逻辑完成六步。
+按照今天的四层逻辑分析：
 
-### Step 1｜Value：项目是否创造价值？
+#### 1. Value
 
-Base-case NPV 为正，只能说明在当前 cash-flow 与 discount-rate assumptions 下预计创造价值。先检查 incremental revenue、working capital、tax、capex、terminal assumptions，以及 USD cash flows 是否与所用 discount rate 一致。
+项目 base-case NPV 为正，但必须复核 incremental revenue、working capital、tax、capex、terminal value 和 discount-rate assumptions。
 
-### Step 2｜Capacity：什么会使价值无法实现？
+#### 2. Investment capacity
 
-真正的风险不是“USD 下降导致利润不好看”，而是 liquidity buffer 跌破底线、covenant headroom 消失，继而造成高成本融资或其他投资被取消。
+真正危险的不是“USD 下跌导致利润不好看”，而是 liquidity buffer 和 covenant headroom 消失，导致公司高成本融资或放弃其他好项目。
 
-因此关键 threshold 可以是：
+#### 3. Risk classification and response
+
+- 产品需求、客户采用和生产执行属于公司需要主动管理的 core risks；
+- 裸露的美元方向押注不是制造商的 comparative advantage，可以转移；
+- 未签约销量仍不确定，因此 100% hedge 可能造成 over-hedging；
+- 可对 committed revenue 使用较高 hedge ratio，对 forecast revenue 分阶段提高对冲；
+- 可用 USD debt、local sourcing 或 pricing clause 建立 natural hedge；
+- 保留第二条产线的 expansion option，避免第一天承诺全部资本。
+
+#### 4. Governance and threshold
+
+Business owner 负责 demand 和 margin assumptions；Treasury 负责 currency exposure；CFO 负责 liquidity 和 financing；CRO 汇总组合风险；investment committee 批准越界后的重新决策。
+
+可使用明确触发点：
 
 > If forecast liquidity falls below EUR 15m or covenant headroom falls below 0.3×, the investment must be resized, delayed or re-approved.
 
-### Step 3｜Risk classification：什么该承担，什么该转移？
+#### 完整建议
 
-- 产品需求、客户采用和生产 execution 是公司需要承担的 core business risks；
-- 对美元方向的裸露押注不是制造商的比较优势，可被视为 transferable financial risk；
-- 但未签约的远期销售量本身也不确定，100% hedge 可能造成 over-hedging。
+> Proceed with the base investment, but stage the expansion and hedge the portion of USD cash flows that is sufficiently committed. The objective is not to eliminate currency volatility; it is to preserve liquidity and covenant headroom so that the firm can continue funding positive-NPV opportunities.
 
-### Step 4｜Risk response：不是“全对冲或不对冲”二选一
+### 今天怎样才算真正学会
 
-一个较成熟的方案是：
+你需要完成一页、不超过 300 字的 decision memo：
 
-- 对已签约或高确定性的 USD cash flows 使用较高 hedge ratio；
-- 对 forecast revenue 采用分层、随订单确认提高的 hedge programme；
-- 保留 expansion option，不在第一天承诺全部资本；
-- 通过 local sourcing、pricing clauses 或 matching USD debt 形成 operational/natural hedge；
-- 明确 hedge cost 和剩余 volume、basis、counterparty risk。
+1. 选择一家企业与一项真实投资；
+2. 写出最重要的 incremental cash flows；
+3. 指出一个 core risk 和一个 transferable risk；
+4. 说明哪种 downside 会威胁 liquidity、covenant 或未来投资；
+5. 给出 response、owner、cost、residual risk 和 threshold；
+6. 写出一条可能推翻建议的新证据。
 
-### Step 5｜ERM：谁负责、看什么、何时改变决定？
-
-- Business owner 负责 demand、margin 与 execution assumptions；
-- Treasury 负责 currency exposure、hedge execution 与 counterparty limits；
-- CFO 负责 liquidity、financing 和 capital allocation；
-- Board / investment committee 批准 appetite、重大例外和 stop threshold；
-- CRO 汇总项目与公司其他 USD、customer 和 financing exposures。
-
-每月 dashboard 不需要几十个指标，只需能改变决定的少数变量：committed orders、USD exposure、project cash burn、liquidity buffer、covenant headroom 和 expansion-gate evidence。
-
-### Step 6｜Recommendation：形成一个完整判断
-
-> Proceed with the base investment, but stage the expansion and hedge the portion of USD cash flows that is sufficiently committed. The objective is not to eliminate currency volatility; it is to preserve liquidity and covenant headroom so that the firm can continue funding positive-NPV opportunities. Re-approval is required if forecast liquidity falls below EUR 15m, covenant headroom falls below 0.3×, or committed demand fails to reach the expansion gate.
-
-这段 recommendation 同时包含 value、risk rationale、response、residual uncertainty 和 threshold，所以不是一般性的“加强风险管理”。
-
----
-
-## 掌握度阶梯｜不是看完，而是能够迁移
-
-### Level 1｜Explain：能用自己的话讲清楚
-
-不看页面，用两分钟解释：
-
-- 为什么 accounting profit 不等于 value；
-- 为什么 positive NPV 项目仍可能造成管理问题；
-- 为什么 diversified shareholders 不能替代 corporate risk management；
-- 为什么 ERM 不等于降低所有风险。
-
-### Level 2｜Calculate：能完成最小计算
-
-给定 initial investment、三年 incremental free cash flows 和 discount rate，能够画 timeline 并计算 NPV；然后增加一个 downside scenario，检查最低 cash balance 和 covenant headroom。不要只重新算 NPV。
-
-### Level 3｜Diagnose：能找出真正的价值破坏机制
-
-看到“汇率波动很大”时，不停在 volatility。继续追问：它通过 revenue、margin、cash、debt service 还是 covenant 影响公司？什么结果会造成 underinvestment？
-
-### Level 4｜Decide：能作出可执行、可复核的建议
-
-Recommendation 必须包含：
-
-> **Decision + value logic + risk classification + response + owner + threshold + residual risk**
-
-### Level 5｜Challenge：能指出自己可能错在哪里
-
-写出三个可能推翻建议的证据：例如订单并不 committed、hedge cost 被低估、USD debt 增加了 refinancing risk、不同项目存在相同 currency concentration。高级学习不是表现得确定，而是知道结论依赖什么。
-
----
-
-## Day 1 全量重点词汇表｜不用离开页面搜索
-
-这不是额外需要背诵的 Session，而是随时回看的语言支持层。先掌握“这个词在决策中做什么”，再记发音。
-
-### 先解决你提到的 increment
-
-| 词形 | 音标 | 最简单的意思 |
-|---|---|---|
-| **increment** | /ˈɪŋkrəmənt/ | 名词：一次增加量、增量。复数是 **increments**。例如 revenue increases in small increments，收入小幅逐次增加。 |
-| **incremental** | /ˌɪŋkrəˈmentl/ | 形容词：增量的，即“因为这个决定才新增或减少的”。 |
-| **incrementally** | /ˌɪŋkrəˈmentəli/ | 副词：逐步地、小幅增加地。 |
-| **incremental cash flow** | /ˌɪŋkrəˈmentl kæʃ fləʊ/ | 增量现金流：接受项目与不接受项目相比，真正发生变化的现金流。 |
-
-记忆方式：**increment 是“增加量”这个东西；incremental 描述“与增加量有关”；incremental cash flow 是财务分析对象。**
-
-### A｜价值与现金流
-
-| 术语 | 音标 | 白话解释 |
-|---|---|---|
-| **accounting profit** | /əˈkaʊntɪŋ ˈprɒfɪt/ | 会计利润；受收入确认、折旧等规则影响，不等于实际现金变化。 |
-| **cash flow** | /ˈkæʃ fləʊ/ | 现金流；真实流入或流出公司的现金。 |
-| **sunk cost** | /ˌsʌŋk ˈkɒst/ | 沉没成本；已经发生且无法收回，不应影响下一步选择。 |
-| **opportunity cost** | /ˌɒpəˈtjuːnəti kɒst/ | 机会成本；把资源用于本项目时，放弃的最佳替代价值。 |
-| **cannibalization** | /ˌkænɪbəlaɪˈzeɪʃn/ | 内部蚕食；新产品抢走公司原有产品的销售。 |
-| **working capital** | /ˈwɜːkɪŋ ˌkæpɪtl/ | 营运资本；库存、应收、应付等日常经营占用或释放的资金。 |
-| **tax** | /tæks/ | 税；项目现金流必须考虑真实税后影响。 |
-| **capex** | /ˈkæpeks/ | Capital expenditure 的缩写，资本性支出，如购买设备或建厂。 |
-| **time value of money** | /taɪm ˈvæljuː əv ˈmʌni/ | 资金时间价值；今天的一欧元通常比未来的一欧元更值钱。 |
-| **timeline** | /ˈtaɪmlaɪn/ | 时间线；标出每笔现金流在第几年发生。 |
-| **discounting** | /ˈdɪskaʊntɪŋ/ | 折现；把未来现金流转换成今天的价值。 |
-| **present value** | /ˈpreznt ˈvæljuː/ | 现值；未来现金流折算到今天值多少。 |
-| **future value** | /ˈfjuːtʃə ˈvæljuː/ | 终值／未来值；今天的钱增长到未来值多少。 |
-| **discount rate** | /ˈdɪskaʊnt reɪt/ | 折现率；同等风险资本要求的回报率。 |
-| **nominal** | /ˈnɒmɪnl/ | 名义的；包含通胀影响的金额或利率。 |
-| **real** | /ˈriːəl/ | 实际的；剔除通胀影响后的金额或利率。 |
-| **net present value, NPV** | /net ˈpreznt ˈvæljuː/ | 净现值；未来增量现金流现值减去初始投资。 |
-| **free cash flow, FCF** | /friː kæʃ fləʊ/ | 自由现金流；经营和必要投资后，可供资本提供者分配的现金。 |
-| **initial investment** | /ɪˈnɪʃl ɪnˈvestmənt/ | 初始投资；项目开始时投入的现金。 |
-| **base case** | /beɪs keɪs/ | 基准情境；管理层当前认为最合理的一组假设，不代表一定发生。 |
-| **forecast** | /ˈfɔːkɑːst/ | 预测；根据假设估计未来数字。 |
-| **assumption** | /əˈsʌmpʃn/ | 假设；分析暂时接受、但需要验证的前提。 |
-| **scenario** | /səˈnɑːriəʊ/ | 情境；一组可能同时发生的未来条件。 |
-| **terminal assumption** | /ˈtɜːmɪnl əˈsʌmpʃn/ | 终值假设；预测期结束后增长或价值怎样延续。 |
-
-### B｜融资、估值与灵活性
-
-| 术语 | 音标 | 白话解释 |
-|---|---|---|
-| **financing** | /ˈfaɪnænsɪŋ/ | 融资；公司取得资金的安排。 |
-| **financing need** | /ˈfaɪnænsɪŋ niːd/ | 融资需求；内部现金不够时需要筹集的金额。 |
-| **financing cost** | /ˈfaɪnænsɪŋ kɒst/ | 融资成本；取得债务或股权资金付出的代价。 |
-| **bond** | /bɒnd/ | 债券；公司承诺按条件支付利息和本金的融资工具。 |
-| **coupon** | /ˈkuːpɒn/ | 票息；债券定期支付的利息。 |
-| **principal** | /ˈprɪnsəpl/ | 本金；债券到期需要偿还的原始金额。注意不是 principle（原则）。 |
-| **claim** | /kleɪm/ | 请求权；投资者依据合同或所有权对现金流拥有的权利。 |
-| **equity** | /ˈekwəti/ | 股权；扣除债务等请求权后属于股东的剩余权益。 |
-| **debt** | /det/ | 债务；注意字母 b 不发音。 |
-| **enterprise value** | /ˈentəpraɪz ˌvæljuː/ | 企业价值；公司经营资产整体产生未来现金流的价值。 |
-| **equity value** | /ˈekwəti ˌvæljuː/ | 股权价值；归属于普通股东的价值。 |
-| **valuation** | /ˌvæljuˈeɪʃn/ | 估值；判断资产、项目或公司值多少。 |
-| **comparable firm** | /ˈkɒmpərəbl fɜːm/ | 可比公司；业务和风险相近、可用于比较估值的公司。 |
-| **valuation multiple** | /ˌvæljuˈeɪʃn ˈmʌltɪpl/ | 估值倍数；企业价值或股价相对于利润、销售等指标的倍数。 |
-| **sanity check** | /ˈsænəti tʃek/ | 合理性检查；快速检查结果是否明显不合常理。 |
-| **growth** | /ɡrəʊθ/ | 增长；收入、现金流或规模上升，不一定自动创造价值。 |
-| **accounting policy** | /əˈkaʊntɪŋ ˈpɒləsi/ | 会计政策；公司确认和计量报表项目采用的规则。 |
-| **capital intensity** | /ˈkæpɪtl ɪnˈtensəti/ | 资本密集度；创造收入需要投入多少厂房、设备等资本。 |
-| **liquidity** | /lɪˈkwɪdəti/ | 流动性；公司能否及时获得现金支付到期义务。 |
-| **liquidity buffer** | /lɪˈkwɪdəti ˈbʌfə/ | 流动性缓冲；为了应付意外保留的现金或可用额度。 |
-| **cash shortfall** | /kæʃ ˈʃɔːtfɔːl/ | 现金缺口；可用现金低于需要支付的金额。 |
-| **covenant** | /ˈkʌvənənt/ | 债务契约条款；贷款人要求企业遵守的财务或行为限制。 |
-| **covenant headroom** | /ˈkʌvənənt ˈhedruːm/ | 契约余量；距离违反债务条款还剩多少缓冲。 |
-| **maturity** | /məˈtʃʊərəti/ | 到期期限；债务需要偿还的时间。 |
-| **cash generation** | /kæʃ ˌdʒenəˈreɪʃn/ | 现金创造能力；业务把经营活动转化为现金的能力。 |
-| **structural gap** | /ˈstrʌktʃərəl ɡæp/ | 结构性缺口；不是暂时问题，而是业务模式长期形成的资金缺口。 |
-| **flexibility** | /ˌfleksəˈbɪləti/ | 灵活性；新信息出现后调整决定的能力。 |
-| **real option** | /ˌriːəl ˈɒpʃn/ | 实物期权；对真实项目延迟、扩张、收缩或退出的选择权。 |
-| **delay** | /dɪˈleɪ/ | 延迟；等待更多信息后再投资。 |
-| **stage** | /steɪdʒ/ | 分阶段投入；达到证据门槛后才释放下一笔资本。 |
-| **expand** | /ɪkˈspænd/ | 扩张；好情境出现时增加投资或产能。 |
-| **contract** | /kənˈtrækt/ | 收缩；减少规模。作名词“合同”时重音不同：/ˈkɒntrækt/。 |
-| **switch** | /swɪtʃ/ | 转换；改变技术、投入品、市场或运营方式。 |
-| **abandon** | /əˈbændən/ | 放弃／退出；停止项目并尽可能回收价值。 |
-
-### C｜风险、对冲与 Stulz
-
-| 术语 | 音标 | 白话解释 |
-|---|---|---|
-| **risk exposure** | /rɪsk ɪkˈspəʊʒə/ | 风险敞口；某个变量变化会让公司现金流或价值改变多少。 |
-| **downside** | /ˈdaʊnsaɪd/ | 下行风险；结果比预期差的一面。 |
-| **tail risk** | /teɪl rɪsk/ | 尾部风险；概率较低但破坏性很大的结果。 |
-| **diversified portfolio** | /daɪˈvɜːsɪfaɪd pɔːtˈfəʊliəʊ/ | 分散化投资组合；持有多种资产以减少单一风险影响。 |
-| **financing friction** | /ˈfaɪnænsɪŋ ˈfrɪkʃn/ | 融资摩擦；外部资金不是随时、无成本获得的现实限制。 |
-| **external financing** | /ɪkˈstɜːnl ˈfaɪnænsɪŋ/ | 外部融资；从银行、债券或新股等企业外部取得资金。 |
-| **financing constraint** | /ˈfaɪnænsɪŋ kənˈstreɪnt/ | 融资约束；公司无法以合理条件获得所需资金。 |
-| **underinvestment** | /ˌʌndərɪnˈvestmənt/ | 投资不足；因资金受限而放弃本来能创造价值的项目。 |
-| **investment capacity** | /ɪnˈvestmənt kəˈpæsəti/ | 投资能力；公司在不同情境下继续为好项目提供资金的能力。 |
-| **core business risk** | /kɔː ˈbɪznəs rɪsk/ | 核心经营风险；与竞争优势和价值创造直接相关、必须承担的风险。 |
-| **non-core risk** | /ˌnɒn ˈkɔː rɪsk/ | 非核心风险；公司没有特别优势承担的风险。 |
-| **transferable risk** | /trænsˈfɜːrəbl rɪsk/ | 可转移风险；可以通过保险、合同或市场工具交给其他方的风险。 |
-| **comparative advantage** | /kəmˈpærətɪv ədˈvɑːntɪdʒ/ | 比较优势；公司相对于市场更有能力理解或承担某类风险。 |
-| **hedge / hedging** | /hedʒ/；/ˈhedʒɪŋ/ | 对冲；降低已有风险敞口，不是猜测市场方向。 |
-| **speculation** | /ˌspekjuˈleɪʃn/ | 投机；基于方向判断主动增加市场风险。 |
-| **benchmark** | /ˈbentʃmɑːk/ | 基准；用来比较策略或业绩的参考标准。 |
-| **mandate** | /ˈmændeɪt/ | 授权范围；一个岗位或团队被允许做什么。 |
-| **risk limit** | /rɪsk ˈlɪmɪt/ | 风险限额；不允许超过的暴露或损失边界。 |
-| **risk-adjusted performance** | /rɪsk əˈdʒʌstɪd pəˈfɔːməns/ | 风险调整后绩效；把获得回报时承担的风险也纳入评价。 |
-| **residual risk** | /rɪˈzɪdʒuəl rɪsk/ | 剩余风险；采取应对措施后仍由公司承担的部分。 |
-| **cash-flow-at-risk** | /kæʃ fləʊ ət rɪsk/ | 风险现金流；在给定置信度和期间内，现金流可能下降到什么程度。 |
-| **natural hedge** | /ˈnætʃrəl hedʒ/ | 自然对冲；用收入、成本或债务币种匹配来降低风险，而非只用衍生品。 |
-| **counterparty risk** | /ˈkaʊntəpɑːti rɪsk/ | 交易对手风险；合同另一方无法履约的风险。 |
-
-### D｜ERM、治理与执行
-
-| 术语 | 音标 | 白话解释 |
-|---|---|---|
-| **enterprise risk management, ERM** | /ˈentəpraɪz rɪsk ˈmænɪdʒmənt/ | 企业风险管理；把风险—回报判断嵌入战略、资本配置和经营决定。 |
-| **macro level** | /ˈmækrəʊ ˈlevl/ | 宏观层面；从公司整体资本、流动性和风险组合看问题。 |
-| **micro level** | /ˈmaɪkrəʊ ˈlevl/ | 微观层面；从单个业务或项目的具体决定看风险。 |
-| **risk appetite** | /rɪsk ˈæpɪtaɪt/ | 风险偏好；企业为实现战略愿意承担的风险范围。 |
-| **boundary** | /ˈbaʊndri/ | 边界；一旦触及就必须限制、升级或停止的界线。 |
-| **threshold** | /ˈθreʃhəʊld/ | 阈值；达到某个数字后触发预先规定的行动。 |
-| **risk owner** | /rɪsk ˈəʊnə/ | 风险负责人；对识别、应对和报告某项风险承担责任的人。 |
-| **portfolio view** | /pɔːtˈfəʊliəʊ vjuː/ | 组合视角；把不同风险放在全公司一起看。 |
-| **concentration** | /ˌkɒnsnˈtreɪʃn/ | 集中度；过多风险依赖同一客户、货币、地区或供应商。 |
-| **correlation** | /ˌkɒrəˈleɪʃn/ | 相关性；多个风险是否容易同时向同一方向变化。 |
-| **stress scenario** | /stres səˈnɑːriəʊ/ | 压力情境；用于检验公司在严重但合理坏情境下能否承受。 |
-| **risk capacity** | /rɪsk kəˈpæsəti/ | 风险承受能力；公司客观上最多能承受多少风险而不失去生存或战略能力。 |
-| **capital allocation** | /ˈkæpɪtl ˌæləˈkeɪʃn/ | 资本配置；决定有限资金投入哪些业务或项目。 |
-| **risk-adjusted capital allocation** | /rɪsk əˈdʒʌstɪd ˈkæpɪtl ˌæləˈkeɪʃn/ | 风险调整资本配置；同时比较项目回报与占用的企业风险能力。 |
-| **owner** | /ˈəʊnə/ | 负责人；不是“资产所有者”，而是对行动和结果负责的人。 |
-| **metric** | /ˈmetrɪk/ | 衡量指标；用于观察结果或风险变化的数字。 |
-| **escalation** | /ˌeskəˈleɪʃn/ | 升级报告；风险越界时把决定提交给更高权限处理。 |
-| **review date** | /rɪˈvjuː deɪt/ | 复核日期；预先约定重新检查决定的时间。 |
-| **committed order** | /kəˈmɪtɪd ˈɔːdə/ | 已承诺订单；客户已有较强合同义务的订单，不只是销售预测。 |
-| **cash burn** | /kæʃ bɜːn/ | 现金消耗速度；项目或公司在一段时间内净花掉多少现金。 |
-| **re-approval** | /ˌriː əˈpruːvl/ | 重新审批；条件改变或越界后，原决定必须再次获得批准。 |
-
-### E｜课堂问题中常见的指令词
-
-| 词 | 音标 | 老师真正要求你做什么 |
-|---|---|---|
-| **explain** | /ɪkˈspleɪn/ | 解释因果，不只是给定义。 |
-| **calculate** | /ˈkælkjuleɪt/ | 用数据和公式计算，并说明结果含义。 |
-| **assess** | /əˈses/ | 根据标准评价严重性或质量。 |
-| **compare** | /kəmˈpeə/ | 指出共同点、差异及为什么差异重要。 |
-| **diagnose** | /ˌdaɪəɡˈnəʊz/ | 找到表面现象背后的真正机制。 |
-| **recommend** | /ˌrekəˈmend/ | 给出具体选择，并用证据和权衡支持。 |
-| **justify** | /ˈdʒʌstɪfaɪ/ | 说明为什么这个选择比替代方案更合理。 |
-| **challenge** | /ˈtʃælɪndʒ/ | 质疑假设，寻找可能推翻结论的证据。 |
-| **implement** | /ˈɪmplɪment/ | 把建议转成 owner、步骤、资源、指标和时间。 |
-| **preserve** | /prɪˈzɜːv/ | 保护并保留下来；如 preserve investment capacity。 |
-| **proceed** | /prəˈsiːd/ | 继续执行决定；如 proceed with the investment。 |
-| **trigger** | /ˈtrɪɡə/ | 触发；达到条件后自动引发某个行动。 |
-
-词汇的最终检验不是“见过”，而是能放回句子：
-
-> The hedge reduces **currency exposure（货币风险敞口）**, but **volume risk（销量风险）** remains as a **residual risk（剩余风险）**.
-
-> If the **liquidity buffer（流动性缓冲）** falls below the **threshold（阈值）**, the project requires **re-approval（重新审批）**.
-
----
-
-## 最终学习产出｜一页 memo 足以检验整天知识
-
-选择一家你熟悉的公司和一项真实投资，用不超过 300 字完成：
-
-1. 这项投资如何创造价值，最关键的 incremental cash flows 是什么；
-2. 一个公司应主动承担的 core risk；
-3. 一个可以 hedge、insure 或 contractually transfer 的 non-core risk；
-4. 哪一种 downside 会威胁 liquidity、covenant 或未来投资能力；
-5. 推荐的 response、owner、cost、residual risk 与 measurable threshold；
-6. 一条可能推翻你建议的新证据。
-
-必须保留这句话，并用你的案例补完整：
+必须能够解释这句话：
 
 > **The purpose of risk management is to protect the firm's ability to create value, not to eliminate all risk.**
 
-## 完成 Day 1 的真正标准
+最终掌握标准分为五级：
 
-如果你能够在一个陌生公司案例中，从 cash flows 开始，识别 financing constraint，区分 core 与 transferable risk，设计 hedge/staging/insurance 等组合方案，并把它转化为 ERM owner 和 threshold，那么 Day 1 才算真正掌握。
+- **Explain**：能用自己的话说明 NPV、hedging 与 ERM 的因果关系；
+- **Calculate**：能计算 NPV，并在 downside scenario 中检查 cash 与 covenant；
+- **Diagnose**：能从“汇率波动”追到真正的 value-destruction mechanism；
+- **Decide**：能写出 decision、owner、response 和 threshold；
+- **Challenge**：能指出自己的假设和可能推翻结论的证据。
 
-如果你只能分别解释 NPV、hedging 和 ERM，却不能说明三者之间的因果关系，就仍然处在“记住了碎片”而不是“形成了知识结构”的阶段。
+## 第二部分｜指定阅读：原文、框架及概述
+
+三份阅读必须按这个顺序理解：
+
+> **Berk：价值怎样形成 → Stulz：风险管理为什么创造价值 → Nocco & Stulz：怎样把判断变成企业系统**
+
+### 阅读一｜Berk, DeMarzo & Harford (2025)
+
+#### 原文与状态
+
+- 指定教材：*Fundamentals of Corporate Finance*, 6th Global Edition。
+- ISBN 9781292470047；eISBN 9781292738048。
+- **原文待补**：目前没有本地教材全文，需要从 Maastricht University Library、Canvas 或 Pearson 获取。
+- [打开现有指定章节学习包](../readings/summaries/berk-demarzo-harford-2025-reading-roadmap.md)
+- [Pearson 版本页面](https://www.pearson.com/en-gb/subject-catalog/p/fundamentals-of-corporate-finance-global-edition/P200000012454/9781292470030)
+
+#### Syllabus 指定范围
+
+- Ch. 1：只读 §§1.3–1.5；
+- Ch. 3：只读 §§3.3–3.4；
+- Ch. 4；
+- Ch. 6：只读 §§6.1–6.2；
+- Ch. 7：只读 §7.1；
+- Chs. 10、20、21。
+
+#### 阅读框架
+
+1. **Decision owner**：financial manager 在企业中为哪些投资、融资和现金决定负责？
+2. **Cash-flow valuation**：如何识别增量现金流并进行 discounting？
+3. **Financial claims**：bond、equity 与 enterprise value 如何连接？
+4. **Short-term survival**：长期价值与短期 liquidity 如何同时判断？
+5. **Managerial flexibility**：delay、stage、expand 或 abandon 如何改变项目价值？
+
+#### 内容概述
+
+Berk 提供的是 Day 1 的基础语言。企业价值来自未来现金流，不来自单纯的会计利润；不同时间的现金流必须经过折现才能比较；债券和股票只是对未来现金流拥有不同优先级的 claims；项目估值还必须与短期资金规划相连，因为公司可能在长期价值出现前就发生 liquidity shortfall。Option Applications 则提醒管理者，不确定性不只通过更高折现率处理，也可以通过分阶段投资和保留选择权来管理。
+
+#### 必懂词汇
+
+| 词汇 | 音标 | 白话解释 |
+|---|---|---|
+| **increment** | /ˈɪŋkrəmənt/ | 名词：一次增加量；复数为 increments。 |
+| **incremental** | /ˌɪŋkrəˈmentl/ | 形容词：增量的，即因为决定才新增或减少的。 |
+| **incrementally** | /ˌɪŋkrəˈmentəli/ | 副词：逐步地、小幅增加地。 |
+| **incremental cash flow** | /ˌɪŋkrəˈmentl kæʃ fləʊ/ | 与不做项目相比，真正改变的现金流。 |
+| **accounting profit** | /əˈkaʊntɪŋ ˈprɒfɪt/ | 会计利润；不等于实际现金变化。 |
+| **sunk cost** | /ˌsʌŋk ˈkɒst/ | 已发生且无法收回，不应影响下一步决定。 |
+| **opportunity cost** | /ˌɒpəˈtjuːnəti kɒst/ | 使用资源时放弃的最佳替代价值。 |
+| **cannibalization** | /ˌkænɪbəlaɪˈzeɪʃn/ | 新产品抢走旧产品销售。 |
+| **working capital** | /ˈwɜːkɪŋ ˌkæpɪtl/ | 库存、应收、应付等经营资金占用。 |
+| **capex** | /ˈkæpeks/ | 资本性支出，如厂房与设备投资。 |
+| **present value** | /ˈpreznt ˈvæljuː/ | 未来现金流折算到今天的价值。 |
+| **discount rate** | /ˈdɪskaʊnt reɪt/ | 同等风险资本要求的回报率。 |
+| **net present value** | /net ˈpreznt ˈvæljuː/ | 增量现金流现值减去初始投资。 |
+| **free cash flow** | /friː kæʃ fləʊ/ | 经营与必要投资后可供资本提供者分配的现金。 |
+| **bond** | /bɒnd/ | 债券。 |
+| **coupon** | /ˈkuːpɒn/ | 债券定期支付的票息。 |
+| **principal** | /ˈprɪnsəpl/ | 本金；注意不是 principle（原则）。 |
+| **claim** | /kleɪm/ | 对现金流的合同或所有权请求权。 |
+| **equity** | /ˈekwəti/ | 扣除债务后归属于股东的权益。 |
+| **debt** | /det/ | 债务，字母 b 不发音。 |
+| **enterprise value** | /ˈentəpraɪz ˌvæljuː/ | 公司经营资产整体产生未来现金流的价值。 |
+| **valuation multiple** | /ˌvæljuˈeɪʃn ˈmʌltɪpl/ | 价值相对于利润、销售等指标的倍数。 |
+| **liquidity** | /lɪˈkwɪdəti/ | 及时取得现金、履行到期义务的能力。 |
+| **covenant** | /ˈkʌvənənt/ | 债务协议中的限制条款。 |
+| **maturity** | /məˈtʃʊərəti/ | 债务到期时间。 |
+| **real option** | /ˌriːəl ˈɒpʃn/ | 延迟、扩张、收缩或退出真实项目的选择权。 |
+| **base case** | /beɪs keɪs/ | 当前认为最合理的基准情境，不代表确定结果。 |
+| **forecast** | /ˈfɔːkɑːst/ | 对未来数字的预测。 |
+| **assumption** | /əˈsʌmpʃn/ | 分析暂时接受、但需要验证的前提。 |
+
+#### 阅读后必须能回答
+
+一个项目 NPV 为正，但第二年现金余额为负。为什么这不是“只要借钱就可以解决”的问题？你应同时讨论 financing cost、liquidity、covenant 和 real option。
+
+### 阅读二｜Stulz (1996), “Rethinking Risk Management”
+
+#### 原文与状态
+
+- **原文已有**：[打开 Stulz (1996) PDF](../readings/Rethinking-Risk-Management-1cnhar7.pdf)
+- [打开中文学习卡](../readings/summaries/stulz-1996-rethinking-risk-management.md)
+- 正式引用：*Journal of Applied Corporate Finance*, 9(3), 8–24。
+
+#### 阅读框架
+
+1. **The puzzle**：股东能自己分散风险，公司为何还需要风险管理？
+2. **The value mechanism**：风险怎样通过 financing constraint 和 underinvestment 破坏价值？
+3. **Risk selection**：公司应承担哪些 core risks、转移哪些 non-core risks？
+4. **Hedge governance**：怎样区分 hedging 与 speculation？
+5. **Decision threshold**：什么损失会真正威胁投资能力？
+
+#### 内容概述
+
+Stulz 不把风险管理理解为“降低所有波动”。如果 downside loss 让公司内部资金不足，而外部融资昂贵或不可得，公司可能被迫放弃本来具有正 NPV 的投资。风险管理因此可以通过保护 investment capacity 创造价值。公司应保留自己具有比较优势的经营风险，并低成本转移没有优势承担的金融风险。选择性对冲如果根据市场观点改变 hedge ratio，就可能从 risk reduction 变成 active market bet，必须接受 mandate、benchmark、limit 和风险调整后的绩效评价。
+
+#### 必懂词汇
+
+| 词汇 | 音标 | 白话解释 |
+|---|---|---|
+| **risk exposure** | /rɪsk ɪkˈspəʊʒə/ | 某变量变化会让现金流或价值改变多少。 |
+| **downside** | /ˈdaʊnsaɪd/ | 结果比预期差的一面。 |
+| **tail risk** | /teɪl rɪsk/ | 概率低但破坏性很大的结果。 |
+| **diversified portfolio** | /daɪˈvɜːsɪfaɪd pɔːtˈfəʊliəʊ/ | 通过多种资产分散单一风险的投资组合。 |
+| **financing friction** | /ˈfaɪnænsɪŋ ˈfrɪkʃn/ | 外部资金不是随时、无成本获得的现实限制。 |
+| **financing constraint** | /ˈfaɪnænsɪŋ kənˈstreɪnt/ | 无法以合理条件获得所需资金。 |
+| **underinvestment** | /ˌʌndərɪnˈvestmənt/ | 因资金不足而放弃能创造价值的投资。 |
+| **investment capacity** | /ɪnˈvestmənt kəˈpæsəti/ | 公司继续为好项目投入资金的能力。 |
+| **core risk** | /kɔː rɪsk/ | 与竞争优势和价值创造直接相关的风险。 |
+| **non-core risk** | /ˌnɒn ˈkɔː rɪsk/ | 公司没有特别优势承担的风险。 |
+| **transferable risk** | /trænsˈfɜːrəbl rɪsk/ | 可通过保险、合同或市场工具转移的风险。 |
+| **comparative advantage** | /kəmˈpærətɪv ədˈvɑːntɪdʒ/ | 相对于市场更有能力理解或承担某种风险。 |
+| **hedge / hedging** | /hedʒ/；/ˈhedʒɪŋ/ | 降低已有风险敞口。 |
+| **speculation** | /ˌspekjuˈleɪʃn/ | 根据方向判断主动增加市场风险。 |
+| **hedge ratio** | /hedʒ ˈreɪʃiəʊ/ | 被对冲的 exposure 占总 exposure 的比例。 |
+| **benchmark** | /ˈbentʃmɑːk/ | 比较策略或绩效的参考基准。 |
+| **mandate** | /ˈmændeɪt/ | 一个岗位或团队被允许采取行动的范围。 |
+| **risk limit** | /rɪsk ˈlɪmɪt/ | 不允许超过的暴露或损失边界。 |
+| **residual risk** | /rɪˈzɪdʒuəl rɪsk/ | 采取应对以后仍由公司承担的风险。 |
+| **natural hedge** | /ˈnætʃrəl hedʒ/ | 通过收入、成本或债务币种匹配降低风险。 |
+| **counterparty risk** | /ˈkaʊntəpɑːti rɪsk/ | 合同另一方不能履约的风险。 |
+
+#### 阅读后必须能回答
+
+“股东已经分散投资，所以公司不需要管理总风险。”这句话错在哪里？答案必须包含 financing friction、underinvestment 和 investment capacity，而不是只说“公司怕亏损”。
+
+### 阅读三｜Nocco & Stulz (2006), “Enterprise Risk Management: Theory and Practice”
+
+#### 原文与状态
+
+- **正式 journal version 已有**：[打开 Nocco & Stulz (2006) PDF](../readings/Nocco-Stulz-2006-Enterprise-Risk-Management-Journal.pdf)
+- [打开中文学习卡](../readings/summaries/nocco-stulz-2006-erm-theory-practice.md)
+- 另有 author-hosted accessible version：`184_nocco-u7sc9u.pdf`。
+
+#### 阅读框架
+
+1. **Macro ERM**：怎样保护公司整体资本、融资和战略执行能力？
+2. **Micro ERM**：怎样让业务经理在每个决定中考虑风险？
+3. **Risk appetite**：企业愿意承担多少风险，边界如何进入真实决定？
+4. **Risk ownership**：Board、CRO、CFO 与 business owner 分别负责什么？
+5. **Portfolio view**：多个风险合起来是否形成 concentration 和 correlation？
+6. **Risk-adjusted allocation**：有限资本应配置给哪些风险—回报组合？
+
+#### 内容概述
+
+Nocco & Stulz 把 Stulz 的价值逻辑升级为组织系统。宏观层面，ERM 保护公司在坏情境下仍能获得资本并执行战略；微观层面，风险判断必须进入业务日常决定，而不能全部交给 CRO。Risk appetite 需要通过 limits、metrics 和 thresholds 进入资本预算与绩效评价。Portfolio view 则防止不同部门各自看起来合理、公司整体却集中依赖同一个货币、客户、利率或供应商。ERM 的目标不是降低所有风险，而是把有限 risk capacity 配置给公司最有优势的核心风险。
+
+#### 必懂词汇
+
+| 词汇 | 音标 | 白话解释 |
+|---|---|---|
+| **enterprise risk management** | /ˈentəpraɪz rɪsk ˈmænɪdʒmənt/ | 将风险—回报判断嵌入战略和经营决定。 |
+| **macro level** | /ˈmækrəʊ ˈlevl/ | 从公司整体资本与风险组合看问题。 |
+| **micro level** | /ˈmaɪkrəʊ ˈlevl/ | 从单个业务或项目决定看问题。 |
+| **risk appetite** | /rɪsk ˈæpɪtaɪt/ | 企业为实现战略愿意承担的风险范围。 |
+| **risk capacity** | /rɪsk kəˈpæsəti/ | 企业客观上最多能承受多少风险。 |
+| **boundary** | /ˈbaʊndri/ | 不应越过的界线。 |
+| **threshold** | /ˈθreʃhəʊld/ | 达到某个数字后触发行动的阈值。 |
+| **risk owner** | /rɪsk ˈəʊnə/ | 对某项风险的识别、应对和报告负责的人。 |
+| **CRO** | /ˌsiː ɑːr ˈəʊ/ | Chief Risk Officer，首席风险官。 |
+| **portfolio view** | /pɔːtˈfəʊliəʊ vjuː/ | 把不同风险放在公司整体一起观察。 |
+| **concentration** | /ˌkɒnsnˈtreɪʃn/ | 风险过度依赖同一客户、货币或供应商。 |
+| **correlation** | /ˌkɒrəˈleɪʃn/ | 多项风险是否容易同时变化。 |
+| **stress scenario** | /stres səˈnɑːriəʊ/ | 检验严重但合理坏情境的压力测试情境。 |
+| **capital allocation** | /ˈkæpɪtl ˌæləˈkeɪʃn/ | 决定有限资本投入哪些业务或项目。 |
+| **risk-adjusted capital** | /rɪsk əˈdʒʌstɪd ˈkæpɪtl/ | 根据风险大小调整后用于评价或配置的资本。 |
+| **metric** | /ˈmetrɪk/ | 观察结果或风险变化的衡量指标。 |
+| **escalation** | /ˌeskəˈleɪʃn/ | 风险越界后提交给更高权限处理。 |
+| **review date** | /rɪˈvjuː deɪt/ | 预先确定重新检查决定的日期。 |
+| **liquidity buffer** | /lɪˈkwɪdəti ˈbʌfə/ | 为意外情况保留的现金或融资额度。 |
+| **covenant headroom** | /ˈkʌvənənt ˈhedruːm/ | 距离违反债务条款还剩多少空间。 |
+| **cash-flow-at-risk** | /kæʃ fləʊ ət rɪsk/ | 在给定期间和置信水平下现金流可能下降的程度。 |
+| **committed order** | /kəˈmɪtɪd ˈɔːdə/ | 客户已有较强合同义务的订单，不只是预测。 |
+| **cash burn** | /kæʃ bɜːn/ | 项目或公司消耗现金的速度。 |
+| **re-approval** | /ˌriː əˈpruːvl/ | 条件改变或越界后重新获得批准。 |
+
+#### 阅读后必须能回答
+
+为什么 ERM 不是一个更大的 risk register？答案必须说明 risk appetite 如何进入 business decisions、portfolio view 如何影响资本配置，以及业务负责人为什么不能把风险全部交给 CRO。
+
+### 三篇阅读合起来怎样使用
+
+面对任何 Day 1 案例，按三个作者顺序写：
+
+1. **Berk**：项目的 incremental cash flows、NPV、liquidity 和 flexibility 是什么？
+2. **Stulz**：哪个 downside 会造成 financing constraint 和 underinvestment？风险应保留还是转移？
+3. **Nocco & Stulz**：这个决定如何进入 risk appetite、portfolio view、ownership 和 capital allocation？
+
+最终答案必须包含：
+
+> **Decision + value logic + risk classification + response + owner + threshold + residual risk**
+
+### 课堂问题中的常见指令词
+
+| 指令词 | 音标 | 老师真正要求你做什么 |
+|---|---|---|
+| **explain** | /ɪkˈspleɪn/ | 解释因果，不只是给定义。 |
+| **calculate** | /ˈkælkjuleɪt/ | 完成计算并解释结果含义。 |
+| **assess** | /əˈses/ | 根据标准评价严重性或质量。 |
+| **compare** | /kəmˈpeə/ | 指出相同点、差异及差异为何重要。 |
+| **diagnose** | /ˌdaɪəɡˈnəʊz/ | 找到表面现象背后的机制。 |
+| **recommend** | /ˌrekəˈmend/ | 提出具体选择并用证据支持。 |
+| **justify** | /ˈdʒʌstɪfaɪ/ | 说明为什么选择比替代方案合理。 |
+| **challenge** | /ˈtʃælɪndʒ/ | 质疑假设并寻找反方证据。 |
+| **implement** | /ˈɪmplɪment/ | 把建议转化为 owner、步骤、资源和时间。 |
+| **preserve** | /prɪˈzɜːv/ | 保护并保留，如 preserve investment capacity。 |
+| **proceed** | /prəˈsiːd/ | 继续执行，如 proceed with the investment。 |
+| **trigger** | /ˈtrɪɡə/ | 达到条件后触发预先规定的行动。 |
+
+如果你能在不回看页面的情况下，用三篇阅读依次解释美国扩产案例，并正确使用上述关键词，Day 1 才算从“看懂”进入“掌握”。

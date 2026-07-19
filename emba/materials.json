@@ -511,7 +511,7 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 11,
+      "materialsRevision": 12,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
@@ -521,7 +521,7 @@
           "title": "Day 1｜Financial Management",
           "type": "daily_course_intro",
           "file": "/emba/materials/2026-09/days/2026-09-07-financial-management.md",
-          "notes": "一条完整认知链：价值、融资、风险与 ERM；重点英语首次出现即给中文，并附词族、音标与白话解释的 Day 1 全量词汇支持。"
+          "notes": "只分两部分：第一部分讲清今天的知识与贯穿案例；第二部分逐篇提供指定阅读的原文入口、作者框架、中文概述、必懂词汇和验证问题。"
         },
         {
           "title": "Day 2｜Compliance & Sustainability Reporting",
