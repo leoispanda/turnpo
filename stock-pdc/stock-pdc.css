@@ -465,28 +465,19 @@ body::before {
   box-shadow: none;
 }
 
-.stock-rank-cell.UP,
-.stock-rank-cell.NEW,
-.stock-rank-cell.positive {
+.stock-rank-cell.stock-price-positive {
   border-color: rgba(180, 35, 24, 0.28);
   background: rgba(180, 35, 24, 0.09);
 }
 
-.stock-rank-cell.DOWN,
-.stock-rank-cell.negative {
+.stock-rank-cell.stock-price-negative {
   border-color: rgba(22, 130, 68, 0.28);
   background: rgba(22, 130, 68, 0.09);
 }
 
-.stock-rank-cell.UNCHANGED,
-.stock-rank-cell.neutral {
+.stock-rank-cell.stock-price-neutral {
   border-color: rgba(34, 87, 122, 0.28);
   background: rgba(34, 87, 122, 0.09);
-}
-
-.stock-rank-cell.DROPPED {
-  border-color: rgba(107, 114, 128, 0.24);
-  background: rgba(107, 114, 128, 0.1);
 }
 
 .stock-rank-cell-empty {
@@ -603,13 +594,34 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 2px;
-  min-width: 36px;
+  min-width: 22px;
   color: #22577a;
 }
 
-.stock-change strong {
-  min-width: 19px;
+.stock-rank-move.stock-rank-new,
+.stock-rank-move.stock-rank-up {
+  color: #b42318;
+}
+
+.stock-rank-move.stock-rank-down,
+.stock-rank-move.stock-rank-dropped {
+  color: #168244;
+}
+
+.stock-performance-change.positive {
+  color: #b42318;
+}
+
+.stock-performance-change.negative {
+  color: #168244;
+}
+
+.stock-performance-change.neutral {
+  color: #22577a;
+}
+
+.stock-performance-change strong {
+  min-width: 38px;
   color: currentColor;
   font-size: 10px;
   font-weight: 840;
@@ -617,62 +629,33 @@ body::before {
   text-align: right;
 }
 
-.stock-rank-cell.NEW .stock-change,
-.stock-rank-cell.UP .stock-change,
-.stock-rank-cell.positive .stock-change {
-  color: #b42318;
-}
-
-.stock-rank-cell.DOWN .stock-change,
-.stock-rank-cell.negative .stock-change {
-  color: #168244;
-}
-
-.stock-rank-cell.UNCHANGED .stock-change,
-.stock-rank-cell.neutral .stock-change {
-  color: #22577a;
-}
-
-.stock-rank-cell.DROPPED .stock-change {
-  color: #6b7280;
-}
-
 .stock-change-arrow {
-  width: 13px;
-  height: 13px;
+  width: 17px;
+  height: 17px;
   display: inline-grid;
   place-items: center;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
 }
 
 .stock-change-arrow::before {
   color: currentColor;
-  font-size: 8.5px;
+  font-size: 16px;
   font-weight: 900;
   line-height: 1;
 }
 
-.stock-rank-cell.NEW .stock-change-arrow::before {
+.stock-rank-new .stock-change-arrow::before {
   content: "↗";
 }
 
-.stock-rank-cell.UP .stock-change-arrow::before,
-.stock-rank-cell.positive .stock-change-arrow::before {
+.stock-rank-up .stock-change-arrow::before {
   content: "▲";
 }
 
-.stock-rank-cell.DOWN .stock-change-arrow::before,
-.stock-rank-cell.negative .stock-change-arrow::before {
+.stock-rank-down .stock-change-arrow::before {
   content: "▼";
 }
 
-.stock-rank-cell.UNCHANGED .stock-change-arrow::before,
-.stock-rank-cell.neutral .stock-change-arrow::before {
-  content: "→";
-}
-
-.stock-rank-cell.DROPPED .stock-change-arrow::before {
+.stock-rank-dropped .stock-change-arrow::before {
   content: "↘";
 }
 
@@ -683,10 +666,6 @@ body::before {
 
 .stock-portfolio-cell {
   min-height: 40px;
-}
-
-.stock-portfolio-cell .stock-change strong {
-  min-width: 38px;
 }
 
 .stock-portfolio-summary {

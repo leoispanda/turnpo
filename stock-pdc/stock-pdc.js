@@ -47,13 +47,6 @@ function movementPath(row) {
   return "";
 }
 
-function changeLabel(row) {
-  if (row.changeType === "UP") return `+${Math.abs(row.rankDelta || 0)}`;
-  if (row.changeType === "DOWN") return `-${Math.abs(row.rankDelta || 0)}`;
-  if (row.changeType === "NEW") return "New";
-  return "0";
-}
-
 function pctClass(value) {
   if (!Number.isFinite(value)) return "neutral";
   if (value > 0) return "positive";
@@ -74,12 +67,6 @@ function formatValuePct(value, fallback = "--") {
 function droppedRankDelta(row) {
   const previousRank = Number.parseInt(row.previousRank, 10);
   return Number.isFinite(previousRank) ? Math.max(1, 21 - previousRank) : null;
-}
-
-function droppedChangeLabel(row) {
-  if (row.exitAction === "HOLD_DROPPED_UP_DAY") return "Hold";
-  const delta = droppedRankDelta(row);
-  return delta === null ? "Out" : `-${delta}+`;
 }
 
 function droppedMovementPath(row) {
@@ -105,28 +92,41 @@ function rowByRank(day, rank) {
 }
 
 function renderDayChange(row) {
-  return `<span class="stock-day-change ${pctClass(row.dayChangePct)}">${formatPct(row.dayChangePct)}</span>`;
+  const value = signalDayChangeValue(row);
+  return `<span class="stock-day-change ${pctClass(value)}">${formatPct(value)}</span>`;
 }
 
 function renderDroppedDayChange(row) {
-  const value = Number.isFinite(row.signalDayChangePct) ? row.signalDayChangePct : row.dayChangePct;
+  const value = signalDayChangeValue(row);
   return `<span class="stock-day-change ${pctClass(value)}">${formatPct(value)}</span>`;
+}
+
+function signalDayChangeValue(row) {
+  return Number.isFinite(row.signalDayChangePct) ? row.signalDayChangePct : row.dayChangePct;
+}
+
+function priceMoveClass(value) {
+  return `stock-price-${pctClass(value)}`;
+}
+
+function rankMoveClass(changeType) {
+  return `stock-rank-${String(changeType || "UNCHANGED").toLowerCase()}`;
 }
 
 function renderRankCell(day, rank) {
   const row = rowByRank(day, rank);
   if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} #${rank} empty"></div>`;
+  const dayChange = signalDayChangeValue(row);
   return `
-    <article class="stock-rank-cell ${escapeHtml(row.changeType)}" aria-label="${escapeHtml(day.date)} #${rank} ${escapeHtml(row.name)} ${escapeHtml(movementPath(row))} 下一交易日涨跌幅 ${escapeHtml(formatPct(row.dayChangePct, "unknown"))}">
+    <article class="stock-rank-cell ${priceMoveClass(dayChange)}" aria-label="${escapeHtml(day.date)} #${rank} ${escapeHtml(row.name)} ${escapeHtml(movementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(dayChange, "unknown"))}">
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
       </div>
       ${renderDayChange(row)}
-      <div class="stock-change" aria-label="${escapeHtml(movementPath(row))}">
+      <span class="stock-change stock-rank-move ${rankMoveClass(row.changeType)}" role="img" aria-label="${escapeHtml(movementPath(row))}">
         <span class="stock-change-arrow" aria-hidden="true"></span>
-        <strong>${escapeHtml(changeLabel(row))}</strong>
-      </div>
+      </span>
     </article>
   `;
 }
@@ -134,23 +134,19 @@ function renderRankCell(day, rank) {
 function renderDroppedCell(day, index) {
   const row = (day.dropped || [])[index] || null;
   if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} dropped ${index + 1} empty"></div>`;
+  const dayChange = signalDayChangeValue(row);
   return `
-    <article class="stock-rank-cell DROPPED" aria-label="${escapeHtml(day.date)} dropped ${index + 1} ${escapeHtml(row.name)} ${escapeHtml(droppedMovementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(row.signalDayChangePct, "unknown"))}">
+    <article class="stock-rank-cell ${priceMoveClass(dayChange)}" aria-label="${escapeHtml(day.date)} dropped ${index + 1} ${escapeHtml(row.name)} ${escapeHtml(droppedMovementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(dayChange, "unknown"))}">
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
       </div>
       ${renderDroppedDayChange(row)}
-      <div class="stock-change" aria-label="${escapeHtml(droppedMovementPath(row))}">
+      <span class="stock-change stock-rank-move stock-rank-dropped" role="img" aria-label="${escapeHtml(droppedMovementPath(row))}">
         <span class="stock-change-arrow" aria-hidden="true"></span>
-        <strong>${escapeHtml(droppedChangeLabel(row))}</strong>
-      </div>
+      </span>
     </article>
   `;
-}
-
-function portfolioClass(day) {
-  return pctClass(day.portfolio?.cumulativeReturnPct);
 }
 
 function renderPortfolioCell(day) {
@@ -161,22 +157,17 @@ function renderPortfolioCell(day) {
     return `<div class="stock-rank-cell stock-rank-cell-empty stock-portfolio-cell" aria-label="${escapeHtml(day.date)} portfolio empty"></div>`;
   }
   return `
-    <article class="stock-rank-cell stock-portfolio-cell ${portfolioClass(day)}" aria-label="${escapeHtml(day.date)} 初始100组合累计 ${escapeHtml(formatPct(cumulative))} 下一交易日 ${escapeHtml(formatPct(daily))}">
+    <article class="stock-rank-cell stock-portfolio-cell ${priceMoveClass(daily)}" aria-label="${escapeHtml(day.date)} 初始100组合累计 ${escapeHtml(formatPct(cumulative))} 下一交易日 ${escapeHtml(formatPct(daily))}">
       <div class="stock-name">
         <h3>${escapeHtml(formatPct(cumulative))}</h3>
         <small>100% -> ${escapeHtml(formatValuePct(portfolio.valuePct))}</small>
       </div>
       <span class="stock-day-change neutral">${escapeHtml(portfolio.investedCount || 0)} / 20</span>
-      <div class="stock-change" aria-label="${escapeHtml(day.date)} portfolio daily return">
-        <span class="stock-change-arrow" aria-hidden="true"></span>
+      <div class="stock-change stock-performance-change ${pctClass(daily)}" aria-label="${escapeHtml(day.date)} portfolio daily return">
         <strong>${escapeHtml(formatPct(daily))}</strong>
       </div>
     </article>
   `;
-}
-
-function benchmarkClass(day) {
-  return pctClass(day.benchmark?.cumulativeReturnPct);
 }
 
 function renderBenchmarkCell(day) {
@@ -187,14 +178,13 @@ function renderBenchmarkCell(day) {
     return `<div class="stock-rank-cell stock-rank-cell-empty stock-portfolio-cell" aria-label="${escapeHtml(day.date)} benchmark empty"></div>`;
   }
   return `
-    <article class="stock-rank-cell stock-portfolio-cell ${benchmarkClass(day)}" aria-label="${escapeHtml(day.date)} 大盘累计 ${escapeHtml(formatPct(cumulative))} 下一交易日 ${escapeHtml(formatPct(daily))}">
+    <article class="stock-rank-cell stock-portfolio-cell ${priceMoveClass(daily)}" aria-label="${escapeHtml(day.date)} 大盘累计 ${escapeHtml(formatPct(cumulative))} 下一交易日 ${escapeHtml(formatPct(daily))}">
       <div class="stock-name">
         <h3>${escapeHtml(formatPct(cumulative))}</h3>
         <small>${escapeHtml(benchmark.ticker || "CSI300ETF")} ${escapeHtml(formatValuePct(benchmark.valuePct))}</small>
       </div>
       <span class="stock-day-change neutral">${escapeHtml(benchmark.returnDate || "--")}</span>
-      <div class="stock-change" aria-label="${escapeHtml(day.date)} benchmark daily return">
-        <span class="stock-change-arrow" aria-hidden="true"></span>
+      <div class="stock-change stock-performance-change ${pctClass(daily)}" aria-label="${escapeHtml(day.date)} benchmark daily return">
         <strong>${escapeHtml(formatPct(daily))}</strong>
       </div>
     </article>
