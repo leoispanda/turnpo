@@ -6,7 +6,23 @@
 
 ## 第一部分｜今天讲什么
 
-### 今天只解决一个管理决定
+### 知识寓言｜《没有被风暴带走的船坞》
+
+灰港每年有四个月封海。冬季来临前，最后一艘货船进港时，码头上的铜钟会连续响七下，搬运工便把绳索、木箱和起重架全部收进仓库。城里的商会想建造一艘能穿过北方浅海的新船。造船师说，只要航线顺利，五年赚回来的银币足以铺满议事厅；于是几位商人当场主张开工。
+
+记账官伊莱没有看那张铺满银币的图。他在长桌两端各放了一本账簿：左边写“不造船”，右边写“造船”。去年已经付给探路人的钱被他从两本账里一起划掉，因为无论今天怎样决定，那笔钱都不会回来。他重新记下新增的木料、船员工资、占用旧船坞失去的修船收入、出海前必须囤积的货物，以及第五年卖掉船身还能收回的钱。随后，他把第五年才能拿到的银币换算成今天的重量。桌面上的银币少了一圈，但仍然多于建船所需。
+
+商会带着这两本账去找出资人。债主愿意提供一半资金，却要求每年冬至收到固定银币；几位远方商人愿意提供另一半，但要分享未来利润和表决权。北方航线越危险，他们要求的回报越高。伊莱把还款日期逐一压在造船进度表上，发现新船虽然五年后值得建，前两个冬天却没有收入。若木材涨价或首航延误，船坞会先付不出工钱，债主也可能收走仓库。那时，纸面上再丰厚的第五年收益都救不了一条停在骨架阶段的船。
+
+港里有人提议为所有未来货物锁定价格。伊莱只把已经签下订单的货物交给兑换商锁价，没有把船长口头预测的货量全部算进去。他说，未必装上船的货物若提前全部锁定，销量不足时，保护会变成新的赌注。至于船型、航线和客户选择，商会没有交给保险商——那正是他们比别人更懂、也必须靠它赚钱的事情。
+
+开工前夜，一名学徒把三艘旧船的航线钉在墙上。他用红线连接港口、海峡和买家，三条线最后竟在同一座北方城市重合。每位船长单独看都有充足订单，但一场封港就会同时困住所有收入。商会于是把新船分成两期建造，先完成能够独立航行的船体，第二期等首批订单兑现后再扩建货舱；他们还保留一笔不准用于分红的银币，并为一部分货物寻找另一座港口。
+
+第三年，北方海峡真的因风暴关闭了六周。新船晚归，锁价合同补回了一部分损失，备用港口接走了另一批货。灰港的利润仍然下降，议事厅里也没有人为那年举行庆典；但船坞的炉火没有熄灭，工人的工资照常发放，下一艘船的龙骨仍在第二天清晨被吊上支架。
+
+他们没有让大海变得平静，也没有拒绝所有危险。他们只是确保一场可以转移的风暴，不会夺走继续建造好船的能力。多年以后，人们把这套判断称为 **Financial Management（财务管理）**：先判断投资是否创造价值，再确认资金能否支持价值实现；随后管理会破坏投资能力的风险，最后检查每一个好项目合在一起是否仍然安全。
+
+### 揭示的概念｜Financial Management
 
 假设一家公司发现了一个看起来很赚钱的新项目。今天要解决的不是“NPV 是什么”“对冲是什么”这类彼此分开的知识点，而是一个完整决定：**这个项目是否真的创造价值，公司有没有能力把它做完，又应该怎样避免可转移的金融风险毁掉这个好项目？**
 
@@ -34,19 +50,19 @@ Monday 的指定阅读只有三项：Berk 指定章节、Stulz (1996)、Nocco & 
 
 Nocco & Stulz 虽然标题包含 ERM，但它是 Monday 的指定阅读。Day 1 只要求理解它的 financial-management message：企业要从整体风险组合保护融资能力，并把风险—回报放入资本配置。COSO components、完整 governance structure 和 ERM implementation 留到 Wednesday。
 
-### 知识地图｜只负责导航，不要求现在回答
+### 隐喻对应｜从灰港进入今天的知识地图
 
-先看五个区域及其顺序，暂时不背结论：
+先看故事中的五个动作分别对应什么。这里只负责导航，暂时不背结论：
 
-| 区域 | 今天会学什么 | 对应 Syllabus outcome |
+| 寓言中的动作 | 对应的金融知识 | 对应 Syllabus outcome |
 |---|---|---|
-| **A. Investment value** | incremental cash flow、time value of money、NPV、valuation | 投资决定、discounting |
-| **B. Markets & financing** | investor expectations、risk-return、diversification、bond/equity financing | 金融市场；融资与投资互动 |
-| **C. Liquidity & flexibility** | short-term planning、covenant、real options | 融资选择如何影响投资 |
-| **D. Financial risk management** | exposure、derivatives、hedging、core/non-core risk | risk management、derivatives |
-| **E. Enterprise bridge** | investment capacity、macro/micro ERM、portfolio effect | Nocco & Stulz 对整体价值的连接 |
+| **左右两本账只记录决定造成的差异** | incremental cash flow、time value of money、NPV | 投资决定、discounting |
+| **债主收固定银币，出资商分享利润与权利** | investor expectations、risk-return、debt/equity financing | 金融市场；融资与投资互动 |
+| **五年赚钱，但前两年可能付不出工资** | liquidity、covenant、financing constraint、real options | 融资选择如何影响投资 |
+| **只为已签订单锁价，不把经营能力交给保险商** | exposure、hedging、derivatives、core/non-core risk | financial risk management、derivatives |
+| **三条航线在同一港口重合** | investment capacity、concentration、portfolio effect | Nocco & Stulz 对整体价值的连接 |
 
-学习顺序是 A → B → C → D → E。第一部分负责把这条主线讲清楚；第二部分再告诉你每一段逻辑来自哪一篇指定阅读。
+学习时按表格从上到下推进。第一部分负责把这条主线讲清楚；第二部分再告诉你每一段逻辑来自哪一篇指定阅读。
 
 ### 第一步｜先判断项目是否创造价值
 
@@ -136,6 +152,14 @@ Nocco & Stulz 进一步说明：即使 CFO 正确决定了某个 hedge ratio（�
 - **Micro level（业务决定层面）**：让项目评价同时考虑 expected return 与它对公司整体 exposure、financing capacity 和 capital allocation 的影响。
 
 Day 1 需要知道 portfolio effect（组合效应）：多个项目可能共同依赖 USD、利率或同一客户，单独看都合理，合起来却形成 concentration。详细的 risk appetite、CRO/board governance、risk categories、COSO framework 与 implementation 不在今天展开，它们属于 Day 3。
+
+### 类比边界｜故事能帮助理解，但不能代替计算
+
+灰港帮助你记住五个判断之间的因果关系，但它不能替代真实公司的现金流预测、折现率估计、债务合同分析和衍生品定价。现实中的风险也不会像航线图一样全部可见；相关性会变化，保险与对冲存在成本和交易对手风险，正 NPV 仍然依赖假设是否可靠。因此，寓言负责建立直觉，Berk、Stulz 与 Nocco & Stulz 负责提供可以检验和引用的正式框架。
+
+### 带回自己的公司
+
+想一项你所在公司很想做、长期也可能创造价值的投资：**什么短期现金问题可能让它在价值实现以前被迫停止？其中哪一种风险是公司必须凭能力承担的，哪一种其实可以花合理成本交给别人？**
 
 ## 第二部分｜指定阅读：原文、框架及概述
 
