@@ -144,6 +144,7 @@ function normalizeThinkingQuestion(item = "") {
     position: cleanText(item.position || "", 240),
     original: cleanText(item.original || item.raw || "", 8000),
     context: cleanText(item.context || "", 12000),
+    fable: cleanText(item.fable || item.allegory || "", 20000),
     reconstruction: cleanText(item.reconstruction || item.completedArgument || item.completed || "", 20000),
     evidenceBoundary: cleanText(item.evidenceBoundary || item.boundary || "", 10000),
     reviewPrompt: cleanText(item.reviewPrompt || item.review || "", 6000),

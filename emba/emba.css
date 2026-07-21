@@ -882,6 +882,12 @@ body::before {
   text-align: right;
 }
 
+.emba-thinking-review-row.is-fable dd {
+  color: #3f3229;
+  font-family: Georgia, "Songti SC", "STSong", serif;
+  line-height: 1.78;
+}
+
 .emba-markdown-read {
   min-height: 72px;
   border: 1px solid rgba(0, 0, 0, 0.08);
