@@ -84,7 +84,7 @@ updated_at: 2026-07-09
 | Leo 思考 | 有 `Leo:`、`I see`、第一人称、Leo thinking 或明确 Turnpo 指向 | 可作为个人观点候选，仍需确认完整含义 |
 | Codex 补齐 | 把碎片补成可讨论论述 | 必须接受 Leo 的 Review，不能倒写成“原来就这样想” |
 
-完整证据见 [原文证据账本](./2026-07-personal-marker-original-extract.md)，逐条补齐见 [T01-T19 Review](./2026-07-questions-and-reflections-review.md)。
+完整证据见 [原文证据账本](./2026-07-personal-marker-original-extract.md)，逐条补齐见 [T01-T19 Review](./2026-07-questions-and-reflections-review.md)；每条 Review 的「当时上下文」下方另有对应寓言，作为反思性创作，不替代原文证据。
 
 ## 思考链 1：学习必须回到真实问题
 
