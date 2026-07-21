@@ -98,7 +98,7 @@ Friday 只有一项指定阅读。读深一篇比拼凑额外材料更符合 syl
 #### 原文与状态
 
 - [打开论文 PDF](../readings/guid-bb9aa06f-4ab8-449c-988f-924ce20150d7-ASSET1.0.pdf)
-- [打开中文学习卡](../readings/summaries/otten-schweitzer-2002-mutual-funds.md)
+- [进入 Otten & Schweitzer 结构化学习页](/emba/reading.html?reading=otten-schweitzer-mutual-funds)
 - 正式来源：*Managerial Finance*, 28(1), 14–36；DOI: 10.1108/03074350210767627。
 
 #### 阅读框架

@@ -96,7 +96,7 @@ Thursday 三项阅读分别解决三个层次：Tennessee Controls 讨论怎样�
 #### 原文与状态
 
 - [打开 HBS case PDF](../readings/Tennessee%20Controls.pdf)
-- [打开中文学习卡](../readings/summaries/tennessee-controls-1991-rev-2010.md)
+- [进入 Tennessee Controls 结构化学习页](/emba/reading.html?reading=tennessee-controls)
 - Syllabus 指定 HBS No. 191-083，1991、revised 2010。
 
 #### 框架及概述
@@ -107,7 +107,7 @@ Thursday 三项阅读分别解决三个层次：Tennessee Controls 讨论怎样�
 
 #### 原文与状态
 
-- [打开现有学习包](../readings/summaries/davila-2005-management-control-innovation-study-guide.md)
+- [进入 Davila 结构化学习页](/emba/reading.html?reading=davila-innovation-control)
 - 本地尚未取得指定 OUP 原章节；学习包只能作为阅读路线，不能冒充原文引用。
 - [打开 DOI 页面](https://doi.org/10.1093/oso/9780199283231.003.0003)
 
@@ -119,7 +119,7 @@ Davila 挑战“控制一定扼杀创新”的简单看法。合适的 MCS 可�
 
 #### 原文与状态
 
-- [打开现有学习包](../readings/summaries/quinn-thakor-2018-purpose-driven-organization-study-guide.md)
+- [进入 Quinn & Thakor 结构化学习页](/emba/reading.html?reading=quinn-thakor-purpose)
 - 本地尚未取得 HBR 原文，正式引用前需通过图书馆或 HBR 获取。
 - [打开 HBR 页面](https://hbr.org/2018/07/creating-a-purpose-driven-organization)
 

@@ -1158,7 +1158,7 @@ function renderMaterials(month, section = "materials") {
               </div>
               ${isReadableMaterial(item.file) ? `<span class="emba-read-action">阅读介绍 →</span>` : ""}
             ${isReadableMaterial(item.file) ? `</button>` : `</div>`}
-            ${item.file && !isReadableMaterial(item.file) ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener noreferrer">Open file</a>` : ""}
+            ${item.file && !isReadableMaterial(item.file) ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener noreferrer">${externalMaterialLabel(item.file)}</a>` : ""}
           </li>
         `).join("")}
       </ul>
@@ -1181,7 +1181,7 @@ function renderMaterials(month, section = "materials") {
           <li class="emba-edit-item">
             <input class="emba-edit-input" value="${escapeHtml(item.title)}" data-material-field="title" data-index="${index}" aria-label="Material title" />
             <input class="emba-edit-input" value="${escapeHtml(item.notes || "")}" data-material-field="notes" data-index="${index}" aria-label="Material notes" />
-            ${item.file ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener noreferrer">Open file</a>` : `<span class="emba-file-spacer" aria-hidden="true"></span>`}
+            ${item.file ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener noreferrer">${externalMaterialLabel(item.file)}</a>` : `<span class="emba-file-spacer" aria-hidden="true"></span>`}
             <button class="emba-text-btn" type="button" data-material-delete="${index}">Delete</button>
           </li>
         `).join("")}
@@ -1201,6 +1201,14 @@ function renderVocabulary(month) {
 
 function isReadableMaterial(file = "") {
   return /^\/emba\/materials\/.*\.md$/i.test(String(file || ""));
+}
+
+function isWebLearningPage(file = "") {
+  return /^\/emba\/[^?#]+\.html(?:[?#].*)?$/i.test(String(file || ""));
+}
+
+function externalMaterialLabel(file = "") {
+  return isWebLearningPage(file) ? "进入学习页 →" : "Open file";
 }
 
 function renderMaterialReader() {

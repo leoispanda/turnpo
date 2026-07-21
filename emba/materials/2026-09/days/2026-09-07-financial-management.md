@@ -174,7 +174,7 @@ Day 1 需要知道 portfolio effect（组合效应）：多个项目可能共同
 - 指定教材：*Fundamentals of Corporate Finance*, 6th Global Edition。
 - ISBN 9781292470047；eISBN 9781292738048。
 - **原文待补**：目前没有本地教材全文，需要从 Maastricht University Library、Canvas 或 Pearson 获取。
-- [打开现有指定章节学习包](../readings/summaries/berk-demarzo-harford-2025-reading-roadmap.md)
+- [进入 Berk 指定章节结构化学习页](/emba/reading.html?reading=berk-corporate-finance)
 - [Pearson 版本页面](https://www.pearson.com/en-gb/subject-catalog/p/fundamentals-of-corporate-finance-global-edition/P200000012454/9781292470030)
 
 #### Syllabus 指定范围
@@ -260,7 +260,7 @@ Berk 为今天的前半段提供基础。它先教你辨认项目真正改变的
 #### 原文与状态
 
 - **原文已有**：[打开 Stulz (1996) PDF](../readings/Rethinking-Risk-Management-1cnhar7.pdf)
-- [打开中文学习卡](../readings/summaries/stulz-1996-rethinking-risk-management.md)
+- [进入 Stulz 结构化学习页](/emba/reading.html?reading=stulz-risk-management)
 - 正式引用：*Journal of Applied Corporate Finance*, 9(3), 8–24。
 
 #### 阅读框架
@@ -310,7 +310,7 @@ Stulz 接在 Berk 之后，解释为什么一个原本有价值的项目仍可�
 #### 原文与状态
 
 - **正式 journal version 已有**：[打开 Nocco & Stulz (2006) PDF](../readings/Nocco-Stulz-2006-Enterprise-Risk-Management-Journal.pdf)
-- [打开中文学习卡](../readings/summaries/nocco-stulz-2006-erm-theory-practice.md)
+- [进入 Nocco & Stulz 结构化学习页](/emba/reading.html?reading=nocco-stulz-erm)
 - 另有 author-hosted accessible version：`184_nocco-u7sc9u.pdf`。
 
 #### 阅读框架

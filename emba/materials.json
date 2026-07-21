@@ -511,7 +511,7 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 19,
+      "materialsRevision": 20,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
@@ -566,21 +566,21 @@
           "notes": "Complete syllabus cross-check: 16 required readings, three sessions with no preparatory reading, access routes, and local-file status."
         },
         {
-          "title": "CFA Chinese study-card index｜16 项指定阅读",
+          "title": "每日指定阅读｜16 个结构化网页",
           "type": "study_guide",
-          "file": "/emba/materials/2026-09/readings/summaries/README.md",
-          "notes": "16 项指定阅读全部有学习入口：12 项已有原文，4 项以明确标注的简要学习包补位；每卡包含核心观点、必学概念、课堂/作业用法与自测。"
+          "file": "/emba/reading.html",
+          "notes": "按 Day 1–5 排列：每篇先用 300 字内建立全貌，再逐部分精讲、解释关键词，并提供课堂讨论用法与原文入口。"
         },
         {
           "title": "COSO 2017 ERM Executive Summary",
           "type": "study_guide",
-          "file": "/emba/materials/2026-09/readings/summaries/coso-2017-erm-executive-summary.md",
+          "file": "/emba/reading.html?reading=coso-executive-summary",
           "notes": "Required ERM executive summary; use with the COSO study card to learn the five ERM components."
         },
         {
           "title": "Tennessee Controls: The Strategic Ranking Problem",
           "type": "case_study",
-          "file": "/emba/materials/2026-09/readings/summaries/tennessee-controls-1991-rev-2010.md",
+          "file": "/emba/reading.html?reading=tennessee-controls",
           "notes": "Required management accounting and control case (HBS 9-191-083, revised 2010)."
         }
       ],

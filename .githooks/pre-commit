@@ -2,4 +2,4 @@
 set -e
 
 node scripts/bump-version.js
-git add version.json index.html emba/index.html
+git add version.json index.html emba/index.html emba/reading.html

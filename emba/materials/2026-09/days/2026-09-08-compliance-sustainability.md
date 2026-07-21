@@ -98,7 +98,7 @@ Tuesday 共有五项指定阅读，顺序应当是：先理解制度怎样与战
 #### 原文与状态
 
 - [打开本地课堂 PDF](../readings/Enterprise%20risk%20management%20Integrating%20with%20strategy%20and%20performance%20COSO.pdf)
-- [打开 full-framework 学习卡](../readings/summaries/coso-2017-erm-full-framework-study-guide.md)
+- [进入 COSO Full ERM 结构化学习页](/emba/reading.html?reading=coso-full-erm)
 - 本地文件为 17 页课堂扫描材料，不能据此确认已经取得 COSO 完整出版物；正式引用前需核对版本与页码。
 
 #### 框架及概述
@@ -110,7 +110,7 @@ Tuesday 重点不是背二十条原则，而是理解 strategy、performance、c
 #### 原文与状态
 
 - [打开 Volkswagen 原文 PDF](../readings/Engineering%20a%20Deception%20-%20Volkswagen%20Diesel%20Scandal%20-%20NYT.pdf)
-- [打开中文学习卡](../readings/summaries/ewing-2017-volkswagen-deception.md)
+- [进入 Volkswagen 结构化学习页](/emba/reading.html?reading=ewing-volkswagen)
 - 本地 PDF 是 4 页网页存档，页眉显示原网页 pp. 3–6；可用于学习，但正式引用前应核对它是否包含完整交互时间线。
 
 #### 框架及概述
@@ -122,7 +122,7 @@ Tuesday 重点不是背二十条原则，而是理解 strategy、performance、c
 #### 原文与状态
 
 - [打开 ING settlement PDF](../readings/ING%20pays%20fine%20of%20EUR%20775%20mio%20for%20non-compliance%20with%20Wwft%20legislation.pdf)
-- [打开中文学习卡](../readings/summaries/ing-2018-compliance-case.md)
+- [进入 ING 结构化学习页](/emba/reading.html?reading=ing-compliance)
 
 #### 框架及概述
 
@@ -133,7 +133,7 @@ ING 案例把抽象 compliance 转化为客户尽调、交易监测、alert inve
 #### 原文与状态
 
 - [打开 Estra 论文 PDF](../readings/db0a04896984cd13a381b47221bd1f3a883b.pdf)
-- [打开中文学习卡](../readings/summaries/de-micco-2021-estra-sustainability.md)
+- [进入 Estra 结构化学习页](/emba/reading.html?reading=de-micco-estra)
 
 #### 框架及概述
 
@@ -144,7 +144,7 @@ Estra 展示 sustainability reporting 不只是年度沟通产物，也可能成
 #### 原文与状态
 
 - [打开 KPMG ESRS PDF](../readings/esrs-learnings-to-progress-2025-kpmg-netherlands.pdf)
-- [打开中文学习卡](../readings/summaries/kpmg-2025-esrs-learnings.md)
+- [进入 KPMG ESRS 结构化学习页](/emba/reading.html?reading=kpmg-esrs)
 
 #### 框架及概述
 

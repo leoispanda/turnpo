@@ -104,7 +104,7 @@ Syllabus 明确标注无 preparatory reading。课前只需复习 accrual、matc
 #### 原文与状态
 
 - [打开 COSO Executive Summary PDF](../readings/2017-COSO-ERM-Integrating-with-Strategy-and-Performance-Executive-Summary%20%281%29.pdf)
-- [打开中文学习卡](../readings/summaries/coso-2017-erm-executive-summary.md)
+- [进入 COSO Executive Summary 结构化学习页](/emba/reading.html?reading=coso-executive-summary)
 
 #### 框架及概述
 
@@ -115,7 +115,7 @@ Executive Summary 用五个 components 建立 ERM 的整体语言。阅读重点
 #### 原文与状态
 
 - [打开 Grant Thornton PDF](../readings/ERM_Grant%20Thorton_2017-Risk%20Frameworks.pdf)
-- [打开中文学习卡](../readings/summaries/grant-thornton-2017-risk-frameworks.md)
+- [进入 Grant Thornton 结构化学习页](/emba/reading.html?reading=grant-thornton-risk-frameworks)
 
 #### 框架及概述
 
@@ -126,7 +126,7 @@ Executive Summary 用五个 components 建立 ERM 的整体语言。阅读重点
 #### 原文与状态
 
 - [打开 Deloitte PDF](../readings/lu-managing-non-financial-risk-31082017.pdf)
-- [打开中文学习卡](../readings/summaries/deloitte-2017-non-financial-risk.md)
+- [进入 Deloitte NFR 结构化学习页](/emba/reading.html?reading=deloitte-non-financial-risk)
 
 #### 框架及概述
 
@@ -137,7 +137,7 @@ Deloitte 强调 non-financial risks 需要共同 taxonomy、清楚的 three-line
 #### 原文与状态
 
 - [打开 DSM 2021 Annual Report PDF](../readings/dsm-integrated-annual-report-2021.pdf)
-- [打开指定页学习卡](../readings/summaries/dsm-2021-corporate-governance-risk-management.md)
+- [进入 DSM 指定页结构化学习页](/emba/reading.html?reading=dsm-governance-risk)
 - 指定范围仅为 pp. 123–146；不要把整份 309 页报告都当作 Wednesday 必读。
 
 #### 框架及概述
