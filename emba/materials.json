@@ -511,7 +511,7 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 21,
+      "materialsRevision": 22,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
@@ -569,7 +569,7 @@
           "title": "每日指定阅读｜16 个结构化网页",
           "type": "study_guide",
           "file": "/emba/reading.html",
-          "notes": "按 Day 1–5 排列：每篇先用 300 字内建立全貌，再逐部分精讲；新增 32 段核心英文原文，点击段落即可在原位置展开中文翻译。"
+          "notes": "按 Day 1–5 排列：结构化讲解与原文阅读完全分开；点击“开始原文阅读”进入独立页面，英文段落点击后原位切换成中文。"
         },
         {
           "title": "COSO 2017 ERM Executive Summary",

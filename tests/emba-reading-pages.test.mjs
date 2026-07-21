@@ -5,6 +5,9 @@ const data = JSON.parse(fs.readFileSync("emba/reading-data.json", "utf8"));
 const html = fs.readFileSync("emba/reading.html", "utf8");
 const script = fs.readFileSync("emba/reading.js", "utf8");
 const styles = fs.readFileSync("emba/reading.css", "utf8");
+const originalHtml = fs.readFileSync("emba/original-reading.html", "utf8");
+const originalScript = fs.readFileSync("emba/original-reading.js", "utf8");
+const originalStyles = fs.readFileSync("emba/original-reading.css", "utf8");
 const dayFiles = [
   "emba/materials/2026-09/days/2026-09-07-financial-management.md",
   "emba/materials/2026-09/days/2026-09-08-compliance-sustainability.md",
@@ -43,10 +46,16 @@ for (const reading of data.readings) {
 
 assert.match(html, /id="readingApp"/);
 assert.match(script, /沿着文章结构逐部分读/);
-assert.match(script, /点击段落展开中文翻译/);
-assert.match(script, /<details class="reading-excerpt">/);
+assert.match(script, /开始原文阅读/);
+assert.match(script, /original-reading\.html\?reading=/);
 assert.match(script, /target="_blank"/);
 assert.match(styles, /\.reading-keywords/);
-assert.match(styles, /\.reading-excerpt\[open\]/);
+assert.doesNotMatch(script, /<details class="reading-excerpt">/);
+assert.match(originalHtml, /id="originalReadingApp"/);
+assert.match(originalScript, /data-original-paragraph/);
+assert.match(originalScript, /aria-pressed/);
+assert.match(originalScript, /点击任意段落，该段会原位切换成中文/);
+assert.match(originalStyles, /\.original-paragraph\[aria-pressed="true"\]/);
+assert.match(originalStyles, /\.original-text-zh/);
 
 console.log("EMBA reading page checks passed");

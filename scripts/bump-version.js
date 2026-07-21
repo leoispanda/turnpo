@@ -6,6 +6,7 @@ const versionPath = path.join(root, "version.json");
 const htmlPath = path.join(root, "index.html");
 const embaHtmlPath = path.join(root, "emba", "index.html");
 const embaReadingHtmlPath = path.join(root, "emba", "reading.html");
+const embaOriginalReadingHtmlPath = path.join(root, "emba", "original-reading.html");
 
 const versionData = JSON.parse(fs.readFileSync(versionPath, "utf8"));
 const parts = String(versionData.version || "0.1.0").split(".").map(Number);
@@ -37,9 +38,15 @@ embaReadingHtml = embaReadingHtml.replace(/styles\.css(?:\?v=[0-9.]+)?/g, `style
 embaReadingHtml = embaReadingHtml.replace(/reading\.css(?:\?v=[0-9.]+)?/g, `reading.css?v=${nextVersion}`);
 embaReadingHtml = embaReadingHtml.replace(/reading\.js(?:\?v=[0-9.]+)?/g, `reading.js?v=${nextVersion}`);
 
+let embaOriginalReadingHtml = fs.readFileSync(embaOriginalReadingHtmlPath, "utf8");
+embaOriginalReadingHtml = embaOriginalReadingHtml.replace(/styles\.css(?:\?v=[0-9.]+)?/g, `styles.css?v=${nextVersion}`);
+embaOriginalReadingHtml = embaOriginalReadingHtml.replace(/original-reading\.css(?:\?v=[0-9.]+)?/g, `original-reading.css?v=${nextVersion}`);
+embaOriginalReadingHtml = embaOriginalReadingHtml.replace(/original-reading\.js(?:\?v=[0-9.]+)?/g, `original-reading.js?v=${nextVersion}`);
+
 fs.writeFileSync(versionPath, `${JSON.stringify(nextData, null, 2)}\n`);
 fs.writeFileSync(htmlPath, html);
 fs.writeFileSync(embaHtmlPath, embaHtml);
 fs.writeFileSync(embaReadingHtmlPath, embaReadingHtml);
+fs.writeFileSync(embaOriginalReadingHtmlPath, embaOriginalReadingHtml);
 
 console.log(`Bumped Turnpo version to v${nextVersion}`);
