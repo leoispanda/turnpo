@@ -14,6 +14,8 @@
       "sourceLabel": "查看 Pearson 教材页面（正式原文待补）",
       "summary": "这组章节提供金融决策的完整骨架：先确定财务经理为谁创造价值，再把未来现金流折算到同一时点，理解债券和股票如何定价，检查短期资金缺口，最后把延迟、扩张或退出等管理弹性视为有价值的真实期权。核心不是背公式，而是同时判断价值、融资、流动性与选择权。",
       "coreQuestion": "一个长期 NPV 为正的项目，为什么仍可能因为融资结构或流动性缺口而不值得立刻投资？",
+      "originalNote": "指定教材的正式原文尚未收录。这里暂不根据目录或二手资料伪造英文段落；取得 Pearson 教材后，再按 syllabus 指定章节补入可核对的原文精读。",
+      "excerpts": [],
       "parts": [
         {"title": "决策起点：财务经理究竟在优化什么", "body": "Chapter 1 的指定部分先明确公司金融的三类工作：投资、融资和现金管理。企业价值并不等于当期利润最大化；经理需要考虑现金流时间、风险、资本提供者与利益冲突。治理与代理问题会决定一个看似高回报的方案是否真的把价值留给公司。", "takeaway": "先说清决策目标和承担后果的人，再进入计算。"},
         {"title": "估值底座：把不同时间的现金流放在同一天比较", "body": "Chapter 3 §§3.3–3.4 与 Chapter 4 解释现值、终值和多期现金流。折现率代表时间价值与风险补偿；年金、永续年金和不规则现金流只是不同的现金流形状。真正容易出错的是时间点、期间数和折现率口径不一致。", "takeaway": "先画 timeline，再选公式；公式不能替你判断现金流发生在什么时候。"},
@@ -45,6 +47,11 @@
       "sourceLabel": "打开 Stulz 原文 PDF",
       "summary": "Stulz 重新定义企业风险管理：目标不是让利润曲线最平，而是避免坏情景造成融资困难，迫使公司放弃原本能创造价值的投资。企业应低成本转移自己没有优势承担的利率、汇率或商品风险，同时保留与核心能力相关、能够获得回报的经营风险。",
       "coreQuestion": "既然股东可以自己分散投资，公司为什么仍需要管理风险？",
+      "originalNote": "以下为课程相关的核心原文摘录；点击英文段落可展开中文翻译。页码按文章印刷页码标注。",
+      "excerpts": [
+        {"label": "p. 8 · 风险管理目标", "en": "I accordingly propose a somewhat different goal for corporate risk management—namely, the elimination of costly lower-tail outcomes—that is designed to reduce the expected costs of financial trouble while preserving a company’s ability to exploit any comparative advantage in risk-bearing it may have.", "zh": "因此，我提出一个略有不同的企业风险管理目标：消除代价高昂的下行尾部结果。这样既能降低财务困境的预期成本，又能保留企业利用自身风险承担比较优势的能力。"},
+        {"label": "p. 21 · 应该衡量什么", "en": "The question management would like to be able to answer is this: If we define financial distress as a situation where we cannot raise funds with a rating of BBB, or where our cash flows or the value of equity fall below some target, what is the probability of distress over, say, the next three years?", "zh": "管理层真正希望回答的问题是：如果我们把财务困境定义为无法以 BBB 评级融资，或者现金流、股权价值跌破某个目标，那么未来三年内陷入这种困境的概率是多少？"}
+      ],
       "parts": [
         {"title": "先推翻旧目标：波动最小不等于价值最大", "body": "传统做法容易把风险管理理解为降低方差或让 earnings 更平稳。Stulz 把问题转向企业价值：某种波动是否会引发财务困境、融资成本上升或投资不足？如果波动不会影响投资与融资能力，消除它可能只是在付费购买好看的数字。", "takeaway": "风险重要，是因为它改变未来选择，而不是因为任何波动都令人不舒服。"},
         {"title": "真正的损失链：现金流下降如何毁掉好项目", "body": "当内部现金减少且外部融资昂贵时，公司可能无法继续研发、扩产或收购，即使这些项目本来有正 NPV。风险管理通过保护关键现金流下限，减少 financial distress 与 underinvestment 的成本。这里的关注点是尾部情景，而不是平均年份。", "takeaway": "先定义“坏到什么程度会停止投资”，再讨论对冲。"},
@@ -75,6 +82,12 @@
       "sourceLabel": "打开 Nocco & Stulz 原文 PDF",
       "summary": "Nocco 与 Stulz 把 ERM 描述成一套同时发生在公司层面和业务层面的决策系统：公司层面确定整体风险偏好、资本与战略边界；业务层面让经理为风险负责，并判断每个项目对整体风险组合的边际贡献。ERM 不是消灭风险，而是在维持融资能力的前提下承担最能创造回报的核心风险。",
       "coreQuestion": "怎样让风险偏好真正进入资本配置，而不是停留在董事会文件里？",
+      "originalNote": "以下摘录分别对应 ERM 的公司层价值与业务层价值。点击后可对照中文理解。",
+      "excerpts": [
+        {"label": "p. 8 · Macro level", "en": "ERM creates value through its effects on companies at both a ‘macro’ or company-wide level and a ‘micro’ or business-unit level. At the macro level, ERM creates value by enabling senior management to quantify and manage the risk-return tradeoff that faces the entire firm.", "zh": "ERM 通过公司整体层面和业务单元层面的影响创造价值。在宏观层面，它使高层管理者能够量化并管理整个企业面临的风险—回报权衡。"},
+        {"label": "p. 8 · Micro level", "en": "At the micro level, ERM becomes a way of life for managers and employees at all levels of the company. Though the academic literature has concentrated mainly on the macro-level benefits of ERM, the micro-level benefits are extremely important in practice. As we argue below, a well-designed ERM system ensures that all material risks are ‘owned,’ and risk-return tradeoffs carefully evaluated, by operating managers and employees throughout the firm.", "zh": "在微观层面，ERM 会成为公司各级经理和员工的日常工作方式。尽管学术研究主要关注 ERM 的公司层面收益，业务层面的收益在实践中同样极其重要。设计良好的 ERM 系统能确保所有重大风险都有人负责，并由企业各处的经营管理者和员工认真评估风险—回报关系。"},
+        {"label": "p. 9 · 保护投资能力", "en": "For most companies, guarding against this corporate ‘underinvestment problem’ is likely to be the most important reason to manage risk.", "zh": "对大多数公司而言，防止这种企业投资不足问题，很可能是开展风险管理最重要的理由。"}
+      ],
       "parts": [
         {"title": "从 silo 到 portfolio：为什么单项风险管理不够", "body": "传统模式让不同部门各自处理市场、信用、运营或法律风险，却看不到它们在同一情景下的相关性与集中度。ERM 以企业整体风险组合为单位，判断总风险是否匹配资本、流动性和战略承受能力。", "takeaway": "多个单独可承受的风险，组合后可能超过企业承受能力。"},
         {"title": "宏观价值：保护资本与战略执行能力", "body": "公司层面的 ERM 通过降低极端现金短缺、评级下降和融资中断的概率，保护进入资本市场和继续投资的能力。这延续了 Stulz 1996 的逻辑：风险管理创造价值，主要因为它减少财务困境和投资不足。", "takeaway": "ERM 的成效应落到资本、现金和战略连续性，而不只是风险报告。"},
@@ -105,6 +118,8 @@
       "sourceLabel": "查看 COSO 官方框架页面（完整原文待补）",
       "summary": "COSO 2017 把 ERM 从风险清单提升为战略与绩效系统。框架要求组织在选择战略时就分析风险，通过治理与文化、战略与目标、绩效、复核修正、信息沟通五个组件，把风险偏好转成目标边界、责任、指标、阈值和行动。成熟 ERM 的证据不是报告很多，而是风险信息确实改变资源配置和决策。",
       "coreQuestion": "公司已经有 risk register 和季度 heat map，为什么仍不能证明它拥有成熟 ERM？",
+      "originalNote": "Tuesday 指定的完整 COSO Framework 尚未收录；现有 Executive Summary 是 Day 3 的另一项指定阅读，不能冒充完整框架原文。",
+      "excerpts": [],
       "parts": [
         {"title": "框架更新：风险不是战略选定后的附录", "body": "COSO 2017 强调不同战略方案本身就有不同风险轮廓、资源需求和价值潜力。组织应在 strategy-setting 阶段比较方案与 mission、vision、core values 和 risk appetite 的一致性，而不是战略批准后才补一张风险表。", "takeaway": "成熟 ERM 首先影响选什么战略，而不只是如何控制既定战略。"},
         {"title": "治理与文化：谁监督，组织在压力下奖励什么", "body": "第一组件关注董事会风险监督、组织结构、期望文化、核心价值和人才能力。制度是否有效取决于高层和中层实际行为：坏消息是否能上报，挑战管理层是否安全，晋升与奖励是否与负责任的风险行为一致。", "takeaway": "文化不是态度调查，而是压力情景下真实发生的行为和后果。"},
@@ -135,6 +150,12 @@
       "sourceLabel": "打开 Volkswagen 原文 PDF",
       "summary": "文章通过 Volkswagen 柴油排放作弊的形成过程说明：违规很少只是一个坏员工的决定。美国增长目标、排放标准、成本与性能之间的矛盾，在强层级、不可挑战的目标和薄弱升级机制下，被工程团队转化为测试作弊软件。真正要学习的是组织如何一步步让诚实报告问题变得比隐瞒更危险。",
       "coreQuestion": "如果 Volkswagen 已有工程能力和正式规则，为什么“不可能同时实现”的目标没有被升级为战略选择？",
+      "originalNote": "原文采用时间线形式。以下摘录保留关键年份，帮助你看见战略野心如何逐步变成技术欺骗。",
+      "excerpts": [
+        {"label": "Nov. 2006 · 战略目标遇到技术约束", "en": "Volkswagen wants to increase its embarrassingly low market share in the United States as part of a plan to become the biggest car company in the world. But engineers realize a newly developed diesel motor cannot meet stricter American emission standards.", "zh": "Volkswagen 希望提高其在美国低得令人尴尬的市场份额，作为成为全球最大汽车公司的计划之一。但工程师意识到，新开发的柴油发动机无法满足美国更严格的排放标准。"},
+        {"label": "Late 2008 · 欺骗成为正式方案", "en": "At a contentious meeting at company headquarters in Wolfsburg, Germany, executives decide to install illegal software that can detect when an emissions test is taking place and crank up pollution controls.", "zh": "在德国沃尔夫斯堡总部一次充满争议的会议上，管理人员决定安装非法软件。该软件能够识别排放测试正在进行，并在测试时加强污染控制。"},
+        {"label": "May 2014 · 外部测试揭示现实表现", "en": "Road tests reveal that two Volkswagens in the study emit far more poisonous nitrogen oxides than allowed.", "zh": "道路测试发现，研究中的两辆 Volkswagen 汽车排放的有毒氮氧化物远远超过允许标准。"}
+      ],
       "parts": [
         {"title": "战略野心：用柴油技术打开美国市场", "body": "公司希望扩大美国销量，并把清洁柴油塑造成兼具性能、燃油效率和环保优势的产品。战略目标本身形成高承诺：一旦投入品牌叙事和产品计划，承认技术路线达不到要求就会带来成本、延误与声誉压力。", "takeaway": "先看到违规背后的战略承诺，才能理解为什么坏消息难以上报。"},
         {"title": "工程矛盾：排放、性能、成本和时间无法同时满足", "body": "团队面对严格氮氧化物标准，同时还要维持驾驶性能、价格与上市时间。当目标组合超出现有技术能力时，组织本应重新选择技术、预算或时间；如果目标被视为不可讨论，问题就会从工程约束变成行为风险。", "takeaway": "不可能目标不是激励工具，而是 control failure 的早期信号。"},
@@ -165,6 +186,12 @@
       "sourceLabel": "打开 ING settlement 原文 PDF",
       "summary": "ING 案例显示 AML 失败不是“没有政策”，而是客户尽职调查、风险分类、交易监测、警报调查和管理层监督长期没有形成闭环。2010–2016 年的系统性缺口最终转化为巨额罚款、非法所得追缴和信任损失。学习重点是把一个合规事件追溯到人员、流程、数据、治理、文化与资源配置。",
       "coreQuestion": "当管理层说“我们已经有 AML 系统和政策”时，还需要什么证据才能证明控制有效？",
+      "originalNote": "以下摘录来自 ING 的 settlement announcement，分别对应案件范围、具体控制缺口和组织责任。",
+      "excerpts": [
+        {"label": "p. 1 · 案件承认的核心问题", "en": "ING acknowledges serious shortcomings in the execution of customer due diligence policies to prevent financial economic crime at ING Netherlands in the period investigated (2010–2016).", "zh": "ING 承认，在调查期间（2010–2016 年），ING Netherlands 执行用于预防金融经济犯罪的客户尽职调查政策时存在严重缺陷。"},
+        {"label": "p. 2 · 系统性缺口清单", "en": "The identified broader shortcomings include: CDD files missing or being incomplete, assignment of incorrect risk classifications, the failure to have the periodic CDD review process in order, failure to exit business relationships in a timely manner, insufficient functioning of the post-transaction monitoring system, classifying clients in the wrong segments and insufficient availability of qualitative and quantitative human resources.", "zh": "被识别出的广泛缺陷包括：CDD 档案缺失或不完整、风险分类错误、定期 CDD 审查流程失序、未能及时终止业务关系、交易后监测系统运行不足、客户分群错误，以及具备适当质量和数量的人力资源不足。"},
+        {"label": "p. 2 · 不是个别人造成的", "en": "The identified shortcomings that occurred in the period investigated are not attributable to some individual persons but rather collective shortcomings at all responsible management levels, i.e. business, compliance and control functions.", "zh": "调查期间发现的问题不能归因于少数个人，而是业务、合规和控制职能等所有责任管理层级的集体缺陷。"}
+      ],
       "parts": [
         {"title": "案件范围：巨额和解反映长期系统性失效", "body": "2018 年 ING 支付 EUR 675m 罚款和 EUR 100m 非法所得追缴，问题涉及 2010–2016 年荷兰业务。金额重要，但课堂重点不是记数字，而是理解监管为何将缺口视为组织层面的长期 failure，而不是少数员工偶发错误。", "takeaway": "持续多年、跨流程出现的问题必须上升为治理与资源配置问题。"},
         {"title": "客户入口：CDD/KYC 没有形成可靠风险画像", "body": "银行要确认客户身份、受益所有人、业务目的和风险级别，并持续更新资料。如果 onboarding 追求速度、档案不完整或高风险客户没有 enhanced due diligence，后续监测系统即使运行，也建立在错误或缺失的数据上。", "takeaway": "AML 的第一道质量门不是软件，而是可信的客户风险信息。"},
@@ -195,6 +222,12 @@
       "sourceLabel": "打开 Estra 论文 PDF",
       "summary": "Estra 的纵向案例把可持续发展报告展示为一段组织学习过程，而非年末制作的宣传册。随着法规、利益相关者要求和数据范围扩大，企业必须协调更多部门、统一指标口径并建立可靠责任链。管理承诺、员工参与、内部传播与流程制度化，决定报告能否从外部披露任务变成真正影响经营的管理系统。",
       "coreQuestion": "为什么一份格式漂亮、指标很多的可持续发展报告，仍可能没有管理价值？",
+      "originalNote": "该论文以 CC BY 4.0 发布。以下摘录来自摘要和研究问题，帮助你快速把握研究目的、方法与发现。",
+      "excerpts": [
+        {"label": "p. 430 · Purpose", "en": "The purpose of this paper is to investigate the challenges that companies could face over time when dealing with sustainability reporting (SR) and focusses on potential mechanisms they may adopt to cope with them.", "zh": "本文旨在研究企业在长期开展可持续发展报告时可能遇到的挑战，并关注企业可以采用哪些机制来应对这些挑战。"},
+        {"label": "p. 430 · Findings", "en": "The authors found that the challenges that gradually arose induced the evolution of SR. Dissemination, employees’ involvement, managerial commitment and routinization/institutionalization of reporting practices appeared to be useful mechanisms to face the related challenges.", "zh": "作者发现，逐渐出现的挑战推动了可持续发展报告的演化。内部传播、员工参与、管理层承诺，以及将报告实践常规化或制度化，都是应对相关挑战的有效机制。"},
+        {"label": "p. 431 · 研究问题", "en": "Which are the main challenges that a firm should face over time when dealing with sustainability reporting? And which mechanisms can be adopted to cope with these challenges?", "zh": "企业长期开展可持续发展报告时，需要面对哪些主要挑战？又可以采用哪些机制来应对这些挑战？"}
+      ],
       "parts": [
         {"title": "研究问题：报告挑战如何随时间出现和变化", "body": "作者以 Estra 为案例，关注组织在持续报告过程中遇到哪些挑战，以及如何逐步管理这些挑战。纵向视角很重要：第一份报告的问题可能是收集数据，后来则转向协调、标准化、可信度与把披露嵌入决策。", "takeaway": "报告能力不是一次建成，而是在不断变化的要求中演化。"},
         {"title": "复杂性上升：议题、利益相关者和组织边界扩大", "body": "可持续议题跨越环境、员工、客户、供应链和社区，数据分散在不同职能与子公司。企业要判断哪些议题重要、谁提供信息、不同诉求如何平衡；若缺少共同语言，报告团队只能在年末临时追数。", "takeaway": "ESG 的难点首先是跨组织协调，而不只是写作。"},
@@ -225,6 +258,12 @@
       "sourceLabel": "打开 KPMG ESRS 报告 PDF",
       "summary": "KPMG 对 26 家荷兰首批 CSRD 报告者的观察显示，ESRS 的难点不是披露页数，而是建立透明的双重重要性评估：把具体影响、风险与机会放到价值链和时间范围中，再连接政策、行动、指标、目标、财务影响与鉴证证据。首轮报告已经建立骨架，但可追溯性和决策相关性仍需提升。",
       "coreQuestion": "一家公司完成 DMA 并列出重大主题后，还缺少哪些连接才能形成可信 ESRS 披露？",
+      "originalNote": "以下摘录来自 KPMG 对 26 家荷兰首批 CSRD 报告的分析，重点对应 DMA、IRO 呈现和利益相关者输入。",
+      "excerpts": [
+        {"label": "p. 4 · DMA 是报告基础", "en": "Under the ESRS, identifying material Impacts, Risks, and Opportunities through a double materiality assessment is the cornerstone of sustainability reporting. The resulting sustainability statement must reflect all material IROs identified through this process.", "zh": "在 ESRS 下，通过双重重要性评估识别重大影响、风险与机会，是可持续发展报告的基石。最终的可持续发展声明必须反映该过程中识别出的所有重大 IRO。"},
+        {"label": "p. 5 · IRO 应带有上下文", "en": "Tables typically include detailed IRO descriptions, value chain positions, and time horizons, while lists offer only a basic enumeration of IROs without context.", "zh": "表格通常包含详细的 IRO 描述、价值链位置和时间范围，而列表往往只是在缺少上下文的情况下简单枚举 IRO。"},
+        {"label": "p. 7 · Stakeholder input 的常见缺口", "en": "Although the majority of the analyzed companies engaged with stakeholders, most of them do not demonstrate how this input meaningfully shapes their sustainability policies.", "zh": "虽然大多数受分析公司都与利益相关者进行了互动，但多数公司没有说明这些输入如何实质性地塑造其可持续发展政策。"}
+      ],
       "parts": [
         {"title": "观察样本：首批报告提供的是成熟度基线", "body": "KPMG 分析 26 家荷兰首批 CSRD 报告者，比较它们怎样执行 ESRS。报告的价值不是宣布最佳实践，而是识别首轮实施中的共同模式、差异与缺口，为下一轮报告改进提供基线。", "takeaway": "首年合规是起点，横向观察帮助判断哪些做法仍停在形式层。"},
         {"title": "双重重要性：同时看 outward impact 与 financial effect", "body": "DMA 要分别判断企业对人和环境造成的重大影响，以及可持续议题对企业现金流、融资、成本或价值的重大财务影响。两种视角可能重叠，也可能只满足其中之一；方法、阈值和利益相关者输入需要透明。", "takeaway": "没有财务影响不代表环境或社会影响不重大。"},
@@ -255,6 +294,12 @@
       "sourceLabel": "打开 COSO Executive Summary PDF",
       "summary": "Executive Summary 用最短路径说明 COSO 2017 的核心：ERM 是组织在制定与执行战略时运用的文化、能力与实践，目的是管理风险并创造、保护和实现价值。它用五个相互连接的组件，把董事会监督、战略选择、风险偏好、绩效波动、组合视角、复盘和信息报告放进同一套决策逻辑。",
       "coreQuestion": "COSO 为什么坚持 ERM 必须同时讨论 strategy、performance 和 value？",
+      "originalNote": "以下摘录来自 Executive Summary 正式 PDF，重点对应战略整合、董事会监督与组织韧性。",
+      "excerpts": [
+        {"label": "p. 1 · 风险进入战略选择", "en": "Explicit consideration of risk may impact the choice of strategy. Enterprise risk management enriches management dialogue by adding perspective to the strengths and weaknesses of a strategy as conditions change, and to how well a strategy fits with the organization’s mission and vision.", "zh": "明确考虑风险可能会影响战略选择。随着环境变化，ERM 通过揭示战略的优势与弱点，以及战略与组织使命、愿景的适配程度，丰富管理层的战略讨论。"},
+        {"label": "p. 2 · 董事会的风险监督", "en": "Every board has an oversight role, helping to support the creation of value in an entity and prevent its decline. Now, boards are increasingly expected to provide oversight of enterprise risk management.", "zh": "每个董事会都承担监督职责，帮助组织创造价值并防止价值衰退。如今，董事会越来越被要求对企业风险管理进行监督。"},
+        {"label": "p. 2 · Resilience", "en": "Over the longer term, enterprise risk management can also enhance enterprise resilience—the ability to anticipate and respond to change.", "zh": "从更长期看，ERM 还可以增强企业韧性，也就是预见变化并作出响应的能力。"}
+      ],
       "parts": [
         {"title": "定义与价值：ERM 是决策能力，不是单独流程", "body": "摘要先把 ERM 定义为 culture、capabilities 和 practices 的组合，并强调它应用于 strategy-setting 与 execution。创造价值需要承担风险，保护价值需要控制下行，实现价值则需要持续执行和调整。", "takeaway": "ERM 既不等于避免风险，也不等于内部审计或合规。"},
         {"title": "战略选择：先比较 risk profile，再承诺资源", "body": "不同战略方案带来的增长、资本需求、执行难度和外部暴露不同。风险偏好要帮助董事会比较这些方案是否符合 mission、vision 和 values，而不是等战略确定后才评价风险。", "takeaway": "风险应参与战略选择，而不是只参与战略保护。"},
@@ -285,6 +330,12 @@
       "sourceLabel": "打开 Grant Thornton PDF",
       "summary": "Grant Thornton 关注如何把风险框架做成可运行的管理系统：从商业模式和战略目标出发，定义风险偏好与限额，明确董事会、业务、二线和内审的职责，再通过识别、评估、应对、监测、报告与保证形成闭环。框架是否有效，最终看它能否让坏消息及时上报并改变资源和决策。",
       "coreQuestion": "风险框架与一份定期更新的风险清单，最根本的区别是什么？",
+      "originalNote": "以下摘录来自报告开篇，重点解释为什么风险框架必须从战略选择和有限资源出发。",
+      "excerpts": [
+        {"label": "p. 2 · 战略选项与有限资源", "en": "Each year, a board begins its planning period with a set of strategic options balanced against a wallet of finite resources. Each of these options carries with it a profile of varying risks.", "zh": "每年，董事会都会在一组战略选项与有限资源之间开始规划。每个战略选项都伴随着不同的风险轮廓。"},
+        {"label": "p. 2 · 风险偏好由战略驱动", "en": "The business strategy drives an organisation’s risk appetite; therefore, tailored to the firm’s needs, a risk function can reduce uncertainty and improve organisational learning and resilience.", "zh": "业务战略决定组织的风险偏好；因此，一个根据企业需要量身设计的风险职能，可以减少不确定性并改善组织学习与韧性。"},
+        {"label": "p. 2 · 风险框架的用途", "en": "A risk framework outlines the risks undertaken in relation to the firm’s risk capacity.", "zh": "风险框架说明企业相对于自身风险承受能力承担了哪些风险。"}
+      ],
       "parts": [
         {"title": "战略起点：框架必须适合商业模式", "body": "风险框架不能从模板或部门边界出发。组织要先理解怎样创造价值、依赖哪些资源、处于什么监管与竞争环境，再决定哪些风险最重要、哪些能力必须建立。相同框架复制到不同公司，可能得到形式合规却没有决策价值。", "takeaway": "risk framework 的设计对象是公司的真实价值创造系统。"},
         {"title": "风险偏好：从语言变成 limit 和 escalation", "body": "董事会层面的偏好陈述要翻译成资本、流动性、运营中断、合规事件或客户伤害等可测边界。指标接近或超过阈值时，需要明确谁收到信息、谁有权行动以及是否调整战略或资源。", "takeaway": "appetite 若不能指导接受、升级或停止，就还没有落地。"},
@@ -315,6 +366,12 @@
       "sourceLabel": "打开 Deloitte NFR PDF",
       "summary": "Deloitte 主张非金融风险必须像金融风险一样被系统管理。运营、行为、数据、网络、模型、第三方和监管风险虽然难以用单一金额表示，却能迅速转化为罚款、客户损害、业务中断和声誉危机。组织需要统一分类、偏好、治理、文化、控制、报告、监测和技术支持，而不是依赖事后合规检查。",
       "coreQuestion": "为什么把所有 NFR 都写成“零容忍”，反而可能让风险偏好失去决策价值？",
+      "originalNote": "以下摘录来自 Deloitte 报告对 NFR 问题与整合框架的说明。英文保留报告原有的 financial institutions 语境。",
+      "excerpts": [
+        {"label": "p. 2 · 为什么旧方法不足", "en": "Recent losses and market events provide the evidence to bear this out: many of them did not emanate from traditional market, credit or operational risks in financial institutions’ portfolios, but instead from non-financial risks.", "zh": "近期损失和市场事件证明了这一点：其中许多并非源自金融机构投资组合中的传统市场风险、信用风险或运营风险，而是源自非金融风险。"},
+        {"label": "p. 2 · 共同语言", "en": "The combination of an NFR taxonomy and methodology introduce the common risk language necessary to build NFR into banks’ risk appetite frameworks.", "zh": "NFR 分类体系与方法论的结合，提供了把非金融风险纳入银行风险偏好框架所需的共同风险语言。"},
+        {"label": "p. 2 · 从零散评估走向整合", "en": "Some regulators are already actively embracing holistic NFR risk management methodologies that transition from a piecemeal and ad-hoc assessment of NFRs to a more integrated approach.", "zh": "一些监管机构已经开始积极采用整体性的 NFR 管理方法，推动非金融风险管理从零散、临时的评估转向更加整合的方式。"}
+      ],
       "parts": [
         {"title": "问题提出：NFR 后果很财务，但根因不是市场价格", "body": "非金融风险来自流程、人员、行为、系统和外部关系，常先表现为客户伤害、控制失效或中断，随后才进入损益、资本与声誉。只在事故后计算罚款，会错过风险形成的早期信号。", "takeaway": "NFR 不是“不会影响财务”，而是风险来源和管理方法不同。"},
         {"title": "统一 taxonomy：没有共同语言就无法聚合", "body": "不同部门若用不同名称描述同一风险，组织无法比较、分配 owner 或看集中暴露。taxonomy 需要清楚层级和边界，同时避免过度复杂；它应能连接事件、控制、指标和报告。", "takeaway": "分类不是文档整理，而是企业级数据和责任的基础。"},
@@ -345,6 +402,12 @@
       "sourceLabel": "打开 DSM 年报 PDF（重点 pp. 123–146）",
       "summary": "DSM 年报把抽象治理框架放进真实公司：Managing Board、Supervisory Board、业务单元、Global Risk Management、内部审计、行为准则和报告政策各自承担什么责任。阅读时不能把完整披露等同于控制有效；要把每项声明转成可验证问题，寻找风险所有权、独立挑战、重大风险、监测证据与管理层保证之间的连接。",
       "coreQuestion": "一家公司披露了完整 risk framework，还需要哪些 operating evidence 才能相信它真的影响决策？",
+      "originalNote": "以下摘录严格来自 syllabus 指定范围 pp. 123–146，用来观察行为准则、风险偏好与强制性公司要求如何连接。",
+      "excerpts": [
+        {"label": "p. 136 · Risk appetite", "en": "The risk appetite defines the level of risk the company is prepared to take in the different risk categories, being strategic, operational, financial, compliance, and reputational risks. The risk appetite supports priority-setting in risk responses.", "zh": "风险偏好定义公司在战略、运营、财务、合规和声誉等不同风险类别中准备承担的风险水平。风险偏好用于支持风险应对措施的优先级排序。"},
+        {"label": "p. 136 · Code of Business Conduct", "en": "The Code of Business Conduct comprises our purpose, our culture, and our business principles, which form the basis for risk management. Our culture is directly related to our purpose of creating brighter lives for all. All our employees receive regular training on the Code of Business Conduct and on detailed aspects of relevant business principles.", "zh": "行为准则由公司的使命、文化和业务原则组成，这些内容构成风险管理的基础。公司的文化与“为所有人创造更美好生活”的使命直接相关。所有员工都会定期接受行为准则以及相关业务原则具体内容的培训。"},
+        {"label": "p. 136 · Corporate Requirements", "en": "The Corporate Requirements are mandatory for all units, and management is responsible to implement these as and when applicable.", "zh": "Corporate Requirements 对所有业务单元均具有强制性，管理层负责在适用时实施这些要求。"}
+      ],
       "parts": [
         {"title": "治理架构：监督与管理责任如何分开", "body": "年报先说明 Managing Board 与 Supervisory Board 的角色以及委员会安排。监督层负责批准、质询和监控，管理层负责战略执行、绩效和风险系统。阅读重点是决策权、信息流和问责，而不是记住组织图名称。", "takeaway": "board oversight 不等于 board 代替管理层拥有风险。"},
         {"title": "治理政策与行为准则：价值观怎样进入制度", "body": "code of conduct、内部政策、举报机制与合规安排共同构成控制环境。真正有效需要 training、reporting、investigation 和 consequence management；只有公开原则，无法证明员工在压力下会遵守。", "takeaway": "价值观必须能在事件处理和领导者后果中被观察。"},
@@ -375,6 +438,8 @@
       "sourceLabel": "打开 Tennessee Controls case PDF",
       "summary": "Tennessee Controls 用 Strategic Ranking Index 帮助公司在有限资本下比较竞争项目，把回报、风险和提案可信度压缩成可排序分数。模型提高一致性和透明度，却也可能制造虚假精确性、重复计算风险并诱导经理优化分数。案例核心不是保留或废除模型，而是决定量化初筛与管理判断应如何分工。",
       "coreQuestion": "什么时候一个看似客观的项目排名系统，反而会降低资本配置质量？",
+      "originalNote": "现有 HBS case PDF 是扫描型文件，正文无法可靠提取。为避免 OCR 错误和案例事实失真，本页暂不复制英文段落；请通过上方按钮阅读原始 PDF，取得可检索版本后再补翻译。",
+      "excerpts": [],
       "parts": [
         {"title": "管理问题：有限资本如何在多个项目间分配", "body": "公司面对的不是一个项目是否盈利，而是多个项目争夺同一预算。决策要同时考虑财务回报、战略适配、实施能力、风险与项目之间的依赖；因此单独 NPV 很难覆盖全部判断。", "takeaway": "项目组合问题不能被简化为各项目独立排序。"},
         {"title": "SRI 设计：把多种判断转成共同分数", "body": "Strategic Ranking Index 试图将回报、风险和提案可信度等变量标准化并加权，使不同部门项目可比较。它可以减少随意性、暴露假设并留下审计轨迹，但每个权重和评分都包含判断。", "takeaway": "模型让判断可见，并没有消除判断。"},
@@ -405,6 +470,8 @@
       "sourceLabel": "查看 Oxford 章节页（正式原文待补）",
       "summary": "Davila 挑战“控制必然扼杀创新”的简单看法。正式管理控制既可能造成过早标准化，也可能帮助创新团队明确假设、分配资源、记录学习并推动战略变化。关键不在控制多或少，而在控制形式是否匹配创新类型和不确定性：探索阶段管理学习，验证阶段管理证据，规模化阶段才逐步加强效率与结果控制。",
       "coreQuestion": "为什么创新项目没有达到最初收入预算，并不自动意味着应该停止？",
+      "originalNote": "Oxford 章节正式原文尚未收录。现有学习内容只依据官方 abstract 和课程主题整理，因此暂不生成无法逐页核对的“原文段落”。",
+      "excerpts": [],
       "parts": [
         {"title": "传统冲突：mechanistic control 被认为会减少变化", "body": "传统观点把正式 MCS 与标准化、可预测性和减少差异联系起来，因此担心预算和指标会压制实验。Davila 的问题不是否认这种风险，而是追问不同控制在不同创新与战略情境下能发挥什么作用。", "takeaway": "不能用“control 好或坏”的二分法讨论创新。"},
         {"title": "核心命题：fit 比控制数量更重要", "body": "控制不足会让资源持续投入却没有学习证据，控制过硬则会迫使探索项目假装可以预测。管理者需要识别主要不确定性，并设计能暴露假设、促进讨论和约束资源浪费的控制。", "takeaway": "控制应针对当前必须解决的不确定性。"},
@@ -435,6 +502,8 @@
       "sourceLabel": "查看 HBR 文章页（正式全文待补）",
       "summary": "Quinn 与 Thakor 认为，组织若只依赖目标、奖金和监控，会把员工推向最低合同贡献。真实的 higher purpose 能把日常工作连接到对客户与社会的价值，激发意义感、内在动机、本地判断和共同身份。但 purpose 只有在资源配置、晋升、边界和领导者后果中得到证明，才是控制系统，而不是宣传口号。",
       "coreQuestion": "如果全体员工都能复述公司 purpose，但短期违规仍反复发生，最可能缺少什么？",
+      "originalNote": "HBR 正式文章尚未收录。为避免把公开摘要或二手访谈误标成文章原文，暂时只保留 HBR 入口；取得全文后再补逐段翻译。",
+      "excerpts": [],
       "parts": [
         {"title": "传统管理假设：员工只会回应外部激励", "body": "管理者面对低投入时常增加 target、incentive 和 monitoring，背后假设工作只是合同交换。组织若持续这样设计，员工可能只完成得到奖励所需的最低行为，并减少主动学习和额外贡献。", "takeaway": "控制系统也会塑造它所假设的员工行为。"},
         {"title": "Higher purpose：组织为他人创造的真实价值", "body": "purpose 不是一句使命口号，而是解释组织为何值得存在、为谁创造什么价值。它需要足够具体，使员工能把日常任务和客户、社区或社会结果连接起来，并在利益冲突时提供方向。", "takeaway": "purpose 必须能帮助真实选择，而不只是产生情绪认同。"},
@@ -465,6 +534,12 @@
       "sourceLabel": "打开 Otten & Schweitzer 原文 PDF",
       "summary": "文章用结构—行为—绩效（SCP）框架比较欧洲和美国共同基金行业。美国市场当时规模更大、单只基金平均规模更高；欧洲市场更碎片化，各国又受银行渠道、养老金制度和股权文化影响。历史回报不能直接证明某地经理更优秀，必须先统一基金类别、风险基准、费用、货币和样本偏差。",
       "coreQuestion": "为什么一段历史超额收益不足以证明某个国家或地区的基金经理更优秀？",
+      "originalNote": "以下摘录来自论文摘要、方法说明和结论。请注意这些结果对应论文当时的样本期间，不能直接当成今天的市场排名。",
+      "excerpts": [
+        {"label": "p. 14 · 研究方法", "en": "In this study we analyze the development and performance of the European mutual fund industry and compare it with the industry in the United States, using the traditional structure-conduct-performance paradigm.", "zh": "本研究采用传统的结构—行为—绩效范式，分析欧洲共同基金行业的发展和表现，并与美国共同基金行业进行比较。"},
+        {"label": "p. 14 · 主要结构发现", "en": "We find that Europe is still lagging the American mutual fund industry when it comes to total asset size, average fund size, and market importance.", "zh": "我们发现，在总资产规模、平均基金规模和市场重要性方面，欧洲共同基金行业当时仍落后于美国。"},
+        {"label": "p. 35 · 小盘基金发现", "en": "Finally, small cap mutual funds in both Europe and the United States outperform the benchmark and all other mutual funds. In this market segment mutual funds apparently add more value than their counterparts in the large cap segment.", "zh": "最后，欧洲和美国的小盘共同基金均跑赢基准及其他共同基金。在这一细分市场中，共同基金显然比其大盘基金同行创造了更多价值。"}
+      ],
       "parts": [
         {"title": "研究视角：不要只比较一张回报排行榜", "body": "作者把共同基金放入 structure–conduct–performance 框架，先理解市场规模、参与者、制度和分销，再观察产品行为与绩效。这样可以避免把制度环境造成的差异全部归因于经理能力。", "takeaway": "绩效是产业结构和竞争行为共同作用的结果。"},
         {"title": "结构差异：美国规模化，欧洲更分散", "body": "研究时期美国共同基金资产和平均基金规模更高；欧洲虽有大量基金，但市场按国家、语言、监管和渠道分割。规模差异可能影响成本效率、产品范围、营销和研究资源。", "takeaway": "基金数量多不等于行业规模或效率更高。"},

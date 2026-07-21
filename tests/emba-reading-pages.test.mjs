@@ -25,10 +25,16 @@ for (const reading of data.readings) {
   assert.ok(reading.parts.length >= 4, `${reading.id} needs at least four deep-reading parts`);
   assert.ok(reading.keywords.length >= 5, `${reading.id} needs at least five keywords`);
   assert.ok(reading.keywords.every((item) => item.term && item.ipa && item.zh && item.meaning), `${reading.id} has an incomplete keyword`);
+  assert.ok(reading.originalNote, `${reading.id} needs an original-reading status note`);
+  assert.ok(Array.isArray(reading.excerpts), `${reading.id} excerpts must be an array`);
+  assert.ok(reading.excerpts.every((item) => item.label && item.en && item.zh), `${reading.id} has an incomplete translated excerpt`);
   if (reading.sourceUrl?.startsWith("/")) {
     assert.ok(fs.existsSync(`.${decodeURI(reading.sourceUrl)}`), `${reading.id} source file is missing`);
   }
 }
+
+assert.equal(data.readings.filter((item) => item.excerpts.length >= 2).length, 11, "Eleven text-based originals should have translated excerpts");
+assert.equal(data.readings.reduce((total, item) => total + item.excerpts.length, 0), 32, "The original-reading section should contain 32 checked excerpts");
 
 const dayContent = dayFiles.map((file) => fs.readFileSync(file, "utf8")).join("\n");
 for (const reading of data.readings) {
@@ -37,7 +43,10 @@ for (const reading of data.readings) {
 
 assert.match(html, /id="readingApp"/);
 assert.match(script, /沿着文章结构逐部分读/);
+assert.match(script, /点击段落展开中文翻译/);
+assert.match(script, /<details class="reading-excerpt">/);
 assert.match(script, /target="_blank"/);
 assert.match(styles, /\.reading-keywords/);
+assert.match(styles, /\.reading-excerpt\[open\]/);
 
 console.log("EMBA reading page checks passed");

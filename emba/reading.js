@@ -34,6 +34,49 @@ function sourceLink(reading) {
   return `<a class="reading-source-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(reading.sourceLabel || "打开原文")} ↗</a>`;
 }
 
+function renderOriginalSection(reading) {
+  const excerpts = Array.isArray(reading.excerpts) ? reading.excerpts : [];
+  const note = reading.originalNote || "点击英文段落，可在原位置展开中文翻译。";
+  return `
+    <section class="reading-section reading-original" aria-labelledby="original-title">
+      <div class="reading-section-heading">
+        <span>Original close reading</span>
+        <h2 id="original-title">阅读原文：点击段落展开中文翻译</h2>
+        <p>${escapeHtml(note)}</p>
+      </div>
+      ${excerpts.length ? `
+        <div class="reading-excerpts">
+          ${excerpts.map((excerpt, excerptIndex) => `
+            <details class="reading-excerpt">
+              <summary>
+                <span class="reading-excerpt-meta">
+                  <span>Excerpt ${String(excerptIndex + 1).padStart(2, "0")}</span>
+                  <span>${escapeHtml(excerpt.label || "原文摘录")}</span>
+                </span>
+                <span class="reading-excerpt-en" lang="en">${escapeHtml(excerpt.en)}</span>
+                <span class="reading-excerpt-toggle">
+                  <span class="reading-excerpt-open">点击查看中文翻译 ＋</span>
+                  <span class="reading-excerpt-close">收起中文翻译 −</span>
+                </span>
+              </summary>
+              <div class="reading-excerpt-translation" lang="zh-CN">
+                <span>中文翻译</span>
+                <p>${escapeHtml(excerpt.zh)}</p>
+              </div>
+            </details>
+          `).join("")}
+        </div>
+      ` : `
+        <div class="reading-original-empty">
+          <span>原文段落暂未开放</span>
+          <p>${escapeHtml(note)}</p>
+          ${sourceLink(reading)}
+        </div>
+      `}
+    </section>
+  `;
+}
+
 function renderIndex(readings) {
   const groups = Object.groupBy
     ? Object.groupBy(readings, (reading) => reading.day)
@@ -47,11 +90,12 @@ function renderIndex(readings) {
     <header class="reading-index-hero">
       <span class="reading-eyebrow">September 2026 · Corporate Finance & Accounting</span>
       <h1>五天，16 项指定阅读</h1>
-      <p>每一篇都先用不超过 300 字建立全貌，再按文章论证顺序精读，最后集中掌握关键词。点击卡片进入独立学习页面；PDF 原文会在新窗口打开。</p>
+      <p>每一篇都先用不超过 300 字建立全貌，再按文章论证顺序精读，并用可展开的中英对照理解核心原文，最后集中掌握关键词。点击卡片进入独立学习页面；PDF 原文会在新窗口打开。</p>
       <div class="reading-index-stats" aria-label="阅读资料统计">
         <span><strong>5</strong> 天</span>
         <span><strong>16</strong> 项指定阅读</span>
         <span><strong>12</strong> 项原文已收录</span>
+        <span><strong>32</strong> 段中英对照</span>
         <span><strong>4</strong> 项替代学习包</span>
       </div>
     </header>
@@ -146,6 +190,8 @@ function renderReading(reading, readings) {
             `).join("")}
           </div>
         </section>
+
+        ${renderOriginalSection(reading)}
 
         <section class="reading-section" aria-labelledby="keywords-title">
           <div class="reading-section-heading">
