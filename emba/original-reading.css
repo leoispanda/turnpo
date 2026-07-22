@@ -145,6 +145,14 @@ body {
   line-height: 1.65;
 }
 
+.original-hero > .original-scope {
+  margin-top: 12px;
+  color: var(--original-accent);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 680;
+}
+
 .original-instruction {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -223,6 +231,11 @@ body {
 .original-paragraph[aria-pressed="true"] {
   border-color: rgba(141, 99, 36, 0.3);
   background: #fbf5e9;
+}
+
+.original-paragraph.is-translating {
+  cursor: progress;
+  opacity: 0.76;
 }
 
 .original-paragraph-meta {

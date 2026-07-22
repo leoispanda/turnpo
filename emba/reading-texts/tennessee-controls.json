@@ -1,0 +1,395 @@
+{
+  "id": "tennessee-controls",
+  "sourceFile": "Tennessee Controls.pdf",
+  "scope": "Complete case · 17 OCR pages",
+  "pageCount": 17,
+  "paragraphCount": 55,
+  "characterCount": 32315,
+  "paragraphs": [
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 1,
+      "label": "p. 1",
+      "en": "HARVARD BUSINESS SCHOOL 9-191-083 REV: NOVEMBER 30, 2010 ROBERT SIMONS Tennessee Controls: The Strategic Ranking Problem Tennessee Controls Corporation was founded by two engineers in 1965. The company had grown apidly due to the successful design and marketing of several technical innovations and by 2010 wa i diversified high technology company approaching $2 billion dollars in annual sales. The founder attributed their success to careful management of the new product choices that inevitably face a growth-oriented enterprise. Although the founders were no longer active in the company, one of their legacies had been the Strategic Ranking Process."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 2,
+      "label": "p. 1",
+      "en": "Until 1996, the Strategic Ranking Process was a relatively informal process that involved the evaluation of project proposals and culminated in an annual series of meetings to compare, rank, and fund opportunities. This process became increasingly formalized with the creation of a Corporate Planning function in 2000. A decade later, Corporate Planning had grown into a respectably sized department with a manager and five analysts. During 2009, the Corporate Planning Department conceived and developed the Strategic Ranking Index (SRI) which was to be used in the 2010 planning cycle for the first time. Jim Williams, corporate planning manager, described its purpose: The problem with making good decisions is the \"fuzziness\" of the data."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 3,
+      "label": "p. 1",
+      "en": "This can lead to making subjective rather than objective decisions. What we have done with the SRI is to quantify, as much as possible, the key decision parameters. This can be particularly important when comparing dissimilar alternatives. We're going to set this up like a \"war room\" where Jim (Jim Wilson, Tennessee Controls President and Chief Executive) can sit in a command chair and call up the details of all projects on a large video screen. I think that having this level of strategic information at his fingertips will give us the ultimate in strategic decision-making capability. The methodology for SRI calculation was formalized in a six-page corporate policy statement (Appendix A)."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 4,
+      "label": "p. 1",
+      "en": "The Process Control Division Located in the foothills of the Appalachian Mountains just outside of Unicoi, Tennessee, the Process Controls Division was the newest and smallest division of Tennessee Controls. The business was started in the late 1980s and had grown to approximately $400 million sales by 2009. basis for class discussion. Cases are not intended to serve as endorsements, sources of primary data, or illustrations of effective or ineffective Doctoral Candidate Dale Geiger prepared this case under the supervision of Professor Robert Simons. HBS cases are developed solely as the management. materials, call 1-800-545-7685, write Harvard Business School Publishing, Boston, MA 02163, or go to http://www.hbsp.harvard.edu."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 5,
+      "label": "p. 1",
+      "en": "No part of Copyright © 1991, 1999, 2000, 2001, 2010 President and Fellows of Harvard College. To order copies or request permission to reproduce mechanical, photocopying, recording, or otherwise-without the permission of Harvard Business School. this publication may be reproduced, stored in a retrieval system, used in a spreadsheet, or transmitted in any form or by any means-electronic,"
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 1,
+      "label": "p. 2",
+      "en": "191-083 Tennessee Controls: The Strategic Ranking Problem In 1999, a major funding commitment for this business had resulted in the construction of a new, dedicated facility and the recruitment and organization of an engineering and development staff of 200 professionals. The division was organized as a profit center with functional departments responsible for manufacturing, marketing, and engineering and development. All manufacturing was done in the Unicoi facility. Domestic marketing was accomplished through a national sales force and a distributor network. International sales and marketing were handled through other divisions of the corporation and represented about 40% of total sales."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 2,
+      "label": "p. 2",
+      "en": "The Process Controls Division offered a product line of process controllers. Controllers were used primarily in \"wet\" process industries, such as petrochemicals, food processing, and waste treatment. On the factory floor, process controllers constantly monitored whether process variables such as temperature and pressure were at pre-programmed set points, adjusting them if necessary. The circuitry of the controllers was electronically \"hardened\" to prevent electrical noise, factory vibration, dust, and temperature variations from interfering with the computer-like functions of the process controller."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 3,
+      "label": "p. 2",
+      "en": "Special design requirements of this business also required that, in the unlikely event of failure, the controller \"failed safe\" to avoid industrial accidents. While first-generation process controllers had been mechanical, manufacturers now mainly sold digital controllers. Tennessee Controls Corporation's objective for the Process Controls Division had been to develop another major business that would continue the company's tradition of profitable, rapid growth. To date the growth of the division had been satisfactory but its profitability had been disappointing (Exhibit 1)."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 4,
+      "label": "p. 2",
+      "en": "The expenses of developing a new site; the recruiting, training, payroll, and benefit costs of the large engineering staff; and the costs of paying distributor discounts in addition to sales force commissions had resulted in disappointing profit levels and the dismissal of the Division manager in 2009. Using an executive search firm, Judy Starnes was hired in February 2010 as the Division's new vice president and general manager. Judy Starnes, age 39, had an engineering undergraduate education but had spent the majority of her career in brand management at Procter and Gamble."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 5,
+      "label": "p. 2",
+      "en": "She was chosen for the position because she was thought to be the type of person who could bring complex technologies together while executing the marketing programs necessary to achieve profitability. Her demonstrated ability to turn around unprofitable products was the major reason that the company had broken its tradition of promotion from within. One of Judy Starnes' first actions was to draft a new mission statement for the Process Control Division."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 6,
+      "label": "p. 2",
+      "en": "After a two-day retreat with key managers of the division, the following mission was adopted: The mission of the Process Controls Division is to apply the talents, knowledge, and skills of our people to make Tennessee Controls the market leader in enabling customers to reap the benefits of industrial control technology. The 2010 Strategic Ranking Process Proposals In September 2010, Starnes was facing her first major resource allocation decision. She was scheduled to present her Division's ranked funding needs the following week at the Corporate Strategic Ranking Meeting. Before she could do that, however, she would have to evaluate the formal funding requests prepared by three of her subordinates. Starnes explained her concerns:"
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 1,
+      "label": "p. 3",
+      "en": "Tennessee Controls: The Strategic Ranking Problem 191-083 Any innovative company worth its salt must have a creative backlog: a reservoir of ideas that have the potential of blossoming into major business opportunities. Therefore, we must encourage multiple creative programs during the idea development stage, but we cannot afford to fund all programs to completion. Management must choose only the best opportunities with the maximum likelihood of success. From what I've seen, this division has done a great job of generating ideas, maybe too good. I wish we had the resources to fund all of the ideas that made sense. But we just don't have the corporate funding to do an adequate job on more than one, or maybe two, large projects."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 2,
+      "label": "p. 3",
+      "en": "Even if we had funding, trying to do more would probably swamp the organization and it's important that we execute well on whatever program we choose. The sales and marketing manager, the engineering and development manager, and the Division controller each had submitted a proposal for funding during the 2010 cycle. Each proposal represented a distinctly different direction for the Division. Proposal 1: Develop New Products for High-volume Market Segment Proposed by Steve Gregg, the Division marketing and sales manager, this proposal focused on the low-price, high-volume segment of the market where Tennessee Controls had competed in the past."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 3,
+      "label": "p. 3",
+      "en": "Studies of Japanese manufacturers, who tended to be early adopters of new technology, supported the proposition that low-priced controllers with streamlined basic features would soon represent the high growth segment of the business. Gregg felt that aggressive product development in this area would give Tennessee Controls a unique product that could result in domestic market leadership in this segment. This approach would also erect defensible barriers to offshore companies should they decide to market in the United States. (Exhibit 3 reproduces Gregg's proposal.) Gregg, age 40, was an electrical engineer with an MBA who had spent his entire career at Tennessee Controls."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 4,
+      "label": "p. 3",
+      "en": "He had worked in the Process Control Division since 1998, first as a salesman and then as an area sales manager prior to his current assignment which began in 2003. Gregg was highly regarded as an outstanding salesman with deep customer and product knowledge. In 2004, based on projections of market share increases, Gregg had successfully sold corporate management on the dual strategy of using both independent distributors and commissioned salespeople. Proposal 2: Develop High-technology Control Systems This proposal by Division Engineering and Development Manager Steve Mowry, argued that the highest profit growth market would be found in products with high technological complexity."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 5,
+      "label": "p. 3",
+      "en": "For some time now, large customers of process controllers had networked individual machines together with SCADA (Supervisory Control and Data Acquisition) systems. These systems offered major cost reductions to customers and, because of their complexity and proprietary nature, could command high prices. Trends in the industry included making operator interfaces more user-friendly; offering modular, scalable SCADA systems at a variety of price levels; introducing real-time \"intelligence\" and remote geographical capabilities; and open standards to facilitate connections to third party products."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 6,
+      "label": "p. 3",
+      "en": "As one of the few firms capable of designing such complex systems, Mowry argued that Tennessee Controls could obtain a unique, market leadership position in the high-end market by a major effort at product development. Delaying funding of the project, he felt, would result inevitably in the introduction of a \"me too\" product at some time in the future. (Exhibit 4 reproduces Mowry's proposal.)"
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 1,
+      "label": "p. 4",
+      "en": "191-083 Tennessee Controls: The Strategic Ranking Problem Mowry, age 48 with a Ph.D. in electrical engineering, had been with the Division since its inception and had been in his current job since 2000. Prior to joining the Process Control Division he had held several engineering development positions in other divisions of the company, specializing in power supply design. He had contributed in some fashion to every product development effort of the Division and took great pride in the technical strength of the engineering and development organization that he had played a large role in building."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 2,
+      "label": "p. 4",
+      "en": "Proposal 3: Acquire MDA Craig Neirman, the Division controller, was an advocate of acquiring new products and markets through the purchase of small, high potential businesses. The newest member of the management team, Neirman had come to the Division in 2008 after several assignments in Corporate Control where he had worked on acquisition evaluation. Aged 34, he had joined the company after receiving his Bachelor's and Master's degree in Business Administration from East Tennessee State University. Neirman had identitied the Maryland Data Acquisition Company as a candidate for acquisition. MDA had successfully entered the SCADA market with a Microsoft Windows based server and had developed a leadership position in the mid-market segment."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 3,
+      "label": "p. 4",
+      "en": "Already profitable with a base of customers, MDA needed capital to finance continued growth and seemed like a natural fit with Tennessee Controls. Risk of failure would be minimized and the opportunities for technical synergy looked good. Furthermore, the existing customer base of MDA would represent good business leads for Tennessee Controls' products. (Exhibit 5 reproduces Neirman's proposal.) Ranking the Proposals Judy Starnes' preliminary work would include the following steps: 1. Review the SRI Calculations as published in the 6-page Corporate Policy PM 2-3-6 (Appendix A). 2. Calculate the Financial Return Index for each proposal using the financial inputs provided by Williams (Exhibit 2). 3."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 4,
+      "label": "p. 4",
+      "en": "Assess the proposals' credibility and risk index from the Proposal Summaries (Exhibits 3, 4, and 5). 4. Calculate the SRI for each proposal. 5. Prepare recommendations to present at the upcoming Strategic Ranking meeting. As she began to prepare for her corporate presentation, Starnes did not know which of the alternatives would be best for the division. Unfortunately, because the process was brand new, she could not turn to more experienced managers for advice on the calculations. Aware of the importance of the decision for the future of the division and the careers of the three managers involved, she wondered how to best evaluate the quality and credibility of the proposals and their sponsors."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 1,
+      "label": "p. 5",
+      "en": "Tennessee Controls: The Strategic Ranking Problem 191-083 Appendix A POLICY MANUAL TCC INTERNAL DATA LEVEL: Corporate REF: No. PM 2-3-6 EFFECTIVE: 5/20/10 (Page 1 of 6) ORIGINAL: 5/20/10 Subject: Strategic Ranking Index References: 1. Strategic Planning Process: PM No. 2-3-4 2. Project Management: PM No. 4-2-1 3. Incentive Compensation: PM No. 8-1-1 Purpose: To provide a uniform policy for the calculation and ranking of major development projects within the company. Scope: All Level 3 business units of TCC including International Subsidiaries. Policy: All developmental funding requests exceeding US$200,000 must include a documented strategic ranking index to facilitate comparison with other corporate opportunities."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 2,
+      "label": "p. 5",
+      "en": "Under normal circumstances, projects submitted for funding should have an overall SRI equal to or greater than 10. Projects with SRI values less than 10 will not be considered unless prior approval is received from a corporate-level officer. The required list of supporting documentation shall be updated periodically by Corporate Planning but must include the following at a minimum: 1. An overall Strategic Ranking Index 2. A Credibility Index 3. A Financial Index 4. A Risk Index The Overall Strategic Ranking Index is a composite of the other indices, as follows: SRI = Credibility x Financial Return Risk The Credibility Index captures the quality of the strategic idea and the adequacy of the resources and planning."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 3,
+      "label": "p. 5",
+      "en": "As shown in Attachment 1, the highest scores result when a strong project champion presents a project with strong strategic definition and favorable competitive assessment. Correspondingly, the lowest scores are given to projects with weak champions and poor strategic analysis. The Financial Return Index is the product of two ratios as shown in Attachment 2. The first ratio is the cumulative organization profit through the product life divided by the maximum, cumulative, negative cash flow. This ratio gives a relative cash flow-related measure of return on investment. The second ratio adds a measure of time to the equation by dividing project life by the time to maximum negative cash flow."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 4,
+      "label": "p. 5",
+      "en": "Life cycle is defined as the time between first NSB (Net Sales Billed) and the time when Net Sales Billed falls to half of its peak level."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 1,
+      "label": "p. 6",
+      "en": "191-083 Tennessee Controls: The Strategic Ranking Problem The financial projections will be calculated by the Corporate Planning Department based on the Cash Flow Wave diagram shown in Attachment 3. The Risk Index in the denominator of the SRI equation recognizes that high risk is less desirable. The matrix balances product uniqueness and expected market share as shown in Attachment 4. The best (lowest) scores are awarded for unique products that can result in Tennessee Controls becoming the market leader. The worst scores are given to copyable products where achievable market share would be less than half that of the market leader."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 2,
+      "label": "p. 6",
+      "en": "Responsibilities: The Corporate Planning Manager will provide the basic inputs to the Financial Index ratios based on financial data supplied by the requestor. It is the responsibility of the requesting organization to warrant that the financial data are correct. The Corporate Planning Department is responsible for maintaining and periodically upgrading the Cash Flow Wave model. It is the responsibility of Level 3 and higher managers to determine the other input indices and to calculate the SRI itself. Adequate backup and explanation should also be provided. Each level of management must assume responsibility for the numbers and recommendations it provides to higher levels."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 3,
+      "label": "p. 6",
+      "en": "Achievement of projections is to be considered a major input into Key Personnel Award Attachment 1: SRI Credibility Factor Attachment 2: SRI Financial Return Factor Attachment 3: SRI Cash Flow Wave Attachment 5: SRI Risk Factor"
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 1,
+      "label": "p. 7",
+      "en": "191-083 Lacks Strong Champion and/or Team Strong Strategy, Segmentation, Product Some Strategic Analysis: Inadequate on Definition and Competitive Assess Market Environmental and/or Ignores Little/Pcor Strategic Analysis: Only Product Plan or \"Hipshot\" Strategy Strategic/Marketing Content Significant Strategic Factors Champion Commitment Average Team/Champion Proven Champion and Team Commitment SRI Credibility Index Strategy/ Marketing Content Appendix A (continued)"
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 1,
+      "label": "p. 8",
+      "en": "191-083 Life Cycle* Years to Maximum Negative Cash Flow Org. Profit Over Product Life Maximum Negative Cash Flow (Cumulative) * Life Cycle is years between first significant NSB level and time NSB falls to approximately 50% of peak. Financial Return Factor = SRI Financial Return Factor Appendix A (continued)"
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 1,
+      "label": "p. 9",
+      "en": "191-083-9- • Time 50% 1/3 NSB = Net Sales Billed 2/3 Product Life Cycle (1) NSB Peak NSB Maturity • X/3 CUM Cash Flow Years to Maximum Negative Cash Flow Design-to Market Cycle SRI Cash Flow Wave Magnitude Maximum CUM Negative Cash Flow Appendix A (continued)"
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 1,
+      "label": "p. 10",
+      "en": "-10- 191-083 Me-Too or Copyable Product. No Unique Technology or Distribution Channel Volatile Product and/or Distribution Strong Technical and/or Distribution Hook (Defendable for 2+ Years) to be Industry Market Share Leader \"Neck-and-Neck\" Product; Expected Leadership Product, Expected Trailing Product, Expected Relative Hook (6-12 Month Lead) Relative Market Share to be Timeliness/Market Share 50-100% of Market Leader Market Share Below 50% of Product Uniqueness Market Leader Product Uniqueness Timeliness Market Share SRI Risk Factor Appendix A (continued)"
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 1,
+      "label": "p. 11",
+      "en": "Tennessee Controls: The Strategic Ranking Problem 191-083 Exhibit 1 Tennessee Controls Corporation-Process Control Division Financial Performance 08/09 ($million) Total 1\"e 2\"O 3\"0 4\"0 Total Change Net sales billed 346.2 69.8 98.0 110.4 117.0 395.2 49.0 Gross profit margin 122.6 27.2 31.0 35.0 36.9 130.0 7.4 GPM (%) 35.4% 38.9% 31.6% 31.7% 31.5% 32.8% (2.6%) General and administrative 109.4 32.0 32.6 31.6 30.8 127.0 (17.6) Division profit 13.2 (0.2) 3.4 6.0 Profit (%) 3.8% (7.2%) (5.0) (0.2%) 3.1% 5.1% 1.1% (9.0) (2.7%) Exhibit 2 September 10, 2010 Judy Starnes From: Jim Williams, Corporate Planning Subiect: Financial Inputs to SRI Model Evaluation of forecast data provided by your people has generated the following matrix of financial output that should be used in your SRI Financial Return Index calculation."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 2,
+      "label": "p. 11",
+      "en": "As outlined in the Planning Manual, you should next evaluate the risk and credibility criteria, calculate the appropriate SRI Index, and then prepare your recommendations for the SRP Meeting. Should you wish other forecast data evaluated, please contact me as soon as possible since there is little time left before the Ranking Meeting and I am being swamped by similar requests. SCADA MDA Proposal High Volume Technology Acquisition First sales 12 months 18 months Immediately Peak sales 10 years 5 years 15 years Half-peak sales 15 years 15 years 25 years Lifetime profit $79.6M $89.0M $217.0M Maximum cumulative negative cash flow dollars: $34.0M $32.8M $50.0M Maximum cumulative negative cash flow years: 2 years 3 years 6 years"
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 1,
+      "label": "p. 12",
+      "en": "191-083 Tennessee Controls: The Strategic Ranking Problem Exhibit 3 September 10, 2010 To: Judy Starnes From: Steve Gregg, Marketing and Sales Manager Re: The 015 Product Proposal When introduced, the 005 and 008 product lines offered state-of-the art features for a lower price than Allen Bradley or Modicon were charging for older, less capable product. However, over the last four years, both competitors have provided similar products to the marketplace and our price and performance advantage has dissipated. It is essential to the future of the Division that we regain our role of low-cost, high-performance supplier to this industry. As you know, we have a difficult time selling into Japan."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 2,
+      "label": "p. 12",
+      "en": "Their product specifiers very much prefer to buy from Japanese programmable control manufacturers who offer lower-priced products with streamlined features. It is only a matter of time before the Japanese introduce similar attributes into the U.S. programmable control market. Indeed, the only barriers to their entry seem to be the relative size of our market and their lack of distributors. Responding to this threat is the basis of the proposed 015 product development. Target priced at roughly one-third of our 005 line, this product will deliver roughly equivalent capability in handling smaller applications requiring less than 32 input/output points."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 3,
+      "label": "p. 12",
+      "en": "The speed of the microprocessor and the enhanced instruction set will make this product particularly attractive in replacing mechanical, drum-timer-type machine controls. The market potential for the product is large, as shown below. Not only will the product have a price advantage in existing applications, it will open two new markets: the low-priced, small I/O market and the drum-timer replacement market."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 4,
+      "label": "p. 12",
+      "en": "Incremental Market Analysis (units) Assumed Year 1 Year 2 Year 3 Year 5 Year 5 Growth Rate Existing 60,000 69,000 79,350 91,253 104,940 15% Served 70% 75% 80% 85% 90% Available 18,000 17,250 15,870 13,688 10,494 Drum timer 30,000 33,000 36,300 39,930 43,923 10% Low-priced 30,000 39,000 50,700 65,910 85,683 30% Total market 78,000 89,250 102,870 119,528 140,100"
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 1,
+      "label": "p. 13",
+      "en": "Tennessee Controls: The Strategic Ranking Problem 191-083 Exhibit 3 (continued) Priced at $2,000 per modular system with 40% gross margin, these volumes will provide they did on the 005: Assuming Not Followed: Year 1 Year 2 Year 3 Year 5 Year 5 TCC share 40% 50% 55% 60% 65% Sales ($M) 62.4 89.3 113.2 143.4 182.1 Gross profit (SM) 25.0 35.7 45.3 57.4 72.9 Assuming Followed: Year 1 Year 2 Year 3 Year 5 Year 5 TCC share 40% 50% 50% 45% 40% Sales (SM) 62.4 89.3 102.9 107.6 112.1 Gross profit ($M) 25.0 35.7 41.1 43.0 44.8 This product is ideally suited to our distribution and sales network. I think that it could be handled with essentially no change in sales force or sales strategy."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 2,
+      "label": "p. 13",
+      "en": "In summary, this product approach is a continuation of our past successful strategy and has the opportunity to add substantially to our business. I feel very strongly that this development should be our number one priority for Strategic Funding this year. Please let know if you have any additional questions."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 1,
+      "label": "p. 14",
+      "en": "191-083 Tennessee Controls: The Strategic Ranking Problem Exhibit 4 September 3, 2010 To: Judy Starnes From: Steve Mowry, Engineering Subject: The SCADA Strategy Per your request, here is a synopsis of the Supervisory Control and Data Acquisition Strategy. 1. The latest technologies in the business such as CAD-CAM, robotics, flexible manufacturing, etc., all illustrate the need for complex industrial control systems. Emerging applications will network factory floor controllers through some sort of data communication system, most likely using token ring architecture with a MAP protocol."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 2,
+      "label": "p. 14",
+      "en": "This data buss will then demand sophisticated higher-level Supervisory Control and Data Acquisition systems to efficiently and effectively manage entire factories, systems, or processes. 2. The market potential is huge when you consider the installed base of our existing systems, public utilities, pipelines, refineries, chemical plants, and, in fact, any process-related industry. 3. There is no doubt that there is demand for this function. We have received many requests from customers to \"consult\" with them on such enhancements and have seen our distributors attempt to provide this higher-level control system function. 4. Such higher-level functionality allows us to more lucratively price our services."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 3,
+      "label": "p. 14",
+      "en": "I visualize each job using a base core of high capability next generation controllers and base core of general SCADA software. Such a base would then be customized for each individual application by a project team that would provide turnkey capabilities. Such a strategy would allow the maxımum of value pricing for each individual job and should be extremely profitable. 5. Each job we completed would add to our capabilities' inventory and further extend the base of common software. This would further enhance our profitability and competitive advantage in subsequent similar jobs. 6. I estimate that we could build up a core of software to provide 90% of the functionality with only 10% of the lines of the code having to be developed on a custom basis."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 4,
+      "label": "p. 14",
+      "en": "Competition would have to develop 100%, which makes us unbeatable, pricewise, and at tremendous margin. A suitable control engine is the first prerequisite. We need the speed and processing capability necessary to handle the data acquisition functions. 7. We also need a talented process-oriented design and engineering staff. To support this new strategy, I recommend that we hire our individuals from the industries that we initially target. This will give us the inside info on what the customer needs. 8. My forecast assumes that we start with three industries the first year: petrochemical, fine chemical, and food processing. We should then plan to add one industry each year."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 5,
+      "label": "p. 14",
+      "en": "I have assumed that any industry we pick could generate $20 million sales the first year. This represents less than one major job completion per month. I assumed a reasonably decreasing growth rate in new opportunities within each industry offset by the addition of another new"
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 1,
+      "label": "p. 15",
+      "en": "Tennessee Controls: The Strategic Ranking Problem 191-083 ndustry each year. I believe that this plan is conservative and may need to be accelerated. have further assumed that the standard cost of hardware and base software is constant at 30° of sales. The custom component of cost will steadily diminish as we build our expertise and software base through experience. The result is steadily lower cost. 9. The key is to be first in this business. I hope that this gives you what we need so that we can begin immediately. I have already designated my control engine design team leaders and seek you earliest approval to backfill enough staff so that I can immediately place my most experienced people on this project."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 2,
+      "label": "p. 15",
+      "en": "I have already been in touch with executive recruiters so as not to delay hiring the industry experts cited above."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 3,
+      "label": "p. 15",
+      "en": "SCADA Forecast Market Detail Buildup Industries Sold to: Sales ($K): 1st three industries 60,000 80,000 100,000 120,000 140,000 4th industry 20,000 26,600 33,250 38,903 5th industry 20,000 26,600 33,250 6th industry 20,000 26,600 7th industry Total 60,000 100,000 146,600 199,850 258,753 20,000 Growth Rate: 1st three industries 33% 20% 17% 4th industry 33% 25% 25% 17% 5th industry 33% 25% 6th industry 33% 7th industry Total 66% 47% 36% 30% Custom Cost ($K): Ist three industries 9,900 7,920 6,600 5,940 4th industry 2,194 4,620 5th industry 3,300 3,300 2,634 1,926 2,634 2,194 6th industry 3,300 2,634 7th industry 3,300 Total 9,900 11,220 12,534 14,068 14,674 Summary and Profit Projections ($K): Custom cost Sales 60,000 100,000 146,600 199,850 9,900 11,220 12,534 14,068 258,753 14,674 Standard cost 18,000 29,940 43,905 59,865 77,640 Total cost 27,900 41,220 56,514 74,023 92,300 Total cost (%) 46.5% 41.2% 38.6% 37.0% 35.7% Gross profit 32,100 58,780 90,806 125,827 166,453"
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 1,
+      "label": "p. 16",
+      "en": "191-083 Tennessee Controls: The Strategic Ranking Problem Exhibit 5 To: Judy Starnes September 1, 2010 From: Craig Neirman Re: MDA Acquisition The recent corporate openness to acquisition offers a unique opportunity to increase our growth rate. Acquiring MDA provides a proven product line, an existing customer base, and a skilled national sales presence. MDA business is a good platform for future growth. 1. The Product: MDA utilizes Honeywell hardware with MDA proprietary software to handle industrial control problems at the supervisory level. They are not a direct competitor but, instead, are complimentary to our existing strategy."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 2,
+      "label": "p. 16",
+      "en": "Data interfaces from our existing product lines to Honeywell hardware are already in existence although we may want to do some upgrading. , Currently, MDA systems installations connect with all of our competitors' equipment as well. In situations where MDA is the primary contractor, MDA is in a position to specify the industrial controller manufacture and this \"pull through\" effect has been factored into the pro forma. A cross-section of customers provided by MDA have been interviewed and have established that they have an excellent reputation for meeting commitments and solving problems. MDA also seems to have TCC's same high-quality philosophy. 2. The Customer Base: MDA has an existing customer base of approximately 200."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 3,
+      "label": "p. 16",
+      "en": "Roughly half of these represent solid incremental sales opportunities for industrial controls. Their backlog is sufficient to cover their next 4.3 months' sales forecast. Many of the customer base have bought from MDA more than once. Almost all represent opportunities for repeat business. The growth rate of MDA's sales and customer base has averaged 30% per year for the last three years. My assessment is that this growth rate is sustainable for several more years and, in fact, may have been constrained by their capital limitations. 3. The Sales Force: Another intangible but nonetheless significant asset of MDA is their highly aggressive and talented sales force."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 4,
+      "label": "p. 16",
+      "en": "MDA's philosophy has been to pay salesmen exclusively with a 10% commission and expects the salesmen to be earning $200,000 per year after two years. Barring unusual circumstances, failure to achieve this level of sales leads to replacement. This sales force should be more than capable of augmenting our existing sales force. Their skills in systems sales will be extremely useful if and when we develop hardened SCADA controllers of our own."
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 1,
+      "label": "p. 17",
+      "en": "Tennessee Controls: The Strategic Ranking Problem 191-083 4. Other Factors: Additional advantages of the acquisition strategy are as follows: We get a proven profit-making business; We start making profit immediately; There are other areas of synergism (for example, we think we can achieve major purchase-price reductions in some of their electronic component purchases; - The Honeywell representative status should prove useful to some of our contract business; - We can provide economies of scale to reduce administrative costs. 5. Pro forma is attached."
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 2,
+      "label": "p. 17",
+      "en": "Pro Forma Sales and Profit Projections—MDA Acquisition ($ millions) Actual Projected Forecast 110.0 143.0 232.4 290.5 Growth (%) MDA sales 33.6% 65.4 84.6 29.4% 30.0% 30.0% 185.9 30.0% 25.0% 25.0% MDA COGS 36.8 51.2 83.0 104.2 127.8 156.8 Gross profit 28.6 33.4 44.0 66.0 60.0 81.7 104.6 Gross profit (%) 43.7% 39.5% 40.0% 42.0% 44.0% 45.0% 133.7 46.0% Marketing/Sales 11.8 14.2 18.4 24.0 31.2 39.0 48.8 R&D 8.0 8.2 11.0 14.4 18.6 23.2 29.0 Other G&A 5.2 6.4 6.8 7.0 7.4 7.8 8.2 PIT (%) PBIT 3.6 5.5% 4.6 7.8 5.5% 7.1% 10.2% 14.6 24.5 34.6 13.2% 14.9% 47.7 16.4% Pull-through Additional Impact Pull-through 11.0 21.5 37.2 58.1 87.2 % MDA sales 10.0% 15.0% 20.0% 25.0% 30.0% STD cost 3.4 6.4 11.2 17.4 26.2 Sales/Marketing 1.2 2.2 3.8 5.8 8.8 PBIT 6.4 12.9 22.2 34.9 52.2 __."
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 3,
+      "label": "p. 17",
+      "en": "Total Impact of Acquisition Total sales 65.4 84.6 121.0 164.5 223.1 290.5 377.7 Total PBIT 3.6 4.6 14.2 27.5 46.7 69.5 99.9 PBIT (%) 5.5% 5.5% 11.7% 16.7% 20.9% 23.9% 26.4%"
+    }
+  ]
+}

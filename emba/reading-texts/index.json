@@ -1,0 +1,88 @@
+{
+  "readings": [
+    {
+      "id": "stulz-risk-management",
+      "scope": "Complete article · 17 PDF pages",
+      "pageCount": 17,
+      "paragraphCount": 123,
+      "characterCount": 76213
+    },
+    {
+      "id": "nocco-stulz-erm",
+      "scope": "Complete article · 15 PDF pages",
+      "pageCount": 15,
+      "paragraphCount": 126,
+      "characterCount": 78729
+    },
+    {
+      "id": "ewing-volkswagen",
+      "scope": "Complete saved article · 4 PDF pages",
+      "pageCount": 4,
+      "paragraphCount": 14,
+      "characterCount": 7740
+    },
+    {
+      "id": "ing-compliance",
+      "scope": "Complete settlement announcement · 4 PDF pages",
+      "pageCount": 4,
+      "paragraphCount": 13,
+      "characterCount": 7868
+    },
+    {
+      "id": "de-micco-estra",
+      "scope": "Complete article · 19 PDF pages",
+      "pageCount": 19,
+      "paragraphCount": 109,
+      "characterCount": 67767
+    },
+    {
+      "id": "kpmg-esrs",
+      "scope": "Complete report · 23 PDF pages",
+      "pageCount": 23,
+      "paragraphCount": 95,
+      "characterCount": 55558
+    },
+    {
+      "id": "coso-executive-summary",
+      "scope": "Complete executive summary · 16 PDF pages",
+      "pageCount": 16,
+      "paragraphCount": 58,
+      "characterCount": 34121
+    },
+    {
+      "id": "grant-thornton-risk-frameworks",
+      "scope": "Complete report · 12 PDF pages",
+      "pageCount": 12,
+      "paragraphCount": 35,
+      "characterCount": 19725
+    },
+    {
+      "id": "deloitte-non-financial-risk",
+      "scope": "Complete report · 13 PDF pages",
+      "pageCount": 13,
+      "paragraphCount": 41,
+      "characterCount": 26371
+    },
+    {
+      "id": "dsm-governance-risk",
+      "scope": "Syllabus-required pages 123–146 · 24 pages",
+      "pageCount": 24,
+      "paragraphCount": 124,
+      "characterCount": 75916
+    },
+    {
+      "id": "otten-schweitzer-mutual-funds",
+      "scope": "Complete article · 22 PDF pages",
+      "pageCount": 22,
+      "paragraphCount": 83,
+      "characterCount": 51425
+    },
+    {
+      "id": "tennessee-controls",
+      "scope": "Complete case · 17 OCR pages",
+      "pageCount": 17,
+      "paragraphCount": 55,
+      "characterCount": 32315
+    }
+  ]
+}

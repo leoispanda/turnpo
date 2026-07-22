@@ -8,6 +8,7 @@ const styles = fs.readFileSync("emba/reading.css", "utf8");
 const originalHtml = fs.readFileSync("emba/original-reading.html", "utf8");
 const originalScript = fs.readFileSync("emba/original-reading.js", "utf8");
 const originalStyles = fs.readFileSync("emba/original-reading.css", "utf8");
+const fullReadingIndex = JSON.parse(fs.readFileSync("emba/reading-texts/index.json", "utf8"));
 const dayFiles = [
   "emba/materials/2026-09/days/2026-09-07-financial-management.md",
   "emba/materials/2026-09/days/2026-09-08-compliance-sustainability.md",
@@ -38,6 +39,15 @@ for (const reading of data.readings) {
 
 assert.equal(data.readings.filter((item) => item.excerpts.length >= 2).length, 11, "Eleven text-based originals should have translated excerpts");
 assert.equal(data.readings.reduce((total, item) => total + item.excerpts.length, 0), 32, "The original-reading section should contain 32 checked excerpts");
+assert.equal(fullReadingIndex.readings.length, 12, "Twelve complete course readings should have extracted full text");
+assert.ok(fullReadingIndex.readings.reduce((total, item) => total + item.paragraphCount, 0) >= 850, "Full readings should contain at least 850 readable sections");
+for (const entry of fullReadingIndex.readings) {
+  const path = `emba/reading-texts/${entry.id}.json`;
+  assert.ok(fs.existsSync(path), `${entry.id} full-reading file is missing`);
+  const fullReading = JSON.parse(fs.readFileSync(path, "utf8"));
+  assert.equal(fullReading.paragraphs.length, entry.paragraphCount, `${entry.id} paragraph count does not match the index`);
+  assert.ok(fullReading.paragraphs.every((item) => item.label && item.en && item.page), `${entry.id} contains an incomplete original paragraph`);
+}
 
 const dayContent = dayFiles.map((file) => fs.readFileSync(file, "utf8")).join("\n");
 for (const reading of data.readings) {
@@ -46,7 +56,7 @@ for (const reading of data.readings) {
 
 assert.match(html, /id="readingApp"/);
 assert.match(script, /沿着文章结构逐部分读/);
-assert.match(script, /开始原文阅读/);
+assert.match(script, /阅读完整原文/);
 assert.match(script, /original-reading\.html\?reading=/);
 assert.match(script, /target="_blank"/);
 assert.match(styles, /\.reading-keywords/);
@@ -54,7 +64,9 @@ assert.doesNotMatch(script, /<details class="reading-excerpt">/);
 assert.match(originalHtml, /id="originalReadingApp"/);
 assert.match(originalScript, /data-original-paragraph/);
 assert.match(originalScript, /aria-pressed/);
-assert.match(originalScript, /点击任意段落，该段会原位切换成中文/);
+assert.match(originalScript, /点击任意段落，该段会原位生成并切换成中文/);
+assert.match(originalScript, /reading-texts\/index\.json/);
+assert.match(originalScript, /translate\.googleapis\.com/);
 assert.match(originalStyles, /\.original-paragraph\[aria-pressed="true"\]/);
 assert.match(originalStyles, /\.original-text-zh/);
 

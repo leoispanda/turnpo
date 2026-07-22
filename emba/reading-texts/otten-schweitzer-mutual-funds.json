@@ -1,0 +1,591 @@
+{
+  "id": "otten-schweitzer-mutual-funds",
+  "sourceFile": "guid-bb9aa06f-4ab8-449c-988f-924ce20150d7-ASSET1.0.pdf",
+  "scope": "Complete article · 22 PDF pages",
+  "pageCount": 22,
+  "paragraphCount": 83,
+  "characterCount": 51425,
+  "paragraphs": [
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 1,
+      "label": "p. 1",
+      "en": "A Comparison between the European and the US Mutual Fund Industry Citation for published version (APA): Otten, R. R. A. E., & Schweitzer, M. (2002). A Comparison between the European and the US Mutual Fund Industry. Managerial Finance, 28(1), 14-35. https://doi.org/10.1108/03074350210767627 Document status and date: Published: 01/01/2002 DOI: 10.1108/03074350210767627 Document Version: Publisher's PDF, also known as Version of record Please check the document version of this publication: • A submitted manuscript is the version of the article upon submission and before peer-review. There can be important differences between the submitted version and the official published version of record."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 2,
+      "label": "p. 1",
+      "en": "People interested in the research are advised to contact the author for the final version of the publication, or visit the DOI to the publisher's website. • The final author version and the galley proof are versions of the publication after peer review. • The final published version features the final layout of the paper including the volume, issue and page numbers."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 3,
+      "label": "p. 1",
+      "en": "Link to publication General rights Copyright and moral rights for the publications made accessible in the public portal are retained by the authors and/or other copyright owners and it is a condition of accessing publications that users recognise and abide by the legal requirements associated with these rights. • Users may download and print one copy of any publication from the public portal for the purpose of private study or research. • You may not further distribute the material or use it for any profit-making activity or commercial gain • You may freely distribute the URL identifying the publication in the public portal."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 4,
+      "label": "p. 1",
+      "en": "If the publication is distributed under the terms of Article 25fa of the Dutch Copyright Act, indicated by the “Taverne” license above, please follow below link for the End User Agreement: www.umlib.nl/taverne-license Take down policy If you believe that this document breaches copyright please contact us at: repository@maastrichtuniversity.nl providing details and we will investigate your claim. Download date: 12 Jul. 2026"
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 1,
+      "label": "p. 2",
+      "en": "A Comparison Between the European and the U.S. Mutual Fund Industry by Rogér Otten, Limburg Institute of Financial Economics,Maastricht University, The Netherlands and Mark Schweitzer, Kempen & Co., Amsterdam, The Netherlands. Keywords : Mutual Funds, Organization of Financial Services, Performance Evaluation JEL Classification: G12, G20, G23 Abstract In this study we analyze the development and performance of the European mutual fund industry and compare it with the industry in the United States, using the traditional structure-conduct-performance (SCP) paradigm. We find that Europe is still lagging the American mutual fund industry when it comes to total asset size, average fund size, and market importance."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 2,
+      "label": "p. 2",
+      "en": "Furthermore, it appears that a few large domestic fund groups domi - nate the mutual fund markets in the individual European countries. The performance of domestic equity funds is tested using a data set containing the main European countries and the United States. The most striking results of these performance tests are the relative poor performance of U.S. funds, compared to the European funds, and the outperformance of small cap mutual funds. 1. Introduction In the last decade the mutual fund industry has grown dramatically. In the United States the market has grown from about $0.7 trillion in 1988 to $4.5 trillion in 1997. The number of funds expanded at the same pace from 1,100 in 1988 to 6,900 in 1997 1."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 3,
+      "label": "p. 2",
+      "en": "Currently, the number of mutual funds is roughly 60% larger than the number of listed securities. The importance of mutual funds in society justifies the tremendous amount of studies published in the financial press and academia. The issues that get most attention are performance attribution, timing and selection abilities, benchmark sensitivity, per - formance persistence, and the survivorship bias. See for example, among many others, Brown et al. [1992], Carhart [1997], Ferson and Schadt [1996], and Grinblatt and Titman [1989]. All these studies typically focus on the United States, where historic data are easily available and the market is more or less in a mature phase."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 4,
+      "label": "p. 2",
+      "en": "In contrast to the United States, the European market has never been studied com - prehensively, although several authors studied individual countries. (See for example Dermine [1992], McDonald [1973], Shukla and Imwegen [1995], and Ward and Saun - ders [1976]). An important explanation for the lack of studies is the institutional setting of the industry in different European countries. Currently, these differences are increasingly disappearing. First of all the European financial markets are getting more integrated, so differences in institutional characteristics are disappearing, and secondly, the demand for mutual fund services increases within the European society. This enables us to carry out this study on the European mutual fund industry."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 5,
+      "label": "p. 2",
+      "en": "To explain the behavior of the European mutual fund industry and the demand for their services in a market where conditions are changing, it is essential to incorporate the organizational characteristics of the industry as well. In the literature there is a general Managerial Finance 14"
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 1,
+      "label": "p. 3",
+      "en": "lack of studies on these characteristics. A few exceptions to this are Chordia [1996], Tu - fano and Sevick [1997], and Walter [1998]. These authors describe and analyze issues as fee structures, board structures and globalization. In general they find that organizational characteristics do indeed influence the performance. In this paper we study the behavior of the European mutual fund industry, compare it with the American mutual fund market and finally test the performance of the funds in our database. Formally, we test the hypothesis whether the European mutual fund indus - try has characteristics like the American mutual fund industry using a traditional structure-conduct-performance (SCP) paradigm."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 2,
+      "label": "p. 3",
+      "en": "(See Mueller and Burkhard [1999], and Shaffer [1994]) The setup of the paper is as follows. In section 2 we provide an overview of the structure of the European mutual fund industry and compare it with the situation in the United States. In section 3 we discuss the conduct in the industry and in section 4 we bring the structure and conduct together and carry out a performance analysis of the individual mutual funds. Section 5 concludes the paper. 2. The Structure of the Mutual Fund Industry in Europe and the United States By the end of 1997 there were $2.1 trillion of assets under management in European open-ended funds. These were split among 17,000 funds promoted by 1,400 management groups."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 3,
+      "label": "p. 3",
+      "en": "This means that the European industry is the second largest in the world and accounts for 29% of world fund assets. It is only surpassed by the American industry, which had $4.5 trillion assets under management divided among 700 fund groups by the end of 2. In this section we focus on the differences between the structure of the European market and the American mutual fund market. We will first analyze the demand for mutual fund services, followed by the supply and finish with the costs involved. As a proxy for the European market we use the 6 most important European mutual fund markets. Together they account for 85% of total mutual fund assets in Europe 3."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 4,
+      "label": "p. 3",
+      "en": "Table 1 presents some of the major characteristics of the two continents and the individual countries. Table 1: Characteristics of Major Mutual Fund Markets Total Number of Average Asset allocation (in %) assets Funds Size Equity Bond Balanced Money Others United States 4,465 6,900 647 53.0 19.5 2.8 24.1 0.6 Europe 1,360 10,269 226 31.8 30.4 11.3 25.7 0.8 France 505 5,836 87 13.6 27.2 18.7 40.4 0.1 United Kingdom 237 1,455 163 85.8 6.1 7.6 0.5 0.0 Italy 210 626 337 20.4 44.0 6.3 25.0 4.3 Spain 179 1456 123 10.5 40.9 11.1 37.5 0.0 Germany 148 717 207 37.9 48.2 2.8 11.1 0.0 Netherlands 78 179 440 53.8 30.2 5.7 10.1 0.2 This table presents the characteristics of the major European mutual fund markets and the United States."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 5,
+      "label": "p. 3",
+      "en": "All figures are obtained from FEFSI and are of December 31, 1997. The first column presents the total market value (billion U.S. dollar). The second column the number of funds, the third column the average size and the last 5 columns the asset allocation of all mutual funds as percentage of total assets."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 1,
+      "label": "p. 4",
+      "en": "Table 1 confirms that the mutual fund industry in the United States is much larger than the European industry. In contrast, the number of funds is much higher in Europe, which results in a smaller average size of the individual funds in Europe. The funds in the United States are with an average fund size of 647 million dollar almost three times as big as in Europe where funds have an average size of 226 million U.S. dollar. Even within Europe there are some differences as the average size of the funds varies between 87 million U.S. dollar in France to 440 million U.S. dollar in the Netherlands. Another differ - ence between the continents is clear in the asset allocation."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 2,
+      "label": "p. 4",
+      "en": "In the United States more than 50% of the funds are equity investors, whereas the percentage in Europe is less than a third. This is probably due to the lower demand for equity-related products in Europe, and definitely not to the shortfall of the supply of funds. We believe that a different equity culture, strong presence of banks and a different pension system explain part of the lower demand 4. Figure 1 gives some insight into the development of the demand from individual investors for equity mutual funds. It presents the growth of market capitalization of the equity mutual funds in Europe and the United States between 1992 and 1997 5."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 3,
+      "label": "p. 4",
+      "en": "While, clearly the industry is growing in both continents industry growth in the United States has been sharper than in Europe. Europe thus is not only lagging behind the United States in absolute size, but also in growth. To put the picture in perspective, figure 2 presents equity mutual fund sizes for the individual European countries over time and shows that some markets are growing very rapidly whereas others are growing at a much lower pace. That is, the United Kingdom and France have the largest mutual fund sector, but also have lower growth rates than the United States. The smaller European countries have growth rates up to 8000%."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 4,
+      "label": "p. 4",
+      "en": "For instance, in countries like Spain and Italy, where mutual funds did not exist at all in the beginning of the sample period, rapid growth is present. Thus, despite the lower growth of the European industry, we see that some underdeveloped mutual fund industries are catching up very quickly, and that the demand for mutual fund services is increasing. Managerial Finance 16 Figure 1: Growth in Asset Sizes for Equity Funds1992 - 1997 1992 1993 1994 1995 1996 1997 US Europe This figure presents the market capitalization of the equity mutual funds as an index figure with 1992 as the base year."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 1,
+      "label": "p. 5",
+      "en": "Although mutual funds are less important in Europe than in the United States, it is not necessarily true that Europeans have less exposure to the equity market. They can also purchase equities themselves or through other institutions like pension funds and insurance companies 6. Table 2 presents a statistic that indicates the importance of mutual funds in their domestic equity market. The statistic is calculated as the total market value of all equity mutual funds divided by the market capitalization 7. The 1997 figure for the United States is 26%, which is roughly two-and-a-half times as big as the average Euro - pean figure."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 2,
+      "label": "p. 5",
+      "en": "Therefore the European mutual fund sector is indeed not as important as its American counterpart indicating that individuals possibly purchase equities through other channels. Finally the table shows that the percentage increased through time both in the United States and in Europe. Besides the demand for mutual fund services the supply of the product by financial institutions is also important. Mutual funds are usually part of a mutual fund group, which gives customers the possibility to switch easily (and often with lower costs) between funds. This is true both for the United States and Europe."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 3,
+      "label": "p. 5",
+      "en": "However, if fund groups be - come too big, they might control the market for financial services, which might have a negative effect on the performance of the industry. In both Europe and the United States the top 5 providers of mutual fund services own less than 20% of the market. This indi - cates that Europe and the Unites States are roughly equal regarding the competition be - Figure2:GrowthinEquityMutualFunds1992-1997 France Germany Italy Netherlands Spain Uk 1992 1993 1994 1995 1996 1997 This figure presents the absolute figures (in billion U.S. Dollar) of the market capitalization of the equity mutual funds for individual European countries. Figure 2: Growth in Equity Mutual Funds 1992-1997"
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 1,
+      "label": "p. 6",
+      "en": "tween fund groups. In table 3, however, we also present the statistic per country. The table shows that the percentages are much higher for all individual countries, except for the United Kingdom. This means that within single European countries individual fund groups dominate their domestic market. This might have a negative influence on the conduct and on the performance of the industry. Turning now to the price investors pay for the services that mutual funds offer we assume that the management fee paid represents the price of the product. Even though legal structures differ slightly between countries, the basic fee system is similar now. That is, the individual pays a management fee that the asset manager receives to manage the portfolio."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 2,
+      "label": "p. 6",
+      "en": "Table 4 presents the fees charged by mutual funds. Besides the figures for the two continents, we split the sample up by country (panel A) and by investment style (panel B). The average fee in the United States is slightly higher than the average in Europe indicating that with respect to the fee structure the continents do not differ much. However, the difference in maximum and minimum fees is larger in the United States."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 3,
+      "label": "p. 6",
+      "en": "Managerial Finance 18 Table 2: Equity Mutual Funds as a Percentage of Total Market Value 1992 1993 1994 1995 1996 1997 United States 16% 20% 22% 26% 28% 26% Europe 6% 8% 8% 8% 8% 11% France 13% 12% 13% 11% 11% 11% United Kingdom 10% 11% 11% 11% 10% 11% Italy 8% 9% 12% 11% 9% 13% Spain 0% 1% 1% 1% 2% 9% Germany 3% 5% 7% 7% 6% 8% Netherlands 6% 8% 7% 9% 9% 10% This table presents the total market size of the equity mutual funds as percentage of the total market size at the end of the year."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 4,
+      "label": "p. 6",
+      "en": "Sources are FEFSI and Datastream Table 3: Concentration Ratios United States 18% Europe 19% France 62% Germany 62% Italy 43% Netherlands 60% Spain 48% United Kingdom 20% This table presents the 1997 concentration ratio calculated as the market value of the five largest fund groups as part of the total mutual fund market. Sources are Datamonitor, Morningstar and Lipper."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 1,
+      "label": "p. 7",
+      "en": "Europe has a higher minimum fee and a lower maximum fee. This might indicate that most European funds follow the same investment strategy, whereas in the United States funds have strategies ranging from pure index funds to highly active strategies, which might lead to a more pronounced differentiation in fees. The results of the individual European countries and the different investment styles, presented in panel A and B, con - firm these findings. Recent research by Fitzrovia International, a London-based fund research firm, showed that the reported costs for the UK-funds are not the same as the true costs because administration costs, legal and audit fees are not included 8."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 2,
+      "label": "p. 7",
+      "en": "The company thinks that the best guess would be to double the reported fees to get the true Total Expense Ratio (TER). Currently they are studying other European countries as well, but the assumption might be that this relation holds for these countries as well. The Investment Company Institute (ICI) in Washington D.C. has studied the situation in the Unites States and found that the TERs are declining."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 3,
+      "label": "p. 7",
+      "en": "However, because the SEC closely monitors U.S. fees, as they appear in a fund’s prospectus, the difference between the true TER and the one re - Table 4: Management Fees Average Minimum Maximum United States 1.4 0.2 17.7 Europe 1.2 0.1 3.0 Panel A: France 1.2 0.3 3.0 Germany 0.8 0.5 2.0 Italy 2.0 0.1 3.0 Netherlands 0.5 0.4 1.0 Spain 2.0 0.5 3.0 United Kingdom 1.2 0.3 2.0 Panel B: US EU US EU US EU Aggressive growth 1.7 0.7 6.4 Growth 1.4 1.2 0.3 0.4 11.9 2.0 Income 1.3 1.2 0.5 0.5 2.3 2.0 Growth/income 1.2 1.1 0.2 0.3 17.7 2.0 Small Caps 1.5 1.2 0.2 0.5 7.3 2.5 This table shows the average, minimum, and maximum management fees in percentages charged by the individual mutual funds in 1997."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 4,
+      "label": "p. 7",
+      "en": "Sources are Morningstar, S&P Micropal, ABN-AMRO, Financial Times, and Hoppenstedt. We do not consider back and front-end fees."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 1,
+      "label": "p. 8",
+      "en": "ported will not be that large for the US market. The European fees should however be interpreted carefully. In sum, we conclude from the description of the structure that the European mutual fund sector is growing rapidly, but that the importance in the financial market is still not as high as in the United States. This suggests that continued growth of mutual fund services in Europe can be expected. An important institutional factor that might influence the speed of the growth is the dominance of the top five fund groups in the individual coun - tries. They control the market, which reduces competition and possibly leads to higher entry barriers."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 2,
+      "label": "p. 8",
+      "en": "In the next section we analyze the actual conduct of the funds and in sec - tion 4 the performance of the funds. 3. Conduct in the Industry The conduct of the mutual fund industry will be described and discussed along two lines. First we look at the distribution channels the funds use to sell their products and secondly how past performance is presented to the general public. Table 5 shows the importance of a specific distribution channel in Europe and the United States. The table clearly shows a big difference between the two continents. European mutual funds predominately use banks as the major distribution channel with a market share of 53%, whereas in the United States only 8% is sold through banks."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 3,
+      "label": "p. 8",
+      "en": "The differences between individual European countries are interesting as well (not reported in the table). In most countries the percentage of banks is bigger than 50%. The United Kingdom is the only European country where banks have only 10% of the market. This means that the United Kingdom and the United States have similar characteristics in this respect. As banks are actually not used in those two countries it means that other channels are more important. In the United Kingdom the distribution of mutual fund services is predominately done through independent agencies. In the United States, brokers and direct sales are the most used channels."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 4,
+      "label": "p. 8",
+      "en": "Besides these channels we see, especially in the United States, an increasing trend towards the provision of mutual fund services through the Internet. Especially firms like Fidelity and Schwab are leading this development. The continents also differ when we look at the use of performance statistics. In the United States league tables are widely published and used by individual investors. For example, Sirri and Tufano [1998] show that when funds receive a 4 or 5-star ranking from Managerial Finance 20 Table 5: Distribution Channels Europe United States Banks 53% 8% Brokers 11% 40% Direct sales 9% 32% Other 27% 20% This table presents the use of a distribution channel as percentage of the total market."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 5,
+      "label": "p. 8",
+      "en": "The category ‘Other’ includes insurance companies, and independent sales forces. Sources: EFID, Datamonitor, Investment Company Institute."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 1,
+      "label": "p. 9",
+      "en": "Morningstar (based on past performance) money inflow increases in the following year. According to the popular press in Europe, individuals seem to value service (e.g. being friendly and accurate) at least as much as performance in terms of returns relative to the benchmark. This could explain the strong position of banks. However, we see that league tables are currently getting more attention in the European press as well. For instance, S&P Micropal publishes monthly performance rankings through several outlets. This will possibly lead to money in- and outflows, based on these publications. As far as we know a European study on this issue has not been carried out, but it would be a fruitful venue for further research."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 2,
+      "label": "p. 9",
+      "en": "Table 6 presents a summary of the analysis of the structure and conduct of the in - dustry, based on the data and the analysis in sections 2 and 3. It restates the conclusion that the European mutual fund industry is still lagging the American industry. Further - more, we found some indication of less competition in Europe, which might possibly di - minish performance. In the next section we compare the performance between the continents and see whether there exists a pattern related to the structure and conduct in the industry. 4. Performance of the Mutual Fund Industry In this section we use the third step of the SCP paradigm to study the effects of the structure and conduct on the performance in the industry."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 3,
+      "label": "p. 9",
+      "en": "The SCP is a framework developed in organizational literature, which focuses on the product and production efficiency (see Scherer and Ross [1990] for more details). Traditionally the SCP paradigm measures the performance along the lines of 1) Production and allocative efficiency, 2) Progress, 3) Full employment and 4) Equity. In contrast, the finance literature always uses stock market returns and asset pricing models to measure performance."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 4,
+      "label": "p. 9",
+      "en": "As the product of a mutual Table 6: Comparison between the United States and Europe United States Europe Structure of the Mutual Fund Market Total assets (trillion $) 4.5 1.4 Average fund size (million $) 650 230 % invested in equity funds High Low /B69 Market importance High Low Concentration Low High within countries Costs High Lower /B69/B69 Conduct of the Mutual Funds Distribution Direct channels Banks Publicity/press coverage High Lower The table shows the summary of the analysis of the structure and the conduct of the industry. It compares the situation in the United States and Europe. The classification is based on sections 1 and 2. /B69except United Kingdom /B69/B69except Italy"
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 1,
+      "label": "p. 10",
+      "en": "fund is the return on the invested portfolio, using stock market returns as our performance measure accommodates both strands of the literature. This gives us an opportunity to compare the performance of mutual funds in the two continents and link it to the structure and conduct in the industry. The remainder of this section is split in 7 sub-sections, which all highlight a par - ticular issue related to the performance."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 2,
+      "label": "p. 10",
+      "en": "In section 4.1 we discuss the data we use to test the performance; section 4.2 presents the summary statistics of the performance; in sec - tion 4.3 we analyze the development through time of the performance; in 4.4 we correct for asset allocations; in 4.5 we test the influence of fees on performance; 4.6 takes a de - tailed look at the underperformance of European index funds and finally in section 4.7 we explore the out-performance of small cap funds. 4.1 Data We use monthly logarithmic total returns for 506 European open-ended mutual funds and 2096 American open-ended mutual funds from January 1991 to December 1997 9.W er estrict our sample to purely domestic equity funds with at least 24 months of data."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 3,
+      "label": "p. 10",
+      "en": "That is, we exclude balanced and guaranteed funds and equity funds that invest internationally. Limiting the sample size along these lines gives us an excellent possibility to compare the relative performance of the different mutual fund industries. If we include all existing funds we would have to correct for country allocation, exchange rate policies, and other legal obstructions before we could compare the relative performance. To calculate relative performance we use the following local benchmarks to correct for market developments: 1) CAC for France, 2) DAX for Germany, 3) Mibtel for Italy, 4) AEX for The Netherlands, 5) FTSE All for the United Kingdom, and 6) the S&P500 for the United States."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 4,
+      "label": "p. 10",
+      "en": "We collect all indices on a total return basis, which means that we reinvest all dividends. It is well known that the market for small stocks usually has different performance characteristics than the main market. As our sample also includes funds that invest in small caps we use a small cap index as the benchmark for these funds. For France we use the Midcac, for Germany the Datastream Small Companies Germany, for the Netherlands the Midcap index, for the United Kingdom the Hoare Govett Small Company index and for the United States the Russell 2000. We use the mid-cap indices for France and the Netherlands, as they represent the actual investment behavior of the funds better than the actual small cap indices (based on fund holdings)."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 5,
+      "label": "p. 10",
+      "en": "For Italy we don’t need a small cap benchmark, as there are no funds concentrating on small companies. To obtain information on the characteristics of the individual equity funds we use several sources: Standard&Poor’s Micropal (France, Italy), Hoppenstedt Fondsführer 1997 (Germany), ABN-AMRO Beleggingsinstellingen (Netherlands), Unit Trust Year - book 1997 (United Kingdom), and Morningstar (United States). We gather data for sev - eral characteristics of each mutual fund: fund type or investment style, total return, size, and fees. Within a country we divide all funds using stated investment styles to test whether this yields differences in performance. Total return data are collected from Da - tastream International, S&P Micropal and Morningstar."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 6,
+      "label": "p. 10",
+      "en": "As numerous studies have shown before (see for example Brown et al. [1992]) a database that only consists of funds that have data available during the whole sample period is subject to survivorship bias, which could severely influence the results. This de - Managerial Finance 22"
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 1,
+      "label": "p. 11",
+      "en": "rives from the fact that funds with bad performance are frequently being shut down or merged into another one. This “kills” bad track records and gives an overestimation of the average performance as only the surviving funds are used. We are confident that the data for Germany and the Netherlands are largely free of survivorship bias as Hoppenstedt for Germany and Koedijk et al. [1998] for the Netherlands studied these funds. For the United Kingdom we were able to track disappeared funds through the Unit Trust Year - book 1997. Dead Italian funds could be tracked through Datastream, while our source for French data, S&P Micropal, was unable to provide data on disappeared funds."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 2,
+      "label": "p. 11",
+      "en": "Morning - star releases the information on non-surviving funds only at very high costs, for a limited history. 4.2 Summary Statistics To get an overview of the data we start our performance analysis with the presentation of table 7 (overleaf). It provides summary statistics and fund characteristics together with the performance of the relevant benchmarks. First of all we see that the number of domestic equity funds differs between coun - tries. Whereas the United Kingdom has a total number of 304 domestic equity funds, the Netherlands has only 9 such funds. What is more important, however, is to look at the size of the European funds relative to their American counterparts."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 3,
+      "label": "p. 11",
+      "en": "While the average European equity fund has about 300 million U.S. dollars in assets, the average American fund amounts to 757 million U.S. dollars. Furthermore, the average size of a European index fund is equal to 57 million U.S. dollars, which is relatively small 10. Table 7 also gives a first indication of the performance of the funds. It presents unadjusted annual mean returns and standard deviations for each class of funds. We see that during the whole sample period (1991-1997) the Dutch mutual funds generated the highest annual return (20.6%) with the second lowest standard deviation of 13.9%. In contrast French mutual funds earned only 11.1% on an annual basis, which was the lowest return in the sample."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 4,
+      "label": "p. 11",
+      "en": "U.K., Italian and German funds earned about the same rates of return, but the last two had a wider dispersion of returns, resulting in higher standard deviations. If we compare these statistics with the returns of the local benchmarks we see that, on average, mutual funds under-perform in most countries. On investment style level we find that in 3 out of 5 countries, small cap funds outperform their relevant benchmark. 4.3 Development through time In sections 2 and 3 we focused on the structure and conduct of the industry, and saw a trend towards an increased importance of both the European and U.S. mutual fund sector. We now turn to the performance of the industry and test whether this trend has influenced the observed performance in section 4.2."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 5,
+      "label": "p. 11",
+      "en": "We analyze the development by presenting the annualized difference between the fund performance and the return on the relevant benchmark (without correcting for risk or asset allocation) using a 36-month moving window 11. In line with earlier results figure 3 shows that both European and U.S. mutual funds, on average, under-perform their relevant benchmarks. It also points out that the performance in the United States has dropped during the sample period, whereas the performance of the European mutual fund industry has remained relatively constant. The av-"
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 1,
+      "label": "p. 12",
+      "en": "Managerial Finance 24 Table 7: Summary Statistics of Individual Countries 1991-1997 n µσ size costs France Growth 55 11.1 14.3 396 1.1 Index 20 10.0 17.3 65 1.2 Smaller Companies 24 11.8 14.3 81 1.3 Total 99 11.1 14.8 258 1.2 CAC 40 11.7 17.8 Midcac 7.5 17.7 Germany General 46 13.2 15.6 369 0.8 Growth 5 10.7 16.2 125 0.8 Income 2 13.7 16.5 660 1 Smaller Companies 4 10.2 13.6 121 0.9 Total 57 12.8 15.5 335 0.8 DAX 12.4 16.2 Datastream Smcos 3.1 10.2 Italy Italian equity 21 11.8 15.2 261 2.0 Italian specialist 16 13.1 17.6 223 1.8 Total 37 12.3 16.1 242 2.0 Mibtel 14.0 24.0 Netherlands Growth 5 20.6 13.2 500 0.6 Index 3 20.5 15.1 50 0.4 Smaller Companies 1 21.2 12.9 505 0.6 Total 9 20.6 13.9 350 0.5 AEX 21.5 14.4 Midcap 22.9 15.9 United Kingdom Growth/Income 79 12.4 13.1 326 1.1 Income 72 12.6 13.3 260 1.2 Growth 102 12.8 13.1 215 1.3 Smaller Companies 51 13.1 13.5 222 1.3 Total 304 12.7 13.2 256 1.2 FTALL 14.1 13.1 Hoare Govett Smcos 11.6 14.5 United States Aggressive Growth 103 17.1 18.9 1027 1.7 Growth 937 17.5 15.4 682 1.4 Income 144 17.6 12.1 781 1.3 Growth/Income 499 18.2 13.5 1175 1.2 Smaller Companies 413 18.2 17.9 345 1.5 Total 2096 17.8 15.4 757 1.4 S&P 500 17.6 12.4 Russel 2000 18.7 13.7 This table reports summary"
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 2,
+      "label": "p. 12",
+      "en": "statistics on the funds in our sample. The return data are annualized with reinvestment of all distributions and based on local currencies. All returns are net of expenses. The average fund sizes are presented in million US dollars as of 31/12/1997. The costs are presented in the fifth column and are presented as a percentage of the assets invested."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 1,
+      "label": "p. 13",
+      "en": "erages, however, are not significantly different from each other, as standard errors around the trend are roughly 3%. Besides these differences in the development of the performance between the two continents we also look at the development of the individual groups of mutual funds by country and by investment style as we have done in table 7. These results are presented in figure 4. The performance in France and in Italy is relatively constant through time and confirms the earlier results. The only remarkable fact in France is the underperformance of the index funds. The most interesting picture is actually provided by the German mutual funds. All classes of funds show a steadily increasing performance relative to their benchmarks."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 2,
+      "label": "p. 13",
+      "en": "It seems that German fund managers are catching up fast with their European competitors. Whereas in the beginning of the sample period German mutual funds were losing on av - erage 6% on an annual basis, by the end of the sample period the funds were able to beat the benchmark. In the Netherlands we see a picture that is similar to Germany as the performance improves through time. The U.K. mutual funds behave as expected, as they under-perform the index on average by an amount equal to the fees they charge. When we look at the U.S. funds it seems that only aggressive growth and small cap mutual funds improve their performance."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 3,
+      "label": "p. 13",
+      "en": "All other styles show a declining average performance. -3.5 -3 -2.5 -2 -1.5 -1 -0.5 0.5 Europe United States Figure 3: Relative returns of European and US Mutual Funds Through Time This figure gives the development of the relative returns in percentages per year (fund-benchmark) for both Europe and the United States. Plotted are the 36 month moving averages for the 1991 – 1997 period. All returns are net of expenses. 1993 1994 1995 1996 1997"
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 1,
+      "label": "p. 14",
+      "en": "4.4 Are funds doing what they are supposed to? Our results suggest that there are performance differences between the two continents, between European countries, and between investment styles. In the former section we simply compared the mutual fund return to the market return. However, the performance might also be driven by large cash-positions or the exposure of mutual funds to the money market 12. Mutual funds hold cash positions for two reasons. First of all they need liquidity to be able to respond to investors who sell their shares in mutual funds. Second, the fund managers might want to engage in market timing. To correct for this behavior we test the sensitivity to different benchmarks and investment horizons."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 2,
+      "label": "p. 14",
+      "en": "Equation (1) presents a model, which is based on Sharpe [1992] and gives us the opportunity to correct for asset allocation. It should not be confused with an asset-pricing test as we control for exposures or allocation, but not risk-exposures."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 3,
+      "label": "p. 14",
+      "en": "Managerial Finance 26 France -5.5 -4 -2.5 -1 0.5 3.5 6.5 Gro wt h Index Sm cap Germany -9 -6 -3 /B31 Gen eral Gro wt h Income Sm cap Italy -5.5 -4.5 -3.5 -2.5 -1.5 -0.5 0.5 1.5 2.5 3.5 Equit y Equity specialist NL -5.5 -4.5 -3.5 -2.5 -1.5 -0.5 0.5 1.5 2.5 3.5 Gro wt h Index Smcap UK /B2d/B35/B2e/B35 /B2d/B34/B2e/B35 /B2d/B33/B2e/B35 /B2d/B32/B2e/B35 /B2d/B31/B2e/B35 /B2d/B30/B2e/B35 /B30/B2e/B35 /B31/B2e/B35 /B32/B2e/B35 /B33/B2e/B35 /B68 /B47/B72 /B2f/B49 /B6e /B63 /B49/B6e/B63/B6f/B6d/B65 /B47/B72/B6f/B77 /B74/B68 /B53/B6d/B63/B61/B70 U nited States -5.5 -4.5 -3.5 -2.5 -1.5 -0.5 0.5 1.5 2.5 3.5 h Agg growth Gro wt h Income Gro wt h /In c Smcap Figure 4: Relative Returns of Individual Countries and Investment Styles Through Time, 1991-1997 (using a 36-month moving window)"
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 1,
+      "label": "p. 15",
+      "en": "Table 8: Summary Statistics for Performance Measurement αˆ T(αˆ ) eβˆ bβˆ R/B32 N %pos / neg Sign test France Growth 0.33 0.14 0.72 0.04 0.85 55 2.0 / 0.0 0.67 Index -1.72 -1.90 0.91 0.11 0.94 20 0.0 / 3.0 -4.47 Smaller companies 2.37 0.65 0.70 0.16 0.80 24 21.0 / 0.0 2.86 Total 0.41 0.14 0.76 0.08 0.86 99 6.0 / 6.0 -0.10 Germany General 0.29 0.14 0.90 0.00 0.92 46 9.0 / 2.0 0.88 Growth -1.87 -0.93 0.93 0.00 0.88 5 0.0 / 0.0 -1.34 Income -0.71 -0.21 0.95 0.00 0.94 2 0.0 / 0.0 0.00 Smaller companies 5.72 1.27 1.25 0.17 0.82 4 50.0 / 0.0 1.00 Total 0.45 0.11 0.93 0.01 0.91 57 3.0 / 5.0 0.66 Italy Italian equity 0.58 0.21 0.58 0.13 0.83 21 5.0 / 5.0 1.53 Italian specialist 0.24 0.09 0.73 0.06 0.90 16 0.0 / 6.0 0.50 Total 0.43 0.16 0.65 0.10 0.86 37 3.0 / 5.0 1.48 Netherlands Growth 1.65 1.23 0.84 0.00 0.84 5 0.0 / 0.0 1.34 Index -1.03 -0.70 0.95 0.00 0.88 3 0.0 / 0.0 -1.73 Smaller companies 2.76 0.99 0.70 0.00 0.76 1 0.0 / 0.0 1.00 Total 0.88 0.46 0.79 0.00 0.84 9 0.0 / 0.0 0.33 United Kingdom Growth/Income -1.83 -0.67 0.95 0.03 0.86 79 1.0 / 5.0 -2.59 Income -1.46 -0.59 0.90 0.09 0.80 72 1.0 / 10.0 -3.06 Growth -1.22 -0.41 0.93 0.01 0.81 102 2.0 / 18.0 -6.14 Smaller companies 1.15 0.29 0.95 0.00 0.79 51 17.0 / 0.0 2.94 Total -1.04"
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 2,
+      "label": "p. 15",
+      "en": "-0.33 0.93 0.03 0.82 304 4.0 / 12.0 -5.16 United States Aggressive Growth -1.69 -0.41 1.04 0.43 0.72 103 5.0 / 5.0 -3.05 Growth -1.58 -0.36 0.94 0.01 0.70 937 2.0 / 16.0 -8.13 Income 0.70 0.31 0.72 0.10 0.82 144 3.0 / 6.0 1.50 Growth/Income -0.38 -0.12 0.88 0.02 0.86 499 4.0 / 22.0 -5.03 Smaller companies 0.83 0.14 1.02 0.08 0.81 413 29.0 / 2.0 9.42 Total -0.65 -0.15 0.93 0.05 0.77 2096 8.0 / 14.0 -1.97"
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 1,
+      "label": "p. 16",
+      "en": "RR R R w h e r eit i em t bb t f f t te bf/c61/c43 /c43 /c43 /c43 /c43 /c43 /c61/c97 /c98 /c98 /c98 /c101 /c98/c98/c98,1 (1) Rit represents the logarithmic return of fund i in month t, /c97is the Jensen [1968] measure for out-performance, /c98e the exposure to the market index Rmt, /c98b the exposure to the bond index Rbt, /c98f the exposure to the money market Rft, and /c101t the error term. The model tests the attribution of the different indices to the return of the mutual fund. We use a standard OLS regression to estimate the coefficients. If /c36/c98b is not positive or that the corresponding t-statistic is lower than one we estimate (1) again without the bond return."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 2,
+      "label": "p. 16",
+      "en": "As a proxy for the bond return we take the local JP Morgan index and for the money market the local 1- Month-Interbank offer rate. Table 8 presents the results for the whole sample period. Again, we split the sample by country and within a country by investment style. We first analyze the estimation of the equity exposure. As the funds are equity investors we expect them to have an average value of /c36/c98 e close to one. This means that funds are doing what they are supposed to do: invest in domestic stocks. Germany, the United Kingdom and the United States have an estimated average of 0.93. This means that the domestic equity mutual funds in these countries follow the market closely."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 3,
+      "label": "p. 16",
+      "en": "In France, Italy and the Netherlands /c36/c98e is much lower, which indicates that the funds also have exposure to other asset markets. For example, we find a high bond exposure in Italy and France13. That is, the funds invest relatively a lot of their assets in bonds, despite the fact that they are equity investors. For the Dutch mutual funds it is not clear why the exposures to the local equity market are so low, but one of the explanations could be the dominance of Royal Dutch in the market, which has a limited weight in the AEX index. To be able to analyze changes in the equity exposure we also calculate the average cross-sectional /c36/c98 e through time using a rolling window of 36 months."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 4,
+      "label": "p. 16",
+      "en": "Figure 5 presents these results, showing that the United States and the United Kingdom both have estimates close to one and constant through time. All other European countries, including the ‘low beta countries’, show an increase of the average /c36/c98e . This indicates that the funds are increasingly following the domestic equity benchmark. It seems that in the beginning of the period the funds were also investing in assets other than domestic stocks. Besides the possibility to analyze the equity exposure, our model also enables us to evaluate the performance of the funds by the estimation of /c97. These results are presented in table 8 as well. In general the results do not differ from the ones presented in para - graphs 4.2 to 4.3."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 5,
+      "label": "p. 16",
+      "en": "Again, we find that the average /c36/c97for the European funds is insignifi - cantly different from zero. The United Kingdom and the United States have an annualized /c36/c97of minus 1.04% and minus 0.65% respectively. They are the only two countries with a negative performance. Table 8 also presents the percentage of funds that have a significant under- or out-performance. Again we see that the United Kingdom and the United States are the worst performers. In these countries 12% and 14% of the funds re - spectively under-perform the benchmark significantly. 4.5 The influence of fees on performance In tables 7 and 8 we show that the U.K. and U.S. mutual funds under-performed their relevant benchmarks."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 6,
+      "label": "p. 16",
+      "en": "We expect to find this underperformance in mature and efficient markets. The underperformance can be completely explained by the costs funds charge. Managerial Finance 28"
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 1,
+      "label": "p. 17",
+      "en": "When we add back expenses to all the funds the/c36/c97’s range from 0.1% for the United Kingdom to 2.5% for Italy. This means that the negative/c36/c97’s we found for the United Kingdom and the United States become positive. This is in line with the general findings in the lit - erature. Table 7 presents the average cost figures for each individual mutual fund class. The average fee varies between 0.5% for the Netherlands and 2.0% for Italy. Especially the fee paid for the French index funds is high with an average of 1.2%, where Gruber [1996] reports average fees for U.S. index funds equal to 0.23%. In the literature authors such as Chordia [1996] and Tufano and Sevick [1997] have studied mutual funds fees."
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 2,
+      "label": "p. 17",
+      "en": "We see that especially in the United States fees are high and above all are growing each year. The fee of the average equity mutual fund (including international funds) is equal to 1.6% in 1997, whereas in 1992 the average fee was only 1.4%. It is remarkable that fees are rising while we would expect them to fall because of economies of scale and increased competition. A possible explanation is the proliferation 0.4 0.5 0.6 0.7 0.8 0.9 1.0 UK US Germany Netherlands France Italy Figure 5: Average Equity beta’s for Individual Countries Through Time In this figure average are plotted through time, by using a 36-month moving window. Period is 1991-1997. 1993 1994 1995 1996 1997"
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 1,
+      "label": "p. 18",
+      "en": "of new funds that tend to have higher expense ratios than older ones. Tufano & Sevick [1997] offer another explanation why fund fees are high. They report that a higher number of directors on a board leads to higher salaries and quicker approval of higher fees. 4.6 The underperformance of European index funds The purpose of an index fund is to follow a particular index. From several studies (see for example Gruber [1996]) we know that activism doesn’t pay and that the existence of in - dex funds is beneficial for the investor. Gruber [1996] showed that, during the period 1990-1994, a sample of 100 S&P 500 index-funds had /c98’s of 1 and /c97’s close to zero where actively managed funds had an average alpha of -1.6% a year."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 2,
+      "label": "p. 18",
+      "en": "Even after adding back expenses, the difference between index funds and actively managed funds re - mained. In our study we were only able to identify index funds in the Dutch and the French sample. The three Dutch index funds gave a lower performance than we expected with an average /c36/c97of –1.03, a /c36/c98 e of 0.95, and an R2 of 88%. The performance of the French mu - tual funds is also remarkable with a /c36/c98e of 0.91, and a corresponding /c36/c97of –1.72. Furthermore, the expenses charged by the French funds are at 1.2% exceptionally high for these kinds of funds. Even after we add back these expenses the performance remains negative for both countries."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 3,
+      "label": "p. 18",
+      "en": "4.7 The Out-performance of Small Cap Mutual Funds In this paragraph we discuss the remarkable result of the mutual funds that focus on smaller companies. In general these mutual funds outperformed their benchmark during the sample period. If we return to table 7, we see that in 3 out of 5 countries the return of the fund is higher than the appropriate small cap benchmark. We also see that the average return from these funds is higher than the averages from all other investment styles except for the German small cap funds. This is even more remarkable when we see that in all European countries (except for the Netherlands) the general equity index outperforms the small cap index."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 4,
+      "label": "p. 18",
+      "en": "The observed out-performance is confirmed in table 8 where we present the results for the attribution analysis. The table shows that small company mutual funds have a positive in each country when we include the money and bond market in the re - gression. The percentage of small cap mutual funds outperforming the market is high, 27% of all funds have positive /c36/c97’s significantly different from zero. This finding is con - firmed by the sign test. Therefore, this suggests that selection and timing abilities do play a role in this field. This might be due to the lower level of market efficiency in these less researched small cap markets. 5."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 5,
+      "label": "p. 18",
+      "en": "Conclusions In this study we take a closer look at the European mutual fund industry and compare it with the United States using a traditional structure-conduct-performance paradigm. We find that Europe is still lagging the U.S. mutual fund industry when it comes to total asset size, average fund size, and market importance. Furthermore, it appears that European citizens have a preference for fixed income mutual funds, whereas Americans prefer mutual funds investing in equity. Besides these findings we show that the mutual fund mar - Managerial Finance 30"
+    },
+    {
+      "page": 19,
+      "pdfPage": 19,
+      "sequence": 1,
+      "label": "p. 19",
+      "en": "kets in the individual European countries are dominated by a few large domestic fund groups, which could possibly lead to lower levels of competition. In our performance tests we observe five interesting findings. First, the European mutual funds have on average a better performance than their American counterparts. This is remarkable as we conclude from the earlier analysis that levels of competition might be lower in Europe. Theoretically we would assume the opposite. Second, we find a dramatic increase in the performance of the German mutual fund sector. Third, we show that the Italian, French, and Dutch mutual funds have a low exposure to their domestic equity benchmark."
+    },
+    {
+      "page": 19,
+      "pdfPage": 19,
+      "sequence": 2,
+      "label": "p. 19",
+      "en": "This exposure however, is rising through time, which indicates that they are increasingly behaving as we expect them to do. Fourth, the results suggest that European index funds are not following pure index strategies. Finally, small cap mutual funds in both Europe and the United States outperform the benchmark and all other mu - tual funds. In this market segment mutual funds apparently add more value than their counterparts in the large cap segment. Acknowledgements During the completion of this paper Mark Schweitzer was affiliated with Maastricht University. Currently he is employed at the Corporate Finance Department of Kempen & Co, Amsterdam."
+    },
+    {
+      "page": 19,
+      "pdfPage": 19,
+      "sequence": 3,
+      "label": "p. 19",
+      "en": "We would like to thank the referee and Kees Koedijk for valuable comments on earlier versions of this paper. All errors remain the responsibility of the authors. The views expressed in this paper are not necessarily shared by FundPartners and or Kempen & Co."
+    },
+    {
+      "page": 20,
+      "pdfPage": 20,
+      "sequence": 1,
+      "label": "p. 20",
+      "en": "Endnotes 1. See FEFSI Statistics 1998. 2. See FEFSI Statistics 1998 and Morningstar 3. We exclude Luxembourg with $381 billion in assets as it mainly serves as an offshore center, which is the result of fiscal and regulatory advantages. The domestic market itself is rather small. 4. We won’t explore these issues in more detail, but others have researched them. See for example Poterba, Venti, and Wise [1998]. 5. This statistic is not only influenced by the demand for mutual fund services, but also by the bull market that occurred at the stock exchanges during the sample period. When we take the bull market into account we can show that the demand for mutual services is still growing rapidly. The results of these tests are available upon request. 6."
+    },
+    {
+      "page": 20,
+      "pdfPage": 20,
+      "sequence": 2,
+      "label": "p. 20",
+      "en": "In 1997 mutual funds possessed a 14.7% stake in total European retail savings, deposits 36.2%, bond investments 8.7%, while direct equity investments amounted to 9.8% and investments through life and pension funds up to 30.6%. Source: Datamonitor. 7. The market capitalization is collected from Datastream and represents the total market including all listed mutual funds itself. 8. See Economist [1999] for details. 9. For Spain there was no comprehensive return data available. 10. Gruber [1996] reports that the average US index fund has $368 million in assets. 11. We calculated the differences for other horizon lengths as well, but as they didn’t influence the results we limit the presentation to the 36-month period. 12."
+    },
+    {
+      "page": 20,
+      "pdfPage": 20,
+      "sequence": 3,
+      "label": "p. 20",
+      "en": "Of course the performance might also be influenced by exposure to foreign stock markets. Tests against European and World indices show that the funds show some exposure to these foreign indices. However, we believe that this is mainly due to cross-listings and the international financial integration and that it is not due to investment in foreign shares. 13. We have used different local stock indices to test for benchmark sensitivity, but in contrast to Lehman and Modest [1987] this didn’t change our findings. Managerial Finance 32"
+    },
+    {
+      "page": 21,
+      "pdfPage": 21,
+      "sequence": 1,
+      "label": "p. 21",
+      "en": "References ABN AMRO Asset Management,Beleggingsinstellingen 1997, Amsterdam, March 1997. Brown, S., and W. Goetzmann, R. Ibbotson and S. Ross, “Survivorship bias in perform - ance studies, Review of Financial Studies 5, 553-580, 1992. Carhart M., “On Persistence in Mutual fund Performance”,Journal of Finance 52, 57-82, 1997. Chordia, T., “The Structure of Mutual Fund Charges”, Journal of Financial Economics 41, pages 3-39, 1996. Dermine, D, and L-H. Röller, “Economies of Scale and Scope in French Mutual Funds”, Journal of Financial Intermediation 2, 83-93, 1992. Economist, Aux armes, investisseurs, February 13, 83, 1999. Féderation Européenne des Fonds et Societés d’Investissement (FEFSI), 1996 Annual Statistics, July 1997. Ferson W., and R."
+    },
+    {
+      "page": 21,
+      "pdfPage": 21,
+      "sequence": 2,
+      "label": "p. 21",
+      "en": "Schadt, “Measuring fund strategy and performance in changing economic conditions”, Journal of Finance 51, 425-462, 1996. Financial Times Unit Trust Yearbook 1997, Financial Times Publishing, London, 1997. Grinblatt, M., and S. Titman, “Mutual fund performance: An Analysis of quarterly portfolio holdings”, Journal of Business 62, 393-416, 1989. Gruber M., “Another Puzzle: The Growth in Actively Managed Mutual Funds”, Journal of Finance 51, 783-807, 1996. Hoppenstedt Fondsführer 1997, Verlag Hoppenstedt, Darmstadt, 1997. Jensen, M., “The performance of mutual funds in the period 1945-1964”, Journal of Finance 23, 389-416, 1968. Koedijk, C.G., P.C. Schotman, and M."
+    },
+    {
+      "page": 21,
+      "pdfPage": 21,
+      "sequence": 3,
+      "label": "p. 21",
+      "en": "Schweitzer, “The Performance of the Dutch Mu - tual Fund Sector”, LIFE working paper, 1998. Lehman, B., and D. Modest, “Mutual fund performance evaluation: A comparison of benchmarks and benchmarks comparisons”, Journal of Finance 42, 232-265, 1987. McDonald, J.G., “French Mutual Fund Performance: Evaluation of Internationally- Diversified Portfolios”, Journal of Finance 28, 1161-1180, 1973. Mueller, D.C., and B. Rauning, “ Heterogeneities within Industries and Structure- Performance Models”, Review of Industrial Organization, Vol 15, 303-321, 1999. Poterba, J.M., S.F. Venti, and D.A. Wise, “401(k) Plans and Future Patterns of Retire - ment Saving”, American Economic Review 88, No. 2., 179-184, 1998."
+    },
+    {
+      "page": 22,
+      "pdfPage": 22,
+      "sequence": 1,
+      "label": "p. 22",
+      "en": "Scherer, F.M., and D. Ross, Industrial Market Structure and Economic Performance , 1990. Sharpe, W., “Asset Allocation: Management Style and Performance Measurement”, Journal of Portfolio Management 46, 7-19, 1992. Shaffer, S., “ Structure, Conduct, Performance, and Welfare”, Review of Industrial Or - ganization, Vol 9, 435-450, 1999. Shukla, R., and G. van Imwegen, “Do locals Perform better than Foreigners?: An Analysis of UK and US Mutual Fund Managers”, Journal of Economics and Business 47, 241-254, 1995. Sirri, E.R., and P. Tufano, “Costly Search and Mutual Fund Flows”, Journal of Finance 53, No. 5, 1589-1622, 1998. Tufano P., and M."
+    },
+    {
+      "page": 22,
+      "pdfPage": 22,
+      "sequence": 2,
+      "label": "p. 22",
+      "en": "Sevick, “Board structure and fee-setting in the US mutual fund industry”, Journal of Financial Economics 46, 321-355, 1997. Walter, I., “The Global Asset Management Industry: Competitive Structure, Conduct, and Performance, Journal of Financial Markets, Institutions and Instruments , January 1999. Ward, C., and A. Saunders, “UK Unit Trust performance 1964-1974”, Journal of Business Finance and Accounting 3 / 4, 83-97, 1976.s Managerial Finance 34"
+    }
+  ]
+}

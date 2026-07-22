@@ -1,0 +1,773 @@
+{
+  "id": "de-micco-estra",
+  "sourceFile": "db0a04896984cd13a381b47221bd1f3a883b.pdf",
+  "scope": "Complete article · 19 PDF pages",
+  "pageCount": 19,
+  "paragraphCount": 109,
+  "characterCount": 67767,
+  "paragraphs": [
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 1,
+      "label": "p. 1",
+      "en": "The challenges of sustainability reporting and their management: the case of Estra Patrice De Micco, Loredana Rinaldi, Gianluca Vitale, Sebastiano Cupertino and Maria Pia Maraghini Department of Business and Law, University of Siena, Siena, Italy Abstract Purpose – The purpose of this paper is to investigate the challenges that companies could face over time when dealing with sustainability reporting (SR) and focusses on potential mechanisms they may adopt to cope with them. Design/methodology/approach – The investigation is conducted adopting the theoretical framework proposed by Baret and Helfrich (2018) and using a longitudinal case study. Findings – The authors found that the challenges that gradually arose induced the evolution of SR."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 2,
+      "label": "p. 1",
+      "en": "Dissemination, employees ’ involvement, managerial commitment and routinization/institutionalization of reporting practices appeared to be useful mechanisms to face the related challenges. Conversely, the authors found that stakeholders’ engagement scarcely affected SR. Furthermore, the legislation impacted the extent and quality of disclosed contents and fostered the standardization of the reporting process. Practical implications – In analysing how Estra faced SR challenges, this paper emphasizes the mechanisms that can be used to properly manage them, in a gradual and holistic way. Hence, this study offers a useful example for companies approaching SR for theﬁrst time."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 3,
+      "label": "p. 1",
+      "en": "Originality/value – The authors adopt a holistic theoretical perspective providing evidence on how SR development within a company depends on the continuous and integrated management of its multiple challenges, also suggesting that its interdependencies with the de ﬁnition and execution of sustainability should be exploited. Keywords Challenges, Mechanisms, Sustainability Reporting, Directive 2014/95/EU Paper type Case study 1. Introduction Nowadays, it is generally recognized that corporate performance must be assessed not only on the basis of ﬁnancial results but also considering the impacts generated on the social and environmental context (Schaltegger and Wagner, 2006)."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 4,
+      "label": "p. 1",
+      "en": "This need has been highlighted by scholars (Manes-Rossi et al., 2018) and practitioners (Business Roundtable, 2019). Therefore, companies are increasingly called to communicate their performance in a holistic and integrated manner to demonstrate if and how sustainability is embedded in their corporate © Patrice De Micco, Loredana Rinaldi, Gianluca Vitale, Sebastiano Cupertino and Maria Pia Maraghini. Published by Emerald Publishing Limited. This article is published under the Creative Commons Attribution (CC BY 4.0) licence. Anyone may reproduce, distribute, translate and create derivative works of this article (for both commercial and non-commercial purposes), subject to full attribution to the original publication and authors."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 5,
+      "label": "p. 1",
+      "en": "The full terms of this licence maybe seen at http:// creativecommons.org/licences/by/4.0/legalcode The authors are deeply grateful to the Estra Group for its collaboration and for having allowed us to conduct this study. MEDAR 29,3 Received 6 September 2019 Revised 19 February 2020 22 February 2020 26 June 2020 7 September 2020 6 October 2020 Accepted 5 November 2020 Meditari Accountancy Research Vol. 29 No. 3, 2021 pp. 430-448 Emerald Publishing Limited 2049-372X DOI 10.1108/MEDAR-09-2019-0555 The current issue and full text archive of this journal is available on Emerald Insight at: https://www.emerald.com/insight/2049-372X.htm"
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 1,
+      "label": "p. 2",
+      "en": "vision and strategy ( Porter and Kramer, 2011 ), also meeting stakeholders’ and institutional claims for an enhanced corporate transparency. Accordingly, sustainability reporting (SR) is becoming a mainstream practice (Bini and Bellucci, 2020) and a tangled process to manage. Nevertheless, SR involves considerable challenges – in terms of managing and communicating non-ﬁnancial information (Brusca et al., 2018) – that can weaken it ( Brand et al. ,2 0 1 8). On the contrary, if properly addressed, challenges can turn into business opportunities ( Schaltegger et al. , 2017 ). Hence, understanding how companies face SR challenges and the related mechanisms they implement can be useful to improve SR."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 2,
+      "label": "p. 2",
+      "en": "This motivated us to perform the present study and address the following research questions: Which are the main challenges that a ﬁrm should face over time when dealing with SR? and Which mechanisms can be adopted to cope with these challenges? Moreover, most studies tend to use a single theoretical perspective when investigating SR. Nevertheless, according to some authors ( Hahn and Kuhnen, 2013 ; Cho et al. ,2 0 1 5), adopting a single theoretical approach could represent a limit, due to the complexity and the ever-changing nature of sustainability."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 3,
+      "label": "p. 2",
+      "en": "To overcome such a limit, we adopted a holistic theoretical perspective that, taking into account the multiple dimensions of sustainability, allowed us to provide a wide overview of the possible SR challenges and to highlight how they can be successfully managed. To fully understand the mechanisms implemented to cope with SR challenges (both formal and informal) and their effects (both tangible and intangible), we carried out an indepth analysis, developing a ﬁve-year longitudinal case study of an Italian multiutility large company."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 4,
+      "label": "p. 2",
+      "en": "This paper is currently among the few studies present in literature that, through a longitudinal case study, analyses the challenges and the related mechanisms characterizing the implementation of SR since the earliest stages, in a holistic manner. The paper is structured as follows: Section 2 focuses on the literature review and the theoretical framework. Then, the methodology is described. Sections 4 and 5 present results and discussion, respectively. The paper ends with conclusions, limitations and future research opportunities. 2."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 5,
+      "label": "p. 2",
+      "en": "Literature review, theoretical framework and research objectives During the past two decades, SR has increasingly become a common managerial practice among companies ( Higgins et al. ,2 0 2 0) and growing attention has been paid to it by academic literature (Bini and Bellucci, 2020). Accordingly, several research streams arose. One of such streams focuses on the contents of sustainability reports. Several scholars investigated the degree of non- ﬁnancial disclosure compliance with reporting standards (Manes-Rossi et al. ,2 0 1 8; Sierra-Garcia et al. , 2018 ), while others analysed the changes in sustainability reports’ contents over time ( Feng and Ngai, 2020 ; Samkin, 2012)."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 6,
+      "label": "p. 2",
+      "en": "Since the enactment of the Directive 2014/95/EU, scholars also focussed on the effects of legislation requirements on the extent, quality and completeness of non- ﬁnancial statements (NFSs) published by companies of different EU member states ( Carini et al.,2 0 1 8; Venturelli et al., 2017). Another important stream of literature deals with non-ﬁnancial disclosure determinants. In this context, some authors found out that stakeholders’ and institutional pressures are the main factors pushing companies to elaborate or modify sustainability reports ( Duran and Rodrigo, 2018)."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 7,
+      "label": "p. 2",
+      "en": "Other scholars motivated the choice to elaborate sustainability reports with the will of avoiding reputational risks (Reverte, 2009) or increasing corporate legitimacy (De Villiers and Alexander, 2014; O’Donovan, 2002). A different research stream takes a more managerial perspective, focussing on how SR has been developed, rather than why. Adams and McNicholas (2007), through Lewin’s ﬁeld Case of Estra"
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 1,
+      "label": "p. 3",
+      "en": "theory, showed how SR can improve sustainability performance by developing learning processes, dialogue, commitment and assessment tools. In the wake of Adams and McNicholas (2007), Massa et al. (2015) showed how, initially, the sustainability report tends to have only a disclosure purpose, while, over time, it becomes a tool to foster planning and sustainability strategies. Thus, prior studies tend to use single theoretical perspectives.Hahn and Kuhnen (2013)found that most of the literature on SR adopts four main theories – legitimacy theory, stakeholder theory, institutional theory and signalling theory– also highlighting that scholars tend to focus on single SR issues or aspects, producing contrasting results."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 2,
+      "label": "p. 3",
+      "en": "In addition, some recent studies (Mitchell et al.,2 0 1 2; Rowbottom and Locke, 2016) adopted two alternative theories: Actor– network theory and learning-based theory. Table 1 reports the main SR literature’s studies, dividing them according to the theory adopted and presenting their keyﬁndings. Using a single theoretical approach could represent a limit, as SR is a complex phenomenon due to its multiple dimensions and to the variety of actors involved. For this reason, Hahn and Kuhnen (2013) and Cho et al. (2015) called for the adoption of more holistically theoretical views to investigate SR and to better understand its complexity."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 3,
+      "label": "p. 3",
+      "en": "Responding to this call, Baret and Helfrich (2018)proposed a framework (B&H, 2018) that includes the main theoretical approaches traditionally used in literature to analyse SR complexity. They identiﬁed three main sets of constraints connected to the different SR dimensions: The ﬁrst set of constraints, analysed through network-based theory ( Callon, 1986 ) and stakeholder theory ( Freeman, 1984 ), is related to the intrinsic complexity of sustainability and regards the di ﬃ culties stemming from the interaction and balance of di ﬀerent stakeholders and their expectations."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 4,
+      "label": "p. 3",
+      "en": "The second set of constraints can be analysed through di ﬀerent theoretical lenses that result in the more traditional approaches of legitimacy theory ( O’Donovan, 2002 ) and signalling theory (Connelly et al. , 2011 ). It pertains to the stakes of the sustainability report and regards the challenges of reducing information asymmetry and increasing legitimacy of non- ﬁnancial reports. The third set of constraints can be analysed through learning-based ( Gond and Herrbach, 2006 ) and institutional theory ( Nelson and Winter, 1982 ; Higgins et al. , 2018 ). It is related to the expectations of the company itself and regards organizational learning and routines."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 5,
+      "label": "p. 3",
+      "en": "Actually, companies can use SR to spread awareness and knowledge regarding sustainability among employees, triggering a double-loop learning process ( Argyris and Schon, 1978 ). This learning process contributes to create new routines to reconcile the need to stabilize business and reporting practices with the simultaneous adaptation to new regulations (B&H, 2018)."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 6,
+      "label": "p. 3",
+      "en": "Moreover, for each set of constraints, B&H (2018) highlighted the following three different sources of challenges, namely, company’s internal and external factors that characterize the elaboration of the sustainability report: Set1 (Complexity, irreducibility and scalability of CSR ) includes: CSR as a complex socio-cognitive network; the irreducible part of qualitative information; the dynamics of the context. Set2 (The inherent stakes of the non- ﬁnancial reporting process ) includes: the stakes of accountability to stakeholders; coordination problems, reliability, and standardisation; the quest for legitimacy of non-ﬁnancial reporting."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 7,
+      "label": "p. 3",
+      "en": "Set3 (Company expectations ) includes: contribution of the reporting tool to the CSR learning process; conciliate organisation ’s speci ﬁcities and legislator ’s expectations; stabilisation of the indicators and organisational routines of CSR reporting vs the risk of obsolescence of the tool. MEDAR 29,3"
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 1,
+      "label": "p. 4",
+      "en": "Theoretical approach Theory features Main findings Legitimacy theory This theory is based on the idea that a contract exists between organizations and society. Hence, organizations need to act according to socially acceptable behaviour (O’Donovan, 2002). The company’s survival depends on its ability to meet societal expectations and the sustainability report can be used as a tool in this regard (Cho et al.,2 0 1 5). Legitimacy theory helps to explain why companies report non- ﬁnancial information and what kind of information is disclosed following threats to the company’s legitimacy (Dumay et al., 2019) Legitimacy issues affect the production and use of sustainability reports (O’Donovan, 2002; Kuruppu et al., 2019)."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 2,
+      "label": "p. 4",
+      "en": "In particular, the perception of managers about the usefulness of SR as a key communication tool increases when the company suffers a loss of legitimacy (Tilling and Tilt, 2010). In the wake of this, legitimacy theory is also used to explain the decoupling of internal practice from the symbolic and external use of reporting (Deegan, 2014) Stakeholder theory This theory highlights that companies need to consider not only the interests of shareholders but also the interests of a wide group of stakeholders (Freeman, 1984)."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 3,
+      "label": "p. 4",
+      "en": "Stakeholder theory and legitimacy theory are not separated but overlap; legitimacy theory is broader because it considers the whole society, while stakeholder theory adopts a micro-level perspective investigating how companies interact with groups of stakeholders (Dumayet al.,2 0 1 9). Unlike the legitimacy theory, stakeholder theory helps to clarify managerial behaviour during SR activities (Dumayet al.,2 0 1 9) Stakeholder pressures and engagement decisively inﬂuence the development of sustainability reports (Brusca et al., 2018; De Villiers et al., 2014a; Gallego-Alvarez and Ortas, 2017)."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 4,
+      "label": "p. 4",
+      "en": "Some authors have highlighted how stakeholder engagement inﬂuences the materiality and relevance of the information to be disclosed (Manetti, 2011; Torelli et al., 2020). On the other hand, the sustainability report has been also considered as a tool that companies use to engage stakeholders (Herremans et al., 2016 ) Institutional theory This theory suggests that company activities, including the decision to start a SR process, are mostly inﬂuenced by institutional pressures (Higgins et al., 2018; Larrinaga, 2007)."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 5,
+      "label": "p. 4",
+      "en": "Consequently, institutional theory helps to explain the progressive alignment of the adoption, quality and extent of SR across organizations as a result of institutional isomorphisms (DiMaggio and Powell, 1983; Hahn and Kuhnen, 2013) Institutional theory has been mainly used to explain the determinants of SR ( De Villiers et al., 2014b; Hahn and Kuhnen, 2013). Several scholars conﬁrmed that companies develop sustainability reports primarily for isomorphism issues (De Villiers and Alexander, 2014; Higgins et al., 2015) Signalling theory This theory helps to explain the behaviour of two parties in case of information asymmetry."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 6,
+      "label": "p. 4",
+      "en": "On the one hand, the sender decides whether and how to communicate the information, and on the other, the receiver chooses how to interpret that information (Connelly et al., 2011). As it may be difﬁcult for subjects outside the company to obtain reliable information on ﬁrms’ non-ﬁnancial aspects, the company itself may proactively engage in the SR process with the aim of reducing information asymmetry and securing its legitimacy (Hahn and Kuhnen, 2013) Signalling theory is used to study the motivations lying behind the development of sustainability reports (Thorneet al.,2 0 1 4)a n dt h ed e g r e eo f disclosure of non-ﬁnancial information (Bini and Bellucci, 2020)."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 7,
+      "label": "p. 4",
+      "en": "According to this theory,ﬁrms tend to disclose non-ﬁnancial information to avoid problems of adverse selection (Clarksonet al., 2011). Furthermore, some scholars found how the disclosure of non-ﬁnancial information depends on the sustainability performance achieved. The higher the performance, the more companies disclose their outcomes and impacts (Clarkson et al.,2 0 0 8), while companies with lower sustainability performances tend to only partly disclose their activities (Bini and Bellucci, 2020 ) (continued) Table 1. Literature streams on sustainability reporting Case of Estra"
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 1,
+      "label": "p. 5",
+      "en": "Therefore, several challenges arise from SR. Accordingly, other authors underlined how these dif ﬁculties are constantly evolving, increasing the complexity of business management ( Herzig and Schaltegger, 2006 ). Companies face challenges and uncertainties that evolve due to business environment ’sd y n a m i s m(Bebbington and Larrinaga, 2014 ) and managerial expectations. Moreover, according to Cho et al. (2015) , these dif ﬁculties are also re ﬂected in managerial activities, including reporting practices ( Higgins and Coffey, 2016 )."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 2,
+      "label": "p. 5",
+      "en": "However, despite the increasing attention in the literature to the dif ﬁculties that companies have to deal with when implementing SR (Brusca et al.,2 0 1 8; Dumay et al.,2 0 1 7; McNally et al. , 2017 ), this topic remains under-investigated. Therefore, more research is needed on the new challenges stemming from the evolution of the current social and normative context ( Higgins et al. ,2 0 2 0) and on the possible management solutions that companies can pursue (Stubbs and Higgins, 2014). Recognizing that, the aim of our study is to investigate the challenges that arise from SR; and the mechanisms that companies can implement to face them. Being aware that such issues are context-speci ﬁc, we opted for qualitative research."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 3,
+      "label": "p. 5",
+      "en": "Aiming at explaining SR challenges in a more holistic way, we adopted the theoretical framework proposed by B&H (2018). As they pr esent a wide categorization of the challenges that a ﬁrm meets when implementing SR, this framework ﬁts the purpose of this study very well. Theoretical approach Theory features Main findings Actor- Network theory (ANT) This theory tries to overcome the dualism between social and natural worlds, between human and non-human actors, claiming that everything is relational, as nothing exists outside the networks of relationships. This means that reality is never ﬁxed or complete (Latour, 1987; Callon, 1986)."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 4,
+      "label": "p. 5",
+      "en": "ANT can be used to analyse human and non-human actors involved in SR (Barter and Bebbington, 2013) Scholars have investigated how the sustainability report is placed within the network in which it is inserted. However, this theory has been used little in this ﬁeld of research. Rowbottom and Locke (2016) traced the evolution of Integrated Reporting by highlighting the main actors involved in the network, their interests and concerns over reporting complexity. Caron and Turcotte (2009), instead, found that a sustainability report can be considered as an artifact of a compromise between Global Reporting Initiative (GRI) and companies."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 5,
+      "label": "p. 5",
+      "en": "The latter tends to only partially adopt the GRI guidelines Learningbased theory This theory identiﬁes learning as a cognitive change and evolution of the system of values, beliefs, ideas and actions (Gond and Herrbach, 2006). This process is called ‘double-loop learning’ (Argyris and Schon, 1978) in case of deep and radical changes in the way of thinking and approaching things This theoretical approach is used to understand how SR can activate business learning processes."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 6,
+      "label": "p. 5",
+      "en": "Adopting this theoretical approach, scholars have found that reporting can sometimes lead to relevant changes in terms of new objectives, structures and business values (Albrecht et al., 2007), while sometimes it can fail radically in terms of affecting business organization (Mitchell et al., 2012) Source: Authors’ elaboration Table 1. MEDAR 29,3"
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 1,
+      "label": "p. 6",
+      "en": "3. Research methodology Given the aims of our study, we adopted a qualitative methodological approach, developing a case study (Yin, 2011). In exploratory and descriptive studies, such as the present one, the case study represents a valid methodology to investigate the existence and peculiarities of a given phenomenon ( Siggelkow, 2007). Moreover, a longitudinal approach is fundamental when studying sustainability, as it takes time to integrate it into organizational practices and culture (Caputo et al.,2 0 1 7). Recognizing this, we developed aﬁve-year longitudinal case study, focussing on Estra – a large multiutility Italian company – that we could follow since its ﬁrst approach to SR."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 2,
+      "label": "p. 6",
+      "en": "To make our study rigorous, we developed a triangulation process (Yin, 2011), relying on various data sources and corroborating them with each other. Finally, we adopted a deductive analytical approach using the theoretical assumptions to interpret our results. 3.1 Data collection Data collection was conducted in four months (February –May 2019) and was articulated in the following three main stages. Firstly, we collected information from corporate documents (e.g. sustainability reports, NFSs, consolidated balance sheets, etc.). This documental analysis provided some primary evidence on the challenges that characterized SR evolution."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 3,
+      "label": "p. 6",
+      "en": "Secondly, we interacted directly with employees and managers involved in SR, participating also as auditors in some meetings. This allowed us to bene ﬁt from different perspectives. Thirdly, an online questionnaire was administered to 32 employees who had been involved in SR. It was articulated in two sections: the ﬁrst four questions asked some general information about the respondent (e.g. qualiﬁcation, job title), whereas the last eight questions focussed on the possible challenges faced during SR implementation. The survey reported a satisfactory response rate, with half of the respondents answering the questionnaire (i.e. nine employees, four middle-managers, three managers)."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 4,
+      "label": "p. 6",
+      "en": "To gain an internal perception of the possible challenges and to understand the mechanisms implemented to face them, we conducted ﬁve one-to-one semi-structured interviews with managers who had a key role in SR, adopting a conversational approach. Questions were in line with the respondent’s tasks and expertise and focussed on some SR general aspects (e.g. corporate motivations, difﬁculties, stakeholders’ expectations), organizational and technical features and possible impacts of the Directive 2014/95/EU. Table 2 shows the details of the interviews."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 5,
+      "label": "p. 6",
+      "en": "Finally, we compared the results of the questionnaire and interviews with the evidence highlighted by the prior documental analysis to ascertain the correspondence between the statements made by respondents and what formally reported in corporate documents. Data collection and analysis were guided by B&H (2018) framework. The latter determined the content of questionnaires and interviews and affected the choice of the people to be involved. Firstly, questions have been speci ﬁcally formulated and structured according to the three sets of constraints described above. Secondly, we involved people who faced SR complexity from the very beginning (e.g. sustainability manager and top management)."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 6,
+      "label": "p. 6",
+      "en": "Finally, the insights of the case study were interpreted according to the three pillars of the framework. The next paragraph presents the case study evidence that allowed us to answer our research questions. Case of Estra"
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 1,
+      "label": "p. 7",
+      "en": "Business area/function Length of service (years) Motivation for the interview Length of the interview (minutes) Chief executive ofﬁcer (CEO) 9 Gain the perspective of the top management 40 ’ Institutional Relations – the person in charge of coordinating the sustainability reporting process (the sustainability manager, as the person in charge of the sustainability reporting process) 32 Gain the perspective of the person who has guided the sustainability reporting process from the very beginning and who knows the company very well 40’ Corporate social responsibility (CSR Manager, as the coordinator of sustainability reporting process) 7 Gain the perspective of the person who is in charge of CSR, development and who has organized and taken part in the sustainability reporting process from the very beginning 30’ Quality, safety and environment (QSE) area (QSE middle-manager) 38 Gain the perspective of a person who has actively taken part in the sustainability reporting process since 2016 30’ QSE of the main company of the group active in the natural gas distribution business area [middle-manager of the QSE of natural gas distribution (NGD)] 33 Gain the perspective of a person who has actively taken part in the sustainability reporting"
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 2,
+      "label": "p. 7",
+      "en": "process from the very beginning, who had some previous experience in sustainability reports and who is used to collect and manage data in his daily activities 30’ Source: Authors’ elaboration Table 2. Interviews plan MEDAR 29,3"
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 1,
+      "label": "p. 8",
+      "en": "4. Results Estra’s SR can be divided into two main phases. The ﬁrst one started in 2015, when Estra began a voluntary SR “journey”, entrusting it to the communication department and producing the 2014 sustainability summary, containing only some key indicators. This summary and the 2015 sustainability report were elaborated in collaboration with two university departments (i.e. management studies and law and education sciences). Estra ’s SR speeded up with the elaboration of sustainability reports in 2016 and 2017. In 2018, the second phase started when Estra, having more than 500 employees and having issued a bond loan, published itsﬁrst NFS, in compliance with the Directive 2014/95/ EU."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 2,
+      "label": "p. 8",
+      "en": "Estra began to be engaged in mandatory non-ﬁnancial disclosure. In 2018 and 2019, Estra produced the sustainability report and the NFS as two separate documents. This is due to two main reasons. Firstly, as the sustainability report is issued on a voluntary basis, it allowed Estra to extend the elaboration and publication timing of SR. Secondly, it also gave the opportunity to widen the disclosed topics and improve corporate transparency, without needing an external assurance on data. In the light of these premises, we considered Estra a suitable business case to answer our research questions. The two following subsections present our results, analysed using B&H (2018) framework. 4.1 Phase-1: 2015–2017 4.1.1 Set1."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 3,
+      "label": "p. 8",
+      "en": "The ﬁrst set of constraints faced by the company was related to the complexity of sustainability. Estra appointed two employees, who belonged to the communication area, as person in charge and coordinator of SR, respectively. Then, it formalized a partnership with two university departments, ﬁnancing a post-doc fellowship to bene ﬁt from external academic and operating skills. The post-doc fellow played a key role in disseminating sustainability principles within the organization, carrying out applied research activities, benchmarking analyses and participating in the elaboration of theﬁrst sustainability report. Finally, Estra formed a working group composed of the post-doc fellow, the person in charge and the coordinator of SR."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 4,
+      "label": "p. 8",
+      "en": "In the following sections, this group is named “sustainability team”. It played an important role in SR development and management. In this regard, the SR coordinator stated that “The role of the sustainability team was crucial in coordinating activities and people, and in promoting, from the very beginning, the adoption of an integrated perspective to manage SR”. Regarding Set1, two main challenges arose: the heterogeneity characterizing the topics to be reported and the stakeholders to be involved. As it emerges from the dialogue with managers, the challenge stemming from the heterogeneity of sustainability topics was tackled by identifying and prioritizing them, adopting a shared approach and involving both top managers and employees."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 5,
+      "label": "p. 8",
+      "en": "This process took place in three steps, as con ﬁrmed by the SR coordinator. Firstly, the sustainability team identi ﬁed Estra ’s main non- ﬁnancial aspects based on the company ’s characteristics and selected a pool of indicators. Secondly, several meetings were held with various business units to get employees and managers ’ feedback on the relevance and availability of the selected data. Finally, the set of indicators was deﬁned, also considering the middle- and top management’s willingness to disclose non- ﬁnancial topics. Therefore, the choice of indicators was the result of a compromise among the ones envisaged by the GRI, those company-speci ﬁc and their availability."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 6,
+      "label": "p. 8",
+      "en": "The selected data were then assigned to employees according to their competences. This ﬁrst constraint concerns also stakeholders ’ heterogeneity. In this regard, the ﬁrst challenge that the company had to face was the deﬁnition of a stakeholder map. The person in charge of SR stated: Case of Estra"
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 1,
+      "label": "p. 9",
+      "en": "[... ] our sustainability team compiled a list of possible stakeholders, also doing benchmarking analyses, including our competitors and companies of other relevant sectors [ ... ] then we discussed that with the top management to de ﬁne our stakeholders’ map This activity allowed the company to draw up the stakeholder map, as well as to establish a stakeholder hierarchization. Some stakeholder engagement activities were also implemented but – as conﬁrmed by the interviews – they lacked a well-deﬁned structure and policy. 4.1.2 Set2."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 2,
+      "label": "p. 9",
+      "en": "The issues related to the stakeholder engagement described above impact the second set of constraints as well, including the challenge related to the reduction of information asymmetry between the company and its stakeholders. As highlighted by the middle-manager of the QSE of natural gas distribution (NGD), “SR partially helped reduce information asymmetry, however it was not enough because not everyone has the time to read the report [ ... ] other communication activities should have been implemented ”.I n dealing with this challenge, Estra adopted speci ﬁc communication strategies (e.g. newsletters, events, seminars) targeting several groups of stakeholders."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 3,
+      "label": "p. 9",
+      "en": "However, the shortcomings that characterized stakeholder engagement activities made substantial information asymmetry endure in phase-1. The variety of sustainability-oriented topics also determined the challenge of data collection and coordination. The sustainability team was given the task of monitoring data collection and represented a convergence point for all indicators coming from the various business areas. To do this, the sustainability team prepared a proposal of the data to be collected, including GRI and speciﬁc indicators, met the different business areas to get their feedback and monitored the collection process organizing regular meetings. Moreover, data heterogeneity and complexity generated the issue of ensuring their reliability."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 4,
+      "label": "p. 9",
+      "en": "To this aim, the sustainability team performed an ongoing and aﬁnal check to guarantee correctness and reliability, also making use of an advanced statistical software package to elaborate more complex indicators. Finally, data were presented to the top management for approval. A further aspect concerns legitimacy issues connected with sustainability reports. In this case, the challenge is to increase the company ’s legitimacy in its operational context. This issue was faced by adopting the GRI guidelines when deﬁning the indicators to be included. The sustainability team aimed to achieve a higher degree of comparability and readability and increase the legitimacy of the document."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 5,
+      "label": "p. 9",
+      "en": "The person in charge of SR explained: “our ﬁnance manager usually presents the sustainability report to banks, because, so doing, they evaluate Estra not only on economic proﬁt but also on non-ﬁnancial performance”. In phase- 1, the challenge of giving the sustainability report the same legitimacy asﬁnancial reporting was perceived also within the organization. As stated by the SR coordinator: [... ] considering the resources allocated to traditional ﬁnancial reporting compared to the non- ﬁnancial one, the former is perceived as more important [ ... ] the two documents do not enjoy the same consideration. In facing this challenge, Estra adopted two different solutions."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 6,
+      "label": "p. 9",
+      "en": "On the one hand, the commitment of the sustainability team to communicate sustainability issues was crucial in spreading awareness within the company. On the other, the partnership with the university was important to give rigorousness and internal legitimacy to SR. 4.1.3 Set3. In phase-1, the main challenge concerning the third set of constraints regarded organizational learning, i.e. how to transmit sustainability and reporting principles throughout the enterprise. The key objective was to prevent employees – who were dealing with sustainability issues for the ﬁrst time – from perceiving SR as a duty imposed by the top management. MEDAR 29,3"
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 1,
+      "label": "p. 10",
+      "en": "In facing the challenge under consideration, Estra organized speciﬁc training activities in partnership with the university, aiming, from the very beginning, at triggering a gradual learning process. The purpose was to introduce SR as a step of a wider and integrated process that “involves identifying, executing, and monitoring business decisions and strategies for long-term value creation” ( Busco et al.,2 0 1 7). From the very beginning, Estra’s training activities on SR encompassed the concept of Integrated Thinking, understood as a mindset enhancing the connectivity among different organizations ’ activities. Actually, the initial intention was to elaborate an integrated report, drafted following the IIRC framework (Busco et al., 2013)."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 2,
+      "label": "p. 10",
+      "en": "However, the latter was considered too complex to be fully understood and applied and, hence, it was not adopted. Consequently, in these ﬁrst years, there was a substantial adaptation of corporate actors to the new non- ﬁnancial reporting context promoted by the sustainability team. It can be said that the involvement in SR activities generated a single-loop learning process under which employees fulﬁlled their tasks without having full awareness of sustainability principles. “There was not a real organizational learning process but a trend ”, speciﬁes the middle-manager of the QSE of NGD, adding “it happens often that people work to ful ﬁl the obligation, while more could have been done to make people feel more involved”."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 3,
+      "label": "p. 10",
+      "en": "4.2 Phase-2: 2018–2019 4.2.1 Set1. The constraint linked to complexity, irreducibility and scalability of CSR strengthened in phase-2, as the mandatory requirement forced Estra to enlarge the sociocognitive network linked to SR. The complexity arising from dealing with different stakeholders and their expectations proved to be particularly signi ﬁcant. The stakeholder map was reﬁned in accordance with the increased complexity of the business environment. Firstly, the categories of possible stakeholder were pinned down, based on past stakeholder maps and on an enlarged benchmarking analysis. Secondly, the relevance of the identi ﬁed categories was assessed based on the company ’s experience and knowledge."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 4,
+      "label": "p. 10",
+      "en": "Middlemanagers, managers and the top management were involved in this activity, leading to a revised stakeholders’ prioritization. However, despite these advances, “there are steps to be made [... ] we don’t take enough care of our stakeholder. We promote involvement activities, but they are not monitored or structured ” (the person in charge of SR, who became sustainability manager in phase-2). Moreover, the challenges related to the irreducible part of the qualitative information and to the ever-changing context emerged. The Directive 2014/95/EU induced more corporate transparency."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 5,
+      "label": "p. 10",
+      "en": "The Italian Legislative Decree 254/2016 – which transposed the Directive 2014/95/EU – required to report on topics that were not investigated much or at all in the previous sustainability reports, such as anti-corruption policies and suppliers ’ social assessments, despite the fact that Estra was already well aware of their relevance. The reporting of these new contents represented a relevant challenge due to their qualitative dimension. Several meetings, involving different company expertise and the auditing ﬁrm, were held taking into consideration Estra ’s ethical code, GRI indicators and the speci ﬁc aspects to be measured."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 6,
+      "label": "p. 10",
+      "en": "As for irreducibility, Estra ’s CEO recognized that NFS “highlights data of which otherwise we would still have awareness but not exact measurement. An example is the value added distributed to our stakeholders, which always thrills me”. 4.2.2 Set2. The Directive 2014/95/EU renewed the challenge of reducing information asymmetry between the company and its stakeholders. Estra reinforced the organization of events to improve stakeholder engagement. These activities helped to identify the materiality aspects to be disclosed. However, the challenge of reducing information asymmetry was mainly addressed thanks to the normative pressure, which required the Case of Estra"
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 1,
+      "label": "p. 11",
+      "en": "disclosure of new and more contents. Stakeholder engagement activities kept on lacking a well-deﬁned structure. As conﬁrmed by the sustainability manager, “the NFS included new topics, improved the disclosure quality of some old ones and reinforced the role of SR in reducing the information asymmetry between the company and stakeholders ”. However, this challenge is still open, as clearly pointed out by the sustainability manager: [... ] we need to communicate SR contents in a more precise and timely manner. We made public presentations, we gave all employees a summary of the sustainability report, we made press releases, but that is not enough."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 2,
+      "label": "p. 11",
+      "en": "Every stakeholder should know the data that concerns him/her most, because only in this way the gap can be ﬁlled. As for data reliability, legislation signi ﬁcantly fostered adherence to the GRI standards, whose adoption became more rigorous as it clearly emerges from the analysis of interviews and questionnaires. This process was signi ﬁcantly encouraged also by the interaction with the audit ﬁrm that led to remarkable improvements in data processing and quality. In this regard, relevant changes arose."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 3,
+      "label": "p. 11",
+      "en": "For instance, human resources were described using the methodology of the full-time equivalent, while GHGs produced were distinguished between direct emissions from owned or controlled sources ( Scope1) and indirect emissions from the generation of purchased energy (Scope2). Given the multitude and complexity of the new information required by the legislation, coordination problems in data collection increased when compared to phase-1. The data management solutions already adopted in phase-1 needed the support of a computer-based system, which remains lacking, as noted by all the interviewees. This inef ﬁciency is clearly detected by the middle-manager of the QSE of NGD: “An improvement that is needed is a computer-based system."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 4,
+      "label": "p. 11",
+      "en": "Data has grown, but the computer support has not grown at the same time”. The last sub-element of the second constraint relates to the quest of legitimacy. In phase- 1, this search for legitimacy was both internal and external. This is true also in phase-2, but with signi ﬁcant changes. Regarding external legitimacy, Estra ’s funders began to pay greater attention to sustainability performance. The sustainability manager stated: “Estra has recently undersigned two loans whose interest rates depend on some environmental performance (e.g., energy savings, waste reduced, GHGs avoided, etc.) ”. These legitimacy issues inﬂuenced the use of non-ﬁnancial documents and the setting of sustainable goals."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 5,
+      "label": "p. 11",
+      "en": "A relevant challenge concerned SR legitimacy within the company that speeded up thanks to the normative requirement, strengthening employees ’ awareness on sustainability issues. Interestingly, 81.25% of respondents to the questionnaire conﬁrmed that ﬁnancial reporting and SR did not enjoy the same importance, but they believed that SR was becoming increasingly relevant. The QSE middle-manager con ﬁrmed the perception that such an increase of internal legitimacy was due to the legislation. Referring to the period post- Directive 2014/95/EU, he stated: “nowadays only a minority of my colleagues don ’t understand the importance of SR and think it is an administrative task”. 4.2.3 Set3."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 6,
+      "label": "p. 11",
+      "en": "Regarding the third set of constraints, in phase-2, Estra faced the more advanced challenge to foster a conscious learning process among employees to ensure the integration of sustainability principles and tools in the organization ’s daily tasks. During phase-1, Estra presented a single-loop learning process that generated employees ’ adaptive response. Differently, in phase-2, a greaterproactivity towards sustainability issues began to emerge. The continuous use of SR tools triggered a shared process, involving more employees. The sustainability team played a crucial role in enhancing this process, organizing regular meetings and encouraging training activities."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 7,
+      "label": "p. 11",
+      "en": "As noted by the middlemanager of the QSE of NGD, “For some colleagues getting involved in something different, MEDAR 29,3"
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 1,
+      "label": "p. 12",
+      "en": "having the opportunity to interact with different people is important ”. Therefore, communication, collaboration and the daily adoption of SR practices, fostered by the sustainability team, triggered an internal learning and growth process, leading to the development of new skills. In this regard, the sustainability manager provided an interesting example: “The human resources department understood things to which they did not give much weight before (such as gender diversity and training). Their data were read and viewed differently ”. Hence, the gradual routinization of SR practices fostered double-loop learning, as they became institutionalized, spontaneously accepted and used within the company’s SR context."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 2,
+      "label": "p. 12",
+      "en": "Speci ﬁcally, the ongoing execution of SR practices made employees gain experience in dealing with sustainability issues. The distrust and resistance some of them had in recognizing the relevance of sustainability topics was gradually overcome. In this regard, the CSR manager– the SR coordinator in phase-1– conﬁrmed that: At the beginning, some colleagues considered SR practices as additional workload and were reluctant to provide data, share information, meet deadlines[ ... ] Over time, SR tasks became routinized and people improved their skills."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 3,
+      "label": "p. 12",
+      "en": "However, in the period analysed, this process was limited to reporting activities, as Estra still struggles to include sustainability issues in its strategic and operational planning due to the persistence of some internal resistance in other company areas. Therefore, the spreading of sustainability within the organization had an impact on non- ﬁnancial disclosure, while it affected strategic planning less. The Directive 2014/95/EU led Estra to face some challenges that otherwise would have remained latent. One of the challenges concerns the disclosure of new contents related to anti-corruption policies and supply chain assessment. As discussed above, Estra opportunistically had neglected these qualitative topics, despite their relevance."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 4,
+      "label": "p. 12",
+      "en": "In this regard, Estra ’s CEO con ﬁrmed that: “Our sustainability report is enriched with new contents taken from the NFS. The report actually ampliﬁes the sustainability issues present in the NFS [ ... ]”. The other challenge induced by legislation concerned the matching between the compliance to the new and strict deadlines set by the normative requirement and employees ’ workload. The Sustainability Manager con ﬁrmed that “the regulatory requirement increased the commitment to meet the deadlines for data delivery ”. Moreover, respondents to the questionnaire highlighted that one of the main dif ﬁculties concerned the respect for deadlines, together with the workload and the understanding of the information to be provided."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 5,
+      "label": "p. 12",
+      "en": "The routinization of SR practices certainly fostered the learning process within the company, but, at the same time, excessive standardization involves the risk of the obsolescence of the report. This risk regards the inability of the company to adapt SR to the continuous evolution of sustainability issues (B&H, 2018) that pushes companies to introduce new contents. Therefore, the challenge concerning the standardization of reporting routines vs. the risk of obsolescence clearly emerged in phase-2 and mainly regarded data selection and reliability. Moreover, the Directive 2014/95/EU induced the adoption of a formalized timeline to deliver data and the implementation of an active monitoring process."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 6,
+      "label": "p. 12",
+      "en": "This challenge was faced by creating opportunities to exchange ideas among employees and discuss indicators. Thus, in Estra, standardization mainly concerned reporting practices, while innovation was related to indicators’ disclosure. 5. Discussion The case of Estra, analysed adopting B&H (2018) framework, produced some interesting insights on SR challenges. Moreover, our results showed how a ﬁrm can manage them, Case of Estra"
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 1,
+      "label": "p. 13",
+      "en": "pointing out the mechanisms that can be implemented to face them. The analysis showed how all the three sets of constraints proposed by B&H arose in both phases analysed. 1. As for CSR complexity (Set1), the main challenges, for both phases, were related to the heterogeneity of the topics to be disclosed and the stakeholders to be involved. Subsequently, the challenge relating to the irreducibility of qualitative information (phase-2) took over. Speci ﬁcally, the complex nature of the network in which the company operates emerged. In facing these challenges, several human and non-human actors intervened ( Callon, 1986 )."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 2,
+      "label": "p. 13",
+      "en": "The partnerships with the university ﬁrst and with the auditing ﬁrm afterwards fostered the deﬁnition of topics and stakeholders’ prioritization. Furthermore, the adherence to the GRI guidelines allowed Estra to deﬁne the measures and the inscriptions to be included in the reports. In phase-1, there was a partial use of GRI standards and, therefore, sustainability contents resulted from a compromise between them and company speciﬁcities, in line with Caron and Turcotte (2009). Subsequently, due to the Directive 2014/ 95/EU, that required a stricter adherence to reporting standards, GRI acted as a mediator between company speciﬁcities and normative requirements. 2."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 3,
+      "label": "p. 13",
+      "en": "In Set2, the challenges mainly concerned the reduction of information asymmetry, data reliability and the quest for legitimacy. These challenges arose in phase-1 and persisted (with a slight increase) in phase-2. Estra tried to face the challenge of information asymmetry through stakeholder engagement activities. However, such activities had a low impact on reducing the knowledge gap between Estra and its stakeholders. A reduction of information asymmetry occurred only because of the Directive 2014/95/EU, which prompted the company to adhere to the GRI more rigorously, leading to the disclosure of previously unreported issues, with positive effects on data reliability."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 4,
+      "label": "p. 13",
+      "en": "These results partially diverge from the stream of literature based on stakeholder theory. In line with Manetti (2011) and Torelli et al. (2020), we found that stakeholder engagement affected the materiality analysis and the topics to be disclosed. Conversely, it did not signi ﬁcantly affect the development of sustainability reports, in contrast with prior studies (i.e. De Villiers et al. , 2014a; Gallego- Alvarez and Ortas, 2017 ). Moreover, the regulatory pressure and the stronger adherence to the GRI led to isomorphism issues increasing the comparability and alignment of Estra’sS R with that of other competitors (DiMaggio and Powell, 1983; Hahn and Kuhnen, 2013)."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 5,
+      "label": "p. 13",
+      "en": "The stronger adherence to the GRI also ensured greater reliability of reports, increasing their external legitimacy to such an extent that they were used not only for communication purposes but also to attract ﬁnancial capitals. The issue of ensuring internal legitimacy to the sustainability report emerged, as to increase the perception of its usefulness among employees. This happened through the continuous employees ’ involvement and communication activities carried out by the sustainability team. On the one hand, these results are in line with O’Donovan (2002) and Kuruppu et al. (2019) since legitimacy issues a ﬀected the elaboration and use of sustainability reports."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 6,
+      "label": "p. 13",
+      "en": "On the other, the case also emphasizes the relevance of internal legitimacy related to employees’ perception of the usefulness of SR. 3. From the above discussion it emerges that in phase-1 Estra mainly focussed on the challenges stemming from complexity ( Set1) and technical aspects of SR ( Set2). However, this does not mean that the challenges related to organizational learning ( Set3) are less relevant, nor that their management can be postponed. Indeed, without adequate awareness of the real value of SR, little effort would have been made to manage the challenges related to complexity and technical aspects. Furthermore, learning is a gradual process."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 7,
+      "label": "p. 13",
+      "en": "Therefore, great attention must be paid to develop an adequate (immediate, pervasive and continuous) learning process. Recognizing that, from the very beginning, Estra implemented a gradual learning process to turn sustainability principles into shared core-values. The dissemination of sustainability values and the growing managerial commitment fostered the transition MEDAR 29,3"
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 1,
+      "label": "p. 14",
+      "en": "from individual to organizational learning (Popper and Lipshitz, 2000) and from single-loop to double-loop learning ( Argyris and Schon, 1978 ). In line with the learning-based theory (Gond and Herrbach, 2006 ), the regular adoption of new sustainability practices fostered a learning process by which employees internalized sustainability principles, integrating them into their daily tasks. However, in the period analysed, this integration was still partial and limited to the reporting process. The concepts of sustainability still struggle to be included in Estra’s strategic planning. This result in part con ﬁrms the ﬁndings by Adams and McNicholas (2007) and Massa et al."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 2,
+      "label": "p. 14",
+      "en": "(2015), according to which SR, initially, is mainly used for disclosure purposes. The introduction of the regulatory obligation played a key role in SR evolution. The legislative requirement accelerated the facing of some challenges, which otherwise would have remained latent. However, the legislation mostly generated a rethinking of some contents of the report but did not meaningfully affect corporate values. It mainly induced technical challenges (regarding the disclosure of new information) and led to improvements in the quality and extent of SR contents ( Carini et al.,2 0 1 8; Venturelli et al., 2017). The main driver in boosting sustainability values was the training activity."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 3,
+      "label": "p. 14",
+      "en": "In line with the evolutionist perspective of Nelson and Winter (1982) , the success of the organizational learning process led to the progressive routinization of SR practices. In phase-2, this evolution favoured their standardization and institutionalization. In this frame, Estra ’sS R practices tended to remain stable during phase-2, while speci ﬁc indicators were changed or updated to minimize possible obsolescence risks. Summarizing, the challenges deriving from the different sets of constraints represented relevant drivers for the evolution of Estra ’s SR. They prompted the company to implement appropriate managerial mechanisms that gradually made SR evolve."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 4,
+      "label": "p. 14",
+      "en": "However, not all the mechanisms adopted were equally effective, even if they all contributed to SR development. Dissemination and organizational learning, employees ’ involvement, managerial commitment and the routinization and institutionalization of sustainability practices signiﬁcantly contributed to spread sustainability values and gave stability to the entire SR. Conversely, the mechanisms of stakeholder engagement and data management revealed relevant criticalities. Speci ﬁcally, stakeholder engagement was effective mainly for the materiality analysis but had a weaker impact on other contents of sustainability reports, while current data management lacks an IT system able to ensure an ef ﬁcient management of non-ﬁnancial information."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 5,
+      "label": "p. 14",
+      "en": "Finally, the three sets of constraints are not static, but tend to evolve over time, following the evolution of the context ( Bebbington and Larrinaga, 2014 ). They do not occur with the same intensity, but the latter can increase or decrease over time. The case study has demonstrated that Set1 had a strong intensity in phase-1, given the complexity of sustainability issues ( Herzig and Schaltegger, 2006 ). This intensity tended to decrease in phase-2, due to the experience that the company acquired. Set2 intensity, on the other hand, showed a slight increase in phase-2, due to an increase in legitimacy issues ( Kuruppu et al., 2019)."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 6,
+      "label": "p. 14",
+      "en": "The intensity of Set3 is strongly affected by the Directive 2014/95/EU ( Brand et al., 2018) and internal organizational learning (Argyris and Schon, 1978). 6. Conclusions This study investigated the challenges stemming from SR and the possible mechanisms that can be adopted to cope with them. Our paper presents the case of Estra using the holistic theoretical lens of B&H (2018), and it theoretically contributes to the existing debate, highlighting the multiple challenges related to each set of constraints identi ﬁed. It shows how they represented a driver that Case of Estra"
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 1,
+      "label": "p. 15",
+      "en": "made SR evolve, pointing out that the three sets identiﬁed by B&H’s are not static, but tend to evolve over time, with different intensities, following the evolution of the context ( Bebbington and Larrinaga, 2014 ), institutional pressures ( Brand et al. ,2 0 1 8), company ’s experience and managerial expectations. For instance, in this regard, the Directive 2014/95/ EU played a key role in bringing out challenges that would otherwise have remained latent. Moreover, it affected the extent and quality of the disclosed contents and fostered SR standardization. Furthermore, the study focusses on the mechanisms that companies can implement to face SR challenges. In this regard, our results show that some of them worked better than others."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 2,
+      "label": "p. 15",
+      "en": "The dissemination of sustainability principles, employees ’ involvement, routinization and institutionalization of SR practices and management commitment were the most ef ﬁcient mechanisms used by Estra. Conversely, other mechanisms, which the literature emphasized as powerful, worked only partially, such as stakeholder engagement and data management. From our analysis, it also can be deduced that SR challenges and the relative mechanisms are interrelated. The mechanisms implemented, besides addressing the challenges they are related to, have also contributed to deal with the other sets of constraints, fostering SR development."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 3,
+      "label": "p. 15",
+      "en": "For example, organizational learning and routines implemented to address Set3 challenges signi ﬁcantly contributed to the management of issues related to complexity ( Set1) and technical aspects ( Set2) of SR. Hence, the ways challenges are faced, and their mutual interrelations, should be considered to exploit their beneﬁcial effects while minimizing the negative ones. From a practical point of view, despite the managerial efforts discussed previously, Estra has not yet achieved a full integration of sustainability principles in its strategic and planning activities, given a business-as-usual mindset in formulating corporate strategies. This could be a future step for Estra."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 4,
+      "label": "p. 15",
+      "en": "Following B&H (2018) insights, the company, to optimally manage SR challenges, could strengthen the principles of integrated thinking (following up on what Estra experienced since SR journey started), whose spreading depends on how sustainability is de ﬁned, executed and reported, and how the mutual interdependencies are managed (Figure 1 ). Figure 1. Integrated thinking and sustainability reporting management Sustainability reportingSustainability culture and strategies Sustainability execution and performance Set1 Set2Set3 Source: Authors’ elaboration MEDAR 29,3"
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 1,
+      "label": "p. 16",
+      "en": "Regarding the managerial implications, this paper sheds light on the possible challenges arising from the different perspectives of SR and on the possible mechanisms that can be applied to address them. This can be useful for other organizations engaged in SR that, from Estra’s experience, can learn that it is necessary to consider and manage the multiple aspects of sustainability to successfully implement SR. Moreover, the case study fosters the integrated management of sustainability issues, possibly encouraging the development of Integrating Thinking. As our analysis covers a period of ﬁve years, this can represent a limitation. However, this limit can be a future research opportunity extending the period of analysis."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 2,
+      "label": "p. 16",
+      "en": "This study can be replicated in other business contexts with no experience in voluntary SR to highlight possible differences in the challenges they face. A comparative case study can also represent a future research opportunity, as it would allow to investigate the common challenges that arise in a speciﬁc context. References Adams, C.A. and McNicholas, P. (2007), “Making a difference: SR, accountability and organizational change”, Accounting, Auditing and Accountability Journal, Vol. 20 No. 3, pp. 382-402. Albrecht, P., Burandt, S. and Schaltegger, S. (2007),“Do sustainability projects stimulate organizational learning in universities? ”, International Journal of Sustainability in Higher Education , Vol. 8 No. 4, pp. 403-415."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 3,
+      "label": "p. 16",
+      "en": "Argyris, C. and Schon, D.A. (1978), Organizational Learning: A Theory of Action Perspective, Addison- Wesley, Reading, MA. Baret, P. and Helfrich, V. (2018), “The “trilemma” of non-ﬁnancial reporting and its pitfalls”, Journal of Management and Governance, pp. 1-27. Barter, N. and Bebbington, J. (2013), “Actor-network theory: a brieﬁng note and possibilities for social and environmental accounting research ”, Social and Environmental Accountability Journal , Vol. 33 No. 1, pp. 33-50. Bebbington, J. and Larrinaga, C. (2014), “Accounting and sustainable development: an exploration ”, Accounting, Organizations and Society, Vol. 39 No. 6, pp. 395-413. Bini, L. and Bellucci, M. (2020), Integrated Sustainability Reporting. Springer Books."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 4,
+      "label": "p. 16",
+      "en": "Brand, F.S., Berger, V., Hetze, K., Schmidt, J.E., Weber, M.C., Winistörfer, H. and Daub, C.H. (2018), “Overcoming current practical challenges in sustainability and integrated reporting: insights from a Swiss ﬁeld study”, Sustainability Management Forum, Vol. 26 Nos 1/4, pp. 35-46. Brusca, I., Labrador, M. and Larran, M. (2018), “The challenge of sustainability and integrated reporting at universities: a case study”, Journal of Cleaner Production, Vol. 188, pp. 347-354. Busco, C., Frigo, M.L., Quattrone, P. and Riccaboni, A. (2013),“Integrated Reporting– Reﬂections on the Concepts, Principles, Elements and Case Studies that are rede ﬁning Corporate Accountability”, Springer. Busco, C., Granà, F. and Quattrone, P."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 5,
+      "label": "p. 16",
+      "en": "(2017), “Integrated thinking: Aligning purpose and the business model to market opportunities and sustainable performance”, CIMA Research Report,V o l .3N o .3 . Business Roundtable (2019), Business Roundtable Rede ﬁnes the Purpose of a Corporation to Promote ‘An Economy That Serves All Americans’. Callon, M. (1986), “The sociology of an actor-network: the case of the electric vehicle ”,I n Mapping the Dynamics of Science and Technology, Palgrave Macmillan, London, pp. 19-34. Caputo, F., Veltri, S. and Venturelli, A. (2017), “Sustainability strategy and management control systems in family ﬁrms. Evidence from a case study”, Sustainability, Vol. 9 No. 6, p. 977. Carini, C., Rocca, L., Veneziani, M. and Teodori, C."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 6,
+      "label": "p. 16",
+      "en": "(2018),“Ex-Ante impact assessment of sustainability information–the directive 2014/95”, Sustainability, Vol. 10 No. 2, p. 560. Case of Estra"
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 1,
+      "label": "p. 17",
+      "en": "Caron, M.A. and Turcotte, M.F.B. (2009), “Path dependence and path creation ”, Accounting, Auditing and Accountability Journal, Vol. 22 No. 2. Cho, C.H., Laine, M., Roberts, R.W. and Rodrigue, M. (2015), “Organized hypocrisy, organizational façades, and SR”, Accounting, Organizations and Society, Vol. 40, pp. 78-94. Clarkson, P., Li, Y., Richardson, G. and Vasvari, F. (2008), “Revisiting the relation between environmental performance and environmental disclosure: an empirical analysis ”, Accounting, Organizations and Society, Vol. 33 Nos 4/5, pp. 303-327. Clarkson, P., Overell, M. and Chapple, L. (2011), “Environmental reporting and its relation to corporate environmental performance”, Abacus, Vol. 47 No. 1, pp. 27-60."
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 2,
+      "label": "p. 17",
+      "en": "Connelly, B.L., Certo, S.T., Ireland, R.D. and Reutzel, C.R. (2011), “Signaling theory: a review and assessment”, Journal of Management, Vol. 37 No. 1, pp. 39-67. De Villiers, C. and Alexander, D. (2014), “The institutionalisation of corporate social responsibility reporting”, The British Accounting Review, Vol. 46 No. 2, pp. 198-212. De Villiers, C., Low, M. and Samkin, G. (2014b), “The institutionalisation of mining company sustainability disclosures”, Journal of Cleaner Production, Vol. 84, pp. 51-58. De Villiers, C., van Staden, C., Kaur, A. and Lodhia, S.K. (2014a),The State of Disclosures on Stakeholder Engagement in Sustainability Reporting in Australian Local Councils ,P a c iﬁc Accounting Review. Deegan, C."
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 3,
+      "label": "p. 17",
+      "en": "(2014), “An overview of legitimacy theory as applied within the social and environmental accounting literature ”, in Unerman, J., Bebbington, J. and O ’Dwyer, B. (Eds), Sustainability Accounting and Accountability, Routledge, New York, NY, pp. 248-272. DiMaggio, P.J. and Powell, W.W. (1983), “The iron cage revisited: institutional isomorphism and collective rationality in organizational ﬁelds”, American Sociological Review , Vol. 48 No. 2, p. 147e160. Dumay, J., Bernardi, C., Guthrie, J. and La Torre, M. (2017), “Barriers to implementing the international integrated reporting framework: a contemporary academic perspective ”, Meditari Accountancy Research, Vol. 25 No. 4, pp. 461-480. Dumay, J., La Torre, M. and Farneti, F."
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 4,
+      "label": "p. 17",
+      "en": "(2019), “Developing trust through stewardship ”, Journal of Intellectual Capital, Vol. 20 No. 1. Duran, I. and Rodrigo, P. (2018), “Why do ﬁrms in emerging markets report? a stakeholder theory approach to study the determinants of Non-Financial disclosure in Latin America ”, Sustainability, Vol. 10 No. 9, p. 3111. Feng, P. and Ngai, C.S.B. (2020), “Doing more on the corporate sustainability front: a longitudinal analysis of CSR reporting of global fashion companies”, Sustainability, Vol. 12 No. 6, p. 2477. Freeman, R.E. (1984),Strategic Management: A Stakeholder Approach, Pitman, Boston. Gallego-Alvarez, I. and Ortas, E."
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 5,
+      "label": "p. 17",
+      "en": "(2017), “Corporate environmental sustainability reporting in the context of national cultures: a quantile regression approach ”, International Business Review , Vol. 26 No. 2, pp. 337-353. Gond, J.P. and Herrbach, O. (2006), “Social reporting as an organizational learning tool? a theoretical framework”, Journal of Business Ethics, Vol. 65 No. 4, pp. 359-371. Hahn, R. and Kuhnen, M. (2013), “Determinants of sustainability reporting: a review of results, trends, theory, and opportunities in an expanding ﬁeld of research ”, Journal of Cleaner Production , Vol. 59, pp. 5-21. Herremans, I.M., Nazari, J.A. and Mahmoudian, F. (2016), “Stakeholder relationships, engagement, and SR”, Journal of Business Ethics, Vol. 138 No. 3, pp. 417-435."
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 6,
+      "label": "p. 17",
+      "en": "Herzig, C. and Schaltegger, S. (2006), “Corporate sustainability reporting. An overview”, in Schaltegger S., Bennett M., Burritt R.L. (Eds), Sustainability Accounting and Reporting, Springer, Dordrecht, pp. 301-324. MEDAR 29,3"
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 1,
+      "label": "p. 18",
+      "en": "Higgins, C. and Coffey, B. (2016), “Improving how sustainability reports drive change: a critical discourse analysis”, Journal of Cleaner Production, Vol. 136, pp. 18-29. Higgins, C., Milne, M.J. and Van Gramberg, B. (2015), “The uptake of sustainability reporting in Australia”, Journal of Business Ethics, Vol. 129 No. 2, pp. 445-468. Higgins, C., Stubbs, W. and Milne, M. (2018), “Is sustainability reporting becoming institutionalised? The role of an issues-basedﬁeld”, Journal of Business Ethics, Vol. 147 No. 2, pp. 309-326. Higgins, C., Tang, S. and Stubbs, W. (2020), “On managing hypocrisy: the transparency of sustainability reports”, Journal of Business Research, Vol. 114, pp. 395-407. Kuruppu, S.C., Milne, M.J. and Tilt, C.A."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 2,
+      "label": "p. 18",
+      "en": "(2019), “Gaining, maintaining and repairing organizational legitimacy”, Accounting, Auditing and Accountability Journal, Vol. 32 No. 7. Larrinaga, C. (2007),SR: insights from Neo-Institutional Theory, Routledge. Latour, B. (1987), Science in Action: How to Follow Scientists and Engineers through Society , Harvard university press. McNally, M.A., Cerbone, D. and Maroun, W. (2017), “Exploring the challenges of preparing an integrated report”, Meditari Accountancy Research, Vol. 25 No. 4, pp. 481-504. Manes-Rossi, F., Tiron-Tudor, A., Nicolò, G. and Zanellato, G. (2018), “Ensuring more sustainable reporting in Europe using non- ﬁnancial disclosure – De facto and de jure evidence ”, Sustainability, Vol. 10 No. 4, pp. 1162. Manetti, G."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 3,
+      "label": "p. 18",
+      "en": "(2011), “The quality of stakeholder engagement in sustainability reporting: empirical evidence and critical points ”, Corporate Social Responsibility and Environmental Management , Vol. 18 No. 2, pp. 110-122. Massa, L., Farneti, F. and Scappini, B. (2015), “Developing a sustainability report in a small to medium enterprise: process and consequences”, Meditari Accountancy Research, Vol. 23 No. 1, pp. 62-91. Mitchell, M., Curtis, A. and Davidson, P. (2012), “Can triple bottom line reporting become a cycle for “double loop” learning and radical change? Accounting ”, Auditing and Accountability Journal , Vol. 25 No. 6. Nelson, R. and Winter, S. (1982), An Evolutionary Theory of Economic Change , Harvard University Press, Cambridge, MA. O’Donovan, G."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 4,
+      "label": "p. 18",
+      "en": "(2002), “Environmental disclosures in the annual report ”, Accounting, Auditing and Accountability Journal, Vol. 15 No. 3,. Popper, M. and Lipshitz, R. (2000), “Organizational learning: Mechanisms, culture, and feasibility ”, Management Learning, Vol. 31 No. 2, pp. 181-196. Porter, M.E. and Kramer, M.R. (2011), “The big idea: creating shared value. How to reinvent capitalism – and unleash a wave of innovation and growth”, Harvard Business Review, Vol. 89, pp. 1-2. Reverte, C. (2009), “Determinants of corporate social responsibility disclosure ratings by Spanish listed ﬁrms”, Journal of Business Ethics, Vol. 88 No. 2, pp. 351-366. Rowbottom, N. and Locke, J. (2016), “The emergence of ”, Accounting and Business Research , Vol. 46 No. 1, pp. 83-115."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 5,
+      "label": "p. 18",
+      "en": "Samkin, G. (2012), “Changes in sustainability reporting by an African defence contractor: a longitudinal analysis”, Meditari Accountancy Research, Vol. 20 No. 2. Schaltegger, S. and Wagner, M. (2006), “Integrative management of sustainability performance, measurement and reporting ”, International Journal of Accounting, Auditing and Performance Evaluation, Vol. 3 No. 1, pp. 1-19. Schaltegger, S., Etxeberria, I.Á. and Ortas, E. (2017), “Innovating corporate accounting and reporting for sustainability –attributes and challenges ”, Sustainable Development , Vol. 25 No. 2, pp. 113-122. Sierra-Garcia, L., Garcia-Benau, M. and Bollas-Araya, H. (2018), “Empirical analysis of Non-Financial reporting by Spanish companies”, Administrative Sciences, Vol. 8 No."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 6,
+      "label": "p. 18",
+      "en": "3, p. 29. Case of Estra"
+    },
+    {
+      "page": 19,
+      "pdfPage": 19,
+      "sequence": 1,
+      "label": "p. 19",
+      "en": "Siggelkow, N. (2007), “Persuasion with case studies”, Academy of Management Journal, Vol. 50 No. 1, pp. 20-24. Stubbs, W. and Higgins, C. (2014), “Integrated reporting and internal mechanisms of change ”, Accounting, Auditing and Accountability Journal, Vol. 27 No. 7, pp. 1068-1089. Thorne, L., Mahoney, L.S. and Manetti, G. (2014), “Motivations for issuing standalone CSR reports: a survey of Canadian ﬁrms”, Accounting, Auditing and Accountability Journal, Vol. 27 No. 4. Tilling, M.V. and Tilt, C.A. (2010), “The edge of legitimacy ”, Accounting, Auditing and Accountability Journal, Vol. 23 No. 1. Torelli, R., Balluchi, F. and Furlotti, K."
+    },
+    {
+      "page": 19,
+      "pdfPage": 19,
+      "sequence": 2,
+      "label": "p. 19",
+      "en": "(2020), “The materiality assessment and stakeholder engagement: a content analysis of sustainability reports ”, Corporate Social Responsibility and Environmental Management, Vol. 27 No. 2, pp. 470-484. Venturelli, A., Caputo, F., Cosma, S., Leopizzi, R. and Pizzi, S. (2017), “Directive 2014/95/EU: are Italian companies already compliant?”, Sustainability, Vol. 9 No. 8, p. 1385. Yin, R.K. (2011), Applications of Case Study Research, Sage Publications, Newbury Park, CA."
+    },
+    {
+      "page": 19,
+      "pdfPage": 19,
+      "sequence": 3,
+      "label": "p. 19",
+      "en": "Corresponding author Patrice De Micco can be contacted at: patrice.demicco@unisi.it For instructions on how to order reprints of this article, please visit our website: www.emeraldgrouppublishing.com/licensing/reprints.htm Or contact us for further details: permissions@emeraldinsight.com MEDAR 29,3"
+    }
+  ]
+}

@@ -1,0 +1,892 @@
+{
+  "id": "nocco-stulz-erm",
+  "sourceFile": "Nocco-Stulz-2006-Enterprise-Risk-Management-Journal.pdf",
+  "scope": "Complete article · 15 PDF pages",
+  "pageCount": 15,
+  "paragraphCount": 126,
+  "characterCount": 78729,
+  "paragraphs": [
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 1,
+      "label": "p. 1",
+      "en": "VOLUME 18 | NUMBER 4 | FALL 2006 APPLIED COR PORATE FINANCE Journal of A M O R G A N S T A N L E Y P U B L I C A T I O N In This Issue: Corporate Risk Management Enterprise Risk Management: Theory and Practice 8 Brian W. Nocco, Nationwide Insurance, and René M. Stulz, Ohio State University Hedging and Value in the U.S. Airline Industry 21 David A. Carter, Oklahoma State University, Daniel A. Rogers, Portland State University, and Betty J. Simkins, Oklahoma State University Basel II: The Route Ahead or Cul-de-sac? 34 Richard Brealey, London Business School Accounting and Valuation: How Helpful Are Recent Accounting Rule Changes? 44 Bradford Cornell, California Institute of Technology, and Wayne R."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 2,
+      "label": "p. 1",
+      "en": "Landsman, University of North Carolina A Note on XBRL and the Promise of “Modular” Accounting 53 Mark Schnitzer, Microsoft, and Campbell Pryde, Morgan Stanley The Promise of Credit Derivatives in Nonﬁnancial Corporations (and Why It’s Failed to Materialize) 54 Charles Smithson, Rutter Associates, and David Mengle, International Swaps and Derivatives Association How Does the Corporate World Cope with Mega-Terrorism?"
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 3,
+      "label": "p. 1",
+      "en": "Puzzling Evidence from Terrorism Insurance Markets 61 Erwann Michel-Kerjan, University of Pennsylvania, and Burkhard Pedell, University of Stuttgart Navigating in the Midst of More Uncertainty and Risk 76 Jim Butcher, Nick Turner, and Gerard Drenth, Morgan Stanley Incorporating Strategic Risk into Enterprise Risk Management: A Survey of Current Corporate Practice 81 Stephen Gates, Audencia Nantes École de Management Managing M&A Risk with Collars, Earn-outs, and CVRs 91 Stefano Caselli and Stefano Gatti, Università Bocconi, and Marco Visconti, Merrill Lynch Risk Management and the Cost of Capital for Operating Assets 105 Thomas J."
+    },
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 4,
+      "label": "p. 1",
+      "en": "O’Brien, University of Connecticut Reducing a Company’s Beta—A Novel Way to Increase Shareholder Value 110 Jeremy Gold, Jeremy Gold Pensions"
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 1,
+      "label": "p. 2",
+      "en": "8 Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 Enterprise Risk Management: Theory and Practice * We are grateful for comments from Don Chew, Michael Hofmann, Joan Lamm-Tennant, Tom O’Brien, Jérôme Taillard, and William Wilt. 1. There is a large academic literature that investigates how ﬁ rm value depends on total risk. For a review of that literature, see René Stulz, Risk Management and Derivatives, Southwestern Publishing, 2002. T by Brian W. Nocco, Nationwide Insurance, and René M. Stulz, Ohio State University* he past two decades have seen a dramatic change in the role of risk management in corporations."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 2,
+      "label": "p. 2",
+      "en": "Twenty years ago, the job of the corporate risk manager—typically, a low-level position in the corporate treasury—involved mainly the purchase of insurance. At the same time, treasurers were responsible for the hedging of interest rate and foreign exchange exposures. Over the last ten years, however, corporate risk management has expanded well beyond insurance and the hedging of ﬁ nancial exposures to include a variety of other kinds of risk—notably operational risk, reputational risk, and, most recently, strategic risk."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 3,
+      "label": "p. 2",
+      "en": "What’s more, at a large and growing number of companies, the risk management function is directed by a senior executive with the title of chief risk ofﬁ cer (CRO) and overseen by a board of directors charged with monitoring risk measures and setting limits for these measures. A corporation can manage risks in one of two fundamentally different ways: (1) one risk at a time, on a largely compartmentalized and decentralized basis; or (2) all risks viewed together within a coordinated and strategic framework. The latter approach is often called “enterprise risk management,” or “ERM” for short."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 4,
+      "label": "p. 2",
+      "en": "In this article, we suggest that companies that succeed in creating an effective ERM have a long-run competitive advantage over those that manage and monitor risks individually. Our argument in brief is that, by measuring and managing its risks consistently and systematically, and by giving its business managers the information and incentives to optimize the tradeoff between risk and return, a company strengthens its ability to carry out its strategic plan. In the pages that follow, we start by explaining how ERM can give companies a competitive advantage and add value for shareholders. Next we describe the process and challenges involved in implementing ERM."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 5,
+      "label": "p. 2",
+      "en": "We begin by discussing how a company should assess its risk “appetite,” an assessment that should guide management’s decision about how much and which risks to retain and which to lay off. Then we show how companies should measure their risks. Third, we discuss various means of laying off “non-core” risks, which, as we argue below, increases the ﬁ rm’s capacity for bearing those “core” risks the ﬁ rm chooses to retain. Though ERM is conceptually straightforward, its implementation is not. And in the last—and longest—section of the article, we provide an extensive guide to the major difﬁ culties that arise in practice when implementing ERM. How Does ERM Create Shareholder Value?"
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 6,
+      "label": "p. 2",
+      "en": "ERM creates value through its effects on companies at both a “macro” or company-wide level and a “micro” or business-unit level. At the macro level, ERM creates value by enabling senior management to quantify and manage the risk-return tradeoff that faces the entire ﬁ rm. By adopting this perspective, ERM helps the ﬁ rm maintain access to the capital markets and other resources necessary to implement its strategy and business plan. At the micro level, ERM becomes a way of life for managers and employees at all levels of the company. Though the academic literature has concentrated mainly on the macrolevel beneﬁ ts of ERM, the micro-level beneﬁ ts are extremely important in practice."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 7,
+      "label": "p. 2",
+      "en": "As we argue below, a well-designed ERM system ensures that all material risks are “owned,” and risk-return tradeoffs carefully evaluated, by operating managers and employees throughout the ﬁ rm. The Macro Beneﬁ ts of Risk Management Students in the ﬁ rst ﬁ nance course of an MBA program often come away with the “perfect markets” view that since shareholders can diversify their own portfolios, the value of a ﬁ rm does not depend on its “total” risk. In this view, a company’s cost of capital, which is a critical determinant of its P/E ratio, depends mainly on the “systematic” or “nondiversiﬁ able component of that risk (as typically measured by a company’s “beta”)."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 8,
+      "label": "p. 2",
+      "en": "And this in turn implies that efforts to manage total risk are a waste of corporate resources. But in the real world, where investors’ information is far from complete and ﬁ nancial troubles can disrupt a company’s operations, a bad outcome resulting from a “diversiﬁ able” risk—say, an unexpected spike in a currency or commodity price—can have costs that go well beyond the immediate hit to cash ﬂ ow and earnings. In the language of economists, such risks can have large “deadweight” costs. 1 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 9,
+      "label": "p. 2",
+      "en": "See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 1,
+      "label": "p. 3",
+      "en": "Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 9 2. For an extended treatment of this concept, see René Stulz, “Rethinking Risk Management,” Journal of Applied Corporate Finance, Vol. 9 No. 3, Fall 1996. 3. For a discussion of core and non-core risks, see Robert Merton, “You Have More Capital Than You Think,” Harvard Business Review (November, 2005). To illustrate, if a company expects operating cash ﬂ ow of $200 million for the year and instead reports a loss of $50 million, a cash shortfall of this size can be far more costly to the ﬁ rm than just the missing $250 million."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 2,
+      "label": "p. 3",
+      "en": "First of all, to the extent it affects the market’s expectation of future cash ﬂ ows and earnings, such a shortfall will generally be associated with a reduction in ﬁ rm value of much more than $250 million—a reduction that reﬂ ects the market’s expectation of lower growth. And even if operating cash ﬂ ow rebounds quickly, there could be other, longer-lasting effects. For example, assume the company has a number of strategic investment opportunities that require immediate funding. immediate funding. immediate Unless the ﬁ rm has considerable excess cash or unused debt capacity, it may be faced with the tough choice of cutting back on planned investments or raising equity in difﬁ cult circumstances and on expensive terms."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 3,
+      "label": "p. 3",
+      "en": "If the cost of issuing equity is high enough, management may have little choice but to cut investment. And unlike the adjustment of market expectations in response to what proves to be a temporary cash shortfall, the loss in value from the ﬁ rm having to pass up positive-NPV projects represents a permanent reduction in value. For most companies, guarding against this corporate “underinvestment problem” is likely to be the most important reason to manage risk. By hedging or otherwise managing risk, a ﬁ rm can limit (to an agreed-upon level) the probability that a large cash shortfall will lead to valuedestroying cutbacks in investment."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 4,
+      "label": "p. 3",
+      "en": "And it is in this sense that the main function of corporate risk management can be seen as protecting a company’s ability to carry out its business plan. But which risks should a company lay off and which should it retain? Corporate exposures to changes in currencies, interest rates, and commodity prices can often be hedged fairly inexpensively using derivatives such as forwards, futures, swaps, and options. For instance, a foreign exchange hedging program using forward contracts typically has very low transaction costs; and when the transfer of risk is inexpensive, there is a strong case for laying off economic risks that could otherwise undermine a company’s ability to execute its strategic plan."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 5,
+      "label": "p. 3",
+      "en": "On the other hand, companies in the course of their normal activities take many strategic or business risks that they cannot proﬁ tably lay off in capital markets or other developed risk transfer markets. For instance, a company with a promising plan to expand its business typically cannot ﬁ nd an economic hedge—if indeed there is any hedge at all—for the business risks associated with pursuing such growth. The company’s management presumably understands the risks of such expansion better than any insurance or derivatives provider—if they don’t, the company probably shouldn’t be undertaking the project."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 6,
+      "label": "p. 3",
+      "en": "If the company were to seek a counterparty to bear such business risks, the costs of transferring such risks would likely be prohibitively high, since they would have to be high enough to compensate the counterparty for transacting with a better informed party and for constructing models to evaluate the risks they’re being asked to hedge. For this reason, we should not be surprised that insurance companies do not offer insurance contracts that provide complete coverage for earnings shortfalls or that there is no market for derivatives for which the underlying is a company’s earnings."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 7,
+      "label": "p. 3",
+      "en": "The insured companies would be in a position not only to know more than the insurers about the distribution of their future earnings, but to manipulate that distribution to increase the payoffs from such insurance policies. A ﬁ rm that entered into a derivatives contract with its earnings as the underlying would have a similar advantage over a derivatives dealer. More generally, in making decisions whether to retain or transfer risks, companies should be guided by the principle of comparative advantage in risk-bearing .comparative advantage in risk-bearing .comparative advantage in risk-bearing 2 A company that has no special ability to forecast market variables has no comparative advantage in bearing the risk associated with those variables."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 8,
+      "label": "p. 3",
+      "en": "In contrast, the same company should have a comparative advantage in bearing information-intensive, ﬁ rm-speciﬁ c business risks because it knows more about these risks than anybody else. For example, at Nationwide Insurance, exposures to changes in interest rates and equity markets are managed in strict ranges, with excess exposures reduced through asset repositioning or hedging. At the same time, Nationwide retains the vast majority of its insurance risks, a decision that reﬂ ects the ﬁ rm’s advantage relative to any potential risk transfer counterparty in terms of experience with and knowledge of such risks."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 9,
+      "label": "p. 3",
+      "en": "One important beneﬁ t of thinking in terms of comparative advantage is to reinforce the message that companies are in business to take strategic and business risks . The recognition that there are no economical ways of transferring risks that are unique to a company’s business operations can serve to underscore the potential value of reducing the ﬁ rm’s exposure to other, “non-core” risks. 3 Once management has decided that the ﬁ rm has a comparative advantage in taking certain business risks, it should use risk management to help the ﬁ rm make the most of this advantage."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 10,
+      "label": "p. 3",
+      "en": "Which brings us to a paradox of risk management: By reducing non-core exposures, ERM effectively enables companies to take more strategic business risk— and greater advantage of the opportunities in their core business. 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 1,
+      "label": "p. 4",
+      "en": "10 Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 The Micro Beneﬁ ts of ERM As discussed above, an increase in total risk can end up reducing value by causing companies to pass up valuable projects or otherwise disrupting the normal operations of the ﬁ rm. These costs associated with total risk should be accounted for when assessing the risk-return tradeoff in all major new investments. If the company takes on a project that increases the ﬁ rm’s total risk, the project should be sufﬁ ciently proﬁ table to provide an adequate return on capital after compensating for the costs associated with the after compensating for the costs associated with the after increase in risk."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 2,
+      "label": "p. 4",
+      "en": "This risk-return tradeoff must be evaluated for all corporate decisions that are expected to have a material impact on total risk. Thus, a major challenge for a company implementing ERM is to ensure that decision-making not just by senior management, but by business managers throughout the ﬁ rm, takes proper account of the risk-return tradeoff. T o make this happen, the risk evaluations of new projects must be performed, at least initially, on a decentralized basis by the project planners in the business units. A completely centralized evaluation of the risk-return tradeoff of individual projects would lead to corporate gridlock. T ake the extreme case of a trader."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 3,
+      "label": "p. 4",
+      "en": "Centralized evaluation would require the CRO’s approval of each of the trader’s decisions with a potentially material impact on the ﬁ rm’s risk. But in a decentralized evaluation of the risk-return tradeoff, each unit in the corporation evaluates this tradeoff in its decision making. An important part of senior management’s and the CRO’s job is to provide the information and incentives for each unit to make these tradeoffs in ways that serve the interests of the shareholders. There are two main components of decentralizing the risk-return tradeoff in a company: a) First, managers proposing new projects should be required to evaluate all major risks in the context of the marginal impact of the projects on the ﬁ rm’s total risk."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 4,
+      "label": "p. 4",
+      "en": "The company’s decision-making framework should require the business managers to evaluate project returns in relation to the marginal increases in ﬁ rm-wide risk to achieve the optimal amount of risk at the corporate level. b) Second, to help ensure that managers do a good job of assessing the risk-return tradeoff, the periodic performance evaluations of the business units must take account of the contributions of each of the units to the total risk of the ﬁ rm. As we will see later, this can be done by assigning a level of additional “imputed” capital to the project to reﬂ ect such incremental risk—capital on which the project manager will be expected to earn an adequate return."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 5,
+      "label": "p. 4",
+      "en": "By so doing, the corporation not only measures its true economic performance, but also creates incentives for managers to manage the risk-return tradeoff effectively by refusing to accept risks that are not economically attractive. With the help of these two mechanisms that are essential to the management of ﬁ rm-wide risk, a company that implements ERM can transform its culture. Without these means, risk will be accounted for in an ad hoc, subjective way, or ignored. In the former case, promising projects could be rejected when risks are overstated. In the latter case, systems that ignore risk will end up encouraging high-risk projects, in many cases without the returns to justify them."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 6,
+      "label": "p. 4",
+      "en": "Perhaps even more troubling, one division could take a project that another would reject based on a different assessment of the project’s risk and associated costs. With the above capital allocation and performance evaluation system mechanisms put in place when ERM is implemented, business managers are forced to consider the impact of all material risks in their investment and operating decisions. In short, every risk is “owned” since it affects someone’s performance evaluation. Spreading risk ownership throughout the company has become more important as the scope of risk management has expanded to include operating and reputational risks."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 7,
+      "label": "p. 4",
+      "en": "Ten or 20 years ago, when risk management focused mainly on ﬁ nancial risks, companies could centrally measure and manage their exposures to market rates. But operational risks typically cannot be hedged. Some of these risks can be insured, but companies often choose to reduce their exposure to such risks by changing procedures and technologies. The individuals who are closest to these risks are generally in the best position to assess what steps should be taken to reduce the ﬁ rm’s exposure to them. So, for example, decisions to manage operating risks are often entrusted to line managers whose decisions are based on their knowledge of the business, and supplemented by technical experts where appropriate."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 8,
+      "label": "p. 4",
+      "en": "Nationwide has developed a “factor-based” capital allocation approach for its management accounting and performance evaluation system. Capital factors are assigned to products based on the perceived risk of such products. For example, the risk associated with, and capital allocated to, insuring a home in a hurricane- or earthquake-prone area is greater than that for a home in a non-catastrophe exposed region. One of the most important purposes of such a risk-based capital allocation system is to provide business managers with more information about how their own investment and operating decisions are likely to affect both corporate-wide performance and the measures by which their performance will be evaluated."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 9,
+      "label": "p. 4",
+      "en": "When combined with a performance evaluation system in this way, a risk-based capital allocation approach effectively forces the business managers to consider risk in their decision-making. Nationwide’s risk factors are updated annually as part of the strategic and operational planning process, reﬂ ecting changes in risk and diversiﬁ cation. Decision-making authority is delegated by means of a risk limit structure that is consistent with Nationwide’s risk appetite framework. 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 10,
+      "label": "p. 4",
+      "en": "See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 1,
+      "label": "p. 5",
+      "en": "Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 11 4. By contrast, for riskier companies with lots of growth opportunities, the same dollar can be worth as much as $1.50. See Lee Pinkowitz and Rohan Williamson, “What is the Market Value of a Dollar of Cash Holdings?,” Georgetown University working paper. 5. Moody’s Default and Recovery Rates of Corporate Bond Issuers, 1920-2005, March 2006. We compute probabilities that assume that the rating is not withdrawn. 6. See Merton, Robert C., 1993, “Operation and Regulation in Financial Intermediation: A Functional Perspective,” in Operation and Regulation of Financial Markets , edited by P . Englund. Stockholm: The Economic Council."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 2,
+      "label": "p. 5",
+      "en": "Determining the Right Amount of Risk How should a company determine the optimal amount of total risk to bear? To answer this question, it’s important to start by recognizing that the costs associated with the cash shortfalls we discussed earlier would not exist if the ﬁ rm had a larger buffer stock of equity capital invested in liquid assets. But carrying excess equity also, of course, has costs. For example, a recent study concludes that, for some companies (typically larger, mature companies), the last dollar of “excess” cash is valued by the market at as little as 60 cents.4 By reducing risk, a company can reduce the amount of expensive equity capital needed to support its operating risks."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 3,
+      "label": "p. 5",
+      "en": "In this sense, risk management can be viewed as a substitute for equity capital, and an important part of the job of the CRO and top management is to evaluate the tradeoff between more active risk management and holding a larger buffer stock of cash and equity. As we saw earlier, for companies without a large buffer of excess equity, a sharp drop in cash ﬂ ow and value can lead to ﬁ nancial distress and a further (permanent) loss of value from underinvestment. Let’s deﬁ ne “ﬁ nancial distress” to be any situation where a company is likely to feel compelled to pass up positive net present value (NPV) activities."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 4,
+      "label": "p. 5",
+      "en": "Many companies identify a level of earnings or cash ﬂ ow that they want to maintain under almost all circumstances (i.e., with an agreed-upon level of statistical conﬁ dence, say 95%, over a one-year period) and then design their risk management programs to ensure the ﬁ rm achieves that minimum. For example, in the case described earlier of the ﬁ rm with a $250 million shortfall, management may want to explore steps that would ensure that the ﬁ rm almost never loses more than, say, $100 million in a year, since that may be the point where management begins to feel pressure to cut projects."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 5,
+      "label": "p. 5",
+      "en": "But, as the mention of statistical conﬁ dence intervals suggests, a company cannot—nor should it attempt to— guarantee should it attempt to— guarantee should it attempt to— that its cash and earnings will never fall below the level it’s aiming to protect. As long as a company operates in a business that promises more than the risk-free rate, there will be some risk of falling into ﬁ nancial distress. What management can accomplish through an ERM program, then, is not to minimize or eliminate, but rather to limit, the probability of distress to a level that manage-limit, the probability of distress to a level that manage-limit ment and the board agrees is likely to maximize ﬁ rm value."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 6,
+      "label": "p. 5",
+      "en": "Minimizing the probability of distress, which could be Minimizing the probability of distress, which could be Minimizing achieved by investing most of the ﬁ rm’s capital in Treasury bills, is clearly not in the interests of shareholders. Management’s job is rather to optimize the ﬁ rm’s risk portfolio by optimize the ﬁ rm’s risk portfolio by optimize trading off the probability of large shortfalls and the associated costs with the expected gains from taking or retaining risks. Let’s refer to this targeted minimal level of resources (which can be formulated in terms of cash ﬂ ow, capital, or market value) as the company’s ﬁ nancial distress “threshold.” Many companies use bond ratings to deﬁ ne this threshold."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 7,
+      "label": "p. 5",
+      "en": "For example, management may conclude that the ﬁ rm would have to start giving up valuable projects if its rating falls to Baa. In that case, it would adopt a ﬁ nancial and risk management policy that aims to limit to an acceptably low level the probability that the ﬁ rm’s rating will fall to Baa or lower. Given a ﬁ rm’s current rating—and let’s assume it is Aa—it is straightforward to use data supplied by the rating agencies to estimate the average probability that the ﬁ rm’s rating will fall to Baa or lower."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 8,
+      "label": "p. 5",
+      "en": "A study by Moody’s using data from 1920 to 2005 shows that the probability of a company with an Aa rating having its rating drop to Baa or lower within a year’s time is 1.05%, on average.5 Whether such a probability is acceptable is for top management and the board to decide. For a company with many valuable growth opportunities, even just a 1% chance of having to forgo such investments may be too risky. By contrast, a basic manufacturing ﬁ rm with few growth opportunities is likely to be better off making aggressive use of leverage, maximizing the tax beneﬁ ts of debt, and returning excess funds to shareholders. For such a ﬁ rm, the costs associated with ﬁ nancial trouble would be relatively low, at least as a percentage of total value."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 9,
+      "label": "p. 5",
+      "en": "For ﬁ nancial companies like Nationwide, however, there is another important consideration when evaluating the costs of ﬁ nancial distress that is speciﬁ c to ﬁ nancial institutions: ﬁ nancial trouble has an adverse impact on liabilities like bank deposits and insurance contracts that constitute an important source of the value of banks and insurance companies.6 Because such liabilities are very credit-sensitive, very credit-sensitive, very these ﬁ nancial institutions generally aim to maximize their value by targeting a much lower probability of distress than the typical industrial ﬁ rm."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 10,
+      "label": "p. 5",
+      "en": "Let’s suppose for the moment that a rating is a completely reliable and sufﬁ cient measure of the probability that a company will default—an assumption we will reexamine later. And let’s consider a company that would have to start giving up valuable projects if its rating fell to Baa or below (that is, Baa would serve as its ﬁ nancial distress threshold). Assume also that management and the board have determined that, for this kind of business, the optimal level of risk is one where the probability of encountering ﬁ nancial distress is 7% over a one-year period. Such an optimal level 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 11,
+      "label": "p. 5",
+      "en": "See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 1,
+      "label": "p. 6",
+      "en": "12 Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 7. See footnote 2. 8. If all debt were due at the end of the year, the default threshold level would be the principal amount of debt outstanding plus interest due. However, if debt matures later, ﬁ rm value could fall below the principal amount of debt outstanding without triggering a default. So, the default threshold level is lower than the principal amount of debt outstanding when the ﬁ rm has long-term debt. of risk would be determined by comparing the costs associated with ﬁ nancial distress and the beneﬁ ts of having a more levered capital structure and taking on riskier projects."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 2,
+      "label": "p. 6",
+      "en": "To the extent that ratings are reliable proxies for ﬁ nancial health, companies can use a rating agency “transition matrix” to estimate the amount of capital necessary to support a given level of risk. The transition matrix shown in Table 1 can be used to identify the frequency with which companies moved from one rating to another over a certain period (in this case, 1920 to 2005). 7 For any rating at the beginning of the year (listed in the left-hand column of the table), the column of numbers running down from the heading “Baa” tells us the probability that a company will end up with a Baa rating at the end of the year."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 3,
+      "label": "p. 6",
+      "en": "Again, let’s assume management wants the probability of its rating falling to Baa or lower over the next year to average around 7%. To determine the probability of a downgrade to or lower than Baa for a given initial rating, we add up the probabilities of ending with a rating equal to or lower than Baa along the row that corresponds to the initial rating. The row where the probabilities of ending at Baa or lower is closest to 7% is the one corresponding to an A rating. Consequently, by targeting an A rating, management would achieve the probability of ﬁ nancial distress that is optimal for the ﬁ rm. In practice, however, the process of determining a target rating can involve more considerations, which makes it more complicated."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 4,
+      "label": "p. 6",
+      "en": "For example, Nationwide analyzes and manages both its probability of default and its probability of downgrade, and it does so in separate but related frameworks. The company’s optimal probability of default is anchored to its target Aa ratings and reﬂ ects the default history of Aarated bonds. By contrast, the probability of downgrade to Baa or below is assumed to be affected by, and is accordingly managed by limiting, risk concentrations such as those arising from natural catastrophes and equity markets. In the example above, the company is assumed to maximize value by targeting a rating of A. As we noted earlier, equity capital provides a buffer or shock absorber that helps the ﬁ rm to avoid default."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 5,
+      "label": "p. 6",
+      "en": "For a given ﬁ rm, a different probability of default corresponds to each level of equity, so that by choosing a given level of equity, management is also effectively choosing a probability of default that it believes to be optimal. As can be seen in Table 1, an A rating is associated with a probability of default of 0.08% over a one-year period. Thus, to achieve an A rating, the company in our example must have the level of (equity) capital that makes its probability of default equal to 0.08%."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 6,
+      "label": "p. 6",
+      "en": "If we make the assumption that the value of a company’s equity falls to a level not materially different from zero in the event of default, we can use the probability of default to “back out” the amount of equity the ﬁ rm needs to support its current level of risk. Although the probability of default is in fact a complicated function of a number of ﬁ rm characteristics, not just the amount of equity, the analytical process that leads from the probability of default to the required amount of capital is straightforward."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 7,
+      "label": "p. 6",
+      "en": "To see this, suppose that the company becomes bankrupt if ﬁ rm value at the end of the ﬁ scal year falls below a default threshold level, which is a function of the composition and amount of the ﬁ rm’s debt.8 Given this assumption, the ﬁ rm needs the amount of equity capital that will make the probability of its value falling below the default threshold level equal to 0.08% Table 1 Transition Matrix from Moody’s Rating To: Rating From: Aaa Aa A Baa Ba B Caa-C Default Aaa 91.75% 7.26% 0.79% 0.17% 0.02% 0.00% 0.00% 0.00% Aa 1.32% 90.71% 6.92% 0.75% 0.19% 0.04% 0.01% 0.06% A 0.08% 3.02% 90.24% 5.67% 0.76% 0.12% 0.03% 0.08% Baa 0.05% 0.33% 5.05% 87.50% 5.72% 0.86% 0.18% 0.31% Ba 0.01% 0.09% 0.59% 6.70% 82.58% 7.83% 0.72% 1.48% B 0.00% 0.07% 0.20% 0.80% 7.29% 80.62% 6.23% 4.78% Caa-C 0.00% 0.03% 0.06% 0.23% 1.07% 7.69% 75.24% 15.69% Average one-year rating transition matrix, 1920-2005, conditional upon no rating withdrawal."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 8,
+      "label": "p. 6",
+      "en": "Source: Moody’s Default and Recovery Rates of Corporate Bond Issuers, 1920-2005, March 2006. 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 1,
+      "label": "p. 7",
+      "en": "Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 13 9. In particular, VaR is a multiple of volatility when the variable for which VaR is estimated has a normal distribution. (or alternatively, the amount that will ensure that its value will not fall below the default threshold level with a probability of 99.92%). A company can also assess its costs of ﬁ nancial distress by using criteria other than ratings and ratings thresholds. For instance, in addition to a rating downgrade, Nationwide Insurance identiﬁ es a number of other scenarios that it views as imposing large costs on the company."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 2,
+      "label": "p. 7",
+      "en": "Chief among them are high levels of volatility in earnings and capital that, while not alone sufﬁ cient to cause a rating downgrade, could contribute to an increase in overall risk and hence the required level of capital. For each of these critical variables and scenarios, Nationwide sets target probability levels and acceptable tolerances that enable the ﬁ rm to limit its volatility risk within those targeted levels. When thinking about acceptable levels of volatility, and the equity capital needed to support them, many ﬁ nancial companies use a risk measure called Value-at-risk, or VaR for short. VaR is the amount of the loss that is expected, with some pre-speciﬁ ed probability level, to be reached or exceeded during a deﬁ ned time period."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 3,
+      "label": "p. 7",
+      "en": "For instance, if a portfolio of securities has a one-year VaR at the 5% probability level of $20 million, there is a 5% chance the portfolio will have a loss that exceeds $20 million in the next year. VaR can also be computed for an entire company by assessing the distribution of ﬁ rm value. When the determination of the buffer stock of equity proceeds along the lines described so far, the company in our example must have an amount of equity equal to its ﬁ rm-wide one-year VaR determined at a probability level of 0.08%. For some companies, VaR conveys the same information as the volatility of its stock price or market value, which would allow the ﬁ rm using VaR to focus on these more direct measures of volatility of its value."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 4,
+      "label": "p. 7",
+      "en": "9 But for those companies for which the distribution of ﬁ rm value changes is not “normal” or symmetric, the analysis of risk provided by VaR can be quite different from the information provided by volatility—and in such cases, VaR must be estimated directly."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 5,
+      "label": "p. 7",
+      "en": "But whether management uses VaR or volatility, given a targeted probability of default or ﬁ nancial distress, the company faces a tradeoff, as illustrated in Figure 1, between Figure 1 Required Equity Capital to Achieve a Target Probability of Default as a Function of Firm Volatility or VaR ��������������������������� ��������� ���������������������������� ������������������������������� ��������������������������� ����������������� 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 6,
+      "label": "p. 7",
+      "en": "See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 1,
+      "label": "p. 8",
+      "en": "14 Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 its level of VaR or volatility and the size of its buffer stock of equity capital. As VaR or volatility increase, the ﬁ rm requires more capital to achieve the same probability of default. And as can also be seen in the upward shift from line x to line y in Figure 1, this tradeoff becomes steeper if management chooses to reduce the targeted probability of default. Now suppose that based on its estimate of volatility, management concludes that the ﬁ rm needs $5 billion of equity capital to achieve its target probability of default."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 2,
+      "label": "p. 8",
+      "en": "As noted earlier, the company can reduce its required level of equity by using risk management to reduce the probability of default, which would make sense if that option were deemed less costly than holding the $5 billion of equity. In making this tradeoff between managing risk and holding more equity, the company should aim to position itself “at the margin” where it is indifferent between decreasing risk and increasing capital. Management can satisfy itself that it has achieved this position if, after having decided on a certain combination of risk management and capital, it can show that, for example, spending another $10 million to decrease risk by 1% will save the ﬁ rm roughly $10 million in equity capital costs."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 3,
+      "label": "p. 8",
+      "en": "In this event, it has achieved the optimal amount of risk. Using this approach, the company can evaluate the marginal impact of a project on both its risk of default and its risk of ﬁ nancial distress. As total risk increases, the ﬁ rm requires more capital to support that risk. Moreover, the cost of the additional capital provides a useful measure of the cost of the project’s contribution to the ﬁ rm’s total risk. The project is worth undertaking only if its NPV is large enough to cover that additional cost. Similarly, when evaluating the performance of a unit within the ﬁ rm, the unit contributes to shareholder wealth only insofar as its economic value added exceeds the cost of its contribution to the risk of the ﬁ rm."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 4,
+      "label": "p. 8",
+      "en": "In this way, then, the capital required to support the contribution of an activity to the total risk of the ﬁ rm becomes itself a measure of risk—a measure that, because of its simplicity, can easily be added up across different activities or risks. The conceptual framework of ERM can thus be summarized as follows: 1) Management begins by determining the ﬁ rm’s risk appetite, a key part of which is choosing the probability of ﬁ nancial distress that is expected to maximize ﬁ rm value. When credit ratings are used as the primary indicator of ﬁ nancial risk, the ﬁ rm determines an optimal or target rating based on its risk appetite and the cost of reducing its probability of ﬁ nancial distress."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 5,
+      "label": "p. 8",
+      "en": "2) Given the ﬁ rm’s target rating, management estimates the amount of capital it requires to support the risk of its operations. In so doing, management should consider the probability of default. 3) Management determines the optimal combination of capital and risk that is expected to yield its target rating. For a given amount of capital, management can alter its risk through hedging and project selection. Alternatively, for a given amount of total risk, the company can increase its capital to achieve its target rating. At the margin, the ﬁ rm should be indifferent between changing its capital and changing its risk."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 6,
+      "label": "p. 8",
+      "en": "4) Top management decentralizes the risk-capital tradeoff with the help of a capital allocation and performance evaluation system that motivates managers throughout the organization to make investment and operating decisions that optimize this tradeoff. Implementing ERM But if ERM is conceptually straightforward, its implementation is challenging. For a company to succeed in implementing ERM, it is critical that people throughout the organization understand how it can create value. Managers must understand that it is not an academic exercise but a critical tool for executing the ﬁ rm’s strategy. Thus ERM must be “sold” to and “bought into” by all levels of the organization."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 7,
+      "label": "p. 8",
+      "en": "For the whole organization to get behind it, considerable thought must be devoted to the design of managerial performance evaluation and incentives. We now consider the main challenges involved in making ERM work. Inventory of Risks The ﬁ rst step in operationalizing ERM is to identify the risks to which the company is exposed. A common approach is to identify the types of risks that will be measured. In the early days of corporate risk management, ﬁ nancial institutions focused mainly on market and credit risks. Eventually operational risk was added. As a result, a common practice for banks is to classify all risks into one of three categories: market, credit, and operational."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 8,
+      "label": "p. 8",
+      "en": "But for such an approach to capture all the risks the ﬁ rm is exposed to, operational risk has to be a catch-all category that includes all risks that are not market and credit risks.10 Many companies have gone beyond measuring market, credit, and operational risks. In recent years, some ﬁ rms have also attempted to measure liquidity, reputational, and strategic risks. Further, the three-party typology used in banking often does not correspond well to the risks faced in other industries. For example, because insurance companies 10. For banks, the deﬁ nition of operational risk that prevails in the Basle II accord is much narrower; for instance, it ignores the reputational risks that are today a major concern of many ﬁ nancial institutions."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 9,
+      "label": "p. 8",
+      "en": "As a result, for banks, there will be a tension between the measurement of operational risk for regulatory purposes and from the perspective of ERM. 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 1,
+      "label": "p. 9",
+      "en": "Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 15 have risks on their asset side—that is, the risks associated with their investment portfolio—as well as their liability side, such companies generally use a different typology. Nationwide Insurance regularly measures and monitors its asset, liability, operating, liquidity, and strategic risks—and it considers reputational risks in the context of each of these risks and of its overall business."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 2,
+      "label": "p. 9",
+      "en": "(Market and credit risks are both treated as parts of asset risks.) Having identiﬁ ed all of the company’s major risks, management must then ﬁ nd a consistent way to measure the ﬁ rm’s exposure to these risks—a common approach that can be used to identify and quantify all the ﬁ rm’s signiﬁ - cant exposures. Without such a method, exposure to the same risk could have different effects on the performance evaluation and decision-making of different business units and activities. The resulting possibility that identically risky activities would be allocated different amounts of capital would almost certainly create tension within the ﬁ rm."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 3,
+      "label": "p. 9",
+      "en": "Furthermore, risk would gradually migrate within the organization to those parts of the ﬁ rm where it received the lowest risk rating and smallest capital allocation. For an inventory of risks to be useful, the information possessed by people within the organization must be collected, made comparable, and continuously updated. Organizations that have grown through acquisitions or without centralized IT departments typically face the problem of incompatible computer systems. Companies must be able to aggregate common risks across all of their businesses to analyze and manage those risks effectively. Nationwide employs both a top-down and a bottom-up process of risk identiﬁ cation."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 4,
+      "label": "p. 9",
+      "en": "From a top-down perspective, the company’s ERM leadership and corporate level risk committee have identiﬁ ed all risks that are large enough in aggregate to threaten the ﬁ rm with ﬁ nancial distress in an adverse environment. The bottom-up process involves individual business units and functional areas conducting risk-control self assessments designed to identify all material local-level risks. The goal is to identify all important risks, quantify them using a consistent approach, and then aggregate individual risk exposures across the entire organization to produce a ﬁ rm-wide risk proﬁ le that takes account of correlations among risk."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 5,
+      "label": "p. 9",
+      "en": "For example, Nationwide analyzes and establishes aggregate limits for the equity risk stemming from three main sources: (1) the stock holdings in its property and casualty insurance investment portfolio; (2) the fee levels that are tied to equity values in the variable annuity and insurance contracts of its life insurance business; and (3) the asset management fees that are tied to equity values in its investment management business. Corporate failures to conduct thorough “inventories” of their risks on a regular basis have been responsible for a striking number of major corporate disasters over the last 20 years. Business units often resist such monitoring efforts because they are time-consuming and distract from other activities."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 6,
+      "label": "p. 9",
+      "en": "A well-known example of such resistance that ultimately created massive problems for the old UBS took place when the ﬁ rm attempted to include its equity derivatives desk into its risk measurement system. Because the equity derivatives desk used a different computer system, such an undertaking would have required major changes in the way the desk did its business. But since the desk was highly proﬁ table, it was allowed to stay outside the system."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 7,
+      "label": "p. 9",
+      "en": "Eventually, the operation incurred massive losses that fundamentally weakened the bank and led it to seek a merger.11 Economic Value versus Accounting Performance Although credit ratings are a useful device for helping a company think about its risk appetite, management should also recognize the limitations of ratings as a guide to a value-maximizing risk management and capital structure policy. Because of the extent of their reliance on “accounting” ratios as well as analysts’ subjective judgment, credit ratings are often not the most reliable estimates of a ﬁ rm’s probability of default."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 8,
+      "label": "p. 9",
+      "en": "For example, a company might feel conﬁ dent that the underlying economics of its risk management and capital structure give it a probability of default that warrants an A rating, but ﬁ nd itself assigned a Baa rating—perhaps because of a mechanical application of misleading accounting-based criteria—by the agencies. In such cases, management should rely on its own economics-based analysis, while making every effort to share its thinking with the agencies. But having said this, if maintaining a certain rating is deemed to be critical to the success of the organization, then setting capital at a level that achieves the probability of default of the targeted rating may not be enough."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 9,
+      "label": "p. 9",
+      "en": "Management may also have to target some accounting-based ratios that are important determinants of ratings as well. This question of economic- or value-based management vs. accounting-based decision-making raises a fundamental question of risk management: What is the shortfall that management should be concerned about? Is it a shortfall in cash ﬂ ow or in earnings? Is it a drop in a company’s GAAP net worth or a market-based measure of ﬁ rm value? If the company is managing its probability of default, it should obviously focus on the measure that is most directly linked to that outcome. For example, an unexpected drop in this year’s cash ﬂ ow may not be a problem for a company if its future cash ﬂ ows are clearly unaffected."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 10,
+      "label": "p. 9",
+      "en": "If the ﬁ rm ﬁ nds it easy to borrow against its future cash ﬂ ows or tangible assets, a shortfall in this year’s cash ﬂ ow is unlikely to lead the ﬁ rm to default. But those companies that cannot 11. See Dirk Schütz, La Chute de l’UBS, Bilan, 1998. 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 1,
+      "label": "p. 10",
+      "en": "16 Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 borrow against future cash ﬂ ows, perhaps because they are too speculative and have few tangible assets, may be affected much more adversely. In such cases, the shortfall in cash ﬂ ow, by triggering ﬁ nancing constraints, could push the ﬁ rm into ﬁ nancial distress. It is these kinds of companies that are likely to focus their risk management efforts on measures of cash ﬂ ow volatility."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 2,
+      "label": "p. 10",
+      "en": "But if a company is more likely to experience ﬁ nancial distress because the present value of future cash ﬂ ows is present value of future cash ﬂ ows is present value low than because of a drop in cash ﬂ ow, management must model the risk of changes in ﬁ rm value, which reﬂ ects the present value of expected future cash ﬂ ows, rather than the risk of changes in cash ﬂ ows. There are a number of topdown approaches that provide estimates of total risk based on industry benchmarks that are cheap and easy to implement. Unfortunately, such approaches are not useful for managing risk within a company because they do not make it possible to relate corporate actions to ﬁ rm-wide risk."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 3,
+      "label": "p. 10",
+      "en": "For instance, management could obtain an estimate of the volatility of ﬁ rm value or cash ﬂ ows by looking at the distribution of the value or cash ﬂ ows of comparable companies. But such an approach would provide management with little understanding of how speciﬁ c risk management policies, including changes in capital structure, would affect this estimate. Thus, a management intent on implementing ERM must estimate the expected distribution of changes in ﬁ rm value from the bottom up. When, as is typical, a company’s value is best estimated as the present value of its expected future cash ﬂ ows, management should “build” its estimates of ﬁ rm value by modeling the distribution of future cash ﬂ ows."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 4,
+      "label": "p. 10",
+      "en": "As a fundamental part of its ERM program, Nationwide has developed stochastic models that generate multi-year cash ﬂ ow distributions for its main businesses. The Accounting Problem. By focusing on cash ﬂ ows, then, a company focuses on its economic value. But while helping the ﬁ rm achieve its target probability of default, such an approach could also result in more volatile accounting earnings. For example, under the current accounting treatment of derivatives, if a company uses derivatives to hedge an economic exposure but fails to qualify for hedge accounting, the derivatives hedge can reduce the volatility of ﬁ rm value while at the same time increasing the volatility of accounting earnings."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 5,
+      "label": "p. 10",
+      "en": "And thus a company that implements ERM could end up with higher earnings volatility than a comparable ﬁ rm that does not. While companies should pursue economic outcomes whenever possible, there will clearly be situations where they need to limit the volatility of reported accounting earnings. Companies with debt covenants that specify minimal levels of earnings and net worth are one example. Another is provided by companies that face regulatory requirements to maintain minimal levels of “statutory” capital, which is typically deﬁ ned in standard accounting terms. Yet another are companies whose ability to attract customers depends in part on credit ratings, which in turn can be affected by earnings volatility."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 6,
+      "label": "p. 10",
+      "en": "Nationwide Insurance, for example, operates in many businesses that are highly sensitive to credit ratings. And to the extent its ratings could be affected by high (or unexplained) levels of accounting volatility, management’s decision-making must clearly take such volatility into account. In such cases, the challenge of an ERM system is to meet the lenders’ and regulators’ accounting requirements while still attempting to manage risk from the perspective of economic value."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 7,
+      "label": "p. 10",
+      "en": "Nationwide’s approach is to make economically-based decisions to maximize value while treating its targeted “Aa” ratings vulnerability as a “constraint.” A signiﬁ cant amount of effort is devoted to minimizing the effect of this constraint through disclosure and communication with the rating agencies. Aggregating Risks A ﬁ rm that uses the three-part typology of market, credit, and operational risk mentioned earlier generally begins by measuring each of these risks individually. If the ﬁ rm uses VaR, it will have three separate VaR measures, one each for market risk, for credit risk, and for operational risk. These three VaRs are then used to produce a ﬁ rm-wide VaR."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 8,
+      "label": "p. 10",
+      "en": "As shown in Figure 2, these three types of risks have dramatically different distributions. 12 Market risk behaves very much like the returns on a portfolio of securities, which have a “normal” or symmetric distribution. In contrast, both credit and operational risk have asymmetric distributions. With credit risk, either a creditor pays in full what is owed or it does not. In general, most creditors pay in full, but some do not—and when a creditor defaults, the loss can be large. With operational risk, there tends to be large numbers of small losses, so that small operational losses are almost predictable."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 9,
+      "label": "p. 10",
+      "en": "There is also, however, some chance of large losses, so that the distribution of operational losses has a “long tail.” Statisticians describe distributions as having “fat tails” when the probability of extreme losses is higher than can be described by the normal distribution. While many use the normal distribution to estimate the VaR of market risk, such an approach is not appropriate for credit and operational risks because these risks have fat tails. When aggregating the risks, one must also estimate their correlations. The probability of experiencing simultaneously highly adverse market, credit, and operational outcomes is typically very low. This means that there is diversiﬁ cation across risk categories, and that the ﬁ rm-wide 12."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 10,
+      "label": "p. 10",
+      "en": "This is also the case when risks are divided into asset risks, operational risks, and liability risks. 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 1,
+      "label": "p. 11",
+      "en": "Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 17 VaR is thus less than the sum of the market risk, credit risk, and operational risk VaRs. How much less depends on the correlation between these risks. The estimation of the correlations between certain types of risks is at present more art than science. For this reason, many companies choose to use averages of correlations used by other ﬁ rms in their industry rather than relying on their own estimates. 13 But regardless of whether they use their own or other ﬁ rms’ correlation measures, companies should keep in mind the tendency for correlations to increase in highly stressed environments."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 2,
+      "label": "p. 11",
+      "en": "One important issue in estimating correlations across types of risks is the importance of recognizing that such correlations depend to some extent on the actions of the company. For example, the total risk of an insurance company depends on the correlation between its asset risk and its liability risk. By changing its asset allocations, the company can modify the correlation between its asset risk and its liability risk. As a consequence, an insurance company’s asset portfolio allocations can be an essential part of its risk management effort. For example, Nationwide Insurance uses a sophisticated asset/liability model to create an efﬁ cient frontier of investment portfolios."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 3,
+      "label": "p. 11",
+      "en": "The actual target portfolio selected takes into consideration the ﬁ rm’s tolerance for interest rate, equity market, and other risks as well as the opportunity for expected economic value creation. 13. For data on correlations used in practice for ﬁ nancial institutions, see Andrew Kuritzkes, Til Schuermann, and Scott M. Weiner, “Risk Measurement, Risk Management and Capital Adequacy in Financial Conglomerates,” Brookings-Wharton Papers on Financial Services, 2003, pp. 141-193. Figure 2 Typical Market, Credit and Operational Risk Distributions ����������� ����������� ����������� 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 4,
+      "label": "p. 11",
+      "en": "See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 1,
+      "label": "p. 12",
+      "en": "18 Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 Measuring Risks Some companies focus mostly on tail risk—the low-probability, large-loss outcomes. As a result, when they measure the risk of changes in the present value of cash ﬂ ows, they use a measure like VaR at a probability level that corresponds to a default threshold. Some of these companies also complement their VaR estimates with stress tests in which they investigate the impact on ﬁ rm value of rare events (such as the crisis period of August and September 1998 that followed Russia’s default on some of its debt). Though VaR is widely used, it is important to understand its limitations and to complement its use with other risk measures."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 2,
+      "label": "p. 12",
+      "en": "Perhaps the main problem is that while VaR measures the loss that is expected to be exceeded with a speciﬁ ed probability, it says nothing about the expected size of the loss in the event that VaR is exceeded. Some have argued that companies should instead focus on the expected loss if VaR is exceeded. But focusing on this risk measure, which is often called conditional VaR, instead of focusing on VaR has little economic justiﬁ cation in the context of ﬁ rmwide risk management. Setting the company’s capital at a level equal to the conditional VaR would provide the ﬁ rm with a lower probability of default than the targeted level, leading to an excessively conservative capital structure."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 3,
+      "label": "p. 12",
+      "en": "But a more important reason for companies to look beyond a VaR measure estimated at the probability level corresponding to a default threshold is that ERM adds value by optimizing the probability and expected costs of ﬁ nancial by optimizing the probability and expected costs of ﬁ nancial by optimizing the probability and expected costs of distress. It is therefore critical for companies to make sure that the equity capital set based on a VaR estimate leads to the targeted optimal probability of ﬁ nancial distress. Such an effort requires a broader understanding of the distribution of ﬁ rm value than is provided by a VaR estimate for a given probability of default."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 4,
+      "label": "p. 12",
+      "en": "Further, since different levels of ﬁ nancial distress have different costs, a company can take these different costs into account and focus on the probability distribution of different levels of ﬁ nancial distress. To compound the problem, when a company has a high rating target, the estimation of VaR becomes more of an art as the estimated VaR corresponds to an extremely low probability level. To see this, consider a company that has determined that an A rating is optimal. Since the probability of default for an A-rated company is only 0.08% over a one-year period, to estimate its optimal amount of capital the ﬁ rm must therefore estimate the loss in value that is exceeded with a probability of 0.08%."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 5,
+      "label": "p. 12",
+      "en": "The problem, however, is that few A-rated companies have any experience of losses that come anywhere near that level. And without any historical experience of such losses, it is difﬁ cult for management to estimate the VaR at that probability level and then evaluate the result. For most investment grade companies, then, it is much easier to evaluate the distribution of changes in ﬁ rm value over the range of changes that encompasses not default, but just a ratings downgrade."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 6,
+      "label": "p. 12",
+      "en": "For example, using the Moody’s transition matrix data (Table 1), one can say with some conﬁ - dence that an A-rated ﬁ rm has a 5.67% chance on average of being downgraded to a Baa rating over a one-year period; in other words, such an event is expected to happen in more than one year out of 20. (In contrast, default is expected to happen in approximately one year out of a 1,000.) Because of the abundance of data on downgrades as opposed to defaults for A-rated companies, the distribution of changes in ﬁ rm value that corresponds to a downgrade to Baa can be estimated more precisely."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 7,
+      "label": "p. 12",
+      "en": "Over that much narrower range of possible outcomes, the problems created by “asymmetries” in the distribution of ﬁ rm value changes and the so-called “fat tail” problems (where extreme negative outcomes are more likely than predicted by common statistical distributions) are not likely to be as severe. In such cases, management may have greater conﬁ dence in its estimates of the distribution of value changes corresponding to a downgrade rather than a default and will be justiﬁ ed in focusing on managing the probability of a downgrade. As discussed previously, it is also important to understand and take account of risk correlations when analyzing and managing default and distress probabilities."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 8,
+      "label": "p. 12",
+      "en": "Nationwide Insurance incorporates in its economic capital model a correlation matrix that reﬂ ects sensitivity-tested stress correlations. It is also now in the process of exploring eventdriven correlation analysis for scenarios that include terrorist attacks, mega hurricanes, and pandemics. Regulatory versus Economic Capital The amount of equity capital required for the company to achieve its optimal rating may bear little relation to the amount of capital regulators would require it to hold. A ﬁ rm that practices ERM may therefore have an amount of capital that substantially exceeds its regulatory requirements because it maximizes shareholder wealth by doing so."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 9,
+      "label": "p. 12",
+      "en": "In this case, the regulatory requirements are not binding and would not affect the ﬁ rm’s decisions. The company would be in a more difﬁ cult situation if its required regulatory capital exceeded the amount of capital it should hold to maximize shareholder wealth. Nationwide Insurance refers to this excess as “stranded capital.” To the extent that economic and regulatory capital are subject to different drivers, the difference between the two can be arbitraged to some degree to minimize the level of stranded capital. Nationwide allocates any residual stranded capital to its businesses and products."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 10,
+      "label": "p. 12",
+      "en": "If all the potential competitors of the ﬁ rm face the same onerous regulatory capital requirements, the capital the ﬁ rm has to hold that is not justiﬁ ed on economic grounds is simply a regulatory tax. If some potential competitors could provide the ﬁ rm’s products without being subjected to the same regulatory 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 1,
+      "label": "p. 13",
+      "en": "Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 19 capital, these less regulated competitors could offer the products at a lower price and the ﬁ rm would risk losing business to them. In this case, the ﬁ rm would have to factor in the cost of regulatory capital of its various activities and would want to grow its portfolio of activities in a way that requires less regulatory capital. Regulatory capital is generally deﬁ ned in terms of regulatory accounting. For purposes of an ERM system, companies focus on GAAP and economic capital. An exclusive focus on accounting capital is mistaken when accounting capital does not accurately reﬂ ect the buffer stock of equity available to the ﬁ rm."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 2,
+      "label": "p. 13",
+      "en": "The ﬁ rm may have valuable assets that, although not marked to market on its books, could be sold or borrowed against. In such cases, the ﬁ rm’s book equity capital understates the buffer stock available to it that could be used to avoid default. Thus, in assessing the level of a company’s buffer of capital, this suggests that the amount of its GAAP equity capital is only part of the story. The composition and liquidity of the assets matters as well. If the ﬁ rm incurs a large loss and has no liquid assets it can use to “ﬁ nance” it, the fact that it has a large buffer stock of book equity will not be very helpful. For this reason, many companies now do separate evaluations of their liquidity and the amount of equity capital they require."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 3,
+      "label": "p. 13",
+      "en": "As the practice of ERM evolves, we would expect such companies to pay more attention to the relation between the optimal amount of equity and the liquidity of their assets. Using Economic Capital to Make Decisions As we saw earlier, if companies could simply stockpile equity capital at no cost, there would be no deadweight costs associated with adverse outcomes. Management could use its liquid assets to ﬁ nance the losses, and the bad outcome would have no effect on the ﬁ rm’s investment policy. But in the real world, there are signiﬁ cant costs associated with carrying too much equity."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 4,
+      "label": "p. 13",
+      "en": "If the market perceives that a company has more equity than it needs to support the risk of the business, it will reduce the ﬁ rm’s value to reﬂ ect management’s failure to earn the cost of capital on that excess capital. When a company undertakes a new risky activity, the probability that it will experience ﬁ nancial distress increases, thus raising the expected costs of ﬁ nancial distress. One way to avoid these additional costs is by raising enough additional capital so that taking on the new risky activity has no effect on the probability of ﬁ nancial distress."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 5,
+      "label": "p. 13",
+      "en": "Consequently, the most straightforward way to estimate the cost of the impact of a new risky activity on the ﬁ rm’s total risk is to evaluate how much incremental capital would be necessary to ensure that the new risky activity has no impact on the ﬁ rm’s probability of ﬁ nancial distress. To illustrate, suppose that before the company takes on the new activity, the VaR estimate used to set the ﬁ rm’s capital is $5 billion. Now, with the new activity, this VaR estimate increases to $5.1 billion. Thus, for the ﬁ rm to have the same probability of ﬁ nancial distress as it had before it undertook the new risky activity, it would need to raise capital of $100 million."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 6,
+      "label": "p. 13",
+      "en": "Moreover, this capital would have to be invested in such a way that the investment does not increase the risk of the ﬁ rm, since otherwise the VaR of the ﬁ rm would further increase. If the risky new activity is expected to last one year, and the cost to the ﬁ rm of having this additional $100 million available for one year is estimated to be $8 million, then the economic value added of the new activity should be reduced by $8 million. If the ﬁ rm ignores this cost, it effectively subsidizes the new risky activity."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 7,
+      "label": "p. 13",
+      "en": "To the extent that riskier activities have higher expected payoffs before taking into account their contribution to the ﬁ rm’s probability of ﬁ nancial distress, a ﬁ rm that ignores the impact of project risks on ﬁ rm-wide risk ends up favoring riskier projects over less risky ones. Though the example just discussed is straightforward, the implementation of this idea in practice faces several difﬁ culties. A company is a collection of risky projects. At any time, a project’s contribution to the ﬁ rm’s total risk depends on the risk of the other projects and their correlations."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 8,
+      "label": "p. 13",
+      "en": "When business units are asked to make decisions that take into account the contribution of a project to ﬁ rm-wide risk, they must have enough information when making the decision to know how to evaluate that contribution. They cannot be told that the contribution will depend on everything else that is going to happen within the ﬁ rm over the next year, and then have a risk charge assigned to their unit after the fact. Many companies sidestep this issue and ignore correlations altogether when they set capital. In that case, the capital required to support a project would be set so that the project receives no beneﬁ t from diversiﬁ cation, and the contribution of the project to ﬁ rm-wide risk would then be the VaR of the project itself."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 9,
+      "label": "p. 13",
+      "en": "To account for diversiﬁ cation beneﬁ ts under this system, the ﬁ rm would reduce the cost of equity. But when evaluating the performance of a business unit, the VaR of the business unit would be used to assess the contribution of the unit to the ﬁ rm’s risk and the units would effectively get no credit for diversiﬁ cation beneﬁ ts. When decentralizing the risk-return tradeoff, the company has to enable the managers of its business units to determine the capital that has to be allocated to a project to keep the risk of the ﬁ rm constant with the relatively simple information that is readily available to them. Nationwide’s factor-based capital allocation and performance evaluation system is an example of such an approach."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 10,
+      "label": "p. 13",
+      "en": "The company allocates diversiﬁ cation beneﬁ ts within major business units, but not across them. This means that a project whose returns have a low correlation with the other activities within its unit will receive “credit” for such diversiﬁ cation 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 1,
+      "label": "p. 14",
+      "en": "20 Journal of Applied Corporate Finance • Volume 18 Number 4 A Morgan Stanley Publication • Fall 2006 beneﬁ ts in the form of a lower capital allocation for the unit. But investments of a business unit that have low correlations with activities of other major business units are not credited with ﬁ rm-wide diversiﬁ cation beneﬁ ts. The rationale for this policy is that it enables Nationwide’s top management to take account of the effects of new investments on risk at the corporate level while at the same time holding the business managers who make those decisions accountable for earning returns consistent with their competitive operating environment. The Governance of ERM How does a company know that its ERM is succeeding?"
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 2,
+      "label": "p. 14",
+      "en": "While one outcome of effective ERM should be a better estimate of expected value and better understanding of unexpected losses, ERM does not eliminate risk. Thus, extreme negative outcomes are still a possibility, and the effectiveness of ERM cannot be judged on whether such outcomes materialize. The role of ERM is to limit the probability of such outcomes to an agreed-upon, valuemaximizing, level. But what if the probability of default is set at one in 1,000 years? Quite apart from whether this is indeed the value-maximizing choice, such a low probability means that there will be no obvious way to judge whether the CRO succeeded in managing risk so as to give the ﬁ rm its target probability of default."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 3,
+      "label": "p. 14",
+      "en": "To evaluate the job of a CRO, the board and the CEO must attempt to determine how well the company’s risk is understood and managed. A company where risk is well understood and well managed is one that can command the resources required to invest in the valuable projects available to it because it is trusted by investors. In such cases, investors will be able to distinguish bad outcomes that are the result of bad luck rather than bad management, and that should give them conﬁ dence to keep investing in the ﬁ rm. Conclusion In this article, we have discussed how enterprise risk management creates value for shareholders and examined the practical issues that arise in the implementation of enterprise risk management."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 4,
+      "label": "p. 14",
+      "en": "Although the key principles that underlie the theory of ERM are well-established, it should be clear from this article that additional research is needed to help with the implementation of ERM. In particular, while much attention has been paid to measures of tail risk like VaR, it has become clear from attempts to implement ERM that a more complete understanding of the distribution of ﬁ rm value is required. Though correlations between different types of risks are essential in measuring ﬁ rm-wide risk, existing research provides little help in how to estimate these correlations. Companies also ﬁ nd that some of their most troubling risks—notably, reputational and strategic risks—are the most difﬁ cult to quantify."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 5,
+      "label": "p. 14",
+      "en": "At this point, there is little research that helps practitioners in assessing these risks, but much to gain from having a better understanding of these risks even if they cannot be quantiﬁ ed reliably. In sum, there has been considerable progress in the implementation of ERM, with the promise of major beneﬁ ts for corporate shareholders. And, as this implementation improves with the help of academic research, these beneﬁ ts can only be expected to grow. brian nocco is the Chief Risk Ofﬁ cer of Nationwide Insurance. rené stulz is the Reese Chair of Banking and Monetary Economics at Ohio State University’s Fisher School of Business and a research fellow at the NBER and at the European Corporate Governance Institute."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 6,
+      "label": "p. 14",
+      "en": "He is also a member of the executive committee of the Global Association of Risk Professionals (GARP). 17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 1,
+      "label": "p. 15",
+      "en": "Journal of Applied Corporate Finance (ISSN 1078-1196 [print], ISSN 1745-6622 [online]) is published quarterly, on behalf of Morgan Stanley by Blackwell Publishing, with ofﬁces at 350 Main Street, Malden, MA 02148, USA, and PO Box 1354, 9600 Garsington Road, Oxford OX4 2XG, UK. Call US: (800) 835-6770, UK: +44 1865 778315; fax US: (781) 388-8232, UK: +44 1865 471775. Information for Subscribers For new orders, renewals, sample copy requests, claims, changes of address, and all other subscription correspondence, please contact the Customer Service Department at your nearest Blackwell ofﬁce (see above) or e-mail subscrip@bos.blackwellpublishing.com."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 2,
+      "label": "p. 15",
+      "en": "Subscription Rates for Volume 18 (four issues) Institutional Premium Rate* The Americas † $356, Rest of World £218; Commercial Company Premium Rate, The Americas $475, Rest of World £289; Individual Rate, The Americas $95, Rest of World £53, €80‡; Students** The Americas $50, Rest of World £28, €42. *Includes print plus premium online access to the current and all available backﬁles."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 3,
+      "label": "p. 15",
+      "en": "Print and online-only rates are also available (see below). †Customers in Canada should add 7% GST or provide evidence of entitlement to exemption. ‡Customers in the UK should add VAT at 5%; customers in the EU should also add VAT at 5%, or provide a VAT registration number or evidence of entitlement to exemption. **Students must present a copy of their student ID card to receive this rate. For more information about Blackwell Publishing journals, including online access information, terms and conditions, and other pricing options, please visit www.blackwellpublishing.com or contact our Customer Service Depart - ment, tel: (800) 835-6770 or +44 1865 778315 (UK ofﬁce)."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 4,
+      "label": "p. 15",
+      "en": "Back Issues Back issues are available from the publisher at the current singleissue rate. Mailing Journal of Applied Corporate Finance is mailed Standard Rate. Mailing to rest of world by DHL Smart & Global Mail. Canadian mail is sent by Canadian publications mail agreement number 40573520. Postmaster Send all address changes to Journal of Applied Corporate Finance, Blackwell Publishing Inc., Journals Subscription Department, 350 Main St., Malden, MA 02148-5020."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 5,
+      "label": "p. 15",
+      "en": "Journal of Applied Corporate Finance is available online through Synergy, Blackwell’s online journal service, which allows you to: • Browse tables of contents and abstracts from over 290 professional, science, social science, and medical journals • Create your own Personal Homepage from which you can access your personal subscriptions, set up e-mail table of contents alerts, and run saved searches • Perform detailed searches across our database of titles and save the search criteria for future use • Link to and from bibliographic databases such as ISI. Sign up for free today at http://www.blackwell-synergy.com."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 6,
+      "label": "p. 15",
+      "en": "Disclaimer The Publisher, Morgan Stanley, its afﬁliates, and the Editor cannot be held responsible for errors or any consequences arising from the use of in - formation contained in this journal. The views and opinions expressed in this journal do not necessarily represent those of the Publisher, Morgan Stanley, its afﬁliates, and Editor, neither does the publication of advertisements con - stitute any endorsement by the Publisher, Morgan Stanley, its afﬁliates, and Editor of the products advertised. No person should purchase or sell any security or asset in reliance on any information in this journal. Morgan Stanley is a full service ﬁnancial services company active in the securities, investment management, and credit services businesses."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 7,
+      "label": "p. 15",
+      "en": "Morgan Stanley may have and may seek to have business relationships with any person or company named in this journal. Copyright © 2006 Morgan Stanley. All rights reserved. No part of this publication may be reproduced, stored, or transmitted in whole or part in any form or by any means without the prior permission in writing from the copyright holder. Authorization to photocopy items for internal or personal use or for the internal or personal use of speciﬁc clients is granted by the copyright holder for libraries and other users of the Copyright Clearance Center (CCC), 222 Rosewood Drive, Danvers, MA 01923, USA (www.copyright.com), provided the appropriate fee is paid directly to the CCC."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 8,
+      "label": "p. 15",
+      "en": "This consent does not extend to other kinds of copying, such as copying for general distribution for advertis - ing or promotional purposes, for creating new collective works, or for resale. Institutions with a paid subscription to this journal may make photocopies for teaching purposes and academic course-packs free of charge provided such copies are not resold. For all other permissions inquiries, including requests to republish material in another work, please contact the Journals Rights and Permissions Coordinator, Blackwell Publishing, 9600 Garsington Road, Oxford OX4 2DQ. E-mail: journalsrights@oxon.blackwellpublishing.com."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 9,
+      "label": "p. 15",
+      "en": "17456622, 2006, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/j.1745-6622.2006.00106.x by Maastricht University, Wiley Online Library on [13/07/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License"
+    }
+  ]
+}

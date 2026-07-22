@@ -1,0 +1,675 @@
+{
+  "id": "kpmg-esrs",
+  "sourceFile": "esrs-learnings-to-progress-2025-kpmg-netherlands.pdf",
+  "scope": "Complete report · 23 PDF pages",
+  "pageCount": 23,
+  "paragraphCount": 95,
+  "characterCount": 55558,
+  "paragraphs": [
+    {
+      "page": 1,
+      "pdfPage": 1,
+      "sequence": 1,
+      "label": "p. 1",
+      "en": "KPMG. Make the Difference. July 2025 ESRS: learnings to progress Key insights from the first wave of Dutch CSRD reporters"
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 1,
+      "label": "p. 2",
+      "en": "2© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Introduction At a time when the role of business in society is under increasing scrutiny, sustainability reporting has emerged as a powerful tool for driving transparency, accountability, and long-term value creation for organizations by making available better management information. The Corporate Sustainability Reporting Directive (CSRD) marks a pivotal step forward in this field."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 2,
+      "label": "p. 2",
+      "en": "The CSRD and corresponding Reporting Standards (ESRS) aim to bring sustainability reporting to the same standing as financial reporting. Companies now professionalize their disclosures about topics such as decarbonization and the global push toward net zero, human rights and ethical corporate conduct. Even against the backdrop of the Omnibus proposal, companies worldwide increasingly value their sustainability reporting as they realize that not only is this a good way to demonstrate their commitment to positive environmental and social impact, sustainability reporting also helps them to be resilient in a rapidly changing world. This publication presents insights from analyzing 26 first-wave CSRD reports from companies in the Netherlands."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 3,
+      "label": "p. 2",
+      "en": "We explore how organizations are navigating the new requirements, what their disclosures reveal about the level of ESRS alignment and what lessons we can draw.The report is structured around key environmental, social, and governance (ESG) themes – each chapter delving into our most important observations. Beyond comparing numbers, the report aims to draw learning and better practice from what was observed, that can be leveraged to improve next year’s (voluntary or mandatory) reporting. We hope you find this publication both informative and inspiring. Whether you are just beginning your CSRD journey or looking to refine your approach, the insights shared here offer valuable guidance."
+    },
+    {
+      "page": 2,
+      "pdfPage": 2,
+      "sequence": 4,
+      "label": "p. 2",
+      "en": "At KPMG, we are proud to support companies in advancing their sustainability ambitions with deep expertise, practical tools, and a commitment to making a meaningful difference. Director, Sustainability Reporting and Assurance Vera Moll"
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 1,
+      "label": "p. 3",
+      "en": "3© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee."
+    },
+    {
+      "page": 3,
+      "pdfPage": 3,
+      "sequence": 2,
+      "label": "p. 3",
+      "en": "ESRS: learnings to progress Double Materiality Assessment 01 Material IROs 5 02 Approaches to visualizing DMA and IROs 6 03 Stakeholder engagement during the DMA 7 04 Stakeholder engagement: a tool to gather meaningful insights 8 Table of contents E1 Climate change Financial effects E4 Biodiversity 01 Material IROs 9 02 Transition Plan & Net-Zero Targets 10 03 Scope 1, 2 and 3 11 01 Material IROs 14 02 Impact and Risk Assessment 15 03 Metrics & Targets 16 S1 Own workforce G1 Business conduct Data analysis methods 01 Current financial effects – E1 Climate Change 12 02 Current financial effects – E1 Climate Change 13 01 Material topics 17 02 Metrics & Targets 19 01 Material topics, metrics and targets 20 01 ESG Data Collection and Analysis Practices 22"
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 1,
+      "label": "p. 4",
+      "en": "4© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Entity-specific G1 S4 S3 S2 S1 E5 E4 E3 E2 E1 Material IROs The analysis shows that companies had identified similar amounts of material IROs on Social and Environmental topics, namely 41% and 38% respectively. The topical standards of E1 and S1 are the most common. 8% of material IROs were found related to the Governance standard. ESRS 1 AR16 offers an extensive list of sustainability matters that must be considered during the DMA."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 2,
+      "label": "p. 4",
+      "en": "Companies are required to add entity-specific topics to this list, if they deem these material and are not covered (with sufficient granularity) by the ESRS. In the analyzed 26 reports, 13% of material IROs are indeed entityspecific. Most of these are mapped to Social topical standards, including topics such as data privacy and cybersecurity. Other entity-specific IROs relate for example to competition, partnerships and business resilience. In the reports of 10 companies, we found that entity-specific IROs showed significant alignment with the ESRS and could potentially have been mapped to an existing (sub-sub-)topic. Using existing (sub-sub-)topics would increase the comparability among peers."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 3,
+      "label": "p. 4",
+      "en": "Under the ESRS, identifying material Impacts, Risks, and Opportunities (IROs) through a double materiality assessment is the cornerstone of sustainability reporting. The resulting sustainability statement must reflect all material IROs identified through this process. While companies may prioritize certain IROs for internal management purposes, they are still required to report comprehensively on all material IROs."
+    },
+    {
+      "page": 4,
+      "pdfPage": 4,
+      "sequence": 4,
+      "label": "p. 4",
+      "en": "1.01 Material IROs Topical spread of material IROs Entity-specific Spread of entity-specific material IROs • ‘Climate Change’ and ‘Own Workforce’ are the most common material topics. • Companies make use of the flexibility granted by entityspecific disclosures, but it is not always evident that this was needed to capture their unique ESG challenges and opportunities. Key Learnings 10 3 Cybersecurity & Data privacy Market & Innovation Network & Servivce quality Social topics Green initiative Others Governance Social Environmental Double Materiality Assessment 41% 38% 8%"
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 1,
+      "label": "p. 5",
+      "en": "5© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Approaches to visualizing DMA and IROs Companies use various methods to visualize material topics and IROs, such as tables, lists, and graphs. Tables typically include detailed IROs descriptions, value chain positions, and time horizons, while lists offer only a basic enumeration of IROs without context."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 2,
+      "label": "p. 5",
+      "en": "Although tables and lists are most common, graphs – especially butterfly bar diagrams which visually divide impact and financial materiality per sustainability matter into low, medium and high – better illustrate the relationship between impact and financial materiality. Tables, however, can offer more detail by including definitions and additional elements. All companies that we analyzed, define their IROs, typically in the DMA section, though some repeat them in topical chapters. While this repetition improves clarity, it also adds length. Another, more efficient approach is to use hyperlinks to connect sections."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 3,
+      "label": "p. 5",
+      "en": "Best practices include detailed topic and sub-topic IRO definitions in the overall DMA representation, clearly linked to topical sections through hyperlink. Under ESRS 2, companies must describe their material IROs identified via the DMA, including if they appear upstream, downstream or in their own operations. Companies are encouraged to clearly present the DMA results, distinguishing impact vs financial materiality. Companies have various ways of visualizing the outcomes of their DMA, with different up- and downsides and varying degrees of extensiveness."
+    },
+    {
+      "page": 5,
+      "pdfPage": 5,
+      "sequence": 4,
+      "label": "p. 5",
+      "en": "1.02 IRO definition Tables, lists and graphs IRO representation Location of IRO definitions • As the DMA is the basis of the sustainability statement, it is important to provide clear visualizations of DMA outcomes, including IRO descriptions, value chain position and time horizon. • To improve clarity and avoid redundancy, companies can use graphs and hyperlinks to present IROs in a well-organized way. Key Learnings 18 17 Table List Graph 19 18 DMA Disclosure Topical Section Glossary or Annex Butterfly bar diagram DMA Matrix Other Type of visual Double Materiality Assessment"
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 1,
+      "label": "p. 6",
+      "en": "6© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Stakeholder engagement during the DMA 23 out of 26 companies that were analyzed, engaged with their external stakeholders for their DMA. The main external stakeholders involved were customers, investors, NGOs, suppliers and government bodies. NGOs were frequently used as proxies for local communities or Nature as ‘the silent stakeholder’. Engagement with public authorities included local, national, and international levels, reflecting the multi-layered nature of government interaction."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 2,
+      "label": "p. 6",
+      "en": "The engagement transparency among companies varied. Many did not clearly identify key stakeholders or explain their involvement. 19 described their methods for engaging with them and how input was used for DMA development. Engagement frequency was mostly vaguely described, using terms such as ‘frequent’ or ‘ongoing’, without specifying timing or structure. Most companies (18) involved stakeholders during the assessment phase to help identify material IROs. Fewer (9) engaged stakeholders during the validation phase, limiting their role to reviewing pre-identified IROs. Only 4 companies involved stakeholders in both phases. Furthermore, just 7 companies disclosed the topics discussed, limiting transparency around materiality outcomes."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 3,
+      "label": "p. 6",
+      "en": "Surveys were the most used engagement method (17 companies), valued for their efficiency but often lacking in depth. More interactive methods such as meetings (14) and interviews (7) were underutilized, despite their potential to yield richer insights on complex issues. Engagement with external stakeholders is essential for identifying impacts and assessing the relevance of sustainability matters from the perspective of those affected. While the ESRS emphasize this importance, they do not prescribe any specific engagement methods."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 4,
+      "label": "p. 6",
+      "en": "However, according to ESRS 2 paragraph 45(a), companies have to provide a description of their stakeholder engagement: key stakeholders, whether engagement with them occurs and for which category of stakeholders, how it is organized and the purpose and how the outcome of the engagement is taken into account. 1.03 Key Stakeholders Stakeholders’ variety Engagement practices • Companies already consult a varied number of stakeholder groups, which is in line with ESRS expectations. Interestingly, NGOs are more often consulted than suppliers, almost just as often as investors/shareholders, indicating that they are considered important stakeholders."
+    },
+    {
+      "page": 6,
+      "pdfPage": 6,
+      "sequence": 5,
+      "label": "p. 6",
+      "en": "However, companies can be more transparent about the form/type of the engagement and the way in which this has influenced the DMA process and outcomes. Key Learnings 7 Survey Meetings Interviews Engagement methods Government bodies Suppliers NGOs Shareholders / investors Customers / end-users 5 4 Assessment Validation Both Engagement phases Double Materiality Assessment"
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 1,
+      "label": "p. 7",
+      "en": "7© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Stakeholder engagement: a tool to gather meaningful insights Although the majority of the analyzed companies engaged with stakeholders, most of them do not demonstrate how this input meaningfully shapes their sustainability policies. Disclosing concrete examples of how stakeholder insights inform decisionmaking would be helpful for readers to understand the connection between stakeholder engagement and business strategy."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 2,
+      "label": "p. 7",
+      "en": "Out of 26 companies reviewed, only 12 disclosed how stakeholder engagement for DMA assessment has influenced or reshaped their corporate strategy. Three companies explicitly stated that stakeholder input had not led to any strategic changes. The remaining 11 companies did not disclose this information at all. Not including this link does not lead to a non-compliance with ESRS, as paragraph 45b asks for disclosures to the extent that interests of key stakeholders were analyzed during the DMA, and 45c asks for disclosure about amendments to the strategy and/or business model “where applicable”. However, for the reader to understand the impact of stakeholder engagement on the (change of the) strategy, this could be improved upon by preparers."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 3,
+      "label": "p. 7",
+      "en": "Moreover, few companies articulate a clear understanding of stakeholder interests or concerns. Only 7 explicitly reference stakeholder interests, and even fewer (3) provide insight into stakeholders’ views on sustainability-related issues. This seems to indicate that companies do not yet fully use the potential of stakeholder engagement. Companies may miss the opportunity to align their sustainability strategies with ever-evolving expectations of important groups such as clients, communities and civil society. Done right, stakeholder engagement can provide important insights that strengthen companies’ resilience."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 4,
+      "label": "p. 7",
+      "en": "According to ESRS 2 paragraph 45(b) and (c), companies should disclose their understanding of stakeholders’ interests and views, particularly as they relate to the company’s strategy, business model, and double materiality assessment. Understanding and integrating stakeholders’ interests is important for adequate sustainability policies, actions and targets. 1.04 Stakeholders’ interests and views Stakeholders’ interests and views • The extent to which companies engage with their stakeholders and disclose how engagement informs companies’ decision-making should improve to meet the ESRS expectations. • Effective stakeholder engagement is a strategic opportunity to enhance transparency, build trust, and create long-term value."
+    },
+    {
+      "page": 7,
+      "pdfPage": 7,
+      "sequence": 5,
+      "label": "p. 7",
+      "en": "Key Learnings 11 Used in strategy Not used in strategy No disclosure Stakeholder engagement and strategy Interests Views Stakeholder perspectives gap Disclosure No disclosure Double Materiality Assessment"
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 1,
+      "label": "p. 8",
+      "en": "8© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Material IROs E1 Climate change comprises three sub-topics: Climate change mitigation (CCM), Climate change adaptation (CCA), and Energy. Among the 26 companies that were analyzed, 25 consider E1 to be material. The company that does not deem it material, still discloses its decarbonization roadmap and has an SBTI-validated net-zero target indicating the relevance of climate mitigation in stakeholder communication."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 2,
+      "label": "p. 8",
+      "en": "Notably, all 25 companies that consider E1 to be material report IROs on GHG emissions (classified under CCM), while only 12 consider CCA and Energy to be material sub-topics. In ID 177, EFRAG notes that the sub-topics of energy and CCM are closely linked and that such interrelations may be reflected when assessing materiality of information. This is disclosed to a varying extent by the companies. All 25 companies that classify E1 as material do so from at least an impact perspective. However, negative impacts were reported significantly more often than positive impacts (24 vs. 16 companies)."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 3,
+      "label": "p. 8",
+      "en": "When assessing financial materiality, E1 was classified as material by 22 out of 25 companies, with financial risks being identified more frequently than opportunities (21 vs. 17 companies). This indicates that companies prioritize risk awareness over opportunity identification in their financial disclosures. Following the Paris Agreement and its aim to limit global warming to 1.5°C, ESRS E1 points companies to disclose information related to climate change, such as how they affect climate change and their past, current and future mitigation efforts. If a company does not consider climate change to be material, ESRS 1 paragraph 32 requires a “detailed explanation”."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 4,
+      "label": "p. 8",
+      "en": "In this context, we have conducted a deeper analysis of key disclosure requirements under the E1 Climate change standard, focusing on Impacts, Risks, and Opportunities (IROs), Transition Plans, Net-Zero Targets, and Greenhouse Gas (GHG) Emissions across Scopes 1, 2, and 3. 2.01 Materiality of sub-topics CCM, CCA, and Energy Impact & Financial Materiality Impact materiality • Nearly all companies consider E1 Climate change to be material, with all 26 companies reporting on E1 Climate Change. • Most companies approach E1 Climate change from a negative impact and/or risk perspective."
+    },
+    {
+      "page": 8,
+      "pdfPage": 8,
+      "sequence": 5,
+      "label": "p. 8",
+      "en": "Key Learnings 12 1213 13 CCM CCA Energy Material Not material Positive Impact Negative Impact Financial materiality Material Not material 21 17 4 8 Positive Impact Negative Impact Material Not material E1 Climate change"
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 1,
+      "label": "p. 9",
+      "en": "9© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Transition Plan & Net-Zero Targets The 26 companies that were analyzed show strong climate ambition in their reports, with 24 having a transition plan in place. All 26 have set at least a near-term target, highlighting the role of short- and medium-term milestones in driving decarbonization. Many align with frameworks such as the Science Based Targets initiative (SBTi), which guides companies in setting science-based emission reduction targets in line with the Paris Agreement."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 2,
+      "label": "p. 9",
+      "en": "Near-term targets – which are key to ensuring measurable progress and accountability – are expected to be disclosed for scope 1, 2 and 3 emissions. While 17 of the 26 companies sought validation of their Scope 1, 2 and 3 near-term targets, 9 companies still need to validate their near-term net-zero targets, with 3 banks committing to the Net-Zero Banking Alliance (NZBA) instead of aligning with the SBTi. 24 out of 26 companies have set net-zero targets, but only 10 companies have validated their Scope 1, 2, and 3 net-zero targets, 3 others are currently awaiting validation, while 11 companies have not yet submitted their net-zero targets for validation."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 3,
+      "label": "p. 9",
+      "en": "Among these 13 companies, 3 banks are committed to the NZBA, while 10 have not aligned with any framework. Under the E1 Climate change topic, the ESRS require companies to disclose if they have set GHG emission reduction targets. Companies must also disclose if they have a transition plan for climate change mitigation in place, explaining how their targets are compatible with the limiting of global warming to 1.5°C in line with the Paris Agreement. The plan should outline the key actions and investments needed to achieve the targets and close the gap between current performance and climate objectives."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 4,
+      "label": "p. 9",
+      "en": "2.02 SBTi near-term targets Scope 1, 2 and 3 targets SBTi net-zero targets Scope 1, 2 and 3 targets • Companies exhibit a high level of maturity in climate target reporting, with all recognizing the urgency of decarbonization and setting at least near-term targets to stay aligned with net-zero ambitions.. • A key challenge is ensuring these targets translate into operational action. • There is room to strengthen governance and transparency to ensure that climate pledges are credible and achievable, especially given that not all net-zero targets have been validated by the SBTi."
+    },
+    {
+      "page": 9,
+      "pdfPage": 9,
+      "sequence": 5,
+      "label": "p. 9",
+      "en": "Key Learnings Validated by SBTi Not yet submitted for approval Alternative framework No alternative framework Validated by SBTi Submitted for approval by SBTi Not yet submitted for approval E1 Climate change Alternative framework No alternative framework"
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 1,
+      "label": "p. 10",
+      "en": "10© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Scope 1, 2 and 3 Intensity targets – which measure emissions per unit of output – can help companies demonstrate efficiency improvements even as their operations grow. However, they may not guarantee a reduction in total emissions, particularly when emissions scale with business activity."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 2,
+      "label": "p. 10",
+      "en": "In contrast, absolute targets aim to reduce total emissions regardless of growth, offering a clearer path to net-zero, but may obscure efficiency gains and may be influenced by external factors such as reduced output. Therefore, setting both absolute and intensity reduction targets can support to track the decarbonization progress, both on a unit level, and as a total impact. The figure on the right shows that most companies have set absolute reduction targets for Scopes 1 and 2 and Scope 3. However, companies are more likely to disclose intensity targets for Scope 3 than for Scope 1 and 2. Yet, in order to effectively address climate change it is crucial to also address absolute Scope 3 emissions."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 3,
+      "label": "p. 10",
+      "en": "Scope 3 often represents the largest share of a company’s total carbon footprint, as it includes indirect emissions across the value chain – from upstream procurement to downstream product use and disposal. The GHG Protocol defines 15 categories of Scope 3 emissions to help companies identify and manage these hotspots. The categories most frequently reported (sector-independent) are Scope 3.6 Business travel, Scope 3.1 Purchased goods and services and Scope 3.7 Employee commuting. The categories least frequently reported (sector-independent) are Scope 3.10 Processing of sold products, Scope 3.14 Franchises and Scope 3.8 Upstream leased assets."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 4,
+      "label": "p. 10",
+      "en": "ESRS E1-4 aims to strengthen the credibility of climate mitigation efforts by requiring companies to disclose their climate mitigation targets. Targets are expected to be disclosed in absolute value and, where relevant, in intensity value (e.g. emissions per unit of output or revenue). Setting and monitoring targets helps to measure decarbonization progress over time. Additionally, companies must report GHG emissions across all three scopes: Scope 1 (direct emissions), Scope 2 (indirect emissions from purchased energy), and Scope 3 (other indirect emissions across the value chain), following the GHG Protocol methodology."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 5,
+      "label": "p. 10",
+      "en": "2.03 GHG emission reductions Absolute and intensity targets GHG Protocol: Scope 3 categories Most frequently reported Scope 3 categories • In alignment with SBTi recommendations, KPMG advises companies to set both absolute and intensity-based targets, where appropriate. In most cases, combining both approaches may offer a more balanced and transparent strategy for tracking progress and driving meaningful climate action. • The significance of Scope 3 categories varies significantly depending on a company's business model. However, categories 6, 1, and 7 show substantial overlap across companies."
+    },
+    {
+      "page": 10,
+      "pdfPage": 10,
+      "sequence": 6,
+      "label": "p. 10",
+      "en": "Key Learnings 2 3 Scope 1 & 2 Scope 3 Absolute Intensity Both Category 7 Employee commuting Category 1 Purchased goods & services Category 6 Business travel E1 Climate change"
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 1,
+      "label": "p. 11",
+      "en": "11© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Current financial effects – E1 Climate Change Many large companies reported on their greenhouse gas emissions and conducted climate risk analyses already prior to the introduction of the CSRD. Given that experience, as well as the importance that is often placed on climate-related disclosures, it would be in line with expectations to find the most advanced reporting on financial effects related to ESG in the context of the E1 topical standard on Climate Change."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 2,
+      "label": "p. 11",
+      "en": "The findings show that most companies disclosed current financial effects from climate-related risks only implicitly. Of the 21 companies with material climate-related risks, 11 explicitly used the ESRS terminology. This can make it difficult for the reader of the report to locate the relevant disclosures, especially because the disclosures on financial effects are often fragmented across different sections of the sustainability statements or elsewhere. In 9 cases, disclosures appeared in multiple locations without clear cross-referencing. This limits understandability."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 3,
+      "label": "p. 11",
+      "en": "To improve this, companies may explicitly use the term ‘current financial effects’ and ensure that disclosures are clearly referenced, especially when using incorporation by reference in line with ESRS 1 paragraph 119. In many cases, the relevant information was embedded within broader disclosures—such as scenario analysis or financial statement considerations—without clearly indicating which Disclosure Requirements were being addressed. Moreover, there was no consistent approach to describing the specific financial metrics affected, such as financial position, performance, or cash flows. To support reconciliation with financial statements, it would help to clearly state the nature of the financial impact being disclosed."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 4,
+      "label": "p. 11",
+      "en": "ESRS 2 paragraph 48 mandates that companies report on financial effects. Current financial effects are expected to be reported for all material risks and opportunities in alignment with the identified time horizon. This however is a complex challenge for companies. The analyzed reports show a wide variety of disclosures on financial effects, both in terms of content / granularity and the places where the information on financial effects is disclosed. 3.01 Location within the AR • Implicit disclosure of current financial effects creates a lack of comparability across financial effects disclosures."
+    },
+    {
+      "page": 11,
+      "pdfPage": 11,
+      "sequence": 5,
+      "label": "p. 11",
+      "en": "For greater transparency, companies may explicitly disclose the financial effects. • The disclosure of current financial effects in multiple locations (e.g. inclusion in scenario analysis disclosures) without explicit referencing doesn’t help users to identify current financial effects within the annual reports. This underlines a disconnection with the financial statements. Key Learnings ‘Current financial effects’ disclosed Yes No Sustainablility statement Financial statement Multiple locations No clear disclosure Financial effects"
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 1,
+      "label": "p. 12",
+      "en": "12© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Current financial effects – E1 Climate Change The analysis found that only a small number of companies have disclosed quantified current financial effects. Of the 21 companies with material risks related to E1, just 6 provided quantitative disclosures. Nearly half (10 of 21) stated qualitatively that there were no current financial effects, but offered limited explanation of how this conclusion was reached."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 2,
+      "label": "p. 12",
+      "en": "To further increase transparency, it would be helpful if companies would describe the assessment that they performed in order to reach that conclusion. Among the 12 companies that identified a short-term E1 material risk, only 4 disclosed a quantified amount for the current financial effects disclosure. ESRS 1 paragraph 48 states that there is a requirement to disclose when there is a significant risk of a material adjustment within the next annual reporting period to the carrying amounts of assets and liabilities reported in the related financial statements. Hence, absence of an amount indicates that no current financial effect has been identified (or the effect does not pose a significant risk to the next annual reporting period)."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 3,
+      "label": "p. 12",
+      "en": "While not mandatory, it would be helpful for the reader to understand the company’s situation if this would be explicitly stated. Similarly, companies could disclose the quantitative threshold used internally to determine if a financial effect is material. Understanding and disclosing the current financial effects of material risks and opportunities is a key requirement under ESRS 2 paragraph 48. This disclosure aims to provide transparency on how these risks and opportunities impact a company’s current financial position, performance, and cash flows. To meet this requirement, companies need to establish a clear methodology for assessing and reporting these financial effects."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 4,
+      "label": "p. 12",
+      "en": "3.01 Time horizons identified and disclosure of current financial effects Breakdown of all companies • Currently, few companies disclose quantified financial effects. • Most companies present the result that there are no current financial effects of the identified material risks. Although not mandated by the ESRS, to better understand the impacts of sustainability risks on financial information it would be helpful for companies to disclose more on the process, e.g. methodology and threshold, that was used to reach this conclusion."
+    },
+    {
+      "page": 12,
+      "pdfPage": 12,
+      "sequence": 5,
+      "label": "p. 12",
+      "en": "Key Learnings 2 3 4 Short-term (< 1 year) Medium-term (1 - 5 years) Long-term (> 5 years) Not disclosed Breakdown of 12 companies (short-term E1 risk) 1 2 No current financial effects - qualitatively Not able to perform assessment Qualitatively and quantitatively Not disclosed Qualitatively without quantitatively No current financial effects - qualitatively Qualitatively and quantitatively Not disclosed Financial effects"
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 1,
+      "label": "p. 13",
+      "en": "13© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Material IROs As per ESRS 1 paragraph 29 and ESRS 2 Appendix C, companies need to disclose information as per IRO-I related disclosure requirements in E4, irrespective of the outcome of the materiality assessment. Half of the companies in this analysis for which this was relevant, did not (fully) meet this requirement. All 12 companies that identified E4 as material did so from an impact perspective, each reporting at least one negative impact, with 6 reporting it as an actual, ongoing impact."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 2,
+      "label": "p. 13",
+      "en": "Fewer companies considered E4 material from a financial perspective, and most of these reported at least one opportunity. None of the companies assessed or disclosed the anticipated financial effects of these opportunities, which is allowed under the phase-in period. According to ESRS E4 paragraph 17(b), companies are expected to assess their dependencies on biodiversity and ecosystem services across their operations and value chains. However, disclosures on this are limited. Most companies did not evaluate their dependencies on biodiversity and ecosystems or stated that no such dependencies exist, often without providing supporting information. Only 1 company in our sample assessed its highimpact value chains."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 3,
+      "label": "p. 13",
+      "en": "These limited disclosures may indicate challenges in evaluating biodiversity-related data, particularly across complex value chains. ESRS E4 recognizes biodiversity as an essential element of environmental sustainability and economic stability and aligns with the EU’s biodiversity strategy for 2030. It requires companies to disclose their impacts as well as their dependencies on biodiversity and ecosystems, along with mitigation actions and strategies. The topical standard emphasizes the strategic importance of biodiversity for long-term business resilience. 4.01 • It can be valuable for companies to strengthen their understanding of biodiversity dependencies and impacts across the value chain."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 4,
+      "label": "p. 13",
+      "en": "Credible reporting under ESRS E4 (and steering on impacts, risks and opportunities) requires robust data, clear methodologies, and proactive identification of nature-related risks and opportunities. • The limited disclosures observed across companies may be indicative of biodiversity being a topic on their radar, yet difficult to quantify. This calls for more structural assessments and thorough methodologies for identifying impacts, risks and opportunities. • Robust biodiversity reporting is not only a regulatory requirement, but also a key driver of sustainable value creation and risk management."
+    },
+    {
+      "page": 13,
+      "pdfPage": 13,
+      "sequence": 5,
+      "label": "p. 13",
+      "en": "Key Learnings Impact materiality Financial materiality Nature dependency Positive impact Negative impact Risks Opportunities Environmental dependency No environmental dependency No disclosure E4 Biodiversity"
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 1,
+      "label": "p. 14",
+      "en": "14© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Impact and Risk Assessment Among the 26 companies analyzed, 7 conducted environmental risk assessments – making it the most used method among those that identified E4 as material. These assessments typically focus on how environmental factors, such as biodiversity loss, may pose risks to the company’s operations or assets."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 2,
+      "label": "p. 14",
+      "en": "However, most of these disclosures did not include transitional (evolving contexts) or systemic (large-scale ecological disruptions) risks, limiting the scope of the analysis. Environmental impact assessments were performed by 5 companies. The level of detail and depth of the disclosures on these assessments varied considerably. From the disclosures it was not always clear whether this was due to concise or limited disclosure, or indeed less in-depth impact assessments. Furthermore, in ESRS E4 the disclosure requirements related to ESRS 2 IRO-1 include under paragraph 19a that companies shall specifically disclose whether or not they have sites in or near biodiversity-sensitive areas. Only 4 companies disclosed this."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 3,
+      "label": "p. 14",
+      "en": "Related to this point, disclosure of any impacts on site-level is also limited. This may be indicative of a need for further investment in biodiversity-related analysis and reporting, such as building expertise and collecting more (geospatial) data. Under ESRS E4 paragraph 17-19, companies are required to assess the materiality of biodiversity by identifying related impacts, risks, and dependencies across their operations and value chains. As part of this assessment, firstly companies must report whether they have actual or potential environmental impact. Secondly, companies have to disclose if their sites are located near biodiversity-sensitive areas or protected habitats and whether biodiversity protection measures have been implemented."
+    },
+    {
+      "page": 14,
+      "pdfPage": 14,
+      "sequence": 4,
+      "label": "p. 14",
+      "en": "Companies may also engage affected communities and use scenario analysis to evaluate long-term biodiversity risks. 4.02 • While companies are taking steps, there is much room for improvement to effectively measure and report on biodiversity. This includes robust evaluations and disclosure of biodiversity impacts and dependencies, as well as proximity to biodiversity-sensitive areas. Key Learnings Environmental risk assessment Environmental impact assessment Proximity to sensitive areas Environmental risk assessment No environmental risk assessment Environmental impact assessment No environmental impact assessment Sensitive area disclosure No sensitive area disclosure E4 Biodiversity"
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 1,
+      "label": "p. 15",
+      "en": "15© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Metrics & Targets Out of the 26 analyzed companies in this analysis, 9 companies have set biodiversity targets, including 2 companies that do not consider E4 as material. Their scope and content vary (e.g. compensation of biodiversity impact, sustainable agriculture etc.), but the timelines generally extend to 2030. Few companies provide comprehensive metrics under E4. In several cases, the reported metrics do not fully reflect the scope of the company’s policies on biodiversity."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 2,
+      "label": "p. 15",
+      "en": "For example, while nature restoration may be included in company policies, reported metrics often focus only on aspects such as the number of hectares near biodiversity-sensitive areas. This signals that in the realm of biodiversity, companies still need to invest in their ability to assess and track their performance. While regulations provide a disclosure baseline, voluntary frameworks such as the Taskforce on Nature-related Financial Disclosures (TNFD), Science Based Targets Network (SBTN), and the LEAP approach offer valuable and practical guidance for integrating nature-related risks into strategy and planning. However, adoption is still limited, with only a few companies incorporating them into biodiversity assessments."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 3,
+      "label": "p. 15",
+      "en": "Only 4 companies have used these tools in their biodiversity assessments. Of the assessed entities in the financial sector, none have reportedly done so. In this regard, the assessment and disclosure of biodiversity-related risks are significantly less advanced than those regarding climate. ESRS E4 encourages companies to set and disclose measurable and time-bound biodiversity targets. It mandates detailed disclosures on targets, metrics, alignment with global frameworks and ecological thresholds, and requires disclosure if no targets are set. Entities must also report biodiversityrelated metrics, methodologies and impacts on sensitive areas, particularly when their operations affect land, freshwater, or sea use."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 4,
+      "label": "p. 15",
+      "en": "ESRS E4-5 and E4- 6, particularly, include such topic-specific disclosure requirements.. 4.03 • Setting meaningful targets and metrics remains a challenge. This is likely due to limited (access to) reliable nature-related data. • To overcome this, organizations should first enhance their understanding of nature dependencies and gain deeper insights into the impacts across their value chains. With this foundation, they can leverage more effectively voluntary frameworks – such as TNFD, SBTN, and the LEAP approach – to guide their assessments and integrate robust biodiversity metrics into their sustainability strategies."
+    },
+    {
+      "page": 15,
+      "pdfPage": 15,
+      "sequence": 5,
+      "label": "p. 15",
+      "en": "Key Learnings Targets and metrics Biodiversity reporting frameworks 7 5 Targets Metrics Disclosed Not disclosed 8 8 8 4 4 4 TNFD LEAP SBTN Not adopted Adopted E4 Biodiversity"
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 1,
+      "label": "p. 16",
+      "en": "16© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Material topics All 26 companies assessed S1 Own Workforce as material, either from an impact or financial perspective. While most companies conducted their double materiality assessment (DMA) at the sub-sub-topic level based on the list provided in ESRS 1 AR16, 7 companies performed their DMA on a sub-level instead, identifying the broader sub-topic of ‘Working Conditions’ as material, rather than the specific sub-sub-topics within ‘Working Conditions’."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 2,
+      "label": "p. 16",
+      "en": "This broader classification makes comparability among peers more challenging and complicates the mapping of IROs to specific policies, actions, and targets (PATs). In contrast, companies that performed their DMA at the sub-sub-topic level provide clearer alignment between IRO descriptions and PATs. The most frequently identified material matters include ‘Diversity,’ ‘Health & Safety,’ and ‘Training & Skills Development.’ Interestingly, none of the companies identified ‘Other Work- Related Rights’ – which covers child labor, forced labor, adequate housing, and privacy – as material. Additionally, 10 companies identified entity-specific topics related to S1, with ‘Employee Engagement’ being the most common theme."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 3,
+      "label": "p. 16",
+      "en": "The S1 Own Workforce standard covers three sub-topics: working conditions, equal treatment and opportunities for all, and other work-related rights. Each sub-topic consists of multiple sub-sub-topics, allowing for a more precise mapping of material Impacts, Risks, and Opportunities (IROs) to enhance clarity in reporting requirements. In this context, we have conducted a deeper analysis of key disclosure requirements, focusing on IROs to identify commonalities and address reporting challenges."
+    },
+    {
+      "page": 16,
+      "pdfPage": 16,
+      "sequence": 4,
+      "label": "p. 16",
+      "en": "5.01 Material topics S1 Sub- and sub-sub-topics Entityspecific Diversity Violence & harassment Inclusion Training & skills Health & safety Work-life balance Collective bargaining Freedom of association Adeguate wages Working time Secure employment Working conditions S1 Own workforce"
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 1,
+      "label": "p. 17",
+      "en": "17© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress All 26 companies assess S1 as material from an impact perspective, while 22 out of the 26 do so from a financial perspective. When assessing impacts, positive material impacts were reported more frequently than negative impacts (25 vs 18 companies). Similarly, material financial risks were identified more often than financial opportunities (22 vs 13 companies), suggesting a stronger emphasis on risk mitigation over opportunity exploration."
+    },
+    {
+      "page": 17,
+      "pdfPage": 17,
+      "sequence": 2,
+      "label": "p. 17",
+      "en": "5.01 Impact and financial materiality Companies with material S1 matters Impact Materiality Positive Impact Negative Impact Risks Opportunities Financial Materiality • All companies identified S1 Own Workforce as a material topic. • IROs that are identified at a sub-level rather than a sub-sublevel, make the disclosures less specific. This decreases comparability among companies. Also, zooming in on a subsub-topic level makes it easier to isolate relevant data points and to steer effectively on the identified IROs. Key Learnings S1 Own workforce"
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 1,
+      "label": "p. 18",
+      "en": "18© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Metrics & Targets Targets All 26 companies disclosed workforce-related targets under ESRS S1, but clarity on the extent to which these targets support effective steering on the material subtopics, varied significantly. While 18 companies present structured, time-bound targets, 1 company went even further by specifying targets per material sub- (sub)-topic. Meanwhile, 8 companies have yet to establish timebound targets."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 2,
+      "label": "p. 18",
+      "en": "The most commonly set targets focus on diversity, employee engagement, and health & safety. Metrics and use of phase-in period Diversity is a key topic, with 22 companies identifying it as material. While 19 companies report on the mandatory S1-9 data points, 3 companies go beyond the prescribed metrics to include additional metrics on ethnic diversity and hiring employees with various backgrounds. Additionally, 12 out of 26 companies make use of S1 phase-in provisions outlined in ESRS 1 Appendix C. It is important though to be precise in which data points exactly are omitted. For example, the analysis found a company that omitted S1-14 even though that phase-in option only applies to specific datapoints."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 3,
+      "label": "p. 18",
+      "en": "Also on social topics, setting metrics and targets is valuable for companies to monitor and steer their performance. Disclosing time-bound and outcome-oriented targets also contributes to accountability and transparency. In line with that, disclosure requirement S1-5 mandates disclosures for targets a company may have set, and S1-6 to S1-17 focus on metrics. 5.02 S1 Metrics Diversity • All companies have set workforce-related targets, with diversity, employee engagement, and health & safety as common themes • Diversity stands out as a focus topic. Several companies disclose diversity-related metrics beyond what is required under the ESRS. • Nearly half of the companies makes use of phase-in provisions with regard to S1 metrics."
+    },
+    {
+      "page": 18,
+      "pdfPage": 18,
+      "sequence": 4,
+      "label": "p. 18",
+      "en": "Key Learnings S1 Targets Common themes across targets Time-bound targets Time-bound targets No timebound targets 18 14 10 7 6 Diversity Employee engagement Health & safety Training & skills development Equal pay Gender & age diversity (S1-9) Additional diversity metrics Use of phase-in provisions S1-14 S1-9 S1-16 S1-15 S1-14 S1-13 S1-12 S1-11 S1-8 S1-7 S1 Own workforce"
+    },
+    {
+      "page": 19,
+      "pdfPage": 19,
+      "sequence": 1,
+      "label": "p. 19",
+      "en": "19© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Among the 26 companies in this analysis, 23 consider G1 Business conduct to be material, either from an impact or financial perspective (or both). All companies disclose the criteria used in the process to identify IROs in relation to G1, including for example location, activity and sector and the structure of the transaction. This is in line with G1 paragraph 6. The most commonly reported sub-topics under G1 are corruption & bribery, corporate culture and whistleblower protection."
+    },
+    {
+      "page": 19,
+      "pdfPage": 19,
+      "sequence": 2,
+      "label": "p. 19",
+      "en": "Eleven companies have identified matters that are not included within ESRS 1 Application Requirement 16. Of these companies, eight have explicitly identified the corresponding IROs as entityspecific, while four have not provided such clarification. As we have seen in other topical standards, there is significant variation in how companies classify IROs. G1 is more often assessed as material from a financial perspective (23 companies) than from an impact perspective (18). Positive impacts were identified more frequently than negative impacts (15 vs 11 companies), while financial risks were recognized more often than financial opportunities (18 vs 7 companies), highlighting a stronger focus on risk awareness."
+    },
+    {
+      "page": 19,
+      "pdfPage": 19,
+      "sequence": 3,
+      "label": "p. 19",
+      "en": "Material IROs under G1 Impact and financial materiality Material topics, metrics and targets The G1 Business conduct standard covers business ethics and corporate culture, including anti-corruption & anti-bribery, whistleblower protection, as well as animal welfare, supplier relationship management, and political influence activities. Indeed, there is considerable variety in the sustainability matters disclosed under this topical standard. The disclosures also include a significant number of entity-specific Impacts, Risks, and Opportunities (IROs)."
+    },
+    {
+      "page": 19,
+      "pdfPage": 19,
+      "sequence": 4,
+      "label": "p. 19",
+      "en": "6.01 Companies with material IROs under G1 Broader supply chain management Information security & data privacy Entity-specific Animal welfare Political engagement Supplier management Whistle-blowers Corporate culture Corruption & bribery Companies with material G1 matters Impact Materiality Positive Negative Risks Opportunities Financial Materiality G1 Business conduct"
+    },
+    {
+      "page": 20,
+      "pdfPage": 20,
+      "sequence": 1,
+      "label": "p. 20",
+      "en": "20© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress Out of the 23 companies that identified material IROs related to G1, 11 companies reported quantitative or qualitative targets. Many of these targets relate to Business Ethics, with 6 companies reporting specific targets on it. It is not mandatory for companies to establish time-bound and outcome-oriented targets."
+    },
+    {
+      "page": 20,
+      "pdfPage": 20,
+      "sequence": 2,
+      "label": "p. 20",
+      "en": "If they do not, then ESRS 2 paragraph 81(b) requires companies to disclose whether they nevertheless track the effectiveness of their policies and actions in relation to the material IRO. Indeed, all 12 companies that do not (yet) have established targets, describe their policies and actions in place. However, it is not clear from these disclosures whether (and how) they monitor the effectiveness of these policies and actions. Regarding metrics, it stood out that 8 companies report S1-17 metrics – incidents, complaints and severe human rights impacts – in the Governance section of their CSRD sustainability statement, although these are typically included in the S1 topical standard on Own Workforce."
+    },
+    {
+      "page": 20,
+      "pdfPage": 20,
+      "sequence": 3,
+      "label": "p. 20",
+      "en": "It would increase the ease of comparing reports to consistently report these metrics under S1. 6.01 • Most companies identified material IROs related to business ethics and corporate culture, including anti-corruption & antibribery. • Entity-specific disclosures can have value, but may also limit comparability. In some cases under G1, the need for entityspecific disclosures is not evident. • Nearly half of the companies have already established targets related to G1 Business conduct, yet not on each of the identified IROs. • Companies without targets could increase their accountability and transparency by disclosing how they monitor the effectiveness of policies and actions in place."
+    },
+    {
+      "page": 20,
+      "pdfPage": 20,
+      "sequence": 4,
+      "label": "p. 20",
+      "en": "Key Learnings S1 Targets Quantitative and qualitative targets Quantitative No targets Qualitative G1 Business conduct"
+    },
+    {
+      "page": 21,
+      "pdfPage": 21,
+      "sequence": 1,
+      "label": "p. 21",
+      "en": "21© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress ESG Data Collection and Analysis Practices A closer look at the ways in which companies collect, validate and manage ESG data shows that there are opportunities to make IT systems more efficient, and methodologies and validation practices more transparent. The use of Artificial Intelligence (AI) in ESG reporting remains limited. Most companies do not reference AI in their data collection or internal control processes."
+    },
+    {
+      "page": 21,
+      "pdfPage": 21,
+      "sequence": 2,
+      "label": "p. 21",
+      "en": "While a few organizations have begun experimenting with AI tools for DMA-related analytics, integration into core ESG reporting workflows is still in its early stages. Internal data controls are commonly disclosed and generally well documented. However, the disclosures show room for improvement regarding the validation of externally sourced ESG data. Many companies rely on supplier or partner data, yet few provide detailed explanations of validation procedures beyond basic benchmarking. This lack of transparency is not in line with the expectations set by the ESRS, which require companies to clearly disclose the methodologies, assumptions, and limitations when using estimated or proxy data."
+    },
+    {
+      "page": 21,
+      "pdfPage": 21,
+      "sequence": 3,
+      "label": "p. 21",
+      "en": "Details about IT systems used for ESG data collection are also sparse. While some companies mention enterprise resource planning (ERP) systems or digital transformation initiatives, specific platforms and tools are rarely mentioned. This limits transparency and makes it difficult for external stakeholders to assess the reliability and robustness of ESG data infrastructures. The ESRS require companies to disclose their data collection and analysis processes to ensure the reliability and accuracy of the reported ESG information. This includes detailing data sources, methodologies, assumptions, and internal controls, especially where measurement uncertainty exists."
+    },
+    {
+      "page": 21,
+      "pdfPage": 21,
+      "sequence": 4,
+      "label": "p. 21",
+      "en": "Companies must also address risks related to data completeness, estimation accuracy, and value chain data availability. These requirements are outlined in ESRS 1, ESRS 2, and relevant topical standards to support transparency and verifiability. 7.01 • Transparent data practices are critical for ensuring the reliability, accuracy, and comparability of sustainability disclosures."
+    },
+    {
+      "page": 21,
+      "pdfPage": 21,
+      "sequence": 5,
+      "label": "p. 21",
+      "en": "They also enhance assurance readiness, stakeholder trust, and governance credibility. • Strong internal controls and clear external validation, particularly for supplier and partner data, are essential to meet ESRS requirements and uphold data integrity. • Improvements are needed in ESG data collection and analysis – especially in IT systems, data transparency, validation processes, and the responsible use of AI – to strengthen the quality and credibility of disclosures. Key Learnings Data analysis overview 26Use of IT control for ESG reporting Use of AI system for ESG reporting Data quality for internal data Data quality for external data IT data collection Data analysis methods"
+    },
+    {
+      "page": 22,
+      "pdfPage": 22,
+      "sequence": 1,
+      "label": "p. 22",
+      "en": "22© 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. ESRS: learnings to progress About ESG at KPMG How can we help you Our ESG team comprises transformation, assurance and reporting specialists."
+    },
+    {
+      "page": 22,
+      "pdfPage": 22,
+      "sequence": 2,
+      "label": "p. 22",
+      "en": "We’ll help you: • Diagnose where you are today, the risks you face and the opportunities; • Build your ESG strategy and a plan for communicating your transition to a sustainable future; • Transform your business, realising the opportunities for value creation and building resilience; • Keep informed on what you need to measure and report to stay compliant, and track your progress to drive continuous improvement; • Provide external assurance in accordance with International Standard on Assurance Engagements (ISAE) 3000 and 3410 (including the Dutch standards 3000A, 3410 and 3810N) either at a limited or reasonable level of assurance (depending on stakeholder and regulatory needs). If you have any questions, feel free to contact our experts."
+    },
+    {
+      "page": 22,
+      "pdfPage": 22,
+      "sequence": 3,
+      "label": "p. 22",
+      "en": "Your stakeholders are increasingly informing their decisions based on your environmental, social and governance (ESG) credentials.Consumers are choosing brands for their ethical behaviour and their record on climate change.Investors are favouring businesses with robust ESG frameworks. And governments are implementing regulations requiring organisations to increase transparency in areas such as diversity, equal pay, carbon emissionsand modern slavery. We believe that sustainable growth is the only way to build a successful business and have a lasting impact on our environment and society."
+    },
+    {
+      "page": 22,
+      "pdfPage": 22,
+      "sequence": 4,
+      "label": "p. 22",
+      "en": "ESG Reporting Understanding and increasing confidence in ESG disclosures Circular Economy Services Sustainable transformation: from old economy to circular future ESG Strategy & Transformation Develop an ESG strategy that accelerates your journey to becoming a sustainable business Climate Risks & Decarbonization Services Are you ready to navigate climate risk with confidence?"
+    },
+    {
+      "page": 22,
+      "pdfPage": 22,
+      "sequence": 5,
+      "label": "p. 22",
+      "en": "ESG & Taxation ESG criteria are becoming increasingly important for companies as businesses, investors, and other stakeholders pay more attention to sustainability ESG Data & Technology Services Solving the great sustainability data challenge ESG Assurance To increase credibility towards stakeholders and improve quality of ESG information Sustainable Finance Dive in today, thrive tomorrow. ESG Governance, Risk & Compliance Services The importance of good risk management and internal audits Supply Chain Transparency & Human Rights Management Pressure is increasing for businesses to build transparent supply chains Discover our ESG Services"
+    },
+    {
+      "page": 23,
+      "pdfPage": 23,
+      "sequence": 1,
+      "label": "p. 23",
+      "en": "The information contained herein is of a general nature and is not intended to address the circumstances of any particular in dividual or entity. Although we endeavor to provide accurate and timely information, there can be no guarantee that such information is accurate as of the date it is received or that it will continue to be accurate in the future. No one should act on such information without appropriate professional advice after a thorough examination of the particular situati on."
+    },
+    {
+      "page": 23,
+      "pdfPage": 23,
+      "sequence": 2,
+      "label": "p. 23",
+      "en": "The KPMG name and logo are trademarks used under license by the independent member firms of the KPMG global organization. © 2025 KPMG Advisory N.V., a Dutch limited liability company and a member firm of the KPMG global organization of independent member firms affiliated with KPMG International Limited, a private English company limited by guarantee. All rights reserved. kpmg.com/nl/esg Marco Frikkee Partner Sustainability Reporting and Assurance KPMG Netherlands +31 6 51 58 34 68 frikkee.marco@kpmg.nl Contacts Vera Moll Director Sustainability Reporting and Assurance KPMG Netherlands +31 6 83 27 90 24 moll.vera@kpmg.nl With special thanks to Anne Stikkers"
+    }
+  ]
+}

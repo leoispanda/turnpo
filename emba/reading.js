@@ -1,4 +1,5 @@
 const READING_DATA_URL = "/emba/reading-data.json";
+const FULL_READING_INDEX_URL = "/emba/reading-texts/index.json";
 
 const app = document.querySelector("#readingApp");
 
@@ -26,7 +27,8 @@ function originalReadingUrl(id = "") {
   return `/emba/original-reading.html?reading=${encodeURIComponent(id)}`;
 }
 
-function statusLabel(status = "") {
+function statusLabel(status = "", hasFullText = false) {
+  if (hasFullText) return "完整原文已收录";
   if (status === "source-available") return "原文已收录";
   if (status === "alternative-available") return "正式原文待补 · 替代资料可读";
   return "正式原文待补 · 学习包";
@@ -38,7 +40,9 @@ function sourceLink(reading) {
   return `<a class="reading-source-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(reading.sourceLabel || "打开原文")} ↗</a>`;
 }
 
-function renderIndex(readings) {
+function renderIndex(readings, fullReadings) {
+  const fullIds = new Set(fullReadings.map((item) => item.id));
+  const paragraphCount = fullReadings.reduce((total, item) => total + (item.paragraphCount || 0), 0);
   const groups = Object.groupBy
     ? Object.groupBy(readings, (reading) => reading.day)
     : readings.reduce((result, reading) => {
@@ -51,13 +55,13 @@ function renderIndex(readings) {
     <header class="reading-index-hero">
       <span class="reading-eyebrow">September 2026 · Corporate Finance & Accounting</span>
       <h1>五天，16 项指定阅读</h1>
-      <p>每一篇先用不超过 300 字建立全貌，再按文章论证顺序精读并掌握关键词。需要阅读英文时，点击“开始原文阅读”会进入全新的纯阅读页面；点击任意英文段落即可原位切换成中文。</p>
+      <p>每一篇先用不超过 300 字建立全貌，再按文章论证顺序精读并掌握关键词。点击“阅读完整原文”会进入独立阅读页；英文按 PDF 页码呈现，点击任意段落即可原位切换成中文。</p>
       <div class="reading-index-stats" aria-label="阅读资料统计">
         <span><strong>5</strong> 天</span>
         <span><strong>16</strong> 项指定阅读</span>
-        <span><strong>12</strong> 项原文已收录</span>
-        <span><strong>32</strong> 段中英对照</span>
-        <span><strong>4</strong> 项替代学习包</span>
+        <span><strong>${fullReadings.length}</strong> 项完整原文</span>
+        <span><strong>${paragraphCount}</strong> 个原文阅读段</span>
+        <span><strong>${readings.length - fullReadings.length}</strong> 项待取得正文</span>
       </div>
     </header>
     <div class="reading-day-list">
@@ -75,7 +79,7 @@ function renderIndex(readings) {
               <a class="reading-card" href="${readingUrl(reading.id)}">
                 <div class="reading-card-meta">
                   <span>Reading ${index + 1}</span>
-                  <span class="reading-status ${escapeHtml(reading.status)}">${escapeHtml(statusLabel(reading.status))}</span>
+                  <span class="reading-status ${escapeHtml(reading.status)}">${escapeHtml(statusLabel(reading.status, fullIds.has(reading.id)))}</span>
                 </div>
                 <h3>${escapeHtml(reading.shortTitle)}</h3>
                 <p>${escapeHtml(reading.summary)}</p>
@@ -89,7 +93,7 @@ function renderIndex(readings) {
   `;
 }
 
-function renderReading(reading, readings) {
+function renderReading(reading, readings, fullIds) {
   const index = readings.findIndex((item) => item.id === reading.id);
   const previous = index > 0 ? readings[index - 1] : null;
   const next = index < readings.length - 1 ? readings[index + 1] : null;
@@ -115,12 +119,12 @@ function renderReading(reading, readings) {
         <header class="reading-hero">
           <div class="reading-hero-meta">
             <span>${escapeHtml(reading.day)} · Reading ${sameDay.findIndex((item) => item.id === reading.id) + 1}</span>
-            <span class="reading-status ${escapeHtml(reading.status)}">${escapeHtml(statusLabel(reading.status))}</span>
+            <span class="reading-status ${escapeHtml(reading.status)}">${escapeHtml(statusLabel(reading.status, fullIds.has(reading.id)))}</span>
           </div>
           <h1>${escapeHtml(reading.title)}</h1>
           <p class="reading-citation">${escapeHtml(reading.citation)}</p>
           <div class="reading-hero-actions">
-            ${reading.excerpts?.length ? `<a class="reading-original-link" href="${originalReadingUrl(reading.id)}" target="_blank" rel="noopener noreferrer">开始原文阅读 →</a>` : `<span class="reading-original-unavailable">双语原文待补</span>`}
+            ${fullIds.has(reading.id) ? `<a class="reading-original-link" href="${originalReadingUrl(reading.id)}" target="_blank" rel="noopener noreferrer">阅读完整原文 →</a>` : reading.excerpts?.length ? `<a class="reading-original-link" href="${originalReadingUrl(reading.id)}" target="_blank" rel="noopener noreferrer">阅读核心原文 →</a>` : `<span class="reading-original-unavailable">完整原文待补</span>`}
             ${sourceLink(reading)}
           </div>
         </header>
@@ -198,14 +202,25 @@ async function init() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const payload = await response.json();
     const readings = Array.isArray(payload.readings) ? payload.readings : [];
+    let fullReadings = [];
+    try {
+      const fullResponse = await fetch(FULL_READING_INDEX_URL, { cache: "no-store" });
+      if (fullResponse.ok) {
+        const fullPayload = await fullResponse.json();
+        fullReadings = Array.isArray(fullPayload.readings) ? fullPayload.readings : [];
+      }
+    } catch (_) {
+      // The structured study pages remain available without the full-text index.
+    }
+    const fullIds = new Set(fullReadings.map((item) => item.id));
     const requestedId = new URLSearchParams(window.location.search).get("reading");
     const reading = readings.find((item) => item.id === requestedId);
     if (requestedId && !reading) {
       app.innerHTML = `<div class="reading-error"><h1>没有找到这篇阅读</h1><p>它可能已经更名，或者链接不完整。</p><a href="/emba/reading.html">返回全部指定阅读</a></div>`;
       return;
     }
-    if (reading) renderReading(reading, readings);
-    else renderIndex(readings);
+    if (reading) renderReading(reading, readings, fullIds);
+    else renderIndex(readings, fullReadings);
   } catch (error) {
     app.innerHTML = `<div class="reading-error"><h1>阅读页面暂时无法加载</h1><p>${escapeHtml(error.message || "Unknown error")}</p><a href="/emba/">返回 EMBA</a></div>`;
   }
