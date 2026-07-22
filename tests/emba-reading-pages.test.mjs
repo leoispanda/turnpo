@@ -69,11 +69,16 @@ assert.doesNotMatch(stulzPageTwo, /1\. Christopher Culp and Merton Miller/);
 
 const dayContent = dayFiles.map((file) => fs.readFileSync(file, "utf8")).join("\n");
 const dayOne = fs.readFileSync(dayFiles[0], "utf8");
+const dayTwo = fs.readFileSync(dayFiles[1], "utf8");
 assert.match(dayOne, /北辰号/);
 assert.match(dayOne, /灯火号/);
 assert.match(dayOne, /有货的盾，才叫保护；没有货的盾，就是赌博/);
 assert.match(dayOne, /一条从未走过的路，不算退路/);
 assert.match(dayOne, /Invest \/ stage \/ delay \/ reject/);
+assert.match(dayTwo, /第二块铜牌/);
+assert.match(dayTwo, /待核/);
+assert.match(dayTwo, /红灯能够在灾祸发生以前亮起来/);
+assert.match(dayTwo, /Double materiality/);
 for (const file of dayFiles) {
   const markdown = fs.readFileSync(file, "utf8");
   const firstPart = markdown.split("## 第二部分｜")[0];
