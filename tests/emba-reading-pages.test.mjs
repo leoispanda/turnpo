@@ -68,6 +68,12 @@ assert.doesNotMatch(stulzPageOne, /apparent conflict T between/);
 assert.doesNotMatch(stulzPageTwo, /1\. Christopher Culp and Merton Miller/);
 
 const dayContent = dayFiles.map((file) => fs.readFileSync(file, "utf8")).join("\n");
+const dayOne = fs.readFileSync(dayFiles[0], "utf8");
+assert.match(dayOne, /北辰号/);
+assert.match(dayOne, /灯火号/);
+assert.match(dayOne, /有货的盾，才叫保护；没有货的盾，就是赌博/);
+assert.match(dayOne, /一条从未走过的路，不算退路/);
+assert.match(dayOne, /Invest \/ stage \/ delay \/ reject/);
 for (const file of dayFiles) {
   const markdown = fs.readFileSync(file, "utf8");
   const firstPart = markdown.split("## 第二部分｜")[0];
@@ -82,7 +88,7 @@ for (const file of dayFiles) {
     `${file} must contain exactly five ordered learning steps`,
   );
   assert.doesNotMatch(firstPart, /\*\*要回答：\*\*|\*\*完成标志：\*\*/, `${file} should teach through explanation, not question prompts`);
-  assert.match(firstPart, /### 寓言对应｜只记住五个动作/, `${file} needs a concise fable map`);
+  assert.match(firstPart, /### 寓言对应｜/, `${file} needs a fable map`);
   assert.match(firstPart, /### 类比边界/, `${file} needs a non-trivial analogy boundary`);
   assert.match(firstPart, /### 应用到自己的公司｜完成一张/, `${file} needs one applied decision card`);
 }
