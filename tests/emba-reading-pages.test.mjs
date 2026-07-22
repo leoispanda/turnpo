@@ -50,6 +50,24 @@ for (const entry of fullReadingIndex.readings) {
 }
 
 const dayContent = dayFiles.map((file) => fs.readFileSync(file, "utf8")).join("\n");
+for (const file of dayFiles) {
+  const markdown = fs.readFileSync(file, "utf8");
+  const firstPart = markdown.split("## 第二部分｜")[0];
+  assert.match(firstPart, /### 知识寓言｜/i, `${file} needs one focused concept fable`);
+  assert.match(firstPart, /### 今天真正要学会的判断/, `${file} needs a plain-language learning judgment`);
+  assert.match(firstPart, /### Syllabus 边界｜今天学什么，不学什么/, `${file} needs an explicit syllabus boundary`);
+  assert.match(firstPart, /### 五步知识链｜/, `${file} needs a five-step decision chain`);
+  assert.deepEqual(
+    [...firstPart.matchAll(/^#### (0[1-5])｜/gm)].map((match) => match[1]),
+    ["01", "02", "03", "04", "05"],
+    `${file} must contain exactly five ordered learning steps`,
+  );
+  assert.equal((firstPart.match(/\*\*要回答：\*\*/g) || []).length, 5, `${file} needs one decision question per step`);
+  assert.equal((firstPart.match(/\*\*完成标志：\*\*/g) || []).length, 5, `${file} needs one mastery signal per step`);
+  assert.match(firstPart, /### 寓言对应｜只记住五个动作/, `${file} needs a concise fable map`);
+  assert.match(firstPart, /### 类比边界/, `${file} needs a non-trivial analogy boundary`);
+  assert.match(firstPart, /### 应用到自己的公司｜完成一张/, `${file} needs one applied decision card`);
+}
 for (const reading of data.readings) {
   assert.match(dayContent, new RegExp(`reading\\.html\\?reading=${reading.id}`), `${reading.id} is not linked from a day page`);
 }

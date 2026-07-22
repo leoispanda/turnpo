@@ -2,92 +2,103 @@
 
 > **Friday 11 September｜08:30–15:00；15:30 MBA Graduation**
 >
-> 今天的核心问题：**面对看起来表现最好的基金或市场，怎样建立公平比较，并把有限证据转化成不夸大的专业建议？**
+> 今天的核心问题：**怎样把“谁过去表现最好”改写成一个公平、可解释，并且适合具体投资者的专业判断？**
 
 ## 第一部分｜今天讲什么
 
-### 知识寓言｜《冠军墙上空着的钉子》
+### 知识寓言｜《冠军旁边的空钉》
 
-双谷每年举行一次越岭赛。东谷有几百支小队，报名点设在旅店和商铺；西谷只有几十支大队，多由退休行会和大型雇主组织。比赛结束后，城里的旅行顾问会把冠军画像挂上大厅墙面，向准备远行的人推荐“过去三年最快的领队”。
+双谷每年举行越岭赛。东谷有几百支小队，报名点设在旅店和商铺；西谷只有几十支大队，多由退休行会和大型雇主组织。比赛结束后，旅行顾问会把冠军画像挂进大厅，向准备远行的人推荐“过去三年最快的领队”。
 
-一位年轻顾问发现，墙上最耀眼的领队连续三年领先，便准备把所有客户交给他。档案员却带她走到地下室。那里堆着没有挂上墙的木牌：有的队伍在第二年解散，有的在暴雪中退出，有的因为人数太少被并入别队。大厅只保留仍然存在的赢家，失败者连名字都从比较表中消失了。
+一位年轻顾问发现同一名领队连续三年领先，准备把所有客户交给他。档案员却带她走进地下室。那里堆着没有上墙的木牌：有的队伍第二年解散，有的在暴雪中退出，有的被并入别队。大厅只保留仍然存在的队伍，消失者也从历史平均数里消失了。
 
-档案员又取下两张路线图。冠军队走的是阳坡，路面更平，却被拿来与穿越冰谷的队伍比较；它只在最近三个暖冬领先，出发时还收取更高的向导费。队伍扩大以后，过去常走的窄道已经容不下所有人，只能把更多行李集中在几辆大车上。画像没有造假，但它省略了路线、天气、费用、规模和承载方式。
+档案员又摊开两张路线图。冠军走的是阳坡，却与穿越冰谷的队伍直接比较；三次胜利都发生在暖冬，出发时还收取更高的向导费。队伍扩大以后，过去使用的窄道已经装不下所有行李，只能把更多货物压在少数几辆车上。画像没有造假，却没有告诉旅客路线、天气、费用和规模已经改变。
 
-两人随后比较东谷与西谷。东谷队伍更多、平均规模更小，并不自动说明竞争更激烈；旅店老板控制推荐名单，小队需要重复支付销售费用。西谷的大队规模更大，也不自动证明管理更优秀；退休行会长期汇集资金，制度本身就让资产集中。若不理解报名渠道、储蓄习惯和规则差异，“更多”“更大”都无法单独解释效率。
+年轻顾问重新制作比较册。她把相同路线、相近负重和同一季节的队伍放在一起，扣除向导费，记录速度波动和暴雪表现，并把已经关闭或合并的队伍放回样本。比较东谷和西谷时，她还补上报名渠道、退休制度和行会规则，不再用“队伍更多”或“平均规模更大”直接判断谁更优秀。
 
-年轻顾问重新制作大厅的比较册。她把相同路线、相同季节和相近负重的队伍放在一起，扣除向导费，再记录速度波动、极端天气表现和中途消失的队伍。她还在每一页写明资料从哪一年开始、哪些名字已经找不到，以及更换路线会怎样改变结论。
+第一位客户是愿意承担陡坡的年轻商人，第二位是一群依靠养老金旅行的退休工匠。顾问没有给两人同一支冠军队。她分别说明预期速度、最坏路况、费用和不确定性，也明确写下：过去三年的领先不能保证下一次越岭仍然领先。
 
-第一位客户是一名体力充足、愿意承受陡坡的年轻商人；第二位是一群依靠养老金旅行的退休工匠。顾问没有给两人同一支“冠军队”。她为商人保留较高波动但费用合理的选择，为退休工匠选择路线更稳定、信息更透明的队伍，并明确说明过去表现不能保证下一次越岭结果。
+新画像挂上墙时，档案员在冠军旁边留出几枚空钉，提醒人们那些已经消失、却仍属于历史的队伍。大厅不再只回答“谁最快”，而会先问“和谁比、承担了什么、付了多少、适合谁”。后来，这套纪律被称为 **Benchmarking、Risk-adjusted Comparison 与 Professional Recommendation**。
 
-新画像挂上墙时，档案员故意在冠军旁边留出几枚空钉，用来提醒人们那些已经消失、却仍属于历史样本的队伍。大厅不再提供一个最漂亮的赢家，而是提供一场可以说明比较对象、风险、费用、限制和适配对象的判断。后来，这套方法被称为 **Benchmarking、Risk-adjusted Comparison 与 Professional Recommendation**。
+### 今天真正要学会的判断
 
-### 揭示的概念｜先保证比较公平，再讨论谁表现更好
+Historical return 是结果，不是 manager skill 的直接证明。今天要学习的是：**先把比较对象、样本、风险和费用处理公平，再解释行业差异，最后根据具体投资者目标给出有限度的建议。**
 
-Historical return 是观察结果，不是 manager skill 的直接证明。基金表现会受到 market exposure、benchmark、period、currency、fees、size、concentration 和 sample selection 影响。只有把重要差异控制在可解释范围内，比较才有意义。
+### Syllabus 边界｜今天学什么，不学什么
 
-Otten & Schweitzer 的价值不在于告诉你今天欧洲或美国基金谁更好，而在于展示 industry structure、distribution 和 institutional context 怎样影响观察到的市场结果。Friday 的学习重点是 comparison discipline，而不是记住 2002 年的行业排名。
-
-### Syllabus 范围｜今天回到 Financial Management
-
-Friday 安排两段 Financial Management，唯一指定阅读是 Otten & Schweitzer (2002)。今天应当把 Monday 的 risk-return、diversification 与 investor expectations 用到基金行业比较，并形成以下能力：
-
-1. 区分行业结构差异与基金经理能力；
-2. 选择合理 benchmark、period、currency 和 fund category；
-3. 比较费用后、风险调整后的表现；
-4. 识别 survivorship bias、concentration 与历史数据边界；
-5. 根据 investor objective 与 risk tolerance 判断 suitability。
-
-Friday 可以整合本周判断方式，但不应把 Compliance、ERM 或 Management Control 重新讲一遍。它们只作为检查证据、治理和行为后果的辅助视角。
-
-### 隐喻对应｜从双谷竞赛进入今天的知识地图
-
-| 寓言中的物件或行动 | 对应的专业概念 | 你要看见的判断 |
+| 今天必须完成 | 今天怎样连接 Day 1 | 不要误学成 |
 |---|---|---|
-| **冠军墙只保留仍存在的队伍** | survivorship bias | 消失样本会让历史表现看起来过好。 |
-| **阳坡与冰谷被直接比较** | benchmark mismatch | 风险暴露不同，原始回报不能直接排名。 |
-| **暖冬三年与更高向导费** | period selection、expense ratio | 期间和费用会改写投资者实际得到的结果。 |
-| **东谷很多小队、西谷少数大队** | industry structure、distribution | 数量和规模需要制度背景才能解释。 |
-| **窄道容不下扩大后的队伍** | fund size、capacity、concentration | 过去策略未必能在更大规模下复制。 |
-| **两类旅客选择不同队伍** | suitability、risk tolerance | 没有脱离客户目标的“最佳基金”。 |
+| mutual-fund industry comparison、benchmark、period、currency、fees、risk-adjusted performance、survivorship bias、structure/distribution 与 suitability | 把 Monday 的 risk-return、diversification 和 investor expectations 用到真实投资产品 | 更新 2002 年行业排名，或重新讲一遍 Compliance、ERM 和 Management Control |
 
-### 第一步｜先问比较问题是否定义正确
+Friday 唯一指定阅读是 Otten & Schweitzer (2002)。文章的价值不在于告诉你今天欧洲或美国基金谁更好，而在于训练 comparison discipline：观察到的差异可能来自市场结构、产品设计、分销制度、风险暴露或样本选择。
 
-“哪只基金最好”通常不是一个可以直接回答的问题。需要先明确投资者目标、持有期限、币种、可承受损失、流动性需求和可选产品范围。相同回报对不同客户可能具有完全不同的意义。
+### 五步知识链｜从历史回报走到专业建议
 
-比较单位也必须一致：retail 与 institutional share class、active 与 passive、equity 与 bond、欧洲股票与美国股票不能在没有调整的情况下进入同一排名。
+> **定义对象 → 修复样本 → 统一尺度 → 解释差异 → 匹配投资者**
 
-### 第二步｜用 SCP 理解行业差异
+#### 01｜先定义谁在为什么目的作比较
 
-Structure-Conduct-Performance（SCP）把市场结构、参与者行为与观察到的绩效连接起来。Fund count、average fund size、distribution channel、pension system、regulation 和 household saving pattern 都可能影响基金行业形态。
+**要回答：** 这项比较服务哪个投资者、什么期限和什么决定？
 
-结构会影响 fees、规模经济、产品数量和竞争方式，但不能仅凭“欧洲基金更多”推断竞争更强，也不能仅凭“美国基金更大”推断效率更高。需要说明中间机制并寻找额外证据。
+先明确 objective、holding period、currency、liquidity need、risk capacity 与可选产品范围。再统一 fund category、share class、active/passive 与资产类别。没有明确使用者，“哪只基金最好”不是一个完整问题。
 
-### 第三步｜为回报找到公平 benchmark
+**完成标志：** 你能说明比较对象为什么属于同一个 decision set。
 
-Benchmark 应尽量匹配基金的资产类别、地区、风格、风险暴露和可投资范围。高回报可能来自承担更多 market、sector、factor 或 currency risk，而不是更高 skill。Period 也要覆盖足够多市场情境，避免只选择最有利窗口。
+#### 02｜先修复样本，再计算平均表现
 
-若比较跨币种结果，需要说明是 local-currency return 还是 investor-currency return，以及是否 hedged。否则汇率变化可能被错误地归为基金经理能力。
+**要回答：** 哪些失败者、关闭基金或数据缺口被排除在历史之外？
 
-### 第四步｜从回报中扣除费用、风险与样本偏差
+Survivorship bias 会让表现较差而关闭或合并的基金消失，从而抬高历史平均数。还要检查 backfill、selection rule、period choice 与样本覆盖。比较之前先说明谁被纳入、谁被排除，以及这种选择会把结果推向哪个方向。
 
-投资者获得的是费用后的净回报。Expense ratio、sales load、交易成本和税务差异都会侵蚀结果。Risk-adjusted return 尝试说明获得同样回报承担了多少波动或系统性风险，但任何指标都依赖模型与期间。
+**完成标志：** 你能指出至少一个可能让样本看起来过好的机制。
 
-Survivorship bias 出现在数据库只保留仍存续基金时；表现较差而关闭或合并的基金消失，会抬高样本平均值。基金规模快速增长还可能降低原策略可复制性，集中持仓则可能让短期冠军来自单一风格暴露。
+#### 03｜把回报放到相同风险和计量尺度上
 
-### 第五步｜专业建议必须说明边界和适配对象
+**要回答：** 更高回报是否只是承担了不同的市场、风格、地区或汇率风险？
 
-Recommendation 应先给判断，再列最有决定性的证据，同时公开 material assumptions、data limitations 和会改变结论的条件。说“证据不足以判断”有时比给出确定排名更专业。
+Benchmark 应匹配资产类别、地区、style、factor exposure 与可投资范围；period 要覆盖不同市场情境；跨币种比较要说明 local 还是 investor currency，以及是否 hedged。原始回报只有在尺度一致后才有解释价值。
 
-Suitability 要求产品与客户目标、知识、期限、流动性和风险承受力匹配。过去冠军基金即使分析可靠，也可能不适合需要稳定现金流或无法承受回撤的投资者。
+**完成标志：** 你能解释为什么选这个 benchmark，以及换一个合理 benchmark 会怎样改变结论。
 
-### 类比边界｜基金不是一场只有速度的比赛
+#### 04｜比较投资者真正得到的净结果，并解释差异来源
 
-竞赛比喻容易让人把风险理解为道路难度，但真实基金还涉及相关性、factor exposure、portfolio construction、税务、交易限制和行为反应。Risk-adjusted metric 也不会自动识别 skill，SCP 更不是简单的单向因果模型。寓言帮助你先怀疑不公平比较，正式结论仍需数据、方法和背景。
+**要回答：** 扣除费用和风险以后，观察到的差异还剩多少？为什么存在？
 
-### 带回自己的公司
+检查 expense ratio、sales load、交易成本、税务、波动、drawdown、concentration 与 capacity。再用 Structure-Conduct-Performance 追问 fund count、average size、distribution channel、pension system 和 regulation 如何影响费用、规模与行为；结构相关不等于已经证明因果。
 
-想一个组织内部经常出现的“冠军排名”：**哪些被删除的失败样本、不同起点、隐含费用或风险差异，使这个排名看起来比实际更公平？谁会因为这个错误比较作出错误决定？**
+**完成标志：** 你能把“表现差异”拆成 exposure、cost、structure 与可能 skill，而不是全部归给经理能力。
+
+#### 05｜把分析变成适合具体人的有限建议
+
+**要回答：** 这个选择是否适合该投资者，什么条件会改变建议？
+
+Recommendation 先给判断，再列决定性证据、material assumptions、data limitations 和 review trigger。Suitability 要求产品与客户目标、知识、期限、流动性和风险承受力匹配；证据不足时，明确保留判断比制造确定排名更专业。
+
+**完成标志：** 两类投资者面对同一历史冠军时，你能给出不同且可解释的建议。
+
+### 寓言对应｜只记住五个动作
+
+| 故事动作 | 今天的投资判断 |
+|---|---|
+| 地下室里堆着消失队伍的木牌 | survivorship bias 与 sample integrity |
+| 阳坡和冰谷被直接比较 | benchmark mismatch 与 risk exposure |
+| 暖冬三年、向导费和扩大的队伍 | period、fees、size 与 capacity |
+| 东谷和西谷有不同报名制度 | industry structure 与 distribution |
+| 两类旅客没有得到同一冠军 | suitability 与 professional recommendation |
+
+### 类比边界
+
+越岭赛会把风险简化成路线难度，真实基金还涉及相关性、factor model、portfolio construction、税务、交易限制和投资者行为。Risk-adjusted metric 不会自动识别 skill，SCP 也不是单向因果模型；正式结论仍需要透明数据和方法。
+
+### 应用到自己的公司｜完成一张公平比较卡
+
+选择一个公司内部的“冠军排名”，只写五行：
+
+1. **Decision user**：谁会根据排名作什么决定？
+2. **Sample**：哪些失败或消失样本没有被看见？
+3. **Benchmark**：比较对象的起点、风险和期间是否一致？
+4. **Net result**：扣除成本、规模和约束后，差异还剩多少？
+5. **Recommendation**：它适合谁，什么条件会改变建议？
 
 ## 第二部分｜指定阅读：原文、框架及概述
 

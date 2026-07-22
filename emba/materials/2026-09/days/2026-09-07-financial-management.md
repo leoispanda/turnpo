@@ -2,164 +2,103 @@
 
 > **Monday 7 September｜08:30–19:00**
 >
-> 今天的核心问题：**当一个项目看起来能够创造价值时，公司如何融资、管理风险，并确保自己在坏情境下仍有能力把价值实现出来？**
+> 今天的核心问题：**这项投资是否值得做，公司能否撑到价值实现，以及哪些风险应该自己承担、哪些应该转移？**
 
 ## 第一部分｜今天讲什么
 
-### 知识寓言｜《没有被风暴带走的船坞》
+### 知识寓言｜《第二张航海表》
 
-灰港每年有四个月封海。冬季来临前，最后一艘货船进港时，码头上的铜钟会连续响七下，搬运工便把绳索、木箱和起重架全部收进仓库。城里的商会想建造一艘能穿过北方浅海的新船。造船师说，只要航线顺利，五年赚回来的银币足以铺满议事厅；于是几位商人当场主张开工。
+灰港的商会准备建一艘北海货船。造船师把五年后的收入画成一座银币山：只要航线开通，赚回的钱远远超过木料和人工。桌边的人很快举手同意，只有记账官伊莱没有签字。
 
-记账官伊莱没有看那张铺满银币的图。他在长桌两端各放了一本账簿：左边写“不造船”，右边写“造船”。去年已经付给探路人的钱被他从两本账里一起划掉，因为无论今天怎样决定，那笔钱都不会回来。他重新记下新增的木料、船员工资、占用旧船坞失去的修船收入、出海前必须囤积的货物，以及第五年卖掉船身还能收回的钱。随后，他把第五年才能拿到的银币换算成今天的重量。桌面上的银币少了一圈，但仍然多于建船所需。
+第二天，他带来两张表。第一张只比较“造船”和“不造船”之后真正改变的现金：已经花掉的勘探费被划去，占用旧船坞失去的修船收入却被补了回来；木料、船员、库存和船体残值都落在各自发生的年份。把远期银币折回今天以后，项目仍然值得做。
 
-商会带着这两本账去找出资人。债主愿意提供一半资金，却要求每年冬至收到固定银币；几位远方商人愿意提供另一半，但要分享未来利润和表决权。北方航线越危险，他们要求的回报越高。伊莱把还款日期逐一压在造船进度表上，发现新船虽然五年后值得建，前两个冬天却没有收入。若木材涨价或首航延误，船坞会先付不出工钱，债主也可能收走仓库。那时，纸面上再丰厚的第五年收益都救不了一条停在骨架阶段的船。
+伊莱随后展开第二张表。上面没有利润，只有日期：什么时候付木料款、什么时候发工资、什么时候偿还债主、什么时候第一批货款才能到账。大家这才看见，货船虽然第五年很赚钱，船坞却可能在第二个冬天先没钱。债主提出增加贷款，但三艘旧船的订单也都来自同一座北方城市；一场封港会让所有收入同时停下。
 
-港里有人提议为所有未来货物锁定价格。伊莱只把已经签下订单的货物交给兑换商锁价，没有把船长口头预测的货量全部算进去。他说，未必装上船的货物若提前全部锁定，销量不足时，保护会变成新的赌注。至于船型、航线和客户选择，商会没有交给保险商——那正是他们比别人更懂、也必须靠它赚钱的事情。
+商会最初想把未来五年的货物全部锁价。伊莱只圈出已经签约、数量明确的订单。没有订单支撑的部分若也锁定，一旦销量不足，原本的保护就会变成另一场押注。船型、客户和航线选择则没有交给保险商，因为那正是船坞必须凭能力承担、也靠它获得回报的事情。
 
-开工前夜，一名学徒把三艘旧船的航线钉在墙上。他用红线连接港口、海峡和买家，三条线最后竟在同一座北方城市重合。每位船长单独看都有充足订单，但一场封港就会同时困住所有收入。商会于是把新船分成两期建造，先完成能够独立航行的船体，第二期等首批订单兑现后再扩建货舱；他们还保留一笔不准用于分红的银币，并为一部分货物寻找另一座港口。
+最后，他们把建造拆成两期：先造能独立航行的船体，第一批订单兑现后再扩建货舱；同时保留不准分红的现金，并把一部分货物改走南港。第三年，北海封航六周。利润下降了，锁价合同也没有消除全部损失，但工资照常发放，债务没有违约，下一艘船的龙骨仍在清晨被吊上支架。
 
-第三年，北方海峡真的因风暴关闭了六周。新船晚归，锁价合同补回了一部分损失，备用港口接走了另一批货。灰港的利润仍然下降，议事厅里也没有人为那年举行庆典；但船坞的炉火没有熄灭，工人的工资照常发放，下一艘船的龙骨仍在第二天清晨被吊上支架。
+灰港没有学会预测每一场风暴。它学会的是：先证明一艘船值得造，再安排一条能活到完工的资金路径；只转移会摧毁这条路径、又不值得自己承担的风险。后来，人们把这种把投资、融资与风险放进同一个决定的做法称为 **Financial Management（财务管理）**。
 
-他们没有让大海变得平静，也没有拒绝所有危险。他们只是确保一场可以转移的风暴，不会夺走继续建造好船的能力。多年以后，人们把这套判断称为 **Financial Management（财务管理）**：先判断投资是否创造价值，再确认资金能否支持价值实现；随后管理会破坏投资能力的风险，最后检查每一个好项目合在一起是否仍然安全。
+### 今天真正要学会的判断
 
-### 揭示的概念｜Financial Management
+财务管理不是依次背诵 NPV、债务和对冲工具，而是回答一个完整问题：**在什么假设下值得投资，怎样融资才能完成投资，坏到什么程度必须调整或停止？**
 
-假设一家公司发现了一个看起来很赚钱的新项目。今天要解决的不是“NPV 是什么”“对冲是什么”这类彼此分开的知识点，而是一个完整决定：**这个项目是否真的创造价值，公司有没有能力把它做完，又应该怎样避免可转移的金融风险毁掉这个好项目？**
+### Syllabus 边界｜今天学什么，不学什么
 
-你会依次完成五步判断。第一步确认项目真正改变了哪些现金流；第二步理解投资者如何给风险定价，以及债务或股权会带来什么融资条件；第三步检查项目早期是否会造成现金短缺，使公司无法坚持到项目开始赚钱；第四步只处理那些可能破坏投资能力、又可以低成本转移的金融风险；第五步把项目放回公司全部投资中，检查多个好项目合在一起是否仍然安全。
-
-学完后，你应该能够把上述判断讲成一段连续的管理逻辑，而不是分别背诵几个金融术语。
-
-### Syllabus 范围｜今天只学 Financial Management
-
-以下内容直接来自 Syllabus 的 Financial Management component-specific learning outcomes。Day 1 必须围绕它们展开：
-
-1. 理解企业在实践中如何作出 **investment decisions（投资决定）** 与 **financing decisions（融资决定）**；
-2. 分析投资与融资如何相互影响；
-3. 理解 **financial markets（金融市场）** 与 **investor expectations（投资者预期）** 的作用；
-4. 应用 discounting、risk-return trade-off 与 diversification；
-5. 了解 financial risk management 与 derivatives 的当代应用。
-
-Monday 的指定阅读只有三项：Berk 指定章节、Stulz (1996)、Nocco & Stulz (2006)。因此，今天出现的核心结论必须能够回到这三项材料或上述五个 outcomes。
-
-### 今日边界｜避免与 Day 2–4 重叠
-
-| 今天必须掌握 | 今天只作桥接 | 留到后续课程深入 |
+| 今天必须完成 | 今天只作连接 | 留到后面深入 |
 |---|---|---|
-| 投资、融资、现金流、discounting、financial markets、risk-return、diversification、derivatives、financial risk management | Nocco & Stulz 如何把金融风险管理连接到企业整体价值和 capital allocation | **Day 2**：Compliance、VW/ING、sustainability/ESRS；**Day 3**：Financial Accounting、COSO ERM、风险分类、risk appetite、governance 与 risk framework；**Day 4**：management accounting、performance control、innovation control 与 purpose |
+| investment/financing decisions、financial markets、investor expectations、discounting、risk-return、diversification、derivatives 与 financial risk management | Nocco & Stulz 如何用企业整体视角保护 financing capacity 与 capital allocation | Day 2 的 compliance/ESG；Day 3 的 COSO、risk appetite 与 governance；Day 4 的 management control |
 
-Nocco & Stulz 虽然标题包含 ERM，但它是 Monday 的指定阅读。Day 1 只要求理解它的 financial-management message：企业要从整体风险组合保护融资能力，并把风险—回报放入资本配置。COSO components、完整 governance structure 和 ERM implementation 留到 Wednesday。
+Monday 只有 Berk、Stulz、Nocco & Stulz 三项指定阅读。Nocco & Stulz 虽然讨论 ERM，今天只取它与财务决策直接相关的部分，不提前学习 Wednesday 的完整治理框架。
 
-### 隐喻对应｜从灰港进入今天的知识地图
+### 五步知识链｜一个投资决定怎样走到可执行建议
 
-先看故事中的五个动作分别对应什么。这里只负责导航，暂时不背结论：
+> **定义决定 → 判断价值 → 安排资金 → 分配风险 → 回到公司整体作结论**
 
-| 寓言中的动作 | 对应的金融知识 | 对应 Syllabus outcome |
-|---|---|---|
-| **左右两本账只记录决定造成的差异** | incremental cash flow、time value of money、NPV | 投资决定、discounting |
-| **债主收固定银币，出资商分享利润与权利** | investor expectations、risk-return、debt/equity financing | 金融市场；融资与投资互动 |
-| **五年赚钱，但前两年可能付不出工资** | liquidity、covenant、financing constraint、real options | 融资选择如何影响投资 |
-| **只为已签订单锁价，不把经营能力交给保险商** | exposure、hedging、derivatives、core/non-core risk | financial risk management、derivatives |
-| **三条航线在同一港口重合** | investment capacity、concentration、portfolio effect | Nocco & Stulz 对整体价值的连接 |
+#### 01｜先定义“做”与“不做”究竟差在哪里
 
-学习时按表格从上到下推进。第一部分负责把这条主线讲清楚；第二部分再告诉你每一段逻辑来自哪一篇指定阅读。
+**要回答：** 哪些现金流真的由这个决定引起？
 
-### 第一步｜先判断项目是否创造价值
+只计算 incremental cash flow。排除已经无法收回的 sunk cost，加入 opportunity cost、cannibalization、working capital、tax、capex 和终值。Accounting profit 可以提供线索，但不能替代现金流。
 
-第一步不是看 accounting profit（会计利润），而是找 **incremental cash flow（增量现金流）**：与“不做这个项目”相比，哪些现金流因为接受项目才发生变化。
+**完成标志：** 你能画出一条项目 timeline，并解释每一笔现金为什么属于这个决定。
 
-需要排除：
+#### 02｜把现金流换算成今天的价值
 
-- sunk cost（沉没成本）：已经发生且无法收回的成本；
-- 与决定无关的共同成本；
-- 只改变会计呈现、没有改变现金的项目。
+**要回答：** 这些未来现金流是否足以补偿时间与风险？
 
-需要加入：
+用 discounting 把不同年份的现金流放到同一时点。Discount rate 来自同等风险资本的 required return，而不是为了得到想要的结论随意选择。NPV 大于零只表示在当前假设下创造价值；它仍需接受情境和敏感性检查。
 
-- opportunity cost（机会成本）；
-- cannibalization（新产品蚕食旧产品销售）；
-- working capital（营运资本）；
-- tax（税）与 capex（资本性支出）；
-- 项目结束时的回收现金流。
+**完成标志：** 你能指出最可能让 NPV 由正转负的两个假设。
 
-然后使用 time value of money（资金时间价值）把不同时间的现金流放到同一个价值时点：
+#### 03｜安排一条能够活到回款的融资路径
 
-> **NPV = − Initial investment + Σ [Incremental FCFₜ ÷ (1 + r)ᵗ]**
+**要回答：** 公司会不会在好项目开始赚钱以前先失去现金或信用？
 
-NPV > 0 表示：在当前现金流和折现率假设下，项目预计创造超过资本机会成本的价值。但它只是判断起点，因为 base case（基准情境）可能没有充分反映融资限制、tail scenario（尾部情境）和 managerial flexibility（管理灵活性）。
+Debt 会形成固定偿付、到期日和 covenant；equity 会分享剩余收益与控制权。把融资承诺压到现金流时间线上，检查最低现金余额、covenant headroom 和 refinancing need。不确定性很高时，可用 delay、stage、expand 或 abandon 保留 real option。
 
-### 第二步｜理解金融市场如何给风险定价
+**完成标志：** 你能说清资金缺口何时出现，以及用什么融资或阶段安排解决。
 
-Syllabus 明确要求理解 financial markets 和 investor expectations。金融市场的作用不只是“买卖股票”，而是把不同投资者对未来 cash flow、risk 和 required return 的判断反映到 securities prices 与 financing terms 中。
+#### 04｜只转移会破坏投资能力的非核心风险
 
-这形成三项连接：
+**要回答：** 哪些风险值得公司承担，哪些只是没有报酬的干扰？
 
-1. **Investor expectations → opportunity cost of capital**：投资者对同等风险要求多少回报，会影响项目 discount rate；
-2. **Financing choice → future commitments**：债务形成 coupon、principal 和 covenant，股权则分享 residual cash flow 与 control；
-3. **Financing capacity → investment choice**：融资成本、到期结构与财务弹性会决定企业能否启动或继续投资。
+公司应保留与产品、客户和能力优势相连的 core risk；对利率、汇率或商品价格等 non-core exposure，可在成本合理时使用 forward、option、swap、保险或自然对冲。Hedging 的对象必须是已经存在且可描述的 exposure，否则容易滑向 speculation。
 
-Risk-return trade-off（风险—回报权衡）不是“风险越大，实际回报一定越高”，而是投资者通常会对无法轻易消除的风险要求更高 expected return。Expected return 是要求或预期，不是保证结果。
+**完成标志：** 你能写出“暴露—损失路径—阈值—工具—剩余风险”，而不是只报工具名称。
 
-Diversification（分散化）通过把不完全同步变化的资产放在一起，降低 company-specific / idiosyncratic risk（公司特有风险）。它不能自动消除影响整个市场的 systematic risk（系统性风险）。这个区别也会引出 Stulz 的问题：既然股东可以自行分散公司特有风险，公司为什么还需要管理风险？
+#### 05｜把项目放回企业组合，再给建议
 
-今天对金融市场的掌握标准是：能说明 investor expectations 如何进入 discount rate，bond/equity financing 如何改变现金承诺，以及 diversification 能消除什么、不能消除什么。
+**要回答：** 一个单独合理的项目，加入现有业务后仍然合理吗？
 
-### 第三步｜判断公司能否坚持到项目创造现金的那一天
+检查多个项目是否共同依赖同一客户、币种、利率、供应商或融资来源。Portfolio view 关注 concentration 与共同坏情景；最终建议必须同时说明 value creation、financing capacity、关键假设和会改变决定的 threshold。
 
-长期 NPV 为正，不代表短期不会出现 liquidity problem（流动性问题）。项目早期现金流为负时，公司可能：
+**完成标志：** 你能给出 invest、stage、delay 或 reject 的明确建议，并说明什么新证据会改变它。
 
-- 需要昂贵的 external financing（外部融资）；
-- 违反债务 covenant（契约条款）；
-- 被迫削减其他必要投资；
-- 放弃后来出现的正 NPV 项目。
+### 寓言对应｜只记住五个动作
 
-所以 valuation（估值）之后还要检查：
+| 故事动作 | 今天的金融判断 |
+|---|---|
+| 第一张表只记录真正改变的现金 | incremental cash flow 与 NPV |
+| 第二张表把付款和回款放到日期上 | liquidity、maturity 与 financing constraint |
+| 只为已签订单锁价 | exposure、hedging 与 speculation 的边界 |
+| 分两期造船并保留现金 | real options 与 investment capacity |
+| 三艘船依赖同一北方城市 | concentration 与 portfolio view |
 
-- 最低 cash balance（现金余额）；
-- liquidity buffer（流动性缓冲）；
-- covenant headroom（契约余量）；
-- 债务 maturity（到期时间）是否与项目 cash generation（现金创造时间）匹配；
-- 缺口是 temporary（暂时性）还是 structural（结构性）。
+### 类比边界
 
-如果不确定性很高，公司也不一定只能“立刻全部投资”或“完全不投资”。它可以 delay（延迟）、stage（分阶段）、expand（扩张）、contract（收缩）、switch（转换）或 abandon（退出）。这些选择构成 real options（实物期权）。
+船坞能帮助你看见价值、资金和风险之间的顺序，但不能替代现金流预测、资本成本估计、合同分析或衍生品定价。现实中的相关性会变化，对冲也有成本、basis risk 与 counterparty risk。
 
-### 第四步｜只管理可能破坏投资能力的金融风险
+### 应用到自己的公司｜完成一张决策卡
 
-如果股东可以自行分散投资，公司为什么还要花钱管理风险？Stulz 的关键回答是：现实世界存在 financing frictions（融资摩擦）。
+选择一项真实投资，只写五行：
 
-风险管理创造价值的路径是：
-
-> **风险敞口 → 严重现金损失 → 融资受限 → 放弃好项目 → 长期价值损失**
-
-因此，风险管理的目标不是让利润曲线最平滑，而是避免 downside（下行情境）和 tail risk（尾部风险）破坏公司的 investment capacity（投资能力）。
-
-企业还要区分：
-
-- **Core business risk（核心经营风险）**：企业依靠知识、能力和战略优势承担并获得回报的风险；
-- **Transferable / non-core risk（可转移／非核心风险）**：企业没有特别优势，但可通过市场工具、保险或合同转移的风险。
-
-Derivative（衍生品）是价值取决于某项 underlying variable（标的变量）的合同。企业常见的金融风险管理工具包括 forward（远期）、future（期货）、option（期权）和 swap（互换）。Day 1 不要求完成复杂定价，但必须理解：工具只是重塑 exposure 的方法，是否创造价值取决于它保护了什么 cash-flow threshold 和 investment capacity。
-
-Hedging（对冲）是降低已经存在的 exposure（敞口）；speculation（投机）则是因为市场方向判断而主动增加风险。一个交易是否属于对冲，取决于它相对什么 exposure 和 policy benchmark，而不是取决于它用了哪一种金融工具。
-
-### 第五步｜把单个项目放回公司整体风险组合
-
-Nocco & Stulz 进一步说明：即使 CFO 正确决定了某个 hedge ratio（对冲比例），不同部门仍可能各自优化、合起来却让公司承担过多集中风险。
-
-今天只学习它与 Financial Management 直接相关的两层价值：
-
-- **Macro level（公司整体层面）**：保护资本、流动性、信用和战略执行能力；
-- **Micro level（业务决定层面）**：让项目评价同时考虑 expected return 与它对公司整体 exposure、financing capacity 和 capital allocation 的影响。
-
-Day 1 需要知道 portfolio effect（组合效应）：多个项目可能共同依赖 USD、利率或同一客户，单独看都合理，合起来却形成 concentration。详细的 risk appetite、CRO/board governance、risk categories、COSO framework 与 implementation 不在今天展开，它们属于 Day 3。
-
-### 类比边界｜故事能帮助理解，但不能代替计算
-
-灰港帮助你记住五个判断之间的因果关系，但它不能替代真实公司的现金流预测、折现率估计、债务合同分析和衍生品定价。现实中的风险也不会像航线图一样全部可见；相关性会变化，保险与对冲存在成本和交易对手风险，正 NPV 仍然依赖假设是否可靠。因此，寓言负责建立直觉，Berk、Stulz 与 Nocco & Stulz 负责提供可以检验和引用的正式框架。
-
-### 带回自己的公司
-
-想一项你所在公司很想做、长期也可能创造价值的投资：**什么短期现金问题可能让它在价值实现以前被迫停止？其中哪一种风险是公司必须凭能力承担的，哪一种其实可以花合理成本交给别人？**
+1. **Decision**：公司现在究竟在决定什么？
+2. **Value**：哪三个增量现金流决定它是否创造价值？
+3. **Survival**：最早可能出现现金或 covenant 压力的时间点是什么？
+4. **Risk ownership**：一个必须保留的核心风险和一个可以转移的风险是什么？
+5. **Threshold**：坏到什么程度，公司应该 stage、delay 或 stop？
 
 ## 第二部分｜指定阅读：原文、框架及概述
 

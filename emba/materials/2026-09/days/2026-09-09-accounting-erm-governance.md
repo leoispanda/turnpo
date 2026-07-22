@@ -2,92 +2,103 @@
 
 > **Wednesday 9 September｜08:30–19:00**
 >
-> 今天的核心问题：**组织怎样把已经发生的财务事实、可能发生的风险和不同层级的责任连接起来，让信息真正触发行动？**
+> 今天的核心问题：**组织怎样从数字看见真实经营状态，把未来不确定性连接到目标，并确保越界之后有人行动？**
 
 ## 第一部分｜今天讲什么
 
-### 知识寓言｜《灯塔的账上没有亏损》
+### 知识寓言｜《三块没有挂在一起的木板》
 
-白岬灯塔由沿岸七个村庄共同供养。它不售票，也没有客户订单；只要每个暴风夜都亮着，渔船便能找到回港的水道。年末，管事把账簿摊在村议会面前：预算还剩八百枚银币，支出比去年更少。议员们点头，称这是管理得当。
+白岬灯塔由沿岸七个村庄共同供养。年末，管事把账簿摊在议会桌上：预算还剩八百枚银币，支出比去年低。灯塔不售票，也不追求利润；只要暴风夜仍然亮着，议员们便认为节省就是好消息。
 
-老守塔人却把一块生锈的齿轮放在桌上。秋天更换透镜的工匠已经完成工作，账上因为尚未付款而没有出现费用；仓库里记着十二桶灯油，其中三桶早已渗漏；海风腐蚀了备用发电机，但它仍按原来的价值写在资产册上。账簿没有撒谎，只是收付款的时间、资产的状况和真正发生的消耗没有被放在一起看。
+老守塔人把一块生锈的齿轮放到账簿旁。透镜已经换好，工匠却尚未收款，所以现金记录里没有支出；仓库写着十二桶灯油，其中三桶已经渗漏；备用发电机被海风腐蚀，资产册仍保留原来的价值。账簿没有故意撒谎，但它没有自动告诉人们设备还能不能工作。
 
-议会让秘书制作一张“危险清单”。秘书写下风暴、断电、缺油和人员受伤，涂上红黄绿三种颜色，锁进柜子。一个月后，海水冲坏了东侧道路。守塔人以为道路归村庄维修，村长以为灯塔会安排，秘书则认为自己已经在清单中标红。修理工具在两个仓库之间来回运了三次，没有一个人下令封闭道路。
+议会又让秘书制作一张红黄绿清单。风暴、断电、缺油和道路损坏都被登记得很整齐，然后锁进柜子。海水冲坏东侧道路时，守塔人以为村庄负责，村长以为灯塔负责，秘书则说自己早已把道路标红。工具在两个仓库之间来回运了三次，没有人下令封路。
 
-冬至前夜，备用发电机停止转动。主灯熄灭了十九分钟，一艘返港渔船在礁石外抛锚。第二天，议会没有再问“谁写了清单”，而是在墙上挂起三块木板。第一块记录收入、消耗、欠款和资产状态；第二块把每项可能阻碍灯塔使命的事情连到目标、负责人、预警数字和行动；第三块写明谁负责操作、谁独立质疑、谁检查前两者是否真的做到。
+冬至前夜，备用发电机停止转动，主灯熄灭十九分钟。一艘渔船在礁石外抛锚。第二天，议会把账簿和风险清单重新搬出来，在墙上挂起三块木板：第一块记录已经发生的收入、消耗、欠款和资产状态；第二块把可能阻碍灯塔使命的事项连到预警数字、界线和应对；第三块写明谁负责操作、谁提出独立质疑、谁检查前两块是否与实物一致。
 
-守塔人负责灯油和设备，不能把责任交给秘书；来自另一村的财务官每月追问油耗、欠款和维修推迟是否合理；巡察员不替他们工作，只检查记录、实物和行动是否一致。村议会不再满足于看到绿色方格，而会询问红线越过后发生了什么、谁接受剩余的不确定性，以及哪些维修即使造成预算超支也不能继续等待。
+来年春天，灯塔支出反而增加。尚未付款的维修被确认，损坏设备的价值被调低，东侧道路也完成加固。但暴风夜的平均救援时间缩短，油料短缺能在灯熄灭以前被看见。议会桌上不再只有“预算未超支”，而是同时出现财务报表、预警记录和行动结果。
 
-来年春天，灯塔的支出反而增加。账上确认了尚未付款的维修，也调低了损坏设备的价值；道路修好后，暴风夜的平均救援时间缩短了。议会桌上不再只有一张“预算未超支”的纸，而是同时摆着财务报表、预警记录和检查报告。
+白岬没有用利润证明公共使命，也没有用使命免除资源纪律。第一块木板回答已经发生了什么，第二块追问什么可能阻碍目标，第三块确保越界后有人负责。后来，它们分别有了名字：**Financial Accounting（财务会计）**、**Enterprise Risk Management（企业风险管理）** 与 **Governance（治理）**。
 
-白岬没有用利润证明自己成功，也没有因为公共使命崇高就放弃资源纪律。数字告诉人们已经发生了什么，前视地图提醒什么可能阻碍目标，清楚的责任安排确保有人必须行动。后来，这三块木板分别有了名字：**Financial Accounting（财务会计）**、**Enterprise Risk Management（企业风险管理）** 与 **Governance（治理）**。
+### 今天真正要学会的判断
 
-### 揭示的概念｜证据、前视判断与责任必须形成闭环
+Financial Accounting、ERM 和 Governance 不是三个平行专题。今天要学会的是：**先用可靠信息还原经营事实，再从目标出发判断未来不确定性，最后把预警、阈值和行动交给清楚的责任主体。**
 
-Financial statements 主要记录经济事项怎样影响资源、义务和绩效；ERM 从战略与目标出发，识别哪些不确定性会妨碍价值创造；governance 则规定谁监督、谁拥有风险、谁提出独立挑战、谁提供 assurance。
+### Syllabus 边界｜今天学什么，不学什么
 
-三者若彼此分开，组织会出现“账是对的、风险也登记了，却没有人行动”的假安全。今天的目标是把过去证据、未来风险和行动责任连接成一个 decision system。
-
-### Syllabus 范围｜今天学习 Financial Accounting、ERM 与 public/non-profit context
-
-今天必须掌握：
-
-1. 解释核心财务报表，以及 accrual、matching、revenue recognition 与 EBITDA；
-2. 用财务和非财务信息支持 managerial judgment，而不只是机械计算 ratio；
-3. 理解 COSO ERM、风险分类、risk appetite、governance、performance 与 resilience；
-4. 区分 board oversight、management ownership、second-line challenge 与 third-line assurance；
-5. 理解 non-profit/public organisation 怎样定义 value、预算纪律与多方 accountability。
-
-Financial Accounting 与 police visit 没有指定预读；不要为了让页面看起来完整而虚构资料。今天的四项正式指定阅读全部属于 Enterprise Risk Management。
-
-### 隐喻对应｜从白岬灯塔进入今天的知识地图
-
-| 寓言中的物件或行动 | 对应的专业概念 | 你要看见的判断 |
+| 今天必须完成 | 资料边界 | 不要误学成 |
 |---|---|---|
-| **已完成但尚未付款的维修** | accrual、matching | 现金尚未支付，不代表费用尚未发生。 |
-| **渗漏灯油与生锈发电机** | inventory evidence、impairment | 账面数量和价值必须接受现实检验。 |
-| **锁进柜子的颜色清单** | risk register without action | 登记风险不等于管理风险。 |
-| **三块木板** | accounting、ERM、governance | 事实、前视判断和责任必须连接。 |
-| **操作、质疑与检查分开** | three lines、oversight、assurance | 独立性不等于把一线责任交给风险或审计。 |
-| **支出增加但救援更快** | public value、accountability | 不以利润为目标仍需要证据与资源纪律。 |
+| 三张报表、accrual/matching、accounting judgment、COSO ERM、risk appetite、KRI、governance、resilience、Three Lines 与 public value | Financial Accounting 和 police visit 没有指定预读；四项正式阅读全部服务 ERM | 单纯 ratio 计算课、风险清单分类课，或把 non-profit 理解为“不需要财务纪律” |
 
-### 第一步｜先读懂三张报表讲述的不同事实
+Wednesday 的重点是把“过去的证据、未来的不确定性、现在的责任”连成闭环。Day 2 的 compliance case 可以作为输入，但今天不重复 VW、ING 或 ESRS。
 
-Income statement 解释一个期间确认了多少收入和费用；balance sheet 显示某一时点拥有的资源与承担的义务；cash flow statement 解释现金怎样从经营、投资和融资活动中流入流出。三张表必须一起读。
+### 五步知识链｜一条信息怎样变成治理行动
 
-Profit 与 cash 不一致并不自动代表错误。赊销可能增加收入与应收款却尚未带来现金；采购库存会消耗现金但暂时不全部进入费用；折旧影响利润却不在当期支付现金。管理者需要解释差异，而不是选择最有利的一张表。
+> **还原事实 → 检查判断 → 连接目标 → 设置触发 → 明确责任**
 
-### 第二步｜把 accounting number 还原成经营事实
+#### 01｜先把利润、资产和现金放回同一幅图
 
-EBITDA、margin、working capital 和 provision 是分析入口，不是结论。应收款增长可能来自业务扩张，也可能来自客户质量下降；库存增加可能为旺季准备，也可能说明产品卖不出去；provision 变化可能反映新信息，也可能改变当期利润表现。
+**要回答：** 三张报表分别告诉了我们什么，又遗漏了什么？
 
-高质量分析会追问 measurement basis、period、comparison、management estimate 和 supporting evidence，并承认 IFRS 与 US GAAP 的分类或确认差异可能影响跨公司比较。
+Income statement 解释期间绩效，balance sheet 显示时点资源与义务，cash flow statement 解释现金来源与用途。Accrual 与 matching 让经济事项在发生时进入报告，因此 profit 和 cash 可以合理不同，但必须能够解释差异。
 
-### 第三步｜ERM 从目标开始，而不是从风险清单开始
+**完成标志：** 你能从一项利润变化追到 balance sheet 与 cash flow 的对应变化。
 
-COSO ERM 强调 Governance & Culture、Strategy & Objective-Setting、Performance、Review & Revision、Information, Communication & Reporting。组织必须在选择战略和目标时讨论风险，而不是决定以后才让 risk team 填表。
+#### 02｜把会计数字还原成经营事实和判断
 
-风险可以分为 strategic、operational、reporting、compliance 与 ESG-related，但分类的目的不是把问题装进盒子，而是确保共同原因、相互影响和责任没有被遗漏。
+**要回答：** 数字变化来自真实经营、新信息，还是 measurement choice？
 
-### 第四步｜KRI 必须连接阈值与行动
+EBITDA、margin、working capital、provision 和 impairment 都只是入口。继续检查口径、期间、估计、一次性项目和 supporting evidence。应收增长可能代表扩张，也可能代表回款恶化；库存增加可能是准备旺季，也可能是滞销。
 
-Key risk indicator 只有在能够提前显示风险累积，并与 threshold、owner、response 和 escalation 相连时才有价值。红黄绿 dashboard 若没有越界记录、处理时限和 closure evidence，只是在描述颜色。
+**完成标志：** 你能为一个异常数字提出至少两种解释，并说明需要什么证据区分它们。
 
-评价 framework 时，要分别看 design evidence 和 operating evidence。Policy、committee charter 与公开披露能说明设计意图；breach trends、incident closure、audit findings 和实际决策才更接近运行证据。
+#### 03｜从目标开始建立 ERM，而不是从风险名称开始
 
-### 第五步｜治理不是所有人共同负责，而是责任清楚
+**要回答：** 哪个目标可能因为不确定性而无法实现？
 
-Board 提供 oversight 并挑战管理层；business management 拥有目标和日常风险；second line 建立框架、监测并提出独立 challenge；internal audit 等 third line 评价体系并提供 assurance。Three lines 不是三个部门名称，而是不同责任关系。
+先定义 strategy、objective 与 performance，再识别会影响它们的 strategic、operational、reporting、compliance 或 ESG-related uncertainty。分类用于防止遗漏，不是分析终点；还要看相关性、共同原因和 portfolio effect。
 
-在 police 或其他 public/non-profit organisation 中，value 不等于 shareholder return。安全、响应时间、公平和公共信任都可能是目标，但预算、资产、证据和透明问责仍不可缺少。使命越难用利润衡量，越需要把目标和证据定义清楚。
+**完成标志：** 每一个重大风险都能明确连接到一个目标、价值来源或公共使命。
 
-### 类比边界｜灯塔不能概括所有会计和治理问题
+#### 04｜把风险判断转成阈值、指标和行动
 
-故事把三类信息画成木板，现实中的确认、计量、合并报表、风险模型和董事责任更加复杂。Public value 也不是“支出越多越好”；资源仍有机会成本。COSO 不能保证风险不会发生，reasonable assurance 只意味着把不确定性降到可接受水平，而不是消灭所有失败。
+**要回答：** 组织愿意承受多少，什么信号意味着必须行动？
 
-### 带回自己的公司
+Risk appetite 表达愿意承担的风险类型和总量；tolerance 与 threshold 把它转成可管理边界。KRI 必须提供前视信号，并连接 owner、response、time limit 与 escalation。没有行动规则的红黄绿图只能描述颜色。
 
-想一个管理层经常看到的绿色 KPI：**它证明的是结果、过程还是只证明有人填过表？如果要让它触发真实行动，还需要什么财务证据、非财务预警、负责人和越界规则？**
+**完成标志：** 你能写出“指标—阈值—负责人—动作—关闭证据”的完整链条。
+
+#### 05｜把监督、拥有、挑战和保证分开
+
+**要回答：** 谁作决定，谁独立质疑，谁确认体系真的运行？
+
+Board 负责 oversight，business management 拥有目标和日常风险，second line 建立框架并 challenge，third line 提供独立 assurance。Public/non-profit organisation 的 value 可能是安全、公平、响应和信任，但仍需预算纪律、证据与透明问责。
+
+**完成标志：** 责任不是写“大家共同负责”，而是能指出每一层的决定权和证据责任。
+
+### 寓言对应｜只记住五个动作
+
+| 故事动作 | 今天的管理判断 |
+|---|---|
+| 未付款维修、渗漏灯油和锈蚀设备 | accrual、asset evidence 与 impairment |
+| 红黄绿清单被锁进柜子 | risk register 不等于 risk management |
+| 道路损坏却无人封路 | ownership 与 escalation 断裂 |
+| 三块木板重新挂在一起 | accounting、ERM 与 governance 的连接 |
+| 支出增加但救援更快 | public value 与 accountability |
+
+### 类比边界
+
+三块木板不能替代复杂的确认计量、合并报表、风险模型或董事法律责任。COSO 提供 reasonable assurance，不保证风险不会发生；公共使命也不代表资源投入越多越好，仍然存在机会成本与优先级。
+
+### 应用到自己的公司｜完成一张“证据到行动”卡
+
+选择一个管理层经常看到的 KPI，只写五行：
+
+1. **Fact**：这个数字来自哪张报表或哪个运营记录？
+2. **Judgment**：它包含什么估计、口径或可能的误读？
+3. **Objective**：它影响哪个战略目标或公共使命？
+4. **Trigger**：什么阈值意味着需要行动？
+5. **Accountability**：谁拥有行动，谁 challenge，谁验证完成？
 
 ## 第二部分｜指定阅读：原文、框架及概述
 
