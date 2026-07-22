@@ -3,50 +3,50 @@
   "sourceFile": "Rethinking-Risk-Management-1cnhar7.pdf",
   "scope": "Complete article · 17 PDF pages",
   "pageCount": 17,
-  "paragraphCount": 123,
-  "characterCount": 76213,
+  "paragraphCount": 111,
+  "characterCount": 67432,
   "paragraphs": [
     {
       "page": 1,
       "pdfPage": 1,
       "sequence": 1,
       "label": "p. 1",
-      "en": "RETHINKING RISK MANAGEMENT by René M. Stulz, The Ohio State University* BANK OF AMERICA JOURNAL OF APPLIED CORPORATE FINANCE *I am grateful for extensive editorial assistance from Don Chew, and for comments by Steve Figlewski, Andrew Karolyi, Robert Whaley, and participants at a seminar at McKinsey, at the Annual Meeting of the International Association of Financial Engineers, and at the French Finance Association. dence, however, consists of corporate responses to surveys. What the stories suggest, and the surveys seem to confirm, is the popularity of a practice known as “selective” as opposed to “full-cover” hedging."
+      "en": "This article explores an apparent conflict between the theory and current practice of corporate risk management. Academic theory suggests that some companies facing large exposures to interest rates, exchange rates, or commodity prices can increase their market values by using derivative securities to reduce their exposures. The primary emphasis of the theory is on the role of derivatives in reducing the variability of corporate cash flows and, in so doing, reducing various costs associated with financial distress. The actual corporate use of derivatives, however, does not seem to correspond closely to the theory."
     },
     {
       "page": 1,
       "pdfPage": 1,
       "sequence": 2,
       "label": "p. 1",
-      "en": "That is, while few companies regularly use derivatives to take a “naked” speculative position on FX rates or commodity prices, most corporate derivatives users appear to allow their views of future interest rates, exchange rates, and commodity prices to influence their hedge ratios. Such a practice seems inconsistent with modern risk management theory, or at least the theory that has been presented thus far. But there is a plausible defense of selective hedging—one that would justify the practice without violating the efficient markets tenet at the center of modern financial theory."
+      "en": "For one thing, large companies make far greater use of derivatives than small firms, even though small firms have more volatile cash flows, more restricted access to capital, and thus presumably more reason to buy protection against financial trouble. Perhaps more puzzling, however, is that many companies appear to be using risk management to pursue goals other than reducing variance. Does this mean that the prevailing academic theory of risk management is wrong, and that “variance-minimization” is not a useful goal for companies using derivatives? Or, is the current corporate practice of risk management misguided and in urgent need of reform?"
     },
     {
       "page": 1,
       "pdfPage": 1,
       "sequence": 3,
       "label": "p. 1",
-      "en": "In this paper, I attempt to explain more of the corporate behavior we observe by pushing the theory of risk management beyond the variance-minimization model that prevails in most academic circles. Some companies, I argue below, may have a comparative advantage in bearing certain financial risks (while other companies mistakenly think and act as if they do). I accordingly propose a somewhat different goal for corporate risk management—namely, the elimination of costly lower-tail outcomes —that is designed to reduce the expected costs of financial trouble while preserving a company’s ability to exploit any comparative advantage in risk-bearing it may have."
+      "en": "In this paper, I answer “no” to both questions while at the same time suggesting there may be room for improvement in the theory as well as the practice of risk management. The paper begins by reviewing some evidence that has accumulated about the current practice of corporate risk management. Part of this evidence takes the form of recent “anecdotes,” or cases, involving large derivatives losses. Most of the evidence, however, consists of corporate responses to surveys. What the stories suggest, and the surveys seem to confirm, is the popularity of a practice known as “selective” as opposed to “full-cover” hedging."
     },
     {
       "page": 1,
       "pdfPage": 1,
       "sequence": 4,
       "label": "p. 1",
-      "en": "(In the jargon of finance specialists, the fundamental aim of corporate risk management can be viewed as the purchase of “well-out-of-the-money put options” that eliminate the downside while preserving as much of the upside as can be justified by the principle of comparative advantage.) facing large exposures to interest rates, exchange rates, or commodity prices can increase their market values by using derivative securities to reduce their exposures. The primary emphasis of the theory is on the role of derivatives in reducing the variability of corporate cash flows and, in so doing, reducing various costs associated with financial distress. The actual corporate use of derivatives, however, does not seem to correspond closely to the theory."
+      "en": "That is, while few companies regularly use derivatives to take a “naked” speculative position on FX rates or commodity prices, most corporate derivatives users appear to allow their views of future interest rates, exchange rates, and commodity prices to influence their hedge ratios. Such a practice seems inconsistent with modern risk management theory, or at least the theory that has been presented thus far. But there is a plausible defense of selective hedging—one that would justify the practice without violating the efficient markets tenet at the center of modern financial theory."
     },
     {
       "page": 1,
       "pdfPage": 1,
       "sequence": 5,
       "label": "p. 1",
-      "en": "For one thing, large companies make far greater use of derivatives than small firms, even though small firms have more volatile cash flows, more restricted access to capital, and thus presumably more reason to buy protection against financial trouble. Perhaps more puzzling, however, is that many companies appear to be using risk management to pursue goals other than reducing variance. Does this mean that the prevailing academic theory of risk management is wrong, and that “variance-minimization” is not a useful goal for companies using derivatives? Or, is the current corporate practice of risk management misguided and in urgent need of reform?"
+      "en": "In this paper, I attempt to explain more of the corporate behavior we observe by pushing the theory of risk management beyond the variance-minimization model that prevails in most academic circles. Some companies, I argue below, may have a comparative advantage in bearing certain financial risks (while other companies mistakenly think and act as if they do). I accordingly propose a somewhat different goal for corporate risk management—namely, the elimination of costly lower-tail outcomes—that is designed to reduce the expected costs of financial trouble while preserving a company’s ability to exploit any comparative advantage in risk-bearing it may have."
     },
     {
       "page": 1,
       "pdfPage": 1,
       "sequence": 6,
       "label": "p. 1",
-      "en": "In this paper, I answer “no” to both questions while at the same time suggesting there may be room for improvement in the theory as well as the practice of risk management. The paper begins by reviewing some evidence that has accumulated about the current practice of corporate risk management. Part of this evidence takes the form of recent “anecdotes,” or cases, involving large derivatives losses. Most of the evihis article explores an apparent conflict between the theory and current practice of corporate risk management. Academic theory suggests that some companies T"
+      "en": "(In the jargon of finance specialists, the fundamental aim of corporate risk management can be viewed as the purchase of “well-out-of-the-money put options” that eliminate the downside while preserving as much of the upside as can be justified by the principle of comparative advantage.)"
     },
     {
       "page": 2,
@@ -74,7 +74,7 @@
       "pdfPage": 2,
       "sequence": 4,
       "label": "p. 2",
-      "en": "RISK MANAGEMENT IN PRACTICE In one of their series of papers on Metallgesellschaft, Chris Culp and Merton Miller make an observation that may seem startling to students of modern finance: “We need hardly remind readers that most value-maximizing firms do not hedge.” But is this true? And, if so, how would we know? Culp and Miller refer to survey evidence—in particular, to a Wharton-Chase study that sent questionnaires to 1,999 companies inquiring about their risk management practices.2 Of the 530 firms that responded to the survey, only about a third answered “yes” when asked if they ever used futures, forwards, options, or swaps."
+      "en": "RISK MANAGEMENT IN PRACTICE In one of their series of papers on Metallgesellschaft, Chris Culp and Merton Miller make an observation that may seem startling to students of modern finance: “We need hardly remind readers that most value-maximizing firms do not hedge.”1 But is this true? And, if so, how would we know? Culp and Miller refer to survey evidence—in particular, to a Wharton-Chase study that sent questionnaires to 1,999 companies inquiring about their risk management practices.2 Of the 530 firms that responded to the survey, only about a third answered “yes” when asked if they ever used futures, forwards, options, or swaps."
     },
     {
       "page": 2,
@@ -88,21 +88,14 @@
       "pdfPage": 2,
       "sequence": 6,
       "label": "p. 2",
-      "en": "Roughly the same proportion of firms also said they never use derivatives to hedge their balance sheets, their foreign dividends, or their economic or competitive exposures. The Wharton-Chase study was updated in 1995, and its results were published in 1996 as the Wharton- CIBC Wood Gundy study. The results of the 1995 survey confirm those of its predecessor, but with one striking new finding: Over a third of all derivative users said they sometimes “actively take positions” that reflect their market views of interest rate and exchange rates. This finding was anticipated in a survey of Fortune 500 companies conducted by Walter Dolde in 1992, and published in this journal in the following year."
+      "en": "Roughly the same proportion of firms also said they never use derivatives to hedge their balance sheets, their foreign dividends, or their economic or competitive exposures. The Wharton-Chase study was updated in 1995, and its results were published in 1996 as the Wharton- CIBC Wood Gundy study. The results of the 1995 survey confirm those of its predecessor, but with one striking new finding: Over a third of all derivative users said they sometimes “actively take positions” that reflect their market views of interest rate and exchange rates."
     },
     {
       "page": 2,
       "pdfPage": 2,
       "sequence": 7,
       "label": "p. 2",
-      "en": "3 Of the 244 companies that responded to Dolde’s survey, 85% reported having used swaps, forwards, futures, or options. As in the Wharton surveys, larger companies reported greater use of derivatives than smaller firms. And, as Dolde notes, such a finding confirms the experience of risk management practitioners that the corporate use of derivatives requires a considerable upfront investment in personnel, training, and computer hardware and software—an investment that could discourage small firms. 1. Christopher Culp and Merton Miller, “Hedging in the Theory of Corporate Finance: A Reply to Our Critics,” Journal of Applied Corporate Finance 8 (Spring 1995), p. 122."
-    },
-    {
-      "page": 2,
-      "pdfPage": 2,
-      "sequence": 8,
-      "label": "p. 2",
-      "en": "For the central idea of this paper, I am indebted to Culp and Miller’s discussion of Holbrook Working’s “carrying-charge” theory of commodity hedging. It is essentially Workings’ notion—and Culp and Miller’s elaboration of it—that I attempt in this paper to generalize into a broader theory of risk management based on comparative advantage in risk-bearing. 2. The Wharton School and The Chase Manhattan Bank, N.A., Survey of Derivative Usage Among U.S. Non-Financial Firms (February 1994). 3. Walter Dolde, “The Trajectory of Corporate Financial Risk Management, Journal of Applied Corporate Finance 6 (Fall 1993), 33-41."
+      "en": "This finding was anticipated in a survey of Fortune 500 companies conducted by Walter Dolde in 1992, and published in this journal in the following year.3 Of the 244 companies that responded to Dolde’s survey, 85% reported having used swaps, forwards, futures, or options. As in the Wharton surveys, larger companies reported greater use of derivatives than smaller firms. And, as Dolde notes, such a finding confirms the experience of risk management practitioners that the corporate use of derivatives requires a considerable upfront investment in personnel, training, and computer hardware and software—an investment that could discourage small firms."
     },
     {
       "page": 3,
@@ -123,7 +116,7 @@
       "pdfPage": 3,
       "sequence": 3,
       "label": "p. 3",
-      "en": "Nevertheless, Dolde also reported “a distinct evolutionary pattern” in which many firms “progress from targeting individual transactions to more systematic measures of ongoing competitive exposures.” The bottom line from the surveys, then, is that corporations do not systematically hedge their exposures, the extent to which they hedge depends on their views of future price movements, the focus of hedging is primarily on near-term transactions, and the use of derivatives is greater for large firms than small firms. Many of the widely-reported derivative problems of recent years are fully consistent with this survey evidence, and closer inspection of such cases provides additional insight into common risk management practices."
+      "en": "Nevertheless, Dolde also reported “a distinct evolutionary pattern” in which many firms “progress from targeting individual transactions to more systematic measures of ongoing competitive exposures.”4 The bottom line from the surveys, then, is that corporations do not systematically hedge their exposures, the extent to which they hedge depends on their views of future price movements, the focus of hedging is primarily on near-term transactions, and the use of derivatives is greater for large firms than small firms. Many of the widely-reported derivative problems of recent years are fully consistent with this survey evidence, and closer inspection of such cases provides additional insight into common risk management practices."
     },
     {
       "page": 3,
@@ -144,21 +137,14 @@
       "pdfPage": 3,
       "sequence": 6,
       "label": "p. 3",
-      "en": "For example, one study estimated that the minimum-variance hedge position for MGRM would have required the forward purchase of only 86 million barrels of oil, or about 55% of the 154 million barrels in short-maturity contracts that MGRM actually entered into. Does this mean that MGRM really took a position that was long some 58 million barrels of oil? Not necessarily. As Culp and Miller demonstrate, had MGRM adhered to its professed strategy and been able to obtain funding for whatever futures losses it incurred over the entire 10-year period, its position would have been largely hedged."
+      "en": "For example, one study estimated that the minimum-variance hedge position for MGRM would have required the forward purchase of only 86 million barrels of oil, or about 55% of the 154 million barrels in short-maturity contracts that MGRM actually entered into.5 Does this mean that MGRM really took a position that was long some 58 million barrels of oil? Not necessarily."
     },
     {
       "page": 3,
       "pdfPage": 3,
       "sequence": 7,
       "label": "p. 3",
-      "en": "But even if MGRM’s net exposure to oil prices was effectively hedged over the long haul, it is also clear that MGRM’s traders had not designed their hedge with the aim of minimizing the variance of their net position in oil during the life of the contracts. The traders presumably took the position they did because they thought they could benefit from their specialized information about supply and demand— and, more specifically, from a persistent feature of oil futures known as “backwardation,” or the long-run 4. Dolde, p. 39. 5. Mello, A., and J.E. Parsons, “Maturity Structure of a Hedge Matters: Lessons from the Metallgesellschaft Debacle,” Journal of Applied Corporate Finance Vol. 8 No. 1 (Spring 1995), 106-120. 6."
-    },
-    {
-      "page": 3,
-      "pdfPage": 3,
-      "sequence": 8,
-      "label": "p. 3",
-      "en": "More precisely, Culp and Miller’s analysis shows that, ignoring any complications arising from basis risk and the daily mark-to-market requirement for futures, over the 10-year period each rolled-over futures contract would have eventually corresponded to an equivalent quantity of oil delivered to customers."
+      "en": "As Culp and Miller demonstrate, had MGRM adhered to its professed strategy and been able to obtain funding for whatever futures losses it incurred over the entire 10-year period, its position would have been largely hedged.6 But even if MGRM’s net exposure to oil prices was effectively hedged over the long haul, it is also clear that MGRM’s traders had not designed their hedge with the aim of minimizing the variance of their net position in oil during the life of the contracts. The traders presumably took the position they did because they thought they could benefit from their specialized information about supply and demand— and, more specifically, from a persistent feature of oil futures known as “backwardation,” or the long-run"
     },
     {
       "page": 4,
@@ -172,14 +158,14 @@
       "pdfPage": 4,
       "sequence": 2,
       "label": "p. 4",
-      "en": "Compounding this problem of large “paper losses,” the backwardation of oil prices also disappeared, thus adding real losses to the paper ones. And, in response to the reports of mounting losses, MG’s management chose to liquidate the hedge. This action, as Culp and Miller point out, had the unfortunate consequence of “turning paper losses into realized losses” and “leaving MGRM exposed to rising prices on its remaining fixed-price contracts.” Daimler-Benz In 1995, Daimler-Benz reported first-half losses of DM1.56 billion, the largest in the company’s 109- year history. In its public statements, management attributed the losses to exchange rate losses due to the weakening dollar."
+      "en": "Compounding this problem of large “paper losses,” the backwardation of oil prices also disappeared, thus adding real losses to the paper ones. And, in response to the reports of mounting losses, MG’s management chose to liquidate the hedge. This action, as Culp and Miller point out, had the unfortunate consequence of “turning paper losses into realized losses” and “leaving MGRM exposed to rising prices on its remaining fixed-price contracts.”7 Daimler-Benz In 1995, Daimler-Benz reported first-half losses of DM1.56 billion, the largest in the company’s 109- year history. In its public statements, management attributed the losses to exchange rate losses due to the weakening dollar."
     },
     {
       "page": 4,
       "pdfPage": 4,
       "sequence": 3,
       "label": "p. 4",
-      "en": "One subsidiary of Daimler- Benz, Daimler-Benz Aerospace, had an order book of DM20 billion, of which 80% was fixed in dollars. Because the dollar fell by 14% during this period, Daimler-Benz had to take a provision for losses of DM1.2 billion to cover future losses. Why did Daimler-Benz fail to hedge its expected dollar receivables? The company said that it chose not to hedge because the forecasts it received were too disperse, ranging as they did from DM1.2 to DM1.7 per dollar. Analysts, however, attributed Daimler-Benz’s decision to remain unhedged to its view that the dollar would stay above DM1.55. These two brief case studies reinforce the conclusion drawn from the survey evidence."
+      "en": "One subsidiary of Daimler- Benz, Daimler-Benz Aerospace, had an order book of DM20 billion, of which 80% was fixed in dollars. Because the dollar fell by 14% during this period, Daimler-Benz had to take a provision for losses of DM1.2 billion to cover future losses. Why did Daimler-Benz fail to hedge its expected dollar receivables? The company said that it chose not to hedge because the forecasts it received were too disperse, ranging as they did from DM1.2 to DM1.7 per dollar. Analysts, however, attributed Daimler-Benz’s decision to remain unhedged to its view that the dollar would stay above DM1.55.8 These two brief case studies reinforce the conclusion drawn from the survey evidence."
     },
     {
       "page": 4,
@@ -207,14 +193,7 @@
       "pdfPage": 4,
       "sequence": 7,
       "label": "p. 4",
-      "en": "The lesson of market efficiency for corporate risk managers is that the attempt to earn higher returns in most financial markets generally means bearing large (and unfamiliar) risks. In highly liquid markets such as those for interest rate and FX futures—and in the case of heavily traded commodities like oil and gold as well—industrial companies are unlikely to have a comparative advantage in bearing these risks. And so, for most industrial corporations, setting up the corporate treasury to 7. Culp and Miller, Vol. 7 No. 4 (Winter 1995), p. 63. 8. See Risk Magazine, October 1995, p. 11."
-    },
-    {
-      "page": 4,
-      "pdfPage": 4,
-      "sequence": 8,
-      "label": "p. 4",
-      "en": "The lesson of market efficiency for corporate risk managers is that the attempt to earn higher returns in most financial markets generally means bearing large (and unfamiliar) risks."
+      "en": "The lesson of market efficiency for corporate risk managers is that the attempt to earn higher returns in most financial markets generally means bearing large (and unfamiliar) risks. In highly liquid markets such as those for interest rate and FX futures—and in the case of heavily traded commodities like oil and gold as well—industrial companies are unlikely to have a comparative advantage in bearing these risks. And so, for most industrial corporations, setting up the corporate treasury to"
     },
     {
       "page": 5,
@@ -249,49 +228,49 @@
       "pdfPage": 5,
       "sequence": 5,
       "label": "p. 5",
-      "en": "The academic finance literature has identified three major costs associated with higher variability: (1) higher expected bankruptcy costs (and, more generally, costs of financial distress); (2) higher expected payments to corporate “stakeholders” (including higher rates of return required by owners of closely-held firms); and (3) higher expected tax payments. The potential gains from risk management come from its ability to reduce each of these three costs—and I review each in turn below."
+      "en": "The academic finance literature has identified three major costs associated with higher variability: (1) higher expected bankruptcy costs (and, more generally, costs of financial distress); (2) higher expected payments to corporate “stakeholders” (including higher rates of return required by owners of closely-held firms); and (3) higher expected tax payments."
     },
     {
       "page": 5,
       "pdfPage": 5,
       "sequence": 6,
       "label": "p. 5",
-      "en": "Risk Management Can Reduce Bankruptcy Costs Although well-diversified shareholders may not be concerned about the cash flow variability caused by swings in FX rates or commodity prices, they will become concerned if such variability materially raises the probability of financial distress. In the extreme case, a company with significant amounts of debt could experience a sharp downturn in operating cash flow—caused in part by an unhedged exposure—and be forced to file for bankruptcy. What are the costs of bankruptcy? Most obvious are the payments to lawyers and court costs. But, in addition to these “direct” costs of administration and reorganization, there are some potentially larger “indirect” costs."
+      "en": "The potential gains from risk management come from its ability to reduce each of these three costs—and I review each in turn below.9 Risk Management Can Reduce Bankruptcy Costs Although well-diversified shareholders may not be concerned about the cash flow variability caused by swings in FX rates or commodity prices, they will become concerned if such variability materially raises the probability of financial distress. In the extreme case, a company with significant amounts of debt could experience a sharp downturn in operating cash flow—caused in part by an unhedged exposure—and be forced to file for bankruptcy. What are the costs of bankruptcy? Most obvious are the payments to lawyers and court costs."
     },
     {
       "page": 5,
       "pdfPage": 5,
       "sequence": 7,
       "label": "p. 5",
-      "en": "Companies that wind up in Chapter 11 face considerable interference from the bankruptcy court with their investment and operating decisions. And such interference has the potential to cause significant reductions in the ongoing operating value of the firm. If a company’s shareholders view bankruptcy as a real possibility—and to the extent the process of reorganization itself is expected to reduce the firm’s operating value—the expected present value of these costs will be reflected in a company’s current market value. A risk management program that costlessly eliminates the risk of bankruptcy effectively reduces these costs to zero and, in so doing, increases the value of the firm."
+      "en": "But, in addition to these “direct” costs of administration and reorganization, there are some potentially larger “indirect” costs. Companies that wind up in Chapter 11 face considerable interference from the bankruptcy court with their investment and operating decisions. And such interference has the potential to cause significant reductions in the ongoing operating value of the firm. If a company’s shareholders view bankruptcy as a real possibility—and to the extent the process of reorganization itself is expected to reduce the firm’s operating value—the expected present value of these costs will be reflected in a company’s current market value."
     },
     {
       "page": 5,
       "pdfPage": 5,
       "sequence": 8,
       "label": "p. 5",
-      "en": "The effects of risk management on bankruptcy costs and firm value are illustrated in Figure 1. In the case shown in the figure, hedging is assumed to 9. For a discussion of the benefits of corporate hedging, see Clifford Smith and René Stulz, “The Determinants of Firms’ Hedging Policies,” Journal of Financial and Quantitative Analysis 20 (1985), pp. 391-405."
+      "en": "A risk management program that costlessly eliminates the risk of bankruptcy effectively reduces these costs to zero and, in so doing, increases the value of the firm. The effects of risk management on bankruptcy costs and firm value are illustrated in Figure 1. In the case shown in the figure, hedging is assumed to"
     },
     {
       "page": 6,
       "pdfPage": 6,
       "sequence": 1,
       "label": "p. 6",
-      "en": "reduce the variability of cash flow and firm value to the degree that default is no longer possible. By eliminating the possibility of bankruptcy, risk management increases the value of the firm’s equity by an amount roughly equal to Bc (bankruptcy costs) multiplied by the probability of bankruptcy if the firm remains unhedged (pBU). For example, let’s assume the market value of the firm’s equity is $100 million, bankruptcy costs are expected to run $25 million (or 25% of current firm value), and the probability of bankruptcy in the absence of hedging is 10%. In this case, risk management can be seen as increasing the current value of the firm’s equity by $2.5 million (10% x $25 million), or 2.5%."
+      "en": "FIGURE 1 DEBT, EQUITY, AND FIRM VALUE WITH BANKRUPTCY COSTS reduce the variability of cash flow and firm value to the degree that default is no longer possible. By eliminating the possibility of bankruptcy, risk management increases the value of the firm’s equity by an amount roughly equal to Bc (bankruptcy costs) multiplied by the probability of bankruptcy if the firm remains unhedged (pBU). For example, let’s assume the market value of the firm’s equity is $100 million, bankruptcy costs are expected to run $25 million (or 25% of current firm value), and the probability of bankruptcy in the absence of hedging is 10%."
     },
     {
       "page": 6,
       "pdfPage": 6,
       "sequence": 2,
       "label": "p. 6",
-      "en": "(Keep in mind that this is the contribution of risk management to firm value when the company is healthy ; in the event that cash flow and value should decline sharply from current levels, the value added by risk management increases in absolute dollars, and even more on a percentage-of-value basis.) This argument extends to distress costs in general. For instance, as a company becomes weaker financially, it becomes more difficult for it to raise funds. At some point, the cost of outside funding— if available at all—may become so great that management chooses to pass up profitable investments."
+      "en": "In this case, risk management can be seen as increasing the current value of the firm’s equity by $2.5 million (10% x $25 million), or 2.5%. (Keep in mind that this is the contribution of risk management to firm value when the company is healthy; in the event that cash flow and value should decline sharply from current levels, the value added by risk management increases in absolute dollars, and even more on a percentage-of-value basis.) This argument extends to distress costs in general. For instance, as a company becomes weaker financially, it becomes more difficult for it to raise funds. At some point, the cost of outside funding— if available at all—may become so great that management chooses to pass up profitable investments."
     },
     {
       "page": 6,
       "pdfPage": 6,
       "sequence": 3,
       "label": "p. 6",
-      "en": "This “underinvestment problem” experienced by companies when facing the prospect of default (or, in some cases, just a downturn in earnings 10) represents an important cost of financial distress. And, to the extent that risk management succeeds in reducing the perceived probability of financial distress and the costs associated with underinvestment, it will increase the current market value of the firm. Risk Management Can Reduce Payments to “Stakeholders” (and Required Returns to Owners of Closely Held Firms) Although the shareholders of large public companies can often manage most financial risks more efficiently than the companies themselves, the case may be different for the owners—or owner-managers—of private or closely-held companies."
+      "en": "This “underinvestment problem” experienced by companies when facing the prospect of default (or, in some cases, just a downturn in earnings10) represents an important cost of financial distress. And, to the extent that risk management succeeds in reducing the perceived probability of financial distress and the costs associated with underinvestment, it will increase the current market value of the firm. Risk Management Can Reduce Payments to “Stakeholders” (and Required Returns to Owners of Closely Held Firms)11 Although the shareholders of large public companies can often manage most financial risks more efficiently than the companies themselves, the case may be different for the owners—or owner-managers—of private or closely-held companies."
     },
     {
       "page": 6,
@@ -305,14 +284,7 @@
       "pdfPage": 6,
       "sequence": 5,
       "label": "p. 6",
-      "en": "If there is a chance that their “firm-specific” investments could be lost because of financial distress, they are likely to require added compensation for the greater risk. 10. This argument is made by Kenneth Froot, David Scharfstein, and Jeremy Stein in “Risk Management: Coordinating Corporate Investment and Financing Policies,” Journal of Finance 48, (1993), 1629-1658. 11. The discussion in this section and the next draws heavily on Smith and Stulz (1985), cited in footnote 9."
-    },
-    {
-      "page": 6,
-      "pdfPage": 6,
-      "sequence": 6,
-      "label": "p. 6",
-      "en": "FIGURE 1 DEBT, EQUITY, AND FIRM VALUE WITH BANKRUPTCY COSTS Because shareholders have such an inexpensive risk-management tool, companies that reduce their earnings volatility by managing financial risks will not be rewarded with a lower “cost of capital.” But if shareholders are not concerned about the cash flow variability caused by swings in FX rates or commodity prices, they will become concerned if such variability materially raises the probability of financial distress."
+      "en": "If there is a chance that their “firm-specific” investments could be lost because of financial distress, they are likely to require added compensation for the greater risk."
     },
     {
       "page": 7,
@@ -361,14 +333,7 @@
       "pdfPage": 7,
       "sequence": 7,
       "label": "p. 7",
-      "en": "Conversely, if management becomes convinced that copper prices are likely to drop sharply (with almost no possibility of a major increase), it might choose to hedge as little as 20% of its exposure. Should the management of company X refrain from exploiting its specialized knowledge in this fashion, and instead adhere to its 50% hedging target? Or should it, in certain circumstances, allow its market view to influence its hedge ratio? Although there are clearly risks to selective hedging of this kind—in particular, the risk that the the company’s principal inputs is nickel; and Lukens’ policy is to allow its view of nickel prices to influence how much of its nickel exposure it hedges."
-    },
-    {
-      "page": 7,
-      "pdfPage": 7,
-      "sequence": 8,
-      "label": "p. 7",
-      "en": "By contrast, although it may have views of interest rates or FX exposures, such views play no role in hedging those exposures. 12. For a good example of this kind of selective hedging policy, see the comments by John Van Roden, Chief Financial Officer of Lukens, Inc. in the “Bank of America Rroundtable on Corporate Risk Management,” Journal of Applied Corporate Finance, Vol. 8 No. 3 (Fall 1995). As a stainless steel producer, one of"
+      "en": "Conversely, if management becomes convinced that copper prices are likely to drop sharply (with almost no possibility of a major increase), it might choose to hedge as little as 20% of its exposure.12 Should the management of company X refrain from exploiting its specialized knowledge in this fashion, and instead adhere to its 50% hedging target? Or should it, in certain circumstances, allow its market view to influence its hedge ratio? Although there are clearly risks to selective hedging of this kind—in particular, the risk that the the company’s principal inputs is nickel; and Lukens’ policy is to allow its view of"
     },
     {
       "page": 8,
@@ -396,7 +361,7 @@
       "pdfPage": 8,
       "sequence": 4,
       "label": "p. 8",
-      "en": "With a sufficient number of large, highly active customers, a trading operation has the following advantage: If one of its traders agrees to buy yen from one customer, the firm can resell them quickly to another customer and pocket the bid-ask spread. In an article entitled “An Analysis of Trading Profits: How Trading Rooms Really Make Money,” Alberic Braas and Charles Bralver present evidence suggesting that most FX trading profits come from market-making, not position-taking. 13 Moreover, as the authors of this article point out, a trading operation that does not understand its comparative advantage in trading currencies is likely not only to fail to generate consistent profit, but to endanger its existing comparative advantage."
+      "en": "With a sufficient number of large, highly active customers, a trading operation has the following advantage: If one of its traders agrees to buy yen from one customer, the firm can resell them quickly to another customer and pocket the bid-ask spread. In an article entitled “An Analysis of Trading Profits: How Trading Rooms Really Make Money,” Alberic Braas and Charles Bralver present evidence suggesting that most FX trading profits come from market-making, not position-taking.13 Moreover, as the authors of this article point out, a trading operation that does not understand its comparative advantage in trading currencies is likely not only to fail to generate consistent profit, but to endanger its existing comparative advantage."
     },
     {
       "page": 8,
@@ -410,28 +375,21 @@
       "pdfPage": 8,
       "sequence": 6,
       "label": "p. 8",
-      "en": "A top management that fails to understand its comparative advantage may waste its time looking for star traders while neglecting the development of marketing strategies and services. How can management determine when it should take risks and when it should not? The best approach is to implement a risk-taking audit . This would involve a comprehensive review of the risks to which the company is exposed, both through its financial instruments and liability structure as well as its normal operations. Such an audit should attempt to answer questions like the following: Which of its major risks has the firm proved capable of “selfinsuring” over a complete business cycle?"
+      "en": "A top management that fails to understand its comparative advantage may waste its time looking for star traders while neglecting the development of marketing strategies and services. How can management determine when it should take risks and when it should not? The best approach is to implement a risk-taking audit. This would involve a comprehensive review of the risks to which the company is exposed, both through its financial instruments and liability structure as well as its normal operations. Such an audit should attempt to answer questions like the following: Which of its major risks has the firm proved capable of “selfinsuring” over a complete business cycle?"
     },
     {
       "page": 8,
       "pdfPage": 8,
       "sequence": 7,
       "label": "p. 8",
-      "en": "If the firm chooses to hedge “selectively,” or leaves exposures completely unhedged, what is the source of the firm’s comparative advantage in taking these positions? Which risk management activities have consistently added value without introducing another source of volatility? Once a firm has decided that it has a comparative advantage in taking certain financial risks, it must then determine the role of risk management 13. See Alberic Braas and Charles Bralver, “How Trading Rooms Really Make Money?,” Journal of Applied Corporate Finance, Vol. 2 No. 4 (Winter 1990). How can management determine when it should take risks and when it should not?"
-    },
-    {
-      "page": 8,
-      "pdfPage": 8,
-      "sequence": 8,
-      "label": "p. 8",
-      "en": "The best approach is to implement a risk-taking audit—a comprehensive review of the risks to which the company is exposed, both through its financial instruments and liability structure as well as its normal operations."
+      "en": "If the firm chooses to hedge “selectively,” or leaves exposures completely unhedged, what is the source of the firm’s comparative advantage in taking these positions? Which risk management activities have consistently added value without introducing another source of volatility? Once a firm has decided that it has a comparative advantage in taking certain financial risks, it must then determine the role of risk management"
     },
     {
       "page": 9,
       "pdfPage": 9,
       "sequence": 1,
       "label": "p. 9",
-      "en": "in exploiting this advantage. As I argue below, risk management may paradoxically enable the firm to take more of these risks than it would in the absence of risk management. To illustrate this point, let’s return to our example of company X and assume it has valuable information about the copper market that enables it to earn consistently superior profits trading copper. Even in this situation, such trading profits are by no means a sure thing; there is always the possibility that the firm will experience significant losses. Purchasing farout-of-the-money calls on copper in such a case could actually serve to increase the firm’s ability to take speculative positions in copper."
+      "en": "FIGURE 2 OPTIMAL HEDGING FOR FIRMS AAA, BBB, S&L in exploiting this advantage. As I argue below, risk management may paradoxically enable the firm to take more of these risks than it would in the absence of risk management. To illustrate this point, let’s return to our example of company X and assume it has valuable information about the copper market that enables it to earn consistently superior profits trading copper. Even in this situation, such trading profits are by no means a sure thing; there is always the possibility that the firm will experience significant losses. Purchasing farout-of-the-money calls on copper in such a case could actually serve to increase the firm’s ability to take speculative positions in copper."
     },
     {
       "page": 9,
@@ -445,28 +403,21 @@
       "pdfPage": 9,
       "sequence": 3,
       "label": "p. 9",
-      "en": "Given this primary objective for risk management, one would not expect companies with little or no debt financing—and, hence, a low probability of financial trouble—to benefit from hedging. In this sense, risk management can be viewed as a direct substitute for equity capital. That is, the more the firm hedges its financial exposures, the less equity it requires to support its business. Or, to put it another way, the use of risk management to reduce exposures effectively increases a company’s debt capacity."
+      "en": "Given this primary objective for risk management, one would not expect companies with little or no debt financing—and, hence, a low probability of financial trouble—to benefit from hedging. In this sense, risk management can be viewed less equity it requires to support its business. Or, to put it another way, the use of risk management to reduce exposures effectively increases a company’s debt capacity. Moreover, to the extent one views risk management as a substitute for equity capital—or, alternatively, as a technique that allows management to substitute debt for equity—then it pays companies to practice risk management only to the extent that equity capital is more expensive than debt."
     },
     {
       "page": 9,
       "pdfPage": 9,
       "sequence": 4,
       "label": "p. 9",
-      "en": "Moreover, to the extent one views risk management as a substitute for equity capital—or, alternatively, as a technique that allows management to substitute debt for equity—then it pays companies to practice risk management only to the extent that equity capital is more expensive than debt. As this formulation of the issue suggests, a company’s decisions to hedge financial risks—or to bear part of such risks through selective hedging—should be made jointly with the corporate capital structure decision. To illustrate this interdependence between risk management and capital structure, consider the three kinds of companies pictured in Figure 2."
+      "en": "As this formulation of the issue suggests, a company’s decisions to hedge financial risks—or to bear part of such risks through selective hedging—should be made jointly with the corporate capital structure decision. To illustrate this interdependence between risk management and capital structure, consider the three kinds of companies pictured in Figure 2. At the right-hand side of the figure is company AAA, so named because it has little debt and a very high debt rating. The probability of default is essentially zero; and thus the left or lower tail of AAA’s distribution of potential outcomes never reaches the range where low value begins to impose financial distress costs on the firm."
     },
     {
       "page": 9,
       "pdfPage": 9,
       "sequence": 5,
       "label": "p. 9",
-      "en": "At the right-hand side of the figure is company AAA, so named because it has little debt and a very high debt rating. The probability of default is essentially zero; and thus the left or lower tail of AAA’s distribution of potential outcomes never reaches the range where low value begins to impose financial distress costs on the firm. Based on the theory of risk management just presented, there is no reason for this company to hedge its financial exposures; the company’s shareholders can do the same job more cost-effectively. And, should investment opportunities arise, AAA will likely be able to raise funds on an economic basis, even if its cash flows should decline temporarily. Should such a company take bets on financial markets?"
-    },
-    {
-      "page": 9,
-      "pdfPage": 9,
-      "sequence": 6,
-      "label": "p. 9",
-      "en": "The answer could be yes, provided management has specialized information that would give it a comparative advantage in a certain market. In FIGURE 2 OPTIMAL HEDGING FOR FIRMS AAA, BBB, S&L"
+      "en": "Based on the theory of risk management just presented, there is no reason for this company to hedge its financial exposures; the company’s shareholders can do the same job more cost-effectively. And, should investment opportunities arise, AAA will likely be able to raise funds on an economic basis, even if its cash flows should decline temporarily. Should such a company take bets on financial markets? The answer could be yes, provided man-"
     },
     {
       "page": 10,
@@ -515,14 +466,14 @@
       "pdfPage": 10,
       "sequence": 7,
       "label": "p. 10",
-      "en": "But there is one notable exception—a study by Peter Tufano of the hedging behavior of 48 publicly traded North American gold mining companies that was published in the September 1996 issue of the Journal of Finance. 14 The gold mining industry is ideal for studying hedging behav- 14. Peter Tufano, “Who Manages Risk? An Empirical Examination of the Risk Management Practices of the Gold Mining Industry, Journal of Finance (September, 1996). The question of what is the right corporate risk management decision for a company begs the question of not only its optimal capital structure, but optimal ownership structure as well."
+      "en": "But there is one notable exception—a study by Peter Tufano of the hedging behavior of 48 publicly traded North American gold mining companies that was published in the September 1996 issue of the Journal of Finance.14 The gold mining industry is ideal for studying hedging behav-"
     },
     {
       "page": 11,
       "pdfPage": 11,
       "sequence": 1,
       "label": "p. 11",
-      "en": "ior in the sense that gold mining companies tend to be single-industry firms with one very large price exposure and a wide range of hedging vehicles, from forward sales, to exchange-traded gold futures and options, to gold swaps and bullion loans. The purpose of Tufano’s study was to examine the ability of various corporate risk management theories to explain any significant pattern of differences in the percentage of their gold price exposures that the companies choose to hedge. Somewhat surprisingly, there was considerable variation in the hedging behavior of these 48 firms."
+      "en": "FIGURE 3 IMPACT OF OPTIONS IN MANAGERIAL COMPENSATION CONTRACTS ior in the sense that gold mining companies tend to be single-industry firms with one very large price exposure and a wide range of hedging vehicles, from forward sales, to exchange-traded gold futures and options, to gold swaps and bullion loans. The purpose of Tufano’s study was to examine the ability of various corporate risk management theories to explain any significant pattern of differences in the percentage of their gold price exposures that the companies choose to hedge. Somewhat surprisingly, there was considerable variation in the hedging behavior of these 48 firms."
     },
     {
       "page": 11,
@@ -536,35 +487,35 @@
       "pdfPage": 11,
       "sequence": 3,
       "label": "p. 11",
-      "en": "In general, the greater management’s direct percentage share ownership, the larger the percentage of its gold price exposure a firm hedged. By contrast, little hedging took place in gold mining firms where management owns a small stake. Moreover, managerial compensation contracts that emphasize options or optionlike features were also associated with significantly less hedging. As Tufano acknowledged in his study, this pattern of findings could have been predicted from arguments that Clifford Smith and I presented in a theoretical paper in 1985."
+      "en": "In general, the greater management’s direct percentage share ownership, the larger the percentage of its gold price exposure a firm hedged. By contrast, little hedging took place in gold mining firms where management owns a small stake. Moreover, managerial compensation contracts that emphasize options or optionlike features were also associated with significantly less hedging."
     },
     {
       "page": 11,
       "pdfPage": 11,
       "sequence": 4,
       "label": "p. 11",
-      "en": "15 Our argument was essentially as follows: As we saw in the case of closely held companies, managers with a significant fraction of their own wealth tied up in their own firms are likely to consider all sources of risk when setting their required rates of return. And this could help explain the tendency of firms with heavy managerial equity ownership to hedge more of their gold price exposures. In such cases, the volatility of gold prices translates fairly directly into volatility of managers’ wealth, and manager-owners concerned about such volatility may rationally choose to manage their exposures."
+      "en": "As Tufano acknowledged in his study, this pattern of findings could have been predicted from arguments that Clifford Smith and I presented in a theoretical paper in 1985.15 Our argument was essentially as follows: As we saw in the case of closely held companies, managers with a significant fraction of their own wealth tied up in their own firms are likely to consider all sources of risk when setting their required rates of return. And this could help explain the tendency of firms with heavy managerial equity ownership to hedge more of their gold price exposures."
     },
     {
       "page": 11,
       "pdfPage": 11,
       "sequence": 5,
       "label": "p. 11",
-      "en": "(How, or whether, such hedging serves the interests of the companies’ outside shareholders is another issue, one that I return to shortly.) The propensity of managers with lots of stock options but little equity ownership to leave their gold price exposures unhedged is also easy to understand. As shown in Figure 3, the one-sided payoff from stock options effectively rewards management for taking bets and so increasing volatility. In this example, the reduction in volatility from hedging makes management’s options worthless (that is, the example assumes these are well out-of-the-money options). But if the firm does not hedge, there is some 15."
+      "en": "In such cases, the volatility of gold prices translates fairly directly into volatility of managers’ wealth, and manager-owners concerned about such volatility may rationally choose to manage their exposures. (How, or whether, such hedging serves the interests of the companies’ outside shareholders is another issue, one that I return to shortly.) The propensity of managers with lots of stock options but little equity ownership to leave their gold price exposures unhedged is also easy to understand. As shown in Figure 3, the one-sided payoff from stock options effectively rewards management for taking bets and so increasing volatility."
     },
     {
       "page": 11,
       "pdfPage": 11,
       "sequence": 6,
       "label": "p. 11",
-      "en": "Clifford Smith and René Stulz, “The Determinants of Firms’ Hedging Policies,” Journal of Financial and Quantitative Analysis 20 (1985), pp. 391-405. FIGURE 3 IMPACT OF OPTIONS IN MANAGERIAL COMPENSATION CONTRACTS"
+      "en": "In this example, the reduction in volatility from hedging makes management’s options worthless (that is, the example assumes these are well out-of-the-money options). But if the firm does not hedge, there is some"
     },
     {
       "page": 12,
       "pdfPage": 12,
       "sequence": 1,
       "label": "p. 12",
-      "en": "probability that a large increase in gold prices will cause the options to pay off. What if we make the more realistic assumption that the options are at the money instead of far out of the money? In this case, options would still have the power to influence hedging behavior because management gains more from increases in firm value than it loses from reductions in firm value. As we saw in the case of the S&L presented earlier, this “asymmetric” payoff structure of options increases management’s willingness to take bets. But if these differences in hedging behavior reflect differences in managerial incentives, what do they tell us about the effect of risk management on shareholder value?"
+      "en": "probability that a large increase in gold prices will cause the options to pay off. What if we make the more realistic assumption that the options are at the money instead of far out of the money? In this case, options would still have the power to influence hedging behavior because management gains more from increases in firm value than it loses from reductions in firm value. As we saw in the case of the S&L presented earlier, this “asymmetric” payoff structure of options increases management’s willingness to take bets.16 But if these differences in hedging behavior reflect differences in managerial incentives, what do they tell us about the effect of risk management on shareholder value?"
     },
     {
       "page": 12,
@@ -599,49 +550,35 @@
       "pdfPage": 12,
       "sequence": 6,
       "label": "p. 12",
-      "en": "For this reason, the combination of concentrated ownership, the less “noisy” performance measure produced by hedging, and the possibility of higher financial leverage 17 has the potential to add significant value. As this reasoning suggests, risk management can be used to facilitate an organizational structure that resembles that of an LBO! To put the same thought another way, it is the risk management policy that allows companies with large financial exposures to have significant managerial stock ownership. For, without the hedging policy, a major price exposure would cause the scope of management’s bet to be too diffuse, and “uncontrollables” would dilute the desired incentive benefits of more concentrated ownership."
+      "en": "For this reason, the combination of concentrated ownership, the less “noisy” performance measure produced by hedging, and the possibility of higher financial leverage17 has the potential to add significant value. As this reasoning suggests, risk management can be used to facilitate an organizational structure that resembles that of an LBO!18 To put the same thought another way, it is the risk management policy that allows companies with large financial exposures to have significant managerial stock ownership. For, without the hedging policy, a major price exposure would cause the scope of management’s bet to be too diffuse, and “uncontrollables” would dilute the desired incentive benefits of more concentrated ownership."
     },
     {
       "page": 12,
       "pdfPage": 12,
       "sequence": 7,
       "label": "p. 12",
-      "en": "Although Tufano’s study is finally incapable of answering the question, “Did risk management add value for shareholders?,” the study nevertheless has an important message for corporate policy. It says 16. Additional empirical support for the importance of the relation between the option component of managerial compensation contracts and corporate risktaking was provided in a recent study of S&Ls that changed their organizational form from mutual ownership to stock ownership. The study finds that those “converted” S&Ls where management has options choose to increase their oneyear gaps and, hence, their exposure to interest rates."
-    },
-    {
-      "page": 12,
-      "pdfPage": 12,
-      "sequence": 8,
-      "label": "p. 12",
-      "en": "The study also shows that the greater the percentage of their interest rate exposure an S&L hedges, the larger the credit risk it takes on. The authors of the study interpret this finding to argue, as I do here, that risk management allows firms to increase their exposures to some risks by reducing other risks and thus limiting total firm risk. See C.M. Schrandt and H. Unal, “Coordinated Risk Management: On and Off-balance Sheet Hedging and Thrift Conversion,” 1996, unpublished working paper, The Wharton School, University of Pennsylvania, Philadelphia, PA. 17. Although Tufano’s study does not find that firms that hedge have systematically higher leverage ratios, it does find that companies that hedge less have higher cash balances. 18."
-    },
-    {
-      "page": 12,
-      "pdfPage": 12,
-      "sequence": 9,
-      "label": "p. 12",
-      "en": "For a discussion of the role of hedging in creating an LBO-like structure, see my study, “Managerial Discretion and Optimal Financing Policies,” Journal of Financial Economics (1990), pp. 3-26. Given that the firm has chosen to concentrate equity ownership, hedging may well be a value-adding strategy. If significant equity ownership for managers is expected to strengthen incentives to improve operating performance, hedging can make these incentives even stronger by removing the “noise” introduced by a major performance variable that is beyond management’s control."
+      "en": "Although Tufano’s study is finally incapable of answering the question, “Did risk management add value for shareholders?,” the study nevertheless has an important message for corporate policy. It says H. Unal, “Coordinated Risk Management: On and Off-balance Sheet Hedging and Thrift Conversion,” 1996, unpublished working paper, The Wharton School, University of Pennsylvania, Philadelphia, PA."
     },
     {
       "page": 13,
       "pdfPage": 13,
       "sequence": 1,
       "label": "p. 13",
-      "en": "that, to the extent that risk-taking within the corporation is decentralized, it is important to understand the incentives of those who make the decisions to take or lay off risks. Organizations have lots of people doing a good job, and so simply doing a good job may not be enough to get promoted. And, if one views corporate promotions as the outcome of “tournaments” (as does one strand of the academic literature), there are tremendous incentives to stand out. One way to stand out is by volunteering to take big risks. In most areas of a corporation, it is generally impossible to take risks where the payoffs are large enough to be noticeable if things go well. But the treasury area may still be an exception."
+      "en": "FIGURE 4 WORLD MARKET PORTFOLIO RETURN SEPTEMBER 1985- DECEMBER 1995 that, to the extent that risk-taking within the corporation is decentralized, it is important to understand the incentives of those who make the decisions to take or lay off risks. Organizations have lots of people doing a good job, and so simply doing a good job may not be enough to get promoted. And, if one views corporate promotions as the outcome of “tournaments” (as does one strand of the academic literature), there are tremendous incentives to stand out. One way to stand out is by volunteering to take big risks. In most areas of a corporation, it is generally impossible to take risks where the payoffs are large enough to be noticeable if things go well."
     },
     {
       "page": 13,
       "pdfPage": 13,
       "sequence": 2,
       "label": "p. 13",
-      "en": "When organized as a profit center, the corporate treasury was certainly a place where an enterprising executive could take such risks and succeed. To the extent such possibilities for risk-taking still exist within some corporate treasuries, top management must be very careful in establishing the appropriate incentives for their risk managers. I return to this subject in the final section of the paper. MEASURING RISK (OR, IMPROVING ON VaR) As I mentioned at the outset, the academic literature has focused on volatility reduction as the primary objective of risk management, and on variance as the principal measure of risk."
+      "en": "But the treasury area may still be an exception. When organized as a profit center, the corporate treasury was certainly a place where an enterprising executive could take such risks and succeed. To the extent such possibilities for risk-taking still exist within some corporate treasuries, top management must be very careful in establishing the appropriate incentives for their risk managers. I return to this subject in the final section of the paper. MEASURING RISK (OR, IMPROVING ON VaR) As I mentioned at the outset, the academic literature has focused on volatility reduction as the primary objective of risk management, and on variance as the principal measure of risk."
     },
     {
       "page": 13,
       "pdfPage": 13,
       "sequence": 3,
       "label": "p. 13",
-      "en": "But such a focus on variance, as we have seen, is inconsistent with both most corporate practice and with the theory of risk management presented in this paper. Rather than aiming to reduce variance, most corporate risk management programs appear designed just to avoid “lower-tail outcomes” while preserving upside potential. Indeed, as I suggested earlier, some companies will hedge certain downside risks precisely in order to be able to increase their leverage ratios or to enlarge other financial exposures in ways designed to exploit their comparative advantage in risk-taking. Many commercial banks and other financial institutions now attempt to quantify the probability of lower-tail outcomes by using a measure known as Value at Risk, or VaR."
+      "en": "But such a focus on variance, as we have seen, is inconsistent with both most corporate practice and with the theory of risk management presented in this paper. just to avoid “lower-tail outcomes” while preserving upside potential. Indeed, as I suggested earlier, some companies will hedge certain downside risks precisely in order to be able to increase their leverage ratios or to enlarge other financial exposures in ways designed to exploit their comparative advantage in risk-taking. Many commercial banks and other financial institutions now attempt to quantify the probability of lower-tail outcomes by using a measure known as Value at Risk, or VaR."
     },
     {
       "page": 13,
@@ -655,7 +592,7 @@
       "pdfPage": 13,
       "sequence": 5,
       "label": "p. 13",
-      "en": "This tells you that, about two thirds of the time, your actual return would have fallen within a range extending from a loss of 3.1% to a gain of 5.5%. But what if one of your major concerns is the size of your monthly losses if things turn out badly, and you thus want to know more about the bottom third of the distribution of outcomes? Let’s say, for example, that you want to know the maximum extent of your losses in 95 cases out of 100—that is, within a 95% “confidence interval.” In that case, you would calculate the VaR evaluated at the 5% level, FIGURE 4 WORLD MARKET PORTFOLIO RETURN SEPTEMBER 1985- DECEMBER 1995"
+      "en": "This tells you that, about two thirds of the time, your actual return would have fallen within a range extending from a loss of 3.1% to a gain of 5.5%. But what if one of your major concerns is the size of your monthly losses if things turn out badly, and you thus want to know more about the bottom third of the distribution of outcomes? Let’s say, for example, that you want to know the maximum extent of your losses in 95 cases out of 100—that is,"
     },
     {
       "page": 14,
@@ -690,35 +627,28 @@
       "pdfPage": 14,
       "sequence": 5,
       "label": "p. 14",
-      "en": "In evaluating their major risks, most non-financial companies will want to know how much volatility in their cash flows or firm value an exposure can be expected to cause over periods of at least a year, and often considerably longer. Unfortunately, there are at least two major difficulties in extending the VaR over longer time horizons that may not be surmountable. First, remember that a daily VaR at the 99th percentile is one that is expected to occur on one day out of 100. The relative precision of such a prediction makes it possible to conduct empirical checks of the validity of the model."
+      "en": "In evaluating their major risks, most non-financial companies cause over periods of at least a year, and often considerably longer. Unfortunately, there are at least two major difficulties in extending the VaR over longer time horizons that may not be surmountable. First, remember that a daily VaR at the 99th percentile is one that is expected to occur on one day out of 100. The relative precision of such a prediction makes it possible to conduct empirical checks of the validity of the model. With the large number of daily observations, one can readily observe the frequency with which the loss is equal or greater than VaR using reasonably current data."
     },
     {
       "page": 14,
       "pdfPage": 14,
       "sequence": 6,
       "label": "p. 14",
-      "en": "With the large number of daily observations, one can readily observe the frequency with which the loss is equal or greater than VaR using reasonably current data. But, if we attempt to move from a daily to, say, a one-year VaR at the same 99th percentile, it becomes very difficult to calculate such a model, much less subject it to empirical testing. Since an annual VaR at the 99th percentile means that the loss can be expected to take place in only one year in every 100, one presumably requires numerous 100-year periods to establish the validity of such a model. The second problem in extending the time horizon of VaR is its reliance on the normal distribution."
+      "en": "But, if we attempt to move from a daily to, say, a one-year VaR at the same 99th percentile, it becomes very difficult to calculate such a model, much less subject it to empirical testing. Since an annual VaR at the 99th percentile means that the loss can be expected to take place in only one year in every 100, one presumably requires numerous 100-year periods to establish the validity of such a model. The second problem in extending the time horizon of VaR is its reliance on the normal distribution. When one is especially concerned about “tail” probabilities—the probabilities of the worst and best outcomes—the assumption made about the statistical distribution of the gains and losses is important."
     },
     {
       "page": 14,
       "pdfPage": 14,
       "sequence": 7,
       "label": "p. 14",
-      "en": "When one is especially concerned about “tail” probabilities—the probabilities of the worst and best outcomes—the assumption made about the statistical distribution of the gains and losses is important. Research on stock prices and on default probabilities across different classes of debt suggests that the tail probabilities are generally larger than implied by the normal distribution. A simple way to understand this is as follows. If stock returns were really normally distributed, as many pricing models assume, market declines in excess of 10% in a day would be extremely rare—say, once in a million years."
+      "en": "Research on stock prices and on default probabilities across different classes of debt suggests that the tail probabilities are generally larger than implied by the normal distribution. A simple way to understand this is as follows. If stock returns were really normally distributed, as many pricing models assume, market declines in excess of 10% in a day would be extremely rare—say, once in a million years. The fact that such declines happen more often than this is proof that the normal distribution does not describe the probability of lower-tail events correctly. Although this is not an important failing for most applications in corporate finance, including the valuation of most securities, it can be critical in the context of risk management."
     },
     {
       "page": 14,
       "pdfPage": 14,
       "sequence": 8,
       "label": "p. 14",
-      "en": "The fact that such declines happen more often than this is proof that the normal distribution does not describe the probability of lower-tail events correctly. Although this is not an important failing for most applications in corporate finance, including the valuation of most securities, it can be critical in the context of risk management. For example, if changes in the value of derivatives portfolios or default probabilities have “fatter tails” than those implied by a normal distribution, management could end up significantly understating the probability of distress. An Alternative to VaR: Using Cash Flow Simulations to Estimate Default Probabilities."
-    },
-    {
-      "page": 14,
-      "pdfPage": 14,
-      "sequence": 9,
-      "label": "p. 14",
-      "en": "Moreover, even if we could calculate a one-year VaR for the value of the firm and be reasonably confident that the distribution was normal, the relevant risk measure for hedging purposes would not be the VaR com- The question management would like to be able to answer is this: If we define financial distress as a situation where we cannot raise funds with a rating of BBB, or where our cash flows fall below some target, what is the probability of distress over, say, the next three years? VaR by itself cannot answer this question—nor can traditional measures of volatility."
+      "en": "For example, if changes in the value of derivatives portfolios or default probabilities have “fatter tails” than those implied by a normal distribution, management could end up significantly understating the probability of distress. An Alternative to VaR: Using Cash Flow Simulations to Estimate Default Probabilities. Moreover, even if we could calculate a one-year VaR for the value of the firm and be reasonably confident that the"
     },
     {
       "page": 15,
@@ -739,7 +669,7 @@
       "pdfPage": 15,
       "sequence": 3,
       "label": "p. 15",
-      "en": "Such a technique could also be used to estimate the expected effect of various hedging strategies on the probability of distress. One of the advantages of using simulation techniques in this context is their ability to incorporate any special properties (or “non-normalities”) of the cash flows. As we saw earlier, the VaR approach assumes that the gains and losses from risky positions are “serially independent,” which means that if your firm experiences a loss today, the chance of experiencing another loss tomorrow is unaffected. But this assumption is likely to be wrong when applied to the operating cash flow of a nonfinancial firm: If cash flow is poor today, it is more likely to be poor tomorrow."
+      "en": "Such a technique could also be used to estimate the expected effect of various hedging strategies on the probability of distress.19 One of the advantages of using simulation techniques in this context is their ability to incorporate any special properties (or “non-normalities”) of the cash flows. As we saw earlier, the VaR approach assumes that the gains and losses from risky positions are “serially independent,” which means that if your firm experiences a loss today, the chance of experiencing another loss tomorrow is unaffected. But this assumption is likely to be wrong when applied to the operating cash flow of a nonfinancial firm: If cash flow is poor today, it is more likely to be poor tomorrow."
     },
     {
       "page": 15,
@@ -760,28 +690,21 @@
       "pdfPage": 15,
       "sequence": 6,
       "label": "p. 15",
-      "en": "To evaluate if the bet is worth taking, let’s start by supposing that we are willing to put an explicit cost on the increase in the probability of distress resulting from betting on certain markets. In that case, the trade-off for evaluating a bet for the company becomes fairly simple: The expected profit from the bet must exceed the increase in the probability of distress multiplied by the expected cost of distress. 20 Thus, a bet that has a positive expected value and no effect on the probability of distress is one that the firm should take. But a bet with positive expected profit that significantly increases the probability of financial distress may not appear profitable if the costs of a bad outcome are too large."
+      "en": "To evaluate if the bet is worth taking, let’s start by supposing that we are willing to put an explicit cost on the increase in the probability of distress resulting from betting on certain markets. In that case, the trade-off for evaluating a bet for the company becomes fairly simple: The expected profit from the bet must exceed the increase in the probability of distress multiplied by the expected cost of distress.20 Thus, a bet that has a positive expected value and no effect on the probability of distress is one that the firm should take. But a bet with positive expected profit that significantly increases the probability of financial distress may not appear profitable if the costs of a bad outcome are too large."
     },
     {
       "page": 15,
       "pdfPage": 15,
       "sequence": 7,
       "label": "p. 15",
-      "en": "In such cases, it makes sense for the firm to think 19. For an illustration of the use of Monte Carlo analysis in risk management, see René Stulz and Rohan Williamson, “Identifying and Quantifying Exposures,” in ed., Robert Jameson, Treasury Risk Management (London, Risk Publications), forthcoming. 20. One possible approach to quantifying the expected costs of financial distress involves the concept of American “binary options” and the associated option pricing models. An example of a binary option is one that would pay a fixed amount, say, $10, if the stock price of IBM falls below $40."
+      "en": "In such cases, it makes sense for the firm to think The connection between binary options and risk management is this: The present value of a binary option is a function of two major variables: the probability that firm value will fall below a certain level (in this case, $40) and the payoff in the event of such a drop in value ($10). By substituting for the $10 payoff its own estimate of how much additional value the firm is likely to lose once its value falls to a certain level and gets into financial trouble, management can then estimate the expected present value of such costs using a binary option pricing model."
     },
     {
       "page": 15,
       "pdfPage": 15,
       "sequence": 8,
       "label": "p. 15",
-      "en": "Unlike standard American put options, which when exercised pay an amount equal to (the strike price of) $40 minus the actual price, the holder of a binary option receives either $10 or nothing, and exercises when the stock price crosses the $40 barrier. Such options can be priced using modified option pricing models. The connection between binary options and risk management is this: The present value of a binary option is a function of two major variables: the probability that firm value will fall below a certain level (in this case, $40) and the payoff in the event of such a drop in value ($10)."
-    },
-    {
-      "page": 15,
-      "pdfPage": 15,
-      "sequence": 9,
-      "label": "p. 15",
-      "en": "By substituting for the $10 payoff its own estimate of how much additional value the firm is likely to lose once its value falls to a certain level and gets into financial trouble, management can then estimate the expected present value of such costs using a binary option pricing model. This is the number that could be set against the expected profit from the firm’s bet in order to evaluate whether to go ahead with the bet."
+      "en": "This is the number that could be set against the expected profit from the firm’s bet in order to evaluate whether to go ahead with the bet."
     },
     {
       "page": 16,
@@ -809,35 +732,28 @@
       "pdfPage": 16,
       "sequence": 4,
       "label": "p. 16",
-      "en": "At the same time, however, top management should also consider subjecting its bets to an even higher standard of profitability to compensate shareholders for any associated increase in expected financial distress costs. How much higher should it be? One method would be to assume that, instead of hedging, the firm raises additional equity capital to support the expected increase in volatility associated with the bet. In that case, the bet would be expected to produce the same risk-adjusted return on capital as the bet taken by company AAA, but on a larger amount of imputed “risk” capital."
+      "en": "At the same time, however, top management should also consider subjecting its bets to an even higher standard of profitability to compensate shareholders for any associated increase in expected financial distress costs. How much higher should it be? One method would be to assume that, instead of hedging, the firm raises additional equity capital to support the expected increase in volatility associated with the bet."
     },
     {
       "page": 16,
       "pdfPage": 16,
       "sequence": 5,
       "label": "p. 16",
-      "en": "In sum, when devising a compensation scheme for those managers entrusted with making the firm’s bets, it is critical to structure their incentive payments so that they are encouraged to take only those bets that are expected to increase shareholder wealth. Managers should not be compensated for earning average returns when taking larger-than-average risks. They should be compensated only for earning more than what their shareholders could earn on their own when bearing the same amount of risk. This approach does not completely eliminate the problem discussed earlier caused by incentives for individuals to stand out in large organizations by taking risks. But traditional compensation schemes only reinforce this problem."
+      "en": "In that case, the bet would be expected to produce the same risk-adjusted return on capital as the bet taken by company AAA, but on a larger amount of imputed “risk” capital.21 In sum, when devising a compensation scheme for those managers entrusted with making the firm’s bets, it is critical to structure their incentive payments so that they are encouraged to take only those bets that are expected to increase shareholder wealth. Managers should not be compensated for earning average returns when taking larger-than-average risks. They should be compensated only for earning more than what their shareholders could earn on their own when bearing the same amount of risk."
     },
     {
       "page": 16,
       "pdfPage": 16,
       "sequence": 6,
       "label": "p. 16",
-      "en": "If a risk-taker simply receives a bonus for making gains, he has incentives to take random bets because he gets a fraction of his gains while the firm bears the losses. Evaluating managers’ performance against a risk-adjusted benchmark can help discourage risk-taking that is not justified by comparative advantage by making it more difficult for the risk-taker to make money by taking random bets. CONCLUSION This paper presents a theory of risk management that attempts to go beyond the “varianceminimization” model that dominates most academic discussions of corporate risk management. I argue that the primary goal of risk management is to eliminate the probability of costly lower-tail outcomes—those that would cause financial distress or 21."
+      "en": "This approach does not completely eliminate the problem discussed earlier caused by incentives for individuals to stand out in large organizations by taking risks. But traditional compensation schemes only reinforce this problem. If a risk-taker simply receives a bonus for making gains, he has incentives to take random bets because he gets a fraction of his gains while the firm bears the losses. Evaluating managers’ performance against a risk-adjusted benchmark can help discourage risk-taking that is not justified by comparative advantage by making it more difficult for the risk-taker to make money by taking random bets."
     },
     {
       "page": 16,
       "pdfPage": 16,
       "sequence": 7,
       "label": "p. 16",
-      "en": "The amount of implicit “risk capital” (as opposed to the actual cash capital) backing an activity can be calculated as a function of the expected volatility (as measured by the standard deviation) of the activity’s cash flow returns. For the distinction between risk capital and cash capital, and a method for calculating risk capital, see Robert Merton and André Perold, “Theory of Risk Capital for Financial Firms,” Journal of Applied Corporate Finance, Vol. 6 No. 3 (Fall 1993). For one company’s application of a similar method for calculating risk capital, see Edward Zaik et al., “RAROC at Bank of America: From Theory to Practice,” Journal of Applied Corporate Finance, Vol. 9 No. 2 (Summer 1996)."
-    },
-    {
-      "page": 16,
-      "pdfPage": 16,
-      "sequence": 8,
-      "label": "p. 16",
-      "en": "For a theoretical model of capital budgeting that takes into account firm-specific risks, see Kenneth Froot and Jeremy Stein, “Risk Management, Capital Budgeting, and Capital Structure Policy for Financial Institutions: An Integrated Approach,” Working Paper 96-030, Harvard Business School Division of Research. To the extent that view-taking becomes an accepted part of a company’s risk management program, it is important to evaluate managers’ bets on a risk-adjusted basis and relative to the market. If managers want to behave like money managers, they should be evaluated like money managers."
+      "en": "CONCLUSION This paper presents a theory of risk management that attempts to go beyond the “varianceminimization” model that dominates most academic discussions of corporate risk management. I argue that the primary goal of risk management is to eliminate the probability of costly lower-tail outcomes—those that would cause financial distress or Zaik et al., “RAROC at Bank of America: From Theory to Practice,” Journal of Applied Corporate Finance, Vol. 9 No. 2 (Summer 1996). For a theoretical model of capital budgeting that takes into account firm-specific risks, see Kenneth Froot and Jeremy Stein, “Risk Management, Capital Budgeting, and Capital Structure"
     },
     {
       "page": 17,
@@ -851,21 +767,21 @@
       "pdfPage": 17,
       "sequence": 2,
       "label": "p. 17",
-      "en": "For, besides increasing corporate debt capacity, the reduction of downside risk could also encourage larger equity stakes for managers by shielding their investments from “uncontrollables.” This paper also departs from standard finance theory in suggesting that some companies may have a comparative advantage in bearing certain financial market risks—an advantage that derives from information it acquires through its normal business activities. Although such specialized information may occasionally lead some companies to take speculative positions in commodities or currencies, it is more likely to encourage selective hedging, a practice in which the risk manager’s view of future price movements influences the percentage of the exposure that is hedged."
+      "en": "For, besides increasing corporate debt capacity, the reduction of downside risk could also encourage larger equity stakes for managers by shielding their investments from “uncontrollables.” This paper also departs from standard finance theory in suggesting that some companies may have a comparative advantage in bearing certain financial market risks—an advantage that derives from information it acquires through its normal business RENÉ STULZ holds the Reese Chair in Banking and Monetary Economics at the Ohio State University, and is also a Bower Fellow at the Harvard Business School and a Research Associate at the National Bureau of Economic Research. Professor Stulz is activities."
     },
     {
       "page": 17,
       "pdfPage": 17,
       "sequence": 3,
       "label": "p. 17",
-      "en": "This kind of hedging, while certainly containing potential for abuse, may also represent a value-adding form of risk-taking for many companies. But, to the extent that such view-taking becomes an accepted part of a company’s risk management program, it is important to evaluate managers’ bets on a risk-adjusted basis and relative to the market. If managers want to behave like money managers, they should be evaluated like money managers. R ENÉ STULZ holds the Reese Chair in Banking and Monetary Economics at the Ohio State University, and is also a Bower Fellow at the Harvard Business School and a Research Associate at the National Bureau of Economic Research."
+      "en": "Although such specialized information may occasionally lead some companies to take speculative positions in commodities or currencies, it is more likely to encourage selective hedging, a practice in which the risk manager’s view of future price movements influences the percentage of the exposure that is hedged. This kind of hedging, while certainly containing potential for abuse, may also represent a value-adding form of risk-taking for many companies. But, to the extent that such view-taking becomes an accepted part of a company’s risk management program, it is important to evaluate managers’ bets on a risk-adjusted basis and relative to the market."
     },
     {
       "page": 17,
       "pdfPage": 17,
       "sequence": 4,
       "label": "p. 17",
-      "en": "Professor Stulz is editor of the Journal of Finance, and is currently at work on a textbook entitled “Derivatives, Risk Management, and Financial Engineering.”"
+      "en": "If managers want to behave like money managers, they should be evaluated like money managers. editor of the Journal of Finance, and is currently at work on a textbook entitled “Derivatives, Risk Management, and Financial Engineering.”"
     }
   ]
 }

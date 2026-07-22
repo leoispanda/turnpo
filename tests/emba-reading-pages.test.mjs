@@ -49,6 +49,24 @@ for (const entry of fullReadingIndex.readings) {
   assert.ok(fullReading.paragraphs.every((item) => item.label && item.en && item.page), `${entry.id} contains an incomplete original paragraph`);
 }
 
+const stulzFullText = JSON.parse(fs.readFileSync("emba/reading-texts/stulz-risk-management.json", "utf8"));
+const stulzPageOne = stulzFullText.paragraphs
+  .filter((item) => item.pdfPage === 1)
+  .map((item) => item.en)
+  .join(" ");
+const stulzPageTwo = stulzFullText.paragraphs
+  .filter((item) => item.pdfPage === 2)
+  .map((item) => item.en)
+  .join(" ");
+assert.match(stulzPageOne, /^This article explores an apparent conflict between the theory and current practice/);
+assert.ok(
+  stulzPageOne.indexOf("The actual corporate use of derivatives")
+    < stulzPageOne.indexOf("What the stories suggest, and the surveys seem to confirm"),
+  "Stulz page 1 must keep the left column before the right column",
+);
+assert.doesNotMatch(stulzPageOne, /apparent conflict T between/);
+assert.doesNotMatch(stulzPageTwo, /1\. Christopher Culp and Merton Miller/);
+
 const dayContent = dayFiles.map((file) => fs.readFileSync(file, "utf8")).join("\n");
 for (const file of dayFiles) {
   const markdown = fs.readFileSync(file, "utf8");

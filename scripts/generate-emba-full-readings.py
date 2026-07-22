@@ -9,6 +9,7 @@ import re
 from pathlib import Path
 
 from pypdf import PdfReader
+import pdfplumber
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -158,6 +159,59 @@ def extracted_pages(config: dict) -> list[dict]:
     return pages
 
 
+def column_text(page, bbox: tuple[float, float, float, float]) -> str:
+    """Extract one physical PDF column in visual reading order.
+
+    pypdf's default extractor follows the PDF drawing order.  That order is
+    not the reading order in Stulz (1996): it interleaves the two columns on
+    each page.  Grouping words into visual lines inside an explicit crop gives
+    us left-column top-to-bottom, followed by right-column top-to-bottom.
+    """
+    words = page.crop(bbox).extract_words(x_tolerance=1, y_tolerance=3)
+    lines: list[list[dict]] = []
+    for word in sorted(words, key=lambda item: (item["top"], item["x0"])):
+        if not lines or abs(word["top"] - lines[-1][0]["top"]) > 3:
+            lines.append([word])
+        else:
+            lines[-1].append(word)
+    rendered_lines: list[str] = []
+    for line in lines:
+        line_text = " ".join(item["text"] for item in sorted(line, key=lambda item: item["x0"]))
+        # Journal citations sit below the article body.  They are not part of
+        # the paragraph that continues in the next column.
+        if line[0]["top"] > 600 and re.match(r"^(?:\*|\d+\.)", line_text):
+            break
+        rendered_lines.append(line_text)
+    return "\n".join(rendered_lines)
+
+
+def stulz_pages(config: dict) -> list[dict]:
+    """Read the Stulz article from its two-column magazine layout.
+
+    The printed article uses the left column first, then the right column.
+    Headers, footnotes, and page furniture sit outside the body crop.  Page 1
+    has a title block, so its body starts lower than the remaining pages.
+    """
+    source = READINGS_DIR / config["file"]
+    pages: list[dict] = []
+    with pdfplumber.open(source) as pdf:
+        for pdf_page, page in enumerate(pdf.pages, start=1):
+            body_top = 250 if pdf_page == 1 else 100
+            # Later pages put notes below the article body.  Keeping the crop
+            # above them prevents a footnote from being inserted between the
+            # left column's last line and the right column's continuation.
+            body_bottom = 700
+            left = column_text(page, (40, body_top, 302, body_bottom))
+            right = column_text(page, (310, body_top, 575, body_bottom))
+            text = f"{left}\n{right}".strip()
+            if pdf_page == 1:
+                # The decorative drop cap is extracted on its own visual line.
+                text = re.sub(r"^his article explores", "This article explores", text)
+                text = text.replace("conflict\nT\nbetween", "conflict\nbetween")
+            pages.append({"pdfPage": pdf_page, "page": pdf_page, "text": text})
+    return pages
+
+
 def ocr_pages(path: Path) -> list[dict]:
     data = json.loads(path.read_text(encoding="utf-8"))
     return [{"pdfPage": item["page"], "page": item["page"], "text": item["text"]} for item in data]
@@ -168,12 +222,16 @@ def build_reading(reading_id: str, config: dict, ocr_path: Path | None) -> dict:
         if not ocr_path or not ocr_path.exists():
             raise SystemExit("Tennessee OCR JSON is required; pass --tennessee-ocr PATH")
         pages = ocr_pages(ocr_path)
+    elif reading_id == "stulz-risk-management":
+        pages = stulz_pages(config)
     else:
         pages = extracted_pages(config)
 
     paragraphs = []
     for page in pages:
         cleaned = normalize_page_text(page["text"])
+        if reading_id == "stulz-risk-management" and page["pdfPage"] == 1:
+            cleaned = cleaned.replace("apparent conflict T between", "apparent conflict between")
         for sequence, text in enumerate(paragraph_chunks(cleaned), start=1):
             paragraphs.append({
                 "page": page["page"],
@@ -197,17 +255,27 @@ def build_reading(reading_id: str, config: dict, ocr_path: Path | None) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--tennessee-ocr", type=Path)
+    parser.add_argument("--reading", choices=sorted(SOURCES), help="Regenerate one reading only")
     args = parser.parse_args()
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    index = {"readings": []}
-    for reading_id, config in SOURCES.items():
+    selected = {args.reading: SOURCES[args.reading]} if args.reading else SOURCES
+    existing_index = {"readings": []}
+    index_path = OUTPUT_DIR / "index.json"
+    if args.reading and index_path.exists():
+        existing_index = json.loads(index_path.read_text(encoding="utf-8"))
+    refreshed_index: dict[str, dict] = {}
+    for entry in existing_index.get("readings", []):
+        if entry.get("id") not in selected:
+            refreshed_index[entry["id"]] = entry
+    for reading_id, config in selected.items():
         payload = build_reading(reading_id, config, args.tennessee_ocr)
         output_path = OUTPUT_DIR / f"{reading_id}.json"
         output_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        index["readings"].append({key: payload[key] for key in (
+        refreshed_index[reading_id] = {key: payload[key] for key in (
             "id", "scope", "pageCount", "paragraphCount", "characterCount"
-        )})
+        )}
         print(f"{reading_id}: {payload['pageCount']} pages, {payload['paragraphCount']} paragraphs")
+    index = {"readings": [refreshed_index[reading_id] for reading_id in SOURCES if reading_id in refreshed_index]}
     (OUTPUT_DIR / "index.json").write_text(
         json.dumps(index, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
