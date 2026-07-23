@@ -153,37 +153,11 @@ function renderReading(reading, readings, fullIds) {
           </div>
         </section>
 
-        ${reading.editionBridge ? `
-          <section class="reading-edition-bridge" aria-labelledby="edition-bridge-title">
-            <div class="reading-section-heading">
-              <span>Simple overview · 简单概念导读</span>
-              <h2 id="edition-bridge-title">${escapeHtml(reading.editionBridge.title)}</h2>
-              <p>${escapeHtml(reading.editionBridge.intro)}</p>
-            </div>
-            <div class="edition-bridge-grid">
-              ${reading.editionBridge.items.map((item) => `
-                <article class="edition-bridge-item">
-                  <span>概念 ${escapeHtml(item.step)}</span>
-                  <h3>${escapeHtml(item.title)}</h3>
-                  <p class="edition-bridge-course">${escapeHtml(item.reference)}</p>
-                  <p>${escapeHtml(item.body)}</p>
-                </article>
-              `).join("")}
-            </div>
-            <div class="edition-bridge-route">
-              <small>轻松阅读顺序｜约 45–60 分钟</small>
-              <ol>
-                ${reading.editionBridge.route.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}
-              </ol>
-            </div>
-          </section>
-        ` : ""}
-
         <section class="reading-section" aria-labelledby="parts-title">
           <div class="reading-section-heading">
             <span>Deep reading</span>
-            <h2 id="parts-title">沿着文章结构逐部分读</h2>
-            <p>先理解作者为什么要写这一部分，再记结论。以下顺序是课堂学习路线，不是虚构的原文小标题。</p>
+            <h2 id="parts-title">${escapeHtml(reading.partsHeading || "沿着文章结构逐部分读")}</h2>
+            <p>${escapeHtml(reading.partsIntro || "先理解作者为什么要写这一部分，再记结论。以下顺序是课堂学习路线，不是虚构的原文小标题。")}</p>
           </div>
           <div class="reading-parts">
             ${reading.parts.map((part, partIndex) => `

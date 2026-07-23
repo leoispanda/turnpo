@@ -12,26 +12,9 @@
       "status": "study-guide",
       "sourceUrl": "https://www.pearson.com/en-gb/subject-catalog/p/fundamentals-of-corporate-finance-global-edition/P200000012454/9781292470030",
       "sourceLabel": "查看 Pearson 教材页面（正式原文待补）",
-      "summary": "这组章节提供金融决策的完整骨架：先确定财务经理为谁创造价值，再把未来现金流折算到同一时点，理解债券和股票如何定价，检查短期资金缺口，最后把延迟、扩张或退出等管理弹性视为有价值的真实期权。核心不是背公式，而是同时判断价值、融资、流动性与选择权。",
-      "coreQuestion": "一个长期 NPV 为正的项目，为什么仍可能因为融资结构或流动性缺口而不值得立刻投资？",
-      "originalNote": "第六版指定教材的正式原文尚未收录。当前先按你提供的 Global Edition 4th summary 建立对应学习路线；它是旧版摘要，不是第六版原书，也不能作为第六版页码引用。",
-      "editionBridge": {
-        "title": "先把这一部分读成一个公司决定",
-        "intro": "不用记第几版、第几章。把你手边的旧版摘要当作一个入口：它要帮你理解的不是公式清单，而是管理层怎样从未来现金、风险和不确定性里，做出一项能活下去的投资决定。",
-        "items": [
-          {"step": "01", "title": "先看钱在什么时候真正发生", "reference": "旧版可先读：Ch. 4｜Time Value of Money", "body": "今天的一欧元和五年后的一欧元不能直接相加。项目分析的第一步不是算回报率，而是把设备、工资、库存、客户回款逐项放进时间线；未来的钱必须穿过时间和风险，才能和今天的投入公平比较。"},
-          {"step": "02", "title": "再看项目究竟改变了什么", "reference": "旧版可先读：Chs. 7–8｜Investment Rules & Capital Budgeting", "body": "项目不是看总收入，也不是把所有历史成本都塞进去。只看“因为做了它才多出或少掉的现金”：已经花掉的调研费是 sunk cost；被占用的厂房和库存也有机会成本。NPV 的意义很朴素：这些新增现金折回今天后，是否还比投入更多。"},
-          {"step": "03", "title": "价值成立，不等于公司一定撑得到", "reference": "旧版可参考：Ch. 14 的债务与股权直觉；再读 Stulz", "body": "长期会赚钱的项目，也可能在前两年先把现金耗尽。债务带来固定偿付与约束，股权换来缓冲但要分享未来。真正成熟的判断会同时问：项目值不值得，以及公司是否有足够现金、信用和融资空间走到回款那天。"},
-          {"step": "04", "title": "风险不是全部消灭，而是别让它毁掉好决定", "reference": "旧版可参考：Chs. 11–12；再读 Stulz 与 Nocco & Stulz", "body": "折现率不是一个为了让项目通过而随意调整的数字；它反映资本面对风险要求的回报。公司不需要害怕所有波动，却要保护会造成现金断裂、融资困难和被迫停止投资的坏情景。核心经营风险可以管理着承担，自己没有优势的价格风险才考虑转移。"},
-          {"step": "05", "title": "不确定时，保留下一次更聪明决定的权利", "reference": "旧版可先读：Chs. 20–22｜Options & Real Options", "body": "不是每项投资都只有“现在全做”或“永远不做”。先小规模试点、等需求更清楚再扩张、情况恶化就收缩或退出，都是有价值的选择权。你不需要推导复杂公式，只要能看出：什么时候 stage、delay 或 stop 比一次押注更理性。"}
-        ],
-        "route": [
-          "先用 10 分钟读五个概念，不要求记住任何公式。",
-          "再翻旧版 Ch. 4 与 Chs. 7–8，把时间线、增量现金、NPV、sunk cost 和 opportunity cost 对上。",
-          "接着读 Stulz：为什么“长期有价值”仍会被现金压力和融资约束打断。",
-          "最后读旧版 Chs. 20–22，形成 stage / delay / stop 的直觉即可。"
-        ]
-      },
+      "summary": "你提供的第四版摘要实际覆盖七条主线：时间价值、投资规则、资本预算、股票估值、风险与资本成本、债务与股权、以及真实期权。它不是完整教材，却足够建立 Day 1 的关键逻辑：先识别增量现金流，再用合理回报要求判断价值，并在不确定性下保留行动空间。",
+      "coreQuestion": "当一项投资的预测很诱人时，怎样用时间线、增量现金流、NPV、资本成本和真实期权，把“看起来不错”变成一个可执行的决定？",
+      "originalNote": "第六版指定教材的正式原文尚未收录。以下学习内容严格依据你提供的 Global Edition 4th summary 实际覆盖的章节生成；摘要没有覆盖的主题不会被伪装成来自旧版教材。它仍不是第六版原书，不能作为第六版页码引用。",
       "fable": {
         "title": "《一盏晚到的灯》",
         "intro": "进入公式前，先用这个小故事把八个指定章节放进同一个决定。它不是教材原文，而是帮助你记住判断顺序的寓言。",
@@ -44,24 +27,28 @@
         "bridge": "读 Berk 的这些章节时，不要把它们当成八段分散的技术。它们合在一起，正是在教你如何判断：一项投资是否创造价值、价值能否穿过融资与流动性的考验、以及不确定时为何要保留行动的选择权。"
       },
       "excerpts": [],
+      "partsHeading": "沿着第四版摘要实际出现的顺序读",
+      "partsIntro": "以下七部分依次来自你提供的第四版摘要：Ch. 4、Chs. 7–9、Chs. 11–12、Ch. 14、Chs. 20–22。没有把旧版没有出现的债券或短期财务规划硬塞进来。",
       "parts": [
-        {"title": "决策起点：财务经理究竟在优化什么", "body": "Chapter 1 的指定部分先明确公司金融的三类工作：投资、融资和现金管理。企业价值并不等于当期利润最大化；经理需要考虑现金流时间、风险、资本提供者与利益冲突。治理与代理问题会决定一个看似高回报的方案是否真的把价值留给公司。", "takeaway": "先说清决策目标和承担后果的人，再进入计算。"},
-        {"title": "估值底座：把不同时间的现金流放在同一天比较", "body": "Chapter 3 §§3.3–3.4 与 Chapter 4 解释现值、终值和多期现金流。折现率代表时间价值与风险补偿；年金、永续年金和不规则现金流只是不同的现金流形状。真正容易出错的是时间点、期间数和折现率口径不一致。", "takeaway": "先画 timeline，再选公式；公式不能替你判断现金流发生在什么时候。"},
-        {"title": "融资工具：债券与股票怎样分配现金流和风险", "body": "Chapter 6 的指定部分把债券看成票息与本金承诺的现值；市场利率上升时，旧债券固定现金流的现值下降。Chapter 7 §7.1 把股票价值连接到未来可分配现金流，而不是过去利润。债权与股权的不同承诺会改变流动性压力、控制权和下行风险。", "takeaway": "融资方式不是项目价值之外的包装，它会改变公司能否承受坏情景。"},
-        {"title": "公司估值：从项目现金流走到 enterprise value", "body": "Chapter 10 用 discounted free cash flow、enterprise value 和 comparable multiples 扩展估值。DCF 迫使你显性写出增长、利润率、再投资和资本成本；倍数法提供市场参照，却会把可比公司的预期和偏差一起带入。两种方法不一致时，要追查假设，而不是机械取平均。", "takeaway": "估值结果只是压缩后的假设；高质量分析必须指出最敏感的驱动因素。"},
-        {"title": "短期生存：有价值不代表有现金撑到价值实现", "body": "Chapter 20 关注现金预算、季节性缺口、短期融资和 rollover risk。长期项目可能创造价值，却在前两年消耗现金；如果融资不能续期、契约被触发或安全余量不足，公司可能被迫停止好项目。短期计划因此是战略可执行性的检验。", "takeaway": "同时看长期 NPV 与最低现金余额，不能只看最终回报。"},
-        {"title": "管理弹性：不确定性下，等待和分阶段也有价值", "body": "Chapter 21 把 delay、expand、contract、switch 和 abandon 视为 real options。面对高度不确定性，一次性投入会放弃未来根据新信息调整的权利；分阶段投资用较小成本购买学习机会。但弹性只有在管理层真的能执行并有明确触发条件时才有价值。", "takeaway": "“暂不全部投入”可能是在保护选择权，而不是拒绝增长。"}
+        {"title": "Ch. 4｜时间价值：先让所有现金站在同一天", "body": "摘要从 timeline、compounding 和 discounting 开始，再进入现金流序列、NPV、perpetuity、annuity 与非年度现金流。它要解决的不是公式数量，而是一个规则：不同日期的钱不能直接比较；先确定现金发生的时间，再把它移动到同一个时点。", "takeaway": "先画时间线，后算现值；任何脱离日期的现金流数字都不可靠。"},
+        {"title": "Ch. 7｜投资规则：为什么 NPV 是主判断，IRR 只是帮手", "body": "摘要依次讨论 stand-alone project 的 NPV、IRR rule、payback、互斥项目与资源约束。它特别提醒：项目有延后投入、多个正负现金流，或彼此规模和时间不同的时候，IRR 很容易误导；NPV 才把所有现金流放回价值这个共同尺度。", "takeaway": "先问哪个选择创造的今天价值最多；不要为了一个好看的 IRR 忽略现金流形状。"},
+        {"title": "Ch. 8｜资本预算：只把“因为项目才改变”的现金算进去", "body": "摘要从 forecast earnings 走到 free cash flow and NPV，并明确列出 opportunity cost、project externalities、cannibalisation、sunk cost、overhead 和 net working capital。最重要的分界是：已经无论如何都会发生的现金不影响决定；项目占用资源、挤掉旧业务或锁住营运资本的影响必须算进去。", "takeaway": "增量现金流是一张“做与不做”的差额表，不是把公司所有成本重新抄一遍。"},
+        {"title": "Ch. 9｜股票估值：市场价值来自未来可分配的现金", "body": "摘要按 dividend-discount model、total payout and free cash flow valuation、comparable firms 排开。它让你看到，股票并不是因为过去利润高才有价值，而是因为投资者预期未来能够得到多少现金；倍数法可以提供市场参照，但仍要回到增长、现金流和风险的假设。", "takeaway": "估值不是找一个漂亮倍数，而是问这个倍数隐含了什么未来。"},
+        {"title": "Chs. 11–12｜风险与资本成本：回报要求从哪里来", "body": "摘要从 portfolio choice、efficient portfolio、CAPM 到 equity cost of capital、beta、debt cost 和 project risk characteristics。这里你不必先做模型推导；先理解资本不会免费进入项目。风险越高、越无法通过组合分散的部分，投资者要求的回报越高，折现率就越不能随意压低。", "takeaway": "discount rate 不是让项目通过的旋钮，而是市场对风险的价格。"},
+        {"title": "Ch. 14｜债务与股权：融资会怎样改变风险分配", "body": "摘要把 equity versus debt financing、leverage、arbitrage 和 firm value 放在一起。它的起点是：债务带来固定承诺，股权让资本提供者分享剩余收益；两者不仅是不同来源的钱，也会改变谁先拿现金、谁承担下行、管理层面对什么压力。", "takeaway": "融资结构不是估值之后的包装，它会改变一个项目的风险落在谁身上。"},
+        {"title": "Chs. 20–22｜期权与真实期权：不确定时不要只会全押或放弃", "body": "摘要先讲 financial options 的基本收益、估值和 corporate finance，再进入 real versus financial options、decision tree、option to delay、growth and abandonment options。对管理者最有用的不是 Black-Scholes 的推导，而是理解小规模投入可以购买信息，等待、扩张和退出本身都是有价值的权利。", "takeaway": "面对未知，分阶段并非缺乏决心，而是在保留下一次更明智决定的选择权。"}
       ],
       "keywords": [
         {"term": "Present value", "ipa": "/ˈprezənt ˈvæljuː/", "zh": "现值", "meaning": "把未来现金流按适当折现率换算成今天的价值。"},
-        {"term": "Discount rate", "ipa": "/ˈdɪskaʊnt reɪt/", "zh": "折现率", "meaning": "反映时间价值与风险补偿，是估值最敏感的假设之一。"},
-        {"term": "Enterprise value", "ipa": "/ˈentəpraɪz ˈvæljuː/", "zh": "企业价值", "meaning": "企业经营资产对全部资本提供者的价值，不等于股权价值。"},
-        {"term": "Liquidity shortfall", "ipa": "/lɪˈkwɪdəti ˈʃɔːtfɔːl/", "zh": "流动性缺口", "meaning": "某一期间可用现金不足以覆盖支出与偿付义务。"},
-        {"term": "Rollover risk", "ipa": "/ˈrəʊləʊvə rɪsk/", "zh": "再融资风险", "meaning": "到期债务无法按可接受条件续借或替换的风险。"},
+        {"term": "Net present value", "ipa": "/net ˈprezənt ˈvæljuː/", "zh": "净现值", "meaning": "未来收益现值减去未来成本现值；它衡量项目在今天创造了多少价值。"},
+        {"term": "Sunk cost", "ipa": "/sʌŋk kɒst/", "zh": "沉没成本", "meaning": "不论今天是否继续项目都无法收回的既有支出，不应改变当前选择。"},
+        {"term": "Opportunity cost", "ipa": "/ˌɒpəˈtjuːnəti kɒst/", "zh": "机会成本", "meaning": "把资源用在项目上而放弃的最佳替代用途的价值。"},
+        {"term": "Free cash flow", "ipa": "/friː kæʃ fləʊ/", "zh": "自由现金流", "meaning": "项目在经营、税项和再投资之后可供资本提供者使用的增量现金。"},
+        {"term": "Cost of capital", "ipa": "/kɒst əv ˈkæpɪtəl/", "zh": "资本成本", "meaning": "资本提供者面对该风险所要求的回报，也是折现率的重要来源。"},
         {"term": "Real option", "ipa": "/rɪəl ˈɒpʃən/", "zh": "真实期权", "meaning": "管理层未来根据新信息延迟、扩张、收缩或退出项目的权利。"}
       ],
-      "classroomUse": "遇到投资案例时，按“现金流与 NPV → 债务/股权融资 → 最低现金余额 → 真实期权”四层作答。特别指出哪一个假设最可能让结论反转，以及管理层可以设置什么阶段性 gate。",
-      "classroomLine": "A positive NPV is not enough if the financing profile prevents the firm from surviving long enough to realize that value."
+      "classroomUse": "遇到投资案例时，先画时间线，再写出增量 cash flow、sunk cost 和 opportunity cost；用 NPV 做主判断，用 IRR 只作辅助；接着指出资本成本与融资结构会怎样改变风险，最后提出应该立即投资、分阶段试点、等待还是退出。",
+      "classroomLine": "A good investment case is not a forecast of profit; it is a disciplined argument about incremental cash flows, required return, financing and flexibility."
     },
     {
       "id": "stulz-risk-management",
