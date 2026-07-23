@@ -156,22 +156,22 @@ function renderReading(reading, readings, fullIds) {
         ${reading.editionBridge ? `
           <section class="reading-edition-bridge" aria-labelledby="edition-bridge-title">
             <div class="reading-section-heading">
-              <span>Practical route · 旧版辅助对应</span>
+              <span>Simple overview · 简单概念导读</span>
               <h2 id="edition-bridge-title">${escapeHtml(reading.editionBridge.title)}</h2>
               <p>${escapeHtml(reading.editionBridge.intro)}</p>
             </div>
             <div class="edition-bridge-grid">
               ${reading.editionBridge.items.map((item) => `
-                <article class="edition-bridge-item edition-bridge-${escapeHtml(item.status)}">
-                  <span>${item.status === "direct" ? "直接对应" : item.status === "partial" ? "部分对应" : item.status === "support" ? "辅助理解" : "暂不覆盖"}</span>
-                  <h3>${escapeHtml(item.old)}</h3>
-                  <p class="edition-bridge-course">${escapeHtml(item.course)}</p>
-                  <p>${escapeHtml(item.learn)}</p>
+                <article class="edition-bridge-item">
+                  <span>概念 ${escapeHtml(item.step)}</span>
+                  <h3>${escapeHtml(item.title)}</h3>
+                  <p class="edition-bridge-course">${escapeHtml(item.reference)}</p>
+                  <p>${escapeHtml(item.body)}</p>
                 </article>
               `).join("")}
             </div>
             <div class="edition-bridge-route">
-              <small>建议阅读顺序｜约 90 分钟</small>
+              <small>轻松阅读顺序｜约 45–60 分钟</small>
               <ol>
                 ${reading.editionBridge.route.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}
               </ol>

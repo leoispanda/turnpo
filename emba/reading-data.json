@@ -16,22 +16,20 @@
       "coreQuestion": "一个长期 NPV 为正的项目，为什么仍可能因为融资结构或流动性缺口而不值得立刻投资？",
       "originalNote": "第六版指定教材的正式原文尚未收录。当前先按你提供的 Global Edition 4th summary 建立对应学习路线；它是旧版摘要，不是第六版原书，也不能作为第六版页码引用。",
       "editionBridge": {
-        "title": "先用你手边的第四版摘要学 Day 1",
-        "intro": "这份 54 页的 Global Edition 4th summary 不是第六版原文，但足以让你先建立 Day 1 的大框架。下面只列真正能对上的部分；章节号已经变化的地方，我按主题对应，不强行把旧版章节号当成第六版。",
+        "title": "先把这一部分读成一个公司决定",
+        "intro": "不用记第几版、第几章。把你手边的旧版摘要当作一个入口：它要帮你理解的不是公式清单，而是管理层怎样从未来现金、风险和不确定性里，做出一项能活下去的投资决定。",
         "items": [
-          {"status": "direct", "old": "旧版 Ch. 4｜Time Value of Money", "course": "对应：第六版 Ch. 3 §§3.3–3.4 + Ch. 4", "learn": "先读 timeline、compounding、discounting、PV、NPV、annuity 与 uneven cash flows。你要能把每笔现金放到正确时间点，而不是先背公式。"},
-          {"status": "support", "old": "旧版 Chs. 7–8｜Investment Rules & Capital Budgeting", "course": "对应：Day 1 的 investment decision 与 incremental cash-flow 结果", "learn": "读 NPV rule、IRR 的局限、sunk cost、opportunity cost、free cash flow、sensitivity 与 scenario analysis。它不对应第六版的同名章节，但非常适合把“项目值得做吗”学扎实。"},
-          {"status": "partial", "old": "旧版 Ch. 9｜Valuing Stocks", "course": "部分对应：第六版 Ch. 7 §7.1 + Ch. 10", "learn": "先理解 dividend、total payout、free cash flow 和 comparable valuation 如何连接到价值。它能建立股票与企业价值的直觉，但不替代第六版的准确案例与步骤。"},
-          {"status": "partial", "old": "旧版 Chs. 20–22｜Financial Options, Valuation & Real Options", "course": "部分对应：第六版 Ch. 21｜Option Applications and Corporate Finance", "learn": "重点读 options and corporate finance、option to delay、growth 与 abandonment options。把它用于理解 stage、delay、expand 与 stop，而不是花时间推导复杂的定价公式。"},
-          {"status": "support", "old": "旧版 Chs. 11–12｜Portfolio Choice & Cost of Capital", "course": "对应：Day 1 课堂中的 risk-return、required return 与 diversification", "learn": "只取 efficient portfolio、required return、beta 和 cost of capital 的直觉。它帮助你理解为什么 discount rate 不能为了让项目通过而随意降低。"},
-          {"status": "missing", "old": "旧版摘要没有覆盖的部分", "course": "第六版 Ch. 1、Ch. 6 Bonds、Ch. 20 Short-Term Financial Planning", "learn": "这里不硬补旧版章节。先使用本页的结构化说明建立基础；再用 Stulz 与 Nocco & Stulz 理解融资约束、现金压力和风险为什么会打断好项目。拿到第六版后，只需优先核对这三块。"}
+          {"step": "01", "title": "先看钱在什么时候真正发生", "reference": "旧版可先读：Ch. 4｜Time Value of Money", "body": "今天的一欧元和五年后的一欧元不能直接相加。项目分析的第一步不是算回报率，而是把设备、工资、库存、客户回款逐项放进时间线；未来的钱必须穿过时间和风险，才能和今天的投入公平比较。"},
+          {"step": "02", "title": "再看项目究竟改变了什么", "reference": "旧版可先读：Chs. 7–8｜Investment Rules & Capital Budgeting", "body": "项目不是看总收入，也不是把所有历史成本都塞进去。只看“因为做了它才多出或少掉的现金”：已经花掉的调研费是 sunk cost；被占用的厂房和库存也有机会成本。NPV 的意义很朴素：这些新增现金折回今天后，是否还比投入更多。"},
+          {"step": "03", "title": "价值成立，不等于公司一定撑得到", "reference": "旧版可参考：Ch. 14 的债务与股权直觉；再读 Stulz", "body": "长期会赚钱的项目，也可能在前两年先把现金耗尽。债务带来固定偿付与约束，股权换来缓冲但要分享未来。真正成熟的判断会同时问：项目值不值得，以及公司是否有足够现金、信用和融资空间走到回款那天。"},
+          {"step": "04", "title": "风险不是全部消灭，而是别让它毁掉好决定", "reference": "旧版可参考：Chs. 11–12；再读 Stulz 与 Nocco & Stulz", "body": "折现率不是一个为了让项目通过而随意调整的数字；它反映资本面对风险要求的回报。公司不需要害怕所有波动，却要保护会造成现金断裂、融资困难和被迫停止投资的坏情景。核心经营风险可以管理着承担，自己没有优势的价格风险才考虑转移。"},
+          {"step": "05", "title": "不确定时，保留下一次更聪明决定的权利", "reference": "旧版可先读：Chs. 20–22｜Options & Real Options", "body": "不是每项投资都只有“现在全做”或“永远不做”。先小规模试点、等需求更清楚再扩张、情况恶化就收缩或退出，都是有价值的选择权。你不需要推导复杂公式，只要能看出：什么时候 stage、delay 或 stop 比一次押注更理性。"}
         ],
         "route": [
-          "先读旧版 Ch. 4，做完时间线与 NPV 的基本判断。",
-          "接着读旧版 Chs. 7–8，只抓 incremental cash flow、sunk cost、opportunity cost 与 scenario sensitivity。",
-          "然后读旧版 Ch. 9，看价值如何从预期现金流进入股票与企业估值。",
-          "最后只读 Chs. 20–22 与管理决策有关的段落，形成 stage / delay / abandon 的直觉。",
-          "读完再进入 Stulz 与 Nocco & Stulz：把“有价值”推进到“公司能否撑到价值兑现”。"
+          "先用 10 分钟读五个概念，不要求记住任何公式。",
+          "再翻旧版 Ch. 4 与 Chs. 7–8，把时间线、增量现金、NPV、sunk cost 和 opportunity cost 对上。",
+          "接着读 Stulz：为什么“长期有价值”仍会被现金压力和融资约束打断。",
+          "最后读旧版 Chs. 20–22，形成 stage / delay / stop 的直觉即可。"
         ]
       },
       "fable": {

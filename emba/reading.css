@@ -533,26 +533,12 @@ body {
 .edition-bridge-item > span {
   display: inline-flex;
   border-radius: 999px;
+  background: #f1efe9;
+  color: #746b5d;
   padding: 5px 8px;
   font-size: 10px;
   font-weight: 780;
   letter-spacing: 0.05em;
-}
-
-.edition-bridge-direct > span {
-  background: #e4f0e8;
-  color: #286448;
-}
-
-.edition-bridge-partial > span,
-.edition-bridge-support > span {
-  background: #f7edd5;
-  color: #86601e;
-}
-
-.edition-bridge-missing > span {
-  background: #f0eeee;
-  color: #756c6c;
 }
 
 .edition-bridge-item h3 {
