@@ -168,7 +168,7 @@ Debt 带来固定偿付、到期日和 covenant；equity 缓冲更大，却会�
 
 这份路径保留了我从「项目看起来会赚钱」到「公司是否值得把未来押在这艘船上」的理解变化，也把财务判断连接到我的职业位置、EMBA 与 PDC / Orion 的承诺时机。它不是课堂笔记的重复，而是以后回顾时可以重新走一遍的思考路线。
 
-[打开 Day 1｜Leo 学习路径与 Reflection](../reflections/2026-09-07-day-1-financial-management-leo-learning-path.md)
+[打开 Day 1｜Leo 学习路径与 Reflection](/emba/learning-path.html)
 
 | 回顾时间 | 从哪里开始 | 结束时应带走什么 |
 |---|---|---|

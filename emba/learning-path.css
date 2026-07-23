@@ -1,0 +1,335 @@
+.learning-top-back {
+  border: 1px solid var(--reading-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--reading-ink);
+  cursor: pointer;
+  padding: 9px 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.learning-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 860px);
+  justify-content: center;
+  gap: clamp(34px, 6vw, 96px);
+  align-items: start;
+}
+
+.learning-side {
+  position: sticky;
+  top: 100px;
+  display: grid;
+  gap: 10px;
+}
+
+.learning-side-kicker,
+.learning-hero-kicker,
+.learning-section-kicker {
+  color: var(--reading-gold);
+  font-size: 11px;
+  font-weight: 780;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.learning-side > strong {
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.learning-side p {
+  margin: 0;
+  color: var(--reading-muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.learning-side nav {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.learning-side nav a {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 8px;
+  align-items: start;
+  border-radius: 12px;
+  color: var(--reading-muted);
+  padding: 9px 10px;
+  font-size: 12px;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.learning-side nav a:hover {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--reading-ink);
+}
+
+.learning-side nav a span {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.05);
+  font-size: 10px;
+}
+
+.learning-article {
+  min-width: 0;
+}
+
+.learning-hero {
+  padding: clamp(22px, 4vw, 44px) 0 clamp(40px, 6vw, 72px);
+}
+
+.learning-hero h1 {
+  max-width: 760px;
+  margin: 18px 0;
+  font-size: clamp(38px, 6vw, 64px);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.learning-hero > p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--reading-muted);
+  font-family: ui-serif, Georgia, serif;
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.8;
+}
+
+.learning-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.learning-hero-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  border-radius: 999px;
+  background: var(--reading-ink);
+  color: #fff;
+  padding: 9px 15px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.learning-hero-actions a:last-child {
+  border: 1px solid var(--reading-line);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--reading-ink);
+}
+
+.learning-intro {
+  border-radius: 28px;
+  background: var(--reading-ink);
+  color: #fff;
+  padding: clamp(28px, 5vw, 48px);
+}
+
+.learning-intro p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.85;
+}
+
+.learning-intro blockquote {
+  margin: 28px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  padding-top: 24px;
+  color: #fff;
+  font-family: ui-serif, Georgia, serif;
+  font-size: clamp(18px, 3vw, 25px);
+  line-height: 1.55;
+}
+
+.learning-section {
+  padding: clamp(58px, 8vw, 96px) 0 0;
+  scroll-margin-top: 96px;
+}
+
+.learning-section-head {
+  max-width: 730px;
+  margin-bottom: 32px;
+}
+
+.learning-section-head h2 {
+  margin: 10px 0 0;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.learning-stations {
+  border-top: 1px solid var(--reading-line);
+}
+
+.learning-station {
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr);
+  gap: clamp(18px, 4vw, 38px);
+  border-bottom: 1px solid var(--reading-line);
+  padding: 34px 0;
+}
+
+.learning-station-number {
+  color: #b3b3b7;
+  font-size: 12px;
+  font-weight: 740;
+  letter-spacing: 0.08em;
+}
+
+.learning-station h3 {
+  margin: 0 0 14px;
+  font-size: 23px;
+  line-height: 1.25;
+}
+
+.learning-copy {
+  color: #4f4f53;
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+.learning-copy p {
+  margin: 0 0 16px;
+}
+
+.learning-copy p:last-child {
+  margin-bottom: 0;
+}
+
+.learning-copy strong {
+  color: var(--reading-ink);
+}
+
+.learning-copy code {
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 5px;
+  color: var(--reading-ink);
+  font-size: 0.88em;
+}
+
+.learning-copy blockquote {
+  margin: 22px 0 0;
+  border-left: 2px solid #d4ad57;
+  color: var(--reading-muted);
+  padding-left: 14px;
+  font-family: ui-serif, Georgia, serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.learning-copy ul,
+.learning-copy ol {
+  display: grid;
+  gap: 9px;
+  margin: 18px 0;
+  padding-left: 22px;
+}
+
+.learning-copy li::marker {
+  color: var(--reading-gold);
+  font-weight: 700;
+}
+
+.learning-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--reading-line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.learning-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+  color: #4f4f53;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.learning-table th,
+.learning-table td {
+  border-bottom: 1px solid var(--reading-line);
+  padding: 15px 16px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.learning-table th {
+  background: rgba(0, 0, 0, 0.025);
+  color: var(--reading-ink);
+  font-size: 12px;
+}
+
+.learning-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.learning-closing {
+  margin-top: clamp(58px, 8vw, 96px);
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.045);
+  padding: clamp(28px, 5vw, 48px);
+}
+
+.learning-closing h2 {
+  margin: 0 0 18px;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.learning-closing blockquote {
+  margin: 28px 0 0;
+  border-top: 1px solid var(--reading-line);
+  padding-top: 24px;
+  color: var(--reading-ink);
+  font-family: ui-serif, Georgia, serif;
+  font-size: clamp(19px, 3vw, 26px);
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .learning-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .learning-side {
+    position: static;
+  }
+
+  .learning-side nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 660px) {
+  .learning-top-back {
+    display: none;
+  }
+
+  .learning-side nav {
+    grid-template-columns: 1fr;
+  }
+
+  .learning-station {
+    grid-template-columns: 34px minmax(0, 1fr);
+  }
+}
