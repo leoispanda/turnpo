@@ -14,7 +14,26 @@
       "sourceLabel": "查看 Pearson 教材页面（正式原文待补）",
       "summary": "这组章节提供金融决策的完整骨架：先确定财务经理为谁创造价值，再把未来现金流折算到同一时点，理解债券和股票如何定价，检查短期资金缺口，最后把延迟、扩张或退出等管理弹性视为有价值的真实期权。核心不是背公式，而是同时判断价值、融资、流动性与选择权。",
       "coreQuestion": "一个长期 NPV 为正的项目，为什么仍可能因为融资结构或流动性缺口而不值得立刻投资？",
-      "originalNote": "指定教材的正式原文尚未收录。这里暂不根据目录或二手资料伪造英文段落；取得 Pearson 教材后，再按 syllabus 指定章节补入可核对的原文精读。",
+      "originalNote": "第六版指定教材的正式原文尚未收录。当前先按你提供的 Global Edition 4th summary 建立对应学习路线；它是旧版摘要，不是第六版原书，也不能作为第六版页码引用。",
+      "editionBridge": {
+        "title": "先用你手边的第四版摘要学 Day 1",
+        "intro": "这份 54 页的 Global Edition 4th summary 不是第六版原文，但足以让你先建立 Day 1 的大框架。下面只列真正能对上的部分；章节号已经变化的地方，我按主题对应，不强行把旧版章节号当成第六版。",
+        "items": [
+          {"status": "direct", "old": "旧版 Ch. 4｜Time Value of Money", "course": "对应：第六版 Ch. 3 §§3.3–3.4 + Ch. 4", "learn": "先读 timeline、compounding、discounting、PV、NPV、annuity 与 uneven cash flows。你要能把每笔现金放到正确时间点，而不是先背公式。"},
+          {"status": "support", "old": "旧版 Chs. 7–8｜Investment Rules & Capital Budgeting", "course": "对应：Day 1 的 investment decision 与 incremental cash-flow 结果", "learn": "读 NPV rule、IRR 的局限、sunk cost、opportunity cost、free cash flow、sensitivity 与 scenario analysis。它不对应第六版的同名章节，但非常适合把“项目值得做吗”学扎实。"},
+          {"status": "partial", "old": "旧版 Ch. 9｜Valuing Stocks", "course": "部分对应：第六版 Ch. 7 §7.1 + Ch. 10", "learn": "先理解 dividend、total payout、free cash flow 和 comparable valuation 如何连接到价值。它能建立股票与企业价值的直觉，但不替代第六版的准确案例与步骤。"},
+          {"status": "partial", "old": "旧版 Chs. 20–22｜Financial Options, Valuation & Real Options", "course": "部分对应：第六版 Ch. 21｜Option Applications and Corporate Finance", "learn": "重点读 options and corporate finance、option to delay、growth 与 abandonment options。把它用于理解 stage、delay、expand 与 stop，而不是花时间推导复杂的定价公式。"},
+          {"status": "support", "old": "旧版 Chs. 11–12｜Portfolio Choice & Cost of Capital", "course": "对应：Day 1 课堂中的 risk-return、required return 与 diversification", "learn": "只取 efficient portfolio、required return、beta 和 cost of capital 的直觉。它帮助你理解为什么 discount rate 不能为了让项目通过而随意降低。"},
+          {"status": "missing", "old": "旧版摘要没有覆盖的部分", "course": "第六版 Ch. 1、Ch. 6 Bonds、Ch. 20 Short-Term Financial Planning", "learn": "这里不硬补旧版章节。先使用本页的结构化说明建立基础；再用 Stulz 与 Nocco & Stulz 理解融资约束、现金压力和风险为什么会打断好项目。拿到第六版后，只需优先核对这三块。"}
+        ],
+        "route": [
+          "先读旧版 Ch. 4，做完时间线与 NPV 的基本判断。",
+          "接着读旧版 Chs. 7–8，只抓 incremental cash flow、sunk cost、opportunity cost 与 scenario sensitivity。",
+          "然后读旧版 Ch. 9，看价值如何从预期现金流进入股票与企业估值。",
+          "最后只读 Chs. 20–22 与管理决策有关的段落，形成 stage / delay / abandon 的直觉。",
+          "读完再进入 Stulz 与 Nocco & Stulz：把“有价值”推进到“公司能否撑到价值兑现”。"
+        ]
+      },
       "fable": {
         "title": "《一盏晚到的灯》",
         "intro": "进入公式前，先用这个小故事把八个指定章节放进同一个决定。它不是教材原文，而是帮助你记住判断顺序的寓言。",
