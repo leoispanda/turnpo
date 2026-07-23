@@ -405,6 +405,67 @@ body {
   color: var(--reading-gold);
 }
 
+.reading-fable {
+  margin: 0 0 clamp(42px, 7vw, 76px);
+  border: 1px solid rgba(170, 132, 70, 0.26);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 92% 10%, rgba(220, 185, 105, 0.23), transparent 30%),
+    linear-gradient(135deg, #fdf9ef 0%, #f5eddd 100%);
+  overflow: hidden;
+}
+
+.reading-fable-heading {
+  border-bottom: 1px solid rgba(170, 132, 70, 0.2);
+  padding: clamp(28px, 5vw, 46px) clamp(26px, 5vw, 54px) 24px;
+}
+
+.reading-fable-heading h2 {
+  margin: 10px 0 12px;
+  color: #2d2924;
+  font-family: ui-serif, Georgia, serif;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.reading-fable-heading p {
+  max-width: 670px;
+  margin: 0;
+  color: #74685a;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.reading-fable-copy {
+  display: grid;
+  gap: 20px;
+  max-width: 780px;
+  padding: clamp(28px, 5vw, 50px) clamp(26px, 5vw, 54px) 28px;
+}
+
+.reading-fable-copy p {
+  margin: 0;
+  color: #3d3730;
+  font-family: ui-serif, Georgia, serif;
+  font-size: clamp(17px, 2vw, 19px);
+  line-height: 1.92;
+}
+
+.reading-fable-bridge {
+  margin: 0;
+  border-top: 1px solid rgba(170, 132, 70, 0.2);
+  background: rgba(255, 255, 255, 0.38);
+  color: #635747;
+  padding: 22px clamp(26px, 5vw, 54px) 26px;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.reading-fable-bridge strong {
+  color: #3e3427;
+}
+
 .reading-quick,
 .reading-application {
   border-radius: 28px;

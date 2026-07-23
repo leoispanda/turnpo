@@ -129,6 +129,20 @@ function renderReading(reading, readings, fullIds) {
           </div>
         </header>
 
+        ${reading.fable ? `
+          <section class="reading-fable" aria-labelledby="fable-title">
+            <div class="reading-fable-heading">
+              <span>Before the formulas · 知识寓言</span>
+              <h2 id="fable-title">${escapeHtml(reading.fable.title)}</h2>
+              <p>${escapeHtml(reading.fable.intro)}</p>
+            </div>
+            <div class="reading-fable-copy">
+              ${reading.fable.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph).replaceAll("\n", "<br>")}</p>`).join("")}
+            </div>
+            <p class="reading-fable-bridge"><strong>把它带回教材：</strong>${escapeHtml(reading.fable.bridge)}</p>
+          </section>
+        ` : ""}
+
         <section class="reading-quick" aria-labelledby="quick-title">
           <span>先建立全貌 · 300 字以内</span>
           <h2 id="quick-title">这篇文章最简单地在讲什么？</h2>
