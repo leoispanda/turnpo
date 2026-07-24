@@ -103,9 +103,9 @@ assert.match(dayTwo, /问题从哪里来/);
 assert.match(dayTwo, /red lights/);
 assert.match(dayTwo, /Double materiality/);
 assert.match(dayThree, /披萨店后厨的三块白板/);
-assert.match(dayThree, /今晚这笔账，真的算完了吗/);
-assert.match(dayThree, /什么事情会让披萨做不出来/);
-assert.match(dayThree, /账要看见真实情况，风险要在出事前被发现/);
+assert.match(dayThree, /这个月到底是怎么赚的钱/);
+assert.match(dayThree, /什么事情会让我们做不出合格的披萨/);
+assert.match(dayThree, /账上的好消息，要到店里看一遍/);
 for (const file of dayFiles) {
   const markdown = fs.readFileSync(file, "utf8");
   const firstPart = markdown.split("## 第二部分｜")[0];
