@@ -73,6 +73,7 @@ assert.doesNotMatch(stulzPageTwo, /1\. Christopher Culp and Merton Miller/);
 const dayContent = dayFiles.map((file) => fs.readFileSync(file, "utf8")).join("\n");
 const dayOne = fs.readFileSync(dayFiles[0], "utf8");
 const dayTwo = fs.readFileSync(dayFiles[1], "utf8");
+const dayThree = fs.readFileSync(dayFiles[2], "utf8");
 const dayOneLearningPath = "emba/materials/2026-09/reflections/2026-09-07-day-1-financial-management-leo-learning-path.md";
 const berkReading = data.readings.find((item) => item.id === "berk-corporate-finance");
 assert.ok(berkReading?.fable, "Berk should have a knowledge fable before the study guide");
@@ -101,6 +102,10 @@ assert.match(dayTwo, /真正的合规，不是每天都打勾/);
 assert.match(dayTwo, /问题从哪里来/);
 assert.match(dayTwo, /red lights/);
 assert.match(dayTwo, /Double materiality/);
+assert.match(dayThree, /披萨店后厨的三块白板/);
+assert.match(dayThree, /今晚这笔账，真的算完了吗/);
+assert.match(dayThree, /什么事情会让披萨做不出来/);
+assert.match(dayThree, /账要看见真实情况，风险要在出事前被发现/);
 for (const file of dayFiles) {
   const markdown = fs.readFileSync(file, "utf8");
   const firstPart = markdown.split("## 第二部分｜")[0];
