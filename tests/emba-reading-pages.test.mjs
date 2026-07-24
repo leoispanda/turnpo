@@ -74,6 +74,7 @@ const dayContent = dayFiles.map((file) => fs.readFileSync(file, "utf8")).join("\
 const dayOne = fs.readFileSync(dayFiles[0], "utf8");
 const dayTwo = fs.readFileSync(dayFiles[1], "utf8");
 const dayThree = fs.readFileSync(dayFiles[2], "utf8");
+const dayFour = fs.readFileSync(dayFiles[3], "utf8");
 const dayOneLearningPath = "emba/materials/2026-09/reflections/2026-09-07-day-1-financial-management-leo-learning-path.md";
 const berkReading = data.readings.find((item) => item.id === "berk-corporate-finance");
 assert.ok(berkReading?.fable, "Berk should have a knowledge fable before the study guide");
@@ -106,6 +107,10 @@ assert.match(dayThree, /披萨店后厨的三块白板/);
 assert.match(dayThree, /这个月到底是怎么赚的钱/);
 assert.match(dayThree, /什么事情会让我们做不出合格的披萨/);
 assert.match(dayThree, /账上的好消息，要到店里看一遍/);
+assert.match(dayFour, /第三勺红油/);
+assert.match(dayFour, /青花椒藤椒鱼/);
+assert.match(dayFour, /让离家的人，吃到一口有根的味道/);
+assert.match(dayFour, /diagnostic control 与 interactive control/);
 for (const file of dayFiles) {
   const markdown = fs.readFileSync(file, "utf8");
   const firstPart = markdown.split("## 第二部分｜")[0];
