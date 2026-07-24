@@ -6,43 +6,165 @@
 
 ## 第一部分｜今天讲什么
 
-### 知识寓言｜《第二块铜牌》
+### 知识寓言｜《那张干净的检查表》
 
-河门城建在一条宽阔的河口。北岸停商船，南岸立染坊；城里的税银，大半来自这两处。新城主上任那年，让铜匠在城门下挂起一块很大的铜牌。铜牌上刻着三句话：**每艘船十二分钟内完成查验；来历不明的货物不得入城；河水要让下游的人仍能饮用。**
+老街口有一家小饭店，叫“阿南小馆”。
 
-城主又在铜牌下加了一行小字：今年税银要比去年多三成。
+饭店不大，只有八张桌子。中午做盒饭，晚上做家常菜。老板阿南最常说的一句话是：“我们小店靠的是口碑，干净、安全、出餐快。”
 
-起初，没有人觉得这些话互相冲突。码头添了六码新的栈桥，查验员拿到一摞更厚的手册，染坊也送来一套亮铜色的取水器。每天傍晚，议事厅门口的木板都会挂出三盏绿灯：通关快，水样清，税银增。来往的商人远远看见那三点绿色，便说河门城是这片海岸上最会做事的城。
+为了让员工记住这句话，他在厨房门口贴了一张检查表。表上有三栏：食材新鲜、厨房卫生、顾客等待不超过十五分钟。
 
-夏初的一个清晨，查验员米洛在一艘香料船的夹层里找到三张名字不同、印章却一样的货单。他知道那不是普通的笔误。按照旧规，他应该把船停在码头外，等人查清真正的货主；可是船后面已经排了十七艘，城主的书记官刚从栈桥上走过，手里举着一只沙漏，提醒大家这个月的十二分钟又慢了半刻钟。
+每天打烊前，值班员工都要在三栏后面打勾。只要三栏都是勾，阿南就觉得今天经营顺利。
 
-米洛把三张货单放进一只写着“待核”的木箱，给船盖了临时通行章。他告诉自己，等晚饭后再回来处理。那天傍晚，木板上的第一盏灯仍然是绿的。木箱却在地下室里多了一层。
+起初，这张表确实有用。冰箱温度有人看，地面油污有人拖，外卖高峰时也有人催菜。阿南小馆生意越来越好，附近写字楼的员工都喜欢来这里吃午饭。后来，阿南又接了几个公司团餐订单。他开始要求厨房每天多做三百份盒饭。
 
-同一周，染坊的管事也收到一张催促单。北岸新来的商人订了大批靛蓝布，若赶不上潮汐，订单就会转去外城。管事让工人昼夜开炉，又把取水器的细管往上游挪了二十步。那里河水从石桥下流过，还没有经过染缸后的暗渠。月底送到议事厅的玻璃瓶清得像刚擦过的窗。第二盏灯也仍然是绿的。
+问题也是从那时开始的。
 
-第一个不对劲的东西，不是报告，而是一只鱼篓。卖鱼的老妇人清晨把篓子沉进南岸芦苇里，日出时捞起，半数银鲫已经翻着白肚。她提着鱼篓来到城门，米洛让她去找染坊；染坊让她去找河道工；河道工看了看月末的水样，指着那支清亮的玻璃瓶说：“瓶里没有问题。”老妇人把死鱼放在台阶上，没人知道该把它写进哪一栏。
+有一天早上，厨师小周打开冰箱，发现昨天送来的鸡肉有一股轻微的酸味。他知道按规定应该退货，至少也要先隔离，等老板确认。可是那天中午有两百份鸡肉饭要送去客户公司。如果退货，订单肯定来不及。
 
-三天后，一封北方来的信送到地下室。信里说，刚刚进城的三艘船背后，站着同一个被外港驱逐的商人。米洛拆开信时，木箱已经塞满了四十二份“待核”货单。他把信压在最上面，想先处理最早那一批；可新的船又进了港，新的沙漏又翻了过来。到月底，第一盏灯还是绿的，因为每一艘船都在十二分钟内拿到了章；只是没有人再说清，哪些章是真的查完了，哪些章只是被推迟了。
+小周犹豫了一下，把那箱鸡肉放到角落，心想：“先不用这箱，等晚上再处理。”可是午高峰一来，厨房忙得没人再看那箱鸡肉。后来新来的帮工不知道情况，把其中一部分切进了备菜盘。
 
-秋天，城主在议事厅举行宴会。他把三盏绿灯的记录摊在长桌上，宣布河门城不仅更快、更富，也更干净。税官已经据此提高了来年的收入预算；染坊主人拿着这份记录去向北方银行借钱，要扩建第三排染缸。宴会进行到一半，北岸的风把窗推开，河里飘来一股刺鼻的蓝黑色泡沫。没人提起地下室的木箱，也没人把那封北方来信读出来。
+晚上打烊时，检查表上的“食材新鲜”还是被打了勾。因为没有人想把问题写出来，也没有人知道“暂时放一边”到底算不算问题。
 
-城里的老审计官莱娅没有参加宴会。第二天，她先去了地下室。她没有问米洛为什么放过那艘船，只让他把木箱一只只搬到阳光下。最早的货单已经发黄，最晚的一批还带着海盐。莱娅从里面抽出七份，发现有四份最终落在同一个名字上；但每一份临时通行章旁，都没有人写下“谁查过、查到了什么、什么时候必须回来关闭”。
+同一周，负责外卖的小李也遇到麻烦。午饭时间订单太多，后厨地面一直有油水。按规定，油水超过警戒线就要停下来清理，否则容易滑倒。但一停下来，出餐速度就会慢，顾客会投诉，平台评分也会下降。
 
-下午，她沿着南岸的石墙走到染坊后面。取水器的细管确实在上游，暗渠的出口却在一丛芦苇后面。莱娅没有立刻撕掉那张水样报告。她先用粉笔在地上画出一条线：从染缸，到暗渠，到河口，到老妇人的鱼篓，再到下游取水的村庄。随后，她又在另一张纸上写下：如果河水继续变色，染坊可能失去订单、银行可能收回扩建借款、城主刚刚承诺的税银也会落空。
+小李看了一眼地面，又看了一眼墙上的十五分钟出餐目标，最后只是把“小心地滑”的牌子放到门边，继续催菜。
 
-她带着两张纸回到议事厅。城主看完后说：“那就再写一本更厚的手册。”莱娅却把第一块铜牌摘下来，放在桌上。“城里不缺一句新的要求。缺的是让一句要求一路走到行动的东西。”
+那天，一名帮工在厨房摔了一跤，手臂擦伤。小李让他先去休息，并说：“不严重，今天先不要写事故报告，不然老板又要停工检查。”
 
-她请铜匠做第二块铜牌。这块牌上没有写更高的目标，也没有涂任何颜色。它有许多细小的孔，每个孔旁边都留着五个位置：**来源、时间、经手人、复核人、下一步。**莱娅让查验员从此只能在查清真正货主、记录结论和关闭日期后盖下“完成”章；不能当场查完的船，不再被算作已完成，而要带着醒目的待处理牌停在另一条栈桥。待处理的船超过十五艘，城门旁的沙漏便不再催促查验员加快，而是自动通知税官和城主：今天不能再把速度当成唯一的好消息。
+晚上，“厨房卫生”也被打了勾。因为地面已经拖干净了。检查表看起来没有问题。
 
-河水也换了另一套做法。取样点移到暗渠出口和下游取水口；染坊不能自己保存所有瓶子，轮流由河道工、渔民和城外来的测量员取样。每只瓶子都要写下取样时刻、地点、方法和复验日期。若颜色超过界线，牌上不允许只写一个红点，必须挂上一根细绳，绳的另一头系着负责人、纠正期限和下一次复查的日期。
+几天后，有顾客反映吃完饭后肚子不舒服。阿南第一反应是：“是不是顾客自己吃了别的东西？”平台上也出现了两条差评，说饭菜不新鲜。阿南让小周查一下当天记录。小周翻出检查表，上面每一栏都是勾。
 
-第一张挂在第二块铜牌上的月报，几乎没有绿色。待核船只排到桥外，染坊被要求停掉夜班，税官不得不把来年的收入预算划去两行。商人们骂莱娅让河门城变慢，城主也在夜里盯着下修后的银币数，许久没有说话。第二天清晨，他仍然签下命令：没有真正货主结论的船不得离开待处理栈桥；暗渠水样未复验前，第三排染缸不得开工；若河水连续三次越线，染坊必须减产并拿出修复计划。
+于是大家都说：“表上没有问题。”
 
-那年冬天，河门城少收了一些税银。可地下室的木箱终于见了底，老妇人的鱼篓又能在芦苇间活到日落。北方银行没有收回染坊的借款，因为城主把整改计划、复验记录和减产后的现金安排一并交给了它。三盏绿灯没有立刻回来；城门下常常亮着红灯和黄灯。但每一盏没有变绿的灯，都能沿着细绳找到一只瓶子、一份货单、一个名字和下一次必须发生的行动。
+可是问题并没有消失。冰箱角落开始出现更多“先放着”的食材；厨房地面的油水每天都被提醒，但没有人真正停下来处理；员工受伤没有记录，顾客投诉也没有和食材批次连起来。饭店看起来仍然运转正常，只是越来越多的风险被塞进了看不见的地方。
 
-几年后，远道而来的商人问河门城为什么愿意把不漂亮的数字挂在城门下。城主指着那块布满细孔的铜牌说：“第一块牌让大家记得我们想成为什么样的城。第二块牌让我们在还来得及的时候，知道自己是不是正朝相反的方向走。”
+月底，阿南看着营业额很高，准备再接一个更大的团餐客户。他拿着整个月的检查表对客户说：“你看，我们每天都合规，卫生、安全、出餐速度都达标。”
 
-后来，商人们把守住边界、让例外不能被匆忙盖章的能力称为 **Compliance（合规）**；把一只水样瓶、一道暗渠和一笔未来借款连成同一条证据链的做法称为 **Sustainability Reporting（可持续发展报告）**；把收入预测下调、仍允许坏消息改变业务速度的选择称为 **Financial Leadership**。河门城真正守住的，不是三盏永远绿色的灯，而是一种让红灯能够在灾祸发生以前亮起来的能力。
+客户还没有签约，市场监管人员先来了。
+
+他们不是只看墙上的检查表，而是要求查看进货单、冰箱温度记录、员工事故记录、顾客投诉、食材处理记录和整改记录。阿南这才发现，很多表格虽然被打了勾，但背后没有证据。鸡肉有没有退货，没人写；地面油水什么时候超过标准，没人记；员工摔倒后谁处理、是否复查，也没人知道。
+
+检查人员没有立刻说饭店一定有大问题。他们只问了一个问题：
+
+“如果每一项都是合格的，为什么问题发生后，没有任何一条记录能说明你们做了什么？”
+
+阿南答不上来。
+
+那天晚上，饭店第一次没有开门。门口贴着一张通知：内部整改，暂停营业一天。
+
+员工有些不满。小周说：“不就是几张表没写清楚吗？停一天要少赚多少钱？”小李也说：“如果每次地上有油都停下来清理，午高峰根本做不完。”
+
+阿南坐在空桌旁，看着那张每天都很干净的检查表，突然明白了：真正的问题不是饭店没有规则，而是规则已经变成了装饰。大家关心的是能不能继续营业，能不能准时出餐，能不能保住收入，却没有人关心异常出现后是否真的被处理。
+
+第二天，阿南把旧检查表撕了下来，换成了一张新的。
+
+新表不再只有三个勾。每一个异常都必须写清楚五件事：**问题从哪里来、什么时候发现、谁负责处理、谁复核结果、下一步什么时候完成。**
+
+如果食材有异味，不能写“已注意”，必须写明是否隔离、是否退货、是否影响已售出的菜品。如果厨房地面油水超过标准，不能只放警示牌，必须暂停相关区域，清理完成后再复工。如果员工受伤，必须记录原因，并检查是不是流程设计有问题。如果顾客投诉肚子不舒服，必须追溯到食材批次、当天温度和对应菜品。
+
+阿南还加了一条新规定：如果同类问题一周内出现三次，厨房必须减单；如果食品安全问题无法确认，相关菜品必须停售；如果团餐订单让安全检查无法完成，宁愿拒绝订单，也不能用“太忙了”作为理由。
+
+第一个星期，新的检查表很难看。上面有很多红色记录。午餐出餐变慢了，外卖评分也短暂下降。阿南少接了一个大客户，收入比上个月低了不少。
+
+但从那以后，饭店的记录不再只是好看的勾。哪里出过问题、谁处理了、什么时候复查，终于都能在表上看见。
+
+冰箱里的食材有了批次记录；员工知道什么情况必须上报；顾客投诉可以追溯到当天的采购和制作过程；地面油水不再靠提醒解决，而是有人负责、有人复查。几周后，市场监管人员再次来检查。阿南没有拿出一张全是勾的漂亮表格，而是拿出一叠有红、有黄、有整改记录的表格。
+
+检查人员看完后说：“现在这份记录不好看，但可信。”
+
+后来，阿南没有把“干净、安全、出餐快”这句话拿掉。他仍然把它贴在厨房门口。只是旁边多了一句话：
+
+“真正的合规，不是每天都打勾，而是问题出现时，饭店愿不愿意停下来处理。”
+
+阿南小馆也慢慢恢复了生意。有些顾客发现出餐没有以前那么快，但更放心了。团餐客户也愿意继续合作，因为阿南能说明每一道菜从哪里来，出了问题谁负责，什么时候整改，谁来确认。
+
+很多年后，阿南回想那次整改，才明白自己真正守住的不是一张检查表，而是一种经营能力：当收入、速度和安全发生冲突时，饭店不能假装什么都没发生。它必须让坏消息被看见，让责任被写下来，让问题在变成事故前就被处理。
+
+后来，阿南把这种能力叫作 **Compliance**。把食材批次、温度记录、员工事故、顾客投诉和整改结果连成证据链，叫作 **Sustainability Reporting**。而在收入会受损时，仍然决定暂停营业、减少订单、先解决问题，叫作 **Financial Leadership**。
+
+真正可靠的小饭店，不是永远没有红灯的小饭店，而是红灯亮起时，知道该停哪里、查什么、谁负责、什么时候再开门的小饭店。
+
+#### English version｜The Clean Checklist
+
+There was a small restaurant at the corner of an old street. It was called Anan’s Kitchen.
+
+The restaurant was not big. It had only eight tables. At noon, it sold lunch boxes. In the evening, it served simple home-style dishes. The owner, Anan, often said, “Our restaurant depends on reputation. The food must be clean, safe, and served quickly.”
+
+To help the staff remember this, he put a checklist on the kitchen door. The checklist had three sections: fresh ingredients, kitchen hygiene, and customer waiting time below fifteen minutes.
+
+Before closing every day, the staff on duty had to tick each section. If all three sections had checkmarks, Anan believed the restaurant had operated well that day.
+
+At the beginning, the checklist was useful. Someone checked the fridge temperature. Someone cleaned the oil on the floor. During the delivery rush, someone also pushed the kitchen to prepare food faster. Business became better and better. Office workers nearby liked to have lunch there. Later, Anan also won several corporate lunch orders. He then asked the kitchen to prepare three hundred more lunch boxes every day.
+
+That was when the problems began.
+
+One morning, the cook, Zhou, opened the fridge and noticed that the chicken delivered the previous day had a slightly sour smell. He knew that, according to the rule, the chicken should be returned. At least, it should be separated and checked by the owner. But that noon, two hundred chicken rice boxes had to be delivered to a corporate client. If the chicken was returned, the order would not be finished on time.
+
+Zhou hesitated for a moment. He moved the box of chicken to a corner and thought, “We will not use this box now. I will deal with it tonight.” But when the lunch rush started, everyone became too busy to look at the box again. Later, a new kitchen helper did not know the situation and cut part of the chicken into the preparation tray.
+
+When the restaurant closed that night, the “fresh ingredients” section was still ticked. Nobody wanted to write down the problem. Nobody knew whether “putting it aside for later” counted as a real issue.
+
+In the same week, Li, who was responsible for delivery orders, also faced a problem. There were too many lunch orders, and the kitchen floor was covered with oil and water. According to the rule, if the floor became too slippery, the team should stop and clean it. Otherwise, someone could fall. But once the kitchen stopped, food preparation would slow down. Customers would complain, and the platform rating might drop.
+
+Li looked at the floor, then looked at the fifteen-minute serving target on the wall. In the end, he only placed a “Caution: Slippery Floor” sign near the door and continued pushing the kitchen to prepare orders.
+
+That day, a kitchen helper slipped and fell. His arm was scratched. Li asked him to take a rest and said, “It is not serious. Let’s not write an accident report today. Otherwise, the boss may stop the kitchen for another inspection.”
+
+That night, the “kitchen hygiene” section was also ticked. The floor had already been cleaned by closing time. The checklist looked fine.
+
+A few days later, some customers said they had stomach discomfort after eating at the restaurant. Anan’s first reaction was, “Maybe they ate something else.” Two negative reviews also appeared on the delivery platform, saying the food was not fresh. Anan asked Zhou to check the records from that day. Zhou took out the checklist. Every section had a checkmark.
+
+So everyone said, “There is no problem on the checklist.”
+
+But the problem did not disappear. More ingredients were placed in the fridge corner “for later.” The oil and water on the kitchen floor were mentioned every day, but nobody really stopped the work to solve it. The employee injury was not recorded. Customer complaints were not connected to ingredient batches. The restaurant still looked normal from the outside, but more and more risks were being pushed into invisible places.
+
+At the end of the month, Anan saw that revenue was high. He planned to accept an even larger corporate lunch order. He showed the whole month’s checklist to the client and said, “You can see that we are compliant every day. Hygiene, safety, and serving speed are all under control.”
+
+Before the client signed the contract, the market inspection officers arrived.
+
+They did not only look at the checklist on the wall. They asked to see purchase records, fridge temperature logs, employee accident records, customer complaints, ingredient handling records, and corrective action records. Only then did Anan realize that many boxes had been ticked, but there was no evidence behind them. Nobody had written whether the chicken was returned. Nobody had recorded when the oil and water on the floor exceeded the limit. Nobody knew who handled the employee injury or whether it had been reviewed.
+
+The inspection officers did not immediately say that the restaurant had a serious problem. They only asked one question:
+
+“If everything was compliant, why is there no record showing what you did after problems happened?”
+
+Anan had no answer.
+
+That evening, the restaurant closed for the first time. A notice was placed at the entrance: Internal remediation, closed for one day.
+
+Some employees were unhappy. Zhou said, “It is only because a few forms were not written clearly. How much money do we lose by closing for one day?” Li also said, “If we stop to clean the floor every time there is oil, we can never finish the lunch rush.”
+
+Anan sat beside an empty table and looked at the clean checklist that had been ticked every day. He suddenly understood the real issue. The problem was not that the restaurant had no rules. The problem was that the rules had become decoration. Everyone cared about whether the restaurant could stay open, serve food on time, and protect revenue. But nobody cared enough about whether exceptions were truly handled after they appeared.
+
+The next day, Anan took down the old checklist and replaced it with a new one.
+
+The new form no longer had only three checkmarks. Every exception had to record five things: where the problem came from; when it was found; who was responsible for handling it; who reviewed the result; and when the next step had to be completed.
+
+If an ingredient had a strange smell, staff could not simply write “noted.” They had to record whether it was separated, returned, or connected to any dishes already sold. If the kitchen floor exceeded the safety limit, the team could not only put up a warning sign. The affected area had to stop working, be cleaned, and then reopen after confirmation. If an employee was injured, the cause had to be recorded, and the team had to check whether the process itself had a problem. If customers complained about stomach discomfort, the complaint had to be traced back to the ingredient batch, the temperature record, and the dishes sold that day.
+
+Anan also added a new rule. If the same type of problem happened three times in one week, the kitchen had to reduce orders. If food safety could not be confirmed, the related dishes had to stop being sold. If corporate lunch orders made safety checks impossible, the restaurant would rather reject the order than use “we were too busy” as an excuse.
+
+During the first week, the new checklist looked bad. There were many red records. Lunch service became slower. The delivery rating also dropped for a short time. Anan lost one large client, and revenue was lower than the previous month.
+
+But from then on, the restaurant’s records were no longer just a page of neat checkmarks. The table finally showed where problems had happened, who handled them, and when they needed to be reviewed.
+
+Ingredients in the fridge had batch records. Employees knew which situations had to be reported. Customer complaints could be traced back to purchase and preparation records from the same day. Oil and water on the kitchen floor were no longer handled only by reminders. Someone had to take responsibility, and someone else had to review the result. A few weeks later, the market inspection officers came again. Anan did not show them a perfect form full of checkmarks. Instead, he showed them a stack of records with red marks, yellow marks, and completed corrective actions.
+
+After reading the records, the inspection officers said, “This record does not look perfect, but it is credible.”
+
+Later, Anan did not remove the sentence “clean, safe, and served quickly” from the kitchen door. He still kept it there. But next to it, he added another sentence:
+
+“Real compliance is not about ticking every box every day. It is about whether the restaurant is willing to stop and handle problems when they appear.”
+
+Anan’s Kitchen slowly recovered its business. Some customers noticed that food was not served as quickly as before, but they felt safer. Corporate clients were also willing to continue working with the restaurant, because Anan could explain where each dish came from, who was responsible when something went wrong, when it was corrected, and who confirmed the correction.
+
+Many years later, when Anan looked back at that remediation, he realized that what he had protected was not a checklist. It was an operating capability. When revenue, speed, and safety were in conflict, the restaurant could not pretend that nothing had happened. It had to make bad news visible, write down responsibility, and handle problems before they became accidents.
+
+Later, Anan called this capability **Compliance**. Connecting ingredient batches, temperature records, employee accidents, customer complaints, and corrective actions into one evidence chain was called **Sustainability Reporting**. And when revenue would be affected, but the restaurant still decided to close, reduce orders, and solve the problem first, this was called **Financial Leadership**.
+
+A truly reliable small restaurant is not a restaurant that never has red lights. It is a restaurant that knows where to stop, what to check, who is responsible, and when it can open again when a red light appears.
 
 ### 今天真正要学会的判断
 
@@ -96,29 +218,26 @@ Tuesday 的三段课程不是三个并列话题：Compliance 处理组织是否�
 
 | 故事情节 | 对应的管理概念 | 白话解释 |
 |---|---|---|
-| 第一块铜牌上的三项承诺 | Obligation / public commitment | 法律、监管、伦理和公开承诺都必须被翻成可以观察的边界。 |
-| “十二分钟、河水清、税银增”同时被要求 | Conflicting objectives / pressure | 速度、增长和边界同时存在时，组织会面对真实取舍。 |
-| 书记官举着沙漏催促 | Performance pressure | 压力本身不等于失效，但会改变人们怎样理解“完成”。 |
-| 米洛把货单放进“待核”木箱 | Alert backlog | 尚未处理的例外不断积累，表面完成不等于实际完成。 |
-| 临时通行章被算作已查验 | Control override / false closure | 控制被绕开或被提前关闭时，绿色状态会失去意义。 |
-| 取水器被移到暗渠上游 | Boundary manipulation | 数据可能准确地描述了错误的位置，从而制造误导性的好消息。 |
-| 老妇人的死鱼没有进入任何一栏 | Outcome evidence | 现实伤害可以先于正式报告出现，组织要能接住这种反常证据。 |
-| 北方来信被压在木箱里 | Delayed escalation | 信息没有及时进入有权行动的人手中，问题就会扩大。 |
-| 税官据三盏绿灯提高预算 | Financial materiality | 环境或合规信息会反过来影响收入预测、融资和经营能力。 |
-| 莱娅画出染缸、暗渠、河口、鱼篓和村庄 | Value-chain boundary / impact materiality | 不能只看工厂门内；要看影响如何沿着价值链传到人和环境。 |
-| 她又写下订单、借款和税银 | Double materiality | 同时看企业对外造成的影响，以及这些影响如何回到企业的财务前景。 |
-| 第二块铜牌的五个孔 | Evidence trail / data governance | 每个结论都要能追溯来源、时间、责任、复核和下一步。 |
-| 未查清的船驶入另一条栈桥 | Exception handling | 例外不能被藏进正常流程，必须有可见的处理状态和规则。 |
-| 待处理船超过十五艘自动通知城主 | Threshold / escalation | 超过预先界线时，系统应触发升级，而不是等待问题自行消失。 |
-| 多方轮流取样、每瓶有复验日期 | Operating effectiveness / assurance | 控制是否有效，要看它是否持续运行、能否被独立复核。 |
-| 红点必须系着负责人和期限 | Corrective action / closure evidence | 发现问题只是开始；真正的完成需要行动、期限和关闭证据。 |
-| 城主下调税收预算并减慢通关 | Tone from the top / financial leadership | 领导力体现在坏消息出现后，是否愿意接受短期代价并改变决定。 |
-| 银行接受整改计划与现金安排 | Legitimacy / stakeholder trust | 可信度来自透明的证据和行动，而不是对外宣称“一切都好”。 |
-| 红黄灯仍然挂在城门下 | Transparent reporting | 好报告不是没有问题，而是让问题、责任和进展都能够被看见。 |
+| 厨房门口的三项承诺 | Obligation / public commitment | 法律、监管、伦理和公开承诺都必须被翻成可以观察的边界。 |
+| “干净、安全、出餐快”同时被要求 | Conflicting objectives / pressure | 速度、增长和边界同时存在时，组织会面对真实取舍。 |
+| 团餐订单与十五分钟出餐目标 | Performance pressure | 压力本身不等于失效，但会改变人们怎样理解“完成”。 |
+| 有异味的鸡肉被放进角落“晚点处理” | Alert backlog / exception handling | 尚未处理的例外不断积累；暂时放一边不等于已经处理。 |
+| 每晚的三栏仍全部打勾 | False closure / control failure | 控制被形式化或提前关闭时，绿色状态会失去意义。 |
+| “小心地滑”牌代替暂停清理 | Design versus operating effectiveness | 有规则、有提示不等于控制实际阻止了伤害。 |
+| 员工受伤没有事故报告 | Outcome evidence / speak-up | 现实伤害可以先于正式报告出现，组织要能接住这种反常证据。 |
+| 顾客投诉没有连回食材批次 | Traceability / information failure | 信息若不能连回来源和责任人，就无法支持调查或行动。 |
+| 高营业额被用来争取更大订单 | Financial materiality | 合规与安全信息会反过来影响收入预测、融资和持续经营能力。 |
+| 监管人员要求查看采购、温度、事故与投诉记录 | Evidence trail / assurance | 每个结论都要能追溯来源、时间、责任、复核和下一步。 |
+| 新表要求记录五件事 | Data governance / closure evidence | 发现问题只是开始；真正的完成需要行动、期限和关闭证据。 |
+| 同类问题一周三次就减单 | Threshold / escalation | 超过预先界线时，系统应触发升级，而不是等待问题自行消失。 |
+| 食品安全无法确认就停售 | Risk appetite / stop decision | 风险承受能力有边界；某些不确定性出现时，业务必须停止。 |
+| 红黄整改记录被认为可信 | Transparent reporting / legitimacy | 好报告不是没有问题，而是让问题、责任和进展都能够被看见。 |
+| 食材、温度、受伤、投诉和整改被连成一条线 | Sustainability reporting / value-chain evidence | 好的披露来自可追溯的数据和真实经营过程，而不只是对外写作。 |
+| 阿南愿意暂停营业、减少订单 | Tone from the top / financial leadership | 领导力体现在坏消息出现后，是否愿意接受短期代价并改变决定。 |
 
 ### 类比边界
 
-城门与河流不能代替具体法规、AML 调查程序、ESRS datapoints 或正式 assurance。Double materiality 需要系统方法和 stakeholder evidence；红色报告也不自动代表管理有效，关键仍是行动是否及时完成。
+饭店与检查表不能代替具体法规、AML 调查程序、ESRS datapoints 或正式 assurance。Double materiality 需要系统方法和 stakeholder evidence；红色记录也不自动代表管理有效，关键仍是行动是否及时完成。
 
 ### 应用到自己的公司｜完成一张真实性检查卡
 

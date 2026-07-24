@@ -95,9 +95,11 @@ assert.match(dayOneReflection, /有货的盾，才叫保护；没有货的盾，
 assert.match(dayOneReflection, /不要做情绪上的主人翁，要做职业上的负责人/);
 assert.match(dayOneReflection, /好的决策系统不只是产生答案，而是管理承诺的时机/);
 assert.match(dayOneReflection, /如果我只有…/);
-assert.match(dayTwo, /第二块铜牌/);
-assert.match(dayTwo, /待核/);
-assert.match(dayTwo, /红灯能够在灾祸发生以前亮起来/);
+assert.match(dayTwo, /那张干净的检查表/);
+assert.match(dayTwo, /The Clean Checklist/);
+assert.match(dayTwo, /真正的合规，不是每天都打勾/);
+assert.match(dayTwo, /问题从哪里来/);
+assert.match(dayTwo, /red lights/);
 assert.match(dayTwo, /Double materiality/);
 for (const file of dayFiles) {
   const markdown = fs.readFileSync(file, "utf8");
