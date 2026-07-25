@@ -8,6 +8,8 @@ const styles = fs.readFileSync("emba/reading.css", "utf8");
 const learningPathHtml = fs.readFileSync("emba/learning-path.html", "utf8");
 const learningPathScript = fs.readFileSync("emba/learning-path.js", "utf8");
 const learningPathStyles = fs.readFileSync("emba/learning-path.css", "utf8");
+const embaScript = fs.readFileSync("emba/emba.js", "utf8");
+const embaStyles = fs.readFileSync("emba/emba.css", "utf8");
 const originalHtml = fs.readFileSync("emba/original-reading.html", "utf8");
 const originalScript = fs.readFileSync("emba/original-reading.js", "utf8");
 const originalStyles = fs.readFileSync("emba/original-reading.css", "utf8");
@@ -159,5 +161,9 @@ assert.match(learningPathScript, /window\.history\.back/);
 assert.match(learningPathScript, /learning-stations/);
 assert.match(learningPathStyles, /\.learning-layout/);
 assert.match(learningPathStyles, /\.learning-side/);
+assert.match(embaScript, /speechSynthesis/);
+assert.match(embaScript, /data-material-read/);
+assert.match(embaScript, /splitSpeechChunks/);
+assert.match(embaStyles, /\.emba-material-read/);
 
 console.log("EMBA reading page checks passed");

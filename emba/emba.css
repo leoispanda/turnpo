@@ -798,6 +798,25 @@ body::before {
   text-align: right;
 }
 
+.emba-material-read {
+  border-color: rgba(32, 112, 102, 0.34);
+  background: rgba(32, 112, 102, 0.1);
+  color: #165e55;
+}
+
+.emba-material-reader-actions .emba-file-link:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.emba-material-speech-status {
+  flex-basis: 100%;
+  min-height: 16px;
+  color: #165e55;
+  font-size: 12px;
+  text-align: right;
+}
+
 .emba-list {
   display: grid;
   gap: 10px;
@@ -1774,6 +1793,10 @@ body::before {
   }
 
   .emba-material-copy-status {
+    text-align: left;
+  }
+
+  .emba-material-speech-status {
     text-align: left;
   }
 

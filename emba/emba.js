@@ -48,6 +48,13 @@ const state = {
   },
   openBlockId: "",
   materialReader: null,
+  materialSpeech: {
+    chunks: [],
+    index: 0,
+    active: false,
+    paused: false,
+    file: ""
+  },
   libraryLoaded: false,
   accessGranted: false,
   editMode: false,
@@ -66,6 +73,7 @@ const state = {
 };
 
 const $ = (selector) => document.querySelector(selector);
+let materialSpeechSession = 0;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -1234,6 +1242,111 @@ function externalMaterialLabel(file = "") {
   return isWebLearningPage(file) ? "进入学习页 →" : "Open file";
 }
 
+function materialSpeechSupported() {
+  return typeof window !== "undefined" && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+}
+
+function materialSpeechText(markdown = "") {
+  return splitFrontmatter(markdown).body
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/[*_`>#|]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function splitSpeechChunks(text = "", maxLength = 220) {
+  const sentences = String(text || "").match(/[^。！？!?；;]+[。！？!?；;]?/g) || [];
+  const chunks = [];
+  let current = "";
+  sentences.forEach((sentence) => {
+    const next = `${current}${sentence}`.trim();
+    if (current && next.length > maxLength) {
+      chunks.push(current);
+      current = sentence.trim();
+      return;
+    }
+    current = next;
+  });
+  if (current) chunks.push(current);
+  return chunks;
+}
+
+function updateMaterialSpeechControls(message = "") {
+  const speech = state.materialSpeech;
+  const start = $("[data-material-read]");
+  const pause = $("[data-material-pause]");
+  const stop = $("[data-material-stop]");
+  const status = $("[data-material-speech-status]");
+  if (start) start.textContent = speech.active ? "重新朗读" : "朗读本页";
+  if (pause) {
+    pause.disabled = !speech.active;
+    pause.textContent = speech.paused ? "继续" : "暂停";
+  }
+  if (stop) stop.disabled = !speech.active;
+  if (status && message) status.textContent = message;
+}
+
+function stopMaterialSpeech(message = "") {
+  materialSpeechSession += 1;
+  if (materialSpeechSupported()) window.speechSynthesis.cancel();
+  state.materialSpeech = { chunks: [], index: 0, active: false, paused: false, file: "" };
+  updateMaterialSpeechControls(message);
+}
+
+function playNextMaterialSpeechChunk() {
+  const speech = state.materialSpeech;
+  if (!speech.active || speech.paused || speech.index >= speech.chunks.length) {
+    if (speech.active && speech.index >= speech.chunks.length) stopMaterialSpeech("本页朗读完成。");
+    return;
+  }
+  const session = speech.session;
+  const utterance = new SpeechSynthesisUtterance(speech.chunks[speech.index]);
+  utterance.lang = "zh-CN";
+  utterance.rate = 0.94;
+  utterance.onend = () => {
+    if (!state.materialSpeech.active || state.materialSpeech.paused || state.materialSpeech.session !== session) return;
+    state.materialSpeech.index += 1;
+    playNextMaterialSpeechChunk();
+  };
+  utterance.onerror = () => {
+    if (state.materialSpeech.session === session) stopMaterialSpeech("朗读已停止；请检查浏览器的语音功能。");
+  };
+  window.speechSynthesis.speak(utterance);
+}
+
+function startMaterialSpeech() {
+  const reader = state.materialReader;
+  if (!reader?.markdown) return;
+  if (!materialSpeechSupported()) {
+    updateMaterialSpeechControls("当前浏览器不支持朗读功能。");
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const chunks = splitSpeechChunks(materialSpeechText(reader.markdown));
+  if (!chunks.length) {
+    updateMaterialSpeechControls("没有可朗读的文字。");
+    return;
+  }
+  const session = ++materialSpeechSession;
+  state.materialSpeech = { chunks, index: 0, active: true, paused: false, file: reader.file || "", session };
+  updateMaterialSpeechControls("正在朗读本页；可随时暂停或停止。");
+  playNextMaterialSpeechChunk();
+}
+
+function toggleMaterialSpeechPause() {
+  if (!state.materialSpeech.active || !materialSpeechSupported()) return;
+  if (state.materialSpeech.paused) {
+    state.materialSpeech.paused = false;
+    window.speechSynthesis.resume();
+    updateMaterialSpeechControls("继续朗读。");
+    return;
+  }
+  state.materialSpeech.paused = true;
+  window.speechSynthesis.pause();
+  updateMaterialSpeechControls("已暂停朗读。");
+}
+
 function renderMaterialReader() {
   const reader = state.materialReader;
   if (!reader) return "";
@@ -1252,9 +1365,11 @@ function renderMaterialReader() {
           ${reader.notes ? `<p>${escapeHtml(reader.notes)}</p>` : ""}
         </div>
         <div class="emba-material-reader-actions">
+          ${canCopy ? `<button class="emba-file-link emba-material-read" type="button" data-material-read>朗读本页</button><button class="emba-file-link" type="button" data-material-pause disabled>暂停</button><button class="emba-file-link" type="button" data-material-stop disabled>停止</button>` : ""}
           ${canCopy ? `<button class="emba-file-link emba-material-copy" type="button" data-material-copy>一键复制给 GPT</button>` : ""}
           <button class="emba-file-link" type="button" data-material-back>← 返回资料</button>
           <span class="emba-material-copy-status" data-material-copy-status role="status" aria-live="polite"></span>
+          <span class="emba-material-speech-status" data-material-speech-status role="status" aria-live="polite"></span>
         </div>
       </div>
       ${body}
@@ -1264,6 +1379,7 @@ function renderMaterialReader() {
 
 async function openMaterialReader(file, title = "Material", notes = "") {
   if (!isReadableMaterial(file)) return;
+  stopMaterialSpeech();
   state.materialReader = { file, title, notes, markdown: "", loading: true, error: "" };
   renderMonthDetail(selectedMonth());
   scrollToMonthTarget("[data-block-panel]");
@@ -1606,6 +1722,7 @@ function renderMonthDetail(month) {
 
 function setActiveMonth(monthIdValue) {
   if (!monthIdValue || state.selectedMonthId === monthIdValue) return;
+  stopMaterialSpeech();
   state.selectedMonthId = monthIdValue;
   state.openBlockId = "";
   state.materialReader = null;
@@ -1754,6 +1871,7 @@ $("#embaTimeline")?.addEventListener("click", (event) => {
 $("#embaMonthDetail")?.addEventListener("click", async (event) => {
   const blockClose = event.target.closest("[data-block-close]");
   if (blockClose) {
+    stopMaterialSpeech();
     state.openBlockId = "";
     state.materialReader = null;
     renderMonthDetail(selectedMonth());
@@ -1777,8 +1895,27 @@ $("#embaMonthDetail")?.addEventListener("click", async (event) => {
     return;
   }
 
+  const materialRead = event.target.closest("[data-material-read]");
+  if (materialRead) {
+    startMaterialSpeech();
+    return;
+  }
+
+  const materialPause = event.target.closest("[data-material-pause]");
+  if (materialPause) {
+    toggleMaterialSpeechPause();
+    return;
+  }
+
+  const materialStop = event.target.closest("[data-material-stop]");
+  if (materialStop) {
+    stopMaterialSpeech("已停止朗读。");
+    return;
+  }
+
   const materialBack = event.target.closest("[data-material-back]");
   if (materialBack) {
+    stopMaterialSpeech();
     state.materialReader = null;
     renderMonthDetail(selectedMonth());
     scrollToMonthTarget("[data-block-panel]");
@@ -1829,6 +1966,7 @@ $("#embaMonthDetail")?.addEventListener("click", async (event) => {
   const button = event.target.closest("[data-block-toggle]");
   if (!button) return;
   const blockId = button.dataset.blockToggle || "";
+  stopMaterialSpeech();
   state.openBlockId = blockId;
   state.materialReader = null;
   renderMonthDetail(selectedMonth());
