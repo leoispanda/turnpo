@@ -1260,7 +1260,7 @@ function renderPodcasts(month) {
             <h3>${escapeHtml(item.title || "Podcast")}</h3>
             ${item.notes ? `<p>${escapeHtml(item.notes)}</p>` : ""}
           </div>
-          <audio class="emba-podcast-player" controls preload="metadata">
+          <audio class="emba-podcast-player" controls controlsList="nodownload" preload="metadata">
             <source src="${escapeHtml(item.file)}" type="audio/mp4" />
             你的浏览器暂不支持音频播放。
           </audio>
@@ -1438,7 +1438,7 @@ function renderMaterialReader() {
             <span>${escapeHtml(podcast.description)}</span>
           </div>
           <div class="emba-day-page-podcast-player">
-            <audio controls preload="metadata">
+            <audio controls controlsList="nodownload" preload="metadata">
               <source src="${escapeHtml(podcast.file)}" type="audio/mp4" />
               Your browser does not support audio playback.
             </audio>
