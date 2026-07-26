@@ -20,6 +20,11 @@ const PREPARATION_MATERIAL_TYPES = new Set([
 ]);
 const PODCAST_MATERIAL_TYPE = "podcast";
 const DAY_PAGE_PODCASTS = Object.freeze({
+  "/emba/materials/2026-09/days/2026-09-07-financial-management.md": {
+    title: "Day 1 Podcast｜《利润背后的生死局》",
+    description: "先听这个故事，再进入投资价值、现金流、机会成本与风险承担的判断。",
+    file: "https://media.turnpo.com/%E5%88%A9%E6%B6%A6%E8%83%8C%E5%90%8E%E7%9A%84%E7%94%9F%E6%AD%BB%E5%B1%80.m4a"
+  },
   "/emba/materials/2026-09/days/2026-09-09-accounting-erm-governance.md": {
     title: "Day 3 Podcast｜《披萨店后厨的三块白板》",
     description: "先听完这个故事，再进入利润、现金、风险与治理之间的关系。",
