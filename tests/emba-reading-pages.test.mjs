@@ -164,7 +164,7 @@ assert.match(learningPathStyles, /\.learning-side/);
 assert.match(embaScript, /speechSynthesis/);
 assert.match(embaScript, /data-material-read/);
 assert.match(embaScript, /splitSpeechChunks/);
-assert.match(embaStyles, /\.emba-material-read/);
+assert.match(embaStyles, /\.emba-material-listening/);
 const embaMaterials = JSON.parse(fs.readFileSync("emba/materials.json", "utf8"));
 const september = embaMaterials.months.find((month) => month.id === "2026-09");
 const podcasts = september.materials.filter((item) => item.type === "podcast");
@@ -178,5 +178,9 @@ assert.match(embaScript, /renderPodcasts/);
 assert.match(embaScript, /Podcast（课程音频）/);
 assert.match(embaScript, /<audio class="emba-podcast-player" controls preload="metadata">/);
 assert.match(embaStyles, /\.emba-podcast-card/);
+assert.match(embaScript, /网页听读/);
+assert.match(embaScript, /开始听读/);
+assert.match(embaStyles, /\.emba-material-listening/);
+assert.match(embaStyles, /\.emba-content-block\[data-block-id="podcast"\]/);
 
 console.log("EMBA reading page checks passed");

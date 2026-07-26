@@ -1303,12 +1303,15 @@ function updateMaterialSpeechControls(message = "") {
   const pause = $("[data-material-pause]");
   const stop = $("[data-material-stop]");
   const status = $("[data-material-speech-status]");
-  if (start) start.textContent = speech.active ? "重新朗读" : "朗读本页";
+  if (start) start.textContent = speech.active ? "重新开始听读" : "开始听读";
   if (pause) {
     pause.disabled = !speech.active;
-    pause.textContent = speech.paused ? "继续" : "暂停";
+    pause.textContent = speech.paused ? "继续听读" : "暂停听读";
   }
-  if (stop) stop.disabled = !speech.active;
+  if (stop) {
+    stop.disabled = !speech.active;
+    stop.textContent = "结束听读";
+  }
   if (status && message) status.textContent = message;
 }
 
@@ -1390,11 +1393,25 @@ function renderMaterialReader() {
           ${reader.notes ? `<p>${escapeHtml(reader.notes)}</p>` : ""}
         </div>
         <div class="emba-material-reader-actions">
-          ${canCopy ? `<button class="emba-file-link emba-material-read" type="button" data-material-read>朗读本页</button><button class="emba-file-link" type="button" data-material-pause disabled>暂停</button><button class="emba-file-link" type="button" data-material-stop disabled>停止</button>` : ""}
-          ${canCopy ? `<button class="emba-file-link emba-material-copy" type="button" data-material-copy>一键复制给 GPT</button>` : ""}
-          <button class="emba-file-link" type="button" data-material-back>← 返回资料</button>
+          ${canCopy ? `
+            <section class="emba-material-listening" aria-label="本页听读控制">
+              <div class="emba-material-listening-head">
+                <span class="emba-material-listening-kicker">网页听读</span>
+                <span>使用浏览器语音播放本页内容</span>
+              </div>
+              <div class="emba-material-listening-controls">
+                <button class="emba-listening-start" type="button" data-material-read>开始听读</button>
+                <button class="emba-listening-secondary" type="button" data-material-pause disabled>暂停听读</button>
+                <button class="emba-listening-secondary" type="button" data-material-stop disabled>结束听读</button>
+              </div>
+              <span class="emba-material-speech-status" data-material-speech-status role="status" aria-live="polite">尚未开始。</span>
+            </section>
+          ` : ""}
+          <div class="emba-material-utility-actions">
+            ${canCopy ? `<button class="emba-file-link emba-material-copy" type="button" data-material-copy>复制给 GPT</button>` : ""}
+            <button class="emba-file-link" type="button" data-material-back>← 返回资料</button>
+          </div>
           <span class="emba-material-copy-status" data-material-copy-status role="status" aria-live="polite"></span>
-          <span class="emba-material-speech-status" data-material-speech-status role="status" aria-live="polite"></span>
         </div>
       </div>
       ${body}
@@ -1740,9 +1757,9 @@ function renderMonthDetail(month) {
     <div class="emba-month-kicker">${escapeHtml(formatMonth(month.month))}</div>
     ${renderOpenBlockPanel(month)}
     <div class="emba-block-grid">
+      ${materialsForSection(month, "podcast").some(materialHasContent) ? blockTemplate("podcast", "Podcast（课程音频）", month) : ""}
       ${materialsForSection(month, "preparation").some(materialHasContent) ? blockTemplate("preparation", "课前准备", month) : ""}
       ${materialsForSection(month, "vocabulary").some(materialHasContent) ? blockTemplate("vocabulary", "专业词汇", month) : ""}
-      ${materialsForSection(month, "podcast").some(materialHasContent) ? blockTemplate("podcast", "Podcast（课程音频）", month) : ""}
       ${blockTemplate("reflection", "Reflection（我的思考）", month)}
       ${blockTemplate("memory", "照片", month)}
       ${blockTemplate("material", "资料", month)}
