@@ -165,5 +165,18 @@ assert.match(embaScript, /speechSynthesis/);
 assert.match(embaScript, /data-material-read/);
 assert.match(embaScript, /splitSpeechChunks/);
 assert.match(embaStyles, /\.emba-material-read/);
+const embaMaterials = JSON.parse(fs.readFileSync("emba/materials.json", "utf8"));
+const september = embaMaterials.months.find((month) => month.id === "2026-09");
+const podcasts = september.materials.filter((item) => item.type === "podcast");
+assert.equal(podcasts.length, 2, "September needs one podcast for Day 3 and one for Day 4");
+assert.match(podcasts[0].title, /Day 3/);
+assert.match(podcasts[1].title, /Day 4/);
+for (const podcast of podcasts) {
+  assert.ok(fs.existsSync(`.${podcast.file}`), `${podcast.title} audio file is missing`);
+}
+assert.match(embaScript, /renderPodcasts/);
+assert.match(embaScript, /Podcast（课程音频）/);
+assert.match(embaScript, /<audio class="emba-podcast-player" controls preload="metadata">/);
+assert.match(embaStyles, /\.emba-podcast-card/);
 
 console.log("EMBA reading page checks passed");

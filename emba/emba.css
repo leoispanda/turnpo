@@ -817,6 +817,57 @@ body::before {
   text-align: right;
 }
 
+.emba-podcast-list {
+  display: grid;
+  gap: 14px;
+}
+
+.emba-podcast-card {
+  display: grid;
+  gap: 14px;
+  border: 1px solid rgba(154, 119, 42, 0.22);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 253, 247, 0.98), rgba(250, 247, 237, 0.78));
+  padding: clamp(18px, 3vw, 24px);
+}
+
+.emba-podcast-card-head {
+  display: grid;
+  gap: 6px;
+}
+
+.emba-podcast-kicker {
+  color: #9a772a;
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.emba-podcast-card h3 {
+  margin: 0;
+  color: #1d1d1f;
+  font-size: clamp(19px, 2.5vw, 24px);
+  line-height: 1.25;
+}
+
+.emba-podcast-card p {
+  margin: 0;
+  color: #6e6e73;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.emba-podcast-player {
+  width: 100%;
+  min-height: 44px;
+  accent-color: #9a772a;
+}
+
+.emba-podcast-download {
+  justify-self: start;
+}
+
 .emba-list {
   display: grid;
   gap: 10px;

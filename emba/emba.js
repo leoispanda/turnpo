@@ -18,6 +18,7 @@ const PREPARATION_MATERIAL_TYPES = new Set([
   "reading_learning_map",
   "case_inspiration"
 ]);
+const PODCAST_MATERIAL_TYPE = "podcast";
 const JULY_THINKING_FABLES = {
   T01: "井边的空桶\n\n旱季的第三周，青石村每天都有讲水的人进祠堂。阿拓坐在最前排，抄下坡度、闸门和蓄池的图。他抄得很快，回家时却发现母亲又把半桶水倒给邻居：井口的绳子越来越长，桶底碰到水的声音越来越迟。\n\n他先照课堂上的图检查北坡水渠，发现一截石槽有裂缝。村长说那裂缝去年就有，拿泥补上即可。阿拓补了两次，井水仍在降。几天后，赶车的女人说马蹄总在村东湿地陷住；阿拓却嫌这和上游无关，没有去看。\n\n暴雨那夜，祠堂屋檐的水全冲到街上。阿拓忽然想起守庙人说过，新砌的围墙把旧水沟封了。他带着空桶，沿墙根找了一夜，才在一丛苦艾后找到被埋住的出水口。第二天，他没有再开讲水会，而是把空桶摆在井边，叫每个挑水的人在桶上写下自己看到的第一处异常。\n\n桶身很快被写满：湿地、裂槽、围墙、北坡新菜地。井水恢复得很慢，但再没有无声下降。阿拓后来明白，真正的问题从不先住在图纸上；它先住在谁每天都提着、却始终提不满的桶里。",
   T02: "匠人的直尺\n\n鲁正的铜尺跟了他三十年。他用它给城门量过梁，也给富商量过书桌。徒弟只要照尺做，少返工，少挨骂，木坊因此从不缺订单。\n\n阿言做了一张窄书桌，鲁正一量便叫她拆掉左边两分。阿言没有辩解，只请他坐下写一封信。鲁正刚落笔，手肘撞上墙。他沉着脸说，房间小，不是桌子的错。第二天，阿言加宽桌面；鲁正又说桌脚占了账房过道，叫她再拆。\n\n阿言夜里没动锯子，去问账房怎样摊账簿，问抄写员怎样放墨瓶，问腿脚不便的老先生怎样起身。第三天，她在桌侧做了一个能抽出的窄板。鲁正看见后很不高兴：铜尺上没有这种尺寸。\n\n两个月后，老先生把一封写到一半的信放在抽板上，慢慢站起身，墨瓶没有翻，账簿也没有掉。鲁正站在窗边很久，终于把铜尺放进抽屉。他仍量木头，只是不再先量。他开始问：谁会坐在这里？谁会在这里把手肘撞到墙？",
@@ -1171,7 +1172,8 @@ function materialsForSection(month, section = "materials") {
   const materials = asArray(month?.materials);
   if (section === "preparation") return materials.filter((item) => PREPARATION_MATERIAL_TYPES.has(item.type));
   if (section === "vocabulary") return materials.filter((item) => item.type === "vocabulary");
-  return materials.filter((item) => !PREPARATION_MATERIAL_TYPES.has(item.type) && item.type !== "vocabulary");
+  if (section === "podcast") return materials.filter((item) => item.type === PODCAST_MATERIAL_TYPE);
+  return materials.filter((item) => !PREPARATION_MATERIAL_TYPES.has(item.type) && item.type !== "vocabulary" && item.type !== PODCAST_MATERIAL_TYPE);
 }
 
 function renderMaterials(month, section = "materials") {
@@ -1228,6 +1230,29 @@ function renderPreparation(month) {
 
 function renderVocabulary(month) {
   return renderMaterials(month, "vocabulary");
+}
+
+function renderPodcasts(month) {
+  const podcasts = materialsForSection(month, "podcast");
+  if (!podcasts.length) return `<p class="emba-empty-copy">暂无课程音频。</p>`;
+  return `
+    <div class="emba-podcast-list">
+      ${podcasts.map((item) => `
+        <article class="emba-podcast-card">
+          <div class="emba-podcast-card-head">
+            <span class="emba-podcast-kicker">课程 Podcast</span>
+            <h3>${escapeHtml(item.title || "Podcast")}</h3>
+            ${item.notes ? `<p>${escapeHtml(item.notes)}</p>` : ""}
+          </div>
+          <audio class="emba-podcast-player" controls preload="metadata">
+            <source src="${escapeHtml(item.file)}" type="audio/mp4" />
+            你的浏览器暂不支持音频播放。请下载音频后收听。
+          </audio>
+          <a class="emba-file-link emba-podcast-download" href="${escapeHtml(item.file)}" download>下载音频</a>
+        </article>
+      `).join("")}
+    </div>
+  `;
 }
 
 function isReadableMaterial(file = "") {
@@ -1652,6 +1677,10 @@ function blockSummary(id, month) {
     const count = materialsForSection(month, "vocabulary").filter(materialHasContent).length;
     return count ? "30 个术语 · IPA 音标" : "暂无专业词汇";
   }
+  if (id === "podcast") {
+    const count = materialsForSection(month, "podcast").filter(materialHasContent).length;
+    return count ? `${count} 集课程音频` : "暂无课程音频";
+  }
   return "";
 }
 
@@ -1662,6 +1691,7 @@ function renderBlockContent(id, month) {
   if (id === "material") return renderMaterials(month);
   if (id === "preparation") return renderPreparation(month);
   if (id === "vocabulary") return renderVocabulary(month);
+  if (id === "podcast") return renderPodcasts(month);
   return "";
 }
 
@@ -1712,6 +1742,7 @@ function renderMonthDetail(month) {
     <div class="emba-block-grid">
       ${materialsForSection(month, "preparation").some(materialHasContent) ? blockTemplate("preparation", "课前准备", month) : ""}
       ${materialsForSection(month, "vocabulary").some(materialHasContent) ? blockTemplate("vocabulary", "专业词汇", month) : ""}
+      ${materialsForSection(month, "podcast").some(materialHasContent) ? blockTemplate("podcast", "Podcast（课程音频）", month) : ""}
       ${blockTemplate("reflection", "Reflection（我的思考）", month)}
       ${blockTemplate("memory", "照片", month)}
       ${blockTemplate("material", "资料", month)}
