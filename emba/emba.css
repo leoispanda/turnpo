@@ -804,6 +804,61 @@ body::before {
   justify-items: stretch;
 }
 
+.emba-day-page-podcast {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+  gap: 22px;
+  align-items: center;
+  margin: 0 0 26px;
+  border: 1px solid rgba(154, 119, 42, 0.28);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(177, 138, 47, 0.12), rgba(32, 112, 102, 0.07));
+  padding: 20px 22px;
+}
+
+.emba-day-page-podcast-copy,
+.emba-day-page-podcast-player {
+  display: grid;
+  gap: 7px;
+}
+
+.emba-day-page-podcast-kicker {
+  color: #785c20;
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.emba-day-page-podcast-copy strong {
+  color: #2f2921;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.emba-day-page-podcast-copy span:last-child {
+  color: #6e6e73;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.emba-day-page-podcast-player audio {
+  width: 100%;
+  min-width: 0;
+}
+
+.emba-day-page-podcast-download {
+  width: fit-content;
+  color: #165e55;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.emba-day-page-podcast-download:hover {
+  text-decoration: underline;
+}
+
 .emba-material-copy {
   border-color: rgba(154, 119, 42, 0.34);
   background: rgba(177, 138, 47, 0.1);
@@ -1925,6 +1980,10 @@ body::before {
   .emba-material-listening-controls,
   .emba-material-utility-actions {
     display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .emba-day-page-podcast {
     grid-template-columns: 1fr;
   }
 

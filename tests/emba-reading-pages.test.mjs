@@ -177,6 +177,9 @@ for (const podcast of podcasts) {
 assert.match(embaScript, /renderPodcasts/);
 assert.match(embaScript, /Podcast（课程音频）/);
 assert.match(embaScript, /<audio class="emba-podcast-player" controls preload="metadata">/);
+assert.match(embaScript, /const DAY_PAGE_PODCASTS/);
+assert.match(embaScript, /Day 4 Podcast｜《数据全绿却等死》/);
+assert.match(embaScript, /本日课程 Podcast/);
 assert.match(embaScript, /const basePodcasts/);
 assert.match(embaScript, /Course podcasts are shipped with the site/);
 assert.match(embaStyles, /\.emba-podcast-card/);
@@ -184,5 +187,6 @@ assert.match(embaScript, /网页听读/);
 assert.match(embaScript, /开始听读/);
 assert.match(embaStyles, /\.emba-material-listening/);
 assert.match(embaStyles, /\.emba-content-block\[data-block-id="podcast"\]/);
+assert.match(embaStyles, /\.emba-day-page-podcast/);
 
 console.log("EMBA reading page checks passed");

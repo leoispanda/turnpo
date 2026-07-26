@@ -19,6 +19,18 @@ const PREPARATION_MATERIAL_TYPES = new Set([
   "case_inspiration"
 ]);
 const PODCAST_MATERIAL_TYPE = "podcast";
+const DAY_PAGE_PODCASTS = Object.freeze({
+  "/emba/materials/2026-09/days/2026-09-09-accounting-erm-governance.md": {
+    title: "Day 3 Podcast｜《披萨店后厨的三块白板》",
+    description: "先听完这个故事，再进入利润、现金、风险与治理之间的关系。",
+    file: "/emba/materials/2026-09/podcasts/day-3-three-whiteboards.m4a"
+  },
+  "/emba/materials/2026-09/days/2026-09-10-management-control.md": {
+    title: "Day 4 Podcast｜《数据全绿却等死》",
+    description: "先听这个故事，再理解指标、控制、创新与 purpose 怎样放在同一个判断里。",
+    file: "/emba/materials/2026-09/podcasts/day-4-data-all-green.m4a"
+  }
+});
 const JULY_THINKING_FABLES = {
   T01: "井边的空桶\n\n旱季的第三周，青石村每天都有讲水的人进祠堂。阿拓坐在最前排，抄下坡度、闸门和蓄池的图。他抄得很快，回家时却发现母亲又把半桶水倒给邻居：井口的绳子越来越长，桶底碰到水的声音越来越迟。\n\n他先照课堂上的图检查北坡水渠，发现一截石槽有裂缝。村长说那裂缝去年就有，拿泥补上即可。阿拓补了两次，井水仍在降。几天后，赶车的女人说马蹄总在村东湿地陷住；阿拓却嫌这和上游无关，没有去看。\n\n暴雨那夜，祠堂屋檐的水全冲到街上。阿拓忽然想起守庙人说过，新砌的围墙把旧水沟封了。他带着空桶，沿墙根找了一夜，才在一丛苦艾后找到被埋住的出水口。第二天，他没有再开讲水会，而是把空桶摆在井边，叫每个挑水的人在桶上写下自己看到的第一处异常。\n\n桶身很快被写满：湿地、裂槽、围墙、北坡新菜地。井水恢复得很慢，但再没有无声下降。阿拓后来明白，真正的问题从不先住在图纸上；它先住在谁每天都提着、却始终提不满的桶里。",
   T02: "匠人的直尺\n\n鲁正的铜尺跟了他三十年。他用它给城门量过梁，也给富商量过书桌。徒弟只要照尺做，少返工，少挨骂，木坊因此从不缺订单。\n\n阿言做了一张窄书桌，鲁正一量便叫她拆掉左边两分。阿言没有辩解，只请他坐下写一封信。鲁正刚落笔，手肘撞上墙。他沉着脸说，房间小，不是桌子的错。第二天，阿言加宽桌面；鲁正又说桌脚占了账房过道，叫她再拆。\n\n阿言夜里没动锯子，去问账房怎样摊账簿，问抄写员怎样放墨瓶，问腿脚不便的老先生怎样起身。第三天，她在桌侧做了一个能抽出的窄板。鲁正看见后很不高兴：铜尺上没有这种尺寸。\n\n两个月后，老先生把一封写到一半的信放在抽板上，慢慢站起身，墨瓶没有翻，账簿也没有掉。鲁正站在窗边很久，终于把铜尺放进抽屉。他仍量木头，只是不再先量。他开始问：谁会坐在这里？谁会在这里把手肘撞到墙？",
@@ -1383,6 +1395,7 @@ function renderMaterialReader() {
   const reader = state.materialReader;
   if (!reader) return "";
   const canCopy = !reader.loading && !reader.error && Boolean(reader.markdown);
+  const podcast = DAY_PAGE_PODCASTS[reader.file];
   const body = reader.loading
     ? `<p class="emba-empty-copy">正在打开课程介绍…</p>`
     : reader.error
@@ -1418,6 +1431,22 @@ function renderMaterialReader() {
           <span class="emba-material-copy-status" data-material-copy-status role="status" aria-live="polite"></span>
         </div>
       </div>
+      ${podcast ? `
+        <section class="emba-day-page-podcast" aria-label="本日课程 Podcast">
+          <div class="emba-day-page-podcast-copy">
+            <span class="emba-day-page-podcast-kicker">课程 Podcast · 建议先听</span>
+            <strong>${escapeHtml(podcast.title)}</strong>
+            <span>${escapeHtml(podcast.description)}</span>
+          </div>
+          <div class="emba-day-page-podcast-player">
+            <audio controls preload="metadata">
+              <source src="${escapeHtml(podcast.file)}" type="audio/mp4" />
+              Your browser does not support audio playback.
+            </audio>
+            <a class="emba-day-page-podcast-download" href="${escapeHtml(podcast.file)}" download>下载音频</a>
+          </div>
+        </section>
+      ` : ""}
       ${body}
     </article>
   `;
