@@ -1,6 +1,6 @@
 /*
   Cache-Control: no-store, no-cache, must-revalidate, max-age=0
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://translate.googleapis.com; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: blob:; object-src 'none'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; connect-src 'self' https://translate.googleapis.com; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: blob:; media-src 'self' https://media.turnpo.com; object-src 'none'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline'; upgrade-insecure-requests
   Permissions-Policy: camera=(), geolocation=(), microphone=()
   Referrer-Policy: strict-origin-when-cross-origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
