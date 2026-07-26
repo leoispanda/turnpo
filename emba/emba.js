@@ -1338,7 +1338,6 @@ function renderMaterialReader() {
 
 async function openMaterialReader(file, title = "Material", notes = "") {
   if (!isReadableMaterial(file)) return;
-  stopMaterialSpeech();
   state.materialReader = { file, title, notes, markdown: "", loading: true, error: "" };
   renderMonthDetail(selectedMonth());
   scrollToMonthTarget("[data-block-panel]");
