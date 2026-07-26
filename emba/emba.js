@@ -23,12 +23,12 @@ const DAY_PAGE_PODCASTS = Object.freeze({
   "/emba/materials/2026-09/days/2026-09-09-accounting-erm-governance.md": {
     title: "Day 3 Podcast｜《披萨店后厨的三块白板》",
     description: "先听完这个故事，再进入利润、现金、风险与治理之间的关系。",
-    file: "/emba/materials/2026-09/podcasts/day-3-three-whiteboards.m4a"
+    file: "https://media.turnpo.com/day-3-three-whiteboards.m4a"
   },
   "/emba/materials/2026-09/days/2026-09-10-management-control.md": {
     title: "Day 4 Podcast｜《数据全绿却等死》",
     description: "先听这个故事，再理解指标、控制、创新与 purpose 怎样放在同一个判断里。",
-    file: "/emba/materials/2026-09/podcasts/day-4-data-all-green.m4a"
+    file: "https://media.turnpo.com/day-4-data-all-green.m4a"
   }
 });
 const JULY_THINKING_FABLES = {
