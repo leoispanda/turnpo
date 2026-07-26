@@ -34,6 +34,11 @@ const DAY_PAGE_PODCASTS = Object.freeze({
     title: "Day 4 Podcast｜《数据全绿却等死》",
     description: "先听这个故事，再理解指标、控制、创新与 purpose 怎样放在同一个判断里。",
     file: "https://media.turnpo.com/day-4-data-all-green.m4a"
+  },
+  "/emba/materials/2026-09/days/2026-09-11-financial-management-integration.md": {
+    title: "Day 5 Podcast｜《业绩榜单的猫腻》",
+    description: "先听这个故事，再理解比较基金业绩时，怎样看见样本、风险、成本与投资者适配。",
+    file: "https://media.turnpo.com/%E4%B8%9A%E7%BB%A9%E6%A6%9C%E5%8D%95%E7%9A%84%E7%8C%AB%E8%85%BB.m4a"
   }
 });
 const JULY_THINKING_FABLES = {
