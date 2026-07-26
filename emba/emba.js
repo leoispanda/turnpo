@@ -21,7 +21,7 @@ const PREPARATION_MATERIAL_TYPES = new Set([
 const PODCAST_MATERIAL_TYPE = "podcast";
 const DAY_PAGE_PODCASTS = Object.freeze({
   "/emba/materials/2026-09/days/2026-09-07-financial-management.md": {
-    title: "Day 1 Podcast｜《利润背后的生死局》",
+    title: "Day 1 Podcast｜《第二张航海表》",
     description: "先听这个故事，再进入投资价值、现金流、机会成本与风险承担的判断。",
     file: "https://media.turnpo.com/%E5%88%A9%E6%B6%A6%E8%83%8C%E5%90%8E%E7%9A%84%E7%94%9F%E6%AD%BB%E5%B1%80.m4a"
   },
@@ -36,12 +36,12 @@ const DAY_PAGE_PODCASTS = Object.freeze({
     file: "https://media.turnpo.com/day-3-three-whiteboards.m4a"
   },
   "/emba/materials/2026-09/days/2026-09-10-management-control.md": {
-    title: "Day 4 Podcast｜《数据全绿却等死》",
+    title: "Day 4 Podcast｜《第三勺红油》",
     description: "先听这个故事，再理解指标、控制、创新与 purpose 怎样放在同一个判断里。",
     file: "https://media.turnpo.com/day-4-data-all-green.m4a"
   },
   "/emba/materials/2026-09/days/2026-09-11-financial-management-integration.md": {
-    title: "Day 5 Podcast｜《业绩榜单的猫腻》",
+    title: "Day 5 Podcast｜《通过率最高的驾校》",
     description: "先听这个故事，再理解比较基金业绩时，怎样看见样本、风险、成本与投资者适配。",
     file: "https://media.turnpo.com/%E4%B8%9A%E7%BB%A9%E6%A6%9C%E5%8D%95%E7%9A%84%E7%8C%AB%E8%85%BB.m4a"
   }
