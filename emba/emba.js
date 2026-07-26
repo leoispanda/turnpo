@@ -1262,9 +1262,8 @@ function renderPodcasts(month) {
           </div>
           <audio class="emba-podcast-player" controls preload="metadata">
             <source src="${escapeHtml(item.file)}" type="audio/mp4" />
-            你的浏览器暂不支持音频播放。请下载音频后收听。
+            你的浏览器暂不支持音频播放。
           </audio>
-          <a class="emba-file-link emba-podcast-download" href="${escapeHtml(item.file)}" download>下载音频</a>
         </article>
       `).join("")}
     </div>
@@ -1443,7 +1442,6 @@ function renderMaterialReader() {
               <source src="${escapeHtml(podcast.file)}" type="audio/mp4" />
               Your browser does not support audio playback.
             </audio>
-            <a class="emba-day-page-podcast-download" href="${escapeHtml(podcast.file)}" download>下载音频</a>
           </div>
         </section>
       ` : ""}
