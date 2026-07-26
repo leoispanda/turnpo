@@ -507,13 +507,17 @@ function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
   const baseThinkingIsStructured = baseThinking.some((item) => typeof item === "object");
   const exactMaterials = (items) => asArray(items).map(normalizeMaterial).filter(materialHasContent);
   const exactMemories = (items) => asArray(items).map((item) => normalizeMemory(item, overlayMonth.month || baseMonth.month));
+  const basePodcasts = exactMaterials(baseMonth.materials).filter((item) => item.type === PODCAST_MATERIAL_TYPE);
+  const chosenMaterials = materialsWinner
+    ? exactMaterials(materialsWinner === "base" ? baseMonth.materials : overlayMonth.materials)
+    : mergeMaterialLists(baseMonth.materials, overlayMonth.materials);
   return {
     ...baseMonth,
     ...overlayMonth,
     title: overlayMonth.title || baseMonth.title,
-    materials: materialsWinner
-      ? exactMaterials(materialsWinner === "base" ? baseMonth.materials : overlayMonth.materials)
-      : mergeMaterialLists(baseMonth.materials, overlayMonth.materials),
+    // Course podcasts are shipped with the site. Keep them visible even when an
+    // older cloud library has a higher revision than the static course catalogue.
+    materials: mergeMaterialLists(basePodcasts, chosenMaterials),
     materialsRevision: Math.max(normalizeRevision(baseMonth.materialsRevision), normalizeRevision(overlayMonth.materialsRevision)),
     reflection: reflectionWinner
       ? normalizeMarkdown(reflectionWinner === "base" ? baseMonth.reflection : overlayMonth.reflection)

@@ -177,6 +177,8 @@ for (const podcast of podcasts) {
 assert.match(embaScript, /renderPodcasts/);
 assert.match(embaScript, /Podcast（课程音频）/);
 assert.match(embaScript, /<audio class="emba-podcast-player" controls preload="metadata">/);
+assert.match(embaScript, /const basePodcasts/);
+assert.match(embaScript, /Course podcasts are shipped with the site/);
 assert.match(embaStyles, /\.emba-podcast-card/);
 assert.match(embaScript, /网页听读/);
 assert.match(embaScript, /开始听读/);
