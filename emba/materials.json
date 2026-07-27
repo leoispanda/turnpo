@@ -554,10 +554,22 @@
           "notes": "Financial Management：用一项看似高利润的投资，串起价值、现金流、机会成本与风险承担。"
         },
         {
+          "title": "Day 1 Podcast｜English version",
+          "type": "podcast",
+          "file": "https://media.turnpo.com/day1-en.m4a",
+          "notes": "English retelling of the Day 1 fable on investment value, cash flow, opportunity cost, and risk."
+        },
+        {
           "title": "Day 2 Podcast｜《那张干净的检查表》",
           "type": "podcast",
           "file": "https://media.turnpo.com/%E9%82%A3%E5%BC%A0%E5%B9%B2%E5%87%80%E7%9A%84%E6%A3%80%E6%9F%A5%E8%A1%A8.m4a",
           "notes": "Compliance & Sustainability Reporting：一张满是勾的检查表，为什么仍然可能掩盖风险与责任断点。"
+        },
+        {
+          "title": "Day 2 Podcast｜English version",
+          "type": "podcast",
+          "file": "https://media.turnpo.com/day2-en.m4a",
+          "notes": "English retelling of the Day 2 fable on compliance, evidence, sustainability reporting, and leadership."
         },
         {
           "title": "Day 3 Podcast｜《披萨店后厨的三块白板》",
@@ -566,16 +578,34 @@
           "notes": "Financial Accounting, ERM & Governance：用披萨店的三块白板，串起利润、现金、风险与治理。"
         },
         {
+          "title": "Day 3 Podcast｜English version",
+          "type": "podcast",
+          "file": "https://media.turnpo.com/day3-en.m4a",
+          "notes": "English retelling of the Day 3 fable on profit, cash, risk, and governance."
+        },
+        {
           "title": "Day 4 Podcast｜《第三勺红油》",
           "type": "podcast",
           "file": "https://media.turnpo.com/day-4-data-all-green.m4a",
           "notes": "Management Accounting & Strategic Control：当指标全绿时，为什么组织仍可能失去真正的判断与行动能力。"
         },
         {
+          "title": "Day 4 Podcast｜Why Accurate Metrics Sabotage Your Strategy",
+          "type": "podcast",
+          "file": "https://media.turnpo.com/day4-en.m4a",
+          "notes": "English retelling of the Day 4 fable on metrics, control, innovation, and purpose."
+        },
+        {
           "title": "Day 5 Podcast｜《通过率最高的驾校》",
           "type": "podcast",
           "file": "https://media.turnpo.com/%E4%B8%9A%E7%BB%A9%E6%A6%9C%E5%8D%95%E7%9A%84%E7%8C%AB%E8%85%BB.m4a",
           "notes": "Financial Management & Mutual Fund Comparison：比较基金业绩时，怎样看见样本、风险、成本与投资者适配。"
+        },
+        {
+          "title": "Day 5 Podcast｜English version",
+          "type": "podcast",
+          "file": "https://media.turnpo.com/day5-en.m4a",
+          "notes": "English retelling of the Day 5 fable on fund-performance comparison, risk, cost, and investor fit."
         },
         {
           "title": "Day 5｜Financial Management Integration & Presentation",
