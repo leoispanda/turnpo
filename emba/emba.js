@@ -21,29 +21,84 @@ const PREPARATION_MATERIAL_TYPES = new Set([
 const PODCAST_MATERIAL_TYPE = "podcast";
 const DAY_PAGE_PODCASTS = Object.freeze({
   "/emba/materials/2026-09/days/2026-09-07-financial-management.md": {
-    title: "Day 1 Podcast｜《第二张航海表》",
-    description: "先听这个故事，再进入投资价值、现金流、机会成本与风险承担的判断。",
-    file: "https://media.turnpo.com/%E5%88%A9%E6%B6%A6%E8%83%8C%E5%90%8E%E7%9A%84%E7%94%9F%E6%AD%BB%E5%B1%80.m4a"
+    versions: [
+      {
+        language: "中文",
+        title: "Day 1 Podcast｜《第二张航海表》",
+        description: "先听这个故事，再进入投资价值、现金流、机会成本与风险承担的判断。",
+        file: "https://media.turnpo.com/%E5%88%A9%E6%B6%A6%E8%83%8C%E5%90%8E%E7%9A%84%E7%94%9F%E6%AD%BB%E5%B1%80.m4a"
+      },
+      {
+        language: "English",
+        title: "Day 1 Podcast｜English version",
+        description: "Listen to the English retelling before exploring investment value, cash flow, opportunity cost, and risk.",
+        file: "https://media.turnpo.com/day1-en.m4a"
+      }
+    ]
   },
   "/emba/materials/2026-09/days/2026-09-08-compliance-sustainability.md": {
-    title: "Day 2 Podcast｜《那张干净的检查表》",
-    description: "先听这个故事，再理解合规、证据链、可持续报告与财务领导力。",
-    file: "https://media.turnpo.com/%E9%82%A3%E5%BC%A0%E5%B9%B2%E5%87%80%E7%9A%84%E6%A3%80%E6%9F%A5%E8%A1%A8.m4a"
+    versions: [
+      {
+        language: "中文",
+        title: "Day 2 Podcast｜《那张干净的检查表》",
+        description: "先听这个故事，再理解合规、证据链、可持续报告与财务领导力。",
+        file: "https://media.turnpo.com/%E9%82%A3%E5%BC%A0%E5%B9%B2%E5%87%80%E7%9A%84%E6%A3%80%E6%9F%A5%E8%A1%A8.m4a"
+      },
+      {
+        language: "English",
+        title: "Day 2 Podcast｜English version",
+        description: "Listen to the English retelling before exploring compliance, evidence, sustainability reporting, and financial leadership.",
+        file: "https://media.turnpo.com/day2-en.m4a"
+      }
+    ]
   },
   "/emba/materials/2026-09/days/2026-09-09-accounting-erm-governance.md": {
-    title: "Day 3 Podcast｜《披萨店后厨的三块白板》",
-    description: "先听完这个故事，再进入利润、现金、风险与治理之间的关系。",
-    file: "https://media.turnpo.com/day-3-three-whiteboards.m4a"
+    versions: [
+      {
+        language: "中文",
+        title: "Day 3 Podcast｜《披萨店后厨的三块白板》",
+        description: "先听完这个故事，再进入利润、现金、风险与治理之间的关系。",
+        file: "https://media.turnpo.com/day-3-three-whiteboards.m4a"
+      },
+      {
+        language: "English",
+        title: "Day 3 Podcast｜English version",
+        description: "Listen to the English retelling before connecting profit, cash, risk, and governance.",
+        file: "https://media.turnpo.com/day3-en.m4a"
+      }
+    ]
   },
   "/emba/materials/2026-09/days/2026-09-10-management-control.md": {
-    title: "Day 4 Podcast｜《第三勺红油》",
-    description: "先听这个故事，再理解指标、控制、创新与 purpose 怎样放在同一个判断里。",
-    file: "https://media.turnpo.com/day-4-data-all-green.m4a"
+    versions: [
+      {
+        language: "中文",
+        title: "Day 4 Podcast｜《第三勺红油》",
+        description: "先听这个故事，再理解指标、控制、创新与 purpose 怎样放在同一个判断里。",
+        file: "https://media.turnpo.com/day-4-data-all-green.m4a"
+      },
+      {
+        language: "English",
+        title: "Day 4 Podcast｜Why Accurate Metrics Sabotage Your Strategy",
+        description: "Listen to the English retelling before exploring metrics, control, innovation, and purpose in one strategic judgment.",
+        file: "https://media.turnpo.com/day4-en.m4a"
+      }
+    ]
   },
   "/emba/materials/2026-09/days/2026-09-11-financial-management-integration.md": {
-    title: "Day 5 Podcast｜《通过率最高的驾校》",
-    description: "先听这个故事，再理解比较基金业绩时，怎样看见样本、风险、成本与投资者适配。",
-    file: "https://media.turnpo.com/%E4%B8%9A%E7%BB%A9%E6%A6%9C%E5%8D%95%E7%9A%84%E7%8C%AB%E8%85%BB.m4a"
+    versions: [
+      {
+        language: "中文",
+        title: "Day 5 Podcast｜《通过率最高的驾校》",
+        description: "先听这个故事，再理解比较基金业绩时，怎样看见样本、风险、成本与投资者适配。",
+        file: "https://media.turnpo.com/%E4%B8%9A%E7%BB%A9%E6%A6%9C%E5%8D%95%E7%9A%84%E7%8C%AB%E8%85%BB.m4a"
+      },
+      {
+        language: "English",
+        title: "Day 5 Podcast｜English version",
+        description: "Listen to the English retelling before comparing fund performance through sample, risk, cost, and investor fit.",
+        file: "https://media.turnpo.com/day5-en.m4a"
+      }
+    ]
   }
 });
 const JULY_THINKING_FABLES = {
@@ -76,6 +131,7 @@ const state = {
   },
   openBlockId: "",
   materialReader: null,
+  podcastLanguage: "中文",
   libraryLoaded: false,
   accessGranted: false,
   editMode: false,
@@ -1295,6 +1351,8 @@ function renderMaterialReader() {
   if (!reader) return "";
   const canCopy = !reader.loading && !reader.error && Boolean(reader.markdown);
   const podcast = DAY_PAGE_PODCASTS[reader.file];
+  const podcastVersions = podcast?.versions || [];
+  const selectedPodcast = podcastVersions.find((version) => version.language === state.podcastLanguage) || podcastVersions[0];
   const body = reader.loading
     ? `<p class="emba-empty-copy">正在打开课程介绍…</p>`
     : reader.error
@@ -1316,16 +1374,19 @@ function renderMaterialReader() {
           <span class="emba-material-copy-status" data-material-copy-status role="status" aria-live="polite"></span>
         </div>
       </div>
-      ${podcast ? `
-        <section class="emba-day-page-podcast" aria-label="本日课程 Podcast">
+      ${selectedPodcast ? `
+        <section class="emba-day-page-podcast" aria-label="${escapeHtml(selectedPodcast.language)} Podcast">
           <div class="emba-day-page-podcast-copy">
-            <span class="emba-day-page-podcast-kicker">课程 Podcast · 建议先听</span>
-            <strong>${escapeHtml(podcast.title)}</strong>
-            <span>${escapeHtml(podcast.description)}</span>
+            <span class="emba-day-page-podcast-kicker">课程 Podcast · ${escapeHtml(selectedPodcast.language)} · 建议先听</span>
+            <div class="emba-podcast-language-toggle" role="group" aria-label="Podcast language">
+              ${podcastVersions.map((version) => `<button type="button" class="${version.language === selectedPodcast.language ? "is-active" : ""}" data-podcast-language="${escapeHtml(version.language)}" aria-pressed="${String(version.language === selectedPodcast.language)}">${escapeHtml(version.language)}</button>`).join("")}
+            </div>
+            <strong>${escapeHtml(selectedPodcast.title)}</strong>
+            <span>${escapeHtml(selectedPodcast.description)}</span>
           </div>
           <div class="emba-day-page-podcast-player">
             <audio controls controlsList="nodownload" preload="metadata">
-              <source src="${escapeHtml(podcast.file)}" type="audio/mp4" />
+              <source src="${escapeHtml(selectedPodcast.file)}" type="audio/mp4" />
               Your browser does not support audio playback.
             </audio>
           </div>
@@ -1338,6 +1399,7 @@ function renderMaterialReader() {
 
 async function openMaterialReader(file, title = "Material", notes = "") {
   if (!isReadableMaterial(file)) return;
+  state.podcastLanguage = "中文";
   state.materialReader = { file, title, notes, markdown: "", loading: true, error: "" };
   renderMonthDetail(selectedMonth());
   scrollToMonthTarget("[data-block-panel]");
@@ -1832,6 +1894,13 @@ $("#embaTimeline")?.addEventListener("click", (event) => {
 });
 
 $("#embaMonthDetail")?.addEventListener("click", async (event) => {
+  const podcastLanguage = event.target.closest("[data-podcast-language]");
+  if (podcastLanguage) {
+    state.podcastLanguage = podcastLanguage.dataset.podcastLanguage || "中文";
+    renderMonthDetail(selectedMonth());
+    return;
+  }
+
   const blockClose = event.target.closest("[data-block-close]");
   if (blockClose) {
     state.openBlockId = "";

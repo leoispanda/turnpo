@@ -822,6 +822,36 @@ body::before {
   gap: 7px;
 }
 
+.emba-podcast-language-toggle {
+  display: inline-flex;
+  width: fit-content;
+  overflow: hidden;
+  border: 1px solid rgba(120, 92, 32, 0.26);
+  border-radius: 999px;
+}
+
+.emba-podcast-language-toggle button {
+  min-width: 62px;
+  padding: 6px 10px;
+  border: 0;
+  border-right: 1px solid rgba(120, 92, 32, 0.18);
+  background: rgba(255, 255, 255, 0.54);
+  color: #6e6e73;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.emba-podcast-language-toggle button:last-child {
+  border-right: 0;
+}
+
+.emba-podcast-language-toggle button.is-active {
+  background: #785c20;
+  color: #fffdf6;
+}
+
 .emba-day-page-podcast-kicker {
   color: #785c20;
   font-size: 11px;
