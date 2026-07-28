@@ -80,6 +80,8 @@ const dayFour = fs.readFileSync(dayFiles[3], "utf8");
 const dayOneLearningPath = "emba/materials/2026-09/reflections/2026-09-07-day-1-financial-management-leo-learning-path.md";
 const berkReading = data.readings.find((item) => item.id === "berk-corporate-finance");
 assert.ok(berkReading?.fable, "Berk should have a knowledge fable before the study guide");
+assert.equal(berkReading?.sourceUrl, "/emba/materials/2026-09/readings/berk-demarzo-fourth-edition-summary.pdf");
+assert.ok(fs.existsSync(`.${berkReading.sourceUrl}`), "Berk fourth-edition summary PDF should be available locally");
 assert.equal(berkReading.fable.title, "《一盏晚到的灯》");
 assert.ok(berkReading.fable.paragraphs.length >= 4, "Berk fable should have a complete narrative arc");
 assert.equal(berkReading.parts.length, 7, "Berk should follow the seven substantive blocks found in the fourth-edition summary");

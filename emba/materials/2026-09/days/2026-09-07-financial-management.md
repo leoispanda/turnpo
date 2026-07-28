@@ -188,7 +188,8 @@ Debt 带来固定偿付、到期日和 covenant；equity 缓冲更大，却会�
 
 - 指定教材：*Fundamentals of Corporate Finance*, 6th Global Edition。
 - ISBN 9781292470047；eISBN 9781292738048。
-- **原文待补**：目前没有本地教材全文，需要从 Maastricht University Library、Canvas 或 Pearson 获取。
+- **对应阅读材料已有**：[打开你提供的第四版摘要 PDF](../readings/berk-demarzo-fourth-edition-summary.pdf)。它覆盖时间价值、NPV、资本预算、风险与资本成本、债务与股权、真实期权等 Day 1 的核心逻辑。
+- **版本边界**：这不是 2025 第六版完整教材，不能替代正式页码引用；第六版指定章节仍需从 Maastricht University Library、Canvas 或 Pearson 获取。
 - [进入 Berk 指定章节结构化学习页](/emba/reading.html?reading=berk-corporate-finance)
 - [Pearson 版本页面](https://www.pearson.com/en-gb/subject-catalog/p/fundamentals-of-corporate-finance-global-edition/P200000012454/9781292470030)
 
@@ -373,7 +374,7 @@ Nocco & Stulz 完成今天的最后一步：一个项目不能只证明自己 NP
 
 | 你要写的结论 | 首要资料 | 资料状态 | 不能犯的错误 |
 |---|---|---|---|
-| 项目现金流、折现、债券/股票估值、短期资金规划、real options | Berk 指定章节 | 原书待补；现有 study guide | 不要把学习卡当作教材原文引用。 |
+| 项目现金流、折现、债券/股票估值、短期资金规划、real options | Berk 指定章节 | 第四版摘要 PDF 已有；第六版原书待补 | 不要把第四版摘要当作第六版教材原文引用。 |
 | 为什么公司风险管理能够创造价值 | Stulz (1996) | 原文 PDF 已有 | 不要只写“降低波动”，要写融资约束与投资不足。 |
 | 为什么应保留 core risk、转移 non-core risk | Stulz (1996) | 原文 PDF 已有 | 不要把风险类别视为永久标签，要结合企业能力。 |
 | Enterprise view 的 macro/micro benefits | Nocco & Stulz (2006) | Journal PDF 已有；Day 1 bridge | 今天聚焦 financing capacity 与 value，不提前替代 Day 3 COSO。 |
