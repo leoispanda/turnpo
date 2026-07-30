@@ -1360,20 +1360,6 @@ function renderMaterialReader() {
       : `<div class="emba-markdown-rendered">${markdownToHtml(reader.markdown || "", reader.file)}</div>`;
   return `
     <article class="emba-material-reader">
-      <div class="emba-material-reader-head">
-        <div>
-          <span class="emba-month-kicker">课程介绍</span>
-          <h3>${escapeHtml(reader.title || "Material")}</h3>
-          ${reader.notes ? `<p>${escapeHtml(reader.notes)}</p>` : ""}
-        </div>
-        <div class="emba-material-reader-actions">
-          <div class="emba-material-utility-actions">
-            ${canCopy ? `<button class="emba-file-link emba-material-copy" type="button" data-material-copy>复制给 GPT</button>` : ""}
-            <button class="emba-file-link" type="button" data-material-back>← 返回资料</button>
-          </div>
-          <span class="emba-material-copy-status" data-material-copy-status role="status" aria-live="polite"></span>
-        </div>
-      </div>
       ${selectedPodcast ? `
         <section class="emba-day-page-podcast" aria-label="${escapeHtml(selectedPodcast.language)} Podcast">
           <div class="emba-day-page-podcast-copy">
@@ -1392,6 +1378,20 @@ function renderMaterialReader() {
           </div>
         </section>
       ` : ""}
+      <div class="emba-material-reader-head">
+        <div>
+          <span class="emba-month-kicker">课程介绍</span>
+          <h3>${escapeHtml(reader.title || "Material")}</h3>
+          ${reader.notes ? `<p>${escapeHtml(reader.notes)}</p>` : ""}
+        </div>
+        <div class="emba-material-reader-actions">
+          <div class="emba-material-utility-actions">
+            ${canCopy ? `<button class="emba-file-link emba-material-copy" type="button" data-material-copy>复制给 GPT</button>` : ""}
+            <button class="emba-file-link" type="button" data-material-back>← 返回资料</button>
+          </div>
+          <span class="emba-material-copy-status" data-material-copy-status role="status" aria-live="polite"></span>
+        </div>
+      </div>
       ${body}
     </article>
   `;
