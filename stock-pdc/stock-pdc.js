@@ -1,34 +1,16 @@
 const STOCK_ACCESS_KEY = "turnpo:stock-pdc-access";
 const STOCK_PASSWORD = "emba2026";
+const ACTION_META = {
+  BUY: { title: "买入", note: "仅显示已通过 PDC 即时买入闸门的股票" },
+  HOLD: { title: "保留", note: "仅显示已确认持仓且满足保留规则的股票" },
+  SELL: { title: "卖出", note: "仅显示已确认持仓且需要人工卖出复核的股票" }
+};
 const state = {
   accessGranted: false,
   data: null
 };
 
 const $ = (selector) => document.querySelector(selector);
-
-function visibleDays() {
-  return (state.data?.days || [])
-    .filter((day) => Array.isArray(day.rows) && day.rows.length)
-    .filter((day) => isTradingWeekday(day.date))
-    .slice()
-    .reverse();
-}
-
-function dateParts(value) {
-  const [year, month, day] = String(value || "").split("-").map((part) => Number.parseInt(part, 10));
-  return [year, month, day].every(Number.isFinite) ? { year, month, day } : null;
-}
-
-function dayOfWeek(value) {
-  const parts = dateParts(value);
-  return parts ? new Date(Date.UTC(parts.year, parts.month - 1, parts.day)).getUTCDay() : null;
-}
-
-function isTradingWeekday(value) {
-  const weekday = dayOfWeek(value);
-  return weekday !== null && weekday !== 0 && weekday !== 6;
-}
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -37,14 +19,6 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
-}
-
-function movementPath(row) {
-  if (row.changeType === "NEW") return `未在上一期 -> #${row.rank}`;
-  if (row.changeType === "UNCHANGED") return `#${row.previousRank || row.rank} -> #${row.rank}`;
-  if (row.changeType === "UP") return `#${row.previousRank} -> #${row.rank}`;
-  if (row.changeType === "DOWN") return `#${row.previousRank} -> #${row.rank}`;
-  return "";
 }
 
 function pctClass(value) {
@@ -60,206 +34,88 @@ function formatPct(value, fallback = "--") {
   return `${sign}${value.toFixed(2)}%`;
 }
 
-function formatValuePct(value, fallback = "--") {
-  return Number.isFinite(value) ? `${value.toFixed(2)}%` : fallback;
+function formatPrice(value) {
+  return Number.isFinite(value) ? value.toFixed(value >= 100 ? 2 : 3) : "--";
 }
 
-function droppedRankDelta(row) {
-  const previousRank = Number.parseInt(row.previousRank, 10);
-  return Number.isFinite(previousRank) ? Math.max(1, 21 - previousRank) : null;
+function actionRows() {
+  const rows = state.data?.actions?.rows;
+  if (!Array.isArray(rows)) return [];
+  return rows.filter((row) => Object.hasOwn(ACTION_META, row.action));
 }
 
-function droppedMovementPath(row) {
-  const delta = droppedRankDelta(row);
-  const movement = delta === null ? "跌出 Top 20" : `跌出 Top 20，至少下滑 ${delta} 名`;
-  const action = row.exitText ? `，${row.exitText}` : "";
-  return `#${row.previousRank || "-"} -> ${movement}${action}`;
-}
-
-function shortDate(value) {
-  const [, month = "", day = ""] = String(value || "").split("-");
-  return month && day ? `${month}.${day}` : value;
-}
-
-function weekdayLabel(value) {
-  const weekday = dayOfWeek(value);
-  if (weekday === null) return "";
-  return ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"][weekday];
-}
-
-function rowByRank(day, rank) {
-  return (day.rows || []).find((row) => Number(row.rank) === rank) || null;
-}
-
-function renderDayChange(row) {
-  const value = signalDayChangeValue(row);
-  return `<span class="stock-day-change ${pctClass(value)}">${formatPct(value)}</span>`;
-}
-
-function renderDroppedDayChange(row) {
-  const value = signalDayChangeValue(row);
-  return `<span class="stock-day-change ${pctClass(value)}">${formatPct(value)}</span>`;
-}
-
-function signalDayChangeValue(row) {
-  return Number.isFinite(row.signalDayChangePct) ? row.signalDayChangePct : row.dayChangePct;
-}
-
-function priceMoveClass(value) {
-  return `stock-price-${pctClass(value)}`;
-}
-
-function rankMoveClass(changeType) {
-  return `stock-rank-${String(changeType || "UNCHANGED").toLowerCase()}`;
-}
-
-function renderRankCell(day, rank) {
-  const row = rowByRank(day, rank);
-  if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} #${rank} empty"></div>`;
-  const dayChange = signalDayChangeValue(row);
+function renderActionCard(row) {
   return `
-    <article class="stock-rank-cell ${priceMoveClass(dayChange)}" aria-label="${escapeHtml(day.date)} #${rank} ${escapeHtml(row.name)} ${escapeHtml(movementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(dayChange, "unknown"))}">
-      <div class="stock-name">
-        <h3>${escapeHtml(row.name)}</h3>
-        <small>${escapeHtml(row.ticker)}</small>
+    <article class="stock-action-card stock-action-${escapeHtml(row.action.toLowerCase())}">
+      <div class="stock-action-card-head">
+        <div>
+          <h3>${escapeHtml(row.name)}</h3>
+          <small>${escapeHtml(row.ticker)}</small>
+        </div>
+        <strong>${escapeHtml(row.actionText || ACTION_META[row.action].title)}</strong>
       </div>
-      ${renderDayChange(row)}
-      <span class="stock-change stock-rank-move ${rankMoveClass(row.changeType)}" role="img" aria-label="${escapeHtml(movementPath(row))}">
-        <span class="stock-change-arrow" aria-hidden="true"></span>
-      </span>
+      <div class="stock-action-market">
+        <span>参考收盘 ${escapeHtml(formatPrice(row.latestClose))}</span>
+        <span class="${pctClass(row.signalDayChangePct)}">${escapeHtml(formatPct(row.signalDayChangePct))}</span>
+      </div>
+      <p>${escapeHtml(row.reason || "等待人工复核")}</p>
     </article>
   `;
 }
 
-function renderDroppedCell(day, index) {
-  const row = (day.dropped || [])[index] || null;
-  if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} dropped ${index + 1} empty"></div>`;
-  const dayChange = signalDayChangeValue(row);
+function renderActionGroup(action, rows) {
+  const meta = ACTION_META[action];
   return `
-    <article class="stock-rank-cell ${priceMoveClass(dayChange)}" aria-label="${escapeHtml(day.date)} dropped ${index + 1} ${escapeHtml(row.name)} ${escapeHtml(droppedMovementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(dayChange, "unknown"))}">
-      <div class="stock-name">
-        <h3>${escapeHtml(row.name)}</h3>
-        <small>${escapeHtml(row.ticker)}</small>
-      </div>
-      ${renderDroppedDayChange(row)}
-      <span class="stock-change stock-rank-move stock-rank-dropped" role="img" aria-label="${escapeHtml(droppedMovementPath(row))}">
-        <span class="stock-change-arrow" aria-hidden="true"></span>
-      </span>
-    </article>
-  `;
-}
-
-function renderPortfolioCell(day) {
-  const portfolio = day.portfolio || {};
-  const cumulative = portfolio.cumulativeReturnPct;
-  const daily = portfolio.dailyReturnPct;
-  if (!Number.isFinite(cumulative)) {
-    return `<div class="stock-rank-cell stock-rank-cell-empty stock-portfolio-cell" aria-label="${escapeHtml(day.date)} portfolio empty"></div>`;
-  }
-  return `
-    <article class="stock-rank-cell stock-portfolio-cell ${priceMoveClass(daily)}" aria-label="${escapeHtml(day.date)} 初始100组合累计 ${escapeHtml(formatPct(cumulative))} 下一交易日 ${escapeHtml(formatPct(daily))}">
-      <div class="stock-name">
-        <h3>${escapeHtml(formatPct(cumulative))}</h3>
-        <small>100% -> ${escapeHtml(formatValuePct(portfolio.valuePct))}</small>
-      </div>
-      <span class="stock-day-change neutral">${escapeHtml(portfolio.investedCount || 0)} / 20</span>
-      <div class="stock-change stock-performance-change ${pctClass(daily)}" aria-label="${escapeHtml(day.date)} portfolio daily return">
-        <strong>${escapeHtml(formatPct(daily))}</strong>
-      </div>
-    </article>
-  `;
-}
-
-function renderBenchmarkCell(day) {
-  const benchmark = day.benchmark || {};
-  const cumulative = benchmark.cumulativeReturnPct;
-  const daily = benchmark.dailyReturnPct;
-  if (!Number.isFinite(cumulative)) {
-    return `<div class="stock-rank-cell stock-rank-cell-empty stock-portfolio-cell" aria-label="${escapeHtml(day.date)} benchmark empty"></div>`;
-  }
-  return `
-    <article class="stock-rank-cell stock-portfolio-cell ${priceMoveClass(daily)}" aria-label="${escapeHtml(day.date)} 大盘累计 ${escapeHtml(formatPct(cumulative))} 下一交易日 ${escapeHtml(formatPct(daily))}">
-      <div class="stock-name">
-        <h3>${escapeHtml(formatPct(cumulative))}</h3>
-        <small>${escapeHtml(benchmark.ticker || "CSI300ETF")} ${escapeHtml(formatValuePct(benchmark.valuePct))}</small>
-      </div>
-      <span class="stock-day-change neutral">${escapeHtml(benchmark.returnDate || "--")}</span>
-      <div class="stock-change stock-performance-change ${pctClass(daily)}" aria-label="${escapeHtml(day.date)} benchmark daily return">
-        <strong>${escapeHtml(formatPct(daily))}</strong>
-      </div>
-    </article>
-  `;
-}
-
-function latestPortfolioSummary(days) {
-  const latest = days.find((day) => day.date === state.data?.portfolio?.daily?.at(-1)?.date)?.portfolio
-    || days.find((day) => day.portfolio)?.portfolio
-    || null;
-  if (!latest) return "";
-  return `
-    <div class="stock-portfolio-summary" aria-label="Stock PDC equal weight portfolio return">
-      <span>初始 100%</span>
-      <strong class="${pctClass(latest.cumulativeReturnPct)}">${escapeHtml(formatPct(latest.cumulativeReturnPct))}</strong>
-      <small>截至 ${escapeHtml(latest.returnDate || latest.date)}，当前 ${escapeHtml(formatValuePct(latest.valuePct))}，次日 ${escapeHtml(formatPct(latest.dailyReturnPct))}</small>
-    </div>
-  `;
-}
-
-function renderStrategySummary() {
-  const strategy = state.data?.strategy;
-  if (!strategy) return "";
-  return `
-    <section class="stock-strategy-note" aria-label="Stock PDC strategy rule">
-      <h2>Top20 Rotation</h2>
-      <p>鹰眼雷达先筛候选，PDC 只做排序。最终决策只看当日 Top 20，全部委员分数仅保留用于未来调权和复盘。</p>
-      <div class="stock-strategy-meta">
-        <span>${escapeHtml(strategy.candidateStage || "Hawkeye Radar")}</span>
-        <span>${escapeHtml(strategy.rankingStage || "PDC ranking")}</span>
-        <span>${escapeHtml(strategy.exitRule || "Top 20 exit review")}</span>
+    <section class="stock-action-group stock-action-group-${action.toLowerCase()}">
+      <header>
+        <div>
+          <span>${escapeHtml(action)}</span>
+          <h2>${escapeHtml(meta.title)}</h2>
+        </div>
+        <strong>${rows.length}</strong>
+      </header>
+      <p class="stock-action-note">${escapeHtml(meta.note)}</p>
+      <div class="stock-action-cards">
+        ${rows.length
+          ? rows.map(renderActionCard).join("")
+          : '<div class="stock-action-none">没有需要处理的股票</div>'}
       </div>
     </section>
   `;
 }
 
-function renderRankList() {
+function renderActionList() {
   const list = $("#stockRankList");
   if (!list) return;
-  const days = visibleDays();
-  if (!days.length) {
-    list.innerHTML = `<div class="stock-empty">No Stock PDC data yet.</div>`;
-    return;
-  }
-  const ranks = Array.from({ length: 20 }, (_, index) => index + 1);
-  const droppedSlots = Array.from({ length: 10 }, (_, index) => index);
+  const actions = state.data?.actions;
+  const rows = actionRows();
+  const latestDate = actions?.latestDate || state.data?.latestDate || "--";
+  const groups = ["BUY", "HOLD", "SELL"];
+
   list.innerHTML = `
-    ${renderStrategySummary()}
-    <div class="stock-rank-matrix" style="--date-count: ${days.length}">
-      <div class="stock-matrix-corner" aria-hidden="true"></div>
-      ${days.map((day) => `
-        <time class="stock-date-head" datetime="${escapeHtml(day.date)}" title="${escapeHtml(day.date)}">
-          <span>${escapeHtml(shortDate(day.date))}</span>
-          <small>${escapeHtml(weekdayLabel(day.date))}</small>
-        </time>
-      `).join("")}
-      ${ranks.map((rank) => `
-        <div class="stock-rank-axis">#${rank}</div>
-        ${days.map((day) => renderRankCell(day, rank)).join("")}
-      `).join("")}
-      ${droppedSlots.map((index) => `
-        <div class="stock-rank-axis stock-rank-axis-dropped">出${index + 1}</div>
-        ${days.map((day) => renderDroppedCell(day, index)).join("")}
-      `).join("")}
-      <div class="stock-rank-axis stock-rank-axis-return">收益</div>
-      ${days.map((day) => renderPortfolioCell(day)).join("")}
-      <div class="stock-rank-axis stock-rank-axis-return">大盘</div>
-      ${days.map((day) => renderBenchmarkCell(day)).join("")}
+    <section class="stock-action-hero">
+      <div>
+        <span>STOCK PDC ACTIONS</span>
+        <h1>买入・保留・卖出</h1>
+        <p>${escapeHtml(latestDate)} · 只显示需要采取行动的股票</p>
+      </div>
+      <div class="stock-action-total">
+        <strong>${rows.length}</strong>
+        <span>项行动</span>
+      </div>
+    </section>
+    ${rows.length === 0
+      ? '<section class="stock-no-action"><strong>今日无需操作</strong><p>没有通过买入闸门的机会，也没有已确认持仓需要保留或卖出。</p></section>'
+      : ""}
+    <div class="stock-action-grid">
+      ${groups.map((action) => renderActionGroup(action, rows.filter((row) => row.action === action))).join("")}
     </div>
-    ${latestPortfolioSummary(days)}
+    <p class="stock-action-footnote">其他研究候选和未确认成交计划均已隐藏。所有行动均为研究和人工复核，不连接券商或自动下单。</p>
   `;
 }
 
 function renderDashboard() {
-  renderRankList();
+  renderActionList();
 }
 
 async function loadData() {

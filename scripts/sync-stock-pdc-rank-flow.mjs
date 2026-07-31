@@ -78,6 +78,10 @@ function readCsv(filePath) {
   return parseCsv(fs.readFileSync(filePath, "utf8"));
 }
 
+function readCsvIfExists(filePath) {
+  return fs.existsSync(filePath) ? readCsv(filePath) : [];
+}
+
 function dateParts(value) {
   const [year, month, day] = String(value || "").split("-").map((part) => Number.parseInt(part, 10));
   return [year, month, day].every(Number.isFinite) ? { year, month, day } : null;
@@ -338,6 +342,107 @@ function droppedExitText(signalDayChangePct) {
     : "卖出复核";
 }
 
+function buildUserActions(sourceRoot, latestDate, names) {
+  const purchasePath = path.join(sourceRoot, "outputs", "daily_purchase_instruction.csv");
+  const monitorPath = path.join(sourceRoot, "portfolio", "position_monitor.csv");
+  const purchaseRows = readCsvIfExists(purchasePath)
+    .filter((row) => clean(row.analysis_date || row.run_date) === latestDate);
+  const openPositionRows = readCsvIfExists(monitorPath)
+    .filter((row) => clean(row.analysis_date) === latestDate)
+    .filter((row) => clean(row.position_status) === "OPEN");
+  const openTickers = new Set(openPositionRows.map((row) => clean(row.ticker)).filter(Boolean));
+  const actions = [];
+
+  purchaseRows.forEach((row) => {
+    const ticker = clean(row.ticker);
+    if (!ticker || openTickers.has(ticker)) return;
+    actions.push({
+      action: "BUY",
+      actionText: "买入",
+      ticker,
+      name: names.get(ticker) || ticker,
+      analysisDate: latestDate,
+      rank: intOrNull(row.rank),
+      score: numberOrNull(row.final_score),
+      latestClose: numberOrNull(row.current_price) ?? numberOrNull(row.latest_close),
+      signalDayChangePct: numberOrNull(row.current_pct_change),
+      reason: clean(row.trigger) || "通过 PDC 即时买入闸门",
+      sourceInstruction: clean(row.instruction),
+      researchStatus: clean(row.final_status)
+    });
+  });
+
+  openPositionRows.forEach((row) => {
+    const ticker = clean(row.ticker);
+    if (!ticker) return;
+    const signalDayChangePct = numberOrNull(row.current_pct_change);
+    const instruction = clean(row.sell_instruction);
+    const droppedUpDay = clean(row.top20_status) === "OUT_OF_TOP20"
+      && Number.isFinite(signalDayChangePct)
+      && signalDayChangePct > 0;
+    let action = "";
+    let actionText = "";
+    let reason = clean(row.sell_trigger) || clean(row.main_risk);
+
+    if (droppedUpDay) {
+      action = "HOLD";
+      actionText = "保留";
+      reason = "HOLD_DROPPED_UP_DAY / 上涨不卖";
+    } else if (instruction.startsWith("HOLD_")) {
+      action = "HOLD";
+      actionText = "保留";
+    } else if (instruction.startsWith("SELL_")) {
+      action = "SELL";
+      actionText = "卖出复核";
+    }
+    if (!action) return;
+
+    actions.push({
+      action,
+      actionText,
+      ticker,
+      name: names.get(ticker) || ticker,
+      analysisDate: latestDate,
+      rank: intOrNull(row.pdc_rank),
+      score: numberOrNull(row.final_score),
+      latestClose: numberOrNull(row.current_price) ?? numberOrNull(row.latest_close),
+      signalDayChangePct,
+      reason,
+      sourceInstruction: droppedUpDay ? "HOLD_DROPPED_UP_DAY" : instruction,
+      researchStatus: clean(row.final_status)
+    });
+  });
+
+  const priority = { BUY: 0, HOLD: 1, SELL: 2 };
+  actions.sort((a, b) => (
+    priority[a.action] - priority[b.action]
+    || (a.rank || 999) - (b.rank || 999)
+    || a.ticker.localeCompare(b.ticker)
+  ));
+
+  return {
+    schemaVersion: "stock-pdc-actions-v1",
+    latestDate,
+    rows: actions,
+    counts: {
+      buy: actions.filter((row) => row.action === "BUY").length,
+      hold: actions.filter((row) => row.action === "HOLD").length,
+      sell: actions.filter((row) => row.action === "SELL").length
+    },
+    rules: {
+      buy: "Only PDC-approved rows from daily_purchase_instruction.csv; never pad the list.",
+      hold: "Only confirmed OPEN positions with a hold instruction, including HOLD_DROPPED_UP_DAY.",
+      sell: "Only confirmed OPEN positions with a sell instruction; manual review only.",
+      hidden: "Watchlists, candidates, rankings, PLANNED_OPEN rows, and non-actionable research statuses are hidden."
+    },
+    sourceFiles: {
+      buy: path.relative(sourceRoot, purchasePath),
+      positions: path.relative(sourceRoot, monitorPath)
+    },
+    noAction: actions.length === 0
+  };
+}
+
 function normalizeWatchRow(row, date, previousByTicker, changesByTicker, names, priceDataDirs, priceCache) {
   const ticker = clean(row.ticker);
   const currentRank = intOrNull(row.rank);
@@ -375,10 +480,10 @@ function normalizeWatchRow(row, date, previousByTicker, changesByTicker, names, 
     dayChangePct: priceMove.dayChangePct,
     scores: scoreMap(row),
     decision: {
-      policy: "TOP20_TARGET_HOLDING",
-      targetHolding: true,
-      action: changeType === "NEW" ? "ENTER_TOP20" : "KEEP_TOP20",
-      basis: "Top 20 rank only"
+      policy: "RESEARCH_RANK_ONLY",
+      targetHolding: false,
+      action: "RESEARCH_ONLY",
+      basis: "Ranking and research status are not user actions"
     },
     research: {
       finalStatus,
@@ -412,12 +517,10 @@ function normalizeDroppedRow(row, date, previousByTicker, names, priceDataDirs, 
     exitText: droppedExitText(priceMove.signalDayChangePct),
     mainRisk: clean(row.main_risk) || previous?.mainRisk || "",
     decision: {
-      policy: "TOP20_ROTATION_EXIT_REVIEW",
+      policy: "RESEARCH_RANK_ONLY",
       targetHolding: false,
-      action: droppedExitAction(priceMove.signalDayChangePct),
-      basis: Number.isFinite(priceMove.signalDayChangePct) && priceMove.signalDayChangePct > 0
-        ? "Dropped from Top 20 but signal day closed up"
-        : "Dropped from Top 20"
+      action: "RESEARCH_ONLY",
+      basis: "A rank-list drop is not a user sell action without a confirmed OPEN position"
     },
     research: {
       previousStatus: clean(row.previous_status) || previous?.status || "",
@@ -436,7 +539,7 @@ function summarize(rows, dropped) {
 
   return {
     total: rows.length,
-    targetHoldings: 20,
+    targetHoldings: 0,
     inTop20: rows.length,
     new: count("NEW"),
     up: count("UP"),
@@ -445,7 +548,7 @@ function summarize(rows, dropped) {
     retained: rows.length - count("NEW"),
     dropped: dropped.length,
     avgScore,
-    decisionRule: "Hold the highest-ranked Top 20 names; keep factor scores for research only."
+    decisionRule: "Ranked rows are research-only; user actions come from the approved purchase list and confirmed OPEN positions."
   };
 }
 
@@ -610,24 +713,26 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
   });
   const portfolio = buildPortfolio(days);
   const benchmark = buildBenchmark(days, priceDataDirs, priceCache);
+  const actions = buildUserActions(sourceRoot, latestDate, names);
 
   return {
     generatedAt: new Date().toISOString(),
     sourceRoot,
     sourceKind: "stock-pdc-local daily watchlists + turnpo backfills",
     strategy: {
-      version: "top20-rotation-v2",
+      version: "action-list-v1",
       candidateStage: "Hawkeye Radar",
-      rankingStage: "PDC scores rank radar-selected candidates",
-      decisionRule: "Top 20 names are the target portfolio. Status fields are research-only.",
-      exitRule: "Dropped names go to sell review unless signal day change is positive, then HOLD_DROPPED_UP_DAY.",
+      rankingStage: "PDC scores rank radar-selected candidates for internal research only",
+      decisionRule: "Show only BUY from approved purchase instructions and HOLD/SELL from confirmed OPEN positions.",
+      exitRule: "A dropped research row is not a sell action; confirmed OPEN positions retain the HOLD_DROPPED_UP_DAY override.",
       researchRetention: "All factor scores, reasons, and risks are retained for later attribution and tuning."
     },
     backfillRoot: path.relative(TURNPO_ROOT, BACKFILL_WATCHLIST_DIR),
     priceDataDir: priceDataDir ? path.relative(sourceRoot, priceDataDir) : "",
     priceDataFallbacks: priceDataDirs.map((dir) => path.relative(sourceRoot, dir)),
     dates: days.map((day) => day.date),
-    latestDate: days.at(-1)?.date || "",
+    latestDate,
+    actions,
     days,
     portfolio,
     benchmark,
