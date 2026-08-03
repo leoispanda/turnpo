@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T05:59:19.422Z",
+  "generatedAt": "2026-08-03T06:05:28.128Z",
   "sourceRoot": "/Users/leoyang/Documents/financial freedom/stock-pdc-local",
   "sourceKind": "stock-pdc-local daily watchlists + turnpo backfills",
   "strategy": {
@@ -211,40 +211,12 @@
         "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
         "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
         "researchStatus": "Watch"
-      },
-      {
-        "action": "SELL",
-        "actionText": "卖出复核",
-        "ticker": "600036.SH",
-        "name": "招商银行",
-        "analysisDate": "2026-07-31",
-        "rank": null,
-        "score": 0,
-        "latestClose": 0,
-        "signalDayChangePct": 0,
-        "reason": "ticker is not a buy target and was not scored; do not retain an unverifiable holding",
-        "sourceInstruction": "SELL_AT_NEXT_OPEN_DATA_MISSING",
-        "researchStatus": "NOT_SCORED"
-      },
-      {
-        "action": "SELL",
-        "actionText": "卖出复核",
-        "ticker": "601211.SH",
-        "name": "国泰海通",
-        "analysisDate": "2026-07-31",
-        "rank": null,
-        "score": 0,
-        "latestClose": 0,
-        "signalDayChangePct": 0,
-        "reason": "ticker is not a buy target and was not scored; do not retain an unverifiable holding",
-        "sourceInstruction": "SELL_AT_NEXT_OPEN_DATA_MISSING",
-        "researchStatus": "NOT_SCORED"
       }
     ],
     "counts": {
       "buy": 0,
       "hold": 8,
-      "sell": 2
+      "sell": 0
     },
     "rules": {
       "buy": "Only PDC-approved rows from daily_purchase_instruction.csv; never pad the list.",
