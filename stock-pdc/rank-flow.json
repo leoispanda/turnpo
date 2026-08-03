@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T01:08:24.238Z",
+  "generatedAt": "2026-08-03T05:59:19.422Z",
   "sourceRoot": "/Users/leoyang/Documents/financial freedom/stock-pdc-local",
   "sourceKind": "stock-pdc-local daily watchlists + turnpo backfills",
   "strategy": {
@@ -99,11 +99,152 @@
   "actions": {
     "schemaVersion": "stock-pdc-actions-v1",
     "latestDate": "2026-07-31",
-    "rows": [],
+    "rows": [
+      {
+        "action": "HOLD",
+        "actionText": "保留",
+        "ticker": "000333.SZ",
+        "name": "美的集团",
+        "analysisDate": "2026-07-31",
+        "rank": 1,
+        "score": 6.8,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
+        "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
+        "researchStatus": "High Risk Watch"
+      },
+      {
+        "action": "HOLD",
+        "actionText": "保留",
+        "ticker": "600900.SH",
+        "name": "长江电力",
+        "analysisDate": "2026-07-31",
+        "rank": 2,
+        "score": 6.8,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
+        "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
+        "researchStatus": "Watch"
+      },
+      {
+        "action": "HOLD",
+        "actionText": "保留",
+        "ticker": "601166.SH",
+        "name": "兴业银行",
+        "analysisDate": "2026-07-31",
+        "rank": 3,
+        "score": 6.8,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
+        "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
+        "researchStatus": "Watch"
+      },
+      {
+        "action": "HOLD",
+        "actionText": "保留",
+        "ticker": "601328.SH",
+        "name": "交通银行",
+        "analysisDate": "2026-07-31",
+        "rank": 4,
+        "score": 6.8,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
+        "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
+        "researchStatus": "Watch"
+      },
+      {
+        "action": "HOLD",
+        "actionText": "保留",
+        "ticker": "601398.SH",
+        "name": "工商银行",
+        "analysisDate": "2026-07-31",
+        "rank": 5,
+        "score": 6.8,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
+        "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
+        "researchStatus": "Watch"
+      },
+      {
+        "action": "HOLD",
+        "actionText": "保留",
+        "ticker": "601919.SH",
+        "name": "中远海控",
+        "analysisDate": "2026-07-31",
+        "rank": 6,
+        "score": 6.8,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
+        "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
+        "researchStatus": "Wait for Pullback"
+      },
+      {
+        "action": "HOLD",
+        "actionText": "保留",
+        "ticker": "601939.SH",
+        "name": "建设银行",
+        "analysisDate": "2026-07-31",
+        "rank": 7,
+        "score": 6.78,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
+        "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
+        "researchStatus": "Watch"
+      },
+      {
+        "action": "HOLD",
+        "actionText": "保留",
+        "ticker": "603259.SH",
+        "name": "药明康德",
+        "analysisDate": "2026-07-31",
+        "rank": 8,
+        "score": 6.65,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
+        "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
+        "researchStatus": "Watch"
+      },
+      {
+        "action": "SELL",
+        "actionText": "卖出复核",
+        "ticker": "600036.SH",
+        "name": "招商银行",
+        "analysisDate": "2026-07-31",
+        "rank": null,
+        "score": 0,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "ticker is not a buy target and was not scored; do not retain an unverifiable holding",
+        "sourceInstruction": "SELL_AT_NEXT_OPEN_DATA_MISSING",
+        "researchStatus": "NOT_SCORED"
+      },
+      {
+        "action": "SELL",
+        "actionText": "卖出复核",
+        "ticker": "601211.SH",
+        "name": "国泰海通",
+        "analysisDate": "2026-07-31",
+        "rank": null,
+        "score": 0,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "ticker is not a buy target and was not scored; do not retain an unverifiable holding",
+        "sourceInstruction": "SELL_AT_NEXT_OPEN_DATA_MISSING",
+        "researchStatus": "NOT_SCORED"
+      }
+    ],
     "counts": {
       "buy": 0,
-      "hold": 0,
-      "sell": 0
+      "hold": 8,
+      "sell": 2
     },
     "rules": {
       "buy": "Only PDC-approved rows from daily_purchase_instruction.csv; never pad the list.",
@@ -115,7 +256,7 @@
       "buy": "outputs/daily_purchase_instruction.csv",
       "positions": "portfolio/position_monitor.csv"
     },
-    "noAction": true
+    "noAction": false
   },
   "days": [
     {
