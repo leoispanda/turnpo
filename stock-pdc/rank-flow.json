@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T17:11:09.263Z",
+  "generatedAt": "2026-08-04T01:06:48.455Z",
   "sourceRoot": "/Users/leoyang/Documents/financial freedom/stock-pdc-local",
   "sourceKind": "stock-pdc-local daily watchlists + turnpo backfills",
   "strategy": {
@@ -11,10 +11,12 @@
     "researchRetention": "All factor scores, reasons, and risks are retained for later attribution and tuning."
   },
   "backfillRoot": "stock-pdc/backfill/daily_watchlists",
-  "priceDataDir": "data_a_share_latest_runs/run_20260803_184909",
+  "priceDataDir": "data_a_share_latest_runs/run_20260804_030300_preopen",
   "priceDataFallbacks": [
-    "data_a_share_latest_runs/run_20260803_184909",
+    "data_a_share_latest_runs/run_20260804_030300_preopen",
     "data_a_share_latest_runs",
+    "data_a_share_latest_runs/run_20260804_030129",
+    "data_a_share_latest_runs/run_20260803_184909",
     "data_a_share_latest_runs/run_20260803_030200_preopen",
     "data_a_share_latest_runs/run_20260803_030200",
     "data_a_share_latest_runs/run_20260731_030500_preopen",
@@ -110,8 +112,8 @@
         "analysisDate": "2026-08-03",
         "rank": 1,
         "score": 6.8,
-        "latestClose": 85.9,
-        "signalDayChangePct": -1.94,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
         "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
         "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
         "researchStatus": "Watch"
@@ -124,8 +126,8 @@
         "analysisDate": "2026-08-03",
         "rank": 3,
         "score": 6.8,
-        "latestClose": 29.05,
-        "signalDayChangePct": -0.14,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
         "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
         "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
         "researchStatus": "Watch"
@@ -138,8 +140,8 @@
         "analysisDate": "2026-08-03",
         "rank": 4,
         "score": 6.8,
-        "latestClose": 19.1,
-        "signalDayChangePct": 1.06,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
         "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
         "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
         "researchStatus": "Watch"
@@ -152,8 +154,8 @@
         "analysisDate": "2026-08-03",
         "rank": 5,
         "score": 6.8,
-        "latestClose": 7.25,
-        "signalDayChangePct": 0.97,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
         "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
         "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
         "researchStatus": "Watch"
@@ -166,8 +168,8 @@
         "analysisDate": "2026-08-03",
         "rank": 6,
         "score": 6.8,
-        "latestClose": 7.96,
-        "signalDayChangePct": -0.38,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
         "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
         "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
         "researchStatus": "Watch"
@@ -180,8 +182,8 @@
         "analysisDate": "2026-08-03",
         "rank": 7,
         "score": 6.8,
-        "latestClose": 15.72,
-        "signalDayChangePct": 0.58,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
         "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
         "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
         "researchStatus": "High Risk Watch"
@@ -194,8 +196,8 @@
         "analysisDate": "2026-08-03",
         "rank": 8,
         "score": 6.69,
-        "latestClose": 10.45,
-        "signalDayChangePct": -3.69,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
         "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
         "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
         "researchStatus": "Watch"
@@ -208,8 +210,8 @@
         "analysisDate": "2026-08-03",
         "rank": 10,
         "score": 6.35,
-        "latestClose": 128.5,
-        "signalDayChangePct": 0.05,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
         "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
         "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
         "researchStatus": "Watch"
@@ -653,7 +655,7 @@
         },
         {
           "ticker": "601138.SH",
-          "name": "XD工业富",
+          "name": "工业富联",
           "rank": 8,
           "previousRank": null,
           "rankDelta": null,
@@ -1491,7 +1493,7 @@
         },
         {
           "ticker": "601138.SH",
-          "name": "XD工业富",
+          "name": "工业富联",
           "rank": 2,
           "previousRank": 8,
           "rankDelta": 6,
@@ -32840,7 +32842,7 @@
     },
     "601138.SH": {
       "ticker": "601138.SH",
-      "name": "XD工业富",
+      "name": "工业富联",
       "appearances": [
         {
           "date": "2026-06-24",
