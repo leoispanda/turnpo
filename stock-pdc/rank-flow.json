@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-04T01:06:48.455Z",
+  "generatedAt": "2026-08-04T05:59:44.514Z",
   "sourceRoot": "/Users/leoyang/Documents/financial freedom/stock-pdc-local",
   "sourceKind": "stock-pdc-local daily watchlists + turnpo backfills",
   "strategy": {
@@ -121,6 +121,20 @@
       {
         "action": "HOLD",
         "actionText": "保留",
+        "ticker": "600036.SH",
+        "name": "招商银行",
+        "analysisDate": "2026-08-03",
+        "rank": 2,
+        "score": 6.8,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
+        "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
+        "researchStatus": "Watch"
+      },
+      {
+        "action": "HOLD",
+        "actionText": "保留",
         "ticker": "600900.SH",
         "name": "长江电力",
         "analysisDate": "2026-08-03",
@@ -205,6 +219,20 @@
       {
         "action": "HOLD",
         "actionText": "保留",
+        "ticker": "002415.SZ",
+        "name": "海康威视",
+        "analysisDate": "2026-08-03",
+        "rank": 9,
+        "score": 6.59,
+        "latestClose": 0,
+        "signalDayChangePct": 0,
+        "reason": "not in tomorrow's buy target list, but trend score 10.0 and the technical stop confirm the uptrend is intact",
+        "sourceInstruction": "HOLD_NOT_BUY_TARGET_UPTREND",
+        "researchStatus": "Wait for Pullback"
+      },
+      {
+        "action": "HOLD",
+        "actionText": "保留",
         "ticker": "603259.SH",
         "name": "药明康德",
         "analysisDate": "2026-08-03",
@@ -219,7 +247,7 @@
     ],
     "counts": {
       "buy": 0,
-      "hold": 8,
+      "hold": 10,
       "sell": 0
     },
     "rules": {
