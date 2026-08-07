@@ -1,4 +1,5 @@
 const DECISION_API_ENDPOINT = "/stock-pdc/decision/api";
+const RUN_STORAGE_KEY = "turnpo-stock-pdc-decision-run";
 
 const steps = [
   { id: "snapshot", title: "锁定研究数据快照", detail: "确认收盘状态、候选池版本与生成时间。", output: "已冻结输入事实包" },
@@ -156,6 +157,12 @@ function renderResult() {
 }
 
 function render() {
+  try {
+    if (state.run?.id && !state.run.publishedAt) sessionStorage.setItem(RUN_STORAGE_KEY, state.run.id);
+    else if (state.run?.publishedAt) sessionStorage.removeItem(RUN_STORAGE_KEY);
+  } catch {
+    // The decision flow still works when browser storage is unavailable.
+  }
   renderSteps();
   renderModelPicker();
   renderModels();
@@ -221,6 +228,24 @@ async function loadModelProfiles() {
     }
   } catch {
     // Keep the safe GPT mini fallback visible while the authenticated API is unavailable.
+  } finally {
+    render();
+  }
+}
+
+async function restoreSavedRun() {
+  try {
+    const runId = sessionStorage.getItem(RUN_STORAGE_KEY);
+    if (!runId) return;
+    const result = await api(`/runs/${runId}`, { headers: { accept: "application/json" } });
+    if (!result.run?.publishedAt) {
+      state.run = result.run;
+      syncRunProgress();
+    } else {
+      sessionStorage.removeItem(RUN_STORAGE_KEY);
+    }
+  } catch {
+    try { sessionStorage.removeItem(RUN_STORAGE_KEY); } catch { /* Storage is optional. */ }
   } finally {
     render();
   }
@@ -349,3 +374,4 @@ $("#publishDecision")?.addEventListener("click", publishDecision);
 
 render();
 loadModelProfiles();
+restoreSavedRun();

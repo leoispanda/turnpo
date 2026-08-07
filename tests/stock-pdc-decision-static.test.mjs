@@ -20,6 +20,8 @@ assert.ok(decisionJs.includes("async function runReviewers(stage)"));
 assert.ok(decisionJs.includes('点击“继续生成”会从已保存的评审继续'));
 assert.ok(decisionJs.includes("async function publishDecision()"));
 assert.ok(decisionJs.includes("async function loadModelProfiles()"));
+assert.ok(decisionJs.includes("async function restoreSavedRun()"));
+assert.ok(decisionJs.includes('const RUN_STORAGE_KEY = "turnpo-stock-pdc-decision-run"'));
 assert.ok(decisionJs.includes("modelProfileId: state.selectedModelProfileId"));
 assert.ok(decisionJs.includes("第一轮独立盲评"));
 assert.ok(decisionJs.includes("市场与风险闸门"));
