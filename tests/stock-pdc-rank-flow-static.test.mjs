@@ -16,6 +16,7 @@ assert.ok(headers.includes("/stock-pdc/*"));
 
 assert.ok(stockHtml.includes("<title>股票大作手 Top 20 | Turnpo</title>"));
 assert.ok(stockHtml.includes('id="stockRankList"'));
+assert.ok(stockHtml.includes('id="stockActionPanel"'));
 assert.ok(stockHtml.includes("stock-color-wall"));
 assert.ok(stockHtml.includes("stock-color-panel"));
 assert.ok(stockHtml.includes("stock-rank-matrix-wrap"));
@@ -56,6 +57,11 @@ assert.ok(stockJs.includes("stock-date-head"));
 assert.ok(stockJs.includes("stock-rank-axis"));
 assert.ok(stockJs.includes("星期五"));
 assert.ok(stockJs.includes("renderRankList"));
+assert.ok(stockJs.includes("renderActionPanel"));
+assert.ok(stockJs.includes("actionDetail"));
+assert.ok(stockJs.includes("即使结果与昨天相同"));
+assert.ok(stockJs.includes("完整 PDC 买入闸门"));
+assert.ok(stockJs.includes("sourceInstruction"));
 assert.ok(!stockJs.includes("<strong>Out</strong>"));
 assert.ok(!stockJs.includes("renderMatrix"));
 assert.ok(!stockJs.includes("function renderDropped("));
@@ -86,6 +92,9 @@ assert.ok(rankFlow.portfolio.daily.length > 0);
 assert.ok(rankFlow.days.some((day) => day.rows.some((row) => Number.isFinite(row.dayChangePct))));
 assert.ok(rankFlow.days.some((day) => day.rows.some((row) => Number.isFinite(row.signalDayChangePct))));
 assert.ok(rankFlow.days.some((day) => Number.isFinite(day.portfolio?.cumulativeReturnPct)));
+assert.equal(rankFlow.actions.schemaVersion, "stock-pdc-actions-v1");
+assert.equal(rankFlow.actions.latestDate, rankFlow.latestDate);
+assert.ok(Array.isArray(rankFlow.actions.rows));
 
 const backfilledWorkdays = ["2026-06-25", "2026-06-30", "2026-07-01", "2026-07-02"];
 backfilledWorkdays.forEach((date) => {

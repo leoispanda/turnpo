@@ -221,6 +221,83 @@ function renderStrategySummary() {
   `;
 }
 
+function actionRows(action) {
+  const rows = state.data?.actions?.rows;
+  return Array.isArray(rows) ? rows.filter((row) => row.action === action) : [];
+}
+
+function actionCount(action) {
+  const counts = state.data?.actions?.counts;
+  const key = action.toLowerCase();
+  return Number.isFinite(counts?.[key]) ? counts[key] : actionRows(action).length;
+}
+
+function actionDetail(row) {
+  if (row.sourceInstruction === "HOLD_DROPPED_UP_DAY") return "上涨不卖";
+  if (row.action === "BUY") return "通过完整 PDC 买入闸门";
+  if (row.action === "HOLD") return "确认持仓，趋势仍完整";
+  if (row.action === "SELL") return "确认持仓，卖出复核";
+  return row.sourceInstruction || "已通过行动合约核验";
+}
+
+function renderActionRows(rows, emptyText) {
+  if (!rows.length) return `<p class="stock-action-empty">${escapeHtml(emptyText)}</p>`;
+  return `
+    <ul class="stock-action-list">
+      ${rows.map((row) => `
+        <li class="stock-action-row">
+          <div>
+            <strong>${escapeHtml(row.name || row.ticker)}</strong>
+            <span>${escapeHtml(row.ticker)}</span>
+          </div>
+          <small>${escapeHtml(actionDetail(row))}</small>
+        </li>
+      `).join("")}
+    </ul>
+  `;
+}
+
+function renderActionPanel() {
+  const panel = $("#stockActionPanel");
+  if (!panel) return;
+  const actions = state.data?.actions;
+  const latestDate = actions?.latestDate || state.data?.latestDate || "--";
+  if (!actions || !Array.isArray(actions.rows)) {
+    panel.innerHTML = `
+      <div class="stock-action-header">
+        <div><h2>最新 PDC 行动</h2><p>行动数据尚未生成；排名仅供研究。</p></div>
+        <time>${escapeHtml(latestDate)}</time>
+      </div>
+    `;
+    return;
+  }
+  const groups = [
+    { action: "BUY", title: "买入", empty: "今日没有通过完整 PDC 买入闸门的标的。" },
+    { action: "HOLD", title: "保留", empty: "当前没有需要保留的确认持仓。" },
+    { action: "SELL", title: "卖出复核", empty: "当前没有需要卖出复核的确认持仓。" }
+  ];
+  panel.innerHTML = `
+    <div class="stock-action-header">
+      <div>
+        <h2>最新 PDC 行动</h2>
+        <p>每个已验证收盘日都会显示；即使结果与昨天相同。研究排名不会自动变成买卖行动。</p>
+      </div>
+      <time datetime="${escapeHtml(latestDate)}">${escapeHtml(latestDate)}</time>
+    </div>
+    <div class="stock-action-counts" aria-label="最新行动数量">
+      ${groups.map((group) => `<span class="stock-action-count stock-action-${group.action.toLowerCase()}">${escapeHtml(group.title)} <strong>${actionCount(group.action)}</strong></span>`).join("")}
+    </div>
+    <div class="stock-action-grid">
+      ${groups.map((group) => `
+        <section class="stock-action-group stock-action-${group.action.toLowerCase()}" aria-label="${escapeHtml(group.title)}">
+          <h3>${escapeHtml(group.title)} <span>${actionCount(group.action)}</span></h3>
+          ${renderActionRows(actionRows(group.action), group.empty)}
+        </section>
+      `).join("")}
+    </div>
+  `;
+}
+
 function renderRankList() {
   const list = $("#stockRankList");
   if (!list) return;
@@ -259,6 +336,7 @@ function renderRankList() {
 }
 
 function renderDashboard() {
+  renderActionPanel();
   renderRankList();
 }
 
