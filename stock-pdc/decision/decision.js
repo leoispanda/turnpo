@@ -1,26 +1,26 @@
-const DECISION_API_ENDPOINT = "/api/stock-pdc/decision-runs";
+const DECISION_API_ENDPOINT = "/stock-pdc/decision/api";
 
 const steps = [
   { id: "snapshot", title: "锁定研究数据快照", detail: "确认收盘状态、候选池版本与生成时间。", output: "已冻结输入事实包" },
-  { id: "round-one", title: "第一轮独立盲评", detail: "四个模型分别生成自己的 Top 20，不读取彼此结论。", output: "已收到 4 份独立排名" },
-  { id: "pool", title: "合并候选挑战池", detail: "去重并融合排名，保留值得复核的 30–40 个候选。", output: "挑战池已生成" },
-  { id: "round-two", title: "第二轮证据复核", detail: "模型只看统一事实包，重新评估候选与关键反证。", output: "复核评分已完成" },
-  { id: "risk", title: "市场与风险闸门", detail: "检查市场状态、流动性、集中度与不可交易风险。", output: "风险门槛已应用" },
+  { id: "round-one", title: "第一轮独立盲评", detail: "四个 GPT mini 角色分别生成自己的 Top 20，不读取彼此结论。", output: "已收到 4 份独立排名" },
+  { id: "merge", title: "合并候选挑战池", detail: "去重并融合排名，保留值得复核的候选。", output: "挑战池已生成" },
+  { id: "round-two", title: "第二轮证据复核", detail: "四个角色重新评估候选与关键反证。", output: "复核评分已完成" },
+  { id: "risk-check", title: "市场与风险闸门", detail: "检查共识、风险与不应进入最终名单的候选。", output: "风险门槛已应用" },
   { id: "final", title: "生成最终研究名单", detail: "保留最多 10 个通过闸门的研究席位；不足不强行补足。", output: "决策快照已生成" }
 ];
 
 const models = [
-  { id: "pdc", name: "GPT-5.6 PDC", role: "综合型卫冕选手", note: "保留现有 PDC 的结构化判断。" },
-  { id: "gemini", name: "Gemini", role: "质量与行业视角", note: "独立评估事实包中的质量与景气线索。" },
-  { id: "kimi", name: "Kimi", role: "趋势与催化视角", note: "独立识别趋势、量价与催化剂。" },
-  { id: "fable", name: "Fable", role: "反方与证伪视角", note: "主动寻找拥挤、叙事断裂与下行风险。" }
+  { id: "pdc", name: "GPT mini · PDC", role: "综合型评审", note: "综合趋势、量价、因子与证据一致性。" },
+  { id: "trend", name: "GPT mini · 趋势", role: "趋势与量价评审", note: "独立识别趋势延续、相对强弱与量价确认。" },
+  { id: "risk", name: "GPT mini · 风险", role: "风险与过热审计", note: "专注下行、过热与不应参与的情形。" },
+  { id: "counter", name: "GPT mini · 反方", role: "反方证伪评审", note: "主动寻找论点漏洞、拥挤与证据不足。" }
 ];
 
 const state = {
   running: false,
   completed: 0,
   activeStep: null,
-  runId: "",
+  run: null,
   modelStates: Object.fromEntries(models.map((model) => [model.id, "idle"]))
 };
 
@@ -90,35 +90,42 @@ function setRunSummary() {
   const copy = $("#progressCopy");
   const button = $("#generateDecision");
   const runId = $("#runId");
+  const mode = $("#decisionMode");
+  const run = state.run;
 
-  if (runId) runId.textContent = state.runId || "等待生成";
-  if (snapshot) snapshot.textContent = state.completed > 0 ? "已锁定" : "尚未锁定";
-  if (status) status.textContent = state.running ? "生成中" : state.completed === steps.length ? "已完成" : "准备就绪";
+  if (runId) runId.textContent = run?.id ? run.id.slice(0, 8).toUpperCase() : "等待生成";
+  if (snapshot) snapshot.textContent = state.completed > 0 ? `${run?.date || ""} 已锁定` : "尚未锁定";
+  if (status) status.textContent = state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
   if (count) count.textContent = `${state.completed} / ${steps.length}`;
+  if (mode) mode.textContent = run?.model ? `GPT mini · ${run.model}` : "GPT mini · API 已连接";
   if (copy) copy.textContent = state.running
     ? `正在执行：${steps.find((step) => step.id === state.activeStep)?.title || "准备任务"}`
     : state.completed === steps.length
-      ? "本次模拟 Run 已完成。实际 API 接入后，这里会显示服务端返回的每一步证据与耗时。"
-      : "点击开始生成后，每一个步骤都会在这里留下状态与产物。";
+      ? "本次 Run 已完成。确认无误后，点击“发布到 PDC”才会追加当天正式记录。"
+      : "点击开始生成后，每一个步骤都会在这里留下真实状态与产物。";
   if (button) {
     button.disabled = state.running;
-    button.textContent = state.running ? "正在生成…" : state.completed === steps.length ? "再次生成" : "开始生成";
+    button.textContent = state.running ? "正在生成…" : "开始生成";
   }
 }
 
 function renderResult() {
   const section = $("#decisionResult");
   const list = $("#resultList");
-  if (!section || !list) return;
+  const publish = $("#publishDecision");
+  if (!section || !list || !publish) return;
+  const final = Array.isArray(state.run?.final) ? state.run.final : [];
   section.hidden = state.completed !== steps.length;
+  publish.hidden = section.hidden || Boolean(state.run?.publishedAt);
+  publish.disabled = state.running;
   if (section.hidden) return;
-  list.innerHTML = Array.from({ length: 10 }, (_, index) => `
+  list.innerHTML = final.length ? final.map((row) => `
     <div class="decision-placeholder-row">
-      <strong>#${index + 1}</strong>
-      <span>最终研究席位</span>
-      <small>等待 API 返回候选</small>
+      <strong>#${escapeHtml(row.rank)}</strong>
+      <span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span>
+      <small>${escapeHtml(row.consensusScore)} 分 · ${escapeHtml(row.support)}/4 共识</small>
     </div>
-  `).join("");
+  `).join("") : `<div class="stock-empty">没有候选通过当前风险闸门。</div>`;
 }
 
 function render() {
@@ -128,53 +135,117 @@ function render() {
   renderResult();
 }
 
-function pause(milliseconds) {
-  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+async function api(path, options = {}) {
+  const response = await fetch(`${DECISION_API_ENDPOINT}${path}`, {
+    ...options,
+    headers: {
+      "content-type": "application/json",
+      ...(options.headers || {})
+    }
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(payload.error || `Decision API error (${response.status})`);
+  return payload;
 }
 
-function newRunId() {
-  const now = new Date();
-  const compact = now.toISOString().replace(/[-:TZ.]/g, "").slice(0, 14);
-  return `DEMO-${compact}`;
+async function latestSnapshot() {
+  const response = await fetch("/stock-pdc/rank-flow.json", { cache: "no-store" });
+  if (!response.ok) throw new Error("Could not load the current PDC fact snapshot.");
+  const data = await response.json();
+  const days = Array.isArray(data.days) ? data.days.filter((day) => Array.isArray(day.rows) && day.rows.length) : [];
+  const latest = days.at(-1);
+  if (!latest?.date || !latest.rows?.length) throw new Error("No current PDC candidates are available.");
+  return {
+    date: latest.date,
+    source: "stock-pdc/rank-flow.json",
+    candidates: latest.rows.slice(0, 30).map((row) => ({
+      ticker: row.ticker,
+      name: row.name,
+      rank: row.rank,
+      score: row.score,
+      status: row.status,
+      mainReason: row.mainReason || row.research?.mainReason,
+      mainRisk: row.mainRisk || row.research?.mainRisk,
+      signalDayChangePct: row.signalDayChangePct,
+      scores: row.scores || row.research?.scores
+    }))
+  };
 }
 
-async function createDecisionRun() {
-  // Replace this local demo adapter with a POST to DECISION_API_ENDPOINT once the API exists.
-  // Expected response: { runId, snapshotAt, status, steps, models, result }.
-  return { runId: newRunId(), mode: "demo", endpoint: DECISION_API_ENDPOINT };
+function completeThrough(stepId) {
+  state.completed = steps.findIndex((step) => step.id === stepId) + 1;
+  state.activeStep = null;
 }
 
-async function runDemoFlow() {
-  const run = await createDecisionRun();
+async function runDecisionFlow() {
   state.running = true;
   state.completed = 0;
-  state.activeStep = null;
-  state.runId = run.runId;
+  state.activeStep = "snapshot";
+  state.run = null;
   state.modelStates = Object.fromEntries(models.map((model) => [model.id, "idle"]));
   render();
+  try {
+    const snapshot = await latestSnapshot();
+    state.run = (await api("/runs", { method: "POST", body: JSON.stringify({ snapshot }) })).run;
+    completeThrough("snapshot");
+    render();
 
-  for (const [index, step] of steps.entries()) {
-    state.activeStep = step.id;
-    if (step.id === "round-one") {
-      models.forEach((model) => { state.modelStates[model.id] = "active"; });
-    }
+    state.activeStep = "round-one";
+    models.forEach((model) => { state.modelStates[model.id] = "active"; });
     render();
-    await pause(step.id === "round-one" ? 1150 : 680);
-    if (step.id === "round-one") {
-      models.forEach((model) => { state.modelStates[model.id] = "complete"; });
-    }
-    state.completed = index + 1;
-    state.activeStep = null;
+    state.run = (await api(`/runs/${state.run.id}/round-one`, { method: "POST", body: "{}" })).run;
+    models.forEach((model) => { state.modelStates[model.id] = "complete"; });
+    completeThrough("round-one");
     render();
-    await pause(160);
+
+    state.activeStep = "merge";
+    render();
+    state.run = (await api(`/runs/${state.run.id}/merge`, { method: "POST", body: "{}" })).run;
+    completeThrough("merge");
+    render();
+
+    state.activeStep = "round-two";
+    render();
+    state.run = (await api(`/runs/${state.run.id}/round-two`, { method: "POST", body: "{}" })).run;
+    completeThrough("round-two");
+    render();
+
+    state.activeStep = "risk-check";
+    render();
+    state.run = (await api(`/runs/${state.run.id}/risk-check`, { method: "POST", body: "{}" })).run;
+    completeThrough("risk-check");
+    state.activeStep = "final";
+    render();
+    completeThrough("final");
+  } catch (caught) {
+    const copy = $("#progressCopy");
+    if (copy) copy.textContent = `生成未完成：${caught.message || "请稍后重试。"}`;
+  } finally {
+    state.running = false;
+    render();
   }
+}
 
-  state.running = false;
+async function publishDecision() {
+  if (!state.run?.id || state.running) return;
+  state.running = true;
   render();
+  try {
+    const result = await api(`/runs/${state.run.id}/publish`, { method: "POST", body: "{}" });
+    state.run = result.run;
+  } catch (caught) {
+    const copy = $("#progressCopy");
+    if (copy) copy.textContent = `发布失败：${caught.message || "请稍后重试。"}`;
+  } finally {
+    state.running = false;
+    render();
+  }
 }
 
 $("#generateDecision")?.addEventListener("click", () => {
-  if (!state.running) runDemoFlow();
+  if (!state.running) runDecisionFlow();
 });
+
+$("#publishDecision")?.addEventListener("click", publishDecision);
 
 render();

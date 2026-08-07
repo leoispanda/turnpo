@@ -2,9 +2,456 @@ const ACCESS_COOKIE = "turnpo_stock_pdc_access";
 const UI_COOKIE = "turnpo_stock_pdc_ui";
 const COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
 const PAGE_PATH = "/stock-pdc";
+const DECISION_PATH = `${PAGE_PATH}/decision`;
+const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
+const DEFAULT_STOCK_MODEL = "gpt-4o-mini";
+const MAX_DECISION_BODY_BYTES = 96 * 1024;
+const MAX_CANDIDATES = 30;
+const MAX_RUNS_PER_DAY = 8;
+const RUN_TTL_SECONDS = 180 * 24 * 60 * 60;
+
+const REVIEW_ROLES = [
+  { id: "pdc", name: "PDC 综合评审", focus: "综合趋势、量价、现有因子与证据一致性" },
+  { id: "trend", name: "趋势与量价评审", focus: "趋势延续、相对强弱、突破与成交量确认" },
+  { id: "risk", name: "风险与过热审计", focus: "风险、过热、流动性、下行与不应参与的情形" },
+  { id: "counter", name: "反方证伪评审", focus: "寻找论点漏洞、拥挤交易、证据不足和反例" }
+];
 
 function configuredAccessCode(env) {
   return String(env.STOCK_PDC_ACCESS_CODE || env.EMBA_ACCESS_CODE || "emba2026").trim();
+}
+
+function stockModel(env) {
+  return String(env.OPENAI_STOCK_MODEL || env.OPENAI_MODEL || DEFAULT_STOCK_MODEL).trim();
+}
+
+function decisionStore(env) {
+  return env.STOCK_PDC_KV || env.AUTH_KV || null;
+}
+
+function json(body, init = {}) {
+  return new Response(JSON.stringify(body), {
+    ...init,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store",
+      ...(init.headers || {})
+    }
+  });
+}
+
+function error(message, status = 400) {
+  return json({ error: message }, { status });
+}
+
+function cleanText(value, maxLength = 900) {
+  return String(value || "").replace(/\s+/g, " ").trim().slice(0, maxLength);
+}
+
+function finiteNumber(value, fallback = null) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
+function validDate(value) {
+  const date = cleanText(value, 10);
+  return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "";
+}
+
+function decisionRunKey(runId) {
+  return `stock-pdc:decision:run:${runId}`;
+}
+
+function decisionDayKey(date) {
+  return `stock-pdc:decision:day:${date}`;
+}
+
+function decisionHistoryKey() {
+  return "stock-pdc:decision:history";
+}
+
+function decisionCurrentKey() {
+  return "stock-pdc:decision:current";
+}
+
+function decisionRateKey(date) {
+  return `stock-pdc:decision:run-count:${date}`;
+}
+
+function extractOutputText(data) {
+  if (typeof data.output_text === "string") return data.output_text;
+  const content = data.output
+    ?.flatMap((item) => item.content || [])
+    ?.find((item) => item.type === "output_text" && typeof item.text === "string");
+  return content?.text || "";
+}
+
+function normalizeScores(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  return Object.fromEntries(Object.entries(value)
+    .slice(0, 14)
+    .map(([key, score]) => [cleanText(key, 60), finiteNumber(score)])
+    .filter(([key, score]) => key && score !== null));
+}
+
+function normalizeCandidate(value, index) {
+  const ticker = cleanText(value?.ticker, 24).toUpperCase();
+  if (!/^[A-Z0-9.]{4,24}$/.test(ticker)) return null;
+  return {
+    ticker,
+    name: cleanText(value?.name || ticker, 80),
+    rank: Math.max(1, Math.min(99, Math.round(finiteNumber(value?.rank, index + 1)))),
+    score: finiteNumber(value?.score),
+    status: cleanText(value?.status, 60),
+    mainReason: cleanText(value?.mainReason, 800),
+    mainRisk: cleanText(value?.mainRisk, 600),
+    signalDayChangePct: finiteNumber(value?.signalDayChangePct),
+    scores: normalizeScores(value?.scores)
+  };
+}
+
+function normalizeSnapshot(value) {
+  const date = validDate(value?.date);
+  const candidates = Array.isArray(value?.candidates)
+    ? value.candidates.map(normalizeCandidate).filter(Boolean).slice(0, MAX_CANDIDATES)
+    : [];
+  if (!date || candidates.length < 5) return null;
+  return {
+    date,
+    source: cleanText(value?.source || "stock-pdc/rank-flow.json", 160),
+    candidates,
+    capturedAt: new Date().toISOString()
+  };
+}
+
+function serializableCandidates(candidates) {
+  return candidates.map((candidate) => ({
+    ticker: candidate.ticker,
+    name: candidate.name,
+    rank: candidate.rank,
+    score: candidate.score,
+    status: candidate.status,
+    mainReason: candidate.mainReason,
+    mainRisk: candidate.mainRisk,
+    signalDayChangePct: candidate.signalDayChangePct,
+    scores: candidate.scores
+  }));
+}
+
+function reviewSchema(name) {
+  return {
+    type: "json_schema",
+    name,
+    strict: true,
+    schema: {
+      type: "object",
+      additionalProperties: false,
+      required: ["rankings", "summary"],
+      properties: {
+        rankings: {
+          type: "array",
+          minItems: 1,
+          maxItems: 30,
+          items: {
+            type: "object",
+            additionalProperties: false,
+            required: ["ticker", "score", "thesis", "risk", "exclude"],
+            properties: {
+              ticker: { type: "string" },
+              score: { type: "number" },
+              thesis: { type: "string" },
+              risk: { type: "string" },
+              exclude: { type: "boolean" }
+            }
+          }
+        },
+        summary: { type: "string" }
+      }
+    }
+  };
+}
+
+function normalizeReview(value, candidates) {
+  const allowed = new Set(candidates.map((candidate) => candidate.ticker));
+  const byTicker = new Map(candidates.map((candidate) => [candidate.ticker, candidate]));
+  const seen = new Set();
+  const rankings = (Array.isArray(value?.rankings) ? value.rankings : [])
+    .map((row) => {
+      const ticker = cleanText(row?.ticker, 24).toUpperCase();
+      if (!allowed.has(ticker) || seen.has(ticker)) return null;
+      seen.add(ticker);
+      return {
+        ticker,
+        name: byTicker.get(ticker)?.name || ticker,
+        score: Math.max(0, Math.min(100, finiteNumber(row?.score, 0))),
+        thesis: cleanText(row?.thesis, 260),
+        risk: cleanText(row?.risk, 220),
+        exclude: Boolean(row?.exclude)
+      };
+    })
+    .filter(Boolean)
+    .sort((left, right) => right.score - left.score)
+    .map((row, index) => ({ ...row, rank: index + 1 }));
+  if (!rankings.length) throw new Error("Model returned no valid candidate rankings.");
+  return { rankings, summary: cleanText(value?.summary, 360) };
+}
+
+async function openAiReview(env, role, candidates, phase) {
+  const apiKey = env.OPENAI_API_KEY;
+  if (!apiKey) throw new Error("Missing OPENAI_API_KEY.");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 25000);
+  try {
+    const response = await fetch(OPENAI_RESPONSES_URL, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${apiKey}`,
+        "content-type": "application/json"
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: stockModel(env),
+        instructions: [
+          "You are one role in an internal A-share research committee.",
+          `Your role is ${role.name}; focus on ${role.focus}.`,
+          "Use only the supplied factual candidate packet. Do not invent news, prices, financial results, or external facts.",
+          "This is research support, not a trading instruction. Be conservative when evidence is weak.",
+          "Rank only supplied tickers. A high score means stronger research priority for the stated horizon, not a buy instruction.",
+          "Use exclude=true when the supplied packet itself shows evidence is inadequate or risk is too high.",
+          phase === "round-two"
+            ? "This is the second review. Challenge the first-pass consensus and look for reasons a candidate should not advance."
+            : "This is the first independent review. Do not assume any other reviewer agrees with you."
+        ].join(" "),
+        input: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`,
+        text: { format: reviewSchema(`stock_pdc_${phase}_${role.id}`) },
+        max_output_tokens: 5000
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error?.message || "OpenAI review request failed.");
+    const outputText = extractOutputText(data);
+    if (!outputText) throw new Error("OpenAI review returned no structured output.");
+    return normalizeReview(JSON.parse(outputText), candidates);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function consensusFromReviews(reviews, candidates) {
+  const rows = new Map(candidates.map((candidate) => [candidate.ticker, {
+    ticker: candidate.ticker,
+    name: candidate.name,
+    sourceRank: candidate.rank,
+    sourceScore: candidate.score,
+    support: 0,
+    excludedBy: 0,
+    scoreTotal: 0,
+    scoreCount: 0,
+    theses: [],
+    risks: []
+  }]));
+  Object.entries(reviews).forEach(([roleId, review]) => {
+    review.rankings.forEach((ranking) => {
+      const row = rows.get(ranking.ticker);
+      if (!row) return;
+      row.support += 1;
+      row.excludedBy += ranking.exclude ? 1 : 0;
+      row.scoreTotal += ranking.score;
+      row.scoreCount += 1;
+      if (ranking.thesis) row.theses.push({ roleId, text: ranking.thesis });
+      if (ranking.risk) row.risks.push({ roleId, text: ranking.risk });
+    });
+  });
+  return [...rows.values()]
+    .map((row) => ({
+      ...row,
+      consensusScore: row.scoreCount ? Number((row.scoreTotal / row.scoreCount).toFixed(2)) : 0
+    }))
+    .sort((left, right) => right.consensusScore - left.consensusScore || right.support - left.support || left.sourceRank - right.sourceRank);
+}
+
+function decisionResult(run) {
+  const consensus = consensusFromReviews(run.roundTwo || run.roundOne || {}, run.pool || run.snapshot.candidates);
+  return consensus
+    .filter((row) => row.support >= 2 && row.excludedBy < 2)
+    .slice(0, 10)
+    .map((row, index) => ({
+      rank: index + 1,
+      ticker: row.ticker,
+      name: row.name,
+      consensusScore: row.consensusScore,
+      support: row.support,
+      sourceRank: row.sourceRank,
+      thesis: row.theses[0]?.text || "Evidence review completed.",
+      risk: row.risks[0]?.text || "Review the full run before any action.",
+      action: "RESEARCH_REVIEW"
+    }));
+}
+
+function publicRun(run) {
+  return {
+    id: run.id,
+    date: run.date,
+    createdAt: run.createdAt,
+    updatedAt: run.updatedAt,
+    model: run.model,
+    status: run.status,
+    snapshot: { date: run.snapshot.date, source: run.snapshot.source, candidateCount: run.snapshot.candidates.length },
+    roles: REVIEW_ROLES.map(({ id, name }) => ({ id, name, state: run.roundOne?.[id] ? "complete" : "idle" })),
+    pool: run.pool || [],
+    final: run.final || [],
+    publishedAt: run.publishedAt || ""
+  };
+}
+
+async function readJson(request) {
+  const length = Number(request.headers.get("content-length") || "0");
+  if (Number.isFinite(length) && length > MAX_DECISION_BODY_BYTES) throw new Error("Decision request is too large.");
+  const body = await request.text();
+  if (body.length > MAX_DECISION_BODY_BYTES) throw new Error("Decision request is too large.");
+  try {
+    return body ? JSON.parse(body) : {};
+  } catch {
+    throw new Error("Decision request must be valid JSON.");
+  }
+}
+
+async function saveRun(store, run) {
+  run.updatedAt = new Date().toISOString();
+  await store.put(decisionRunKey(run.id), JSON.stringify(run), { expirationTtl: RUN_TTL_SECONDS });
+  return run;
+}
+
+async function loadRun(store, runId) {
+  const run = await store.get(decisionRunKey(cleanText(runId, 80)), "json");
+  return run && typeof run === "object" ? run : null;
+}
+
+async function createRun(request, env) {
+  const store = decisionStore(env);
+  if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
+  const snapshot = normalizeSnapshot((await readJson(request)).snapshot);
+  if (!snapshot) return error("A valid daily PDC snapshot with at least five candidates is required.");
+  const currentCount = Number(await store.get(decisionRateKey(snapshot.date)) || "0");
+  if (currentCount >= MAX_RUNS_PER_DAY) return error("Daily decision-run limit reached. Review an existing run instead.", 429);
+  await store.put(decisionRateKey(snapshot.date), String(currentCount + 1), { expirationTtl: 24 * 60 * 60 });
+  const now = new Date().toISOString();
+  const run = {
+    id: crypto.randomUUID(),
+    date: snapshot.date,
+    createdAt: now,
+    updatedAt: now,
+    model: stockModel(env),
+    status: "SNAPSHOT_LOCKED",
+    snapshot,
+    roundOne: {},
+    pool: [],
+    roundTwo: {},
+    final: [],
+    publishedAt: ""
+  };
+  await saveRun(store, run);
+  return json({ ok: true, run: publicRun(run) });
+}
+
+async function advanceRun(env, runId, stage) {
+  const store = decisionStore(env);
+  if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
+  const run = await loadRun(store, runId);
+  if (!run) return error("Decision run was not found.", 404);
+  if (run.publishedAt) return error("Published decision runs are immutable.", 409);
+  try {
+    if (stage === "round-one") {
+      if (!Object.keys(run.roundOne || {}).length) {
+        const reviews = await Promise.all(REVIEW_ROLES.map(async (role) => [role.id, await openAiReview(env, role, run.snapshot.candidates, "round-one")]));
+        run.roundOne = Object.fromEntries(reviews);
+        run.status = "ROUND_ONE_COMPLETE";
+      }
+    } else if (stage === "merge") {
+      if (!Object.keys(run.roundOne || {}).length) return error("Complete round one before merging candidates.", 409);
+      if (!run.pool?.length) run.pool = consensusFromReviews(run.roundOne, run.snapshot.candidates).slice(0, 20);
+      run.status = "POOL_READY";
+    } else if (stage === "round-two") {
+      if (!run.pool?.length) return error("Build the candidate pool before second review.", 409);
+      if (!Object.keys(run.roundTwo || {}).length) {
+        const candidates = run.pool.map((row) => run.snapshot.candidates.find((candidate) => candidate.ticker === row.ticker)).filter(Boolean);
+        const reviews = await Promise.all(REVIEW_ROLES.map(async (role) => [role.id, await openAiReview(env, role, candidates, "round-two")]));
+        run.roundTwo = Object.fromEntries(reviews);
+        run.status = "ROUND_TWO_COMPLETE";
+      }
+    } else if (stage === "risk-check") {
+      if (!Object.keys(run.roundTwo || {}).length) return error("Complete round two before risk review.", 409);
+      run.final = decisionResult(run);
+      run.status = "READY_TO_PUBLISH";
+    } else {
+      return error("Unknown decision stage.", 404);
+    }
+    await saveRun(store, run);
+    return json({ ok: true, run: publicRun(run) });
+  } catch (caught) {
+    return error(cleanText(caught?.message || "Decision stage failed.", 320), 502);
+  }
+}
+
+async function publishRun(env, runId) {
+  const store = decisionStore(env);
+  if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
+  const run = await loadRun(store, runId);
+  if (!run) return error("Decision run was not found.", 404);
+  if (run.status !== "READY_TO_PUBLISH" || !Array.isArray(run.final) || !run.final.length) {
+    return error("Finish all review stages before publishing.", 409);
+  }
+  const publishedAt = new Date().toISOString();
+  const day = {
+    date: run.date,
+    runId: run.id,
+    model: run.model,
+    publishedAt,
+    decisions: run.final,
+    action: "RESEARCH_REVIEW"
+  };
+  const history = await store.get(decisionHistoryKey(), "json");
+  const dates = Array.isArray(history?.dates) ? history.dates.filter(validDate) : [];
+  const nextDates = [...new Set([...dates, run.date])].sort().slice(-365);
+  run.status = "PUBLISHED";
+  run.publishedAt = publishedAt;
+  await Promise.all([
+    store.put(decisionDayKey(run.date), JSON.stringify(day)),
+    store.put(decisionCurrentKey(), JSON.stringify(day)),
+    store.put(decisionHistoryKey(), JSON.stringify({ dates: nextDates })),
+    saveRun(store, run)
+  ]);
+  return json({ ok: true, run: publicRun(run), current: day });
+}
+
+async function decisionApi(context) {
+  const { request, env } = context;
+  const url = new URL(request.url);
+  const suffix = url.pathname.slice(`${DECISION_PATH}/api`.length).replace(/^\/+/, "");
+  if (request.method === "GET") {
+    const store = decisionStore(env);
+    if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
+    if (suffix === "current") return json({ ok: true, current: await store.get(decisionCurrentKey(), "json") });
+    if (suffix === "history") {
+      const history = await store.get(decisionHistoryKey(), "json");
+      const dates = Array.isArray(history?.dates) ? history.dates.filter(validDate).sort().reverse() : [];
+      const days = await Promise.all(dates.map((date) => store.get(decisionDayKey(date), "json")));
+      return json({ ok: true, days: days.filter(Boolean) });
+    }
+    const runMatch = suffix.match(/^runs\/([a-f0-9-]{36})$/i);
+    if (runMatch) {
+      const run = await loadRun(store, runMatch[1]);
+      return run ? json({ ok: true, run: publicRun(run) }) : error("Decision run was not found.", 404);
+    }
+    return error("Unknown decision resource.", 404);
+  }
+  if (request.method !== "POST") return error("Method not allowed.", 405);
+  if (suffix === "runs") return createRun(request, env);
+  const stageMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/(round-one|merge|round-two|risk-check)$/i);
+  if (stageMatch) return advanceRun(env, stageMatch[1], stageMatch[2]);
+  const publishMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/publish$/i);
+  if (publishMatch) return publishRun(env, publishMatch[1]);
+  return error("Unknown decision action.", 404);
 }
 
 function html(body, init = {}) {
@@ -159,6 +606,11 @@ export async function onRequestGet(context) {
     return new Response(null, { status: 303, headers });
   }
 
+  if (url.pathname.startsWith(`${DECISION_PATH}/api`)) {
+    if (await isAuthorized(request, env)) return decisionApi(context);
+    return error("Stock PDC access is required.", 401);
+  }
+
   if (await isAuthorized(request, env)) return context.next();
   return accessPage();
 }
@@ -172,6 +624,11 @@ export async function onRequestPost(context) {
     headers.append("set-cookie", clearAccessCookie());
     headers.append("set-cookie", clearUiCookie());
     return new Response(null, { status: 303, headers });
+  }
+
+  if (url.pathname.startsWith(`${DECISION_PATH}/api`)) {
+    if (await isAuthorized(request, env)) return decisionApi(context);
+    return error("Stock PDC access is required.", 401);
   }
 
   const formData = await request.formData();

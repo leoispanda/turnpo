@@ -2,7 +2,8 @@ const STOCK_ACCESS_KEY = "turnpo:stock-pdc-access";
 const STOCK_PASSWORD = "emba2026";
 const state = {
   accessGranted: false,
-  data: null
+  data: null,
+  decisionHistory: []
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -298,6 +299,35 @@ function renderActionPanel() {
   `;
 }
 
+function renderPublishedDecisionHistory() {
+  const days = Array.isArray(state.decisionHistory) ? state.decisionHistory : [];
+  if (!days.length) return "";
+  return `
+    <section class="stock-published-decisions" aria-label="已发布 PDC 决策历史">
+      <div class="stock-published-head">
+        <div>
+          <h2>最终 PDC 决策</h2>
+          <p>由今日决策页发布；每个日期保留一份不可覆盖的研究记录。</p>
+        </div>
+        <a href="/stock-pdc/decision/">生成新决策</a>
+      </div>
+      <div class="stock-published-history">
+        ${days.map((day) => `
+          <article class="stock-published-day">
+            <time datetime="${escapeHtml(day.date)}">${escapeHtml(day.date)}</time>
+            <span>${escapeHtml(day.model || "GPT mini")}</span>
+            <div>
+              ${(day.decisions || []).map((decision) => `
+                <p><strong>#${escapeHtml(decision.rank)}</strong> ${escapeHtml(decision.name)} <small>${escapeHtml(decision.ticker)}</small></p>
+              `).join("") || "<p>没有候选通过本次风险闸门。</p>"}
+            </div>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
 function renderRankList() {
   const list = $("#stockRankList");
   if (!list) return;
@@ -310,6 +340,7 @@ function renderRankList() {
   const droppedSlots = Array.from({ length: 10 }, (_, index) => index);
   list.innerHTML = `
     ${renderStrategySummary()}
+    ${renderPublishedDecisionHistory()}
     <div class="stock-rank-matrix" style="--date-count: ${days.length}">
       <div class="stock-matrix-corner" aria-hidden="true"></div>
       ${days.map((day) => `
@@ -341,9 +372,16 @@ function renderDashboard() {
 }
 
 async function loadData() {
-  const response = await fetch("/stock-pdc/rank-flow.json", { cache: "no-store" });
-  if (!response.ok) throw new Error(`Could not load rank-flow.json (${response.status})`);
-  state.data = await response.json();
+  const [rankResponse, decisionResponse] = await Promise.all([
+    fetch("/stock-pdc/rank-flow.json", { cache: "no-store" }),
+    fetch("/stock-pdc/decision/api/history", { cache: "no-store" }).catch(() => null)
+  ]);
+  if (!rankResponse.ok) throw new Error(`Could not load rank-flow.json (${rankResponse.status})`);
+  state.data = await rankResponse.json();
+  if (decisionResponse?.ok) {
+    const decisionData = await decisionResponse.json().catch(() => ({}));
+    state.decisionHistory = Array.isArray(decisionData.days) ? decisionData.days : [];
+  }
   renderDashboard();
 }
 
