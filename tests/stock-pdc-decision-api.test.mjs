@@ -68,13 +68,20 @@ try {
     body: body === null ? undefined : JSON.stringify(body)
   });
 
-  let response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
-    snapshot: { date: "2026-08-07", candidates }
-  })));
+  let response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/models")));
   assert.equal(response.status, 200);
   let payload = await response.json();
+  assert.deepEqual(payload.models, [{ id: "gpt-mini", label: "GPT mini", provider: "OpenAI", model: "gpt-mini-test" }]);
+
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
+    snapshot: { date: "2026-08-07", candidates },
+    modelProfileId: "gpt-mini"
+  })));
+  assert.equal(response.status, 200);
+  payload = await response.json();
   const runId = payload.run.id;
   assert.equal(payload.run.model, "gpt-mini-test");
+  assert.equal(payload.run.modelProfile.id, "gpt-mini");
 
   for (const stage of ["round-one", "merge", "round-two", "risk-check"]) {
     response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/${stage}`, {})));

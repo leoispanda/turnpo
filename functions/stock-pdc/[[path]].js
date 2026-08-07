@@ -25,6 +25,29 @@ function stockModel(env) {
   return String(env.OPENAI_STOCK_MODEL || env.OPENAI_MODEL || DEFAULT_STOCK_MODEL).trim();
 }
 
+function configuredModelProfiles(env) {
+  return [{
+    id: "gpt-mini",
+    label: "GPT mini",
+    provider: "OpenAI",
+    model: stockModel(env)
+  }];
+}
+
+function publicModelProfile(profile) {
+  return {
+    id: profile.id,
+    label: profile.label,
+    provider: profile.provider,
+    model: profile.model
+  };
+}
+
+function selectedModelProfile(env, profileId) {
+  const requestedId = cleanText(profileId || "gpt-mini", 64);
+  return configuredModelProfiles(env).find((profile) => profile.id === requestedId) || null;
+}
+
 function decisionStore(env) {
   return env.STOCK_PDC_KV || env.AUTH_KV || null;
 }
@@ -196,7 +219,7 @@ function normalizeReview(value, candidates) {
   return { rankings, summary: cleanText(value?.summary, 360) };
 }
 
-async function openAiReview(env, role, candidates, phase) {
+async function openAiReview(env, modelProfile, role, candidates, phase) {
   const apiKey = env.OPENAI_API_KEY;
   if (!apiKey) throw new Error("Missing OPENAI_API_KEY.");
   const controller = new AbortController();
@@ -210,7 +233,7 @@ async function openAiReview(env, role, candidates, phase) {
       },
       signal: controller.signal,
       body: JSON.stringify({
-        model: stockModel(env),
+        model: modelProfile.model,
         instructions: [
           "You are one role in an internal A-share research committee.",
           `Your role is ${role.name}; focus on ${role.focus}.`,
@@ -289,12 +312,19 @@ function decisionResult(run) {
 }
 
 function publicRun(run) {
+  const modelProfile = run.modelProfile || {
+    id: "gpt-mini",
+    label: "GPT mini",
+    provider: "OpenAI",
+    model: run.model || DEFAULT_STOCK_MODEL
+  };
   return {
     id: run.id,
     date: run.date,
     createdAt: run.createdAt,
     updatedAt: run.updatedAt,
-    model: run.model,
+    model: modelProfile.model,
+    modelProfile: publicModelProfile(modelProfile),
     status: run.status,
     snapshot: { date: run.snapshot.date, source: run.snapshot.source, candidateCount: run.snapshot.candidates.length },
     roles: REVIEW_ROLES.map(({ id, name }) => ({ id, name, state: run.roundOne?.[id] ? "complete" : "idle" })),
@@ -330,8 +360,11 @@ async function loadRun(store, runId) {
 async function createRun(request, env) {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
-  const snapshot = normalizeSnapshot((await readJson(request)).snapshot);
+  const body = await readJson(request);
+  const snapshot = normalizeSnapshot(body.snapshot);
   if (!snapshot) return error("A valid daily PDC snapshot with at least five candidates is required.");
+  const modelProfile = selectedModelProfile(env, body.modelProfileId);
+  if (!modelProfile) return error("The selected decision model is not configured on this deployment.");
   const currentCount = Number(await store.get(decisionRateKey(snapshot.date)) || "0");
   if (currentCount >= MAX_RUNS_PER_DAY) return error("Daily decision-run limit reached. Review an existing run instead.", 429);
   await store.put(decisionRateKey(snapshot.date), String(currentCount + 1), { expirationTtl: 24 * 60 * 60 });
@@ -341,7 +374,8 @@ async function createRun(request, env) {
     date: snapshot.date,
     createdAt: now,
     updatedAt: now,
-    model: stockModel(env),
+    model: modelProfile.model,
+    modelProfile,
     status: "SNAPSHOT_LOCKED",
     snapshot,
     roundOne: {},
@@ -360,10 +394,12 @@ async function advanceRun(env, runId, stage) {
   const run = await loadRun(store, runId);
   if (!run) return error("Decision run was not found.", 404);
   if (run.publishedAt) return error("Published decision runs are immutable.", 409);
+  const modelProfile = run.modelProfile || selectedModelProfile(env, "gpt-mini");
+  if (!modelProfile || modelProfile.provider !== "OpenAI") return error("This run's selected model provider is not available.", 409);
   try {
     if (stage === "round-one") {
       if (!Object.keys(run.roundOne || {}).length) {
-        const reviews = await Promise.all(REVIEW_ROLES.map(async (role) => [role.id, await openAiReview(env, role, run.snapshot.candidates, "round-one")]));
+        const reviews = await Promise.all(REVIEW_ROLES.map(async (role) => [role.id, await openAiReview(env, modelProfile, role, run.snapshot.candidates, "round-one")]));
         run.roundOne = Object.fromEntries(reviews);
         run.status = "ROUND_ONE_COMPLETE";
       }
@@ -375,7 +411,7 @@ async function advanceRun(env, runId, stage) {
       if (!run.pool?.length) return error("Build the candidate pool before second review.", 409);
       if (!Object.keys(run.roundTwo || {}).length) {
         const candidates = run.pool.map((row) => run.snapshot.candidates.find((candidate) => candidate.ticker === row.ticker)).filter(Boolean);
-        const reviews = await Promise.all(REVIEW_ROLES.map(async (role) => [role.id, await openAiReview(env, role, candidates, "round-two")]));
+        const reviews = await Promise.all(REVIEW_ROLES.map(async (role) => [role.id, await openAiReview(env, modelProfile, role, candidates, "round-two")]));
         run.roundTwo = Object.fromEntries(reviews);
         run.status = "ROUND_TWO_COMPLETE";
       }
@@ -405,7 +441,7 @@ async function publishRun(env, runId) {
   const day = {
     date: run.date,
     runId: run.id,
-    model: run.model,
+    model: run.modelProfile?.label || run.model,
     publishedAt,
     decisions: run.final,
     action: "RESEARCH_REVIEW"
@@ -431,6 +467,7 @@ async function decisionApi(context) {
   if (request.method === "GET") {
     const store = decisionStore(env);
     if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
+    if (suffix === "models") return json({ ok: true, models: configuredModelProfiles(env).map(publicModelProfile) });
     if (suffix === "current") return json({ ok: true, current: await store.get(decisionCurrentKey(), "json") });
     if (suffix === "history") {
       const history = await store.get(decisionHistoryKey(), "json");

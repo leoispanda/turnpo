@@ -10,10 +10,10 @@ const steps = [
 ];
 
 const models = [
-  { id: "pdc", name: "GPT mini · PDC", role: "综合型评审", note: "综合趋势、量价、因子与证据一致性。" },
-  { id: "trend", name: "GPT mini · 趋势", role: "趋势与量价评审", note: "独立识别趋势延续、相对强弱与量价确认。" },
-  { id: "risk", name: "GPT mini · 风险", role: "风险与过热审计", note: "专注下行、过热与不应参与的情形。" },
-  { id: "counter", name: "GPT mini · 反方", role: "反方证伪评审", note: "主动寻找论点漏洞、拥挤与证据不足。" }
+  { id: "pdc", name: "PDC", role: "综合型评审", note: "综合趋势、量价、因子与证据一致性。" },
+  { id: "trend", name: "趋势", role: "趋势与量价评审", note: "独立识别趋势延续、相对强弱与量价确认。" },
+  { id: "risk", name: "风险", role: "风险与过热审计", note: "专注下行、过热与不应参与的情形。" },
+  { id: "counter", name: "反方", role: "反方证伪评审", note: "主动寻找论点漏洞、拥挤与证据不足。" }
 ];
 
 const state = {
@@ -21,6 +21,8 @@ const state = {
   completed: 0,
   activeStep: null,
   run: null,
+  modelProfiles: [{ id: "gpt-mini", label: "GPT mini", provider: "OpenAI", model: "gpt-4o-mini" }],
+  selectedModelProfileId: "gpt-mini",
   modelStates: Object.fromEntries(models.map((model) => [model.id, "idle"]))
 };
 
@@ -48,6 +50,10 @@ function stepStateText(step) {
   return "等待";
 }
 
+function selectedModelProfile() {
+  return state.modelProfiles.find((profile) => profile.id === state.selectedModelProfileId) || state.modelProfiles[0] || null;
+}
+
 function renderSteps() {
   const list = $("#decisionSteps");
   if (!list) return;
@@ -73,14 +79,28 @@ function modelStatus(model) {
 function renderModels() {
   const grid = $("#modelGrid");
   if (!grid) return;
+  const modelLabel = selectedModelProfile()?.label || "GPT mini";
   grid.innerHTML = models.map((model) => `
     <article class="decision-model-card" data-state="${state.modelStates[model.id]}">
       <span>${escapeHtml(model.role)}</span>
-      <h3>${escapeHtml(model.name)}</h3>
+      <h3>${escapeHtml(modelLabel)} · ${escapeHtml(model.name)}</h3>
       <p>${escapeHtml(model.note)}</p>
       <div class="decision-model-status">${escapeHtml(modelStatus(model))}</div>
     </article>
   `).join("");
+}
+
+function renderModelPicker() {
+  const select = $("#decisionModelSelect");
+  const note = $("#decisionModelNote");
+  const profile = selectedModelProfile();
+  if (!select || !note) return;
+  select.innerHTML = state.modelProfiles.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.label)} · ${escapeHtml(item.model)}</option>`).join("");
+  select.value = profile?.id || "";
+  select.disabled = state.running || Boolean(state.run);
+  note.textContent = profile
+    ? `${profile.provider} · ${profile.model}。密钥只保留在服务端；本次选择会写入这份 Run。`
+    : "当前没有可用模型。请先完成服务端模型配置。";
 }
 
 function setRunSummary() {
@@ -97,7 +117,10 @@ function setRunSummary() {
   if (snapshot) snapshot.textContent = state.completed > 0 ? `${run?.date || ""} 已锁定` : "尚未锁定";
   if (status) status.textContent = state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
   if (count) count.textContent = `${state.completed} / ${steps.length}`;
-  if (mode) mode.textContent = run?.model ? `GPT mini · ${run.model}` : "GPT mini · API 已连接";
+  if (mode) {
+    const profile = run?.modelProfile || selectedModelProfile();
+    mode.textContent = profile ? `${profile.label} · ${profile.model}` : "未配置模型";
+  }
   if (copy) copy.textContent = state.running
     ? `正在执行：${steps.find((step) => step.id === state.activeStep)?.title || "准备任务"}`
     : state.completed === steps.length
@@ -130,6 +153,7 @@ function renderResult() {
 
 function render() {
   renderSteps();
+  renderModelPicker();
   renderModels();
   setRunSummary();
   renderResult();
@@ -172,6 +196,22 @@ async function latestSnapshot() {
   };
 }
 
+async function loadModelProfiles() {
+  try {
+    const result = await api("/models", { headers: { accept: "application/json" } });
+    if (Array.isArray(result.models) && result.models.length) {
+      state.modelProfiles = result.models;
+      if (!state.modelProfiles.some((profile) => profile.id === state.selectedModelProfileId)) {
+        state.selectedModelProfileId = state.modelProfiles[0].id;
+      }
+    }
+  } catch {
+    // Keep the safe GPT mini fallback visible while the authenticated API is unavailable.
+  } finally {
+    render();
+  }
+}
+
 function completeThrough(stepId) {
   state.completed = steps.findIndex((step) => step.id === stepId) + 1;
   state.activeStep = null;
@@ -186,7 +226,10 @@ async function runDecisionFlow() {
   render();
   try {
     const snapshot = await latestSnapshot();
-    state.run = (await api("/runs", { method: "POST", body: JSON.stringify({ snapshot }) })).run;
+    state.run = (await api("/runs", {
+      method: "POST",
+      body: JSON.stringify({ snapshot, modelProfileId: state.selectedModelProfileId })
+    })).run;
     completeThrough("snapshot");
     render();
 
@@ -246,6 +289,13 @@ $("#generateDecision")?.addEventListener("click", () => {
   if (!state.running) runDecisionFlow();
 });
 
+$("#decisionModelSelect")?.addEventListener("change", (event) => {
+  if (state.running || state.run) return;
+  state.selectedModelProfileId = event.currentTarget.value;
+  render();
+});
+
 $("#publishDecision")?.addEventListener("click", publishDecision);
 
 render();
+loadModelProfiles();

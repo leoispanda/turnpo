@@ -32,6 +32,11 @@
           <div class="decision-kicker"><span></span> 多模型研究编排</div>
           <h1 id="decisionTitle">生成今日决策</h1>
           <p>锁定一份研究快照，让四个 GPT mini 评审角色分别盲评、复核，再经过风险闸门形成最多 10 个研究席位。</p>
+          <label class="decision-model-picker" for="decisionModelSelect">
+            <span>本次决策模型</span>
+            <select id="decisionModelSelect" name="decisionModel"></select>
+            <small id="decisionModelNote">正在读取可用模型配置…</small>
+          </label>
         </div>
         <div class="decision-command-actions">
           <span class="decision-demo-badge" id="decisionMode">GPT mini · API 已连接</span>
@@ -73,7 +78,7 @@
         <div class="stock-section-head">
           <div>
             <h2 id="modelsTitle">第一轮盲评席</h2>
-            <p>所有模型基于同一份事实包，但不会看到其他模型的判断。</p>
+            <p>所有评审角色基于同一份事实包，但不会看到其他角色的判断。本次选择会锁定进 Run。</p>
           </div>
           <span class="decision-blind-badge">盲评已启用</span>
         </div>
