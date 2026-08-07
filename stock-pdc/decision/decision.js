@@ -20,6 +20,8 @@ const state = {
   running: false,
   completed: 0,
   activeStep: null,
+  activeRoleId: "",
+  error: "",
   run: null,
   modelProfiles: [{ id: "gpt-mini", label: "GPT mini", provider: "OpenAI", model: "gpt-4o-mini" }],
   selectedModelProfileId: "gpt-mini",
@@ -71,7 +73,7 @@ function renderSteps() {
 
 function modelStatus(model) {
   const status = state.modelStates[model.id];
-  if (status === "active") return "正在盲评";
+  if (status === "active") return "正在评审";
   if (status === "complete") return "已提交 Top 20";
   return "等待开始";
 }
@@ -121,14 +123,16 @@ function setRunSummary() {
     const profile = run?.modelProfile || selectedModelProfile();
     mode.textContent = profile ? `${profile.label} · ${profile.model}` : "未配置模型";
   }
-  if (copy) copy.textContent = state.running
+  if (copy) copy.textContent = state.error
+    ? `已暂停：${state.error} 点击“继续生成”会从已保存的评审继续，不会重复已完成的角色。`
+    : state.running
     ? `正在执行：${steps.find((step) => step.id === state.activeStep)?.title || "准备任务"}`
     : state.completed === steps.length
       ? "本次 Run 已完成。确认无误后，点击“发布到 PDC”才会追加当天正式记录。"
       : "点击开始生成后，每一个步骤都会在这里留下真实状态与产物。";
   if (button) {
     button.disabled = state.running;
-    button.textContent = state.running ? "正在生成…" : "开始生成";
+    button.textContent = state.running ? "正在生成…" : state.run ? "继续生成" : "开始生成";
   }
 }
 
@@ -160,16 +164,26 @@ function render() {
 }
 
 async function api(path, options = {}) {
-  const response = await fetch(`${DECISION_API_ENDPOINT}${path}`, {
-    ...options,
-    headers: {
-      "content-type": "application/json",
-      ...(options.headers || {})
-    }
-  });
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(payload.error || `Decision API error (${response.status})`);
-  return payload;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 35000);
+  try {
+    const response = await fetch(`${DECISION_API_ENDPOINT}${path}`, {
+      ...options,
+      signal: controller.signal,
+      headers: {
+        "content-type": "application/json",
+        ...(options.headers || {})
+      }
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.error || `Decision API error (${response.status})`);
+    return payload;
+  } catch (caught) {
+    if (caught?.name === "AbortError") throw new Error("该评审超过 35 秒未返回，可能是模型额度或网络问题。");
+    throw caught;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 async function latestSnapshot() {
@@ -217,54 +231,90 @@ function completeThrough(stepId) {
   state.activeStep = null;
 }
 
+function syncRunProgress() {
+  if (!state.run) return;
+  state.completed = 1;
+  state.modelStates = Object.fromEntries(models.map((model) => [model.id, "idle"]));
+  state.run.roles?.forEach((role) => {
+    if (role.state === "complete") state.modelStates[role.id] = "complete";
+  });
+  if (state.run.roundOneComplete) state.completed = 2;
+  if (state.run.pool?.length) state.completed = 3;
+  if (state.run.roundTwoComplete) state.completed = 4;
+  if (state.run.status === "READY_TO_PUBLISH" || state.run.status === "PUBLISHED") state.completed = steps.length;
+}
+
+async function runReviewers(stage) {
+  for (const model of models) {
+    if (state.modelStates[model.id] === "complete" && stage === "round-one") continue;
+    state.activeStep = stage;
+    state.activeRoleId = model.id;
+    state.modelStates[model.id] = "active";
+    render();
+    state.run = (await api(`/runs/${state.run.id}/${stage}/${model.id}`, { method: "POST", body: "{}" })).run;
+    state.modelStates[model.id] = "complete";
+    state.activeRoleId = "";
+    render();
+  }
+}
+
 async function runDecisionFlow() {
   state.running = true;
-  state.completed = 0;
-  state.activeStep = "snapshot";
-  state.run = null;
-  state.modelStates = Object.fromEntries(models.map((model) => [model.id, "idle"]));
+  state.error = "";
+  if (!state.run) {
+    state.completed = 0;
+    state.activeStep = "snapshot";
+    state.modelStates = Object.fromEntries(models.map((model) => [model.id, "idle"]));
+  } else {
+    syncRunProgress();
+  }
   render();
   try {
-    const snapshot = await latestSnapshot();
-    state.run = (await api("/runs", {
-      method: "POST",
-      body: JSON.stringify({ snapshot, modelProfileId: state.selectedModelProfileId })
-    })).run;
-    completeThrough("snapshot");
-    render();
+    if (!state.run) {
+      const snapshot = await latestSnapshot();
+      state.run = (await api("/runs", {
+        method: "POST",
+        body: JSON.stringify({ snapshot, modelProfileId: state.selectedModelProfileId })
+      })).run;
+      completeThrough("snapshot");
+      render();
+    }
 
-    state.activeStep = "round-one";
-    models.forEach((model) => { state.modelStates[model.id] = "active"; });
-    render();
-    state.run = (await api(`/runs/${state.run.id}/round-one`, { method: "POST", body: "{}" })).run;
-    models.forEach((model) => { state.modelStates[model.id] = "complete"; });
-    completeThrough("round-one");
-    render();
+    if (!state.run.roundOneComplete) {
+      await runReviewers("round-one");
+      completeThrough("round-one");
+      render();
+    }
 
-    state.activeStep = "merge";
-    render();
-    state.run = (await api(`/runs/${state.run.id}/merge`, { method: "POST", body: "{}" })).run;
-    completeThrough("merge");
-    render();
+    if (!state.run.pool?.length) {
+      state.activeStep = "merge";
+      render();
+      state.run = (await api(`/runs/${state.run.id}/merge`, { method: "POST", body: "{}" })).run;
+      completeThrough("merge");
+      render();
+    }
 
-    state.activeStep = "round-two";
-    render();
-    state.run = (await api(`/runs/${state.run.id}/round-two`, { method: "POST", body: "{}" })).run;
-    completeThrough("round-two");
-    render();
+    if (!state.run.roundTwoComplete) {
+      state.modelStates = Object.fromEntries(models.map((model) => [model.id, "idle"]));
+      await runReviewers("round-two");
+      completeThrough("round-two");
+      render();
+    }
 
-    state.activeStep = "risk-check";
-    render();
-    state.run = (await api(`/runs/${state.run.id}/risk-check`, { method: "POST", body: "{}" })).run;
-    completeThrough("risk-check");
-    state.activeStep = "final";
-    render();
-    completeThrough("final");
+    if (state.run.status !== "READY_TO_PUBLISH" && state.run.status !== "PUBLISHED") {
+      state.activeStep = "risk-check";
+      render();
+      state.run = (await api(`/runs/${state.run.id}/risk-check`, { method: "POST", body: "{}" })).run;
+      completeThrough("risk-check");
+      state.activeStep = "final";
+      render();
+      completeThrough("final");
+    }
   } catch (caught) {
-    const copy = $("#progressCopy");
-    if (copy) copy.textContent = `生成未完成：${caught.message || "请稍后重试。"}`;
+    state.error = caught.message || "请稍后重试。";
   } finally {
     state.running = false;
+    state.activeRoleId = "";
     render();
   }
 }

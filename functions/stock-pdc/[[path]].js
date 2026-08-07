@@ -311,6 +311,15 @@ function decisionResult(run) {
     }));
 }
 
+function reviewStageKey(stage) {
+  return stage === "round-one" ? "roundOne" : stage === "round-two" ? "roundTwo" : "";
+}
+
+function reviewStageComplete(run, stage) {
+  const reviewKey = reviewStageKey(stage);
+  return Boolean(reviewKey && REVIEW_ROLES.every((role) => run[reviewKey]?.[role.id]));
+}
+
 function publicRun(run) {
   const modelProfile = run.modelProfile || {
     id: "gpt-mini",
@@ -328,6 +337,8 @@ function publicRun(run) {
     status: run.status,
     snapshot: { date: run.snapshot.date, source: run.snapshot.source, candidateCount: run.snapshot.candidates.length },
     roles: REVIEW_ROLES.map(({ id, name }) => ({ id, name, state: run.roundOne?.[id] ? "complete" : "idle" })),
+    roundOneComplete: reviewStageComplete(run, "round-one"),
+    roundTwoComplete: reviewStageComplete(run, "round-two"),
     pool: run.pool || [],
     final: run.final || [],
     publishedAt: run.publishedAt || ""
@@ -388,7 +399,7 @@ async function createRun(request, env) {
   return json({ ok: true, run: publicRun(run) });
 }
 
-async function advanceRun(env, runId, stage) {
+async function advanceRun(env, runId, stage, requestedRoleId = "") {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
   const run = await loadRun(store, runId);
@@ -397,26 +408,32 @@ async function advanceRun(env, runId, stage) {
   const modelProfile = run.modelProfile || selectedModelProfile(env, "gpt-mini");
   if (!modelProfile || modelProfile.provider !== "OpenAI") return error("This run's selected model provider is not available.", 409);
   try {
-    if (stage === "round-one") {
-      if (!Object.keys(run.roundOne || {}).length) {
-        const reviews = await Promise.all(REVIEW_ROLES.map(async (role) => [role.id, await openAiReview(env, modelProfile, role, run.snapshot.candidates, "round-one")]));
-        run.roundOne = Object.fromEntries(reviews);
-        run.status = "ROUND_ONE_COMPLETE";
+    if (stage === "round-one" || stage === "round-two") {
+      const reviewKey = reviewStageKey(stage);
+      const roles = requestedRoleId
+        ? REVIEW_ROLES.filter((role) => role.id === requestedRoleId)
+        : REVIEW_ROLES;
+      if (requestedRoleId && !roles.length) return error("Unknown decision reviewer.", 404);
+      const candidates = stage === "round-one"
+        ? run.snapshot.candidates
+        : run.pool.map((row) => run.snapshot.candidates.find((candidate) => candidate.ticker === row.ticker)).filter(Boolean);
+      if (stage === "round-two" && !candidates.length) return error("Build the candidate pool before second review.", 409);
+      run[reviewKey] ||= {};
+      for (const role of roles) {
+        if (run[reviewKey][role.id]) continue;
+        run.status = `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_IN_PROGRESS`;
+        run[reviewKey][role.id] = await openAiReview(env, modelProfile, role, candidates, stage);
+        // Save after every individual reviewer so a timeout or refresh can resume safely.
+        await saveRun(store, run);
       }
+      if (reviewStageComplete(run, stage)) run.status = stage === "round-one" ? "ROUND_ONE_COMPLETE" : "ROUND_TWO_COMPLETE";
     } else if (stage === "merge") {
       if (!Object.keys(run.roundOne || {}).length) return error("Complete round one before merging candidates.", 409);
+      if (!reviewStageComplete(run, "round-one")) return error("Complete every round-one reviewer before merging candidates.", 409);
       if (!run.pool?.length) run.pool = consensusFromReviews(run.roundOne, run.snapshot.candidates).slice(0, 20);
       run.status = "POOL_READY";
-    } else if (stage === "round-two") {
-      if (!run.pool?.length) return error("Build the candidate pool before second review.", 409);
-      if (!Object.keys(run.roundTwo || {}).length) {
-        const candidates = run.pool.map((row) => run.snapshot.candidates.find((candidate) => candidate.ticker === row.ticker)).filter(Boolean);
-        const reviews = await Promise.all(REVIEW_ROLES.map(async (role) => [role.id, await openAiReview(env, modelProfile, role, candidates, "round-two")]));
-        run.roundTwo = Object.fromEntries(reviews);
-        run.status = "ROUND_TWO_COMPLETE";
-      }
     } else if (stage === "risk-check") {
-      if (!Object.keys(run.roundTwo || {}).length) return error("Complete round two before risk review.", 409);
+      if (!reviewStageComplete(run, "round-two")) return error("Complete every round-two reviewer before risk review.", 409);
       run.final = decisionResult(run);
       run.status = "READY_TO_PUBLISH";
     } else {
@@ -484,8 +501,8 @@ async function decisionApi(context) {
   }
   if (request.method !== "POST") return error("Method not allowed.", 405);
   if (suffix === "runs") return createRun(request, env);
-  const stageMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/(round-one|merge|round-two|risk-check)$/i);
-  if (stageMatch) return advanceRun(env, stageMatch[1], stageMatch[2]);
+  const stageMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/(round-one|merge|round-two|risk-check)(?:\/(pdc|trend|risk|counter))?$/i);
+  if (stageMatch) return advanceRun(env, stageMatch[1], stageMatch[2], stageMatch[3] || "");
   const publishMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/publish$/i);
   if (publishMatch) return publishRun(env, publishMatch[1]);
   return error("Unknown decision action.", 404);

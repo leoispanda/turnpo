@@ -83,11 +83,32 @@ try {
   assert.equal(payload.run.model, "gpt-mini-test");
   assert.equal(payload.run.modelProfile.id, "gpt-mini");
 
-  for (const stage of ["round-one", "merge", "round-two", "risk-check"]) {
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-one/pdc`, {})));
+  assert.equal(response.status, 200, "single reviewer should succeed");
+  payload = await response.json();
+  assert.equal(payload.run.roundOneComplete, false);
+
+  for (const roleId of ["trend", "risk", "counter"]) {
+    response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-one/${roleId}`, {})));
+    assert.equal(response.status, 200, `${roleId} should succeed`);
+    payload = await response.json();
+  }
+  assert.equal(payload.run.roundOneComplete, true);
+
+  for (const stage of ["merge"]) {
     response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/${stage}`, {})));
     assert.equal(response.status, 200, `${stage} should succeed`);
     payload = await response.json();
   }
+  for (const roleId of ["pdc", "trend", "risk", "counter"]) {
+    response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-two/${roleId}`, {})));
+    assert.equal(response.status, 200, `${roleId} should succeed`);
+    payload = await response.json();
+  }
+  assert.equal(payload.run.roundTwoComplete, true);
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/risk-check`, {})));
+  assert.equal(response.status, 200, "risk-check should succeed");
+  payload = await response.json();
   assert.equal(payload.run.status, "READY_TO_PUBLISH");
   assert.equal(payload.run.final.length, 8);
 
