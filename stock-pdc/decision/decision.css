@@ -69,6 +69,12 @@
   font-size: 15px;
 }
 
+.decision-publish-btn {
+  min-height: 38px;
+  padding: 0 16px;
+  font-size: 13px;
+}
+
 .decision-generate-btn:disabled {
   cursor: wait;
   opacity: 0.72;
