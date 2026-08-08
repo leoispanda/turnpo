@@ -87,7 +87,7 @@ assert.ok(stockFunction.includes('const DEFAULT_DEMO_STOCK_MODEL = "gpt-5.6-luna
 assert.ok(stockFunction.includes('const DEFAULT_CLAUDE_DEMO_STOCK_MODEL = "claude-haiku-4-5-20251001"'));
 assert.ok(stockFunction.includes('const DEFAULT_GEMINI_DEMO_STOCK_MODEL = "gemini-3.5-flash-lite"'));
 assert.ok(stockFunction.includes('const DEFAULT_DEEPSEEK_DEMO_STOCK_MODEL = "deepseek-v4-flash"'));
-assert.ok(stockFunction.includes('const DEFAULT_KIMI_DEMO_STOCK_MODEL = "moonshot-v1-8k"'));
+assert.ok(stockFunction.includes('const DEFAULT_KIMI_DEMO_STOCK_MODEL = "kimi-k2.6"'));
 assert.ok(stockFunction.includes("Mini Demo runs are intentionally isolated"));
 assert.ok(stockFunction.includes("const PORTFOLIO_DEFAULT_CONFIG"));
 assert.ok(stockFunction.includes("async function portfolioApi(context)"));

@@ -20,7 +20,7 @@ const DEFAULT_DEMO_STOCK_MODEL = "gpt-5.6-luna";
 const DEFAULT_CLAUDE_DEMO_STOCK_MODEL = "claude-haiku-4-5-20251001";
 const DEFAULT_DEEPSEEK_DEMO_STOCK_MODEL = "deepseek-v4-flash";
 const DEFAULT_GEMINI_DEMO_STOCK_MODEL = "gemini-3.5-flash-lite";
-const DEFAULT_KIMI_DEMO_STOCK_MODEL = "moonshot-v1-8k";
+const DEFAULT_KIMI_DEMO_STOCK_MODEL = "kimi-k2.6";
 const PDC_SCORING_SYSTEM = "short-term-forward-upside-v2";
 const MAX_DECISION_BODY_BYTES = 96 * 1024;
 const MAX_CANDIDATES = 30;
@@ -555,7 +555,7 @@ async function openAiReview(env, modelProfile, role, candidates, phase) {
     if (!response.ok) throw new Error(data.error?.message || "OpenAI review request failed.");
     const outputText = extractOutputText(data);
     if (!outputText) throw new Error("OpenAI review returned no structured output.");
-    return normalizeReview(JSON.parse(outputText), candidates);
+    return normalizeReview(parseModelJson(outputText), candidates);
   } finally {
     clearTimeout(timeout);
   }
@@ -695,7 +695,7 @@ async function deepseekReview(env, modelProfile, role, candidates, phase) {
       body: JSON.stringify({
         model: modelProfile.model,
         thinking: { type: "enabled" },
-        reasoning_effort: modelProfile.tier === "mini-demo" ? "low" : "max",
+        ...(modelProfile.tier === "mini-demo" ? {} : { reasoning_effort: "max" }),
         messages: [
           { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings and summary.` },
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
@@ -708,7 +708,7 @@ async function deepseekReview(env, modelProfile, role, candidates, phase) {
     if (!response.ok) throw new Error(data.error?.message || "DeepSeek review request failed.");
     const outputText = data.choices?.[0]?.message?.content || "";
     if (!outputText) throw new Error("DeepSeek review returned no structured output.");
-    return normalizeReview(JSON.parse(outputText), candidates);
+    return normalizeReview(parseModelJson(outputText), candidates);
   } finally {
     clearTimeout(timeout);
   }
@@ -729,7 +729,7 @@ async function kimiReview(env, modelProfile, role, candidates, phase) {
       signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
-        reasoning_effort: modelProfile.tier === "mini-demo" ? "low" : "max",
+        ...(modelProfile.tier === "mini-demo" ? {} : { reasoning_effort: "max" }),
         messages: [
           { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings and summary.` },
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
@@ -742,7 +742,7 @@ async function kimiReview(env, modelProfile, role, candidates, phase) {
     if (!response.ok) throw new Error(response.status === 401 ? "Kimi authentication was rejected. Check the Cloudflare secret ‘kimi pdc’ is a Kimi Open Platform API Key." : data.error?.message || "Kimi review request failed.");
     const outputText = data.choices?.[0]?.message?.content || "";
     if (!outputText) throw new Error("Kimi review returned no structured output.");
-    return normalizeReview(JSON.parse(outputText), candidates);
+    return normalizeReview(parseModelJson(outputText), candidates);
   } finally {
     clearTimeout(timeout);
   }
@@ -784,12 +784,21 @@ function verificationInstructions() {
 function verifyStructuredOutput(outputText, provider) {
   let value;
   try {
-    value = JSON.parse(outputText);
+    value = parseModelJson(outputText);
   } catch {
     throw new Error(`${provider} verification did not return valid JSON.`);
   }
   if (value?.status !== "ok") throw new Error(`${provider} verification returned an unexpected result.`);
   return value;
+}
+
+function parseModelJson(outputText) {
+  const raw = String(outputText || "").trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+  try { return JSON.parse(raw); } catch { /* Some OpenAI-compatible APIs add a short prose prefix despite JSON mode. */ }
+  const start = raw.indexOf("{");
+  const end = raw.lastIndexOf("}");
+  if (start < 0 || end <= start) throw new Error("No JSON object found.");
+  return JSON.parse(raw.slice(start, end + 1));
 }
 
 async function verifyOpenAiModel(env, profile) {
