@@ -62,10 +62,25 @@ function renderSteps() {
       <div>
         <h3>${escapeHtml(step.title)}</h3>
         <p>${escapeHtml(step.detail)}</p>
+        <small class="decision-step-artifact">${escapeHtml(stepArtifact(step))}</small>
       </div>
       <span class="decision-step-state">${escapeHtml(stepStateText(step))}</span>
     </li>
   `).join("");
+}
+
+function stepArtifact(step) {
+  const run = state.run;
+  if (!run) return "开始后，这里会显示这一环节的实际产物。";
+  const members = run.members || [];
+  const roundOneCount = members.filter((member) => member.roundOne?.rankings?.length).length;
+  const roundTwoCount = members.filter((member) => member.roundTwo?.rankings?.length).length;
+  if (step.id === "snapshot") return `${run.snapshot?.candidateCount || 0} 只候选已锁定；所有模型读取同一份事实包。`;
+  if (step.id === "round-one") return `${roundOneCount}/${members.length} 位委员已独立交回首轮 Top 30 与风险判断。`;
+  if (step.id === "merge") return run.pool?.length ? `已形成 ${run.pool.length} 只共同复核候选，来自首轮交集与高分股。` : "等待首轮全部完成后，由程序合并候选。";
+  if (step.id === "round-two") return `${roundTwoCount}/${members.length} 位委员已交回最终复核结论。`;
+  if (step.id === "risk-check") return run.final?.length ? `${run.final.length} 只股票通过当前共识与风险闸门。` : "程序会检查反对票、风险排除与共识门槛。";
+  return run.status === "PUBLISHED" ? "已追加到 PDC 历史。" : run.final?.length ? "最终研究名单已生成，可先复制给 GPT 讨论，再决定是否发布。" : "等待风险闸门完成。";
 }
 
 function modelStatus(member) {
@@ -74,6 +89,95 @@ function modelStatus(member) {
   if (status === "round_two_complete") return "已完成第二轮结论 · 点击查看";
   if (status === "round_one_complete" || status === "complete") return "已完成第一轮结论 · 点击查看";
   return state.run ? "等待本轮评审" : state.selectedModelProfileIds.includes(member.id) ? "已加入本轮" : "未加入本轮";
+}
+
+function reviewCopyText(member, review, phase) {
+  const phaseTitle = phase === "round-two" ? "第二轮最终复核" : "第一轮独立盲评";
+  const rows = (review?.rankings || []).map((row) => [
+    `#${row.rank} ${row.name} (${row.ticker}) · ${row.score} 分`,
+    `理由：${row.thesis || "未提供"}`,
+    `风险：${row.risk || "未提供"}`,
+    `排除：${row.exclude ? "是" : "否"}`
+  ].join("\n")).join("\n\n");
+  return [
+    "# Stock PDC 独立模型结论",
+    `日期：${state.run?.date || "未锁定"}`,
+    `模型：${member.label}（${member.provider} / ${member.model}）`,
+    `阶段：${phaseTitle}`,
+    "请只基于以下冻结事实与模型结论协助我讨论；不要把它视为交易指令。",
+    "",
+    "模型摘要：",
+    review?.summary || "未提供摘要。",
+    "",
+    "排名与依据：",
+    rows || "该阶段尚未返回排名。"
+  ].join("\n");
+}
+
+function fullRunCopyText() {
+  const run = state.run;
+  if (!run) return "";
+  const facts = (run.snapshot?.facts || []).map((row) => [
+    `${row.name} (${row.ticker})`,
+    `原始排名：${row.rank}；基础分：${row.score ?? "—"}；状态：${row.status || "—"}`,
+    `已有理由：${row.mainReason || "—"}`,
+    `已有风险：${row.mainRisk || "—"}`
+  ].join("\n")).join("\n\n");
+  const conclusions = (run.members || []).flatMap((member) => [
+    member.roundOne ? reviewCopyText(member, member.roundOne, "round-one") : "",
+    member.roundTwo ? reviewCopyText(member, member.roundTwo, "round-two") : ""
+  ]).filter(Boolean).join("\n\n---\n\n");
+  const final = (run.final || []).map((row) => `#${row.rank} ${row.name} (${row.ticker}) · ${row.consensusScore} 分 · ${row.support}/${row.requiredSupport || "—"} 共识\n理由：${row.thesis}\n风险：${row.risk}`).join("\n\n");
+  return [
+    "# Stock PDC 本轮决策包",
+    `日期：${run.date}；Run：${run.id}`,
+    "用途：请协助我审阅这一轮研究过程，重点指出证据缺口、模型分歧与风险；不构成交易指令。",
+    "",
+    "## 冻结事实包",
+    facts || "等待数据快照。",
+    "",
+    "## 各模型原始结论",
+    conclusions || "模型评审尚未完成。",
+    "",
+    "## 当前最终研究名单",
+    final || "尚未形成最终名单。"
+  ].join("\n");
+}
+
+async function copyText(value, button) {
+  if (!value || !button) return;
+  const original = button.textContent;
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(value);
+    } else {
+      const area = document.createElement("textarea");
+      area.value = value;
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      document.body.append(area);
+      area.select();
+      const copied = document.execCommand("copy");
+      area.remove();
+      if (!copied) throw new Error("copy unavailable");
+    }
+    button.textContent = "已复制，可以粘贴给 GPT";
+  } catch {
+    button.textContent = "复制失败，请重试";
+  }
+  setTimeout(() => { button.textContent = original; }, 1800);
+}
+
+function reviewPanel(member, phase, review) {
+  if (!review) return "";
+  const title = phase === "round-two" ? "第二轮 · 最终复核结论" : "第一轮 · 独立盲评结论";
+  return `<section class="decision-review-panel">
+    <div class="decision-review-panel-head">
+      <div><strong>${title}</strong><p>${escapeHtml(review.summary || "该模型已提交完整评分。")}</p></div>
+      <button class="decision-member-copy" type="button" data-copy-member="${escapeHtml(member.id)}" data-copy-phase="${phase}">复制给 GPT</button>
+    </div>
+    <ol>${review.rankings.slice(0, 30).map((row) => `<li><b>#${escapeHtml(row.rank)}</b><span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span><em>${escapeHtml(row.score)} 分</em><p>${escapeHtml(row.thesis)}<br><small>风险：${escapeHtml(row.risk)}${row.exclude ? " · 建议排除" : ""}</small></p></li>`).join("")}</ol>
+  </section>`;
 }
 
 function renderModels() {
@@ -92,8 +196,9 @@ function renderModels() {
       ${!state.run ? `<button class="decision-member-toggle" type="button" data-member-toggle="${escapeHtml(member.id)}">${state.selectedModelProfileIds.includes(member.id) ? "已加入本轮" : "加入本轮"}</button>` : ""}
       ${review ? `<button class="decision-member-open" type="button" data-member-open="${escapeHtml(member.id)}">${expanded ? "收起结论" : "查看结论"}</button>` : ""}
       ${review && expanded ? `<div class="decision-member-conclusion">
-        <strong>模型结论</strong><p>${escapeHtml(review.summary || "该模型已提交完整评分。")}</p>
-        <ol>${review.rankings.slice(0, 30).map((row) => `<li><b>#${escapeHtml(row.rank)}</b><span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span><em>${escapeHtml(row.score)} 分</em><p>${escapeHtml(row.thesis)}<br><small>风险：${escapeHtml(row.risk)}</small></p></li>`).join("")}</ol>
+        <p class="decision-member-hint">先看首轮的独立意见，再看最终复核是否改变。每一部分都能单独复制给 GPT。</p>
+        ${reviewPanel(member, "round-one", member.roundOne)}
+        ${reviewPanel(member, "round-two", member.roundTwo)}
       </div>` : ""}
     </article>
   `;
@@ -111,6 +216,12 @@ function renderModels() {
     const id = button.dataset.memberOpen;
     state.expandedMemberId = state.expandedMemberId === id ? "" : id;
     renderModels();
+  }));
+  grid.querySelectorAll("[data-copy-member]").forEach((button) => button.addEventListener("click", () => {
+    const member = (state.run?.members || []).find((item) => item.id === button.dataset.copyMember);
+    const phase = button.dataset.copyPhase;
+    const review = phase === "round-two" ? member?.roundTwo : member?.roundOne;
+    copyText(reviewCopyText(member || {}, review, phase), button);
   }));
 }
 
@@ -154,6 +265,7 @@ function setRunSummary() {
   const button = $("#generateDecision");
   const runId = $("#runId");
   const mode = $("#decisionMode");
+  const copyRun = $("#copyDecisionPacket");
   const run = state.run;
 
   if (runId) runId.textContent = run?.id ? run.id.slice(0, 8).toUpperCase() : "等待生成";
@@ -175,6 +287,7 @@ function setRunSummary() {
     button.disabled = state.running;
     button.textContent = state.running ? "正在生成…" : state.run ? "继续生成" : "开始生成";
   }
+  if (copyRun) copyRun.disabled = !run || state.running;
 }
 
 function renderResult() {
@@ -435,6 +548,10 @@ $("#generateDecision")?.addEventListener("click", () => {
 });
 
 $("#publishDecision")?.addEventListener("click", publishDecision);
+
+$("#copyDecisionPacket")?.addEventListener("click", (event) => {
+  copyText(fullRunCopyText(), event.currentTarget);
+});
 
 render();
 loadModelProfiles();

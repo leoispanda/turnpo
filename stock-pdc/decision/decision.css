@@ -99,6 +99,24 @@
   font-size: 15px;
 }
 
+.decision-copy-btn {
+  min-height: 36px;
+  border: 1px solid rgba(34, 87, 122, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  color: #22577a;
+  padding: 0 13px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.decision-copy-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .decision-publish-btn {
   min-height: 38px;
   padding: 0 16px;
@@ -289,6 +307,15 @@
   line-height: 1.35;
 }
 
+.decision-step-artifact {
+  display: block;
+  margin-top: 7px;
+  color: #65707a;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 .decision-step-state {
   min-width: 52px;
   color: #7a848e;
@@ -343,7 +370,7 @@
 
 .decision-model-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 10px;
 }
 
@@ -404,7 +431,8 @@
 }
 
 .decision-member-toggle,
-.decision-member-open {
+.decision-member-open,
+.decision-member-copy {
   width: fit-content;
   border: 1px solid rgba(34, 87, 122, 0.2);
   border-radius: 9px;
@@ -418,7 +446,8 @@
 }
 
 .decision-member-toggle:hover,
-.decision-member-open:hover {
+.decision-member-open:hover,
+.decision-member-copy:hover {
   border-color: rgba(34, 87, 122, 0.5);
   background: rgba(232, 243, 249, 0.75);
 }
@@ -432,16 +461,40 @@
   padding-top: 13px;
 }
 
-.decision-member-conclusion > strong {
+.decision-member-hint {
+  min-height: auto !important;
+  margin: 0 !important;
+  color: #65707a;
+  font-size: 12px !important;
+}
+
+.decision-review-panel {
+  display: grid;
+  gap: 9px;
+  border: 1px solid rgba(34, 87, 122, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.52);
+  padding: 12px;
+}
+
+.decision-review-panel-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.decision-review-panel-head strong {
   color: #22577a;
   font-size: 12px;
 }
 
-.decision-member-conclusion > p {
+.decision-review-panel-head p {
   min-height: auto;
+  margin: 5px 0 0;
 }
 
-.decision-member-conclusion ol {
+.decision-review-panel ol {
   display: grid;
   gap: 6px;
   max-height: 560px;

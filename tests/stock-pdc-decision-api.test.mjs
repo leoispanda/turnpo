@@ -161,6 +161,7 @@ try {
   assert.equal(payload.run.members.length, 5);
   assert.equal(payload.run.members[0].id, "gpt-5.6-sol");
   assert.equal(payload.run.snapshot.provenance.snapshotId, "pdc-2026-08-07-test");
+  assert.equal(payload.run.snapshot.facts.length, 8, "saved fact packet should be available for user copy-out");
 
   for (const memberId of ["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]) {
     response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-one/${memberId}`, {})));

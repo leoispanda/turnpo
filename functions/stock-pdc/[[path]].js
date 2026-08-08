@@ -672,7 +672,8 @@ function publicRun(run) {
       date: run.snapshot.date,
       source: run.snapshot.source,
       candidateCount: run.snapshot.candidates.length,
-      provenance: run.snapshot.provenance || null
+      provenance: run.snapshot.provenance || null,
+      facts: serializableCandidates(run.snapshot.candidates)
     },
     committeeMode: committee,
     members: committee ? committeeMembers(run).map((member) => ({

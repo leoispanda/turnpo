@@ -40,6 +40,7 @@
         </div>
         <div class="decision-command-actions">
           <span class="decision-demo-badge" id="decisionMode">多模型 PDC · API 已连接</span>
+          <button class="decision-copy-btn" id="copyDecisionPacket" type="button" disabled>复制本轮给 GPT</button>
           <button class="stock-primary-btn decision-generate-btn" id="generateDecision" type="button">开始生成</button>
         </div>
       </section>
@@ -94,7 +95,7 @@
         <div class="stock-section-head">
           <div>
             <h2 id="modelsTitle">独立 PDC 委员</h2>
-            <p>每个模型是一位完整 PDC 委员，使用同一份事实包完成独立判断。点击已完成的委员即可查看它的结论与 Top 30。</p>
+            <p>每个模型是一位完整 PDC 委员。展开后可分别查看第一轮做了什么、最终复核结论，以及一键复制给你的 GPT。</p>
           </div>
           <span class="decision-blind-badge">盲评已启用</span>
         </div>
