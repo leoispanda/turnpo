@@ -10,7 +10,7 @@ const DEMO_DECISION_MODE = "demo";
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
 const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
 const DEEPSEEK_CHAT_URL = "https://api.deepseek.com/chat/completions";
-const KIMI_CHAT_URL = "https://api.moonshot.ai/v1/chat/completions";
+const KIMI_CHAT_URL = "https://api.moonshot.cn/v1/chat/completions";
 const DEFAULT_STOCK_MODEL = "gpt-5.6-sol";
 const DEFAULT_CLAUDE_STOCK_MODEL = "claude-fable-5";
 const DEFAULT_DEEPSEEK_STOCK_MODEL = "deepseek-v4-pro";
@@ -664,7 +664,7 @@ async function geminiReview(env, modelProfile, role, candidates, phase) {
         }],
         generationConfig: {
           responseMimeType: "application/json",
-          responseSchema: portableReviewSchema()
+          responseJsonSchema: portableReviewSchema()
         }
       })
     });
@@ -739,7 +739,7 @@ async function kimiReview(env, modelProfile, role, candidates, phase) {
       })
     });
     const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error?.message || "Kimi review request failed.");
+    if (!response.ok) throw new Error(response.status === 401 ? "Kimi authentication was rejected. Check the Cloudflare secret ‘kimi pdc’ is a Kimi Open Platform API Key." : data.error?.message || "Kimi review request failed.");
     const outputText = data.choices?.[0]?.message?.content || "";
     if (!outputText) throw new Error("Kimi review returned no structured output.");
     return normalizeReview(JSON.parse(outputText), candidates);
@@ -859,7 +859,7 @@ async function verifyGeminiModel(env, profile) {
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: verificationInstructions() }] },
         contents: [{ role: "user", parts: [{ text: "Verify readiness now." }] }],
-        generationConfig: { responseMimeType: "application/json", responseSchema: portableVerificationSchema(), maxOutputTokens: 64 }
+        generationConfig: { responseMimeType: "application/json", responseJsonSchema: portableVerificationSchema(), maxOutputTokens: 64 }
       })
     });
     const data = await response.json().catch(() => ({}));
@@ -921,7 +921,7 @@ async function verifyKimiModel(env, profile) {
       })
     });
     const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error?.message || "Kimi verification request failed.");
+    if (!response.ok) throw new Error(response.status === 401 ? "Kimi authentication was rejected. Check the Cloudflare secret ‘kimi pdc’ is a Kimi Open Platform API Key." : data.error?.message || "Kimi verification request failed.");
     return verifyStructuredOutput(data.choices?.[0]?.message?.content || "", "Kimi");
   } finally {
     clearTimeout(timeout);

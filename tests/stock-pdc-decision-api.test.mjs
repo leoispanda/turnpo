@@ -59,7 +59,7 @@ const mockDimensionScores = (index) => ({
 });
 globalThis.fetch = async (_url, options) => {
   const request = JSON.parse(options.body);
-  const provider = String(_url).includes("api.anthropic.com") ? "claude" : String(_url).includes("generativelanguage.googleapis.com") ? "gemini" : String(_url).includes("api.deepseek.com") ? "deepseek" : String(_url).includes("api.moonshot.ai") ? "kimi" : "openai";
+  const provider = String(_url).includes("api.anthropic.com") ? "claude" : String(_url).includes("generativelanguage.googleapis.com") ? "gemini" : String(_url).includes("api.deepseek.com") ? "deepseek" : String(_url).includes("api.moonshot.cn") ? "kimi" : "openai";
   const isVerification = request.input === "Verify readiness now."
     || request.messages?.some((message) => message.content === "Verify readiness now.")
     || request.contents?.[0]?.parts?.[0]?.text === "Verify readiness now.";
@@ -339,7 +339,7 @@ try {
   assert.equal(response.status, 200, "Gemini reviewer should succeed");
   assert.equal(geminiRequest.headers["x-goog-api-key"], "gemini-test-key");
   assert.equal(geminiRequest.request.generationConfig.responseMimeType, "application/json");
-  assert.ok(geminiRequest.request.generationConfig.responseSchema.properties.rankings.items.properties.forwardPrediction);
+  assert.ok(geminiRequest.request.generationConfig.responseJsonSchema.properties.rankings.items.properties.forwardPrediction);
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["deepseek_api_pdc"]))));
   assert.equal(response.status, 200);
