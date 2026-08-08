@@ -37,27 +37,50 @@ const candidates = Array.from({ length: 8 }, (_, index) => ({
 }));
 
 const originalFetch = globalThis.fetch;
+let claudeRequest = null;
+let geminiRequest = null;
 globalThis.fetch = async (_url, options) => {
   const request = JSON.parse(options.body);
-  const packet = JSON.parse(String(request.input).replace("Candidate packet:\n", ""));
-  return new Response(JSON.stringify({
-    output_text: JSON.stringify({
-      rankings: packet.map((candidate, index) => ({
-        ticker: candidate.ticker,
-        score: 95 - index,
-        thesis: `${candidate.name} has supplied evidence.`,
-        risk: `${candidate.name} requires risk review.`,
-        exclude: false
-      })),
-      summary: "Mock committee review completed."
-    })
-  }), { status: 200, headers: { "content-type": "application/json" } });
+  const provider = String(_url).includes("api.anthropic.com") ? "claude" : String(_url).includes("generativelanguage.googleapis.com") ? "gemini" : "openai";
+  const packetInput = provider === "claude"
+    ? request.messages?.[0]?.content
+    : provider === "gemini"
+      ? request.contents?.[0]?.parts?.[0]?.text
+      : request.input;
+  const packet = JSON.parse(String(packetInput).replace("Candidate packet:\n", ""));
+  const review = {
+    rankings: packet.map((candidate, index) => ({
+      ticker: candidate.ticker,
+      score: 95 - index,
+      thesis: `${candidate.name} has supplied evidence.`,
+      risk: `${candidate.name} requires risk review.`,
+      exclude: false
+    })),
+    summary: "Mock committee review completed."
+  };
+  if (provider === "claude") {
+    claudeRequest = { request, headers: options.headers };
+    return new Response(JSON.stringify({ content: [{ type: "text", text: JSON.stringify(review) }] }), { status: 200, headers: { "content-type": "application/json" } });
+  }
+  if (provider === "gemini") {
+    geminiRequest = { request, headers: options.headers };
+    return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: JSON.stringify(review) }] } }] }), { status: 200, headers: { "content-type": "application/json" } });
+  }
+  return new Response(JSON.stringify({ output_text: JSON.stringify(review) }), { status: 200, headers: { "content-type": "application/json" } });
 };
 
 try {
   const secret = "decision-test-secret";
   const cookie = await accessCookie(secret);
-  const env = { AUTH_KV: new MemoryKv(), OPENAI_API_KEY: "test-key", STOCK_PDC_ACCESS_CODE: secret };
+  const env = {
+    AUTH_KV: new MemoryKv(),
+    OPENAI_API_KEY: "test-key",
+    ANTHROPIC_API_KEY: "claude-test-key",
+    ANTHROPIC_STOCK_MODEL: "claude-test-model",
+    GEMINI_API_KEY: "gemini-test-key",
+    GEMINI_STOCK_MODEL: "gemini-test-model",
+    STOCK_PDC_ACCESS_CODE: secret
+  };
   const context = (request) => ({ request, env, next: async () => new Response("next") });
   const requestFor = (path, body = null) => new Request(`https://turnpo.test${path}`, {
     method: body === null ? "GET" : "POST",
@@ -71,7 +94,11 @@ try {
   let response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/models")));
   assert.equal(response.status, 200);
   let payload = await response.json();
-  assert.deepEqual(payload.models, [{ id: "gpt-5.6-luna", label: "GPT-5.6 Luna", provider: "OpenAI", model: "gpt-5.6-luna" }]);
+  assert.deepEqual(payload.models, [
+    { id: "gpt-5.6-luna", label: "GPT-5.6 Luna", provider: "OpenAI", model: "gpt-5.6-luna" },
+    { id: "claude_api_pdc", label: "Claude API PDC", provider: "Anthropic", model: "claude-test-model" },
+    { id: "gemini_api_pdc", label: "Gemini API PDC", provider: "Google", model: "gemini-test-model" }
+  ]);
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
     snapshot: {
@@ -136,6 +163,33 @@ try {
   payload = await response.json();
   assert.equal(payload.days.length, 1);
   assert.equal(payload.days[0].date, "2026-08-07");
+
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
+    snapshot: { date: "2026-08-08", candidates },
+    modelProfileId: "claude_api_pdc"
+  })));
+  assert.equal(response.status, 200);
+  payload = await response.json();
+  const claudeRunId = payload.run.id;
+  assert.equal(payload.run.modelProfile.provider, "Anthropic");
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${claudeRunId}/round-one/pdc`, {})));
+  assert.equal(response.status, 200, "Claude reviewer should succeed");
+  assert.equal(claudeRequest.request.model, "claude-test-model");
+  assert.equal(claudeRequest.headers["x-api-key"], "claude-test-key");
+  assert.equal(claudeRequest.headers["anthropic-version"], "2023-06-01");
+
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
+    snapshot: { date: "2026-08-08", candidates },
+    modelProfileId: "gemini_api_pdc"
+  })));
+  assert.equal(response.status, 200);
+  payload = await response.json();
+  const geminiRunId = payload.run.id;
+  assert.equal(payload.run.modelProfile.provider, "Google");
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${geminiRunId}/round-one/pdc`, {})));
+  assert.equal(response.status, 200, "Gemini reviewer should succeed");
+  assert.equal(geminiRequest.headers["x-goog-api-key"], "gemini-test-key");
+  assert.equal(geminiRequest.request.generationConfig.responseMimeType, "application/json");
 } finally {
   globalThis.fetch = originalFetch;
 }

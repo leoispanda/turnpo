@@ -4,7 +4,9 @@ const COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
 const PAGE_PATH = "/stock-pdc";
 const DECISION_PATH = `${PAGE_PATH}/decision`;
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
+const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
 const DEFAULT_STOCK_MODEL = "gpt-5.6-luna";
+const DEFAULT_CLAUDE_STOCK_MODEL = "claude-sonnet-4-6";
 const MAX_DECISION_BODY_BYTES = 96 * 1024;
 const MAX_CANDIDATES = 30;
 const MAX_RUNS_PER_DAY = 8;
@@ -25,13 +27,38 @@ function stockModel(env) {
   return String(env.OPENAI_STOCK_MODEL || DEFAULT_STOCK_MODEL).trim();
 }
 
+function claudeApiKey(env) {
+  return String(env.ANTHROPIC_API_KEY || env.CLAUDE_API_KEY || "").trim();
+}
+
+function claudeStockModel(env) {
+  return String(env.ANTHROPIC_STOCK_MODEL || env.CLAUDE_STOCK_MODEL || DEFAULT_CLAUDE_STOCK_MODEL).trim();
+}
+
 function configuredModelProfiles(env) {
-  return [{
+  const profiles = [{
     id: "gpt-5.6-luna",
     label: "GPT-5.6 Luna",
     provider: "OpenAI",
     model: stockModel(env)
   }];
+  if (claudeApiKey(env)) {
+    profiles.push({
+      id: "claude_api_pdc",
+      label: "Claude API PDC",
+      provider: "Anthropic",
+      model: claudeStockModel(env)
+    });
+  }
+  if (geminiApiKey(env)) {
+    profiles.push({
+      id: "gemini_api_pdc",
+      label: "Gemini API PDC",
+      provider: "Google",
+      model: geminiStockModel(env)
+    });
+  }
+  return profiles;
 }
 
 function publicModelProfile(profile) {
@@ -211,6 +238,46 @@ function reviewSchema(name) {
   };
 }
 
+function portableReviewSchema() {
+  return {
+    type: "object",
+    additionalProperties: false,
+    required: ["rankings", "summary"],
+    properties: {
+      rankings: {
+        type: "array",
+        items: {
+          type: "object",
+          additionalProperties: false,
+          required: ["ticker", "score", "thesis", "risk", "exclude"],
+          properties: {
+            ticker: { type: "string" },
+            score: { type: "number" },
+            thesis: { type: "string" },
+            risk: { type: "string" },
+            exclude: { type: "boolean" }
+          }
+        }
+      },
+      summary: { type: "string" }
+    }
+  };
+}
+
+function reviewInstructions(role, phase) {
+  return [
+    "You are one role in an internal A-share research committee.",
+    `Your role is ${role.name}; focus on ${role.focus}.`,
+    "Use only the supplied factual candidate packet. Do not invent news, prices, financial results, or external facts.",
+    "This is research support, not a trading instruction. Be conservative when evidence is weak.",
+    "Rank only supplied tickers. A high score means stronger research priority for the stated horizon, not a buy instruction.",
+    "Use exclude=true when the supplied packet itself shows evidence is inadequate or risk is too high.",
+    phase === "round-two"
+      ? "This is the second review. Challenge the first-pass consensus and look for reasons a candidate should not advance."
+      : "This is the first independent review. Do not assume any other reviewer agrees with you."
+  ].join(" ");
+}
+
 function normalizeReview(value, candidates) {
   const allowed = new Set(candidates.map((candidate) => candidate.ticker));
   const byTicker = new Map(candidates.map((candidate) => [candidate.ticker, candidate]));
@@ -251,17 +318,7 @@ async function openAiReview(env, modelProfile, role, candidates, phase) {
       signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
-        instructions: [
-          "You are one role in an internal A-share research committee.",
-          `Your role is ${role.name}; focus on ${role.focus}.`,
-          "Use only the supplied factual candidate packet. Do not invent news, prices, financial results, or external facts.",
-          "This is research support, not a trading instruction. Be conservative when evidence is weak.",
-          "Rank only supplied tickers. A high score means stronger research priority for the stated horizon, not a buy instruction.",
-          "Use exclude=true when the supplied packet itself shows evidence is inadequate or risk is too high.",
-          phase === "round-two"
-            ? "This is the second review. Challenge the first-pass consensus and look for reasons a candidate should not advance."
-            : "This is the first independent review. Do not assume any other reviewer agrees with you."
-        ].join(" "),
+        instructions: reviewInstructions(role, phase),
         input: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`,
         text: { format: reviewSchema(`stock_pdc_${phase}_${role.id}`) },
         max_output_tokens: 5000
@@ -275,6 +332,97 @@ async function openAiReview(env, modelProfile, role, candidates, phase) {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+async function claudeReview(env, modelProfile, role, candidates, phase) {
+  const apiKey = claudeApiKey(env);
+  if (!apiKey) throw new Error("Missing ANTHROPIC_API_KEY or CLAUDE_API_KEY.");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 25000);
+  try {
+    const response = await fetch(ANTHROPIC_MESSAGES_URL, {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json"
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: modelProfile.model,
+        max_tokens: 5000,
+        system: reviewInstructions(role, phase),
+        messages: [{
+          role: "user",
+          content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`
+        }],
+        output_config: {
+          format: {
+            type: "json_schema",
+            schema: portableReviewSchema()
+          }
+        }
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error?.message || "Claude review request failed.");
+    const outputText = data.content?.find((item) => item.type === "text" && typeof item.text === "string")?.text || "";
+    if (!outputText) throw new Error("Claude review returned no structured output.");
+    return normalizeReview(JSON.parse(outputText), candidates);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function geminiApiKey(env) {
+  return String(env.GEMINI_API_KEY || env.GOOGLE_GEMINI_API_KEY || "").trim();
+}
+
+function geminiStockModel(env) {
+  return String(env.GEMINI_STOCK_MODEL || env.GOOGLE_GEMINI_STOCK_MODEL || "gemini-2.5-flash").trim();
+}
+
+async function geminiReview(env, modelProfile, role, candidates, phase) {
+  const apiKey = geminiApiKey(env);
+  if (!apiKey) throw new Error("Missing GEMINI_API_KEY or GOOGLE_GEMINI_API_KEY.");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 25000);
+  try {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelProfile.model)}:generateContent`, {
+      method: "POST",
+      headers: {
+        "x-goog-api-key": apiKey,
+        "content-type": "application/json"
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: reviewInstructions(role, phase) }] },
+        contents: [{
+          role: "user",
+          parts: [{ text: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }]
+        }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema: portableReviewSchema()
+        }
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error?.message || "Gemini review request failed.");
+    const outputText = data.candidates?.flatMap((candidate) => candidate.content?.parts || [])
+      ?.find((part) => typeof part.text === "string")?.text || "";
+    if (!outputText) throw new Error("Gemini review returned no structured output.");
+    return normalizeReview(JSON.parse(outputText), candidates);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function modelReview(env, modelProfile, role, candidates, phase) {
+  if (modelProfile.provider === "OpenAI") return openAiReview(env, modelProfile, role, candidates, phase);
+  if (modelProfile.provider === "Anthropic") return claudeReview(env, modelProfile, role, candidates, phase);
+  if (modelProfile.provider === "Google") return geminiReview(env, modelProfile, role, candidates, phase);
+  throw new Error("Selected model provider is not supported.");
 }
 
 function consensusFromReviews(reviews, candidates) {
@@ -428,7 +576,7 @@ async function advanceRun(env, runId, stage, requestedRoleId = "") {
   if (!run) return error("Decision run was not found.", 404);
   if (run.publishedAt) return error("Published decision runs are immutable.", 409);
   const modelProfile = run.modelProfile || selectedModelProfile(env, "gpt-5.6-luna");
-  if (!modelProfile || modelProfile.provider !== "OpenAI") return error("This run's selected model provider is not available.", 409);
+  if (!modelProfile || !["OpenAI", "Anthropic", "Google"].includes(modelProfile.provider)) return error("This run's selected model provider is not available.", 409);
   try {
     if (stage === "round-one" || stage === "round-two") {
       const reviewKey = reviewStageKey(stage);
@@ -444,7 +592,7 @@ async function advanceRun(env, runId, stage, requestedRoleId = "") {
       for (const role of roles) {
         if (run[reviewKey][role.id]) continue;
         run.status = `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_IN_PROGRESS`;
-        run[reviewKey][role.id] = await openAiReview(env, modelProfile, role, candidates, stage);
+        run[reviewKey][role.id] = await modelReview(env, modelProfile, role, candidates, stage);
         // Save after every individual reviewer so a timeout or refresh can resume safely.
         await saveRun(store, run);
       }
