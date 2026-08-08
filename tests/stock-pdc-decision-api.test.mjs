@@ -120,6 +120,23 @@ try {
     { id: "kimi_api_pdc", label: "Kimi API PDC", provider: "Moonshot", model: "kimi-test-model" }
   ]);
 
+  const pdcNamedEnv = {
+    ...env,
+    ANTHROPIC_API_KEY: "",
+    GEMINI_API_KEY: "",
+    DEEPSEEK_API_KEY: "",
+    KIMI_API_KEY: "",
+    CLAUDE_API_PDC: "claude-pdc-key",
+    GEMINI_API_PDC: "gemini-pdc-key",
+    DEEPSEEK_API_PDC: "deepseek-pdc-key",
+    KIMI_PDC: "kimi-pdc-key"
+  };
+  const pdcNamedContext = (request) => ({ request, env: pdcNamedEnv, next: async () => new Response("next") });
+  response = await onRequestGet(pdcNamedContext(requestFor("/stock-pdc/decision/api/models")));
+  assert.equal(response.status, 200);
+  payload = await response.json();
+  assert.equal(payload.models.length, 5, "PDC-suffixed Cloudflare secrets should enable every model member");
+
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
     snapshot: {
       date: "2026-08-07",
