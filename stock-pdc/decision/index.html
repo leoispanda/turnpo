@@ -63,6 +63,22 @@
         </article>
       </section>
 
+      <section class="decision-data-contract" aria-labelledby="dataContractTitle">
+        <div class="stock-section-head">
+          <div>
+            <h2 id="dataContractTitle">事实包与数据口径</h2>
+            <p>Data is deterministic, reasoning is diversified. 所有评审角色只读取同一份冻结事实包。</p>
+          </div>
+          <span class="decision-data-lock">冻结后不可替换</span>
+        </div>
+        <div class="decision-data-grid">
+          <article><span>主数据源</span><strong id="dataPrimary">读取中…</strong><small id="dataPrimaryPolicy"></small></article>
+          <article><span>本次快照</span><strong id="dataSnapshotId">等待锁定</strong><small id="dataSnapshotMeta">候选与特征将在开始后冻结</small></article>
+          <article><span>价格数据批次</span><strong id="dataPriceRun">读取中…</strong><small id="dataSourceFile"></small></article>
+          <article><span>备用校验</span><strong id="dataBackup">读取中…</strong><small id="dataBackupPolicy"></small></article>
+        </div>
+      </section>
+
       <section class="decision-workspace" aria-labelledby="progressTitle">
         <div class="stock-section-head">
           <div>
@@ -78,7 +94,7 @@
         <div class="stock-section-head">
           <div>
             <h2 id="modelsTitle">第一轮盲评席</h2>
-            <p>所有评审角色基于同一份事实包，但不会看到其他角色的判断。本次选择会锁定进 Run。</p>
+            <p>所有评审角色基于同一份冻结事实包，但不会看到其他角色的判断。本次选择会锁定进 Run。</p>
           </div>
           <span class="decision-blind-badge">盲评已启用</span>
         </div>

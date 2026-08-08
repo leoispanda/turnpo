@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -20,6 +21,20 @@ const SCORE_FIELDS = [
   "zhuge_orion_score",
   "final_chair_score"
 ];
+const DATA_GOVERNANCE = {
+  schemaVersion: "stock-pdc-market-data-v1",
+  principle: "Deterministic facts, diversified reasoning.",
+  primary: {
+    id: "stock-pdc-local-frozen-watchlist",
+    label: "Stock PDC 本地日度数据集",
+    policy: "Hawkeye、PDC、决策模型和复盘只读取这个冻结数据集。"
+  },
+  backup: {
+    id: "not-configured",
+    label: "未配置备用校验源",
+    policy: "备用源仅用于缺失或异常校验，不得混入正式评分或模型事实包。"
+  }
+};
 
 function argValue(name, fallback = "") {
   const index = process.argv.indexOf(name);
@@ -152,6 +167,14 @@ function round2(value) {
   return Number.isFinite(value) ? Math.round(value * 100) / 100 : null;
 }
 
+function snapshotId(date, sourceFile, rows, priceDataDir) {
+  const digest = crypto.createHash("sha256")
+    .update(JSON.stringify({ date, sourceFile, priceDataDir, rows }))
+    .digest("hex")
+    .slice(0, 16);
+  return `pdc-${date}-${digest}`;
+}
+
 function lastBarDate(dataDir, ticker = DEFAULT_BENCHMARK_TICKER) {
   const filePath = path.join(dataDir, `${ticker}.csv`);
   if (!fs.existsSync(filePath)) return "";
@@ -211,15 +234,10 @@ function resolvePriceDataDir(sourceRoot, latestDate, explicitDataDir = "") {
 }
 
 function priceDataDirCandidates(sourceRoot, primaryDir) {
-  const candidates = [
-    primaryDir,
-    ...expandPriceDataDirCandidates(sourceRoot),
-    path.join(sourceRoot, "data_a_share"),
-    path.join(sourceRoot, "data_a_share_live_mcap"),
-    path.join(sourceRoot, "data_a_share_live_mcap_2020"),
-    path.join(sourceRoot, "data_a_share_live_mcap_2020_em")
-  ].filter(Boolean);
-  return [...new Set(candidates)].filter((dir) => fs.existsSync(dir) && fs.statSync(dir).isDirectory());
+  if (!primaryDir || !fs.existsSync(primaryDir) || !fs.statSync(primaryDir).isDirectory()) return [];
+  // A data batch is selected once at the start of a run. Never fill a missing ticker
+  // from another batch: that would silently mix adjustment, volume, or calendar rules.
+  return [primaryDir];
 }
 
 function loadPriceBars(priceDataDirs, ticker, priceCache) {
@@ -701,11 +719,21 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
     previousByTicker.clear();
     rows.forEach((row) => previousByTicker.set(row.ticker, row));
 
+    const sourceFile = label === "source" ? path.relative(root, filePath) : path.relative(TURNPO_ROOT, filePath);
+    const changeFile = changeFiles.has(date) ? path.relative(sourceRoot, changeFiles.get(date)) : "";
+    const priceDataRun = priceDataDir ? path.relative(sourceRoot, priceDataDir) : "";
     return {
       date,
       previousDate: index > 0 ? watchlistFiles[index - 1].date : "",
-      sourceFile: label === "source" ? path.relative(root, filePath) : path.relative(TURNPO_ROOT, filePath),
-      changeFile: changeFiles.has(date) ? path.relative(sourceRoot, changeFiles.get(date)) : "",
+      sourceFile,
+      changeFile,
+      dataSnapshot: {
+        id: snapshotId(date, sourceFile, rows, priceDataRun),
+        primarySourceId: DATA_GOVERNANCE.primary.id,
+        sourceFile,
+        priceDataRun,
+        candidateCount: rows.length
+      },
       summary: summarize(rows, dropped),
       rows,
       dropped: dropped.sort((a, b) => (a.previousRank || 999) - (b.previousRank || 999))
@@ -719,6 +747,7 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
     generatedAt: new Date().toISOString(),
     sourceRoot,
     sourceKind: "stock-pdc-local daily watchlists + turnpo backfills",
+    dataGovernance: DATA_GOVERNANCE,
     strategy: {
       version: "action-list-v1",
       candidateStage: "Hawkeye Radar",

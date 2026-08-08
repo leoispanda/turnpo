@@ -24,6 +24,7 @@ const state = {
   activeRoleId: "",
   error: "",
   run: null,
+  dataContract: null,
   modelProfiles: [{ id: "gpt-5.6-luna", label: "GPT-5.6 Luna", provider: "OpenAI", model: "gpt-5.6-luna" }],
   selectedModelProfileId: "gpt-5.6-luna",
   modelStates: Object.fromEntries(models.map((model) => [model.id, "idle"]))
@@ -106,6 +107,27 @@ function renderModelPicker() {
     : "当前没有可用模型。请先完成服务端模型配置。";
 }
 
+function setText(selector, value) {
+  const node = $(selector);
+  if (node) node.textContent = value || "—";
+}
+
+function renderDataContract() {
+  const contract = state.dataContract || {};
+  const governance = contract.governance || {};
+  const primary = governance.primary || {};
+  const backup = governance.backup || {};
+  const snapshot = contract.snapshot || {};
+  setText("#dataPrimary", primary.label || "Stock PDC 本地日度数据集");
+  setText("#dataPrimaryPolicy", primary.policy || "统一事实包，供 Hawkeye、PDC 与复盘复用。");
+  setText("#dataSnapshotId", snapshot.id || "等待锁定");
+  setText("#dataSnapshotMeta", snapshot.candidateCount ? `${snapshot.candidateCount} 个候选 · ${contract.date || ""}` : "候选与特征将在开始后冻结");
+  setText("#dataPriceRun", snapshot.priceDataRun || "等待数据批次");
+  setText("#dataSourceFile", snapshot.sourceFile || "rank-flow.json");
+  setText("#dataBackup", backup.label || "未配置备用校验源");
+  setText("#dataBackupPolicy", backup.policy || "只做校验，不能混入正式计算。");
+}
+
 function setRunSummary() {
   const snapshot = $("#snapshotStatus");
   const status = $("#runStatus");
@@ -164,6 +186,7 @@ function render() {
     // The decision flow still works when browser storage is unavailable.
   }
   renderSteps();
+  renderDataContract();
   renderModelPicker();
   renderModels();
   setRunSummary();
@@ -200,9 +223,26 @@ async function latestSnapshot() {
   const days = Array.isArray(data.days) ? data.days.filter((day) => Array.isArray(day.rows) && day.rows.length) : [];
   const latest = days.at(-1);
   if (!latest?.date || !latest.rows?.length) throw new Error("No current PDC candidates are available.");
+  const governance = data.dataGovernance || {};
+  const dataSnapshot = latest.dataSnapshot || {};
+  const provenance = {
+    snapshotId: dataSnapshot.id || `pdc-${latest.date}-rank-flow`,
+    primarySourceId: dataSnapshot.primarySourceId || governance.primary?.id || "stock-pdc-local-frozen-watchlist",
+    primarySourceLabel: governance.primary?.label || "Stock PDC 本地日度数据集",
+    sourceFile: dataSnapshot.sourceFile || latest.sourceFile || "stock-pdc/rank-flow.json",
+    priceDataRun: dataSnapshot.priceDataRun || data.priceDataDir || "",
+    backupPolicy: governance.backup?.policy || "备用源只用于校验，不进入正式计算。",
+    featureContract: governance.principle || "Deterministic facts, diversified reasoning."
+  };
+  state.dataContract = {
+    date: latest.date,
+    governance,
+    snapshot: { ...provenance, candidateCount: latest.rows.length }
+  };
   return {
     date: latest.date,
-    source: "stock-pdc/rank-flow.json",
+    source: provenance.sourceFile,
+    provenance,
     candidates: latest.rows.slice(0, 30).map((row) => ({
       ticker: row.ticker,
       name: row.name,
@@ -215,6 +255,16 @@ async function latestSnapshot() {
       scores: row.scores || row.research?.scores
     }))
   };
+}
+
+async function loadDataContract() {
+  try {
+    await latestSnapshot();
+  } catch {
+    // The decision run will show a concrete error if the required fact snapshot cannot be loaded.
+  } finally {
+    render();
+  }
 }
 
 async function loadModelProfiles() {
@@ -374,4 +424,5 @@ $("#publishDecision")?.addEventListener("click", publishDecision);
 
 render();
 loadModelProfiles();
+loadDataContract();
 restoreSavedRun();

@@ -2,6 +2,20 @@
   "generatedAt": "2026-08-07T01:10:48.087Z",
   "sourceRoot": "/Users/leoyang/Documents/financial freedom/stock-pdc-local",
   "sourceKind": "stock-pdc-local daily watchlists + turnpo backfills",
+  "dataGovernance": {
+    "schemaVersion": "stock-pdc-market-data-v1",
+    "principle": "Deterministic facts, diversified reasoning.",
+    "primary": {
+      "id": "stock-pdc-local-frozen-watchlist",
+      "label": "Stock PDC 本地日度数据集",
+      "policy": "Hawkeye、PDC、决策模型和复盘只读取这个冻结数据集。"
+    },
+    "backup": {
+      "id": "not-configured",
+      "label": "未配置备用校验源",
+      "policy": "备用源仅用于缺失或异常校验，不得混入正式评分或模型事实包。"
+    }
+  },
   "strategy": {
     "version": "action-list-v1",
     "candidateStage": "Hawkeye Radar",

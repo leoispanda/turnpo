@@ -74,7 +74,19 @@ try {
   assert.deepEqual(payload.models, [{ id: "gpt-5.6-luna", label: "GPT-5.6 Luna", provider: "OpenAI", model: "gpt-5.6-luna" }]);
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
-    snapshot: { date: "2026-08-07", candidates },
+    snapshot: {
+      date: "2026-08-07",
+      candidates,
+      provenance: {
+        snapshotId: "pdc-2026-08-07-test",
+        primarySourceId: "stock-pdc-local-frozen-watchlist",
+        primarySourceLabel: "Stock PDC 本地日度数据集",
+        sourceFile: "outputs/daily_watchlists/watchlist_2026-08-07.csv",
+        priceDataRun: "data_a_share_latest_runs/run_20260807",
+        backupPolicy: "Validation only.",
+        featureContract: "Deterministic facts, diversified reasoning."
+      }
+    },
     modelProfileId: "gpt-5.6-luna"
   })));
   assert.equal(response.status, 200);
@@ -82,6 +94,7 @@ try {
   const runId = payload.run.id;
   assert.equal(payload.run.model, "gpt-5.6-luna");
   assert.equal(payload.run.modelProfile.id, "gpt-5.6-luna");
+  assert.equal(payload.run.snapshot.provenance.snapshotId, "pdc-2026-08-07-test");
 
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-one/pdc`, {})));
   assert.equal(response.status, 200, "single reviewer should succeed");
@@ -117,6 +130,7 @@ try {
   payload = await response.json();
   assert.equal(payload.run.status, "PUBLISHED");
   assert.equal(payload.current.decisions.length, 8);
+  assert.equal(payload.current.dataSnapshot.snapshotId, "pdc-2026-08-07-test");
 
   response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/history")));
   payload = await response.json();

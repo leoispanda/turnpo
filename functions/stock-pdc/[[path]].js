@@ -117,6 +117,22 @@ function normalizeScores(value) {
     .filter(([key, score]) => key && score !== null));
 }
 
+function normalizeProvenance(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const snapshotId = cleanText(value.snapshotId, 120);
+  const primarySourceId = cleanText(value.primarySourceId, 100);
+  if (!snapshotId || !primarySourceId) return null;
+  return {
+    snapshotId,
+    primarySourceId,
+    primarySourceLabel: cleanText(value.primarySourceLabel, 160),
+    sourceFile: cleanText(value.sourceFile, 320),
+    priceDataRun: cleanText(value.priceDataRun, 320),
+    backupPolicy: cleanText(value.backupPolicy, 240),
+    featureContract: cleanText(value.featureContract, 240)
+  };
+}
+
 function normalizeCandidate(value, index) {
   const ticker = cleanText(value?.ticker, 24).toUpperCase();
   if (!/^[A-Z0-9.]{4,24}$/.test(ticker)) return null;
@@ -142,6 +158,7 @@ function normalizeSnapshot(value) {
   return {
     date,
     source: cleanText(value?.source || "stock-pdc/rank-flow.json", 160),
+    provenance: normalizeProvenance(value?.provenance),
     candidates,
     capturedAt: new Date().toISOString()
   };
@@ -335,7 +352,12 @@ function publicRun(run) {
     model: modelProfile.model,
     modelProfile: publicModelProfile(modelProfile),
     status: run.status,
-    snapshot: { date: run.snapshot.date, source: run.snapshot.source, candidateCount: run.snapshot.candidates.length },
+    snapshot: {
+      date: run.snapshot.date,
+      source: run.snapshot.source,
+      candidateCount: run.snapshot.candidates.length,
+      provenance: run.snapshot.provenance || null
+    },
     roles: REVIEW_ROLES.map(({ id, name }) => ({ id, name, state: run.roundOne?.[id] ? "complete" : "idle" })),
     roundOneComplete: reviewStageComplete(run, "round-one"),
     roundTwoComplete: reviewStageComplete(run, "round-two"),
@@ -459,6 +481,7 @@ async function publishRun(env, runId) {
     date: run.date,
     runId: run.id,
     model: run.modelProfile?.label || run.model,
+    dataSnapshot: run.snapshot.provenance || null,
     publishedAt,
     decisions: run.final,
     action: "RESEARCH_REVIEW"
