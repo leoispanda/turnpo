@@ -134,35 +134,33 @@ try {
         featureContract: "Deterministic facts, diversified reasoning."
       }
     },
-    modelProfileId: "gpt-5.6-sol"
+    modelProfileIds: ["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]
   })));
   assert.equal(response.status, 200);
   payload = await response.json();
   const runId = payload.run.id;
-  assert.equal(payload.run.model, "gpt-5.6-sol");
-  assert.equal(payload.run.modelProfile.id, "gpt-5.6-sol");
+  assert.equal(payload.run.model, "MULTI_MODEL_PDC");
+  assert.equal(payload.run.committeeMode, true);
+  assert.equal(payload.run.members.length, 5);
+  assert.equal(payload.run.members[0].id, "gpt-5.6-sol");
   assert.equal(payload.run.snapshot.provenance.snapshotId, "pdc-2026-08-07-test");
 
-  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-one/pdc`, {})));
-  assert.equal(response.status, 200, "single reviewer should succeed");
-  payload = await response.json();
-  assert.equal(payload.run.roundOneComplete, false);
-
-  for (const roleId of ["trend", "risk", "counter"]) {
-    response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-one/${roleId}`, {})));
-    assert.equal(response.status, 200, `${roleId} should succeed`);
+  for (const memberId of ["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]) {
+    response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-one/${memberId}`, {})));
+    assert.equal(response.status, 200, `${memberId} first PDC conclusion should succeed`);
     payload = await response.json();
   }
   assert.equal(payload.run.roundOneComplete, true);
+  assert.equal(payload.run.members[0].roundOne.rankings.length, 8);
 
   for (const stage of ["merge"]) {
     response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/${stage}`, {})));
     assert.equal(response.status, 200, `${stage} should succeed`);
     payload = await response.json();
   }
-  for (const roleId of ["pdc", "trend", "risk", "counter"]) {
-    response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-two/${roleId}`, {})));
-    assert.equal(response.status, 200, `${roleId} should succeed`);
+  for (const memberId of ["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]) {
+    response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-two/${memberId}`, {})));
+    assert.equal(response.status, 200, `${memberId} second PDC conclusion should succeed`);
     payload = await response.json();
   }
   assert.equal(payload.run.roundTwoComplete, true);
@@ -186,13 +184,13 @@ try {
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
     snapshot: { date: "2026-08-08", candidates },
-    modelProfileId: "claude_api_pdc"
+    modelProfileIds: ["claude_api_pdc"]
   })));
   assert.equal(response.status, 200);
   payload = await response.json();
   const claudeRunId = payload.run.id;
-  assert.equal(payload.run.modelProfile.provider, "Anthropic");
-  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${claudeRunId}/round-one/pdc`, {})));
+  assert.equal(payload.run.members[0].provider, "Anthropic");
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${claudeRunId}/round-one/claude_api_pdc`, {})));
   assert.equal(response.status, 200, "Claude reviewer should succeed");
   assert.equal(claudeRequest.request.model, "claude-test-model");
   assert.equal(claudeRequest.headers["x-api-key"], "claude-test-key");
@@ -200,39 +198,39 @@ try {
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
     snapshot: { date: "2026-08-08", candidates },
-    modelProfileId: "gemini_api_pdc"
+    modelProfileIds: ["gemini_api_pdc"]
   })));
   assert.equal(response.status, 200);
   payload = await response.json();
   const geminiRunId = payload.run.id;
-  assert.equal(payload.run.modelProfile.provider, "Google");
-  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${geminiRunId}/round-one/pdc`, {})));
+  assert.equal(payload.run.members[0].provider, "Google");
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${geminiRunId}/round-one/gemini_api_pdc`, {})));
   assert.equal(response.status, 200, "Gemini reviewer should succeed");
   assert.equal(geminiRequest.headers["x-goog-api-key"], "gemini-test-key");
   assert.equal(geminiRequest.request.generationConfig.responseMimeType, "application/json");
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
     snapshot: { date: "2026-08-08", candidates },
-    modelProfileId: "deepseek_api_pdc"
+    modelProfileIds: ["deepseek_api_pdc"]
   })));
   assert.equal(response.status, 200);
   payload = await response.json();
   const deepseekRunId = payload.run.id;
-  assert.equal(payload.run.modelProfile.provider, "DeepSeek");
-  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${deepseekRunId}/round-one/pdc`, {})));
+  assert.equal(payload.run.members[0].provider, "DeepSeek");
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${deepseekRunId}/round-one/deepseek_api_pdc`, {})));
   assert.equal(response.status, 200, "DeepSeek reviewer should succeed");
   assert.equal(deepseekRequest.headers.authorization, "Bearer deepseek-test-key");
   assert.equal(deepseekRequest.request.response_format.type, "json_object");
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
     snapshot: { date: "2026-08-08", candidates },
-    modelProfileId: "kimi_api_pdc"
+    modelProfileIds: ["kimi_api_pdc"]
   })));
   assert.equal(response.status, 200);
   payload = await response.json();
   const kimiRunId = payload.run.id;
-  assert.equal(payload.run.modelProfile.provider, "Moonshot");
-  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${kimiRunId}/round-one/pdc`, {})));
+  assert.equal(payload.run.members[0].provider, "Moonshot");
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${kimiRunId}/round-one/kimi_api_pdc`, {})));
   assert.equal(response.status, 200, "Kimi reviewer should succeed");
   assert.equal(kimiRequest.headers.authorization, "Bearer kimi-test-key");
   assert.equal(kimiRequest.request.response_format.type, "json_object");

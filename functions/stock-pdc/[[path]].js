@@ -24,6 +24,12 @@ const REVIEW_ROLES = [
   { id: "counter", name: "反方证伪评审", focus: "寻找论点漏洞、拥挤交易、证据不足和反例" }
 ];
 
+const FULL_PDC_ROLE = {
+  id: "full-pdc",
+  name: "完整 PDC 决策委员",
+  focus: "独立完成趋势、量价、风险、过热、反方证伪与证据一致性的全维度评分，并给出完整 Top 30 结论"
+};
+
 function configuredAccessCode(env) {
   return String(env.STOCK_PDC_ACCESS_CODE || env.EMBA_ACCESS_CODE || "emba2026").trim();
 }
@@ -574,9 +580,17 @@ function consensusFromReviews(reviews, candidates) {
 }
 
 function decisionResult(run) {
-  const consensus = consensusFromReviews(run.roundTwo || run.roundOne || {}, run.pool || run.snapshot.candidates);
+  const committee = isCommitteeRun(run);
+  const reviews = committee
+    ? Object.keys(committeeReviewMap(run, "round-two")).length
+      ? committeeReviewMap(run, "round-two")
+      : committeeReviewMap(run, "round-one")
+    : run.roundTwo || run.roundOne || {};
+  const candidates = run.pool?.length ? run.pool : run.snapshot.candidates;
+  const requiredSupport = committee ? Math.max(1, Math.ceil(committeeMembers(run).length / 2)) : 2;
+  const consensus = consensusFromReviews(reviews, candidates);
   return consensus
-    .filter((row) => row.support >= 2 && row.excludedBy < 2)
+    .filter((row) => row.support >= requiredSupport && row.excludedBy < requiredSupport)
     .slice(0, 10)
     .map((row, index) => ({
       rank: index + 1,
@@ -584,6 +598,7 @@ function decisionResult(run) {
       name: row.name,
       consensusScore: row.consensusScore,
       support: row.support,
+      requiredSupport,
       sourceRank: row.sourceRank,
       thesis: row.theses[0]?.text || "Evidence review completed.",
       risk: row.risks[0]?.text || "Review the full run before any action.",
@@ -600,20 +615,58 @@ function reviewStageComplete(run, stage) {
   return Boolean(reviewKey && REVIEW_ROLES.every((role) => run[reviewKey]?.[role.id]));
 }
 
+function isCommitteeRun(run) {
+  return Boolean(run?.committee && typeof run.committee === "object" && !Array.isArray(run.committee));
+}
+
+function committeeMembers(run) {
+  return Object.values(run?.committee || {}).filter((member) => member?.profile?.id && member?.profile?.provider);
+}
+
+function committeeReviewMap(run, stage) {
+  const reviewKey = reviewStageKey(stage);
+  return Object.fromEntries(committeeMembers(run)
+    .map((member) => [member.profile.id, member[reviewKey]])
+    .filter(([, review]) => review && Array.isArray(review.rankings)));
+}
+
+function committeeStageComplete(run, stage) {
+  const reviewKey = reviewStageKey(stage);
+  const members = committeeMembers(run);
+  return Boolean(reviewKey && members.length && members.every((member) => member[reviewKey]?.rankings?.length));
+}
+
+function publicReview(review) {
+  if (!review?.rankings?.length) return null;
+  return {
+    summary: cleanText(review.summary, 360),
+    rankings: review.rankings.slice(0, 30).map((row) => ({
+      rank: row.rank,
+      ticker: row.ticker,
+      name: row.name,
+      score: row.score,
+      thesis: row.thesis,
+      risk: row.risk,
+      exclude: row.exclude
+    }))
+  };
+}
+
 function publicRun(run) {
-  const modelProfile = run.modelProfile || {
+  const committee = isCommitteeRun(run);
+  const modelProfile = !committee && (run.modelProfile || {
     id: "gpt-5.6-sol",
     label: "GPT-5.6 Sol · Pro PDC",
     provider: "OpenAI",
     model: run.model || DEFAULT_STOCK_MODEL
-  };
+  });
   return {
     id: run.id,
     date: run.date,
     createdAt: run.createdAt,
     updatedAt: run.updatedAt,
-    model: modelProfile.model,
-    modelProfile: publicModelProfile(modelProfile),
+    model: committee ? "MULTI_MODEL_PDC" : modelProfile.model,
+    modelProfile: modelProfile ? publicModelProfile(modelProfile) : null,
     status: run.status,
     snapshot: {
       date: run.snapshot.date,
@@ -621,9 +674,16 @@ function publicRun(run) {
       candidateCount: run.snapshot.candidates.length,
       provenance: run.snapshot.provenance || null
     },
-    roles: REVIEW_ROLES.map(({ id, name }) => ({ id, name, state: run.roundOne?.[id] ? "complete" : "idle" })),
-    roundOneComplete: reviewStageComplete(run, "round-one"),
-    roundTwoComplete: reviewStageComplete(run, "round-two"),
+    committeeMode: committee,
+    members: committee ? committeeMembers(run).map((member) => ({
+      ...publicModelProfile(member.profile),
+      state: member.roundTwo?.rankings?.length ? "round_two_complete" : member.roundOne?.rankings?.length ? "round_one_complete" : "idle",
+      roundOne: publicReview(member.roundOne),
+      roundTwo: publicReview(member.roundTwo)
+    })) : [],
+    roles: committee ? [] : REVIEW_ROLES.map(({ id, name }) => ({ id, name, state: run.roundOne?.[id] ? "complete" : "idle" })),
+    roundOneComplete: committee ? committeeStageComplete(run, "round-one") : reviewStageComplete(run, "round-one"),
+    roundTwoComplete: committee ? committeeStageComplete(run, "round-two") : reviewStageComplete(run, "round-two"),
     pool: run.pool || [],
     final: run.final || [],
     publishedAt: run.publishedAt || ""
@@ -659,8 +719,12 @@ async function createRun(request, env) {
   const body = await readJson(request);
   const snapshot = normalizeSnapshot(body.snapshot);
   if (!snapshot) return error("A valid daily PDC snapshot with at least five candidates is required.");
-  const modelProfile = selectedModelProfile(env, body.modelProfileId);
-  if (!modelProfile) return error("The selected decision model is not configured on this deployment.");
+  const requestedIds = Array.isArray(body.modelProfileIds)
+    ? body.modelProfileIds.map((id) => cleanText(id, 64)).filter(Boolean)
+    : body.modelProfileId ? [cleanText(body.modelProfileId, 64)] : configuredModelProfiles(env).map((profile) => profile.id);
+  const availableProfiles = configuredModelProfiles(env);
+  const modelProfiles = availableProfiles.filter((profile) => requestedIds.includes(profile.id));
+  if (!modelProfiles.length) return error("No selected PDC model is configured on this deployment.");
   const currentCount = Number(await store.get(decisionRateKey(snapshot.date)) || "0");
   if (currentCount >= MAX_RUNS_PER_DAY) return error("Daily decision-run limit reached. Review an existing run instead.", 429);
   await store.put(decisionRateKey(snapshot.date), String(currentCount + 1), { expirationTtl: 24 * 60 * 60 });
@@ -670,10 +734,15 @@ async function createRun(request, env) {
     date: snapshot.date,
     createdAt: now,
     updatedAt: now,
-    model: modelProfile.model,
-    modelProfile,
+    model: "MULTI_MODEL_PDC",
+    modelProfile: null,
     status: "SNAPSHOT_LOCKED",
     snapshot,
+    committee: Object.fromEntries(modelProfiles.map((profile) => [profile.id, {
+      profile: publicModelProfile(profile),
+      roundOne: null,
+      roundTwo: null
+    }])),
     roundOne: {},
     pool: [],
     roundTwo: {},
@@ -684,12 +753,53 @@ async function createRun(request, env) {
   return json({ ok: true, run: publicRun(run) });
 }
 
+async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
+  if (stage === "round-one" || stage === "round-two") {
+    const reviewKey = reviewStageKey(stage);
+    const members = requestedModelId
+      ? committeeMembers(run).filter((member) => member.profile.id === requestedModelId)
+      : committeeMembers(run);
+    if (requestedModelId && !members.length) return error("Unknown PDC model member.", 404);
+    const candidates = stage === "round-one"
+      ? run.snapshot.candidates
+      : run.pool.map((row) => run.snapshot.candidates.find((candidate) => candidate.ticker === row.ticker)).filter(Boolean);
+    if (stage === "round-two" && !candidates.length) return error("Build the candidate pool before second review.", 409);
+    for (const member of members) {
+      if (member[reviewKey]?.rankings?.length) continue;
+      run.status = `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_IN_PROGRESS`;
+      member[reviewKey] = await modelReview(env, member.profile, FULL_PDC_ROLE, candidates, stage);
+      // Persist one independent PDC conclusion at a time for safe resume after a timeout.
+      await saveRun(decisionStore(env), run);
+    }
+    if (committeeStageComplete(run, stage)) run.status = stage === "round-one" ? "ROUND_ONE_COMPLETE" : "ROUND_TWO_COMPLETE";
+  } else if (stage === "merge") {
+    if (!committeeStageComplete(run, "round-one")) return error("Complete every PDC model before merging candidates.", 409);
+    if (!run.pool?.length) run.pool = consensusFromReviews(committeeReviewMap(run, "round-one"), run.snapshot.candidates).slice(0, 20);
+    run.status = "POOL_READY";
+  } else if (stage === "risk-check") {
+    if (!committeeStageComplete(run, "round-two")) return error("Complete every PDC model before risk review.", 409);
+    run.final = decisionResult(run);
+    run.status = "READY_TO_PUBLISH";
+  } else {
+    return error("Unknown decision stage.", 404);
+  }
+  await saveRun(decisionStore(env), run);
+  return json({ ok: true, run: publicRun(run) });
+}
+
 async function advanceRun(env, runId, stage, requestedRoleId = "") {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
   const run = await loadRun(store, runId);
   if (!run) return error("Decision run was not found.", 404);
   if (run.publishedAt) return error("Published decision runs are immutable.", 409);
+  if (isCommitteeRun(run)) {
+    try {
+      return await advanceCommitteeRun(env, run, stage, requestedRoleId);
+    } catch (caught) {
+      return error(cleanText(caught?.message || "Decision stage failed.", 320), 502);
+    }
+  }
   const modelProfile = run.modelProfile || selectedModelProfile(env, "gpt-5.6-sol");
   if (!modelProfile || !["OpenAI", "Anthropic", "Google", "DeepSeek", "Moonshot"].includes(modelProfile.provider)) return error("This run's selected model provider is not available.", 409);
   try {
@@ -743,7 +853,7 @@ async function publishRun(env, runId) {
   const day = {
     date: run.date,
     runId: run.id,
-    model: run.modelProfile?.label || run.model,
+    model: isCommitteeRun(run) ? "Multi-model PDC" : run.modelProfile?.label || run.model,
     dataSnapshot: run.snapshot.provenance || null,
     publishedAt,
     decisions: run.final,
@@ -787,7 +897,7 @@ async function decisionApi(context) {
   }
   if (request.method !== "POST") return error("Method not allowed.", 405);
   if (suffix === "runs") return createRun(request, env);
-  const stageMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/(round-one|merge|round-two|risk-check)(?:\/(pdc|trend|risk|counter))?$/i);
+  const stageMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/(round-one|merge|round-two|risk-check)(?:\/([a-z0-9_.-]+))?$/i);
   if (stageMatch) return advanceRun(env, stageMatch[1], stageMatch[2], stageMatch[3] || "");
   const publishMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/publish$/i);
   if (publishMatch) return publishRun(env, publishMatch[1]);

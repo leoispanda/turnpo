@@ -5,29 +5,23 @@ const steps = [
   { id: "snapshot", title: "锁定研究数据快照", detail: "确认收盘状态、候选池版本与生成时间。", output: "已冻结输入事实包" },
   { id: "round-one", title: "第一轮独立盲评", detail: "每个旗舰模型仅基于同一份冻结事实包生成独立排名，不读取其他模型结论。", output: "已收到独立排名" },
   { id: "merge", title: "合并候选挑战池", detail: "去重并融合排名，保留值得复核的候选。", output: "挑战池已生成" },
-  { id: "round-two", title: "第二轮证据复核", detail: "四个角色重新评估候选与关键反证。", output: "复核评分已完成" },
+  { id: "round-two", title: "第二轮证据复核", detail: "每位模型 PDC 对 Top 20 重新独立评分，并检验第一轮结论。", output: "复核评分已完成" },
   { id: "risk-check", title: "市场与风险闸门", detail: "检查共识、风险与不应进入最终名单的候选。", output: "风险门槛已应用" },
   { id: "final", title: "生成最终研究名单", detail: "保留最多 10 个通过闸门的研究席位；不足不强行补足。", output: "决策快照已生成" }
-];
-
-const models = [
-  { id: "pdc", name: "PDC", role: "综合型评审", note: "综合趋势、量价、因子与证据一致性。" },
-  { id: "trend", name: "趋势", role: "趋势与量价评审", note: "独立识别趋势延续、相对强弱与量价确认。" },
-  { id: "risk", name: "风险", role: "风险与过热审计", note: "专注下行、过热与不应参与的情形。" },
-  { id: "counter", name: "反方", role: "反方证伪评审", note: "主动寻找论点漏洞、拥挤与证据不足。" }
 ];
 
 const state = {
   running: false,
   completed: 0,
   activeStep: null,
-  activeRoleId: "",
+  activeMemberId: "",
+  expandedMemberId: "",
   error: "",
   run: null,
   dataContract: null,
   modelProfiles: [{ id: "gpt-5.6-sol", label: "GPT-5.6 Sol · Pro PDC", provider: "OpenAI", model: "gpt-5.6-sol" }],
-  selectedModelProfileId: "gpt-5.6-sol",
-  modelStates: Object.fromEntries(models.map((model) => [model.id, "idle"]))
+  selectedModelProfileIds: ["gpt-5.6-sol"],
+  modelStates: { "gpt-5.6-sol": "idle" }
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -54,8 +48,9 @@ function stepStateText(step) {
   return "等待";
 }
 
-function selectedModelProfile() {
-  return state.modelProfiles.find((profile) => profile.id === state.selectedModelProfileId) || state.modelProfiles[0] || null;
+function selectedModelProfiles() {
+  const selected = state.modelProfiles.filter((profile) => state.selectedModelProfileIds.includes(profile.id));
+  return selected.length ? selected : state.modelProfiles;
 }
 
 function renderSteps() {
@@ -73,37 +68,60 @@ function renderSteps() {
   `).join("");
 }
 
-function modelStatus(model) {
-  const status = state.modelStates[model.id];
-  if (status === "active") return "正在评审";
-  if (status === "complete") return "已提交 Top 20";
-  return "等待开始";
+function modelStatus(member) {
+  const status = state.modelStates[member.id] || member.state || "idle";
+  if (status === "active") return "正在形成完整 PDC 结论";
+  if (status === "round_two_complete") return "已完成第二轮结论 · 点击查看";
+  if (status === "round_one_complete" || status === "complete") return "已完成第一轮结论 · 点击查看";
+  return state.run ? "等待本轮评审" : state.selectedModelProfileIds.includes(member.id) ? "已加入本轮" : "未加入本轮";
 }
 
 function renderModels() {
   const grid = $("#modelGrid");
   if (!grid) return;
-  const modelLabel = selectedModelProfile()?.label || "GPT-5.6 Sol · Pro PDC";
-  grid.innerHTML = models.map((model) => `
-    <article class="decision-model-card" data-state="${state.modelStates[model.id]}">
-      <span>${escapeHtml(model.role)}</span>
-      <h3>${escapeHtml(modelLabel)} · ${escapeHtml(model.name)}</h3>
-      <p>${escapeHtml(model.note)}</p>
-      <div class="decision-model-status">${escapeHtml(modelStatus(model))}</div>
+  const members = state.run?.committeeMode ? state.run.members : state.modelProfiles;
+  grid.innerHTML = members.map((member) => {
+    const review = member.roundTwo || member.roundOne;
+    const expanded = state.expandedMemberId === member.id;
+    return `
+    <article class="decision-model-card ${review ? "is-clickable" : ""}" data-state="${escapeHtml(state.modelStates[member.id] || member.state || "idle")}">
+      <span>${escapeHtml(member.provider)} · 完整 PDC</span>
+      <h3>${escapeHtml(member.label)}</h3>
+      <p>${escapeHtml(member.model)}<br>独立覆盖趋势、量价、风险、过热与反方证伪。</p>
+      <div class="decision-model-status">${escapeHtml(modelStatus(member))}</div>
+      ${!state.run ? `<button class="decision-member-toggle" type="button" data-member-toggle="${escapeHtml(member.id)}">${state.selectedModelProfileIds.includes(member.id) ? "已加入本轮" : "加入本轮"}</button>` : ""}
+      ${review ? `<button class="decision-member-open" type="button" data-member-open="${escapeHtml(member.id)}">${expanded ? "收起结论" : "查看结论"}</button>` : ""}
+      ${review && expanded ? `<div class="decision-member-conclusion">
+        <strong>模型结论</strong><p>${escapeHtml(review.summary || "该模型已提交完整评分。")}</p>
+        <ol>${review.rankings.slice(0, 30).map((row) => `<li><b>#${escapeHtml(row.rank)}</b><span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span><em>${escapeHtml(row.score)} 分</em><p>${escapeHtml(row.thesis)}<br><small>风险：${escapeHtml(row.risk)}</small></p></li>`).join("")}</ol>
+      </div>` : ""}
     </article>
-  `).join("");
+  `;
+  }).join("");
+  grid.querySelectorAll("[data-member-toggle]").forEach((button) => button.addEventListener("click", () => {
+    if (state.run || state.running) return;
+    const id = button.dataset.memberToggle;
+    state.selectedModelProfileIds = state.selectedModelProfileIds.includes(id)
+      ? state.selectedModelProfileIds.filter((item) => item !== id)
+      : [...state.selectedModelProfileIds, id];
+    if (!state.selectedModelProfileIds.length) state.selectedModelProfileIds = [id];
+    render();
+  }));
+  grid.querySelectorAll("[data-member-open]").forEach((button) => button.addEventListener("click", () => {
+    const id = button.dataset.memberOpen;
+    state.expandedMemberId = state.expandedMemberId === id ? "" : id;
+    renderModels();
+  }));
 }
 
 function renderModelPicker() {
   const select = $("#decisionModelSelect");
   const note = $("#decisionModelNote");
-  const profile = selectedModelProfile();
   if (!select || !note) return;
-  select.innerHTML = state.modelProfiles.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.label)} · ${escapeHtml(item.model)}</option>`).join("");
-  select.value = profile?.id || "";
-  select.disabled = state.running || Boolean(state.run);
-  note.textContent = profile
-    ? `${profile.provider} · ${profile.model}。密钥只保留在服务端；本次选择会写入这份 Run。`
+  const profiles = selectedModelProfiles();
+  select.textContent = profiles.length ? `${profiles.length} 位模型 PDC 已加入` : "请选择至少一位模型 PDC";
+  note.textContent = profiles.length
+    ? `${profiles.map((profile) => profile.label).join("、")}。密钥只保留在服务端；开始后委员名单与事实包都会锁定。`
     : "当前没有可用模型。请先完成服务端模型配置。";
 }
 
@@ -143,11 +161,11 @@ function setRunSummary() {
   if (status) status.textContent = state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
   if (count) count.textContent = `${state.completed} / ${steps.length}`;
   if (mode) {
-    const profile = run?.modelProfile || selectedModelProfile();
-    mode.textContent = profile ? `${profile.label} · ${profile.model}` : "未配置模型";
+    const profiles = run?.committeeMode ? run.members : selectedModelProfiles();
+    mode.textContent = profiles?.length ? `${profiles.length} 位模型 PDC · 同一事实包` : "未配置模型";
   }
   if (copy) copy.textContent = state.error
-    ? `已暂停：${state.error} 点击“继续生成”会从已保存的评审继续，不会重复已完成的角色。`
+    ? `已暂停：${state.error} 点击“继续生成”会从已保存的模型 PDC 继续，不会重复已完成的结论。`
     : state.running
     ? `正在执行：${steps.find((step) => step.id === state.activeStep)?.title || "准备任务"}`
     : state.completed === steps.length
@@ -173,7 +191,7 @@ function renderResult() {
     <div class="decision-placeholder-row">
       <strong>#${escapeHtml(row.rank)}</strong>
       <span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span>
-      <small>${escapeHtml(row.consensusScore)} 分 · ${escapeHtml(row.support)}/4 共识</small>
+      <small>${escapeHtml(row.consensusScore)} 分 · ${escapeHtml(row.support)}/${escapeHtml(row.requiredSupport || "—")} 共识门槛</small>
     </div>
   `).join("") : `<div class="stock-empty">没有候选通过当前风险闸门。</div>`;
 }
@@ -272,12 +290,10 @@ async function loadModelProfiles() {
     const result = await api("/models", { headers: { accept: "application/json" } });
     if (Array.isArray(result.models) && result.models.length) {
       state.modelProfiles = result.models;
-      if (!state.modelProfiles.some((profile) => profile.id === state.selectedModelProfileId)) {
-        state.selectedModelProfileId = state.modelProfiles[0].id;
-      }
+      state.selectedModelProfileIds = state.modelProfiles.map((profile) => profile.id);
     }
   } catch {
-    // Keep the default Luna profile visible while the authenticated API is unavailable.
+    // Keep the default PDC profile visible while the authenticated API is unavailable.
   } finally {
     render();
   }
@@ -309,9 +325,9 @@ function completeThrough(stepId) {
 function syncRunProgress() {
   if (!state.run) return;
   state.completed = 1;
-  state.modelStates = Object.fromEntries(models.map((model) => [model.id, "idle"]));
-  state.run.roles?.forEach((role) => {
-    if (role.state === "complete") state.modelStates[role.id] = "complete";
+  state.modelStates = Object.fromEntries((state.run.members || []).map((member) => [member.id, member.state || "idle"]));
+  state.run.members?.forEach((member) => {
+    state.modelStates[member.id] = member.state || "idle";
   });
   if (state.run.roundOneComplete) state.completed = 2;
   if (state.run.pool?.length) state.completed = 3;
@@ -320,15 +336,19 @@ function syncRunProgress() {
 }
 
 async function runReviewers(stage) {
-  for (const model of models) {
-    if (state.modelStates[model.id] === "complete" && stage === "round-one") continue;
+  for (const member of state.run.members || []) {
+    const complete = stage === "round-one"
+      ? member.roundOne?.rankings?.length
+      : member.roundTwo?.rankings?.length;
+    if (complete) continue;
     state.activeStep = stage;
-    state.activeRoleId = model.id;
-    state.modelStates[model.id] = "active";
+    state.activeMemberId = member.id;
+    state.modelStates[member.id] = "active";
     render();
-    state.run = (await api(`/runs/${state.run.id}/${stage}/${model.id}`, { method: "POST", body: "{}" })).run;
-    state.modelStates[model.id] = "complete";
-    state.activeRoleId = "";
+    state.run = (await api(`/runs/${state.run.id}/${stage}/${member.id}`, { method: "POST", body: "{}" })).run;
+    const updated = state.run.members.find((item) => item.id === member.id);
+    state.modelStates[member.id] = updated?.state || "complete";
+    state.activeMemberId = "";
     render();
   }
 }
@@ -339,7 +359,7 @@ async function runDecisionFlow() {
   if (!state.run) {
     state.completed = 0;
     state.activeStep = "snapshot";
-    state.modelStates = Object.fromEntries(models.map((model) => [model.id, "idle"]));
+    state.modelStates = Object.fromEntries(selectedModelProfiles().map((member) => [member.id, "idle"]));
   } else {
     syncRunProgress();
   }
@@ -349,7 +369,7 @@ async function runDecisionFlow() {
       const snapshot = await latestSnapshot();
       state.run = (await api("/runs", {
         method: "POST",
-        body: JSON.stringify({ snapshot, modelProfileId: state.selectedModelProfileId })
+        body: JSON.stringify({ snapshot, modelProfileIds: state.selectedModelProfileIds })
       })).run;
       completeThrough("snapshot");
       render();
@@ -370,7 +390,7 @@ async function runDecisionFlow() {
     }
 
     if (!state.run.roundTwoComplete) {
-      state.modelStates = Object.fromEntries(models.map((model) => [model.id, "idle"]));
+      state.modelStates = Object.fromEntries((state.run.members || []).map((member) => [member.id, member.state || "idle"]));
       await runReviewers("round-two");
       completeThrough("round-two");
       render();
@@ -389,7 +409,7 @@ async function runDecisionFlow() {
     state.error = caught.message || "请稍后重试。";
   } finally {
     state.running = false;
-    state.activeRoleId = "";
+    state.activeMemberId = "";
     render();
   }
 }
@@ -412,12 +432,6 @@ async function publishDecision() {
 
 $("#generateDecision")?.addEventListener("click", () => {
   if (!state.running) runDecisionFlow();
-});
-
-$("#decisionModelSelect")?.addEventListener("change", (event) => {
-  if (state.running || state.run) return;
-  state.selectedModelProfileId = event.currentTarget.value;
-  render();
 });
 
 $("#publishDecision")?.addEventListener("click", publishDecision);

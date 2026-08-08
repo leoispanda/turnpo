@@ -31,15 +31,15 @@
         <div>
           <div class="decision-kicker"><span></span> 多模型研究编排</div>
           <h1 id="decisionTitle">生成今日决策</h1>
-          <p>锁定一份研究快照，让四个 GPT-5.6 Luna 评审角色分别盲评、复核，再经过风险闸门形成最多 10 个研究席位。</p>
-          <label class="decision-model-picker" for="decisionModelSelect">
-            <span>本次决策模型</span>
-            <select id="decisionModelSelect" name="decisionModel"></select>
+          <p>锁定一份研究快照，让每个已加入的模型作为一个完整 PDC 独立盲评、复核，再由共识闸门形成最多 10 个研究席位。</p>
+          <div class="decision-model-picker">
+            <span>本轮独立 PDC</span>
+            <strong id="decisionModelSelect">正在读取模型配置…</strong>
             <small id="decisionModelNote">正在读取可用模型配置…</small>
-          </label>
+          </div>
         </div>
         <div class="decision-command-actions">
-          <span class="decision-demo-badge" id="decisionMode">GPT-5.6 Luna · API 已连接</span>
+          <span class="decision-demo-badge" id="decisionMode">多模型 PDC · API 已连接</span>
           <button class="stock-primary-btn decision-generate-btn" id="generateDecision" type="button">开始生成</button>
         </div>
       </section>
@@ -93,8 +93,8 @@
       <section class="decision-models" aria-labelledby="modelsTitle">
         <div class="stock-section-head">
           <div>
-            <h2 id="modelsTitle">第一轮盲评席</h2>
-            <p>所有评审角色基于同一份冻结事实包，但不会看到其他角色的判断。本次选择会锁定进 Run。</p>
+            <h2 id="modelsTitle">独立 PDC 委员</h2>
+            <p>每个模型是一位完整 PDC 委员，使用同一份事实包完成独立判断。点击已完成的委员即可查看它的结论与 Top 30。</p>
           </div>
           <span class="decision-blind-badge">盲评已启用</span>
         </div>
@@ -110,8 +110,8 @@
           <button class="stock-primary-btn decision-publish-btn" id="publishDecision" type="button" hidden>发布到 PDC</button>
         </div>
         <div class="decision-result-summary">
-          <article><span>候选池</span><strong>30–40</strong><small>来自第一轮合并去重</small></article>
-          <article><span>第二轮复核</span><strong>4 × Top 30</strong><small>不展示其他模型分数</small></article>
+          <article><span>候选池</span><strong>Top 20</strong><small>来自各模型第一轮独立结论</small></article>
+          <article><span>第二轮复核</span><strong>模型 × Top 20</strong><small>各模型重新给出自己的判断</small></article>
           <article><span>通过风控</span><strong>≤ 10</strong><small>风险不足时不会强行补足</small></article>
         </div>
         <div class="decision-placeholder-list" id="resultList"></div>
