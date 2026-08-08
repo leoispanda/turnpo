@@ -13,6 +13,7 @@ const PDC_DIMENSIONS = [
 ];
 
 const steps = [
+  { id: "verify", stage: "prepare", title: "验证旗舰模型可用性", detail: "用本轮的 API Key 与实际 Model ID 做一次极短的真实 JSON 请求。", output: "所有委员已通过验证" },
   { id: "snapshot", stage: "prepare", title: "锁定研究数据快照", detail: "确认收盘状态、候选池版本与生成时间。", output: "事实包已冻结" },
   { id: "round-one", stage: "review", title: "第一轮独立盲评", detail: "五位模型只看同一份事实包，不读取其他模型结论。", output: "首轮结论已收齐" },
   { id: "merge", stage: "review", title: "合并共同复核池", detail: "程序去重并汇总首轮排名，找出值得再次研究的候选。", output: "Top 20 已形成" },
@@ -38,7 +39,8 @@ const state = {
   dataContract: null,
   modelProfiles: [{ id: "gpt-5.6-sol", label: "GPT-5.6 Sol · Pro PDC", provider: "OpenAI", model: "gpt-5.6-sol" }],
   selectedModelProfileIds: ["gpt-5.6-sol"],
-  modelStates: { "gpt-5.6-sol": "idle" }
+  modelStates: { "gpt-5.6-sol": "idle" },
+  verification: {}
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -95,6 +97,15 @@ function renderSteps() {
 
 function stepArtifact(step) {
   const run = state.run;
+  if (step.id === "verify") {
+    const profiles = selectedModelProfiles();
+    const results = profiles.map((profile) => state.verification[profile.id]).filter(Boolean);
+    const passed = results.filter((result) => result.ok).length;
+    const failed = results.find((result) => result.ok === false);
+    if (failed) return `${passed}/${profiles.length} 位委员验证通过；${failed.label || failed.id} 未通过：${failed.error || "请检查型号与额度"}`;
+    if (results.length === profiles.length && passed === profiles.length) return `${passed}/${profiles.length} 位委员已验证：Key、实际型号与 JSON 输出均可用。`;
+    return "开始后先进行一次极短的真实 API 验证；未通过者不能进入本轮。";
+  }
   if (!run) return "开始后，这里会显示这一环节的实际产物。";
   const members = run.members || [];
   const roundOneCount = members.filter((member) => member.roundOne?.rankings?.length).length;
@@ -109,6 +120,10 @@ function stepArtifact(step) {
 
 function modelStatus(member) {
   const status = state.modelStates[member.id] || member.state || "idle";
+  const verification = state.verification[member.id];
+  if (!state.run && verification?.checking) return "正在验证 API 与实际型号";
+  if (!state.run && verification?.ok) return `本轮已验证 · ${verification.latencyMs || 0}ms`;
+  if (!state.run && verification && verification.ok === false) return `验证未通过 · ${verification.error || "请检查配置"}`;
   if (status === "active") return "正在形成完整 PDC 结论";
   if (status === "round_two_complete") return "已完成第二轮结论 · 点击查看";
   if (status === "round_one_complete" || status === "complete") return "已完成第一轮结论 · 点击查看";
@@ -230,11 +245,13 @@ function renderModels() {
   grid.innerHTML = members.map((member) => {
     const review = member.roundTwo || member.roundOne;
     const expanded = state.expandedMemberId === member.id;
+    const verification = state.verification[member.id];
+    const verificationState = verification?.checking ? "checking" : verification?.ok ? "passed" : verification ? "failed" : "idle";
     return `
-    <article class="decision-model-card ${review ? "is-clickable" : ""}" data-state="${escapeHtml(state.modelStates[member.id] || member.state || "idle")}">
+    <article class="decision-model-card ${review ? "is-clickable" : ""}" data-state="${escapeHtml(state.modelStates[member.id] || member.state || "idle")}" data-verification="${verificationState}">
       <span>${escapeHtml(member.provider)} · 完整 PDC</span>
       <h3>${escapeHtml(member.label)}</h3>
-      <p>${escapeHtml(member.model)}<br>独立覆盖趋势、量价、风险、过热与反方证伪。</p>
+      <p>实际型号：${escapeHtml(member.model)}<br>独立覆盖趋势、量价、风险、过热与反方证伪。</p>
       <div class="decision-model-status">${escapeHtml(modelStatus(member))}</div>
       ${!state.run ? `<button class="decision-member-toggle" type="button" data-member-toggle="${escapeHtml(member.id)}">${state.selectedModelProfileIds.includes(member.id) ? "已加入本轮" : "加入本轮"}</button>` : ""}
       ${review ? `<button class="decision-member-open" type="button" data-member-open="${escapeHtml(member.id)}">${expanded ? "收起结论" : "查看结论"}</button>` : ""}
@@ -275,7 +292,7 @@ function renderModelPicker() {
   const profiles = selectedModelProfiles();
   select.textContent = profiles.length ? `${profiles.length} 位模型 PDC 已加入` : "请选择至少一位模型 PDC";
   note.textContent = profiles.length
-    ? `${profiles.map((profile) => profile.label).join("、")}。密钥只保留在服务端；开始后委员名单与事实包都会锁定。`
+    ? `${profiles.map((profile) => profile.label).join("、")}。每次开始会先验证实际型号与 JSON 输出；密钥只保留在服务端。`
     : "当前没有可用模型。请先完成服务端模型配置。";
 }
 
@@ -509,23 +526,47 @@ async function runReviewers(stage) {
   }
 }
 
+async function verifySelectedModels() {
+  const profiles = selectedModelProfiles();
+  state.activeStep = "verify";
+  state.verification = Object.fromEntries(profiles.map((profile) => [profile.id, { checking: true }]));
+  render();
+  const result = await api("/verifications", {
+    method: "POST",
+    body: JSON.stringify({ modelProfileIds: state.selectedModelProfileIds })
+  });
+  const results = Array.isArray(result.verification?.members) ? result.verification.members : [];
+  state.verification = Object.fromEntries(results.map((member) => [member.id, member]));
+  render();
+  const failed = results.find((member) => !member.ok);
+  if (failed) throw new Error(`${failed.label || failed.id} 验证未通过：${failed.error || "请检查 API Key、实际型号或账户额度。"}`);
+  if (results.length !== profiles.length) throw new Error("模型验证结果不完整，请重试。");
+  completeThrough("verify");
+  return result.verification?.id || "";
+}
+
 async function runDecisionFlow() {
   state.running = true;
   state.error = "";
+  let verificationId = "";
   if (!state.run) {
     state.completed = 0;
-    state.activeStep = "snapshot";
+    state.activeStep = "verify";
     state.modelStates = Object.fromEntries(selectedModelProfiles().map((member) => [member.id, "idle"]));
+    state.verification = {};
   } else {
     syncRunProgress();
   }
   render();
   try {
     if (!state.run) {
+      verificationId = await verifySelectedModels();
       const snapshot = await latestSnapshot();
+      state.activeStep = "snapshot";
+      render();
       state.run = (await api("/runs", {
         method: "POST",
-        body: JSON.stringify({ snapshot, modelProfileIds: state.selectedModelProfileIds })
+        body: JSON.stringify({ snapshot, modelProfileIds: state.selectedModelProfileIds, verificationId })
       })).run;
       completeThrough("snapshot");
       render();

@@ -14,6 +14,10 @@ class MemoryKv {
   async put(key, value) {
     this.values.set(key, String(value));
   }
+
+  async delete(key) {
+    this.values.delete(key);
+  }
 }
 
 async function accessCookie(secret) {
@@ -55,6 +59,16 @@ const mockDimensionScores = (index) => ({
 globalThis.fetch = async (_url, options) => {
   const request = JSON.parse(options.body);
   const provider = String(_url).includes("api.anthropic.com") ? "claude" : String(_url).includes("generativelanguage.googleapis.com") ? "gemini" : String(_url).includes("api.deepseek.com") ? "deepseek" : String(_url).includes("api.moonshot.ai") ? "kimi" : "openai";
+  const isVerification = request.input === "Verify readiness now."
+    || request.messages?.some((message) => message.content === "Verify readiness now.")
+    || request.contents?.[0]?.parts?.[0]?.text === "Verify readiness now.";
+  if (isVerification) {
+    const result = JSON.stringify({ status: "ok" });
+    if (provider === "claude") return new Response(JSON.stringify({ content: [{ type: "text", text: result }] }), { status: 200, headers: { "content-type": "application/json" } });
+    if (provider === "gemini") return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: result }] } }] }), { status: 200, headers: { "content-type": "application/json" } });
+    if (provider === "deepseek" || provider === "kimi") return new Response(JSON.stringify({ choices: [{ message: { content: result } }] }), { status: 200, headers: { "content-type": "application/json" } });
+    return new Response(JSON.stringify({ output_text: result }), { status: 200, headers: { "content-type": "application/json" } });
+  }
   const packetInput = provider === "claude"
     ? request.messages?.[0]?.content
     : provider === "gemini"
@@ -123,6 +137,13 @@ try {
     },
     body: body === null ? undefined : JSON.stringify(body)
   });
+  const verifiedRunBody = async (snapshot, modelProfileIds) => {
+    const verificationResponse = await onRequestPost(context(requestFor("/stock-pdc/decision/api/verifications", { modelProfileIds })));
+    assert.equal(verificationResponse.status, 200, "selected PDC models should be verified before a run");
+    const verification = await verificationResponse.json();
+    assert.equal(verification.ok, true, "every selected PDC model should return valid JSON during verification");
+    return { snapshot, modelProfileIds, verificationId: verification.verification.id };
+  };
 
   let response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/models")));
   assert.equal(response.status, 200);
@@ -153,21 +174,25 @@ try {
   assert.equal(payload.models.length, 5, "PDC-suffixed Cloudflare secrets should enable every model member");
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
-    snapshot: {
-      date: "2026-08-07",
-      candidates,
-      provenance: {
-        snapshotId: "pdc-2026-08-07-test",
-        primarySourceId: "stock-pdc-local-frozen-watchlist",
-        primarySourceLabel: "Stock PDC 本地日度数据集",
-        sourceFile: "outputs/daily_watchlists/watchlist_2026-08-07.csv",
-        priceDataRun: "data_a_share_latest_runs/run_20260807",
-        backupPolicy: "Validation only.",
-        featureContract: "Deterministic facts, diversified reasoning."
-      }
-    },
-    modelProfileIds: ["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]
+    snapshot: { date: "2026-08-07", candidates },
+    modelProfileIds: ["gpt-5.6-sol"]
   })));
+  assert.equal(response.status, 409, "a run must consume a fresh verification");
+
+  const initialSnapshot = {
+    date: "2026-08-07",
+    candidates,
+    provenance: {
+      snapshotId: "pdc-2026-08-07-test",
+      primarySourceId: "stock-pdc-local-frozen-watchlist",
+      primarySourceLabel: "Stock PDC 本地日度数据集",
+      sourceFile: "outputs/daily_watchlists/watchlist_2026-08-07.csv",
+      priceDataRun: "data_a_share_latest_runs/run_20260807",
+      backupPolicy: "Validation only.",
+      featureContract: "Deterministic facts, diversified reasoning."
+    }
+  };
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(initialSnapshot, ["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const runId = payload.run.id;
@@ -218,10 +243,7 @@ try {
   assert.equal(payload.days.length, 1);
   assert.equal(payload.days[0].date, "2026-08-07");
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
-    snapshot: { date: "2026-08-08", candidates },
-    modelProfileIds: ["claude_api_pdc"]
-  })));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["claude_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const claudeRunId = payload.run.id;
@@ -232,10 +254,7 @@ try {
   assert.equal(claudeRequest.headers["x-api-key"], "claude-test-key");
   assert.equal(claudeRequest.headers["anthropic-version"], "2023-06-01");
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
-    snapshot: { date: "2026-08-08", candidates },
-    modelProfileIds: ["gemini_api_pdc"]
-  })));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["gemini_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const geminiRunId = payload.run.id;
@@ -245,10 +264,7 @@ try {
   assert.equal(geminiRequest.headers["x-goog-api-key"], "gemini-test-key");
   assert.equal(geminiRequest.request.generationConfig.responseMimeType, "application/json");
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
-    snapshot: { date: "2026-08-08", candidates },
-    modelProfileIds: ["deepseek_api_pdc"]
-  })));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["deepseek_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const deepseekRunId = payload.run.id;
@@ -258,10 +274,7 @@ try {
   assert.equal(deepseekRequest.headers.authorization, "Bearer deepseek-test-key");
   assert.equal(deepseekRequest.request.response_format.type, "json_object");
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
-    snapshot: { date: "2026-08-08", candidates },
-    modelProfileIds: ["kimi_api_pdc"]
-  })));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["kimi_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const kimiRunId = payload.run.id;

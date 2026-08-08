@@ -16,6 +16,7 @@ const MAX_DECISION_BODY_BYTES = 96 * 1024;
 const MAX_CANDIDATES = 30;
 const MAX_RUNS_PER_DAY = 8;
 const RUN_TTL_SECONDS = 180 * 24 * 60 * 60;
+const MODEL_VERIFICATION_TTL_SECONDS = 10 * 60;
 
 const REVIEW_ROLES = [
   { id: "pdc", name: "PDC 综合评审", focus: "综合趋势、量价、现有因子与证据一致性" },
@@ -165,6 +166,10 @@ function decisionCurrentKey() {
 
 function decisionRateKey(date) {
   return `stock-pdc:decision:run-count:${date}`;
+}
+
+function decisionVerificationKey(verificationId) {
+  return `stock-pdc:decision:verification:${verificationId}`;
 }
 
 function extractOutputText(data) {
@@ -604,6 +609,185 @@ async function modelReview(env, modelProfile, role, candidates, phase) {
   throw new Error("Selected model provider is not supported.");
 }
 
+function verificationSchema(name = "stock_pdc_model_verification") {
+  return {
+    type: "json_schema",
+    name,
+    strict: true,
+    schema: {
+      type: "object",
+      additionalProperties: false,
+      properties: {
+        status: { type: "string", enum: ["ok"] }
+      },
+      required: ["status"]
+    }
+  };
+}
+
+function portableVerificationSchema() {
+  return verificationSchema().schema;
+}
+
+function verificationInstructions() {
+  return "This is a Stock PDC readiness check. Return only the required JSON object with status set to ok.";
+}
+
+function verifyStructuredOutput(outputText, provider) {
+  let value;
+  try {
+    value = JSON.parse(outputText);
+  } catch {
+    throw new Error(`${provider} verification did not return valid JSON.`);
+  }
+  if (value?.status !== "ok") throw new Error(`${provider} verification returned an unexpected result.`);
+}
+
+async function verifyOpenAiModel(env, profile) {
+  const apiKey = env.OPENAI_API_KEY;
+  if (!apiKey) throw new Error("Missing OPENAI_API_KEY.");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const response = await fetch(OPENAI_RESPONSES_URL, {
+      method: "POST",
+      headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: profile.model,
+        instructions: verificationInstructions(),
+        input: "Verify readiness now.",
+        text: { format: verificationSchema() },
+        max_output_tokens: 64,
+        reasoning: { effort: "none" }
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error?.message || "OpenAI verification request failed.");
+    verifyStructuredOutput(extractOutputText(data), "OpenAI");
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function verifyClaudeModel(env, profile) {
+  const apiKey = claudeApiKey(env);
+  if (!apiKey) throw new Error("Missing ANTHROPIC_API_KEY or CLAUDE_API_KEY.");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const response = await fetch(ANTHROPIC_MESSAGES_URL, {
+      method: "POST",
+      headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: profile.model,
+        max_tokens: 64,
+        system: verificationInstructions(),
+        messages: [{ role: "user", content: "Verify readiness now." }],
+        output_config: { format: { type: "json_schema", schema: portableVerificationSchema() } }
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error?.message || "Claude verification request failed.");
+    const outputText = data.content?.find((item) => item.type === "text" && typeof item.text === "string")?.text || "";
+    verifyStructuredOutput(outputText, "Claude");
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function verifyGeminiModel(env, profile) {
+  const apiKey = geminiApiKey(env);
+  if (!apiKey) throw new Error("Missing GEMINI_API_KEY or GOOGLE_GEMINI_API_KEY.");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(profile.model)}:generateContent`, {
+      method: "POST",
+      headers: { "x-goog-api-key": apiKey, "content-type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: verificationInstructions() }] },
+        contents: [{ role: "user", parts: [{ text: "Verify readiness now." }] }],
+        generationConfig: { responseMimeType: "application/json", responseSchema: portableVerificationSchema(), maxOutputTokens: 64 }
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error?.message || "Gemini verification request failed.");
+    const outputText = data.candidates?.flatMap((candidate) => candidate.content?.parts || [])
+      ?.find((part) => typeof part.text === "string")?.text || "";
+    verifyStructuredOutput(outputText, "Gemini");
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function verifyDeepSeekModel(env, profile) {
+  const apiKey = deepseekApiKey(env);
+  if (!apiKey) throw new Error("Missing DEEPSEEK_API_KEY or DEEPSEEK_PDC_API_KEY.");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const response = await fetch(DEEPSEEK_CHAT_URL, {
+      method: "POST",
+      headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: profile.model,
+        messages: [
+          { role: "system", content: verificationInstructions() },
+          { role: "user", content: "Verify readiness now." }
+        ],
+        response_format: { type: "json_object" },
+        max_tokens: 64
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error?.message || "DeepSeek verification request failed.");
+    verifyStructuredOutput(data.choices?.[0]?.message?.content || "", "DeepSeek");
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function verifyKimiModel(env, profile) {
+  const apiKey = kimiApiKey(env);
+  if (!apiKey) throw new Error("Missing KIMI_API_KEY, MOONSHOT_API_KEY, or KIMI_PDC_API_KEY.");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const response = await fetch(kimiChatUrl(env), {
+      method: "POST",
+      headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: profile.model,
+        messages: [
+          { role: "system", content: verificationInstructions() },
+          { role: "user", content: "Verify readiness now." }
+        ],
+        response_format: { type: "json_object" },
+        max_completion_tokens: 64
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error?.message || "Kimi verification request failed.");
+    verifyStructuredOutput(data.choices?.[0]?.message?.content || "", "Kimi");
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function verifyModel(env, profile) {
+  if (profile.provider === "OpenAI") return verifyOpenAiModel(env, profile);
+  if (profile.provider === "Anthropic") return verifyClaudeModel(env, profile);
+  if (profile.provider === "Google") return verifyGeminiModel(env, profile);
+  if (profile.provider === "DeepSeek") return verifyDeepSeekModel(env, profile);
+  if (profile.provider === "Moonshot") return verifyKimiModel(env, profile);
+  throw new Error("Selected model provider is not supported.");
+}
+
 function consensusFromReviews(reviews, candidates) {
   const rows = new Map(candidates.map((candidate) => [candidate.ticker, {
     ticker: candidate.ticker,
@@ -801,18 +985,82 @@ async function loadRun(store, runId) {
   return run && typeof run === "object" ? run : null;
 }
 
+function verificationResult(profile, startedAt, caught = null) {
+  return {
+    id: profile.id,
+    label: profile.label,
+    provider: profile.provider,
+    model: profile.model,
+    ok: !caught,
+    checkedAt: new Date().toISOString(),
+    latencyMs: Date.now() - startedAt,
+    error: caught ? cleanText(caught?.message || "Model verification failed.", 240) : ""
+  };
+}
+
+function requestedModelProfiles(body, env) {
+  const requestedIds = Array.isArray(body.modelProfileIds)
+    ? body.modelProfileIds.map((id) => cleanText(id, 64)).filter(Boolean)
+    : body.modelProfileId ? [cleanText(body.modelProfileId, 64)] : configuredModelProfiles(env).map((profile) => profile.id);
+  const availableProfiles = configuredModelProfiles(env);
+  return {
+    requestedIds: [...new Set(requestedIds)],
+    modelProfiles: availableProfiles.filter((profile) => requestedIds.includes(profile.id))
+  };
+}
+
+async function createModelVerification(request, env) {
+  const store = decisionStore(env);
+  if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
+  const body = await readJson(request);
+  const { requestedIds, modelProfiles } = requestedModelProfiles(body, env);
+  if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("Every selected PDC model must be configured before verification.");
+  const results = await Promise.all(modelProfiles.map(async (profile) => {
+    const startedAt = Date.now();
+    try {
+      await verifyModel(env, profile);
+      return verificationResult(profile, startedAt);
+    } catch (caught) {
+      return verificationResult(profile, startedAt, caught);
+    }
+  }));
+  const verification = {
+    id: crypto.randomUUID(),
+    createdAt: new Date().toISOString(),
+    modelProfileIds: modelProfiles.map((profile) => profile.id),
+    members: results
+  };
+  await store.put(decisionVerificationKey(verification.id), JSON.stringify(verification), { expirationTtl: MODEL_VERIFICATION_TTL_SECONDS });
+  return json({ ok: results.every((result) => result.ok), verification });
+}
+
+async function consumeModelVerification(store, verificationId, modelProfiles) {
+  const id = cleanText(verificationId, 80);
+  if (!/^[a-f0-9-]{36}$/i.test(id)) return "Run a fresh model verification before generating this PDC decision.";
+  const verification = await store.get(decisionVerificationKey(id), "json");
+  if (!verification || typeof verification !== "object") return "The model verification has expired. Please verify the selected PDC models again.";
+  const requested = modelProfiles.map((profile) => `${profile.id}:${profile.model}`).sort();
+  const verified = (Array.isArray(verification.members) ? verification.members : [])
+    .filter((member) => member?.ok)
+    .map((member) => `${member.id}:${member.model}`)
+    .sort();
+  if (requested.length !== verified.length || requested.some((member, index) => member !== verified[index])) {
+    return "Every selected PDC model must pass a fresh verification before generation.";
+  }
+  await store.delete(decisionVerificationKey(id));
+  return "";
+}
+
 async function createRun(request, env) {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
   const body = await readJson(request);
   const snapshot = normalizeSnapshot(body.snapshot);
   if (!snapshot) return error("A valid daily PDC snapshot with at least five candidates is required.");
-  const requestedIds = Array.isArray(body.modelProfileIds)
-    ? body.modelProfileIds.map((id) => cleanText(id, 64)).filter(Boolean)
-    : body.modelProfileId ? [cleanText(body.modelProfileId, 64)] : configuredModelProfiles(env).map((profile) => profile.id);
-  const availableProfiles = configuredModelProfiles(env);
-  const modelProfiles = availableProfiles.filter((profile) => requestedIds.includes(profile.id));
-  if (!modelProfiles.length) return error("No selected PDC model is configured on this deployment.");
+  const { requestedIds, modelProfiles } = requestedModelProfiles(body, env);
+  if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("No selected PDC model is configured on this deployment.");
+  const verificationError = await consumeModelVerification(store, body.verificationId, modelProfiles);
+  if (verificationError) return error(verificationError, 409);
   const currentCount = Number(await store.get(decisionRateKey(snapshot.date)) || "0");
   if (currentCount >= MAX_RUNS_PER_DAY) return error("Daily decision-run limit reached. Review an existing run instead.", 429);
   await store.put(decisionRateKey(snapshot.date), String(currentCount + 1), { expirationTtl: 24 * 60 * 60 });
@@ -984,6 +1232,7 @@ async function decisionApi(context) {
     return error("Unknown decision resource.", 404);
   }
   if (request.method !== "POST") return error("Method not allowed.", 405);
+  if (suffix === "verifications") return createModelVerification(request, env);
   if (suffix === "runs") return createRun(request, env);
   const stageMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/(round-one|merge|round-two|risk-check)(?:\/([a-z0-9_.-]+))?$/i);
   if (stageMatch) return advanceRun(env, stageMatch[1], stageMatch[2], stageMatch[3] || "");

@@ -518,6 +518,29 @@
   color: #168244;
 }
 
+.decision-model-card[data-verification="checking"] {
+  border-color: rgba(34, 87, 122, 0.42);
+  background: rgba(232, 243, 249, 0.88);
+}
+
+.decision-model-card[data-verification="passed"] {
+  border-color: rgba(22, 130, 68, 0.3);
+  background: rgba(241, 249, 244, 0.9);
+}
+
+.decision-model-card[data-verification="passed"] .decision-model-status {
+  color: #168244;
+}
+
+.decision-model-card[data-verification="failed"] {
+  border-color: rgba(180, 35, 24, 0.28);
+  background: rgba(255, 244, 242, 0.9);
+}
+
+.decision-model-card[data-verification="failed"] .decision-model-status {
+  color: #b42318;
+}
+
 .decision-member-toggle,
 .decision-member-open,
 .decision-member-copy {
