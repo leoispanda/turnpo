@@ -39,7 +39,7 @@ function stockModel(env) {
 }
 
 function claudeApiKey(env) {
-  return String(env.ANTHROPIC_API_KEY || env.CLAUDE_API_KEY || env.CLAUDE_API_PDC || env.CLAUDE_PDC_API_KEY || env.claude_api_pdc || "").trim();
+  return String(env.ANTHROPIC_API_KEY || env.CLAUDE_API_KEY || env.CLAUDE_API_PDC || env.CLAUDE_PDC_API_KEY || env.CLAUDE_API_KEY_PDC || env.claude_api_pdc || env["claude api pdc"] || "").trim();
 }
 
 function claudeStockModel(env) {
@@ -404,7 +404,7 @@ async function claudeReview(env, modelProfile, role, candidates, phase) {
 }
 
 function geminiApiKey(env) {
-  return String(env.GEMINI_API_KEY || env.GOOGLE_GEMINI_API_KEY || env.GEMINI_API_PDC || env.GEMINI_PDC_API_KEY || env.gemini_api_pdc || "").trim();
+  return String(env.GEMINI_API_KEY || env.GOOGLE_GEMINI_API_KEY || env.GEMINI_API_PDC || env.GEMINI_PDC_API_KEY || env.GEMINI_API_KEY_PDC || env.gemini_api_pdc || env["gemini api key pdc"] || env["Gemini API Key pdc"] || "").trim();
 }
 
 function geminiStockModel(env) {
@@ -412,7 +412,7 @@ function geminiStockModel(env) {
 }
 
 function deepseekApiKey(env) {
-  return String(env.DEEPSEEK_API_KEY || env.DEEPSEEK_PDC_API_KEY || env.DEEPSEEK_API_PDC || env.DEEPSEEK_PDC || env.deepseek_api_pdc || "").trim();
+  return String(env.DEEPSEEK_API_KEY || env.DEEPSEEK_PDC_API_KEY || env.DEEPSEEK_API_PDC || env.DEEPSEEK_API_KEY_PDC || env.DEEPSEEK_PDC || env.deepseek_api_pdc || env["deepseek api pdc"] || "").trim();
 }
 
 function deepseekStockModel(env) {
@@ -420,7 +420,7 @@ function deepseekStockModel(env) {
 }
 
 function kimiApiKey(env) {
-  return String(env.KIMI_API_KEY || env.MOONSHOT_API_KEY || env.KIMI_PDC_API_KEY || env.KIMI_API_PDC || env.KIMI_PDC || env.kimi_pdc || "").trim();
+  return String(env.KIMI_API_KEY || env.MOONSHOT_API_KEY || env.KIMI_PDC_API_KEY || env.KIMI_API_PDC || env.KIMI_API_KEY_PDC || env.KIMI_PDC || env.kimi_pdc || env["kimi pdc"] || "").trim();
 }
 
 function kimiStockModel(env) {

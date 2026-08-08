@@ -127,9 +127,9 @@ try {
     DEEPSEEK_API_KEY: "",
     KIMI_API_KEY: "",
     CLAUDE_API_PDC: "claude-pdc-key",
-    GEMINI_API_PDC: "gemini-pdc-key",
-    DEEPSEEK_API_PDC: "deepseek-pdc-key",
-    KIMI_PDC: "kimi-pdc-key"
+    "Gemini API Key pdc": "gemini-pdc-key",
+    "deepseek api pdc": "deepseek-pdc-key",
+    "kimi pdc": "kimi-pdc-key"
   };
   const pdcNamedContext = (request) => ({ request, env: pdcNamedEnv, next: async () => new Response("next") });
   response = await onRequestGet(pdcNamedContext(requestFor("/stock-pdc/decision/api/models")));
