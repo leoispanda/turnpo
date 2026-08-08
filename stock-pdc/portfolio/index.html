@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>每日组合决策 | 股票大作手 | Turnpo</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href="https://www.turnpo.com/stock-pdc/portfolio/" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.223" />
+    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css" />
+    <link rel="stylesheet" href="/stock-pdc/decision/decision.css" />
+    <link rel="stylesheet" href="/stock-pdc/portfolio/portfolio.css" />
+  </head>
+  <body>
+    <header class="topbar stock-decision-topbar">
+      <a class="brand" href="/" aria-label="Turnpo home"><span class="brand-mark" aria-hidden="true"></span><span>Turnpo</span></a>
+      <p>股票大作手 / 每日组合决策</p>
+      <div class="top-actions"><a class="ghost-btn" href="/stock-pdc/">查看 Top 20</a><a class="ghost-btn" href="/stock-pdc/decision/">生成 PDC</a></div>
+    </header>
+    <main class="stock-shell stock-decision-shell portfolio-shell">
+      <section class="decision-command">
+        <div><div class="decision-kicker"><span></span> Daily Trading Decision &amp; Portfolio Engine</div><h1>今天该买、持有，还是卖？</h1><p>盘前基于冻结 PDC 事实包生成关注名单；午盘以 11:30 最新可用价格复核。系统只给研究动作，不连接券商、不自动下单。</p></div>
+        <div class="decision-command-actions"><span class="decision-demo-badge" id="portfolioStage">等待盘前决策</span><button class="stock-primary-btn decision-generate-btn" id="generatePremarket" type="button">生成盘前决策</button></div>
+      </section>
+      <section class="portfolio-reference" aria-label="决策参考价格"><strong id="referencePrice">盘前：前一交易日收盘价</strong><small id="portfolioMeta">先生成盘前决策，再在午盘确认。</small></section>
+      <section class="portfolio-board" aria-label="今日组合行动">
+        <article data-action="buy"><header><span>BUY TODAY</span><strong id="buyCount">0</strong></header><p>午盘确认后的新资金进入机会。</p><div id="buyList"></div></article>
+        <article data-action="hold"><header><span>HOLD</span><strong id="holdCount">0</strong></header><p>已有持仓仍值得占用 Portfolio Slot。</p><div id="holdList"></div></article>
+        <article data-action="sell"><header><span>SELL TODAY</span><strong id="sellCount">0</strong></header><p>明确 Trigger 触发的退出或替换。</p><div id="sellList"></div></article>
+      </section>
+      <section class="portfolio-section" aria-labelledby="noonTitle">
+        <div class="stock-section-head"><div><span class="decision-section-index">午盘复核</span><h2 id="noonTitle">11:30 冻结快照后，再决定下午是否执行</h2><p>只复核盘前 Top 20 与当前持仓。所有午盘判断以你填入的最新参考价为基准，而非昨天收盘价。</p></div><button class="stock-primary-btn" id="runNoonRecheck" type="button" disabled>午盘重新确认</button></div>
+        <div class="portfolio-noon-note">每行填写 11:30 最新价；其余短周期字段可按午盘事实更新。冲高回落、突破失效或已明显追高会取消 BUY。</div>
+        <div class="portfolio-noon-grid" id="noonRows"><p class="stock-empty">先生成盘前决策，系统会列出需要复核的股票。</p></div>
+      </section>
+      <section class="portfolio-section portfolio-ledger" aria-labelledby="ledgerTitle">
+        <div class="stock-section-head"><div><span class="decision-section-index">实际成交账本</span><h2 id="ledgerTitle">记录真实成交，P&amp;L 才会真实</h2><p>实际成交价与成交时间只由你手动确认保存；Hard Stop、持有天数、冷却期均以这里的数据计算。</p></div></div>
+        <div class="portfolio-ledger-forms">
+          <form id="entryForm"><strong>记录实际买入</strong><input name="ticker" placeholder="Ticker，例如 600519.SH" required /><input name="name" placeholder="名称" /><input name="actualEntryPrice" type="number" min="0.001" step="0.001" placeholder="实际买入价" required /><input name="quantity" type="number" min="0" step="1" placeholder="数量（可选）" /><input name="actualEntryDate" type="date" required /><button class="stock-primary-btn" type="submit">保存买入</button></form>
+          <form id="exitForm"><strong>记录实际卖出</strong><select name="ticker" id="exitTicker" required><option value="">选择持仓</option></select><input name="actualExitPrice" type="number" min="0.001" step="0.001" placeholder="实际卖出价" required /><input name="actualExitDate" type="date" required /><input name="exitReason" placeholder="退出原因，例如 HARD_STOP" /><button class="stock-primary-btn" type="submit">保存卖出</button></form>
+        </div>
+        <div class="portfolio-holdings" id="holdingList"></div>
+      </section>
+      <section class="portfolio-section portfolio-config" aria-labelledby="configTitle"><div class="stock-section-head"><div><span class="decision-section-index">可配置保护规则</span><h2 id="configTitle">组合阈值</h2><p>这些阈值独立于九维 PDC 评分，可按你的交易纪律调整。</p></div><button class="decision-copy-btn" id="saveConfig" type="button">保存阈值</button></div><div id="configGrid" class="portfolio-config-grid"></div></section>
+      <p class="decision-research-note">研究工具，不构成交易指令。BUY / HOLD / SELL 是可审阅的资本配置建议；实际成交与风险责任由你确认。</p>
+    </main>
+    <script src="/stock-pdc/portfolio/portfolio.js"></script>
+  </body>
+</html>

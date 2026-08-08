@@ -294,6 +294,29 @@ try {
   assert.equal(payload.days.length, 1);
   assert.equal(payload.days[0].date, "2026-08-07");
 
+  response = await onRequestPost(context(requestFor("/stock-pdc/portfolio/api/holdings/entry", {
+    ticker: "000001.SZ", name: "候选 1", actualEntryPrice: 10, actualEntryDate: "2026-08-06", quantity: 100
+  })));
+  assert.equal(response.status, 200, "manual actual entry should create a portfolio holding");
+  response = await onRequestPost(context(requestFor("/stock-pdc/portfolio/api/pre-market", {})));
+  assert.equal(response.status, 200, "a published PDC run should generate the pre-market portfolio decision");
+  let portfolioPayload = await response.json();
+  assert.equal(portfolioPayload.dashboard.stage, "PRE_MARKET");
+  assert.equal(portfolioPayload.dashboard.referencePrice, "PREVIOUS_CLOSE");
+  assert.ok(portfolioPayload.dashboard.candidates.length <= 20);
+  const noonRows = portfolioPayload.dashboard.candidates.map((row) => ({
+    ticker: row.ticker, referencePrice: 10.2, dayChangePct: 2, entryTiming: 8, overheatSafety: 7, downsideSafety: 7,
+    relativeStrength: 8, trendAcceleration: 8, breakoutConfirmation: 8, volumeConfirmation: 8, breakoutValid: true, pullback: false
+  }));
+  response = await onRequestPost(context(requestFor("/stock-pdc/portfolio/api/noon-recheck", {
+    date: "2026-08-07", noonSnapshot: { rows: noonRows }
+  })));
+  assert.equal(response.status, 200, "noon recheck should freeze a new 11:30 reference-price snapshot");
+  portfolioPayload = await response.json();
+  assert.equal(portfolioPayload.dashboard.stage, "NOON_RECHECK");
+  assert.equal(portfolioPayload.dashboard.referencePrice, "11:30_LATEST_AVAILABLE_PRICE");
+  assert.ok(portfolioPayload.dashboard.noonSnapshot.rows.every((row) => row.referencePrice === 10.2));
+
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["claude_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();

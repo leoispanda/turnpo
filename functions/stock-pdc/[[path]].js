@@ -4,6 +4,7 @@ const COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
 const PAGE_PATH = "/stock-pdc";
 const DECISION_PATH = `${PAGE_PATH}/decision`;
 const DEMO_DECISION_PATH = `${PAGE_PATH}/decision-demo`;
+const PORTFOLIO_PATH = `${PAGE_PATH}/portfolio`;
 const OFFICIAL_DECISION_MODE = "official";
 const DEMO_DECISION_MODE = "demo";
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
@@ -26,6 +27,35 @@ const MAX_CANDIDATES = 30;
 const MAX_RUNS_PER_DAY = 8;
 const RUN_TTL_SECONDS = 180 * 24 * 60 * 60;
 const MODEL_VERIFICATION_TTL_SECONDS = 10 * 60;
+const PORTFOLIO_DEFAULT_CONFIG = Object.freeze({
+  maxPositions: 15,
+  premarketRankLimit: 20,
+  coreHoldRank: 15,
+  rankExitThreshold: 20,
+  rankExitDays: 2,
+  buyMinVotes: 3,
+  holdMinVotes: 2,
+  buyMinForwardUpside: 65,
+  buyMinProbability5dUp: 55,
+  buyMinExpected5dReturn: 2,
+  buyMinEntryTiming: 7,
+  buyMinRelativeStrength: 6,
+  buyMinTrendAcceleration: 6,
+  buyMinBreakoutConfirmation: 6,
+  buyMinVolumeConfirmation: 6,
+  buyMinOverheatSafety: 6,
+  buyMinDownsideSafety: 5,
+  noonMaxChasePct: 5,
+  hardStopPct: -5,
+  timeWarningDays: 3,
+  timeStopDays: 5,
+  timeStopTargetPct: 2,
+  cooldownTradingDays: 3,
+  reentryMaxRank: 5,
+  reentryMinVotes: 4,
+  reentryMinEntryTiming: 8,
+  replacementMargin: 12
+});
 
 const REVIEW_ROLES = [
   { id: "pdc", name: "PDC 综合评审", focus: "综合趋势、量价、现有因子与证据一致性" },
@@ -1385,6 +1415,319 @@ async function publishRun(env, runId, mode = OFFICIAL_DECISION_MODE) {
   return json({ ok: true, run: publicRun(run), current: day });
 }
 
+function portfolioKey(name) {
+  return `stock-pdc:portfolio:${name}`;
+}
+
+function tradingDaysBetween(startDate, endDate) {
+  const start = new Date(`${validDate(startDate)}T00:00:00Z`);
+  const end = new Date(`${validDate(endDate)}T00:00:00Z`);
+  if (Number.isNaN(start) || Number.isNaN(end) || end < start) return 0;
+  let days = 0;
+  for (let cursor = new Date(start); cursor <= end; cursor.setUTCDate(cursor.getUTCDate() + 1)) {
+    const weekday = cursor.getUTCDay();
+    if (weekday !== 0 && weekday !== 6) days += 1;
+  }
+  return Math.max(0, days - 1);
+}
+
+function safePortfolioConfig(value) {
+  const source = value && typeof value === "object" ? value : {};
+  const config = { ...PORTFOLIO_DEFAULT_CONFIG };
+  Object.keys(PORTFOLIO_DEFAULT_CONFIG).forEach((key) => {
+    const number = finiteNumber(source[key], null);
+    if (number !== null && number >= 0 && number <= 10000) config[key] = number;
+  });
+  config.maxPositions = Math.max(1, Math.min(50, Math.round(config.maxPositions)));
+  config.premarketRankLimit = Math.max(1, Math.min(30, Math.round(config.premarketRankLimit)));
+  config.rankExitDays = Math.max(1, Math.min(10, Math.round(config.rankExitDays)));
+  config.buyMinVotes = Math.max(1, Math.min(5, Math.round(config.buyMinVotes)));
+  config.holdMinVotes = Math.max(0, Math.min(5, Math.round(config.holdMinVotes)));
+  return config;
+}
+
+async function portfolioConfig(store) {
+  return safePortfolioConfig(await store.get(portfolioKey("config"), "json"));
+}
+
+async function portfolioLedger(store) {
+  const ledger = await store.get(portfolioKey("ledger"), "json");
+  return ledger && typeof ledger === "object" ? {
+    holdings: Array.isArray(ledger.holdings) ? ledger.holdings : [],
+    closed: Array.isArray(ledger.closed) ? ledger.closed : []
+  } : { holdings: [], closed: [] };
+}
+
+async function savePortfolioLedger(store, ledger) {
+  await store.put(portfolioKey("ledger"), JSON.stringify(ledger));
+  return ledger;
+}
+
+function portfolioDimension(row, id) {
+  return finiteNumber(row?.dimensionConsensus?.[id]?.median, 0) || 0;
+}
+
+function hasSafetyFlag(row) {
+  return Boolean(row?.backgroundChecks?.financialDistressFlag || row?.backgroundChecks?.stDelistingRisk || row?.backgroundChecks?.fundamentalRedFlag);
+}
+
+function portfolioScore(row) {
+  const forward = finiteNumber(row?.forwardPrediction?.forwardUpsideScore, 0) || 0;
+  const probability = finiteNumber(row?.forwardPrediction?.prob5dUpGt2Pct, 0) || 0;
+  const consensus = finiteNumber(row?.consensusScore, 0) || 0;
+  return Number((forward + probability * 0.35 + consensus * 2).toFixed(2));
+}
+
+function buyGate(row, config) {
+  const forward = row?.forwardPrediction || {};
+  const checks = [
+    ["PDC_CONSENSUS", (row?.buyVotes || 0) >= config.buyMinVotes],
+    ["FORWARD_UPSIDE", (forward.forwardUpsideScore || 0) >= config.buyMinForwardUpside && (forward.prob5dUpGt2Pct || 0) >= config.buyMinProbability5dUp && (forward.expected5dReturnPct || 0) >= config.buyMinExpected5dReturn],
+    ["ENTRY_TIMING", portfolioDimension(row, "entryTiming") >= config.buyMinEntryTiming],
+    ["RELATIVE_STRENGTH", portfolioDimension(row, "relativeStrength") >= config.buyMinRelativeStrength],
+    ["TREND_ACCELERATION", portfolioDimension(row, "trendAcceleration") >= config.buyMinTrendAcceleration],
+    ["BREAKOUT_VOLUME", portfolioDimension(row, "breakoutConfirmation") >= config.buyMinBreakoutConfirmation && portfolioDimension(row, "volumeFlowConfirmation") >= config.buyMinVolumeConfirmation],
+    ["OVERHEAT_GATE", portfolioDimension(row, "overheatReversalRisk") >= config.buyMinOverheatSafety],
+    ["DOWNSIDE_GATE", portfolioDimension(row, "downsideFailureRisk") >= config.buyMinDownsideSafety],
+    ["BACKGROUND_SAFETY", !hasSafetyFlag(row)]
+  ];
+  return { pass: checks.every(([, pass]) => pass), failed: checks.filter(([, pass]) => !pass).map(([name]) => name) };
+}
+
+function candidateRowsFromRun(run, limit) {
+  const reviews = Object.keys(committeeReviewMap(run, "round-two")).length
+    ? committeeReviewMap(run, "round-two")
+    : committeeReviewMap(run, "round-one");
+  const candidates = run.pool?.length ? run.pool : run.snapshot?.candidates || [];
+  return consensusFromReviews(reviews, candidates).slice(0, limit).map((row, index) => ({
+    ...row,
+    rank: index + 1,
+    forwardPrediction: row.forwardPredictionConsensus,
+    coreEvidence: row.theses?.[0]?.text || "PDC consensus evidence available.",
+    coreRisk: row.risks?.[0]?.text || "Review full PDC evidence before execution."
+  }));
+}
+
+function publicPortfolioRow(row) {
+  return {
+    ticker: cleanText(row?.ticker, 24),
+    name: cleanText(row?.name, 80),
+    rank: finiteNumber(row?.rank, null),
+    previousRank: finiteNumber(row?.previousRank, null),
+    action: cleanText(row?.action, 40),
+    recheckAction: cleanText(row?.recheckAction, 40),
+    trigger: cleanText(row?.trigger, 120),
+    evidence: cleanText(row?.evidence, 500),
+    reason: cleanText(row?.reason, 300),
+    referencePrice: finiteNumber(row?.referencePrice, null),
+    currentReturnPct: finiteNumber(row?.currentReturnPct, null),
+    daysHeld: finiteNumber(row?.daysHeld, null),
+    forwardUpsideScore: finiteNumber(row?.forwardPrediction?.forwardUpsideScore, null),
+    probability5dUp: finiteNumber(row?.forwardPrediction?.prob5dUpGt2Pct, null),
+    expected5dReturnPct: finiteNumber(row?.forwardPrediction?.expected5dReturnPct, null),
+    consensus: finiteNumber(row?.buyVotes, null),
+    entryTiming: portfolioDimension(row, "entryTiming"),
+    relativeStrength: portfolioDimension(row, "relativeStrength"),
+    trendAcceleration: portfolioDimension(row, "trendAcceleration"),
+    breakoutConfirmation: portfolioDimension(row, "breakoutConfirmation"),
+    volumeConfirmation: portfolioDimension(row, "volumeFlowConfirmation"),
+    overheatSafety: portfolioDimension(row, "overheatReversalRisk"),
+    downsideSafety: portfolioDimension(row, "downsideFailureRisk"),
+    replacementCandidate: row?.replacementCandidate ? {
+      ticker: cleanText(row.replacementCandidate.ticker, 24),
+      name: cleanText(row.replacementCandidate.name, 80),
+      rank: finiteNumber(row.replacementCandidate.rank, null)
+    } : null
+  };
+}
+
+function positionEvaluation(holding, row, date, config, referencePrice = null, updateRank = false) {
+  const rank = row?.rank || 99;
+  const priorRank = finiteNumber(holding.lastRank, null);
+  const price = finiteNumber(referencePrice, null);
+  const entryPrice = finiteNumber(holding.actualEntryPrice, null);
+  const currentReturnPct = price && entryPrice ? Number((((price - entryPrice) / entryPrice) * 100).toFixed(2)) : null;
+  const daysHeld = tradingDaysBetween(holding.actualEntryDate, date);
+  const thesisFailure = !row || (row.buyVotes || 0) < config.holdMinVotes || portfolioDimension(row, "trendAcceleration") < Math.max(3, config.buyMinTrendAcceleration - 2) || portfolioDimension(row, "breakoutConfirmation") < Math.max(3, config.buyMinBreakoutConfirmation - 2) || hasSafetyFlag(row);
+  const rankExitDays = updateRank && holding.lastRankDate !== date
+    ? rank > config.rankExitThreshold ? (finiteNumber(holding.rankExitDays, 0) || 0) + 1 : 0
+    : finiteNumber(holding.rankExitDays, 0) || 0;
+  if (updateRank && holding.lastRankDate !== date) {
+    holding.lastRank = rank;
+    holding.lastRankDate = date;
+    holding.rankExitDays = rankExitDays;
+  }
+  let trigger = "HOLD_CONDITIONS_PASSED";
+  let action = "HOLD";
+  if (currentReturnPct !== null && currentReturnPct <= config.hardStopPct) { trigger = "HARD_STOP"; action = "SELL"; }
+  else if (thesisFailure) { trigger = "THESIS_FAILURE"; action = "SELL"; }
+  else if (rank > config.rankExitThreshold && ((row?.buyVotes || 0) < config.holdMinVotes || rankExitDays >= config.rankExitDays)) { trigger = "PDC_RANK_EXIT"; action = "SELL"; }
+  else if (daysHeld >= config.timeStopDays && currentReturnPct !== null && currentReturnPct < config.timeStopTargetPct) { trigger = "TIME_STOP"; action = "SELL"; }
+  else if (daysHeld >= config.timeWarningDays && currentReturnPct !== null && currentReturnPct < config.timeStopTargetPct) trigger = "TIME_WARNING";
+  return {
+    ...row,
+    ticker: holding.ticker,
+    name: holding.name || row?.name || holding.ticker,
+    rank,
+    previousRank: priorRank,
+    action,
+    trigger,
+    referencePrice: price,
+    currentReturnPct,
+    daysHeld,
+    evidence: row ? `Rank #${rank} · ${row.buyVotes || 0}/5 PDC BUY · Trend ${portfolioDimension(row, "trendAcceleration")}/10 · Entry ${portfolioDimension(row, "entryTiming")}/10.` : "Not present in today's PDC eligible universe.",
+    reason: trigger === "HOLD_CONDITIONS_PASSED" ? "Trend and PDC hold criteria remain intact; no exit trigger." : trigger
+  };
+}
+
+function normalizeNoonRows(value) {
+  const rows = Array.isArray(value?.rows) ? value.rows : [];
+  const result = new Map();
+  rows.forEach((row) => {
+    const ticker = cleanText(row?.ticker, 24).toUpperCase();
+    const referencePrice = finiteNumber(row?.referencePrice, null);
+    if (!ticker || !referencePrice || referencePrice <= 0) return;
+    result.set(ticker, {
+      referencePrice,
+      dayChangePct: finiteNumber(row?.dayChangePct, 0) || 0,
+      entryTiming: finiteNumber(row?.entryTiming, null),
+      overheatSafety: finiteNumber(row?.overheatSafety, null),
+      downsideSafety: finiteNumber(row?.downsideSafety, null),
+      relativeStrength: finiteNumber(row?.relativeStrength, null),
+      trendAcceleration: finiteNumber(row?.trendAcceleration, null),
+      breakoutConfirmation: finiteNumber(row?.breakoutConfirmation, null),
+      volumeConfirmation: finiteNumber(row?.volumeConfirmation, null),
+      breakoutValid: row?.breakoutValid !== false,
+      pullback: Boolean(row?.pullback),
+      volumeExpansion: Boolean(row?.volumeExpansion)
+    });
+  });
+  return result;
+}
+
+function applyNoonRow(row, noon) {
+  if (!noon) return row;
+  const dimensions = { ...row.dimensionConsensus };
+  const mapping = [
+    ["entryTiming", noon.entryTiming], ["overheatReversalRisk", noon.overheatSafety], ["downsideFailureRisk", noon.downsideSafety],
+    ["relativeStrength", noon.relativeStrength], ["trendAcceleration", noon.trendAcceleration], ["breakoutConfirmation", noon.breakoutConfirmation], ["volumeFlowConfirmation", noon.volumeConfirmation]
+  ];
+  mapping.forEach(([id, value]) => { if (value !== null) dimensions[id] = { ...(dimensions[id] || {}), median: value }; });
+  return { ...row, dimensionConsensus: dimensions, referencePrice: noon.referencePrice };
+}
+
+function reentryAllowed(holding, row, date, config) {
+  if (!holding?.cooldownUntil || validDate(holding.cooldownUntil) < date) return true;
+  return row.rank <= config.reentryMaxRank && (row.buyVotes || 0) >= config.reentryMinVotes && portfolioDimension(row, "entryTiming") >= config.reentryMinEntryTiming && buyGate(row, config).pass;
+}
+
+async function portfolioApi(context) {
+  const { request, env } = context;
+  const store = decisionStore(env);
+  if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
+  const url = new URL(request.url);
+  const suffix = url.pathname.slice(`${PORTFOLIO_PATH}/api`.length).replace(/^\/+/, "");
+  if (request.method === "GET") {
+    if (suffix === "dashboard") return json({ ok: true, dashboard: await store.get(portfolioKey("current"), "json"), ledger: await portfolioLedger(store), config: await portfolioConfig(store) });
+    if (suffix === "config") return json({ ok: true, config: await portfolioConfig(store) });
+    return error("Unknown portfolio resource.", 404);
+  }
+  if (request.method !== "POST") return error("Method not allowed.", 405);
+  const body = await readJson(request);
+  if (suffix === "config") {
+    const config = safePortfolioConfig(body.config);
+    await store.put(portfolioKey("config"), JSON.stringify(config));
+    return json({ ok: true, config });
+  }
+  const ledger = await portfolioLedger(store);
+  if (suffix === "holdings/entry") {
+    const ticker = cleanText(body.ticker, 24).toUpperCase();
+    const actualEntryPrice = finiteNumber(body.actualEntryPrice, null);
+    const actualEntryDate = validDate(body.actualEntryDate) || new Date().toISOString().slice(0, 10);
+    if (!ticker || !actualEntryPrice || actualEntryPrice <= 0) return error("Ticker and actual entry price are required.");
+    if (ledger.holdings.some((holding) => holding.ticker === ticker)) return error("This ticker is already recorded as held.", 409);
+    ledger.holdings.push({ id: crypto.randomUUID(), ticker, name: cleanText(body.name || ticker, 80), actualEntryPrice, actualEntryDate, actualEntryTime: cleanText(body.actualEntryTime, 40), quantity: Math.max(0, finiteNumber(body.quantity, 0) || 0), state: "HELD", rankExitDays: 0, lastRank: null, lastRankDate: "", cooldownUntil: "" });
+    await savePortfolioLedger(store, ledger);
+    return json({ ok: true, ledger });
+  }
+  if (suffix === "holdings/exit") {
+    const ticker = cleanText(body.ticker, 24).toUpperCase();
+    const index = ledger.holdings.findIndex((holding) => holding.ticker === ticker);
+    const actualExitPrice = finiteNumber(body.actualExitPrice, null);
+    const actualExitDate = validDate(body.actualExitDate) || new Date().toISOString().slice(0, 10);
+    if (index < 0 || !actualExitPrice || actualExitPrice <= 0) return error("A held ticker and actual exit price are required.");
+    const holding = ledger.holdings.splice(index, 1)[0];
+    const config = await portfolioConfig(store);
+    const cooldownUntil = new Date(`${actualExitDate}T00:00:00Z`);
+    cooldownUntil.setUTCDate(cooldownUntil.getUTCDate() + config.cooldownTradingDays + 2);
+    ledger.closed.push({ ...holding, actualExitPrice, actualExitDate, actualExitTime: cleanText(body.actualExitTime, 40), exitReason: cleanText(body.exitReason || "MANUAL_CONFIRMATION", 80), lastExitRank: finiteNumber(body.lastExitRank, holding.lastRank), cooldownUntil: cooldownUntil.toISOString().slice(0, 10), state: "COOLDOWN" });
+    await savePortfolioLedger(store, ledger);
+    return json({ ok: true, ledger });
+  }
+  if (suffix === "pre-market") {
+    const config = await portfolioConfig(store);
+    const current = await store.get(decisionCurrentKey(), "json");
+    const runId = cleanText(body.runId || current?.runId, 80);
+    const run = runId ? await loadRun(store, runId) : null;
+    if (!run || !committeeStageComplete(run, "round-two")) return error("A completed formal PDC run is required before generating the pre-market decision.", 409);
+    const date = validDate(body.date || run.date) || run.date;
+    const candidates = candidateRowsFromRun(run, config.premarketRankLimit).map((row) => {
+      const gate = buyGate(row, config);
+      return { ...row, action: gate.pass ? "PREMARKET_BUY_CANDIDATE" : "NO_ACTION", trigger: gate.pass ? "PREMARKET_BUY_GATE_PASSED" : gate.failed.join(" · "), evidence: `Rank #${row.rank} · ${row.buyVotes || 0}/5 PDC BUY · Forward ${row.forwardPrediction.forwardUpsideScore || 0}/100 · Entry ${portfolioDimension(row, "entryTiming")}/10.`, reason: row.coreEvidence };
+    });
+    const byTicker = new Map(candidates.map((row) => [row.ticker, row]));
+    const holdingRows = ledger.holdings.map((holding) => positionEvaluation(holding, byTicker.get(holding.ticker), date, config, null, true));
+    await savePortfolioLedger(store, ledger);
+    const dashboard = { date, stage: "PRE_MARKET", generatedAt: new Date().toISOString(), runId, config, referencePrice: "PREVIOUS_CLOSE", noonSnapshot: null, candidates: candidates.map(publicPortfolioRow), actions: { buy: candidates.filter((row) => row.action === "PREMARKET_BUY_CANDIDATE").map(publicPortfolioRow), hold: holdingRows.filter((row) => row.action === "HOLD").map(publicPortfolioRow), sell: holdingRows.filter((row) => row.action === "SELL").map(publicPortfolioRow) } };
+    await Promise.all([store.put(portfolioKey(`day:${date}`), JSON.stringify(dashboard)), store.put(portfolioKey("current"), JSON.stringify(dashboard))]);
+    return json({ ok: true, dashboard });
+  }
+  if (suffix === "noon-recheck") {
+    const current = await store.get(portfolioKey("current"), "json");
+    const date = validDate(body.date || current?.date);
+    if (!current || !date || current.date !== date || current.stage !== "PRE_MARKET") return error("Generate today's pre-market decision before noon recheck.", 409);
+    const config = await portfolioConfig(store);
+    const noonRows = normalizeNoonRows(body.noonSnapshot);
+    if (!noonRows.size) return error("Noon recheck requires at least one 11:30 reference price.");
+    const candidates = current.candidates.map((saved) => {
+      const raw = { ...saved, dimensionConsensus: {
+        entryTiming: { median: saved.entryTiming }, relativeStrength: { median: saved.relativeStrength }, trendAcceleration: { median: saved.trendAcceleration },
+        breakoutConfirmation: { median: saved.breakoutConfirmation }, volumeFlowConfirmation: { median: saved.volumeConfirmation },
+        overheatReversalRisk: { median: saved.overheatSafety }, downsideFailureRisk: { median: saved.downsideSafety }
+      }, forwardPrediction: { forwardUpsideScore: saved.forwardUpsideScore, prob5dUpGt2Pct: saved.probability5dUp, expected5dReturnPct: saved.expected5dReturnPct }, buyVotes: saved.consensus, backgroundChecks: {} };
+      const noon = noonRows.get(saved.ticker);
+      const row = applyNoonRow(raw, noon);
+      const gate = buyGate(row, config);
+      const cancelled = !noon || !noon.breakoutValid || noon.pullback || noon.dayChangePct >= config.noonMaxChasePct || !gate.pass;
+      return { ...row, name: saved.name, rank: saved.rank, coreEvidence: saved.reason, action: cancelled ? "NO_ACTION" : "BUY", recheckAction: cancelled ? (noon?.pullback || noon?.dayChangePct >= config.noonMaxChasePct ? "CANCEL_BUY" : "WAIT") : "BUY_NOW", trigger: cancelled ? "NOON_RECHECK_NOT_PASSED" : "BUY_CONDITIONS_PASSED", evidence: `11:30 reference ${noon?.referencePrice || "N/A"} · ${noon?.dayChangePct || 0}% · Entry ${portfolioDimension(row, "entryTiming")}/10 · Overheat safety ${portfolioDimension(row, "overheatReversalRisk")}/10.`, reason: cancelled ? "Afternoon entry was not confirmed by the frozen noon snapshot." : "Pre-market thesis remains valid at the 11:30 reference price." };
+    });
+    const byTicker = new Map(candidates.map((row) => [row.ticker, row]));
+    const holdingRows = ledger.holdings.map((holding) => positionEvaluation(holding, byTicker.get(holding.ticker), date, config, noonRows.get(holding.ticker)?.referencePrice, false));
+    const retained = holdingRows.filter((row) => row.action !== "SELL");
+    const buyRows = candidates.filter((row) => row.action === "BUY").filter((row) => {
+      const priorExit = ledger.closed.filter((closed) => closed.ticker === row.ticker).at(-1);
+      return reentryAllowed(priorExit, row, date, config) && !ledger.holdings.some((holding) => holding.ticker === row.ticker);
+    }).sort((left, right) => portfolioScore(right) - portfolioScore(left));
+    const capacity = Math.max(0, config.maxPositions - retained.length);
+    const approvedBuys = buyRows.slice(0, capacity);
+    const replacements = capacity ? [] : approvedBuys;
+    if (!capacity && buyRows.length) {
+      const weakest = [...retained].sort((left, right) => portfolioScore(left) - portfolioScore(right))[0];
+      if (weakest && portfolioScore(buyRows[0]) - portfolioScore(weakest) >= config.replacementMargin) {
+        weakest.action = "SELL";
+        weakest.trigger = "PORTFOLIO_REPLACEMENT";
+        weakest.reason = "A materially stronger BUY NOW candidate exceeds the configured replacement margin.";
+        weakest.replacementCandidate = buyRows[0];
+        approvedBuys.push(buyRows[0]);
+      }
+    }
+    const dashboard = { date, stage: "NOON_RECHECK", generatedAt: new Date().toISOString(), runId: current.runId, config, referencePrice: "11:30_LATEST_AVAILABLE_PRICE", noonSnapshot: { capturedAt: new Date().toISOString(), rows: [...noonRows.entries()].map(([ticker, row]) => ({ ticker, ...row })) }, candidates: candidates.map(publicPortfolioRow), actions: { buy: approvedBuys.map(publicPortfolioRow), hold: holdingRows.filter((row) => row.action === "HOLD").map(publicPortfolioRow), sell: holdingRows.filter((row) => row.action === "SELL").map(publicPortfolioRow) } };
+    await Promise.all([store.put(portfolioKey(`day:${date}`), JSON.stringify(dashboard)), store.put(portfolioKey("current"), JSON.stringify(dashboard))]);
+    return json({ ok: true, dashboard });
+  }
+  return error("Unknown portfolio action.", 404);
+}
+
 async function decisionApi(context, mode = OFFICIAL_DECISION_MODE) {
   const { request, env } = context;
   const url = new URL(request.url);
@@ -1576,6 +1919,11 @@ export async function onRequestGet(context) {
     return error("Stock PDC access is required.", 401);
   }
 
+  if (url.pathname.startsWith(`${PORTFOLIO_PATH}/api`)) {
+    if (await isAuthorized(request, env)) return portfolioApi(context);
+    return error("Stock PDC access is required.", 401);
+  }
+
   if (await isAuthorized(request, env)) return context.next();
   return accessPage();
 }
@@ -1594,6 +1942,11 @@ export async function onRequestPost(context) {
   if (url.pathname.startsWith(`${DECISION_PATH}/api`) || url.pathname.startsWith(`${DEMO_DECISION_PATH}/api`)) {
     const mode = url.pathname.startsWith(`${DEMO_DECISION_PATH}/api`) ? DEMO_DECISION_MODE : OFFICIAL_DECISION_MODE;
     if (await isAuthorized(request, env)) return decisionApi(context, mode);
+    return error("Stock PDC access is required.", 401);
+  }
+
+  if (url.pathname.startsWith(`${PORTFOLIO_PATH}/api`)) {
+    if (await isAuthorized(request, env)) return portfolioApi(context);
     return error("Stock PDC access is required.", 401);
   }
 
