@@ -16,8 +16,10 @@ const DEFAULT_DEEPSEEK_STOCK_MODEL = "deepseek-v4-pro";
 const DEFAULT_KIMI_STOCK_MODEL = "kimi-k3";
 const DEFAULT_GEMINI_STOCK_MODEL = "gemini-3.1-pro-preview";
 const DEFAULT_DEMO_STOCK_MODEL = "gpt-5.6-luna";
+const DEFAULT_CLAUDE_DEMO_STOCK_MODEL = "claude-haiku-4-5-20251001";
 const DEFAULT_DEEPSEEK_DEMO_STOCK_MODEL = "deepseek-v4-flash";
 const DEFAULT_GEMINI_DEMO_STOCK_MODEL = "gemini-3.5-flash-lite";
+const DEFAULT_KIMI_DEMO_STOCK_MODEL = "moonshot-v1-8k";
 const PDC_SCORING_SYSTEM = "short-term-forward-upside-v2";
 const MAX_DECISION_BODY_BYTES = 96 * 1024;
 const MAX_CANDIDATES = 30;
@@ -79,7 +81,7 @@ function claudeStockModel(env) {
 }
 
 function claudeDemoStockModel(env) {
-  return String(env.ANTHROPIC_DEMO_STOCK_MODEL || env.CLAUDE_DEMO_STOCK_MODEL || "").trim();
+  return String(env.ANTHROPIC_DEMO_STOCK_MODEL || env.CLAUDE_DEMO_STOCK_MODEL || DEFAULT_CLAUDE_DEMO_STOCK_MODEL).trim();
 }
 
 function configuredModelProfiles(env, mode = OFFICIAL_DECISION_MODE) {
@@ -91,7 +93,7 @@ function configuredModelProfiles(env, mode = OFFICIAL_DECISION_MODE) {
     model: demo ? demoStockModel(env) : stockModel(env),
     tier: demo ? "mini-demo" : "flagship"
   }];
-  if (claudeApiKey(env) && (!demo || claudeDemoStockModel(env))) {
+  if (claudeApiKey(env)) {
     profiles.push({
       id: "claude_api_pdc",
       label: demo ? "Claude · Mini Demo" : "Claude Fable 5 PDC",
@@ -118,7 +120,7 @@ function configuredModelProfiles(env, mode = OFFICIAL_DECISION_MODE) {
       tier: demo ? "mini-demo" : "flagship"
     });
   }
-  if (kimiApiKey(env) && (!demo || kimiDemoStockModel(env))) {
+  if (kimiApiKey(env)) {
     profiles.push({
       id: "kimi_api_pdc",
       label: demo ? "Kimi · Mini Demo" : "Kimi API PDC",
@@ -603,7 +605,7 @@ function kimiStockModel(env) {
 }
 
 function kimiDemoStockModel(env) {
-  return String(env.KIMI_DEMO_STOCK_MODEL || env.MOONSHOT_DEMO_STOCK_MODEL || "").trim();
+  return String(env.KIMI_DEMO_STOCK_MODEL || env.MOONSHOT_DEMO_STOCK_MODEL || DEFAULT_KIMI_DEMO_STOCK_MODEL).trim();
 }
 
 function kimiChatUrl(env) {
