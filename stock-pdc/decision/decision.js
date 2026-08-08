@@ -1,5 +1,7 @@
-const DECISION_API_ENDPOINT = "/stock-pdc/decision/api";
-const RUN_STORAGE_KEY = "turnpo-stock-pdc-decision-run";
+const IS_DEMO_MODE = window.location.pathname.startsWith("/stock-pdc/decision-demo");
+const DECISION_API_ENDPOINT = IS_DEMO_MODE ? "/stock-pdc/decision-demo/api" : "/stock-pdc/decision/api";
+const RUN_STORAGE_KEY = IS_DEMO_MODE ? "turnpo-stock-pdc-decision-demo-run" : "turnpo-stock-pdc-decision-run";
+const PDC_MODE_LABEL = IS_DEMO_MODE ? "Mini Demo" : "正式 PDC";
 const PDC_DIMENSIONS = [
   { id: "marketRegime", short: "市场" },
   { id: "relativeStrength", short: "相对强" },
@@ -21,7 +23,7 @@ const BACKGROUND_CHECKS = [
 ];
 
 const steps = [
-  { id: "verify", stage: "prepare", title: "验证旗舰模型可用性", detail: "用本轮的 API Key 与实际 Model ID 做一次极短的真实 JSON 请求。", output: "所有委员已通过验证" },
+  { id: "verify", stage: "prepare", title: `验证${IS_DEMO_MODE ? "Mini" : "旗舰"}模型可用性`, detail: "用本轮的 API Key 与实际 Model ID 做一次极短的真实 JSON 请求。", output: "所有委员已通过验证" },
   { id: "snapshot", stage: "prepare", title: "锁定研究数据快照", detail: "确认收盘状态、候选池版本与生成时间。", output: "事实包已冻结" },
   { id: "round-one", stage: "review", title: "第一轮独立盲评", detail: "五位模型只看同一份事实包，不读取其他模型结论。", output: "首轮结论已收齐" },
   { id: "merge", stage: "review", title: "合并共同复核池", detail: "程序去重并汇总首轮排名，找出值得再次研究的候选。", output: "Top 20 已形成" },
@@ -45,9 +47,9 @@ const state = {
   error: "",
   run: null,
   dataContract: null,
-  modelProfiles: [{ id: "gpt-5.6-sol", label: "GPT-5.6 Sol · Pro PDC", provider: "OpenAI", model: "gpt-5.6-sol" }],
-  selectedModelProfileIds: ["gpt-5.6-sol"],
-  modelStates: { "gpt-5.6-sol": "idle" },
+  modelProfiles: [{ id: IS_DEMO_MODE ? "gpt-5.6-luna" : "gpt-5.6-sol", label: IS_DEMO_MODE ? "GPT-5.6 Luna · Mini Demo" : "GPT-5.6 Sol · Pro PDC", provider: "OpenAI", model: IS_DEMO_MODE ? "gpt-5.6-luna" : "gpt-5.6-sol", tier: IS_DEMO_MODE ? "mini-demo" : "flagship" }],
+  selectedModelProfileIds: [IS_DEMO_MODE ? "gpt-5.6-luna" : "gpt-5.6-sol"],
+  modelStates: { [IS_DEMO_MODE ? "gpt-5.6-luna" : "gpt-5.6-sol"]: "idle" },
   verification: {}
 };
 
@@ -195,6 +197,7 @@ function reviewCopyText(member, review, phase) {
   ].join("\n")).join("\n\n");
   return [
     "# Stock PDC 独立模型结论",
+    `模式：${PDC_MODE_LABEL}`,
     `日期：${state.run?.date || "未锁定"}`,
     `模型：${member.label}（${member.provider} / ${member.model}）`,
     `阶段：${phaseTitle}`,
@@ -224,7 +227,7 @@ function fullRunCopyText() {
   const final = (run.final || []).map((row) => `#${row.rank} ${row.name} (${row.ticker}) · ${row.consensusScore} 分 · ${row.buyVotes ?? 0}/${row.requiredSupport || "—"} BUY 共识\n数据覆盖：${row.averageCoveragePct ?? 0}%\n5D 上涨超过 +2% 概率共识：${row.forwardPrediction?.prob5dUpGt2Pct ?? "N/A"}%；预期 5D 收益：${row.forwardPrediction?.expected5dReturnPct ?? "N/A"}%；5D 下跌低于 -3% 概率：${row.forwardPrediction?.prob5dDownLtMinus3Pct ?? "N/A"}%\n趋势加速共识：${row.dimensionConsensus?.trendAcceleration?.median ?? "N/A"}/10；买点共识：${row.dimensionConsensus?.entryTiming?.median ?? "N/A"}/10；低反转共识：${row.dimensionConsensus?.overheatReversalRisk?.median ?? "N/A"}/10\n理由：${row.thesis}\n风险：${row.risk}`).join("\n\n");
   return [
     "# Stock PDC 本轮决策包",
-    `日期：${run.date}；Run：${run.id}`,
+    `模式：${PDC_MODE_LABEL}；日期：${run.date}；Run：${run.id}`,
     "用途：请协助我审阅这一轮研究过程，重点指出证据缺口、模型分歧与风险；不构成交易指令。",
     "",
     "## 冻结事实包",
@@ -371,14 +374,16 @@ function setRunSummary() {
   if (count) count.textContent = `${state.completed} / ${steps.length}`;
   if (mode) {
     const profiles = run?.committeeMode ? run.members : selectedModelProfiles();
-    mode.textContent = profiles?.length ? `${profiles.length} 位模型 PDC · 同一事实包` : "未配置模型";
+    mode.textContent = profiles?.length ? `${profiles.length} 位${IS_DEMO_MODE ? "Mini" : "模型"} PDC · 同一事实包` : "未配置模型";
   }
   if (copy) copy.textContent = state.error
     ? `已暂停：${state.error} 点击“继续生成”会从已保存的模型 PDC 继续，不会重复已完成的结论。`
     : state.running
     ? `正在执行：${steps.find((step) => step.id === state.activeStep)?.title || "准备任务"}`
     : state.completed === steps.length
-      ? "本次 Run 已完成。确认无误后，点击“发布到 PDC”才会追加当天正式记录。"
+      ? IS_DEMO_MODE
+        ? "Mini Demo Run 已完成。可复制整包给 GPT 继续讨论；结果不会写入正式 PDC。"
+        : "本次 Run 已完成。确认无误后，点击“发布到 PDC”才会追加当天正式记录。"
       : "点击开始生成后，每一个步骤都会在这里留下真实状态与产物。";
   if (button) {
     button.disabled = state.running;
@@ -391,11 +396,13 @@ function renderResult() {
   const section = $("#decisionResult");
   const list = $("#resultList");
   const publish = $("#publishDecision");
+  const note = $("#decisionResearchNote");
   if (!section || !list || !publish) return;
   const final = Array.isArray(state.run?.final) ? state.run.final : [];
   section.hidden = state.completed !== steps.length;
-  publish.hidden = section.hidden || Boolean(state.run?.publishedAt);
+  publish.hidden = IS_DEMO_MODE || section.hidden || Boolean(state.run?.publishedAt);
   publish.disabled = state.running;
+  if (note && IS_DEMO_MODE) note.textContent = "Mini Demo 只用于研究和模型对比，不构成交易指令，也不会写入正式 PDC 历史。";
   if (section.hidden) return;
   list.innerHTML = final.length ? final.map((row) => `
     <div class="decision-placeholder-row">
@@ -652,7 +659,7 @@ async function runDecisionFlow() {
 }
 
 async function publishDecision() {
-  if (!state.run?.id || state.running) return;
+  if (IS_DEMO_MODE || !state.run?.id || state.running) return;
   state.running = true;
   render();
   try {

@@ -3,6 +3,9 @@ const UI_COOKIE = "turnpo_stock_pdc_ui";
 const COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
 const PAGE_PATH = "/stock-pdc";
 const DECISION_PATH = `${PAGE_PATH}/decision`;
+const DEMO_DECISION_PATH = `${PAGE_PATH}/decision-demo`;
+const OFFICIAL_DECISION_MODE = "official";
+const DEMO_DECISION_MODE = "demo";
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
 const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
 const DEEPSEEK_CHAT_URL = "https://api.deepseek.com/chat/completions";
@@ -12,6 +15,9 @@ const DEFAULT_CLAUDE_STOCK_MODEL = "claude-fable-5";
 const DEFAULT_DEEPSEEK_STOCK_MODEL = "deepseek-v4-pro";
 const DEFAULT_KIMI_STOCK_MODEL = "kimi-k3";
 const DEFAULT_GEMINI_STOCK_MODEL = "gemini-3.1-pro-preview";
+const DEFAULT_DEMO_STOCK_MODEL = "gpt-5.6-luna";
+const DEFAULT_DEEPSEEK_DEMO_STOCK_MODEL = "deepseek-v4-flash";
+const DEFAULT_GEMINI_DEMO_STOCK_MODEL = "gemini-3.5-flash-lite";
 const PDC_SCORING_SYSTEM = "short-term-forward-upside-v2";
 const MAX_DECISION_BODY_BYTES = 96 * 1024;
 const MAX_CANDIDATES = 30;
@@ -60,6 +66,10 @@ function stockModel(env) {
   return String(env.OPENAI_STOCK_MODEL || DEFAULT_STOCK_MODEL).trim();
 }
 
+function demoStockModel(env) {
+  return String(env.OPENAI_DEMO_STOCK_MODEL || DEFAULT_DEMO_STOCK_MODEL).trim();
+}
+
 function claudeApiKey(env) {
   return String(env.ANTHROPIC_API_KEY || env.CLAUDE_API_KEY || env.CLAUDE_API_PDC || env.CLAUDE_PDC_API_KEY || env.CLAUDE_API_KEY_PDC || env.claude_api_pdc || env["claude api pdc"] || "").trim();
 }
@@ -68,43 +78,53 @@ function claudeStockModel(env) {
   return String(env.ANTHROPIC_STOCK_MODEL || env.CLAUDE_STOCK_MODEL || DEFAULT_CLAUDE_STOCK_MODEL).trim();
 }
 
-function configuredModelProfiles(env) {
+function claudeDemoStockModel(env) {
+  return String(env.ANTHROPIC_DEMO_STOCK_MODEL || env.CLAUDE_DEMO_STOCK_MODEL || "").trim();
+}
+
+function configuredModelProfiles(env, mode = OFFICIAL_DECISION_MODE) {
+  const demo = mode === DEMO_DECISION_MODE;
   const profiles = [{
-    id: "gpt-5.6-sol",
-    label: "GPT-5.6 Sol · Pro PDC",
+    id: demo ? "gpt-5.6-luna" : "gpt-5.6-sol",
+    label: demo ? "GPT-5.6 Luna · Mini Demo" : "GPT-5.6 Sol · Pro PDC",
     provider: "OpenAI",
-    model: stockModel(env)
+    model: demo ? demoStockModel(env) : stockModel(env),
+    tier: demo ? "mini-demo" : "flagship"
   }];
-  if (claudeApiKey(env)) {
+  if (claudeApiKey(env) && (!demo || claudeDemoStockModel(env))) {
     profiles.push({
       id: "claude_api_pdc",
-      label: "Claude Fable 5 PDC",
+      label: demo ? "Claude · Mini Demo" : "Claude Fable 5 PDC",
       provider: "Anthropic",
-      model: claudeStockModel(env)
+      model: demo ? claudeDemoStockModel(env) : claudeStockModel(env),
+      tier: demo ? "mini-demo" : "flagship"
     });
   }
   if (geminiApiKey(env)) {
     profiles.push({
       id: "gemini_api_pdc",
-      label: "Gemini 3.1 Pro PDC",
+      label: demo ? "Gemini Flash · Mini Demo" : "Gemini 3.1 Pro PDC",
       provider: "Google",
-      model: geminiStockModel(env)
+      model: demo ? geminiDemoStockModel(env) : geminiStockModel(env),
+      tier: demo ? "mini-demo" : "flagship"
     });
   }
   if (deepseekApiKey(env)) {
     profiles.push({
       id: "deepseek_api_pdc",
-      label: "DeepSeek API PDC",
+      label: demo ? "DeepSeek Flash · Mini Demo" : "DeepSeek API PDC",
       provider: "DeepSeek",
-      model: deepseekStockModel(env)
+      model: demo ? deepseekDemoStockModel(env) : deepseekStockModel(env),
+      tier: demo ? "mini-demo" : "flagship"
     });
   }
-  if (kimiApiKey(env)) {
+  if (kimiApiKey(env) && (!demo || kimiDemoStockModel(env))) {
     profiles.push({
       id: "kimi_api_pdc",
-      label: "Kimi API PDC",
+      label: demo ? "Kimi · Mini Demo" : "Kimi API PDC",
       provider: "Moonshot",
-      model: kimiStockModel(env)
+      model: demo ? kimiDemoStockModel(env) : kimiStockModel(env),
+      tier: demo ? "mini-demo" : "flagship"
     });
   }
   return profiles;
@@ -115,13 +135,14 @@ function publicModelProfile(profile) {
     id: profile.id,
     label: profile.label,
     provider: profile.provider,
-    model: profile.model
+    model: profile.model,
+    tier: profile.tier || "flagship"
   };
 }
 
-function selectedModelProfile(env, profileId) {
+function selectedModelProfile(env, profileId, mode = OFFICIAL_DECISION_MODE) {
   const requestedId = cleanText(profileId || "gpt-5.6-sol", 64);
-  return configuredModelProfiles(env).find((profile) => profile.id === requestedId) || null;
+  return configuredModelProfiles(env, mode).find((profile) => profile.id === requestedId) || null;
 }
 
 function decisionStore(env) {
@@ -157,28 +178,32 @@ function validDate(value) {
   return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "";
 }
 
-function decisionRunKey(runId) {
-  return `stock-pdc:decision:run:${runId}`;
+function decisionPrefix(mode = OFFICIAL_DECISION_MODE) {
+  return mode === DEMO_DECISION_MODE ? "stock-pdc:decision-demo" : "stock-pdc:decision";
 }
 
-function decisionDayKey(date) {
-  return `stock-pdc:decision:day:${date}`;
+function decisionRunKey(runId, mode = OFFICIAL_DECISION_MODE) {
+  return `${decisionPrefix(mode)}:run:${runId}`;
 }
 
-function decisionHistoryKey() {
-  return "stock-pdc:decision:history";
+function decisionDayKey(date, mode = OFFICIAL_DECISION_MODE) {
+  return `${decisionPrefix(mode)}:day:${date}`;
 }
 
-function decisionCurrentKey() {
-  return "stock-pdc:decision:current";
+function decisionHistoryKey(mode = OFFICIAL_DECISION_MODE) {
+  return `${decisionPrefix(mode)}:history`;
 }
 
-function decisionRateKey(date) {
-  return `stock-pdc:decision:run-count:${date}`;
+function decisionCurrentKey(mode = OFFICIAL_DECISION_MODE) {
+  return `${decisionPrefix(mode)}:current`;
 }
 
-function decisionVerificationKey(verificationId) {
-  return `stock-pdc:decision:verification:${verificationId}`;
+function decisionRateKey(date, mode = OFFICIAL_DECISION_MODE) {
+  return `${decisionPrefix(mode)}:run-count:${date}`;
+}
+
+function decisionVerificationKey(verificationId, mode = OFFICIAL_DECISION_MODE) {
+  return `${decisionPrefix(mode)}:verification:${verificationId}`;
 }
 
 function extractOutputText(data) {
@@ -491,7 +516,7 @@ async function openAiReview(env, modelProfile, role, candidates, phase) {
         input: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`,
         text: { format: reviewSchema(`stock_pdc_${phase}_${role.id}`) },
         max_output_tokens: 8000,
-        reasoning: { mode: "pro", effort: "max" }
+        reasoning: modelProfile.tier === "mini-demo" ? { effort: "medium" } : { mode: "pro", effort: "max" }
       })
     });
     const data = await response.json().catch(() => ({}));
@@ -527,7 +552,7 @@ async function claudeReview(env, modelProfile, role, candidates, phase) {
           content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`
         }],
         output_config: {
-          effort: "max",
+          effort: modelProfile.tier === "mini-demo" ? "low" : "max",
           format: {
             type: "json_schema",
             schema: portableReviewSchema()
@@ -553,6 +578,10 @@ function geminiStockModel(env) {
   return String(env.GEMINI_STOCK_MODEL || env.GOOGLE_GEMINI_STOCK_MODEL || DEFAULT_GEMINI_STOCK_MODEL).trim();
 }
 
+function geminiDemoStockModel(env) {
+  return String(env.GEMINI_DEMO_STOCK_MODEL || env.GOOGLE_GEMINI_DEMO_STOCK_MODEL || DEFAULT_GEMINI_DEMO_STOCK_MODEL).trim();
+}
+
 function deepseekApiKey(env) {
   return String(env.DEEPSEEK_API_KEY || env.DEEPSEEK_PDC_API_KEY || env.DEEPSEEK_API_PDC || env.DEEPSEEK_API_KEY_PDC || env.DEEPSEEK_PDC || env.deepseek_api_pdc || env["deepseek api pdc"] || "").trim();
 }
@@ -561,12 +590,20 @@ function deepseekStockModel(env) {
   return String(env.DEEPSEEK_STOCK_MODEL || DEFAULT_DEEPSEEK_STOCK_MODEL).trim();
 }
 
+function deepseekDemoStockModel(env) {
+  return String(env.DEEPSEEK_DEMO_STOCK_MODEL || DEFAULT_DEEPSEEK_DEMO_STOCK_MODEL).trim();
+}
+
 function kimiApiKey(env) {
   return String(env.KIMI_API_KEY || env.MOONSHOT_API_KEY || env.KIMI_PDC_API_KEY || env.KIMI_API_PDC || env.KIMI_API_KEY_PDC || env.KIMI_PDC || env.kimi_pdc || env["kimi pdc"] || "").trim();
 }
 
 function kimiStockModel(env) {
   return String(env.KIMI_STOCK_MODEL || env.MOONSHOT_STOCK_MODEL || DEFAULT_KIMI_STOCK_MODEL).trim();
+}
+
+function kimiDemoStockModel(env) {
+  return String(env.KIMI_DEMO_STOCK_MODEL || env.MOONSHOT_DEMO_STOCK_MODEL || "").trim();
 }
 
 function kimiChatUrl(env) {
@@ -626,7 +663,7 @@ async function deepseekReview(env, modelProfile, role, candidates, phase) {
       body: JSON.stringify({
         model: modelProfile.model,
         thinking: { type: "enabled" },
-        reasoning_effort: "max",
+        reasoning_effort: modelProfile.tier === "mini-demo" ? "low" : "max",
         messages: [
           { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings and summary.` },
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
@@ -660,7 +697,7 @@ async function kimiReview(env, modelProfile, role, candidates, phase) {
       signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
-        reasoning_effort: "max",
+        reasoning_effort: modelProfile.tier === "mini-demo" ? "low" : "max",
         messages: [
           { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings and summary.` },
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
@@ -1059,6 +1096,7 @@ function publicRun(run) {
   });
   return {
     id: run.id,
+    mode: run.mode || OFFICIAL_DECISION_MODE,
     date: run.date,
     createdAt: run.createdAt,
     updatedAt: run.updatedAt,
@@ -1104,12 +1142,12 @@ async function readJson(request) {
 
 async function saveRun(store, run) {
   run.updatedAt = new Date().toISOString();
-  await store.put(decisionRunKey(run.id), JSON.stringify(run), { expirationTtl: RUN_TTL_SECONDS });
+  await store.put(decisionRunKey(run.id, run.mode), JSON.stringify(run), { expirationTtl: RUN_TTL_SECONDS });
   return run;
 }
 
-async function loadRun(store, runId) {
-  const run = await store.get(decisionRunKey(cleanText(runId, 80)), "json");
+async function loadRun(store, runId, mode = OFFICIAL_DECISION_MODE) {
+  const run = await store.get(decisionRunKey(cleanText(runId, 80), mode), "json");
   return run && typeof run === "object" ? run : null;
 }
 
@@ -1127,22 +1165,22 @@ function verificationResult(profile, startedAt, caught = null, response = null) 
   };
 }
 
-function requestedModelProfiles(body, env) {
+function requestedModelProfiles(body, env, mode = OFFICIAL_DECISION_MODE) {
   const requestedIds = Array.isArray(body.modelProfileIds)
     ? body.modelProfileIds.map((id) => cleanText(id, 64)).filter(Boolean)
-    : body.modelProfileId ? [cleanText(body.modelProfileId, 64)] : configuredModelProfiles(env).map((profile) => profile.id);
-  const availableProfiles = configuredModelProfiles(env);
+    : body.modelProfileId ? [cleanText(body.modelProfileId, 64)] : configuredModelProfiles(env, mode).map((profile) => profile.id);
+  const availableProfiles = configuredModelProfiles(env, mode);
   return {
     requestedIds: [...new Set(requestedIds)],
     modelProfiles: availableProfiles.filter((profile) => requestedIds.includes(profile.id))
   };
 }
 
-async function createModelVerification(request, env) {
+async function createModelVerification(request, env, mode = OFFICIAL_DECISION_MODE) {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
   const body = await readJson(request);
-  const { requestedIds, modelProfiles } = requestedModelProfiles(body, env);
+  const { requestedIds, modelProfiles } = requestedModelProfiles(body, env, mode);
   if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("Every selected PDC model must be configured before verification.");
   const results = await Promise.all(modelProfiles.map(async (profile) => {
     const startedAt = Date.now();
@@ -1159,14 +1197,14 @@ async function createModelVerification(request, env) {
     modelProfileIds: modelProfiles.map((profile) => profile.id),
     members: results
   };
-  await store.put(decisionVerificationKey(verification.id), JSON.stringify(verification), { expirationTtl: MODEL_VERIFICATION_TTL_SECONDS });
+  await store.put(decisionVerificationKey(verification.id, mode), JSON.stringify(verification), { expirationTtl: MODEL_VERIFICATION_TTL_SECONDS });
   return json({ ok: results.every((result) => result.ok), verification });
 }
 
-async function consumeModelVerification(store, verificationId, modelProfiles) {
+async function consumeModelVerification(store, verificationId, modelProfiles, mode = OFFICIAL_DECISION_MODE) {
   const id = cleanText(verificationId, 80);
   if (!/^[a-f0-9-]{36}$/i.test(id)) return { error: "Run a fresh model verification before generating this PDC decision.", verification: null };
-  const verification = await store.get(decisionVerificationKey(id), "json");
+  const verification = await store.get(decisionVerificationKey(id, mode), "json");
   if (!verification || typeof verification !== "object") return { error: "The model verification has expired. Please verify the selected PDC models again.", verification: null };
   const requested = modelProfiles.map((profile) => `${profile.id}:${profile.model}`).sort();
   const verified = (Array.isArray(verification.members) ? verification.members : [])
@@ -1176,26 +1214,27 @@ async function consumeModelVerification(store, verificationId, modelProfiles) {
   if (requested.length !== verified.length || requested.some((member, index) => member !== verified[index])) {
     return { error: "Every selected PDC model must pass a fresh verification before generation.", verification: null };
   }
-  await store.delete(decisionVerificationKey(id));
+  await store.delete(decisionVerificationKey(id, mode));
   return { error: "", verification };
 }
 
-async function createRun(request, env) {
+async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
   const body = await readJson(request);
   const snapshot = normalizeSnapshot(body.snapshot);
   if (!snapshot) return error("A valid daily PDC snapshot with at least five candidates is required.");
-  const { requestedIds, modelProfiles } = requestedModelProfiles(body, env);
+  const { requestedIds, modelProfiles } = requestedModelProfiles(body, env, mode);
   if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("No selected PDC model is configured on this deployment.");
-  const verificationReceipt = await consumeModelVerification(store, body.verificationId, modelProfiles);
+  const verificationReceipt = await consumeModelVerification(store, body.verificationId, modelProfiles, mode);
   if (verificationReceipt.error) return error(verificationReceipt.error, 409);
-  const currentCount = Number(await store.get(decisionRateKey(snapshot.date)) || "0");
+  const currentCount = Number(await store.get(decisionRateKey(snapshot.date, mode)) || "0");
   if (currentCount >= MAX_RUNS_PER_DAY) return error("Daily decision-run limit reached. Review an existing run instead.", 429);
-  await store.put(decisionRateKey(snapshot.date), String(currentCount + 1), { expirationTtl: 24 * 60 * 60 });
+  await store.put(decisionRateKey(snapshot.date, mode), String(currentCount + 1), { expirationTtl: 24 * 60 * 60 });
   const now = new Date().toISOString();
   const run = {
     id: crypto.randomUUID(),
+    mode,
     date: snapshot.date,
     createdAt: now,
     updatedAt: now,
@@ -1254,10 +1293,10 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
   return json({ ok: true, run: publicRun(run) });
 }
 
-async function advanceRun(env, runId, stage, requestedRoleId = "") {
+async function advanceRun(env, runId, stage, requestedRoleId = "", mode = OFFICIAL_DECISION_MODE) {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
-  const run = await loadRun(store, runId);
+  const run = await loadRun(store, runId, mode);
   if (!run) return error("Decision run was not found.", 404);
   if (run.publishedAt) return error("Published decision runs are immutable.", 409);
   if (isCommitteeRun(run)) {
@@ -1267,7 +1306,7 @@ async function advanceRun(env, runId, stage, requestedRoleId = "") {
       return error(cleanText(caught?.message || "Decision stage failed.", 320), 502);
     }
   }
-  const modelProfile = run.modelProfile || selectedModelProfile(env, "gpt-5.6-sol");
+  const modelProfile = run.modelProfile || selectedModelProfile(env, mode === DEMO_DECISION_MODE ? "gpt-5.6-luna" : "gpt-5.6-sol", mode);
   if (!modelProfile || !["OpenAI", "Anthropic", "Google", "DeepSeek", "Moonshot"].includes(modelProfile.provider)) return error("This run's selected model provider is not available.", 409);
   try {
     if (stage === "round-one" || stage === "round-two") {
@@ -1308,11 +1347,14 @@ async function advanceRun(env, runId, stage, requestedRoleId = "") {
   }
 }
 
-async function publishRun(env, runId) {
+async function publishRun(env, runId, mode = OFFICIAL_DECISION_MODE) {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
-  const run = await loadRun(store, runId);
+  const run = await loadRun(store, runId, mode);
   if (!run) return error("Decision run was not found.", 404);
+  if (mode === DEMO_DECISION_MODE || run.mode === DEMO_DECISION_MODE) {
+    return error("Mini Demo runs are intentionally isolated and cannot be published to the formal PDC.", 409);
+  }
   if (run.status !== "READY_TO_PUBLISH" || !Array.isArray(run.final) || !run.final.length) {
     return error("Finish all review stages before publishing.", 409);
   }
@@ -1341,35 +1383,36 @@ async function publishRun(env, runId) {
   return json({ ok: true, run: publicRun(run), current: day });
 }
 
-async function decisionApi(context) {
+async function decisionApi(context, mode = OFFICIAL_DECISION_MODE) {
   const { request, env } = context;
   const url = new URL(request.url);
-  const suffix = url.pathname.slice(`${DECISION_PATH}/api`.length).replace(/^\/+/, "");
+  const apiPath = mode === DEMO_DECISION_MODE ? DEMO_DECISION_PATH : DECISION_PATH;
+  const suffix = url.pathname.slice(`${apiPath}/api`.length).replace(/^\/+/, "");
   if (request.method === "GET") {
     const store = decisionStore(env);
     if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
-    if (suffix === "models") return json({ ok: true, models: configuredModelProfiles(env).map(publicModelProfile) });
-    if (suffix === "current") return json({ ok: true, current: await store.get(decisionCurrentKey(), "json") });
+    if (suffix === "models") return json({ ok: true, mode, models: configuredModelProfiles(env, mode).map(publicModelProfile) });
+    if (suffix === "current") return json({ ok: true, current: await store.get(decisionCurrentKey(mode), "json") });
     if (suffix === "history") {
-      const history = await store.get(decisionHistoryKey(), "json");
+      const history = await store.get(decisionHistoryKey(mode), "json");
       const dates = Array.isArray(history?.dates) ? history.dates.filter(validDate).sort().reverse() : [];
-      const days = await Promise.all(dates.map((date) => store.get(decisionDayKey(date), "json")));
+      const days = await Promise.all(dates.map((date) => store.get(decisionDayKey(date, mode), "json")));
       return json({ ok: true, days: days.filter(Boolean) });
     }
     const runMatch = suffix.match(/^runs\/([a-f0-9-]{36})$/i);
     if (runMatch) {
-      const run = await loadRun(store, runMatch[1]);
+      const run = await loadRun(store, runMatch[1], mode);
       return run ? json({ ok: true, run: publicRun(run) }) : error("Decision run was not found.", 404);
     }
     return error("Unknown decision resource.", 404);
   }
   if (request.method !== "POST") return error("Method not allowed.", 405);
-  if (suffix === "verifications") return createModelVerification(request, env);
-  if (suffix === "runs") return createRun(request, env);
+  if (suffix === "verifications") return createModelVerification(request, env, mode);
+  if (suffix === "runs") return createRun(request, env, mode);
   const stageMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/(round-one|merge|round-two|risk-check)(?:\/([a-z0-9_.-]+))?$/i);
-  if (stageMatch) return advanceRun(env, stageMatch[1], stageMatch[2], stageMatch[3] || "");
+  if (stageMatch) return advanceRun(env, stageMatch[1], stageMatch[2], stageMatch[3] || "", mode);
   const publishMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/publish$/i);
-  if (publishMatch) return publishRun(env, publishMatch[1]);
+  if (publishMatch) return publishRun(env, publishMatch[1], mode);
   return error("Unknown decision action.", 404);
 }
 
@@ -1525,8 +1568,9 @@ export async function onRequestGet(context) {
     return new Response(null, { status: 303, headers });
   }
 
-  if (url.pathname.startsWith(`${DECISION_PATH}/api`)) {
-    if (await isAuthorized(request, env)) return decisionApi(context);
+  if (url.pathname.startsWith(`${DECISION_PATH}/api`) || url.pathname.startsWith(`${DEMO_DECISION_PATH}/api`)) {
+    const mode = url.pathname.startsWith(`${DEMO_DECISION_PATH}/api`) ? DEMO_DECISION_MODE : OFFICIAL_DECISION_MODE;
+    if (await isAuthorized(request, env)) return decisionApi(context, mode);
     return error("Stock PDC access is required.", 401);
   }
 
@@ -1545,8 +1589,9 @@ export async function onRequestPost(context) {
     return new Response(null, { status: 303, headers });
   }
 
-  if (url.pathname.startsWith(`${DECISION_PATH}/api`)) {
-    if (await isAuthorized(request, env)) return decisionApi(context);
+  if (url.pathname.startsWith(`${DECISION_PATH}/api`) || url.pathname.startsWith(`${DEMO_DECISION_PATH}/api`)) {
+    const mode = url.pathname.startsWith(`${DEMO_DECISION_PATH}/api`) ? DEMO_DECISION_MODE : OFFICIAL_DECISION_MODE;
+    if (await isAuthorized(request, env)) return decisionApi(context, mode);
     return error("Stock PDC access is required.", 401);
   }
 

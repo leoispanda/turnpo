@@ -135,12 +135,15 @@ try {
     OPENAI_API_KEY: "test-key",
     ANTHROPIC_API_KEY: "claude-test-key",
     ANTHROPIC_STOCK_MODEL: "claude-test-model",
+    ANTHROPIC_DEMO_STOCK_MODEL: "claude-mini-test-model",
     GEMINI_API_KEY: "gemini-test-key",
     GEMINI_STOCK_MODEL: "gemini-test-model",
     DEEPSEEK_API_KEY: "deepseek-test-key",
     DEEPSEEK_STOCK_MODEL: "deepseek-test-model",
+    DEEPSEEK_DEMO_STOCK_MODEL: "deepseek-mini-test-model",
     KIMI_API_KEY: "kimi-test-key",
     KIMI_STOCK_MODEL: "kimi-test-model",
+    KIMI_DEMO_STOCK_MODEL: "kimi-mini-test-model",
     STOCK_PDC_ACCESS_CODE: secret
   };
   const context = (request) => ({ request, env, next: async () => new Response("next") });
@@ -164,12 +167,36 @@ try {
   assert.equal(response.status, 200);
   let payload = await response.json();
   assert.deepEqual(payload.models, [
-    { id: "gpt-5.6-sol", label: "GPT-5.6 Sol · Pro PDC", provider: "OpenAI", model: "gpt-5.6-sol" },
-    { id: "claude_api_pdc", label: "Claude Fable 5 PDC", provider: "Anthropic", model: "claude-test-model" },
-    { id: "gemini_api_pdc", label: "Gemini 3.1 Pro PDC", provider: "Google", model: "gemini-test-model" },
-    { id: "deepseek_api_pdc", label: "DeepSeek API PDC", provider: "DeepSeek", model: "deepseek-test-model" },
-    { id: "kimi_api_pdc", label: "Kimi API PDC", provider: "Moonshot", model: "kimi-test-model" }
+    { id: "gpt-5.6-sol", label: "GPT-5.6 Sol · Pro PDC", provider: "OpenAI", model: "gpt-5.6-sol", tier: "flagship" },
+    { id: "claude_api_pdc", label: "Claude Fable 5 PDC", provider: "Anthropic", model: "claude-test-model", tier: "flagship" },
+    { id: "gemini_api_pdc", label: "Gemini 3.1 Pro PDC", provider: "Google", model: "gemini-test-model", tier: "flagship" },
+    { id: "deepseek_api_pdc", label: "DeepSeek API PDC", provider: "DeepSeek", model: "deepseek-test-model", tier: "flagship" },
+    { id: "kimi_api_pdc", label: "Kimi API PDC", provider: "Moonshot", model: "kimi-test-model", tier: "flagship" }
   ]);
+
+  response = await onRequestGet(context(requestFor("/stock-pdc/decision-demo/api/models")));
+  assert.equal(response.status, 200);
+  payload = await response.json();
+  assert.equal(payload.mode, "demo");
+  assert.deepEqual(payload.models.map((model) => model.model), [
+    "gpt-5.6-luna", "claude-mini-test-model", "gemini-3.5-flash-lite", "deepseek-mini-test-model", "kimi-mini-test-model"
+  ], "Mini Demo must select the low-cost model group, never the flagship fallback");
+
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision-demo/api/verifications", { modelProfileIds: ["gpt-5.6-luna"] })));
+  assert.equal(response.status, 200);
+  let demoVerification = await response.json();
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision-demo/api/runs", {
+    snapshot: { date: "2026-08-07", candidates },
+    modelProfileIds: ["gpt-5.6-luna"],
+    verificationId: demoVerification.verification.id
+  })));
+  assert.equal(response.status, 200);
+  const demoRun = await response.json();
+  assert.equal(demoRun.run.mode, "demo");
+  response = await onRequestGet(context(requestFor(`/stock-pdc/decision/api/runs/${demoRun.run.id}`)));
+  assert.equal(response.status, 404, "formal PDC cannot read a Mini Demo run");
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision-demo/api/runs/${demoRun.run.id}/publish`, {})));
+  assert.equal(response.status, 409, "Mini Demo cannot publish to formal PDC");
 
   const pdcNamedEnv = {
     ...env,
