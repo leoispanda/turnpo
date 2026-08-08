@@ -40,15 +40,18 @@ const originalFetch = globalThis.fetch;
 let claudeRequest = null;
 let geminiRequest = null;
 let deepseekRequest = null;
+let kimiRequest = null;
 globalThis.fetch = async (_url, options) => {
   const request = JSON.parse(options.body);
-  const provider = String(_url).includes("api.anthropic.com") ? "claude" : String(_url).includes("generativelanguage.googleapis.com") ? "gemini" : String(_url).includes("api.deepseek.com") ? "deepseek" : "openai";
+  const provider = String(_url).includes("api.anthropic.com") ? "claude" : String(_url).includes("generativelanguage.googleapis.com") ? "gemini" : String(_url).includes("api.deepseek.com") ? "deepseek" : String(_url).includes("api.moonshot.ai") ? "kimi" : "openai";
   const packetInput = provider === "claude"
     ? request.messages?.[0]?.content
     : provider === "gemini"
       ? request.contents?.[0]?.parts?.[0]?.text
       : provider === "deepseek"
         ? request.messages?.[1]?.content
+        : provider === "kimi"
+          ? request.messages?.[1]?.content
       : request.input;
   const packet = JSON.parse(String(packetInput).replace("Candidate packet:\n", ""));
   const review = {
@@ -73,6 +76,10 @@ globalThis.fetch = async (_url, options) => {
     deepseekRequest = { request, headers: options.headers };
     return new Response(JSON.stringify({ choices: [{ message: { content: JSON.stringify(review) } }] }), { status: 200, headers: { "content-type": "application/json" } });
   }
+  if (provider === "kimi") {
+    kimiRequest = { request, headers: options.headers };
+    return new Response(JSON.stringify({ choices: [{ message: { content: JSON.stringify(review) } }] }), { status: 200, headers: { "content-type": "application/json" } });
+  }
   return new Response(JSON.stringify({ output_text: JSON.stringify(review) }), { status: 200, headers: { "content-type": "application/json" } });
 };
 
@@ -88,6 +95,8 @@ try {
     GEMINI_STOCK_MODEL: "gemini-test-model",
     DEEPSEEK_API_KEY: "deepseek-test-key",
     DEEPSEEK_STOCK_MODEL: "deepseek-test-model",
+    KIMI_API_KEY: "kimi-test-key",
+    KIMI_STOCK_MODEL: "kimi-test-model",
     STOCK_PDC_ACCESS_CODE: secret
   };
   const context = (request) => ({ request, env, next: async () => new Response("next") });
@@ -107,7 +116,8 @@ try {
     { id: "gpt-5.6-luna", label: "GPT-5.6 Luna", provider: "OpenAI", model: "gpt-5.6-luna" },
     { id: "claude_api_pdc", label: "Claude API PDC", provider: "Anthropic", model: "claude-test-model" },
     { id: "gemini_api_pdc", label: "Gemini API PDC", provider: "Google", model: "gemini-test-model" },
-    { id: "deepseek_api_pdc", label: "DeepSeek API PDC", provider: "DeepSeek", model: "deepseek-test-model" }
+    { id: "deepseek_api_pdc", label: "DeepSeek API PDC", provider: "DeepSeek", model: "deepseek-test-model" },
+    { id: "kimi_api_pdc", label: "Kimi API PDC", provider: "Moonshot", model: "kimi-test-model" }
   ]);
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
@@ -213,6 +223,20 @@ try {
   assert.equal(response.status, 200, "DeepSeek reviewer should succeed");
   assert.equal(deepseekRequest.headers.authorization, "Bearer deepseek-test-key");
   assert.equal(deepseekRequest.request.response_format.type, "json_object");
+
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
+    snapshot: { date: "2026-08-08", candidates },
+    modelProfileId: "kimi_api_pdc"
+  })));
+  assert.equal(response.status, 200);
+  payload = await response.json();
+  const kimiRunId = payload.run.id;
+  assert.equal(payload.run.modelProfile.provider, "Moonshot");
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${kimiRunId}/round-one/pdc`, {})));
+  assert.equal(response.status, 200, "Kimi reviewer should succeed");
+  assert.equal(kimiRequest.headers.authorization, "Bearer kimi-test-key");
+  assert.equal(kimiRequest.request.response_format.type, "json_object");
+  assert.equal(kimiRequest.request.max_completion_tokens, 5000);
 } finally {
   globalThis.fetch = originalFetch;
 }
