@@ -57,7 +57,7 @@ globalThis.fetch = async (_url, options) => {
 try {
   const secret = "decision-test-secret";
   const cookie = await accessCookie(secret);
-  const env = { AUTH_KV: new MemoryKv(), OPENAI_API_KEY: "test-key", OPENAI_STOCK_MODEL: "gpt-mini-test", STOCK_PDC_ACCESS_CODE: secret };
+  const env = { AUTH_KV: new MemoryKv(), OPENAI_API_KEY: "test-key", STOCK_PDC_ACCESS_CODE: secret };
   const context = (request) => ({ request, env, next: async () => new Response("next") });
   const requestFor = (path, body = null) => new Request(`https://turnpo.test${path}`, {
     method: body === null ? "GET" : "POST",
@@ -71,17 +71,17 @@ try {
   let response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/models")));
   assert.equal(response.status, 200);
   let payload = await response.json();
-  assert.deepEqual(payload.models, [{ id: "gpt-mini", label: "GPT mini", provider: "OpenAI", model: "gpt-mini-test" }]);
+  assert.deepEqual(payload.models, [{ id: "gpt-5.6-luna", label: "GPT-5.6 Luna", provider: "OpenAI", model: "gpt-5.6-luna" }]);
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
     snapshot: { date: "2026-08-07", candidates },
-    modelProfileId: "gpt-mini"
+    modelProfileId: "gpt-5.6-luna"
   })));
   assert.equal(response.status, 200);
   payload = await response.json();
   const runId = payload.run.id;
-  assert.equal(payload.run.model, "gpt-mini-test");
-  assert.equal(payload.run.modelProfile.id, "gpt-mini");
+  assert.equal(payload.run.model, "gpt-5.6-luna");
+  assert.equal(payload.run.modelProfile.id, "gpt-5.6-luna");
 
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-one/pdc`, {})));
   assert.equal(response.status, 200, "single reviewer should succeed");

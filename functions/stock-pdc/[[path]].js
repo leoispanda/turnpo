@@ -4,7 +4,7 @@ const COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
 const PAGE_PATH = "/stock-pdc";
 const DECISION_PATH = `${PAGE_PATH}/decision`;
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
-const DEFAULT_STOCK_MODEL = "gpt-4o-mini";
+const DEFAULT_STOCK_MODEL = "gpt-5.6-luna";
 const MAX_DECISION_BODY_BYTES = 96 * 1024;
 const MAX_CANDIDATES = 30;
 const MAX_RUNS_PER_DAY = 8;
@@ -22,13 +22,13 @@ function configuredAccessCode(env) {
 }
 
 function stockModel(env) {
-  return String(env.OPENAI_STOCK_MODEL || env.OPENAI_MODEL || DEFAULT_STOCK_MODEL).trim();
+  return String(env.OPENAI_STOCK_MODEL || DEFAULT_STOCK_MODEL).trim();
 }
 
 function configuredModelProfiles(env) {
   return [{
-    id: "gpt-mini",
-    label: "GPT mini",
+    id: "gpt-5.6-luna",
+    label: "GPT-5.6 Luna",
     provider: "OpenAI",
     model: stockModel(env)
   }];
@@ -44,7 +44,7 @@ function publicModelProfile(profile) {
 }
 
 function selectedModelProfile(env, profileId) {
-  const requestedId = cleanText(profileId || "gpt-mini", 64);
+  const requestedId = cleanText(profileId || "gpt-5.6-luna", 64);
   return configuredModelProfiles(env).find((profile) => profile.id === requestedId) || null;
 }
 
@@ -322,8 +322,8 @@ function reviewStageComplete(run, stage) {
 
 function publicRun(run) {
   const modelProfile = run.modelProfile || {
-    id: "gpt-mini",
-    label: "GPT mini",
+    id: "gpt-5.6-luna",
+    label: "GPT-5.6 Luna",
     provider: "OpenAI",
     model: run.model || DEFAULT_STOCK_MODEL
   };
@@ -405,7 +405,7 @@ async function advanceRun(env, runId, stage, requestedRoleId = "") {
   const run = await loadRun(store, runId);
   if (!run) return error("Decision run was not found.", 404);
   if (run.publishedAt) return error("Published decision runs are immutable.", 409);
-  const modelProfile = run.modelProfile || selectedModelProfile(env, "gpt-mini");
+  const modelProfile = run.modelProfile || selectedModelProfile(env, "gpt-5.6-luna");
   if (!modelProfile || modelProfile.provider !== "OpenAI") return error("This run's selected model provider is not available.", 409);
   try {
     if (stage === "round-one" || stage === "round-two") {

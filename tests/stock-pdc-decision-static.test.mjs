@@ -25,12 +25,13 @@ assert.ok(decisionJs.includes('const RUN_STORAGE_KEY = "turnpo-stock-pdc-decisio
 assert.ok(decisionJs.includes("modelProfileId: state.selectedModelProfileId"));
 assert.ok(decisionJs.includes("第一轮独立盲评"));
 assert.ok(decisionJs.includes("市场与风险闸门"));
-assert.ok(decisionJs.includes('const modelLabel = selectedModelProfile()?.label || "GPT mini"'));
+assert.ok(decisionJs.includes('const modelLabel = selectedModelProfile()?.label || "GPT-5.6 Luna"'));
 assert.ok(stockFunction.includes('const DECISION_PATH = `${PAGE_PATH}/decision`;'));
 assert.ok(stockFunction.includes("async function decisionApi(context)"));
 assert.ok(stockFunction.includes("Save after every individual reviewer"));
 assert.ok(stockFunction.includes('if (suffix === "models")'));
-assert.ok(stockFunction.includes("OPENAI_STOCK_MODEL || env.OPENAI_MODEL || DEFAULT_STOCK_MODEL"));
+assert.ok(stockFunction.includes('const DEFAULT_STOCK_MODEL = "gpt-5.6-luna"'));
+assert.ok(stockFunction.includes("OPENAI_STOCK_MODEL || DEFAULT_STOCK_MODEL"));
 assert.ok(stockFunction.includes("stock-pdc:decision:day:"));
 assert.ok(stockJs.includes('fetch("/stock-pdc/decision/api/history"'));
 assert.ok(stockJs.includes("function renderPublishedDecisionHistory()"));

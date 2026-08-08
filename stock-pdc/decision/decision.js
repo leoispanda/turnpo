@@ -3,7 +3,7 @@ const RUN_STORAGE_KEY = "turnpo-stock-pdc-decision-run";
 
 const steps = [
   { id: "snapshot", title: "锁定研究数据快照", detail: "确认收盘状态、候选池版本与生成时间。", output: "已冻结输入事实包" },
-  { id: "round-one", title: "第一轮独立盲评", detail: "四个 GPT mini 角色分别生成自己的 Top 20，不读取彼此结论。", output: "已收到 4 份独立排名" },
+  { id: "round-one", title: "第一轮独立盲评", detail: "四个 GPT-5.6 Luna 角色分别生成自己的 Top 20，不读取彼此结论。", output: "已收到 4 份独立排名" },
   { id: "merge", title: "合并候选挑战池", detail: "去重并融合排名，保留值得复核的候选。", output: "挑战池已生成" },
   { id: "round-two", title: "第二轮证据复核", detail: "四个角色重新评估候选与关键反证。", output: "复核评分已完成" },
   { id: "risk-check", title: "市场与风险闸门", detail: "检查共识、风险与不应进入最终名单的候选。", output: "风险门槛已应用" },
@@ -24,8 +24,8 @@ const state = {
   activeRoleId: "",
   error: "",
   run: null,
-  modelProfiles: [{ id: "gpt-mini", label: "GPT mini", provider: "OpenAI", model: "gpt-4o-mini" }],
-  selectedModelProfileId: "gpt-mini",
+  modelProfiles: [{ id: "gpt-5.6-luna", label: "GPT-5.6 Luna", provider: "OpenAI", model: "gpt-5.6-luna" }],
+  selectedModelProfileId: "gpt-5.6-luna",
   modelStates: Object.fromEntries(models.map((model) => [model.id, "idle"]))
 };
 
@@ -82,7 +82,7 @@ function modelStatus(model) {
 function renderModels() {
   const grid = $("#modelGrid");
   if (!grid) return;
-  const modelLabel = selectedModelProfile()?.label || "GPT mini";
+  const modelLabel = selectedModelProfile()?.label || "GPT-5.6 Luna";
   grid.innerHTML = models.map((model) => `
     <article class="decision-model-card" data-state="${state.modelStates[model.id]}">
       <span>${escapeHtml(model.role)}</span>
@@ -227,7 +227,7 @@ async function loadModelProfiles() {
       }
     }
   } catch {
-    // Keep the safe GPT mini fallback visible while the authenticated API is unavailable.
+    // Keep the default Luna profile visible while the authenticated API is unavailable.
   } finally {
     render();
   }
