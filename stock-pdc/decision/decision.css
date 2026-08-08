@@ -534,6 +534,43 @@
   color: #65707a;
 }
 
+.decision-dimension-breakdown {
+  margin-top: 8px;
+}
+
+.decision-dimension-breakdown summary {
+  width: fit-content;
+  cursor: pointer;
+  color: #22577a;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.decision-dimension-breakdown > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+.decision-dimension-breakdown span {
+  display: inline-flex;
+  gap: 4px;
+  border: 1px solid rgba(22, 130, 68, 0.16);
+  border-radius: 999px;
+  background: rgba(241, 249, 244, 0.72);
+  color: #168244;
+  padding: 3px 6px;
+  font-size: 10px;
+  line-height: 1.1;
+}
+
+.decision-dimension-breakdown span[data-available="false"] {
+  border-color: rgba(122, 132, 142, 0.18);
+  background: rgba(247, 248, 249, 0.9);
+  color: #7a848e;
+}
+
 .decision-result-summary {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }

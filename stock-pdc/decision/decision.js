@@ -1,5 +1,16 @@
 const DECISION_API_ENDPOINT = "/stock-pdc/decision/api";
 const RUN_STORAGE_KEY = "turnpo-stock-pdc-decision-run";
+const PDC_DIMENSIONS = [
+  { id: "marketRegime", short: "市场" },
+  { id: "trend", short: "趋势" },
+  { id: "breakout", short: "突破" },
+  { id: "volumeFlow", short: "量价" },
+  { id: "fundamental", short: "基本面" },
+  { id: "valuation", short: "估值" },
+  { id: "catalyst", short: "催化" },
+  { id: "overheat", short: "不过热" },
+  { id: "downsideRisk", short: "低风险" }
+];
 
 const steps = [
   { id: "snapshot", title: "锁定研究数据快照", detail: "确认收盘状态、候选池版本与生成时间。", output: "已冻结输入事实包" },
@@ -91,12 +102,31 @@ function modelStatus(member) {
   return state.run ? "等待本轮评审" : state.selectedModelProfileIds.includes(member.id) ? "已加入本轮" : "未加入本轮";
 }
 
+function dimensionCopyText(row) {
+  return PDC_DIMENSIONS.map((dimension) => {
+    const value = row.dimensionScores?.[dimension.id];
+    return `${dimension.short}：${value?.available ? `${value.score}/10` : "N/A"}${value?.evidence ? `（${value.evidence}）` : ""}`;
+  }).join("\n");
+}
+
+function dimensionMarkup(row) {
+  const cells = PDC_DIMENSIONS.map((dimension) => {
+    const value = row.dimensionScores?.[dimension.id];
+    const available = Boolean(value?.available);
+    const score = available ? `${value.score}/10` : "N/A";
+    return `<span data-available="${available}" title="${escapeHtml(value?.evidence || "未提供数据")}"><b>${dimension.short}</b>${escapeHtml(score)}</span>`;
+  }).join("");
+  return `<details class="decision-dimension-breakdown"><summary>九维评分 · 数据覆盖 ${escapeHtml(row.coveragePct ?? 0)}%</summary><div>${cells}</div></details>`;
+}
+
 function reviewCopyText(member, review, phase) {
   const phaseTitle = phase === "round-two" ? "第二轮最终复核" : "第一轮独立盲评";
   const rows = (review?.rankings || []).map((row) => [
     `#${row.rank} ${row.name} (${row.ticker}) · ${row.score} 分`,
     `理由：${row.thesis || "未提供"}`,
     `风险：${row.risk || "未提供"}`,
+    `模型状态：${row.decision || "WATCH"}；信心：${row.confidence ?? 0}/100；数据覆盖：${row.coveragePct ?? 0}%`,
+    dimensionCopyText(row),
     `排除：${row.exclude ? "是" : "否"}`
   ].join("\n")).join("\n\n");
   return [
@@ -127,7 +157,7 @@ function fullRunCopyText() {
     member.roundOne ? reviewCopyText(member, member.roundOne, "round-one") : "",
     member.roundTwo ? reviewCopyText(member, member.roundTwo, "round-two") : ""
   ]).filter(Boolean).join("\n\n---\n\n");
-  const final = (run.final || []).map((row) => `#${row.rank} ${row.name} (${row.ticker}) · ${row.consensusScore} 分 · ${row.support}/${row.requiredSupport || "—"} 共识\n理由：${row.thesis}\n风险：${row.risk}`).join("\n\n");
+  const final = (run.final || []).map((row) => `#${row.rank} ${row.name} (${row.ticker}) · ${row.consensusScore} 分 · ${row.support}/${row.requiredSupport || "—"} 共识\n数据覆盖：${row.averageCoveragePct ?? 0}%\n趋势共识：${row.dimensionConsensus?.trend?.median ?? "N/A"}/10；不过热共识：${row.dimensionConsensus?.overheat?.median ?? "N/A"}/10；低风险共识：${row.dimensionConsensus?.downsideRisk?.median ?? "N/A"}/10\n理由：${row.thesis}\n风险：${row.risk}`).join("\n\n");
   return [
     "# Stock PDC 本轮决策包",
     `日期：${run.date}；Run：${run.id}`,
@@ -176,7 +206,7 @@ function reviewPanel(member, phase, review) {
       <div><strong>${title}</strong><p>${escapeHtml(review.summary || "该模型已提交完整评分。")}</p></div>
       <button class="decision-member-copy" type="button" data-copy-member="${escapeHtml(member.id)}" data-copy-phase="${phase}">复制给 GPT</button>
     </div>
-    <ol>${review.rankings.slice(0, 30).map((row) => `<li><b>#${escapeHtml(row.rank)}</b><span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span><em>${escapeHtml(row.score)} 分</em><p>${escapeHtml(row.thesis)}<br><small>风险：${escapeHtml(row.risk)}${row.exclude ? " · 建议排除" : ""}</small></p></li>`).join("")}</ol>
+    <ol>${review.rankings.slice(0, 30).map((row) => `<li><b>#${escapeHtml(row.rank)}</b><span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span><em>${escapeHtml(row.score)} 分</em><p>${escapeHtml(row.thesis)}<br><small>${escapeHtml(row.decision || "WATCH")} · 信心 ${escapeHtml(row.confidence ?? 0)}/100 · 风险：${escapeHtml(row.risk)}${row.exclude ? " · 建议排除" : ""}</small>${dimensionMarkup(row)}</p></li>`).join("")}</ol>
   </section>`;
 }
 

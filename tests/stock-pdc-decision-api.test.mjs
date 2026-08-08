@@ -41,6 +41,17 @@ let claudeRequest = null;
 let geminiRequest = null;
 let deepseekRequest = null;
 let kimiRequest = null;
+const mockDimensionScores = (index) => ({
+  marketRegime: 7,
+  trend: Math.max(5, 9 - index / 4),
+  breakout: 8,
+  volumeFlow: 7,
+  fundamental: 0,
+  valuation: 0,
+  catalyst: 0,
+  overheat: 6,
+  downsideRisk: 6
+});
 globalThis.fetch = async (_url, options) => {
   const request = JSON.parse(options.body);
   const provider = String(_url).includes("api.anthropic.com") ? "claude" : String(_url).includes("generativelanguage.googleapis.com") ? "gemini" : String(_url).includes("api.deepseek.com") ? "deepseek" : String(_url).includes("api.moonshot.ai") ? "kimi" : "openai";
@@ -57,7 +68,11 @@ globalThis.fetch = async (_url, options) => {
   const review = {
     rankings: packet.map((candidate, index) => ({
       ticker: candidate.ticker,
-      score: 95 - index,
+      dimensionScores: mockDimensionScores(index),
+      unavailableDimensions: ["fundamental", "valuation", "catalyst"],
+      dataGaps: "N/A — no fundamental, valuation, or catalyst data supplied.",
+      decision: "WATCH",
+      confidence: 72,
       thesis: `${candidate.name} has supplied evidence.`,
       risk: `${candidate.name} requires risk review.`,
       exclude: false
@@ -170,6 +185,8 @@ try {
   }
   assert.equal(payload.run.roundOneComplete, true);
   assert.equal(payload.run.members[0].roundOne.rankings.length, 8);
+  assert.equal(payload.run.members[0].roundOne.rankings[0].dimensionScores.trend.score, 9);
+  assert.equal(payload.run.members[0].roundOne.rankings[0].dimensionScores.fundamental.available, false);
 
   for (const stage of ["merge"]) {
     response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/${stage}`, {})));
@@ -187,6 +204,7 @@ try {
   payload = await response.json();
   assert.equal(payload.run.status, "READY_TO_PUBLISH");
   assert.equal(payload.run.final.length, 8);
+  assert.equal(payload.run.final[0].dimensionConsensus.trend.count, 5);
 
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/publish`, {})));
   assert.equal(response.status, 200);

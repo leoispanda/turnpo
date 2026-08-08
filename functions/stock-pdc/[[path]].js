@@ -30,6 +30,18 @@ const FULL_PDC_ROLE = {
   focus: "独立完成趋势、量价、风险、过热、反方证伪与证据一致性的全维度评分，并给出完整 Top 30 结论"
 };
 
+const PDC_DIMENSIONS = [
+  { id: "marketRegime", label: "Market Regime", weight: 8 },
+  { id: "trend", label: "Trend", weight: 18 },
+  { id: "breakout", label: "Breakout Quality", weight: 15 },
+  { id: "volumeFlow", label: "Volume & Flow", weight: 12 },
+  { id: "fundamental", label: "Fundamental Quality", weight: 10 },
+  { id: "valuation", label: "Valuation", weight: 7 },
+  { id: "catalyst", label: "Catalyst", weight: 5 },
+  { id: "overheat", label: "Overheat / Crowding", weight: 10 },
+  { id: "downsideRisk", label: "Downside Risk", weight: 15 }
+];
+
 function configuredAccessCode(env) {
   return String(env.STOCK_PDC_ACCESS_CODE || env.EMBA_ACCESS_CODE || "emba2026").trim();
 }
@@ -232,6 +244,29 @@ function serializableCandidates(candidates) {
   }));
 }
 
+function dimensionScoreProperties() {
+  return Object.fromEntries(PDC_DIMENSIONS.map((dimension) => [dimension.id, { type: "number", minimum: 0, maximum: 10 }]));
+}
+
+function rankingSchemaProperties() {
+  return {
+    ticker: { type: "string" },
+    dimensionScores: {
+      type: "object",
+      additionalProperties: false,
+      required: PDC_DIMENSIONS.map((dimension) => dimension.id),
+      properties: dimensionScoreProperties()
+    },
+    unavailableDimensions: { type: "array", items: { type: "string", enum: PDC_DIMENSIONS.map((dimension) => dimension.id) } },
+    dataGaps: { type: "string" },
+    decision: { type: "string", enum: ["BUY", "WATCH", "HOLD", "SELL"] },
+    confidence: { type: "number", minimum: 0, maximum: 100 },
+    thesis: { type: "string" },
+    risk: { type: "string" },
+    exclude: { type: "boolean" }
+  };
+}
+
 function reviewSchema(name) {
   return {
     type: "json_schema",
@@ -249,14 +284,8 @@ function reviewSchema(name) {
           items: {
             type: "object",
             additionalProperties: false,
-            required: ["ticker", "score", "thesis", "risk", "exclude"],
-            properties: {
-              ticker: { type: "string" },
-              score: { type: "number" },
-              thesis: { type: "string" },
-              risk: { type: "string" },
-              exclude: { type: "boolean" }
-            }
+            required: ["ticker", "dimensionScores", "unavailableDimensions", "dataGaps", "decision", "confidence", "thesis", "risk", "exclude"],
+            properties: rankingSchemaProperties()
           }
         },
         summary: { type: "string" }
@@ -276,14 +305,8 @@ function portableReviewSchema() {
         items: {
           type: "object",
           additionalProperties: false,
-          required: ["ticker", "score", "thesis", "risk", "exclude"],
-          properties: {
-            ticker: { type: "string" },
-            score: { type: "number" },
-            thesis: { type: "string" },
-            risk: { type: "string" },
-            exclude: { type: "boolean" }
-          }
+          required: ["ticker", "dimensionScores", "unavailableDimensions", "dataGaps", "decision", "confidence", "thesis", "risk", "exclude"],
+          properties: rankingSchemaProperties()
         }
       },
       summary: { type: "string" }
@@ -297,12 +320,41 @@ function reviewInstructions(role, phase) {
     `Your role is ${role.name}; focus on ${role.focus}.`,
     "Use only the supplied factual candidate packet. Do not invent news, prices, financial results, or external facts.",
     "This is research support, not a trading instruction. Be conservative when evidence is weak.",
-    "Rank only supplied tickers. A high score means stronger research priority for the stated horizon, not a buy instruction.",
+    "Score every supplied ticker on all nine fixed dimensions: marketRegime 8%, trend 18%, breakout 15%, volumeFlow 12%, fundamental 10%, valuation 7%, catalyst 5%, overheat 10%, downsideRisk 15%.",
+    "Every available dimension uses one direction: 10 is best and 0 is worst. For overheat, 10 means healthy and not crowded; for downsideRisk, 10 means low downside risk.",
+    "If the supplied facts cannot support a fundamental, valuation, catalyst, or any other dimension, put its id in unavailableDimensions, set that dimension score to 0, and explain the missing data once in dataGaps. Never guess. The program ignores unavailable dimensions and calculates weighted scores.",
+    "Rank only supplied tickers. A high program-calculated score means stronger research priority for the stated horizon, not a buy instruction.",
     "Use exclude=true when the supplied packet itself shows evidence is inadequate or risk is too high.",
     phase === "round-two"
       ? "This is the second review. Challenge the first-pass consensus and look for reasons a candidate should not advance."
       : "This is the first independent review. Do not assume any other reviewer agrees with you."
   ].join(" ");
+}
+
+function normalizeDimensionScores(value, unavailableDimensions, dataGaps) {
+  const input = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  const unavailable = new Set((Array.isArray(unavailableDimensions) ? unavailableDimensions : []).filter((id) => PDC_DIMENSIONS.some((dimension) => dimension.id === id)));
+  const dimensionScores = {};
+  let coveredWeight = 0;
+  let weightedTotal = 0;
+  PDC_DIMENSIONS.forEach((dimension) => {
+    const score = finiteNumber(input[dimension.id]);
+    const available = !unavailable.has(dimension.id) && score !== null;
+    dimensionScores[dimension.id] = {
+      available,
+      score: available ? Math.max(0, Math.min(10, score)) : null,
+      evidence: available ? "Scored from the supplied fact packet." : cleanText(dataGaps || "N/A — supporting data was not supplied.", 220)
+    };
+    if (available) {
+      coveredWeight += dimension.weight;
+      weightedTotal += (dimensionScores[dimension.id].score / 10) * dimension.weight;
+    }
+  });
+  return {
+    dimensionScores,
+    coveragePct: coveredWeight,
+    weightedScore: coveredWeight ? Number(((weightedTotal / coveredWeight) * 100).toFixed(2)) : 0
+  };
 }
 
 function normalizeReview(value, candidates) {
@@ -314,10 +366,16 @@ function normalizeReview(value, candidates) {
       const ticker = cleanText(row?.ticker, 24).toUpperCase();
       if (!allowed.has(ticker) || seen.has(ticker)) return null;
       seen.add(ticker);
+      const dimensions = normalizeDimensionScores(row?.dimensionScores, row?.unavailableDimensions, row?.dataGaps);
       return {
         ticker,
         name: byTicker.get(ticker)?.name || ticker,
-        score: Math.max(0, Math.min(100, finiteNumber(row?.score, 0))),
+        score: dimensions.weightedScore,
+        coveragePct: dimensions.coveragePct,
+        dimensionScores: dimensions.dimensionScores,
+        dataGaps: cleanText(row?.dataGaps, 240),
+        decision: ["BUY", "WATCH", "HOLD", "SELL"].includes(row?.decision) ? row.decision : "WATCH",
+        confidence: Math.max(0, Math.min(100, finiteNumber(row?.confidence, 0))),
         thesis: cleanText(row?.thesis, 260),
         risk: cleanText(row?.risk, 220),
         exclude: Boolean(row?.exclude)
@@ -556,6 +614,8 @@ function consensusFromReviews(reviews, candidates) {
     excludedBy: 0,
     scoreTotal: 0,
     scoreCount: 0,
+    coverageTotal: 0,
+    dimensionValues: Object.fromEntries(PDC_DIMENSIONS.map((dimension) => [dimension.id, []])),
     theses: [],
     risks: []
   }]));
@@ -567,6 +627,11 @@ function consensusFromReviews(reviews, candidates) {
       row.excludedBy += ranking.exclude ? 1 : 0;
       row.scoreTotal += ranking.score;
       row.scoreCount += 1;
+      row.coverageTotal += ranking.coveragePct || 0;
+      PDC_DIMENSIONS.forEach((dimension) => {
+        const score = ranking.dimensionScores?.[dimension.id];
+        if (score?.available && score.score !== null) row.dimensionValues[dimension.id].push(score.score);
+      });
       if (ranking.thesis) row.theses.push({ roleId, text: ranking.thesis });
       if (ranking.risk) row.risks.push({ roleId, text: ranking.risk });
     });
@@ -574,7 +639,22 @@ function consensusFromReviews(reviews, candidates) {
   return [...rows.values()]
     .map((row) => ({
       ...row,
-      consensusScore: row.scoreCount ? Number((row.scoreTotal / row.scoreCount).toFixed(2)) : 0
+      consensusScore: row.scoreCount ? Number((row.scoreTotal / row.scoreCount).toFixed(2)) : 0,
+      averageCoveragePct: row.scoreCount ? Number((row.coverageTotal / row.scoreCount).toFixed(2)) : 0,
+      dimensionConsensus: Object.fromEntries(PDC_DIMENSIONS.map((dimension) => {
+        const values = row.dimensionValues[dimension.id].sort((left, right) => left - right);
+        const count = values.length;
+        const mean = count ? Number((values.reduce((total, score) => total + score, 0) / count).toFixed(2)) : null;
+        const median = !count ? null : Number((count % 2 ? values[(count - 1) / 2] : (values[count / 2 - 1] + values[count / 2]) / 2).toFixed(2));
+        return [dimension.id, {
+          count,
+          mean,
+          median,
+          min: count ? values[0] : null,
+          max: count ? values.at(-1) : null,
+          range: count ? Number((values.at(-1) - values[0]).toFixed(2)) : null
+        }];
+      }))
     }))
     .sort((left, right) => right.consensusScore - left.consensusScore || right.support - left.support || left.sourceRank - right.sourceRank);
 }
@@ -597,6 +677,8 @@ function decisionResult(run) {
       ticker: row.ticker,
       name: row.name,
       consensusScore: row.consensusScore,
+      averageCoveragePct: row.averageCoveragePct,
+      dimensionConsensus: row.dimensionConsensus,
       support: row.support,
       requiredSupport,
       sourceRank: row.sourceRank,
@@ -645,6 +727,11 @@ function publicReview(review) {
       ticker: row.ticker,
       name: row.name,
       score: row.score,
+      coveragePct: row.coveragePct,
+      dimensionScores: row.dimensionScores,
+      dataGaps: row.dataGaps,
+      decision: row.decision,
+      confidence: row.confidence,
       thesis: row.thesis,
       risk: row.risk,
       exclude: row.exclude
