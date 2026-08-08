@@ -2,14 +2,22 @@ const DECISION_API_ENDPOINT = "/stock-pdc/decision/api";
 const RUN_STORAGE_KEY = "turnpo-stock-pdc-decision-run";
 const PDC_DIMENSIONS = [
   { id: "marketRegime", short: "市场" },
-  { id: "trend", short: "趋势" },
-  { id: "breakout", short: "突破" },
-  { id: "volumeFlow", short: "量价" },
-  { id: "fundamental", short: "基本面" },
-  { id: "valuation", short: "估值" },
-  { id: "catalyst", short: "催化" },
-  { id: "overheat", short: "不过热" },
-  { id: "downsideRisk", short: "低风险" }
+  { id: "relativeStrength", short: "相对强" },
+  { id: "trendAcceleration", short: "趋势加速" },
+  { id: "breakoutConfirmation", short: "突破确认" },
+  { id: "volumeFlowConfirmation", short: "量价确认" },
+  { id: "catalystInformation", short: "短催化" },
+  { id: "entryTiming", short: "买点" },
+  { id: "overheatReversalRisk", short: "低反转" },
+  { id: "downsideFailureRisk", short: "低下行" }
+];
+
+const BACKGROUND_CHECKS = [
+  ["fundamentalRedFlag", "基本面红旗"],
+  ["valuationExtremeFlag", "估值极端"],
+  ["majorEventRisk", "重大事件"],
+  ["financialDistressFlag", "财务困境"],
+  ["stDelistingRisk", "ST/退市风险"]
 ];
 
 const steps = [
@@ -147,6 +155,25 @@ function dimensionMarkup(row) {
   return `<details class="decision-dimension-breakdown"><summary>九维评分 · 数据覆盖 ${escapeHtml(row.coveragePct ?? 0)}%</summary><div>${cells}</div></details>`;
 }
 
+function forwardPredictionCopyText(row) {
+  const prediction = row.forwardPrediction || {};
+  return [
+    `5D 上涨超过 +2% 概率：${prediction.prob5dUpGt2Pct ?? "N/A"}${prediction.prob5dUpGt2Pct === null || prediction.prob5dUpGt2Pct === undefined ? "" : "%"}`,
+    `预期 5D 收益：${prediction.expected5dReturnPct ?? "N/A"}${prediction.expected5dReturnPct === null || prediction.expected5dReturnPct === undefined ? "" : "%"}`,
+    `5D 下跌低于 -3% 概率：${prediction.prob5dDownLtMinus3Pct ?? "N/A"}${prediction.prob5dDownLtMinus3Pct === null || prediction.prob5dDownLtMinus3Pct === undefined ? "" : "%"}`,
+    `Forward Upside：${prediction.forwardUpsideScore ?? "N/A"}/100`
+  ].join("；");
+}
+
+function backgroundCheckCopyText(row) {
+  const flagged = BACKGROUND_CHECKS.filter(([id]) => row.backgroundChecks?.[id]).map(([, label]) => label);
+  return flagged.length ? `背景安全检查：发现 ${flagged.join("、")}` : "背景安全检查：冻结事实中未发现明确红旗（非完整尽调）";
+}
+
+function forwardPredictionMarkup(row) {
+  return `<span class="decision-forward-prediction">${escapeHtml(forwardPredictionCopyText(row))}<br><small>${escapeHtml(backgroundCheckCopyText(row))}</small></span>`;
+}
+
 function reviewCopyText(member, review, phase) {
   const phaseTitle = phase === "round-two" ? "第二轮最终复核" : "第一轮独立盲评";
   const rows = (review?.rankings || []).map((row) => [
@@ -154,6 +181,8 @@ function reviewCopyText(member, review, phase) {
     `理由：${row.thesis || "未提供"}`,
     `风险：${row.risk || "未提供"}`,
     `模型状态：${row.decision || "WATCH"}；信心：${row.confidence ?? 0}/100；数据覆盖：${row.coveragePct ?? 0}%`,
+    forwardPredictionCopyText(row),
+    backgroundCheckCopyText(row),
     dimensionCopyText(row),
     `排除：${row.exclude ? "是" : "否"}`
   ].join("\n")).join("\n\n");
@@ -185,7 +214,7 @@ function fullRunCopyText() {
     member.roundOne ? reviewCopyText(member, member.roundOne, "round-one") : "",
     member.roundTwo ? reviewCopyText(member, member.roundTwo, "round-two") : ""
   ]).filter(Boolean).join("\n\n---\n\n");
-  const final = (run.final || []).map((row) => `#${row.rank} ${row.name} (${row.ticker}) · ${row.consensusScore} 分 · ${row.support}/${row.requiredSupport || "—"} 共识\n数据覆盖：${row.averageCoveragePct ?? 0}%\n趋势共识：${row.dimensionConsensus?.trend?.median ?? "N/A"}/10；不过热共识：${row.dimensionConsensus?.overheat?.median ?? "N/A"}/10；低风险共识：${row.dimensionConsensus?.downsideRisk?.median ?? "N/A"}/10\n理由：${row.thesis}\n风险：${row.risk}`).join("\n\n");
+  const final = (run.final || []).map((row) => `#${row.rank} ${row.name} (${row.ticker}) · ${row.consensusScore} 分 · ${row.buyVotes ?? 0}/${row.requiredSupport || "—"} BUY 共识\n数据覆盖：${row.averageCoveragePct ?? 0}%\n5D 上涨超过 +2% 概率共识：${row.forwardPrediction?.prob5dUpGt2Pct ?? "N/A"}%；预期 5D 收益：${row.forwardPrediction?.expected5dReturnPct ?? "N/A"}%；5D 下跌低于 -3% 概率：${row.forwardPrediction?.prob5dDownLtMinus3Pct ?? "N/A"}%\n趋势加速共识：${row.dimensionConsensus?.trendAcceleration?.median ?? "N/A"}/10；买点共识：${row.dimensionConsensus?.entryTiming?.median ?? "N/A"}/10；低反转共识：${row.dimensionConsensus?.overheatReversalRisk?.median ?? "N/A"}/10\n理由：${row.thesis}\n风险：${row.risk}`).join("\n\n");
   return [
     "# Stock PDC 本轮决策包",
     `日期：${run.date}；Run：${run.id}`,
@@ -234,7 +263,7 @@ function reviewPanel(member, phase, review) {
       <div><strong>${title}</strong><p>${escapeHtml(review.summary || "该模型已提交完整评分。")}</p></div>
       <button class="decision-member-copy" type="button" data-copy-member="${escapeHtml(member.id)}" data-copy-phase="${phase}">复制给 GPT</button>
     </div>
-    <ol>${review.rankings.slice(0, 30).map((row) => `<li><b>#${escapeHtml(row.rank)}</b><span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span><em>${escapeHtml(row.score)} 分</em><p>${escapeHtml(row.thesis)}<br><small>${escapeHtml(row.decision || "WATCH")} · 信心 ${escapeHtml(row.confidence ?? 0)}/100 · 风险：${escapeHtml(row.risk)}${row.exclude ? " · 建议排除" : ""}</small>${dimensionMarkup(row)}</p></li>`).join("")}</ol>
+    <ol>${review.rankings.slice(0, 30).map((row) => `<li><b>#${escapeHtml(row.rank)}</b><span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span><em>${escapeHtml(row.score)} 分</em><p>${escapeHtml(row.thesis)}<br><small>${escapeHtml(row.decision || "WATCH")} · 信心 ${escapeHtml(row.confidence ?? 0)}/100 · 风险：${escapeHtml(row.risk)}${row.exclude ? " · 建议排除" : ""}</small>${forwardPredictionMarkup(row)}${dimensionMarkup(row)}</p></li>`).join("")}</ol>
   </section>`;
 }
 
@@ -364,9 +393,9 @@ function renderResult() {
     <div class="decision-placeholder-row">
       <strong>#${escapeHtml(row.rank)}</strong>
       <span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span>
-      <small>${escapeHtml(row.consensusScore)} 分 · ${escapeHtml(row.support)}/${escapeHtml(row.requiredSupport || "—")} 共识门槛</small>
+      <small>${escapeHtml(row.consensusScore)} 分 · ${escapeHtml(row.buyVotes ?? 0)}/${escapeHtml(row.requiredSupport || "—")} BUY 共识 · 5D↑&gt;+2% ${escapeHtml(row.forwardPrediction?.prob5dUpGt2Pct ?? "N/A")}%</small>
     </div>
-  `).join("") : `<div class="stock-empty">没有候选通过当前风险闸门。</div>`;
+  `).join("") : `<div class="stock-empty">本轮没有股票获得足够的短期 BUY 共识；NO BUY 是正常结果。</div>`;
 }
 
 function render() {

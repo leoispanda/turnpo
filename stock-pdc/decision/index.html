@@ -31,7 +31,7 @@
         <div>
           <div class="decision-kicker"><span></span> 多模型研究编排</div>
           <h1 id="decisionTitle">今日选股决策</h1>
-          <p>从一份锁定的数据开始，依次听取五位独立 PDC 的判断，再用共识与风险闸门形成研究名单。</p>
+          <p>目标只有一个：判断现在买入后，未来 5 个交易日能否出现可交易的上涨。五位独立 PDC 只读取同一份锁定事实包。</p>
           <div class="decision-model-picker">
             <span>本轮独立 PDC</span>
             <strong id="decisionModelSelect">正在读取模型配置…</strong>
@@ -66,8 +66,8 @@
 
       <section class="decision-reading-guide" aria-label="本页阅读方式">
         <article><span>01</span><div><strong>先确认事实</strong><small>数据快照一经开始便锁定，所有模型只读这一份。</small></div></article>
-        <article><span>02</span><div><strong>再听模型判断</strong><small>五位模型各自独立完成首轮与复核，不互相影响。</small></div></article>
-        <article><span>03</span><div><strong>最后审阅结论</strong><small>共识、风险与最终名单在底部汇总，也可复制给 GPT 讨论。</small></div></article>
+        <article><span>02</span><div><strong>再看未来 5 日</strong><small>五位模型独立判断短期上涨概率、当前买点与失败风险。</small></div></article>
+        <article><span>03</span><div><strong>最后审阅结论</strong><small>只有获得 BUY 共识的股票才会出现；NO BUY 也是正常结果。</small></div></article>
       </section>
 
       <section class="decision-data-contract" aria-labelledby="dataContractTitle">
@@ -75,7 +75,7 @@
           <div>
             <span class="decision-section-index">01 · 固定事实</span>
             <h2 id="dataContractTitle">这轮决策依据什么数据？</h2>
-            <p>所有模型只读取同一份冻结事实包。九维评分均为 10 分最好；缺失数据必须标记 N/A。</p>
+            <p>所有模型只读取同一份冻结事实包。九维只服务于未来 5 日上涨概率与当前买点；10 分均代表现在买入更有利。</p>
           </div>
           <span class="decision-data-lock">冻结后不可替换</span>
         </div>
@@ -87,6 +87,28 @@
         </div>
       </section>
 
+      <section class="decision-scoring-contract" aria-labelledby="scoringContractTitle">
+        <div class="stock-section-head">
+          <div>
+            <span class="decision-section-index">短期评分准则</span>
+            <h2 id="scoringContractTitle">现在买入，未来 5 日会怎样？</h2>
+            <p>九维总分只衡量短周期的 Forward Upside。基本面与估值不加分，只在冻结事实出现明确风险时作为背景安全检查。</p>
+          </div>
+          <span class="decision-data-lock">10 分 = 更有利于现在买入</span>
+        </div>
+        <ol class="decision-score-grid">
+          <li><strong>市场环境</strong><span>10%</span><small>市场和板块是否支持做多</small></li>
+          <li><strong>相对强度</strong><span>15%</span><small>是否领先于指数和行业</small></li>
+          <li><strong>趋势加速</strong><span>15%</span><small>趋势在增强还是衰竭</small></li>
+          <li><strong>突破确认</strong><span>15%</span><small>当前突破是否有效且站稳</small></li>
+          <li><strong>量价确认</strong><span>12%</span><small>真实买盘是否持续跟进</small></li>
+          <li><strong>短期催化</strong><span>10%</span><small>必须有冻结事实支持</small></li>
+          <li><strong>当前买点</strong><span>10%</span><small>好股票不等于现在适合买</small></li>
+          <li><strong>低反转风险</strong><span>7%</span><small>不过热、不过度拥挤</small></li>
+          <li><strong>低下行风险</strong><span>6%</span><small>失败时损失是否可控</small></li>
+        </ol>
+      </section>
+
       <section class="decision-workspace" aria-labelledby="progressTitle">
         <div class="stock-section-head">
           <div>
@@ -94,7 +116,7 @@
             <h2 id="progressTitle">现在走到哪一步？</h2>
             <p id="progressCopy" aria-live="polite">点击开始后，下面会按“准备 → 独立判断 → 共识交付”留下每一步实际产物。</p>
           </div>
-          <span class="decision-progress-count" id="progressCount">0 / 6</span>
+          <span class="decision-progress-count" id="progressCount">0 / 7</span>
         </div>
         <ol class="decision-steps" id="decisionSteps"></ol>
       </section>
@@ -104,7 +126,7 @@
           <div>
             <span class="decision-section-index">03 · 五位独立 PDC</span>
             <h2 id="modelsTitle">每位委员怎么说？</h2>
-            <p>每个模型是一位完整 PDC 委员。展开后可分别查看第一轮做了什么、最终复核结论，以及一键复制给你的 GPT。</p>
+            <p>每个模型是一位完整 PDC 委员。展开可查看其短期 Forward Upside 预测、当前买点评分、背景安全检查与独立结论。</p>
           </div>
           <span class="decision-blind-badge">盲评已启用</span>
         </div>
@@ -116,14 +138,14 @@
           <div>
             <span class="decision-section-index">04 · 共识交付</span>
             <h2 id="resultTitle">本次最终研究名单</h2>
-            <p>本次 Run 的实际候选、共识与风险记录。确认后才会写入当前 PDC 的当天历史。</p>
+            <p>只展示获得足够短期 BUY 共识的候选；若没有，系统会明确给出 NO BUY。确认后才会写入当天历史。</p>
           </div>
           <button class="stock-primary-btn decision-publish-btn" id="publishDecision" type="button" hidden>发布到 PDC</button>
         </div>
         <div class="decision-result-summary">
           <article><span>候选池</span><strong>Top 20</strong><small>来自各模型第一轮独立结论</small></article>
-          <article><span>第二轮复核</span><strong>模型 × Top 20</strong><small>各模型重新给出自己的判断</small></article>
-          <article><span>通过风控</span><strong>≤ 10</strong><small>风险不足时不会强行补足</small></article>
+          <article><span>第二轮复核</span><strong>模型 × Top 20</strong><small>各模型重新给出自己的独立判断</small></article>
+          <article><span>短期 BUY 共识</span><strong>0–10</strong><small>不满足门槛时不会强行补足</small></article>
         </div>
         <div class="decision-placeholder-list" id="resultList"></div>
         <p class="decision-research-note">研究工具，不构成交易指令。发布会为该日期追加一份不可覆盖的 PDC 决策记录；历史 Run 与历史日期均会保留。</p>

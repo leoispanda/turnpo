@@ -12,6 +12,7 @@ const DEFAULT_CLAUDE_STOCK_MODEL = "claude-fable-5";
 const DEFAULT_DEEPSEEK_STOCK_MODEL = "deepseek-v4-pro";
 const DEFAULT_KIMI_STOCK_MODEL = "kimi-k3";
 const DEFAULT_GEMINI_STOCK_MODEL = "gemini-3.1-pro-preview";
+const PDC_SCORING_SYSTEM = "short-term-forward-upside-v2";
 const MAX_DECISION_BODY_BYTES = 96 * 1024;
 const MAX_CANDIDATES = 30;
 const MAX_RUNS_PER_DAY = 8;
@@ -28,19 +29,27 @@ const REVIEW_ROLES = [
 const FULL_PDC_ROLE = {
   id: "full-pdc",
   name: "完整 PDC 决策委员",
-  focus: "独立完成趋势、量价、风险、过热、反方证伪与证据一致性的全维度评分，并给出完整 Top 30 结论"
+  focus: "独立评估当前买入后未来 5 个交易日的上涨概率、买点时机、失败风险与证据一致性，并给出完整 Top 30 结论"
 };
 
 const PDC_DIMENSIONS = [
-  { id: "marketRegime", label: "Market Regime", weight: 8 },
-  { id: "trend", label: "Trend", weight: 18 },
-  { id: "breakout", label: "Breakout Quality", weight: 15 },
-  { id: "volumeFlow", label: "Volume & Flow", weight: 12 },
-  { id: "fundamental", label: "Fundamental Quality", weight: 10 },
-  { id: "valuation", label: "Valuation", weight: 7 },
-  { id: "catalyst", label: "Catalyst", weight: 5 },
-  { id: "overheat", label: "Overheat / Crowding", weight: 10 },
-  { id: "downsideRisk", label: "Downside Risk", weight: 15 }
+  { id: "marketRegime", label: "Market Regime", weight: 10 },
+  { id: "relativeStrength", label: "Relative Strength", weight: 15 },
+  { id: "trendAcceleration", label: "Trend Acceleration", weight: 15 },
+  { id: "breakoutConfirmation", label: "Breakout Confirmation", weight: 15 },
+  { id: "volumeFlowConfirmation", label: "Volume & Flow Confirmation", weight: 12 },
+  { id: "catalystInformation", label: "Catalyst / Information", weight: 10 },
+  { id: "entryTiming", label: "Entry Timing", weight: 10 },
+  { id: "overheatReversalRisk", label: "Overheat / Reversal Risk", weight: 7 },
+  { id: "downsideFailureRisk", label: "Downside / Failure Risk", weight: 6 }
+];
+
+const BACKGROUND_CHECKS = [
+  "fundamentalRedFlag",
+  "valuationExtremeFlag",
+  "majorEventRisk",
+  "financialDistressFlag",
+  "stDelistingRisk"
 ];
 
 function configuredAccessCode(env) {
@@ -253,6 +262,19 @@ function dimensionScoreProperties() {
   return Object.fromEntries(PDC_DIMENSIONS.map((dimension) => [dimension.id, { type: "number", minimum: 0, maximum: 10 }]));
 }
 
+function backgroundCheckProperties() {
+  return Object.fromEntries(BACKGROUND_CHECKS.map((id) => [id, { type: "boolean" }]));
+}
+
+function forwardPredictionProperties() {
+  return {
+    prob5dUpGt2Pct: { type: "number", minimum: 0, maximum: 100 },
+    expected5dReturnPct: { type: "number", minimum: -100, maximum: 100 },
+    prob5dDownLtMinus3Pct: { type: "number", minimum: 0, maximum: 100 },
+    forwardUpsideScore: { type: "number", minimum: 0, maximum: 100 }
+  };
+}
+
 function rankingSchemaProperties() {
   return {
     ticker: { type: "string" },
@@ -264,6 +286,18 @@ function rankingSchemaProperties() {
     },
     unavailableDimensions: { type: "array", items: { type: "string", enum: PDC_DIMENSIONS.map((dimension) => dimension.id) } },
     dataGaps: { type: "string" },
+    backgroundChecks: {
+      type: "object",
+      additionalProperties: false,
+      required: BACKGROUND_CHECKS,
+      properties: backgroundCheckProperties()
+    },
+    forwardPrediction: {
+      type: "object",
+      additionalProperties: false,
+      required: ["prob5dUpGt2Pct", "expected5dReturnPct", "prob5dDownLtMinus3Pct", "forwardUpsideScore"],
+      properties: forwardPredictionProperties()
+    },
     decision: { type: "string", enum: ["BUY", "WATCH", "HOLD", "SELL"] },
     confidence: { type: "number", minimum: 0, maximum: 100 },
     thesis: { type: "string" },
@@ -289,7 +323,7 @@ function reviewSchema(name) {
           items: {
             type: "object",
             additionalProperties: false,
-            required: ["ticker", "dimensionScores", "unavailableDimensions", "dataGaps", "decision", "confidence", "thesis", "risk", "exclude"],
+            required: ["ticker", "dimensionScores", "unavailableDimensions", "dataGaps", "backgroundChecks", "forwardPrediction", "decision", "confidence", "thesis", "risk", "exclude"],
             properties: rankingSchemaProperties()
           }
         },
@@ -310,7 +344,7 @@ function portableReviewSchema() {
         items: {
           type: "object",
           additionalProperties: false,
-          required: ["ticker", "dimensionScores", "unavailableDimensions", "dataGaps", "decision", "confidence", "thesis", "risk", "exclude"],
+          required: ["ticker", "dimensionScores", "unavailableDimensions", "dataGaps", "backgroundChecks", "forwardPrediction", "decision", "confidence", "thesis", "risk", "exclude"],
           properties: rankingSchemaProperties()
         }
       },
@@ -325,11 +359,14 @@ function reviewInstructions(role, phase) {
     `Your role is ${role.name}; focus on ${role.focus}.`,
     "Use only the supplied factual candidate packet. Do not invent news, prices, financial results, or external facts.",
     "This is research support, not a trading instruction. Be conservative when evidence is weak.",
-    "Score every supplied ticker on all nine fixed dimensions: marketRegime 8%, trend 18%, breakout 15%, volumeFlow 12%, fundamental 10%, valuation 7%, catalyst 5%, overheat 10%, downsideRisk 15%.",
-    "Every available dimension uses one direction: 10 is best and 0 is worst. For overheat, 10 means healthy and not crowded; for downsideRisk, 10 means low downside risk.",
-    "If the supplied facts cannot support a fundamental, valuation, catalyst, or any other dimension, put its id in unavailableDimensions, set that dimension score to 0, and explain the missing data once in dataGaps. Never guess. The program ignores unavailable dimensions and calculates weighted scores.",
-    "Rank only supplied tickers. A high program-calculated score means stronger research priority for the stated horizon, not a buy instruction.",
-    "Use exclude=true when the supplied packet itself shows evidence is inadequate or risk is too high.",
+    "Your sole task is short-term forward upside: based only on the frozen fact package, determine whether buying at the current reference price is likely to produce a meaningful positive return in the next 5 trading days. Do not evaluate whether this is a good company or a good long-term investment.",
+    "Penalize stocks likely to move sideways even when long-term quality or historical trend is high. A strong historical trend alone is insufficient: judge whether forward momentum remains from this specific entry point.",
+    "Score every supplied ticker on the nine fixed short-term dimensions: marketRegime 10%, relativeStrength 15%, trendAcceleration 15%, breakoutConfirmation 15%, volumeFlowConfirmation 12%, catalystInformation 10%, entryTiming 10%, overheatReversalRisk 7%, downsideFailureRisk 6%.",
+    "Every available dimension uses one direction: 10 is most favorable for buying now and seeing a continued short-term rise; 0 is least favorable. For overheatReversalRisk, 10 means not overheated and low reversal risk. For downsideFailureRisk, 10 means low downside and failure risk.",
+    "CatalystInformation is only a dated or timely short-term price catalyst evidenced in the frozen packet. If it or any other dimension lacks factual support, put its id in unavailableDimensions, set that dimension score to 0, and explain the missing data once in dataGaps. Never guess or invent news. The program ignores unavailable dimensions and calculates weighted scores.",
+    "Fundamental and valuation are not scored. Return backgroundChecks only to flag clear, fact-supported red flags; false means no flag was evidenced in the supplied packet, not that the company has passed a full diligence review. Never use a low PE or long-term company quality to raise the short-term score.",
+    "For every ticker return forwardPrediction: probability in percent that 5D return exceeds +2%, expected 5D return percent, probability in percent that 5D return is below -3%, and a 0-100 forwardUpsideScore. These are forecasts from the frozen facts, not known outcomes.",
+    "Rank only supplied tickers. BUY means a favorable current entry with credible 5D forward upside; WATCH, HOLD, and SELL must be used when that threshold is not met. Use exclude=true when the supplied packet itself shows evidence is inadequate or risk is too high.",
     phase === "round-two"
       ? "This is the second review. Challenge the first-pass consensus and look for reasons a candidate should not advance."
       : "This is the first independent review. Do not assume any other reviewer agrees with you."
@@ -362,6 +399,46 @@ function normalizeDimensionScores(value, unavailableDimensions, dataGaps) {
   };
 }
 
+function normalizeBackgroundChecks(value) {
+  const input = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  return Object.fromEntries(BACKGROUND_CHECKS.map((id) => [id, Boolean(input[id])]));
+}
+
+function normalizeForwardPrediction(value) {
+  const input = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  const percentage = (key) => {
+    const number = finiteNumber(input[key]);
+    return number === null ? null : Number(Math.max(0, Math.min(100, number)).toFixed(2));
+  };
+  const returnPct = finiteNumber(input.expected5dReturnPct);
+  return {
+    prob5dUpGt2Pct: percentage("prob5dUpGt2Pct"),
+    expected5dReturnPct: returnPct === null ? null : Number(Math.max(-100, Math.min(100, returnPct)).toFixed(2)),
+    prob5dDownLtMinus3Pct: percentage("prob5dDownLtMinus3Pct"),
+    forwardUpsideScore: percentage("forwardUpsideScore")
+  };
+}
+
+function pendingForwardOutcome(referenceDate) {
+  return {
+    status: "PENDING_PRICE_DATA",
+    referenceDate,
+    referencePrice: null,
+    returnsPct: { day1: null, day3: null, day5: null, day10: null },
+    excursionsPct: {
+      day5: { maxFavorable: null, maxAdverse: null },
+      day10: { maxFavorable: null, maxAdverse: null }
+    },
+    labels: { success5dUpGt2Pct: null }
+  };
+}
+
+function attachPendingForwardOutcomes(review, referenceDate) {
+  if (!review?.rankings?.length) return review;
+  review.rankings = review.rankings.map((row) => ({ ...row, forwardOutcome: pendingForwardOutcome(referenceDate) }));
+  return review;
+}
+
 function normalizeReview(value, candidates) {
   const allowed = new Set(candidates.map((candidate) => candidate.ticker));
   const byTicker = new Map(candidates.map((candidate) => [candidate.ticker, candidate]));
@@ -379,6 +456,8 @@ function normalizeReview(value, candidates) {
         coveragePct: dimensions.coveragePct,
         dimensionScores: dimensions.dimensionScores,
         dataGaps: cleanText(row?.dataGaps, 240),
+        backgroundChecks: normalizeBackgroundChecks(row?.backgroundChecks),
+        forwardPrediction: normalizeForwardPrediction(row?.forwardPrediction),
         decision: ["BUY", "WATCH", "HOLD", "SELL"].includes(row?.decision) ? row.decision : "WATCH",
         confidence: Math.max(0, Math.min(100, finiteNumber(row?.confidence, 0))),
         thesis: cleanText(row?.thesis, 260),
@@ -411,7 +490,7 @@ async function openAiReview(env, modelProfile, role, candidates, phase) {
         instructions: reviewInstructions(role, phase),
         input: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`,
         text: { format: reviewSchema(`stock_pdc_${phase}_${role.id}`) },
-        max_output_tokens: 5000,
+        max_output_tokens: 8000,
         reasoning: { mode: "pro", effort: "max" }
       })
     });
@@ -441,7 +520,7 @@ async function claudeReview(env, modelProfile, role, candidates, phase) {
       signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
-        max_tokens: 5000,
+        max_tokens: 8000,
         system: reviewInstructions(role, phase),
         messages: [{
           role: "user",
@@ -553,7 +632,7 @@ async function deepseekReview(env, modelProfile, role, candidates, phase) {
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
         ],
         response_format: { type: "json_object" },
-        max_tokens: 5000
+        max_tokens: 8000
       })
     });
     const data = await response.json().catch(() => ({}));
@@ -587,7 +666,7 @@ async function kimiReview(env, modelProfile, role, candidates, phase) {
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
         ],
         response_format: { type: "json_object" },
-        max_completion_tokens: 5000
+        max_completion_tokens: 8000
       })
     });
     const data = await response.json().catch(() => ({}));
@@ -800,6 +879,14 @@ function consensusFromReviews(reviews, candidates) {
     scoreCount: 0,
     coverageTotal: 0,
     dimensionValues: Object.fromEntries(PDC_DIMENSIONS.map((dimension) => [dimension.id, []])),
+    predictionValues: {
+      prob5dUpGt2Pct: [],
+      expected5dReturnPct: [],
+      prob5dDownLtMinus3Pct: [],
+      forwardUpsideScore: []
+    },
+    backgroundCheckVotes: Object.fromEntries(BACKGROUND_CHECKS.map((id) => [id, 0])),
+    buyVotes: 0,
     theses: [],
     risks: []
   }]));
@@ -812,9 +899,16 @@ function consensusFromReviews(reviews, candidates) {
       row.scoreTotal += ranking.score;
       row.scoreCount += 1;
       row.coverageTotal += ranking.coveragePct || 0;
+      if (ranking.decision === "BUY") row.buyVotes += 1;
       PDC_DIMENSIONS.forEach((dimension) => {
         const score = ranking.dimensionScores?.[dimension.id];
         if (score?.available && score.score !== null) row.dimensionValues[dimension.id].push(score.score);
+      });
+      Object.entries(ranking.forwardPrediction || {}).forEach(([key, value]) => {
+        if (Array.isArray(row.predictionValues[key]) && Number.isFinite(value)) row.predictionValues[key].push(value);
+      });
+      BACKGROUND_CHECKS.forEach((id) => {
+        if (ranking.backgroundChecks?.[id]) row.backgroundCheckVotes[id] += 1;
       });
       if (ranking.thesis) row.theses.push({ roleId, text: ranking.thesis });
       if (ranking.risk) row.risks.push({ roleId, text: ranking.risk });
@@ -838,7 +932,11 @@ function consensusFromReviews(reviews, candidates) {
           max: count ? values.at(-1) : null,
           range: count ? Number((values.at(-1) - values[0]).toFixed(2)) : null
         }];
-      }))
+      })),
+      forwardPredictionConsensus: Object.fromEntries(Object.entries(row.predictionValues).map(([key, values]) => [key,
+        values.length ? Number((values.reduce((total, value) => total + value, 0) / values.length).toFixed(2)) : null
+      ])),
+      backgroundChecks: Object.fromEntries(BACKGROUND_CHECKS.map((id) => [id, row.backgroundCheckVotes[id] > 0]))
     }))
     .sort((left, right) => right.consensusScore - left.consensusScore || right.support - left.support || left.sourceRank - right.sourceRank);
 }
@@ -855,6 +953,8 @@ function decisionResult(run) {
   const consensus = consensusFromReviews(reviews, candidates);
   return consensus
     .filter((row) => row.support >= requiredSupport && row.excludedBy < requiredSupport)
+    .filter((row) => row.buyVotes >= requiredSupport)
+    .filter((row) => !row.backgroundChecks.financialDistressFlag && !row.backgroundChecks.stDelistingRisk)
     .slice(0, 10)
     .map((row, index) => ({
       rank: index + 1,
@@ -863,11 +963,15 @@ function decisionResult(run) {
       consensusScore: row.consensusScore,
       averageCoveragePct: row.averageCoveragePct,
       dimensionConsensus: row.dimensionConsensus,
+      forwardPrediction: row.forwardPredictionConsensus,
+      backgroundChecks: row.backgroundChecks,
       support: row.support,
       requiredSupport,
+      buyVotes: row.buyVotes,
       sourceRank: row.sourceRank,
       thesis: row.theses[0]?.text || "Evidence review completed.",
       risk: row.risks[0]?.text || "Review the full run before any action.",
+      forwardOutcome: pendingForwardOutcome(run.date),
       action: "RESEARCH_REVIEW"
     }));
 }
@@ -914,6 +1018,9 @@ function publicReview(review) {
       coveragePct: row.coveragePct,
       dimensionScores: row.dimensionScores,
       dataGaps: row.dataGaps,
+      backgroundChecks: row.backgroundChecks,
+      forwardPrediction: row.forwardPrediction,
+      forwardOutcome: row.forwardOutcome || null,
       decision: row.decision,
       confidence: row.confidence,
       thesis: row.thesis,
@@ -937,6 +1044,7 @@ function publicRun(run) {
     createdAt: run.createdAt,
     updatedAt: run.updatedAt,
     model: committee ? "MULTI_MODEL_PDC" : modelProfile.model,
+    scoringSystem: run.scoringSystem || "legacy-nine-dimension-pdc",
     modelProfile: modelProfile ? publicModelProfile(modelProfile) : null,
     status: run.status,
     snapshot: {
@@ -1071,6 +1179,7 @@ async function createRun(request, env) {
     createdAt: now,
     updatedAt: now,
     model: "MULTI_MODEL_PDC",
+    scoringSystem: PDC_SCORING_SYSTEM,
     modelProfile: null,
     status: "SNAPSHOT_LOCKED",
     snapshot,
@@ -1103,7 +1212,7 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
     for (const member of members) {
       if (member[reviewKey]?.rankings?.length) continue;
       run.status = `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_IN_PROGRESS`;
-      member[reviewKey] = await modelReview(env, member.profile, FULL_PDC_ROLE, candidates, stage);
+      member[reviewKey] = attachPendingForwardOutcomes(await modelReview(env, member.profile, FULL_PDC_ROLE, candidates, stage), run.date);
       // Persist one independent PDC conclusion at a time for safe resume after a timeout.
       await saveRun(decisionStore(env), run);
     }
@@ -1153,7 +1262,7 @@ async function advanceRun(env, runId, stage, requestedRoleId = "") {
       for (const role of roles) {
         if (run[reviewKey][role.id]) continue;
         run.status = `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_IN_PROGRESS`;
-        run[reviewKey][role.id] = await modelReview(env, modelProfile, role, candidates, stage);
+        run[reviewKey][role.id] = attachPendingForwardOutcomes(await modelReview(env, modelProfile, role, candidates, stage), run.date);
         // Save after every individual reviewer so a timeout or refresh can resume safely.
         await saveRun(store, run);
       }
@@ -1190,6 +1299,7 @@ async function publishRun(env, runId) {
     date: run.date,
     runId: run.id,
     model: isCommitteeRun(run) ? "Multi-model PDC" : run.modelProfile?.label || run.model,
+    scoringSystem: run.scoringSystem || "legacy-nine-dimension-pdc",
     dataSnapshot: run.snapshot.provenance || null,
     publishedAt,
     decisions: run.final,

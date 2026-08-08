@@ -41,20 +41,21 @@ const candidates = Array.from({ length: 8 }, (_, index) => ({
 }));
 
 const originalFetch = globalThis.fetch;
+let openAiRequest = null;
 let claudeRequest = null;
 let geminiRequest = null;
 let deepseekRequest = null;
 let kimiRequest = null;
 const mockDimensionScores = (index) => ({
   marketRegime: 7,
-  trend: Math.max(5, 9 - index / 4),
-  breakout: 8,
-  volumeFlow: 7,
-  fundamental: 0,
-  valuation: 0,
-  catalyst: 0,
-  overheat: 6,
-  downsideRisk: 6
+  relativeStrength: 8,
+  trendAcceleration: Math.max(5, 9 - index / 4),
+  breakoutConfirmation: 8,
+  volumeFlowConfirmation: 7,
+  catalystInformation: 0,
+  entryTiming: 8,
+  overheatReversalRisk: 6,
+  downsideFailureRisk: 7
 });
 globalThis.fetch = async (_url, options) => {
   const request = JSON.parse(options.body);
@@ -83,9 +84,22 @@ globalThis.fetch = async (_url, options) => {
     rankings: packet.map((candidate, index) => ({
       ticker: candidate.ticker,
       dimensionScores: mockDimensionScores(index),
-      unavailableDimensions: ["fundamental", "valuation", "catalyst"],
-      dataGaps: "N/A — no fundamental, valuation, or catalyst data supplied.",
-      decision: "WATCH",
+      unavailableDimensions: ["catalystInformation"],
+      dataGaps: "N/A — no short-term catalyst data supplied.",
+      backgroundChecks: {
+        fundamentalRedFlag: false,
+        valuationExtremeFlag: false,
+        majorEventRisk: false,
+        financialDistressFlag: index === 7,
+        stDelistingRisk: false
+      },
+      forwardPrediction: {
+        prob5dUpGt2Pct: 68,
+        expected5dReturnPct: 3.2,
+        prob5dDownLtMinus3Pct: 12,
+        forwardUpsideScore: 76
+      },
+      decision: "BUY",
       confidence: 72,
       thesis: `${candidate.name} has supplied evidence.`,
       risk: `${candidate.name} requires risk review.`,
@@ -109,6 +123,7 @@ globalThis.fetch = async (_url, options) => {
     kimiRequest = { request, headers: options.headers };
     return new Response(JSON.stringify({ choices: [{ message: { content: JSON.stringify(review) } }] }), { status: 200, headers: { "content-type": "application/json" } });
   }
+  openAiRequest = { request, headers: options.headers };
   return new Response(JSON.stringify({ output_text: JSON.stringify(review) }), { status: 200, headers: { "content-type": "application/json" } });
 };
 
@@ -197,6 +212,7 @@ try {
   payload = await response.json();
   const runId = payload.run.id;
   assert.equal(payload.run.model, "MULTI_MODEL_PDC");
+  assert.equal(payload.run.scoringSystem, "short-term-forward-upside-v2");
   assert.equal(payload.run.committeeMode, true);
   assert.equal(payload.run.members.length, 5);
   assert.equal(payload.run.members[0].id, "gpt-5.6-sol");
@@ -210,8 +226,12 @@ try {
   }
   assert.equal(payload.run.roundOneComplete, true);
   assert.equal(payload.run.members[0].roundOne.rankings.length, 8);
-  assert.equal(payload.run.members[0].roundOne.rankings[0].dimensionScores.trend.score, 9);
-  assert.equal(payload.run.members[0].roundOne.rankings[0].dimensionScores.fundamental.available, false);
+  assert.equal(payload.run.members[0].roundOne.rankings[0].dimensionScores.trendAcceleration.score, 9);
+  assert.equal(payload.run.members[0].roundOne.rankings[0].dimensionScores.catalystInformation.available, false);
+  assert.equal(payload.run.members[0].roundOne.rankings[0].forwardPrediction.prob5dUpGt2Pct, 68);
+  assert.equal(payload.run.members[0].roundOne.rankings[0].forwardOutcome.returnsPct.day1, null);
+  assert.ok(openAiRequest.request.instructions.includes("next 5 trading days"));
+  assert.ok(openAiRequest.request.text.format.schema.properties.rankings.items.properties.forwardPrediction);
 
   for (const stage of ["merge"]) {
     response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/${stage}`, {})));
@@ -228,14 +248,16 @@ try {
   assert.equal(response.status, 200, "risk-check should succeed");
   payload = await response.json();
   assert.equal(payload.run.status, "READY_TO_PUBLISH");
-  assert.equal(payload.run.final.length, 8);
-  assert.equal(payload.run.final[0].dimensionConsensus.trend.count, 5);
+  assert.equal(payload.run.final.length, 7, "a fact-supported financial-distress flag must keep a ticker out of short-term BUY results");
+  assert.equal(payload.run.final[0].dimensionConsensus.trendAcceleration.count, 5);
+  assert.equal(payload.run.final[0].forwardPrediction.prob5dUpGt2Pct, 68);
+  assert.equal(payload.run.final[0].forwardOutcome.returnsPct.day5, null);
 
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/publish`, {})));
   assert.equal(response.status, 200);
   payload = await response.json();
   assert.equal(payload.run.status, "PUBLISHED");
-  assert.equal(payload.current.decisions.length, 8);
+  assert.equal(payload.current.decisions.length, 7);
   assert.equal(payload.current.dataSnapshot.snapshotId, "pdc-2026-08-07-test");
 
   response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/history")));
@@ -253,6 +275,8 @@ try {
   assert.equal(claudeRequest.request.model, "claude-test-model");
   assert.equal(claudeRequest.headers["x-api-key"], "claude-test-key");
   assert.equal(claudeRequest.headers["anthropic-version"], "2023-06-01");
+  assert.ok(claudeRequest.request.system.includes("short-term forward upside"));
+  assert.ok(claudeRequest.request.output_config.format.schema.properties.rankings.items.properties.backgroundChecks);
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["gemini_api_pdc"]))));
   assert.equal(response.status, 200);
@@ -263,6 +287,7 @@ try {
   assert.equal(response.status, 200, "Gemini reviewer should succeed");
   assert.equal(geminiRequest.headers["x-goog-api-key"], "gemini-test-key");
   assert.equal(geminiRequest.request.generationConfig.responseMimeType, "application/json");
+  assert.ok(geminiRequest.request.generationConfig.responseSchema.properties.rankings.items.properties.forwardPrediction);
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["deepseek_api_pdc"]))));
   assert.equal(response.status, 200);
@@ -283,7 +308,7 @@ try {
   assert.equal(response.status, 200, "Kimi reviewer should succeed");
   assert.equal(kimiRequest.headers.authorization, "Bearer kimi-test-key");
   assert.equal(kimiRequest.request.response_format.type, "json_object");
-  assert.equal(kimiRequest.request.max_completion_tokens, 5000);
+  assert.equal(kimiRequest.request.max_completion_tokens, 8000);
 } finally {
   globalThis.fetch = originalFetch;
 }
