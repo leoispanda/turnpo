@@ -30,8 +30,8 @@
       <section class="decision-command" aria-labelledby="decisionTitle">
         <div>
           <div class="decision-kicker"><span></span> 多模型研究编排</div>
-          <h1 id="decisionTitle">生成今日决策</h1>
-          <p>锁定一份研究快照，让每个已加入的模型作为一个完整 PDC 独立盲评、复核，再由共识闸门形成最多 10 个研究席位。</p>
+          <h1 id="decisionTitle">今日选股决策</h1>
+          <p>从一份锁定的数据开始，依次听取五位独立 PDC 的判断，再用共识与风险闸门形成研究名单。</p>
           <div class="decision-model-picker">
             <span>本轮独立 PDC</span>
             <strong id="decisionModelSelect">正在读取模型配置…</strong>
@@ -64,11 +64,18 @@
         </article>
       </section>
 
+      <section class="decision-reading-guide" aria-label="本页阅读方式">
+        <article><span>01</span><div><strong>先确认事实</strong><small>数据快照一经开始便锁定，所有模型只读这一份。</small></div></article>
+        <article><span>02</span><div><strong>再听模型判断</strong><small>五位模型各自独立完成首轮与复核，不互相影响。</small></div></article>
+        <article><span>03</span><div><strong>最后审阅结论</strong><small>共识、风险与最终名单在底部汇总，也可复制给 GPT 讨论。</small></div></article>
+      </section>
+
       <section class="decision-data-contract" aria-labelledby="dataContractTitle">
         <div class="stock-section-head">
           <div>
-            <h2 id="dataContractTitle">事实包与数据口径</h2>
-            <p>Data is deterministic, reasoning is diversified. 所有评审角色只读取同一份冻结事实包；九维评分均为 10 分最好，缺失数据必须标记 N/A。</p>
+            <span class="decision-section-index">01 · 固定事实</span>
+            <h2 id="dataContractTitle">这轮决策依据什么数据？</h2>
+            <p>所有模型只读取同一份冻结事实包。九维评分均为 10 分最好；缺失数据必须标记 N/A。</p>
           </div>
           <span class="decision-data-lock">冻结后不可替换</span>
         </div>
@@ -83,8 +90,9 @@
       <section class="decision-workspace" aria-labelledby="progressTitle">
         <div class="stock-section-head">
           <div>
-            <h2 id="progressTitle">决策流程</h2>
-            <p id="progressCopy" aria-live="polite">点击开始生成后，每一个步骤都会在这里留下状态与产物。</p>
+            <span class="decision-section-index">02 · 决策路径</span>
+            <h2 id="progressTitle">现在走到哪一步？</h2>
+            <p id="progressCopy" aria-live="polite">点击开始后，下面会按“准备 → 独立判断 → 共识交付”留下每一步实际产物。</p>
           </div>
           <span class="decision-progress-count" id="progressCount">0 / 6</span>
         </div>
@@ -94,7 +102,8 @@
       <section class="decision-models" aria-labelledby="modelsTitle">
         <div class="stock-section-head">
           <div>
-            <h2 id="modelsTitle">独立 PDC 委员</h2>
+            <span class="decision-section-index">03 · 五位独立 PDC</span>
+            <h2 id="modelsTitle">每位委员怎么说？</h2>
             <p>每个模型是一位完整 PDC 委员。展开后可分别查看第一轮做了什么、最终复核结论，以及一键复制给你的 GPT。</p>
           </div>
           <span class="decision-blind-badge">盲评已启用</span>
@@ -105,7 +114,8 @@
       <section class="decision-result" id="decisionResult" hidden aria-labelledby="resultTitle">
         <div class="stock-section-head">
           <div>
-            <h2 id="resultTitle">本次决策快照</h2>
+            <span class="decision-section-index">04 · 共识交付</span>
+            <h2 id="resultTitle">本次最终研究名单</h2>
             <p>本次 Run 的实际候选、共识与风险记录。确认后才会写入当前 PDC 的当天历史。</p>
           </div>
           <button class="stock-primary-btn decision-publish-btn" id="publishDecision" type="button" hidden>发布到 PDC</button>

@@ -13,12 +13,18 @@ const PDC_DIMENSIONS = [
 ];
 
 const steps = [
-  { id: "snapshot", title: "锁定研究数据快照", detail: "确认收盘状态、候选池版本与生成时间。", output: "已冻结输入事实包" },
-  { id: "round-one", title: "第一轮独立盲评", detail: "每个旗舰模型仅基于同一份冻结事实包生成独立排名，不读取其他模型结论。", output: "已收到独立排名" },
-  { id: "merge", title: "合并候选挑战池", detail: "去重并融合排名，保留值得复核的候选。", output: "挑战池已生成" },
-  { id: "round-two", title: "第二轮证据复核", detail: "每位模型 PDC 对 Top 20 重新独立评分，并检验第一轮结论。", output: "复核评分已完成" },
-  { id: "risk-check", title: "市场与风险闸门", detail: "检查共识、风险与不应进入最终名单的候选。", output: "风险门槛已应用" },
-  { id: "final", title: "生成最终研究名单", detail: "保留最多 10 个通过闸门的研究席位；不足不强行补足。", output: "决策快照已生成" }
+  { id: "snapshot", stage: "prepare", title: "锁定研究数据快照", detail: "确认收盘状态、候选池版本与生成时间。", output: "事实包已冻结" },
+  { id: "round-one", stage: "review", title: "第一轮独立盲评", detail: "五位模型只看同一份事实包，不读取其他模型结论。", output: "首轮结论已收齐" },
+  { id: "merge", stage: "review", title: "合并共同复核池", detail: "程序去重并汇总首轮排名，找出值得再次研究的候选。", output: "Top 20 已形成" },
+  { id: "round-two", stage: "review", title: "第二轮证据复核", detail: "五位模型对共同候选重新检查，并交回最终复核意见。", output: "复核结论已收齐" },
+  { id: "risk-check", stage: "deliver", title: "共识与风险闸门", detail: "程序核对支持票、排除意见、九维评分和风险信号。", output: "风险闸门已完成" },
+  { id: "final", stage: "deliver", title: "生成最终研究名单", detail: "只保留通过闸门的研究席位；不足 10 个也不会强行补足。", output: "本轮名单已生成" }
+];
+
+const decisionStages = [
+  { id: "prepare", number: "A", title: "准备事实", detail: "先锁定本轮所有人共同使用的研究输入。" },
+  { id: "review", number: "B", title: "独立判断", detail: "模型先分别判断，再基于共同候选做第二次复核。" },
+  { id: "deliver", number: "C", title: "共识交付", detail: "由程序应用共识与风险规则，形成可审阅的最终名单。" }
 ];
 
 const state = {
@@ -67,17 +73,24 @@ function selectedModelProfiles() {
 function renderSteps() {
   const list = $("#decisionSteps");
   if (!list) return;
-  list.innerHTML = steps.map((step, index) => `
-    <li class="decision-step" data-state="${stepState(step)}">
-      <span class="decision-step-index">${index + 1}</span>
-      <div>
-        <h3>${escapeHtml(step.title)}</h3>
-        <p>${escapeHtml(step.detail)}</p>
-        <small class="decision-step-artifact">${escapeHtml(stepArtifact(step))}</small>
-      </div>
-      <span class="decision-step-state">${escapeHtml(stepStateText(step))}</span>
-    </li>
-  `).join("");
+  list.innerHTML = decisionStages.map((stage) => {
+    const stageSteps = steps.filter((step) => step.stage === stage.id);
+    return `<li class="decision-process-stage" data-stage="${stage.id}">
+      <header><span>${stage.number}</span><div><strong>${escapeHtml(stage.title)}</strong><small>${escapeHtml(stage.detail)}</small></div></header>
+      <ol>${stageSteps.map((step) => {
+        const index = steps.findIndex((item) => item.id === step.id) + 1;
+        return `<li class="decision-step" data-state="${stepState(step)}">
+          <span class="decision-step-index">${index}</span>
+          <div>
+            <h3>${escapeHtml(step.title)}</h3>
+            <p>${escapeHtml(step.detail)}</p>
+            <small class="decision-step-artifact">${escapeHtml(stepArtifact(step))}</small>
+          </div>
+          <span class="decision-step-state">${escapeHtml(stepStateText(step))}</span>
+        </li>`;
+      }).join("")}</ol>
+    </li>`;
+  }).join("");
 }
 
 function stepArtifact(step) {
