@@ -5,8 +5,10 @@ const PAGE_PATH = "/stock-pdc";
 const DECISION_PATH = `${PAGE_PATH}/decision`;
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
 const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
+const DEEPSEEK_CHAT_URL = "https://api.deepseek.com/chat/completions";
 const DEFAULT_STOCK_MODEL = "gpt-5.6-luna";
 const DEFAULT_CLAUDE_STOCK_MODEL = "claude-sonnet-4-6";
+const DEFAULT_DEEPSEEK_STOCK_MODEL = "deepseek-v4-pro";
 const MAX_DECISION_BODY_BYTES = 96 * 1024;
 const MAX_CANDIDATES = 30;
 const MAX_RUNS_PER_DAY = 8;
@@ -56,6 +58,14 @@ function configuredModelProfiles(env) {
       label: "Gemini API PDC",
       provider: "Google",
       model: geminiStockModel(env)
+    });
+  }
+  if (deepseekApiKey(env)) {
+    profiles.push({
+      id: "deepseek_api_pdc",
+      label: "DeepSeek API PDC",
+      provider: "DeepSeek",
+      model: deepseekStockModel(env)
     });
   }
   return profiles;
@@ -382,6 +392,14 @@ function geminiStockModel(env) {
   return String(env.GEMINI_STOCK_MODEL || env.GOOGLE_GEMINI_STOCK_MODEL || "gemini-2.5-flash").trim();
 }
 
+function deepseekApiKey(env) {
+  return String(env.DEEPSEEK_API_KEY || env.DEEPSEEK_PDC_API_KEY || "").trim();
+}
+
+function deepseekStockModel(env) {
+  return String(env.DEEPSEEK_STOCK_MODEL || DEFAULT_DEEPSEEK_STOCK_MODEL).trim();
+}
+
 async function geminiReview(env, modelProfile, role, candidates, phase) {
   const apiKey = geminiApiKey(env);
   if (!apiKey) throw new Error("Missing GEMINI_API_KEY or GOOGLE_GEMINI_API_KEY.");
@@ -418,10 +436,44 @@ async function geminiReview(env, modelProfile, role, candidates, phase) {
   }
 }
 
+async function deepseekReview(env, modelProfile, role, candidates, phase) {
+  const apiKey = deepseekApiKey(env);
+  if (!apiKey) throw new Error("Missing DEEPSEEK_API_KEY or DEEPSEEK_PDC_API_KEY.");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 25000);
+  try {
+    const response = await fetch(DEEPSEEK_CHAT_URL, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${apiKey}`,
+        "content-type": "application/json"
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: modelProfile.model,
+        messages: [
+          { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings and summary.` },
+          { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
+        ],
+        response_format: { type: "json_object" },
+        max_tokens: 5000
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error?.message || "DeepSeek review request failed.");
+    const outputText = data.choices?.[0]?.message?.content || "";
+    if (!outputText) throw new Error("DeepSeek review returned no structured output.");
+    return normalizeReview(JSON.parse(outputText), candidates);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 async function modelReview(env, modelProfile, role, candidates, phase) {
   if (modelProfile.provider === "OpenAI") return openAiReview(env, modelProfile, role, candidates, phase);
   if (modelProfile.provider === "Anthropic") return claudeReview(env, modelProfile, role, candidates, phase);
   if (modelProfile.provider === "Google") return geminiReview(env, modelProfile, role, candidates, phase);
+  if (modelProfile.provider === "DeepSeek") return deepseekReview(env, modelProfile, role, candidates, phase);
   throw new Error("Selected model provider is not supported.");
 }
 
@@ -576,7 +628,7 @@ async function advanceRun(env, runId, stage, requestedRoleId = "") {
   if (!run) return error("Decision run was not found.", 404);
   if (run.publishedAt) return error("Published decision runs are immutable.", 409);
   const modelProfile = run.modelProfile || selectedModelProfile(env, "gpt-5.6-luna");
-  if (!modelProfile || !["OpenAI", "Anthropic", "Google"].includes(modelProfile.provider)) return error("This run's selected model provider is not available.", 409);
+  if (!modelProfile || !["OpenAI", "Anthropic", "Google", "DeepSeek"].includes(modelProfile.provider)) return error("This run's selected model provider is not available.", 409);
   try {
     if (stage === "round-one" || stage === "round-two") {
       const reviewKey = reviewStageKey(stage);
