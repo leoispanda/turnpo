@@ -113,9 +113,9 @@ try {
   assert.equal(response.status, 200);
   let payload = await response.json();
   assert.deepEqual(payload.models, [
-    { id: "gpt-5.6-luna", label: "GPT-5.6 Luna", provider: "OpenAI", model: "gpt-5.6-luna" },
-    { id: "claude_api_pdc", label: "Claude API PDC", provider: "Anthropic", model: "claude-test-model" },
-    { id: "gemini_api_pdc", label: "Gemini API PDC", provider: "Google", model: "gemini-test-model" },
+    { id: "gpt-5.6-sol", label: "GPT-5.6 Sol · Pro PDC", provider: "OpenAI", model: "gpt-5.6-sol" },
+    { id: "claude_api_pdc", label: "Claude Fable 5 PDC", provider: "Anthropic", model: "claude-test-model" },
+    { id: "gemini_api_pdc", label: "Gemini 3.1 Pro PDC", provider: "Google", model: "gemini-test-model" },
     { id: "deepseek_api_pdc", label: "DeepSeek API PDC", provider: "DeepSeek", model: "deepseek-test-model" },
     { id: "kimi_api_pdc", label: "Kimi API PDC", provider: "Moonshot", model: "kimi-test-model" }
   ]);
@@ -134,13 +134,13 @@ try {
         featureContract: "Deterministic facts, diversified reasoning."
       }
     },
-    modelProfileId: "gpt-5.6-luna"
+    modelProfileId: "gpt-5.6-sol"
   })));
   assert.equal(response.status, 200);
   payload = await response.json();
   const runId = payload.run.id;
-  assert.equal(payload.run.model, "gpt-5.6-luna");
-  assert.equal(payload.run.modelProfile.id, "gpt-5.6-luna");
+  assert.equal(payload.run.model, "gpt-5.6-sol");
+  assert.equal(payload.run.modelProfile.id, "gpt-5.6-sol");
   assert.equal(payload.run.snapshot.provenance.snapshotId, "pdc-2026-08-07-test");
 
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/round-one/pdc`, {})));

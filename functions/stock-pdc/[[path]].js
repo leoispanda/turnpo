@@ -7,10 +7,11 @@ const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
 const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
 const DEEPSEEK_CHAT_URL = "https://api.deepseek.com/chat/completions";
 const KIMI_CHAT_URL = "https://api.moonshot.ai/v1/chat/completions";
-const DEFAULT_STOCK_MODEL = "gpt-5.6-luna";
-const DEFAULT_CLAUDE_STOCK_MODEL = "claude-sonnet-4-6";
+const DEFAULT_STOCK_MODEL = "gpt-5.6-sol";
+const DEFAULT_CLAUDE_STOCK_MODEL = "claude-fable-5";
 const DEFAULT_DEEPSEEK_STOCK_MODEL = "deepseek-v4-pro";
 const DEFAULT_KIMI_STOCK_MODEL = "kimi-k3";
+const DEFAULT_GEMINI_STOCK_MODEL = "gemini-3.1-pro-preview";
 const MAX_DECISION_BODY_BYTES = 96 * 1024;
 const MAX_CANDIDATES = 30;
 const MAX_RUNS_PER_DAY = 8;
@@ -41,15 +42,15 @@ function claudeStockModel(env) {
 
 function configuredModelProfiles(env) {
   const profiles = [{
-    id: "gpt-5.6-luna",
-    label: "GPT-5.6 Luna",
+    id: "gpt-5.6-sol",
+    label: "GPT-5.6 Sol · Pro PDC",
     provider: "OpenAI",
     model: stockModel(env)
   }];
   if (claudeApiKey(env)) {
     profiles.push({
       id: "claude_api_pdc",
-      label: "Claude API PDC",
+      label: "Claude Fable 5 PDC",
       provider: "Anthropic",
       model: claudeStockModel(env)
     });
@@ -57,7 +58,7 @@ function configuredModelProfiles(env) {
   if (geminiApiKey(env)) {
     profiles.push({
       id: "gemini_api_pdc",
-      label: "Gemini API PDC",
+      label: "Gemini 3.1 Pro PDC",
       provider: "Google",
       model: geminiStockModel(env)
     });
@@ -91,7 +92,7 @@ function publicModelProfile(profile) {
 }
 
 function selectedModelProfile(env, profileId) {
-  const requestedId = cleanText(profileId || "gpt-5.6-luna", 64);
+  const requestedId = cleanText(profileId || "gpt-5.6-sol", 64);
   return configuredModelProfiles(env).find((profile) => profile.id === requestedId) || null;
 }
 
@@ -341,7 +342,8 @@ async function openAiReview(env, modelProfile, role, candidates, phase) {
         instructions: reviewInstructions(role, phase),
         input: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`,
         text: { format: reviewSchema(`stock_pdc_${phase}_${role.id}`) },
-        max_output_tokens: 5000
+        max_output_tokens: 5000,
+        reasoning: { mode: "pro", effort: "max" }
       })
     });
     const data = await response.json().catch(() => ({}));
@@ -377,6 +379,7 @@ async function claudeReview(env, modelProfile, role, candidates, phase) {
           content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`
         }],
         output_config: {
+          effort: "max",
           format: {
             type: "json_schema",
             schema: portableReviewSchema()
@@ -399,7 +402,7 @@ function geminiApiKey(env) {
 }
 
 function geminiStockModel(env) {
-  return String(env.GEMINI_STOCK_MODEL || env.GOOGLE_GEMINI_STOCK_MODEL || "gemini-2.5-flash").trim();
+  return String(env.GEMINI_STOCK_MODEL || env.GOOGLE_GEMINI_STOCK_MODEL || DEFAULT_GEMINI_STOCK_MODEL).trim();
 }
 
 function deepseekApiKey(env) {
@@ -474,6 +477,8 @@ async function deepseekReview(env, modelProfile, role, candidates, phase) {
       signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
+        thinking: { type: "enabled" },
+        reasoning_effort: "max",
         messages: [
           { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings and summary.` },
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
@@ -507,6 +512,7 @@ async function kimiReview(env, modelProfile, role, candidates, phase) {
       signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
+        reasoning_effort: "max",
         messages: [
           { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings and summary.` },
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
@@ -596,8 +602,8 @@ function reviewStageComplete(run, stage) {
 
 function publicRun(run) {
   const modelProfile = run.modelProfile || {
-    id: "gpt-5.6-luna",
-    label: "GPT-5.6 Luna",
+    id: "gpt-5.6-sol",
+    label: "GPT-5.6 Sol · Pro PDC",
     provider: "OpenAI",
     model: run.model || DEFAULT_STOCK_MODEL
   };
@@ -684,7 +690,7 @@ async function advanceRun(env, runId, stage, requestedRoleId = "") {
   const run = await loadRun(store, runId);
   if (!run) return error("Decision run was not found.", 404);
   if (run.publishedAt) return error("Published decision runs are immutable.", 409);
-  const modelProfile = run.modelProfile || selectedModelProfile(env, "gpt-5.6-luna");
+  const modelProfile = run.modelProfile || selectedModelProfile(env, "gpt-5.6-sol");
   if (!modelProfile || !["OpenAI", "Anthropic", "Google", "DeepSeek", "Moonshot"].includes(modelProfile.provider)) return error("This run's selected model provider is not available.", 409);
   try {
     if (stage === "round-one" || stage === "round-two") {
