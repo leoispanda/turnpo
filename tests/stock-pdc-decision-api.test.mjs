@@ -215,6 +215,8 @@ try {
   assert.equal(payload.run.scoringSystem, "short-term-forward-upside-v2");
   assert.equal(payload.run.committeeMode, true);
   assert.equal(payload.run.members.length, 5);
+  assert.equal(payload.run.modelVerification.members.length, 5);
+  assert.equal(payload.run.modelVerification.members[0].response, '{"status":"ok"}');
   assert.equal(payload.run.members[0].id, "gpt-5.6-sol");
   assert.equal(payload.run.snapshot.provenance.snapshotId, "pdc-2026-08-07-test");
   assert.equal(payload.run.snapshot.facts.length, 8, "saved fact packet should be available for user copy-out");

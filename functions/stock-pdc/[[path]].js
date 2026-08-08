@@ -720,6 +720,7 @@ function verifyStructuredOutput(outputText, provider) {
     throw new Error(`${provider} verification did not return valid JSON.`);
   }
   if (value?.status !== "ok") throw new Error(`${provider} verification returned an unexpected result.`);
+  return value;
 }
 
 async function verifyOpenAiModel(env, profile) {
@@ -743,7 +744,7 @@ async function verifyOpenAiModel(env, profile) {
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error?.message || "OpenAI verification request failed.");
-    verifyStructuredOutput(extractOutputText(data), "OpenAI");
+    return verifyStructuredOutput(extractOutputText(data), "OpenAI");
   } finally {
     clearTimeout(timeout);
   }
@@ -770,7 +771,7 @@ async function verifyClaudeModel(env, profile) {
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error?.message || "Claude verification request failed.");
     const outputText = data.content?.find((item) => item.type === "text" && typeof item.text === "string")?.text || "";
-    verifyStructuredOutput(outputText, "Claude");
+    return verifyStructuredOutput(outputText, "Claude");
   } finally {
     clearTimeout(timeout);
   }
@@ -796,7 +797,7 @@ async function verifyGeminiModel(env, profile) {
     if (!response.ok) throw new Error(data.error?.message || "Gemini verification request failed.");
     const outputText = data.candidates?.flatMap((candidate) => candidate.content?.parts || [])
       ?.find((part) => typeof part.text === "string")?.text || "";
-    verifyStructuredOutput(outputText, "Gemini");
+    return verifyStructuredOutput(outputText, "Gemini");
   } finally {
     clearTimeout(timeout);
   }
@@ -824,7 +825,7 @@ async function verifyDeepSeekModel(env, profile) {
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error?.message || "DeepSeek verification request failed.");
-    verifyStructuredOutput(data.choices?.[0]?.message?.content || "", "DeepSeek");
+    return verifyStructuredOutput(data.choices?.[0]?.message?.content || "", "DeepSeek");
   } finally {
     clearTimeout(timeout);
   }
@@ -852,7 +853,7 @@ async function verifyKimiModel(env, profile) {
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error?.message || "Kimi verification request failed.");
-    verifyStructuredOutput(data.choices?.[0]?.message?.content || "", "Kimi");
+    return verifyStructuredOutput(data.choices?.[0]?.message?.content || "", "Kimi");
   } finally {
     clearTimeout(timeout);
   }
@@ -1030,6 +1031,24 @@ function publicReview(review) {
   };
 }
 
+function publicModelVerification(verification) {
+  if (!verification || typeof verification !== "object" || !Array.isArray(verification.members)) return null;
+  return {
+    createdAt: cleanText(verification.createdAt, 40),
+    members: verification.members.map((member) => ({
+      id: cleanText(member?.id, 64),
+      label: cleanText(member?.label, 100),
+      provider: cleanText(member?.provider, 40),
+      model: cleanText(member?.model, 100),
+      ok: Boolean(member?.ok),
+      checkedAt: cleanText(member?.checkedAt, 40),
+      latencyMs: Math.max(0, finiteNumber(member?.latencyMs, 0)),
+      response: cleanText(member?.response, 160),
+      error: cleanText(member?.error, 240)
+    }))
+  };
+}
+
 function publicRun(run) {
   const committee = isCommitteeRun(run);
   const modelProfile = !committee && (run.modelProfile || {
@@ -1045,6 +1064,7 @@ function publicRun(run) {
     updatedAt: run.updatedAt,
     model: committee ? "MULTI_MODEL_PDC" : modelProfile.model,
     scoringSystem: run.scoringSystem || "legacy-nine-dimension-pdc",
+    modelVerification: publicModelVerification(run.modelVerification),
     modelProfile: modelProfile ? publicModelProfile(modelProfile) : null,
     status: run.status,
     snapshot: {
@@ -1093,7 +1113,7 @@ async function loadRun(store, runId) {
   return run && typeof run === "object" ? run : null;
 }
 
-function verificationResult(profile, startedAt, caught = null) {
+function verificationResult(profile, startedAt, caught = null, response = null) {
   return {
     id: profile.id,
     label: profile.label,
@@ -1102,6 +1122,7 @@ function verificationResult(profile, startedAt, caught = null) {
     ok: !caught,
     checkedAt: new Date().toISOString(),
     latencyMs: Date.now() - startedAt,
+    response: response && typeof response === "object" ? JSON.stringify(response).slice(0, 160) : "",
     error: caught ? cleanText(caught?.message || "Model verification failed.", 240) : ""
   };
 }
@@ -1126,8 +1147,8 @@ async function createModelVerification(request, env) {
   const results = await Promise.all(modelProfiles.map(async (profile) => {
     const startedAt = Date.now();
     try {
-      await verifyModel(env, profile);
-      return verificationResult(profile, startedAt);
+      const response = await verifyModel(env, profile);
+      return verificationResult(profile, startedAt, null, response);
     } catch (caught) {
       return verificationResult(profile, startedAt, caught);
     }
@@ -1144,19 +1165,19 @@ async function createModelVerification(request, env) {
 
 async function consumeModelVerification(store, verificationId, modelProfiles) {
   const id = cleanText(verificationId, 80);
-  if (!/^[a-f0-9-]{36}$/i.test(id)) return "Run a fresh model verification before generating this PDC decision.";
+  if (!/^[a-f0-9-]{36}$/i.test(id)) return { error: "Run a fresh model verification before generating this PDC decision.", verification: null };
   const verification = await store.get(decisionVerificationKey(id), "json");
-  if (!verification || typeof verification !== "object") return "The model verification has expired. Please verify the selected PDC models again.";
+  if (!verification || typeof verification !== "object") return { error: "The model verification has expired. Please verify the selected PDC models again.", verification: null };
   const requested = modelProfiles.map((profile) => `${profile.id}:${profile.model}`).sort();
   const verified = (Array.isArray(verification.members) ? verification.members : [])
     .filter((member) => member?.ok)
     .map((member) => `${member.id}:${member.model}`)
     .sort();
   if (requested.length !== verified.length || requested.some((member, index) => member !== verified[index])) {
-    return "Every selected PDC model must pass a fresh verification before generation.";
+    return { error: "Every selected PDC model must pass a fresh verification before generation.", verification: null };
   }
   await store.delete(decisionVerificationKey(id));
-  return "";
+  return { error: "", verification };
 }
 
 async function createRun(request, env) {
@@ -1167,8 +1188,8 @@ async function createRun(request, env) {
   if (!snapshot) return error("A valid daily PDC snapshot with at least five candidates is required.");
   const { requestedIds, modelProfiles } = requestedModelProfiles(body, env);
   if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("No selected PDC model is configured on this deployment.");
-  const verificationError = await consumeModelVerification(store, body.verificationId, modelProfiles);
-  if (verificationError) return error(verificationError, 409);
+  const verificationReceipt = await consumeModelVerification(store, body.verificationId, modelProfiles);
+  if (verificationReceipt.error) return error(verificationReceipt.error, 409);
   const currentCount = Number(await store.get(decisionRateKey(snapshot.date)) || "0");
   if (currentCount >= MAX_RUNS_PER_DAY) return error("Daily decision-run limit reached. Review an existing run instead.", 429);
   await store.put(decisionRateKey(snapshot.date), String(currentCount + 1), { expirationTtl: 24 * 60 * 60 });
@@ -1180,6 +1201,7 @@ async function createRun(request, env) {
     updatedAt: now,
     model: "MULTI_MODEL_PDC",
     scoringSystem: PDC_SCORING_SYSTEM,
+    modelVerification: verificationReceipt.verification,
     modelProfile: null,
     status: "SNAPSHOT_LOCKED",
     snapshot,

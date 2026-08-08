@@ -138,6 +138,13 @@ function modelStatus(member) {
   return state.run ? "等待本轮评审" : state.selectedModelProfileIds.includes(member.id) ? "已加入本轮" : "未加入本轮";
 }
 
+function verificationReceiptMarkup(verification) {
+  if (!verification || verification.checking) return "";
+  const checkedAt = verification.checkedAt ? new Date(verification.checkedAt).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) : "刚刚";
+  if (!verification.ok) return `<div class="decision-verification-receipt" data-ok="false"><strong>启动前验证未通过</strong><small>${escapeHtml(verification.error || "请检查 API Key、型号或额度。")} · ${escapeHtml(checkedAt)}</small></div>`;
+  return `<div class="decision-verification-receipt" data-ok="true"><strong>启动前验证已通过 · ${escapeHtml(verification.latencyMs || 0)}ms</strong><small>返回：${escapeHtml(verification.response || '{"status":"ok"}')} · ${escapeHtml(checkedAt)}</small></div>`;
+}
+
 function dimensionCopyText(row) {
   return PDC_DIMENSIONS.map((dimension) => {
     const value = row.dimensionScores?.[dimension.id];
@@ -282,6 +289,7 @@ function renderModels() {
       <h3>${escapeHtml(member.label)}</h3>
       <p>实际型号：${escapeHtml(member.model)}<br>独立覆盖趋势、量价、风险、过热与反方证伪。</p>
       <div class="decision-model-status">${escapeHtml(modelStatus(member))}</div>
+      ${verificationReceiptMarkup(verification)}
       ${!state.run ? `<button class="decision-member-toggle" type="button" data-member-toggle="${escapeHtml(member.id)}">${state.selectedModelProfileIds.includes(member.id) ? "已加入本轮" : "加入本轮"}</button>` : ""}
       ${review ? `<button class="decision-member-open" type="button" data-member-open="${escapeHtml(member.id)}">${expanded ? "收起结论" : "查看结论"}</button>` : ""}
       ${review && expanded ? `<div class="decision-member-conclusion">
@@ -527,6 +535,9 @@ function completeThrough(stepId) {
 function syncRunProgress() {
   if (!state.run) return;
   state.completed = 1;
+  if (Array.isArray(state.run.modelVerification?.members)) {
+    state.verification = Object.fromEntries(state.run.modelVerification.members.map((member) => [member.id, member]));
+  }
   state.modelStates = Object.fromEntries((state.run.members || []).map((member) => [member.id, member.state || "idle"]));
   state.run.members?.forEach((member) => {
     state.modelStates[member.id] = member.state || "idle";

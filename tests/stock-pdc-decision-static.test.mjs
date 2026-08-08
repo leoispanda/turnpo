@@ -36,6 +36,7 @@ assert.ok(decisionJs.includes("const decisionStages"));
 assert.ok(decisionJs.includes("decision-process-stage"));
 assert.ok(decisionJs.includes("function selectedModelProfiles()"));
 assert.ok(decisionJs.includes("function renderModels()"));
+assert.ok(decisionJs.includes("function verificationReceiptMarkup("));
 assert.ok(decisionJs.includes("data-member-open"));
 assert.ok(decisionJs.includes("function fullRunCopyText()"));
 assert.ok(decisionJs.includes("function reviewCopyText("));
@@ -58,6 +59,7 @@ assert.ok(stockFunction.includes('const PDC_SCORING_SYSTEM = "short-term-forward
 assert.ok(stockFunction.includes("function normalizeForwardPrediction"));
 assert.ok(stockFunction.includes("function normalizeBackgroundChecks"));
 assert.ok(stockFunction.includes("forwardOutcome"));
+assert.ok(stockFunction.includes("function publicModelVerification("));
 assert.ok(stockFunction.includes("function normalizeDimensionScores"));
 assert.ok(stockFunction.includes("dimensionConsensus"));
 assert.ok(stockFunction.includes("async function advanceCommitteeRun"));

@@ -540,6 +540,36 @@
   font-weight: 800;
 }
 
+.decision-verification-receipt {
+  display: grid;
+  gap: 3px;
+  border: 1px solid rgba(22, 130, 68, 0.2);
+  border-radius: 9px;
+  background: rgba(241, 249, 244, 0.72);
+  padding: 8px 9px;
+}
+
+.decision-verification-receipt strong {
+  color: #168244;
+  font-size: 11px;
+}
+
+.decision-verification-receipt small {
+  overflow-wrap: anywhere;
+  color: #65707a;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.decision-verification-receipt[data-ok="false"] {
+  border-color: rgba(180, 35, 24, 0.22);
+  background: rgba(255, 244, 242, 0.8);
+}
+
+.decision-verification-receipt[data-ok="false"] strong {
+  color: #b42318;
+}
+
 .decision-model-card[data-state="active"] {
   border-color: rgba(34, 87, 122, 0.36);
   background: rgba(232, 243, 249, 0.78);
