@@ -71,8 +71,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--top", type=int, default=20)
     parser.add_argument("--source", choices=["tencent", "eastmoney"], default="tencent")
     parser.add_argument("--bars", type=int, default=360)
-    parser.add_argument("--min-mcap", type=float, default=30_000_000_000)
-    parser.add_argument("--min-bars", type=int, default=200)
+    parser.add_argument(
+        "--history-fetch-min-mcap",
+        type=float,
+        default=30_000_000_000,
+        help="History-download threshold aligned with Hawkeye's fixed market-cap rule.",
+    )
+    parser.add_argument("--min-bars", type=int, default=61)
     parser.add_argument("--benchmark", default="CSI300ETF")
     parser.add_argument("--outputs-dir", default="outputs")
     parser.add_argument(
@@ -137,7 +142,7 @@ def build_parser() -> argparse.ArgumentParser:
 def _build_pdc_command(
     args: argparse.Namespace,
     data_dir: Path,
-    universe_csv: Path,
+    metadata_csv: Path,
     outputs_dir: Path,
     as_of: str,
 ) -> list[str]:
@@ -151,7 +156,7 @@ def _build_pdc_command(
         "--data-dir",
         str(data_dir),
         "--metadata-csv",
-        str(universe_csv),
+        str(metadata_csv),
         "--outputs-dir",
         str(outputs_dir),
         "--benchmark",
@@ -199,12 +204,18 @@ def main() -> int:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     data_dir = _project_path(args.run_dir or f"data_a_share_latest_runs/run_{timestamp}")
     universe_csv = _project_path(f"outputs_a_share_latest_runs/run_{timestamp}/a_share_universe.csv")
+    market_snapshot_csv = _project_path(f"outputs_a_share_latest_runs/run_{timestamp}/a_share_market_snapshot.csv")
     outputs_dir = _project_path(args.outputs_dir)
 
     if args.skip_fetch:
         if args.run_dir is None:
             raise SystemExit("--skip-fetch requires --run-dir")
         universe_csv = _project_path("outputs_a_share/a_share_universe.csv")
+        market_snapshot_csv = _project_path("outputs_a_share/a_share_market_snapshot.csv")
+        if not market_snapshot_csv.exists():
+            raise SystemExit(
+                "--skip-fetch requires a_share_market_snapshot.csv; refusing to score an unaudited legacy universe"
+            )
     else:
         fetch_cmd = [
             sys.executable,
@@ -213,12 +224,14 @@ def main() -> int:
             str(data_dir),
             "--universe-csv",
             str(universe_csv),
+            "--market-snapshot-csv",
+            str(market_snapshot_csv),
             "--source",
             args.source,
             "--bars",
             str(args.bars),
-            "--min-mcap",
-            str(args.min_mcap),
+            "--history-fetch-min-mcap",
+            str(args.history_fetch_min_mcap),
             "--min-bars",
             str(args.min_bars),
             "--continue-on-error",
@@ -232,7 +245,7 @@ def main() -> int:
             "historical or backfilled B signals are not allowed"
         )
     as_of = args.as_of or latest_date
-    pdc_cmd = _build_pdc_command(args, data_dir, universe_csv, outputs_dir, as_of)
+    pdc_cmd = _build_pdc_command(args, data_dir, market_snapshot_csv, outputs_dir, as_of)
     subprocess.run(pdc_cmd, cwd=PROJECT_ROOT, check=True, env=child_env)
     if "b" in variants:
         b_cmd = [
@@ -241,7 +254,7 @@ def main() -> int:
             "--data-dir",
             str(data_dir),
             "--metadata-csv",
-            str(universe_csv),
+            str(market_snapshot_csv),
             "--a-outputs-dir",
             str(outputs_dir),
             "--b-outputs-dir",
@@ -268,6 +281,7 @@ def main() -> int:
         subprocess.run(b_cmd, cwd=PROJECT_ROOT, check=True, env=child_env)
     print(f"Latest market data verified: {latest_date}")
     print(f"Clean data directory: {data_dir}")
+    print(f"Market snapshot CSV: {market_snapshot_csv}")
     print(f"Universe CSV: {universe_csv}")
     print(f"Strategy variants: {','.join(sorted(variants))}")
     if "b" in variants:
