@@ -1,17 +1,15 @@
 {
   "schemaVersion": "stock-pdc-hawkeye-v2",
-  "generatedAt": "2026-08-09T20:46:50.755Z",
-  "availability": "STALE",
+  "generatedAt": "2026-08-09T21:00:55.871Z",
+  "availability": "ACTIVE",
   "asOfDate": "2026-08-07",
   "sourceFiles": {
     "candidateUniverse": "outputs/candidate_universe.csv",
     "audit": "outputs/hawkeye_radar_audit.csv"
   },
-  "sourceGeneratedAt": "2026-08-09T20:46:45.011Z",
+  "sourceGeneratedAt": "2026-08-09T21:00:48.931Z",
   "marketDataProvider": "sina",
-  "validationErrors": [
-    "Hawkeye market data is incomplete: 7 row(s) are DATA_FAILED; PDC generation is blocked."
-  ],
+  "validationErrors": [],
   "rules": {
     "minMarketCapCny": 30000000000,
     "minReturn60dPct": 0
@@ -19,8 +17,8 @@
   "checkedCount": 5538,
   "marketUniverseCount": 5538,
   "passedCount": 242,
-  "rejectedCount": 5289,
-  "dataFailedCount": 7,
+  "rejectedCount": 5296,
+  "dataFailedCount": 0,
   "universeExcludedCount": 0,
   "dispatchedCount": 242,
   "dispatchRule": "Every Hawkeye-passed name enters the PDC fact packet. No candidate-count cap or additional Hawkeye filter is applied.",
@@ -23410,7 +23408,7 @@
     {
       "ticker": "001232.SZ",
       "name": "C嘉立创",
-      "status": "DATA_FAILED_HISTORY_INSUFFICIENT_BARS",
+      "status": "REJECTED_HAWKEYE",
       "passed": false,
       "totalMcapCny": 110161992400,
       "return60dPct": 0,
@@ -23423,7 +23421,7 @@
       "sma200": 0,
       "marketDataProvider": "sina",
       "reason": "total market cap > 300.0亿",
-      "rejectionReason": "received 4 bars; need 61"
+      "rejectionReason": "60d return unavailable: received 4 bars; need 61"
     },
     {
       "ticker": "001233.SZ",
@@ -23536,7 +23534,7 @@
     {
       "ticker": "001248.SZ",
       "name": "华润新能",
-      "status": "DATA_FAILED_HISTORY_INSUFFICIENT_BARS",
+      "status": "REJECTED_HAWKEYE",
       "passed": false,
       "totalMcapCny": 175578857494.80002,
       "return60dPct": 0,
@@ -23549,7 +23547,7 @@
       "sma200": 0,
       "marketDataProvider": "sina",
       "reason": "total market cap > 300.0亿",
-      "rejectionReason": "received 27 bars; need 61"
+      "rejectionReason": "60d return unavailable: received 27 bars; need 61"
     },
     {
       "ticker": "001255.SZ",
@@ -24796,7 +24794,7 @@
     {
       "ticker": "001399.SZ",
       "name": "惠科股份",
-      "status": "DATA_FAILED_HISTORY_INSUFFICIENT_BARS",
+      "status": "REJECTED_HAWKEYE",
       "passed": false,
       "totalMcapCny": 175997501127.36002,
       "return60dPct": 0,
@@ -24809,7 +24807,7 @@
       "sma200": 0,
       "marketDataProvider": "sina",
       "reason": "total market cap > 300.0亿",
-      "rejectionReason": "received 31 bars; need 61"
+      "rejectionReason": "60d return unavailable: received 31 bars; need 61"
     },
     {
       "ticker": "001400.SZ",
@@ -63964,7 +63962,7 @@
     {
       "ticker": "301707.SZ",
       "name": "N展芯",
-      "status": "DATA_FAILED_HISTORY_INSUFFICIENT_BARS",
+      "status": "REJECTED_HAWKEYE",
       "passed": false,
       "totalMcapCny": 47911850643.6,
       "return60dPct": 0,
@@ -63977,7 +63975,7 @@
       "sma200": 0,
       "marketDataProvider": "sina",
       "reason": "total market cap > 300.0亿",
-      "rejectionReason": "received 1 bars; need 61"
+      "rejectionReason": "60d return unavailable: received 1 bars; need 61"
     },
     {
       "ticker": "600004.SH",
@@ -98344,7 +98342,7 @@
     {
       "ticker": "688797.SH",
       "name": "臻宝科技",
-      "status": "DATA_FAILED_HISTORY_INSUFFICIENT_BARS",
+      "status": "REJECTED_HAWKEYE",
       "passed": false,
       "totalMcapCny": 52731925812.72,
       "return60dPct": 0,
@@ -98357,7 +98355,7 @@
       "sma200": 0,
       "marketDataProvider": "sina",
       "reason": "total market cap > 300.0亿",
-      "rejectionReason": "received 33 bars; need 61"
+      "rejectionReason": "60d return unavailable: received 33 bars; need 61"
     },
     {
       "ticker": "688798.SH",
@@ -98542,7 +98540,7 @@
     {
       "ticker": "688825.SH",
       "name": "长鑫科技",
-      "status": "DATA_FAILED_HISTORY_INSUFFICIENT_BARS",
+      "status": "REJECTED_HAWKEYE",
       "passed": false,
       "totalMcapCny": 3509908901321,
       "return60dPct": 0,
@@ -98555,7 +98553,7 @@
       "sma200": 0,
       "marketDataProvider": "sina",
       "reason": "total market cap > 300.0亿",
-      "rejectionReason": "received 10 bars; need 61"
+      "rejectionReason": "60d return unavailable: received 10 bars; need 61"
     },
     {
       "ticker": "920000.BJ",
@@ -99154,7 +99152,7 @@
     {
       "ticker": "920045.BJ",
       "name": "蘅东光",
-      "status": "DATA_FAILED_HISTORY_INSUFFICIENT_BARS",
+      "status": "REJECTED_HAWKEYE",
       "passed": false,
       "totalMcapCny": 32497356947,
       "return60dPct": 0,
@@ -99167,7 +99165,7 @@
       "sma200": 0,
       "marketDataProvider": "sina",
       "reason": "total market cap > 300.0亿",
-      "rejectionReason": "received 1 bars; need 61"
+      "rejectionReason": "60d return unavailable: received 1 bars; need 61"
     },
     {
       "ticker": "920046.BJ",

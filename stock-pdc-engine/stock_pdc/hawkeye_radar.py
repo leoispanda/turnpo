@@ -242,6 +242,32 @@ def screen_stock(
     else:
         reasons.append(f"total market cap > {safe_round(min_market_cap / 100_000_000)}亿")
 
+    if metadata.history_status == "HISTORY_INSUFFICIENT_BARS":
+        # The raw market row remains in the audit, but a security with fewer
+        # than 61 daily bars cannot satisfy Hawkeye's fixed 60-day-return
+        # rule. Exclude it from PDC as an explicit rule rejection, never as a
+        # fabricated return or a silent deletion.
+        return HawkeyeResult(
+            ticker=ticker,
+            status="REJECTED_HAWKEYE",
+            passed=False,
+            name=name,
+            total_mcap=total_mcap,
+            return_60d=None,
+            latest_daily_return=None,
+            max_single_day_gain=None,
+            max_single_day_loss=None,
+            latest_close=None,
+            sma20=None,
+            sma50=None,
+            sma200=None,
+            market_data_provider=market_data_provider,
+            reason="; ".join(reasons),
+            rejection_reason=(
+                f"60d return unavailable: {metadata.history_error or 'fewer than 61 daily bars'}"
+            ),
+        )
+
     if metadata.history_status and metadata.history_status != "HISTORY_READY":
         return HawkeyeResult(
             ticker=ticker,

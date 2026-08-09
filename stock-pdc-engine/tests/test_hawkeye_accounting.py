@@ -41,6 +41,14 @@ class HawkeyeAccountingTests(unittest.TestCase):
                 history_status="HISTORY_FETCH_FAILED",
                 history_error="upstream timeout",
             ),
+            "600004.SH": HawkeyeMetadata(
+                ticker="600004.SH",
+                name="上市未满60日",
+                total_mcap=50_000_000_000,
+                universe_status="UNIVERSE_INCLUDED_A_SHARE",
+                history_status="HISTORY_INSUFFICIENT_BARS",
+                history_error="received 12 bars; need 61",
+            ),
         }
         results = screen_universe(
             {"600001.SH": _bars(0.001), "CSI300ETF": _bars(0.001)},
@@ -63,6 +71,9 @@ class HawkeyeAccountingTests(unittest.TestCase):
         self.assertFalse(by_ticker["600003.SH"].passed)
         self.assertEqual(by_ticker["600003.SH"].status, "DATA_FAILED_HISTORY_FETCH_FAILED")
         self.assertEqual(by_ticker["600003.SH"].rejection_reason, "upstream timeout")
+        self.assertFalse(by_ticker["600004.SH"].passed)
+        self.assertEqual(by_ticker["600004.SH"].status, "REJECTED_HAWKEYE")
+        self.assertIn("60d return unavailable", by_ticker["600004.SH"].rejection_reason)
         self.assertNotIn("CSI300ETF", by_ticker)
 
 
