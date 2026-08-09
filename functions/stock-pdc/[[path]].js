@@ -694,7 +694,7 @@ async function deepseekReview(env, modelProfile, role, candidates, phase) {
       signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
-        thinking: { type: "enabled" },
+        thinking: modelProfile.tier === "mini-demo" ? { type: "disabled" } : { type: "enabled" },
         ...(modelProfile.tier === "mini-demo" ? {} : { reasoning_effort: "max" }),
         messages: [
           { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings and summary.` },
@@ -706,7 +706,7 @@ async function deepseekReview(env, modelProfile, role, candidates, phase) {
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error?.message || "DeepSeek review request failed.");
-    const outputText = data.choices?.[0]?.message?.content || "";
+    const outputText = chatCompletionText(data);
     if (!outputText) throw new Error("DeepSeek review returned no structured output.");
     return normalizeReview(parseModelJson(outputText), candidates);
   } finally {
@@ -729,7 +729,7 @@ async function kimiReview(env, modelProfile, role, candidates, phase) {
       signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
-        ...(modelProfile.tier === "mini-demo" ? {} : { reasoning_effort: "max" }),
+        ...(modelProfile.tier === "mini-demo" ? { thinking: { type: "disabled" } } : { reasoning_effort: "max" }),
         messages: [
           { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings and summary.` },
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
@@ -740,7 +740,7 @@ async function kimiReview(env, modelProfile, role, candidates, phase) {
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(response.status === 401 ? "Kimi authentication was rejected. Check the Cloudflare secret ‘kimi pdc’ is a Kimi Open Platform API Key." : data.error?.message || "Kimi review request failed.");
-    const outputText = data.choices?.[0]?.message?.content || "";
+    const outputText = chatCompletionText(data);
     if (!outputText) throw new Error("Kimi review returned no structured output.");
     return normalizeReview(parseModelJson(outputText), candidates);
   } finally {
@@ -786,10 +786,18 @@ function verifyStructuredOutput(outputText, provider) {
   try {
     value = parseModelJson(outputText);
   } catch {
-    throw new Error(`${provider} verification did not return valid JSON.`);
+    const preview = cleanText(outputText, 160);
+    throw new Error(`${provider} verification did not return valid JSON${preview ? ` (response: ${preview})` : " (empty response)"}.`);
   }
   if (value?.status !== "ok") throw new Error(`${provider} verification returned an unexpected result.`);
   return value;
+}
+
+function chatCompletionText(data) {
+  const message = data?.choices?.[0]?.message || {};
+  if (typeof message.content === "string") return message.content;
+  if (Array.isArray(message.content)) return message.content.map((part) => typeof part?.text === "string" ? part.text : "").join("");
+  return typeof message.reasoning_content === "string" ? message.reasoning_content : "";
 }
 
 function parseModelJson(outputText) {
@@ -893,6 +901,7 @@ async function verifyDeepSeekModel(env, profile) {
       signal: controller.signal,
       body: JSON.stringify({
         model: profile.model,
+        thinking: { type: "disabled" },
         messages: [
           { role: "system", content: verificationInstructions() },
           { role: "user", content: "Verify readiness now." }
@@ -903,7 +912,7 @@ async function verifyDeepSeekModel(env, profile) {
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error?.message || "DeepSeek verification request failed.");
-    return verifyStructuredOutput(data.choices?.[0]?.message?.content || "", "DeepSeek");
+    return verifyStructuredOutput(chatCompletionText(data), "DeepSeek");
   } finally {
     clearTimeout(timeout);
   }
@@ -921,6 +930,7 @@ async function verifyKimiModel(env, profile) {
       signal: controller.signal,
       body: JSON.stringify({
         model: profile.model,
+        thinking: { type: "disabled" },
         messages: [
           { role: "system", content: verificationInstructions() },
           { role: "user", content: "Verify readiness now." }
@@ -931,7 +941,7 @@ async function verifyKimiModel(env, profile) {
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(response.status === 401 ? "Kimi authentication was rejected. Check the Cloudflare secret ‘kimi pdc’ is a Kimi Open Platform API Key." : data.error?.message || "Kimi verification request failed.");
-    return verifyStructuredOutput(data.choices?.[0]?.message?.content || "", "Kimi");
+    return verifyStructuredOutput(chatCompletionText(data), "Kimi");
   } finally {
     clearTimeout(timeout);
   }
