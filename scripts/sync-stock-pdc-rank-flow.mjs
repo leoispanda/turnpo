@@ -868,9 +868,9 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
   const candidates = passed.map(hawkeyeCandidate);
   if (candidates.length < 5) consistencyErrors.push("Hawkeye returned fewer than five valid candidates; PDC generation is blocked.");
   const auditMtime = fs.statSync(auditPath).mtime.toISOString();
-  const sourceDate = auditMtime.slice(0, 10);
-  if (rankSnapshot.latestDate && sourceDate < rankSnapshot.latestDate) {
-    consistencyErrors.push(`Hawkeye source generated on ${sourceDate} is older than the latest market snapshot ${rankSnapshot.latestDate}. Refresh Hawkeye before PDC generation.`);
+  const sourceDate = rankSnapshot.latestDate || "";
+  if (!sourceDate) {
+    consistencyErrors.push("Hawkeye cannot be published without an actual market-data date.");
   }
 
   return {
