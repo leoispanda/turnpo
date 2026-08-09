@@ -81,6 +81,8 @@ assert.ok(syncScript.includes("rank-flow.json"));
 assert.ok(syncScript.includes("candidate_universe.csv"));
 assert.ok(syncScript.includes("hawkeye_radar_audit.csv"));
 assert.ok(syncScript.includes("stock-pdc-hawkeye-v1"));
+assert.ok(syncScript.includes("Every passed Hawkeye name enters the PDC fact packet"));
+assert.ok(syncScript.includes("fixedRuleViolations"));
 
 assert.ok(stockFunction.includes("env.STOCK_PDC_ACCESS_CODE || env.EMBA_ACCESS_CODE"));
 assert.ok(stockFunction.includes('const PAGE_PATH = "/stock-pdc";'));
@@ -110,10 +112,15 @@ assert.ok(["ACTIVE", "STALE"].includes(hawkeye.availability));
 assert.ok(hawkeye.asOfDate);
 assert.ok(hawkeye.checkedCount >= hawkeye.passedCount);
 assert.ok(hawkeye.dispatchedCount >= 5);
-assert.ok(hawkeye.dispatchedCount <= 30);
+assert.equal(hawkeye.dispatchedCount, hawkeye.passedCount);
 assert.equal(hawkeye.candidates.length, hawkeye.dispatchedCount);
 assert.ok(hawkeye.candidates.every((row) => row.status === "HAWKEYE_PASSED"));
 assert.ok(hawkeye.candidates.every((row) => Number.isFinite(row.facts?.return60dPct)));
+assert.equal(hawkeye.rules.minMarketCapCny, 30_000_000_000);
+assert.equal(hawkeye.rules.minReturn60dPct, 0);
+assert.ok(hawkeye.candidates.every((row) => row.facts.marketCapCny > hawkeye.rules.minMarketCapCny));
+assert.ok(hawkeye.candidates.every((row) => row.facts.return60dPct > hawkeye.rules.minReturn60dPct));
+assert.ok(!Object.hasOwn(hawkeye.rules, "requireClearUptrend"));
 assert.ok(hawkeye.audit.some((row) => row.passed));
 
 const backfilledWorkdays = ["2026-06-25", "2026-06-30", "2026-07-01", "2026-07-02"];

@@ -854,7 +854,18 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
   if (candidateTickers.size !== passedTickers.size || [...candidateTickers].some((ticker) => !passedTickers.has(ticker))) {
     consistencyErrors.push("candidate_universe.csv does not match the passed rows in hawkeye_radar_audit.csv");
   }
-  const candidates = passed.slice(0, 30).map(hawkeyeCandidate);
+  const fixedRuleViolations = passed.filter((row) => (
+    !Number.isFinite(row.totalMcapCny)
+      || row.totalMcapCny <= 30_000_000_000
+      || !Number.isFinite(row.return60dPct)
+      || row.return60dPct <= 0
+  ));
+  if (fixedRuleViolations.length) {
+    consistencyErrors.push("Hawkeye audit contains passed rows that violate the fixed market-cap or 60-day-return rule");
+  }
+  // Every passed Hawkeye name enters the PDC fact packet. No Top N dispatch
+  // limit, trend gate, volume gate, or daily-move gate is allowed here.
+  const candidates = passed.map(hawkeyeCandidate);
   if (candidates.length < 5) consistencyErrors.push("Hawkeye returned fewer than five valid candidates; PDC generation is blocked.");
   const auditMtime = fs.statSync(auditPath).mtime.toISOString();
   const sourceDate = auditMtime.slice(0, 10);
@@ -871,17 +882,13 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
     sourceGeneratedAt: auditMtime,
     validationErrors: consistencyErrors,
     rules: {
-      minMarketCapCny: 50_000_000_000,
-      minReturn60dPct: 9,
-      requireClearUptrend: "close > SMA20 > SMA50 and above SMA200 when available",
-      maxDailyMovePct: 8,
-      dailyMoveLookback: 1,
-      minHistoryBars: 200
+      minMarketCapCny: 30_000_000_000,
+      minReturn60dPct: 0
     },
     checkedCount: audit.length,
     passedCount: passed.length,
     dispatchedCount: candidates.length,
-    dispatchRule: "All Hawkeye-passed names are ordered by the radar's deterministic 60-day-return order; the first 30 are sent to PDC.",
+    dispatchRule: "Every Hawkeye-passed name enters the PDC fact packet. No candidate-count cap or additional Hawkeye filter is applied.",
     candidates,
     audit
   };

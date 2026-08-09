@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png" />
     <link rel="stylesheet" href="/styles.css?v=0.1.223" />
-    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css" />
+    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css?v=20260809-full-hawkeye" />
     <link rel="stylesheet" href="/stock-pdc/decision/decision.css" />
   </head>
   <body>
@@ -128,8 +128,13 @@
         <div class="decision-placeholder-list" id="resultList"></div>
         <p class="decision-research-note" id="decisionResearchNote" hidden></p>
       </section>
+      <nav class="stock-bottom-home" aria-label="正式 PDC 页面操作">
+        <button class="stock-bottom-home-btn stock-markdown-copy-btn" data-copy-run type="button" disabled>生成并复制本轮 MD</button>
+        <a class="stock-bottom-home-btn" href="/stock-pdc/decision-demo/">切换 Mini Demo</a>
+        <a class="stock-bottom-home-btn" href="/stock-pdc/">查看每日 Top 20</a>
+      </nav>
     </main>
 
-    <script src="/stock-pdc/decision/decision.js"></script>
+    <script src="/stock-pdc/decision/decision.js?v=20260809-full-hawkeye"></script>
   </body>
 </html>

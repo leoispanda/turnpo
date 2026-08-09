@@ -439,7 +439,7 @@ function setRunSummary() {
   const testButton = $("#testDecision");
   const runId = $("#runId");
   const mode = $("#decisionMode");
-  const copyRun = $("#copyDecisionPacket");
+  const copyRunButtons = document.querySelectorAll("[data-copy-run], #copyDecisionPacket");
   const run = state.run;
 
   if (runId) runId.textContent = run?.id ? run.id.slice(0, 8).toUpperCase() : "等待生成";
@@ -471,7 +471,9 @@ function setRunSummary() {
     testButton.disabled = state.running || state.testing;
     testButton.textContent = state.testing ? "Test 运行中…" : "对话 Test（不生成决策）";
   }
-  if (copyRun) copyRun.disabled = !run || state.running;
+  copyRunButtons.forEach((copyRun) => {
+    copyRun.disabled = !run || state.running;
+  });
 }
 
 function renderResult() {
@@ -699,7 +701,7 @@ async function runDecisionFlow() {
       render();
       state.run = (await api("/runs", {
         method: "POST",
-        body: JSON.stringify({ snapshot, modelProfileIds: state.selectedModelProfileIds, verificationId })
+        body: JSON.stringify({ modelProfileIds: state.selectedModelProfileIds, verificationId })
       })).run;
       completeThrough("snapshot");
       render();
@@ -818,6 +820,10 @@ $("#publishDecision")?.addEventListener("click", publishDecision);
 
 $("#copyDecisionPacket")?.addEventListener("click", (event) => {
   copyText(fullRunCopyText(), event.currentTarget);
+});
+
+document.querySelectorAll("[data-copy-run]").forEach((button) => {
+  button.addEventListener("click", (event) => copyText(fullRunCopyText(), event.currentTarget));
 });
 
 render();

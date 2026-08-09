@@ -3,40 +3,138 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mini Demo 决策 | 股票大作手 | Turnpo</title>
-    <meta name="description" content="股票大作手多模型 Mini Demo 决策生成中心。" />
+    <title>Mini 决策 | 股票大作手 | Turnpo</title>
+    <meta name="description" content="股票大作手多模型 Mini 决策生成中心。" />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href="https://www.turnpo.com/stock-pdc/decision-demo/" />
     <meta name="theme-color" content="#f5f6f8" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png" />
     <link rel="stylesheet" href="/styles.css?v=0.1.223" />
-    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css" />
+    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css?v=20260809-full-hawkeye" />
     <link rel="stylesheet" href="/stock-pdc/decision/decision.css" />
   </head>
   <body>
     <header class="topbar stock-decision-topbar">
-      <a class="brand" href="/" aria-label="Turnpo home"><span class="brand-mark" aria-hidden="true"></span><span>Turnpo</span></a>
-      <p>股票大作手 / Mini Demo</p>
-      <div class="top-actions"><a class="ghost-btn" href="/stock-pdc/">查看 Top 20</a><a class="ghost-btn" href="/stock-pdc/decision/">切换正式版</a></div>
+      <a class="brand" href="/" aria-label="Turnpo home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Turnpo</span>
+      </a>
+      <p>股票大作手 / Mini 决策</p>
+      <div class="top-actions">
+        <a class="ghost-btn" href="/stock-pdc/">查看 Top 20</a>
+        <a class="ghost-btn" href="/stock-pdc/decision/">切换正式版</a>
+      </div>
     </header>
+
     <main class="stock-shell stock-decision-shell">
       <section class="decision-command" aria-labelledby="decisionTitle">
         <div>
-          <div class="decision-kicker"><span></span> MINI</div>
+          <div class="decision-kicker"><span></span> PDC</div>
           <h1 id="decisionTitle">今日决策</h1>
-          <div class="decision-model-picker"><span>本轮 Mini PDC</span><strong id="decisionModelSelect">正在读取模型配置…</strong><small id="decisionModelNote">正在读取…</small></div>
+          <div class="decision-model-picker">
+            <span>本轮独立 PDC</span>
+            <strong id="decisionModelSelect">正在读取模型配置…</strong>
+            <small id="decisionModelNote">正在读取…</small>
+          </div>
         </div>
-        <div class="decision-command-actions"><span class="decision-demo-badge" id="decisionMode">Mini Demo · API 已连接</span><button class="decision-copy-btn" id="copyDecisionPacket" type="button" disabled>复制本轮给 GPT</button><button class="decision-copy-btn" id="testDecision" type="button">对话 Test（不生成决策）</button><button class="stock-primary-btn decision-generate-btn" id="generateDecision" type="button">开始生成</button></div>
+        <div class="decision-command-actions">
+          <span class="decision-demo-badge" id="decisionMode">多模型 PDC · API 已连接</span>
+          <button class="decision-copy-btn" id="copyDecisionPacket" type="button" disabled>复制本轮给 GPT</button>
+          <button class="decision-copy-btn" id="testDecision" type="button">对话 Test（不生成决策）</button>
+          <button class="stock-primary-btn decision-generate-btn" id="generateDecision" type="button">开始生成</button>
+        </div>
       </section>
+
       <ol class="decision-workflow" id="decisionWorkflow" aria-label="本轮步骤"></ol>
-      <section class="decision-run-strip" aria-label="本次生成状态" hidden><article><span>运行编号</span><strong id="runId">等待生成</strong></article><article><span>数据快照</span><strong id="snapshotStatus">尚未锁定</strong></article><article><span>研究状态</span><strong id="runStatus">准备就绪</strong></article><article><span>最终容量</span><strong id="finalCapacity">最多 10</strong></article></section>
-      <section class="decision-data-contract" aria-labelledby="dataContractTitle" hidden><div class="stock-section-head"><div><span class="decision-section-index">01 · 固定事实</span><h2 id="dataContractTitle">这轮决策依据什么数据？</h2><p>所有模型只读取同一份冻结事实包。九维只服务于未来 5 日上涨概率与当前买点；10 分均代表现在买入更有利。</p></div><span class="decision-data-lock">冻结后不可替换</span></div><div class="decision-data-grid"><article><span>主数据源</span><strong id="dataPrimary">读取中…</strong><small id="dataPrimaryPolicy"></small></article><article><span>本次快照</span><strong id="dataSnapshotId">等待锁定</strong><small id="dataSnapshotMeta">候选与特征将在开始后冻结</small></article><article><span>价格数据批次</span><strong id="dataPriceRun">读取中…</strong><small id="dataSourceFile"></small></article><article><span>备用校验</span><strong id="dataBackup">读取中…</strong><small id="dataBackupPolicy"></small></article></div></section>
-      <section class="decision-scoring-contract" aria-labelledby="scoringContractTitle" hidden><div class="stock-section-head"><div><span class="decision-section-index">短期评分准则</span><h2 id="scoringContractTitle">现在买入，未来 5 日会怎样？</h2></div></div></section>
-      <section class="decision-workspace" id="decisionArchive" aria-labelledby="progressTitle" hidden><div class="stock-section-head"><div><span class="decision-section-index">运行记录</span><h2 id="progressTitle">本轮输出</h2><p id="progressCopy" aria-live="polite" hidden></p></div><span class="decision-progress-count" id="progressCount">等待运行</span></div><ol class="decision-steps" id="decisionSteps"></ol></section>
-      <section class="decision-models" aria-labelledby="modelsTitle"><div class="stock-section-head"><div><span class="decision-section-index">模型</span><h2 id="modelsTitle">模型返回</h2></div><span class="decision-blind-badge">独立 PDC</span></div><div class="decision-model-grid" id="modelGrid"></div></section>
-      <section class="decision-result" id="decisionResult" hidden aria-labelledby="resultTitle"><div class="stock-section-head"><div><span class="decision-section-index">最终</span><h2 id="resultTitle">最终名单</h2></div><button class="stock-primary-btn decision-publish-btn" id="publishDecision" type="button" hidden>发布到 PDC</button></div><div class="decision-placeholder-list" id="resultList"></div><p class="decision-research-note" id="decisionResearchNote" hidden></p></section>
+
+      <section class="decision-run-strip" aria-label="本次生成状态" hidden>
+        <article><span>运行编号</span><strong id="runId">等待生成</strong></article>
+        <article><span>数据快照</span><strong id="snapshotStatus">尚未锁定</strong></article>
+        <article><span>研究状态</span><strong id="runStatus">准备就绪</strong></article>
+        <article><span>最终容量</span><strong id="finalCapacity">最多 10</strong></article>
+      </section>
+
+      <section class="decision-data-contract" aria-labelledby="dataContractTitle" hidden>
+        <div class="stock-section-head">
+          <div>
+            <span class="decision-section-index">01 · 固定事实</span>
+            <h2 id="dataContractTitle">这轮决策依据什么数据？</h2>
+            <p>所有模型只读取同一份冻结事实包。九维只服务于未来 5 日上涨概率与当前买点；10 分均代表现在买入更有利。</p>
+          </div>
+          <span class="decision-data-lock">冻结后不可替换</span>
+        </div>
+        <div class="decision-data-grid">
+          <article><span>主数据源</span><strong id="dataPrimary">读取中…</strong><small id="dataPrimaryPolicy"></small></article>
+          <article><span>本次快照</span><strong id="dataSnapshotId">等待锁定</strong><small id="dataSnapshotMeta">候选与特征将在开始后冻结</small></article>
+          <article><span>价格数据批次</span><strong id="dataPriceRun">读取中…</strong><small id="dataSourceFile"></small></article>
+          <article><span>备用校验</span><strong id="dataBackup">读取中…</strong><small id="dataBackupPolicy"></small></article>
+        </div>
+      </section>
+
+      <section class="decision-scoring-contract" aria-labelledby="scoringContractTitle" hidden>
+        <div class="stock-section-head">
+          <div>
+            <span class="decision-section-index">短期评分准则</span>
+            <h2 id="scoringContractTitle">现在买入，未来 5 日会怎样？</h2>
+            <p>九维总分只衡量短周期的 Forward Upside。基本面与估值不加分，只在冻结事实出现明确风险时作为背景安全检查。</p>
+          </div>
+          <span class="decision-data-lock">10 分 = 更有利于现在买入</span>
+        </div>
+        <ol class="decision-score-grid">
+          <li><strong>市场环境</strong><span>10%</span><small>市场和板块是否支持做多</small></li>
+          <li><strong>相对强度</strong><span>15%</span><small>是否领先于指数和行业</small></li>
+          <li><strong>趋势加速</strong><span>15%</span><small>趋势在增强还是衰竭</small></li>
+          <li><strong>突破确认</strong><span>15%</span><small>当前突破是否有效且站稳</small></li>
+          <li><strong>量价确认</strong><span>12%</span><small>真实买盘是否持续跟进</small></li>
+          <li><strong>短期催化</strong><span>10%</span><small>必须有冻结事实支持</small></li>
+          <li><strong>当前买点</strong><span>10%</span><small>好股票不等于现在适合买</small></li>
+          <li><strong>低反转风险</strong><span>7%</span><small>不过热、不过度拥挤</small></li>
+          <li><strong>低下行风险</strong><span>6%</span><small>失败时损失是否可控</small></li>
+        </ol>
+      </section>
+
+      <section class="decision-workspace" id="decisionArchive" aria-labelledby="progressTitle" hidden>
+        <div class="stock-section-head">
+          <div>
+            <span class="decision-section-index">运行记录</span>
+            <h2 id="progressTitle">本轮输出</h2>
+            <p id="progressCopy" aria-live="polite" hidden></p>
+          </div>
+          <span class="decision-progress-count" id="progressCount">等待运行</span>
+        </div>
+        <ol class="decision-steps" id="decisionSteps"></ol>
+      </section>
+
+      <section class="decision-models" aria-labelledby="modelsTitle">
+        <div class="stock-section-head">
+          <div>
+            <span class="decision-section-index">模型</span>
+            <h2 id="modelsTitle">模型返回</h2>
+          </div>
+          <span class="decision-blind-badge">独立 PDC</span>
+        </div>
+        <div class="decision-model-grid" id="modelGrid"></div>
+      </section>
+
+      <section class="decision-result" id="decisionResult" hidden aria-labelledby="resultTitle">
+        <div class="stock-section-head">
+          <div>
+            <span class="decision-section-index">最终</span>
+            <h2 id="resultTitle">最终名单</h2>
+          </div>
+          <button class="stock-primary-btn decision-publish-btn" id="publishDecision" type="button" hidden>发布到 PDC</button>
+        </div>
+        <div class="decision-placeholder-list" id="resultList"></div>
+        <p class="decision-research-note" id="decisionResearchNote" hidden></p>
+      </section>
+      <nav class="stock-bottom-home" aria-label="正式 PDC 页面操作">
+        <button class="stock-bottom-home-btn stock-markdown-copy-btn" data-copy-run type="button" disabled>生成并复制本轮 MD</button>
+        <a class="stock-bottom-home-btn" href="/stock-pdc/decision/">切换正式版</a>
+        <a class="stock-bottom-home-btn" href="/stock-pdc/">查看每日 Top 20</a>
+      </nav>
     </main>
-    <script src="/stock-pdc/decision/decision.js"></script>
+
+    <script src="/stock-pdc/decision/decision.js?v=20260809-full-hawkeye"></script>
   </body>
 </html>

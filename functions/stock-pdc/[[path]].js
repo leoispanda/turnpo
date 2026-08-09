@@ -23,8 +23,7 @@ const DEFAULT_DEEPSEEK_DEMO_STOCK_MODEL = "deepseek-v4-flash";
 const DEFAULT_GEMINI_DEMO_STOCK_MODEL = "gemini-3.5-flash-lite";
 const DEFAULT_KIMI_DEMO_STOCK_MODEL = "kimi-k2.6";
 const PDC_SCORING_SYSTEM = "short-term-forward-upside-v2";
-const MAX_DECISION_BODY_BYTES = 96 * 1024;
-const MAX_CANDIDATES = 30;
+const MAX_DECISION_BODY_BYTES = 512 * 1024;
 const MAX_RUNS_PER_DAY = 8;
 const MAX_SMOKE_TESTS_PER_DAY = 60;
 const SMOKE_TEST_TIMEOUT_MS = 5 * 60 * 1000;
@@ -319,7 +318,7 @@ function normalizeCandidate(value, index) {
 function normalizeSnapshot(value) {
   const date = validDate(value?.date);
   const candidates = Array.isArray(value?.candidates)
-    ? value.candidates.map(normalizeCandidate).filter(Boolean).slice(0, MAX_CANDIDATES)
+    ? value.candidates.map(normalizeCandidate).filter(Boolean)
     : [];
   if (!date || candidates.length < 5) return null;
   return {
@@ -329,6 +328,54 @@ function normalizeSnapshot(value) {
     candidates,
     capturedAt: new Date().toISOString()
   };
+}
+
+async function serverHawkeyeSnapshot(request) {
+  const sourceUrl = new URL("/stock-pdc/hawkeye/latest.json", request.url);
+  const response = await fetch(sourceUrl, {
+    headers: { cookie: request.headers.get("cookie") || "" },
+    cf: { cacheTtl: 0, cacheEverything: false }
+  });
+  if (!response.ok) throw new Error("Could not load the current Hawkeye Radar snapshot.");
+  const packet = await response.json();
+  const candidates = Array.isArray(packet?.candidates) ? packet.candidates : [];
+  const rules = packet?.rules || {};
+  const expectedMarketCap = 30_000_000_000;
+  const expectedReturn60d = 0;
+  if (packet?.availability !== "ACTIVE") {
+    throw new Error(`Hawkeye Radar is not ready: ${(packet?.validationErrors || []).join(" ") || "unknown validation failure"}`);
+  }
+  if (rules.minMarketCapCny !== expectedMarketCap || rules.minReturn60dPct !== expectedReturn60d) {
+    throw new Error("Hawkeye Radar rules do not match the fixed market-cap and 60-day-return policy.");
+  }
+  if (!packet?.asOfDate || candidates.length < 5 || candidates.length !== packet.passedCount || packet.dispatchedCount !== packet.passedCount) {
+    throw new Error("Hawkeye Radar did not provide every passed candidate.");
+  }
+  if (candidates.some((row) => (
+    row?.status !== "HAWKEYE_PASSED"
+      || !Number.isFinite(row?.facts?.marketCapCny)
+      || row.facts.marketCapCny <= expectedMarketCap
+      || !Number.isFinite(row?.facts?.return60dPct)
+      || row.facts.return60dPct <= expectedReturn60d
+  ))) {
+    throw new Error("Hawkeye Radar contains a candidate that violates the fixed eligibility rules.");
+  }
+  const snapshot = normalizeSnapshot({
+    date: packet.asOfDate,
+    source: packet.sourceFiles?.candidateUniverse || "outputs/candidate_universe.csv",
+    provenance: {
+      snapshotId: `hawkeye-${packet.asOfDate}-${packet.sourceGeneratedAt || packet.generatedAt || ""}`,
+      primarySourceId: "stock-pdc-local-hawkeye-radar",
+      primarySourceLabel: "Stock PDC 本地 Hawkeye Radar",
+      sourceFile: packet.sourceFiles?.candidateUniverse || "outputs/candidate_universe.csv",
+      priceDataRun: packet.asOfDate,
+      backupPolicy: "备用源只用于校验，不进入正式计算。",
+      featureContract: "Every Hawkeye-passed name enters the PDC. No browser-supplied candidate list is accepted."
+    },
+    candidates
+  });
+  if (!snapshot || snapshot.candidates.length !== candidates.length) throw new Error("Hawkeye Radar snapshot could not be normalized without dropping candidates.");
+  return snapshot;
 }
 
 function serializableCandidates(candidates) {
@@ -1451,10 +1498,12 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
   const body = await readJson(request);
-  const snapshot = normalizeSnapshot(body.snapshot);
-  if (!snapshot) return error("A valid daily PDC snapshot with at least five candidates is required.");
-  if (snapshot.provenance?.primarySourceId !== "stock-pdc-local-hawkeye-radar") {
-    return error("PDC generation only accepts an active Hawkeye Radar fact packet.", 409);
+  if (body.snapshot !== undefined || body.candidates !== undefined) return error("The browser may not supply Hawkeye candidates, dates, scores, or screening inputs.", 400);
+  let snapshot;
+  try {
+    snapshot = await serverHawkeyeSnapshot(request);
+  } catch (caught) {
+    return error(cleanText(caught?.message || "Hawkeye Radar is not ready.", 320), 409);
   }
   const { requestedIds, modelProfiles } = requestedModelProfiles(body, env, mode);
   if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("No selected PDC model is configured on this deployment.");

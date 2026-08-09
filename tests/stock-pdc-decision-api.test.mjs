@@ -32,8 +32,8 @@ const candidates = Array.from({ length: 8 }, (_, index) => ({
   ticker: `00000${index + 1}.SZ`,
   name: `候选 ${index + 1}`,
   rank: index + 1,
+  status: "HAWKEYE_PASSED",
   score: 10 - index / 2,
-  status: "Watch",
   mainReason: "Trend and volume facts supplied.",
   mainRisk: "Review downside risk.",
   signalDayChangePct: 0.5,
@@ -41,18 +41,17 @@ const candidates = Array.from({ length: 8 }, (_, index) => ({
   facts: { marketCapCny: 50_000_000_000 + index, return60dPct: 9 + index }
 }));
 
-const hawkeyeSnapshot = (date, rows = candidates) => ({
-  date,
-  candidates: rows,
-  provenance: {
-    snapshotId: `hawkeye-${date}-test`,
-    primarySourceId: "stock-pdc-local-hawkeye-radar",
-    primarySourceLabel: "Stock PDC 本地 Hawkeye Radar",
-    sourceFile: "outputs/candidate_universe.csv",
-    priceDataRun: date,
-    backupPolicy: "Validation only.",
-    featureContract: "Deterministic Hawkeye facts, diversified PDC reasoning."
-  }
+let hawkeyeDate = "2026-08-07";
+const hawkeyePacket = (date = hawkeyeDate, rows = candidates) => ({
+  availability: "ACTIVE",
+  asOfDate: date,
+  generatedAt: "test",
+  sourceGeneratedAt: "test",
+  sourceFiles: { candidateUniverse: "outputs/candidate_universe.csv" },
+  rules: { minMarketCapCny: 30_000_000_000, minReturn60dPct: 0 },
+  passedCount: rows.length,
+  dispatchedCount: rows.length,
+  candidates: rows
 });
 
 const originalFetch = globalThis.fetch;
@@ -72,7 +71,10 @@ const mockDimensionScores = (index) => ({
   overheatReversalRisk: 6,
   downsideFailureRisk: 7
 });
-globalThis.fetch = async (_url, options) => {
+globalThis.fetch = async (_url, options = {}) => {
+  if (String(_url).endsWith("/stock-pdc/hawkeye/latest.json")) {
+    return new Response(JSON.stringify(hawkeyePacket()), { status: 200, headers: { "content-type": "application/json" } });
+  }
   const request = JSON.parse(options.body);
   const provider = String(_url).includes("api.anthropic.com") ? "claude" : String(_url).includes("generativelanguage.googleapis.com") ? "gemini" : String(_url).includes("api.deepseek.com") ? "deepseek" : String(_url).includes("api.moonshot.cn") ? "kimi" : "openai";
   const isVerification = request.input === "Verify readiness now."
@@ -190,12 +192,12 @@ try {
     },
     body: body === null ? undefined : JSON.stringify(body)
   });
-  const verifiedRunBody = async (snapshot, modelProfileIds) => {
+  const verifiedRunBody = async (modelProfileIds) => {
     const verificationResponse = await onRequestPost(context(requestFor("/stock-pdc/decision/api/verifications", { modelProfileIds })));
     assert.equal(verificationResponse.status, 200, "selected PDC models should be verified before a run");
     const verification = await verificationResponse.json();
     assert.equal(verification.ok, true, "every selected PDC model should return valid JSON during verification");
-    return { snapshot, modelProfileIds, verificationId: verification.verification.id };
+    return { modelProfileIds, verificationId: verification.verification.id };
   };
 
   let response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/models")));
@@ -221,7 +223,6 @@ try {
   assert.equal(response.status, 200);
   let demoVerification = await response.json();
   response = await onRequestPost(context(requestFor("/stock-pdc/decision-demo/api/runs", {
-    snapshot: hawkeyeSnapshot("2026-08-07"),
     modelProfileIds: ["gpt-5.6-luna"],
     verificationId: demoVerification.verification.id
   })));
@@ -258,13 +259,12 @@ try {
   assert.equal(payload.models.length, 5, "PDC-suffixed Cloudflare secrets should enable every model member");
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
-    snapshot: hawkeyeSnapshot("2026-08-07"),
+    snapshot: { candidates },
     modelProfileIds: ["gpt-5.6-sol"]
   })));
-  assert.equal(response.status, 409, "a run must consume a fresh verification");
+  assert.equal(response.status, 400, "the browser must never supply a Hawkeye candidate list");
 
-  const initialSnapshot = hawkeyeSnapshot("2026-08-07");
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(initialSnapshot, ["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]))));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const runId = payload.run.id;
@@ -355,7 +355,8 @@ try {
   assert.equal(portfolioPayload.dashboard.referencePrice, "11:30_LATEST_AVAILABLE_PRICE");
   assert.ok(portfolioPayload.dashboard.noonSnapshot.rows.every((row) => row.referencePrice === 10.2));
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(hawkeyeSnapshot("2026-08-08"), ["claude_api_pdc"]))));
+  hawkeyeDate = "2026-08-08";
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(["claude_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const claudeRunId = payload.run.id;
@@ -368,7 +369,7 @@ try {
   assert.ok(claudeRequest.request.system.includes("short-term forward upside"));
   assert.ok(claudeRequest.request.output_config.format.schema.properties.rankings.items.properties.backgroundChecks);
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(hawkeyeSnapshot("2026-08-08"), ["gemini_api_pdc"]))));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(["gemini_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const geminiRunId = payload.run.id;
@@ -379,7 +380,7 @@ try {
   assert.equal(geminiRequest.request.generationConfig.responseMimeType, "application/json");
   assert.ok(geminiRequest.request.generationConfig.responseJsonSchema.properties.rankings.items.properties.forwardPrediction);
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(hawkeyeSnapshot("2026-08-08"), ["deepseek_api_pdc"]))));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(["deepseek_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const deepseekRunId = payload.run.id;
@@ -389,7 +390,7 @@ try {
   assert.equal(deepseekRequest.headers.authorization, "Bearer deepseek-test-key");
   assert.equal(deepseekRequest.request.response_format.type, "json_object");
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(hawkeyeSnapshot("2026-08-08"), ["kimi_api_pdc"]))));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(["kimi_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const kimiRunId = payload.run.id;

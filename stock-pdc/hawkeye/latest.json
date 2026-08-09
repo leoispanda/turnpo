@@ -1,26 +1,22 @@
 {
   "schemaVersion": "stock-pdc-hawkeye-v1",
-  "generatedAt": "2026-08-09T15:46:20.717Z",
+  "generatedAt": "2026-08-09T17:25:10.797Z",
   "availability": "ACTIVE",
   "asOfDate": "2026-08-09",
   "sourceFiles": {
     "candidateUniverse": "outputs/candidate_universe.csv",
     "audit": "outputs/hawkeye_radar_audit.csv"
   },
-  "sourceGeneratedAt": "2026-08-09T15:44:25.436Z",
+  "sourceGeneratedAt": "2026-08-09T15:26:09.922Z",
   "validationErrors": [],
   "rules": {
-    "minMarketCapCny": 50000000000,
-    "minReturn60dPct": 9,
-    "requireClearUptrend": "close > SMA20 > SMA50 and above SMA200 when available",
-    "maxDailyMovePct": 8,
-    "dailyMoveLookback": 1,
-    "minHistoryBars": 200
+    "minMarketCapCny": 30000000000,
+    "minReturn60dPct": 0
   },
   "checkedCount": 93,
   "passedCount": 52,
-  "dispatchedCount": 30,
-  "dispatchRule": "All Hawkeye-passed names are ordered by the radar's deterministic 60-day-return order; the first 30 are sent to PDC.",
+  "dispatchedCount": 52,
+  "dispatchRule": "Every Hawkeye-passed name enters the PDC fact packet. No candidate-count cap or additional Hawkeye filter is applied.",
   "candidates": [
     {
       "ticker": "301377.SZ",
@@ -620,6 +616,446 @@
         "sma20": 28.2,
         "sma50": 27.5984,
         "sma200": 27.0719
+      }
+    },
+    {
+      "ticker": "600900.SH",
+      "name": "长江电力",
+      "rank": 31,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 6.1%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": 0,
+      "facts": {
+        "marketCapCny": 678993041619,
+        "return60dPct": 6.118546845124295,
+        "latestDailyReturnPct": 0,
+        "maxSingleDayGainPct": 0,
+        "maxSingleDayLossPct": 0,
+        "close": 27.75,
+        "sma20": 28.445,
+        "sma50": 27.2956,
+        "sma200": 26.60085
+      }
+    },
+    {
+      "ticker": "601899.SH",
+      "name": "紫金矿业",
+      "rank": 32,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 6.1%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": 1.8840579710144967,
+      "facts": {
+        "marketCapCny": 934663618963,
+        "return60dPct": 6.065178032589014,
+        "latestDailyReturnPct": 1.8840579710144967,
+        "maxSingleDayGainPct": 1.8840579710144967,
+        "maxSingleDayLossPct": 1.8840579710144967,
+        "close": 35.15,
+        "sma20": 31.4435,
+        "sma50": 29.4616,
+        "sma200": 32.3343
+      }
+    },
+    {
+      "ticker": "600919.SH",
+      "name": "江苏银行",
+      "rank": 33,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 6.0%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -1.106382978723408,
+      "facts": {
+        "marketCapCny": 213242390260,
+        "return60dPct": 5.954226315309552,
+        "latestDailyReturnPct": -1.106382978723408,
+        "maxSingleDayGainPct": -1.106382978723408,
+        "maxSingleDayLossPct": -1.106382978723408,
+        "close": 11.62,
+        "sma20": 11.517,
+        "sma50": 11.28666,
+        "sma200": 10.5631
+      }
+    },
+    {
+      "ticker": "601939.SH",
+      "name": "建设银行",
+      "rank": 34,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 5.6%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.39564787339266827,
+      "facts": {
+        "marketCapCny": 2634315841292,
+        "return60dPct": 5.588759567998314,
+        "latestDailyReturnPct": -0.39564787339266827,
+        "maxSingleDayGainPct": -0.39564787339266827,
+        "maxSingleDayLossPct": -0.39564787339266827,
+        "close": 10.07,
+        "sma20": 10.2835,
+        "sma50": 10.0084,
+        "sma200": 9.29007
+      }
+    },
+    {
+      "ticker": "600036.SH",
+      "name": "招商银行",
+      "rank": 35,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 5.4%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.43623299974340224,
+      "facts": {
+        "marketCapCny": 978530009319,
+        "return60dPct": 5.414730893580022,
+        "latestDailyReturnPct": -0.43623299974340224,
+        "maxSingleDayGainPct": -0.43623299974340224,
+        "maxSingleDayLossPct": -0.43623299974340224,
+        "close": 38.8,
+        "sma20": 38.8185,
+        "sma50": 37.54786,
+        "sma200": 38.51319
+      }
+    },
+    {
+      "ticker": "603993.SH",
+      "name": "洛阳钼业",
+      "rank": 36,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 5.4%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": 2.25822287677957,
+      "facts": {
+        "marketCapCny": 445643480966,
+        "return60dPct": 5.393645011131354,
+        "latestDailyReturnPct": 2.25822287677957,
+        "maxSingleDayGainPct": 2.25822287677957,
+        "maxSingleDayLossPct": 2.25822287677957,
+        "close": 20.83,
+        "sma20": 18.995,
+        "sma50": 18.71,
+        "sma200": 18.99916
+      }
+    },
+    {
+      "ticker": "601328.SH",
+      "name": "交通银行",
+      "rank": 37,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 5.3%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.4322766570605263,
+      "facts": {
+        "marketCapCny": 610593748981,
+        "return60dPct": 5.303261200853404,
+        "latestDailyReturnPct": -0.4322766570605263,
+        "maxSingleDayGainPct": -0.4322766570605263,
+        "maxSingleDayLossPct": -0.4322766570605263,
+        "close": 6.91,
+        "sma20": 6.977,
+        "sma50": 6.73476,
+        "sma200": 6.777105
+      }
+    },
+    {
+      "ticker": "000001.SZ",
+      "name": "平安银行",
+      "rank": 38,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 4.7%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.7098491570541321,
+      "facts": {
+        "marketCapCny": 217152224636,
+        "return60dPct": 4.677268475210483,
+        "latestDailyReturnPct": -0.7098491570541321,
+        "maxSingleDayGainPct": -0.7098491570541321,
+        "maxSingleDayLossPct": -0.7098491570541321,
+        "close": 11.19,
+        "sma20": 11.11,
+        "sma50": 10.7952,
+        "sma200": 10.8542
+      }
+    },
+    {
+      "ticker": "600025.SH",
+      "name": "华能水电",
+      "rank": 39,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 3.3%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.8205128205128198,
+      "facts": {
+        "marketCapCny": 180162681465,
+        "return60dPct": 3.256807261078487,
+        "latestDailyReturnPct": -0.8205128205128198,
+        "maxSingleDayGainPct": -0.8205128205128198,
+        "maxSingleDayLossPct": -0.8205128205128198,
+        "close": 9.67,
+        "sma20": 9.9535,
+        "sma50": 9.5908,
+        "sma200": 9.4334
+      }
+    },
+    {
+      "ticker": "601398.SH",
+      "name": "工商银行",
+      "rank": 40,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 3.2%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.5284015852047519,
+      "facts": {
+        "marketCapCny": 2683739115880,
+        "return60dPct": 3.150684931506853,
+        "latestDailyReturnPct": -0.5284015852047519,
+        "maxSingleDayGainPct": -0.5284015852047519,
+        "maxSingleDayLossPct": -0.5284015852047519,
+        "close": 7.53,
+        "sma20": 7.693,
+        "sma50": 7.4636000000000005,
+        "sma200": 7.4087250000000004
+      }
+    },
+    {
+      "ticker": "600690.SH",
+      "name": "海尔智家",
+      "rank": 41,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 3.1%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.8589511754068746,
+      "facts": {
+        "marketCapCny": 205651418225,
+        "return60dPct": 3.054511278195471,
+        "latestDailyReturnPct": -0.8589511754068746,
+        "maxSingleDayGainPct": -0.8589511754068746,
+        "maxSingleDayLossPct": -0.8589511754068746,
+        "close": 21.93,
+        "sma20": 21.901,
+        "sma50": 20.9862,
+        "sma200": 23.73714
+      }
+    },
+    {
+      "ticker": "601988.SH",
+      "name": "中国银行",
+      "rank": 42,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 2.3%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.3454231433506094,
+      "facts": {
+        "marketCapCny": 1859165616167,
+        "return60dPct": 2.2505759347864585,
+        "latestDailyReturnPct": -0.3454231433506094,
+        "maxSingleDayGainPct": -0.3454231433506094,
+        "maxSingleDayLossPct": -0.3454231433506094,
+        "close": 5.77,
+        "sma20": 5.938,
+        "sma50": 5.85634,
+        "sma200": 5.57799
+      }
+    },
+    {
+      "ticker": "601816.SH",
+      "name": "京沪高铁",
+      "rank": 43,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 1.8%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.7874015748031482,
+      "facts": {
+        "marketCapCny": 246585424025,
+        "return60dPct": 1.8181818181818077,
+        "latestDailyReturnPct": -0.7874015748031482,
+        "maxSingleDayGainPct": -0.7874015748031482,
+        "maxSingleDayLossPct": -0.7874015748031482,
+        "close": 5.04,
+        "sma20": 4.9885,
+        "sma50": 4.856,
+        "sma200": 5.00433
+      }
+    },
+    {
+      "ticker": "002142.SZ",
+      "name": "宁波银行",
+      "rank": 44,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 1.5%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.8191556395715116,
+      "facts": {
+        "marketCapCny": 207881038132,
+        "return60dPct": 1.4829142488717029,
+        "latestDailyReturnPct": -0.8191556395715116,
+        "maxSingleDayGainPct": -0.8191556395715116,
+        "maxSingleDayLossPct": -0.8191556395715116,
+        "close": 31.48,
+        "sma20": 31.762999999999998,
+        "sma50": 30.838,
+        "sma200": 29.4446
+      }
+    },
+    {
+      "ticker": "600028.SH",
+      "name": "中国石化",
+      "rank": 45,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 1.2%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": 0.3937007874015741,
+      "facts": {
+        "marketCapCny": 616720122532,
+        "return60dPct": 1.2306470821754623,
+        "latestDailyReturnPct": 0.3937007874015741,
+        "maxSingleDayGainPct": 0.3937007874015741,
+        "maxSingleDayLossPct": 0.3937007874015741,
+        "close": 5.1,
+        "sma20": 5.1225000000000005,
+        "sma50": 4.8796800000000005,
+        "sma200": 5.54747
+      }
+    },
+    {
+      "ticker": "300033.SZ",
+      "name": "同花顺",
+      "rank": 46,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 1.2%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": 0.35149384885764245,
+      "facts": {
+        "marketCapCny": 180498124800,
+        "return60dPct": 1.1898734177215209,
+        "latestDailyReturnPct": 0.35149384885764245,
+        "maxSingleDayGainPct": 0.35149384885764245,
+        "maxSingleDayLossPct": 0.35149384885764245,
+        "close": 239.82,
+        "sma20": 226.091,
+        "sma50": 227.4094,
+        "sma200": 234.03688
+      }
+    },
+    {
+      "ticker": "600276.SH",
+      "name": "恒瑞医药",
+      "rank": 47,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 0.9%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": 4.816733832277875,
+      "facts": {
+        "marketCapCny": 362523857118,
+        "return60dPct": 0.9238728750923908,
+        "latestDailyReturnPct": 4.816733832277875,
+        "maxSingleDayGainPct": 4.816733832277875,
+        "maxSingleDayLossPct": 4.816733832277875,
+        "close": 54.62,
+        "sma20": 54.385,
+        "sma50": 51.866,
+        "sma200": 56.81575
+      }
+    },
+    {
+      "ticker": "601336.SH",
+      "name": "XD新华保",
+      "rank": 48,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 0.6%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": 0.4803710452211396,
+      "facts": {
+        "marketCapCny": 189231696756,
+        "return60dPct": 0.5636604774535758,
+        "latestDailyReturnPct": 0.4803710452211396,
+        "maxSingleDayGainPct": 0.4803710452211396,
+        "maxSingleDayLossPct": 0.4803710452211396,
+        "close": 60.66,
+        "sma20": 61.5085,
+        "sma50": 59.768,
+        "sma200": 65.42595
+      }
+    },
+    {
+      "ticker": "601658.SH",
+      "name": "邮储银行",
+      "rank": 49,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 0.5%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.2012072434607548,
+      "facts": {
+        "marketCapCny": 595671465320,
+        "return60dPct": 0.5065856129685908,
+        "latestDailyReturnPct": -0.2012072434607548,
+        "maxSingleDayGainPct": -0.2012072434607548,
+        "maxSingleDayLossPct": -0.2012072434607548,
+        "close": 4.96,
+        "sma20": 5.0875,
+        "sma50": 4.9734,
+        "sma200": 5.119435
+      }
+    },
+    {
+      "ticker": "601319.SH",
+      "name": "中国人保",
+      "rank": 50,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 0.5%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.4213483146067398,
+      "facts": {
+        "marketCapCny": 313548093233,
+        "return60dPct": 0.49610205527994555,
+        "latestDailyReturnPct": -0.4213483146067398,
+        "maxSingleDayGainPct": -0.4213483146067398,
+        "maxSingleDayLossPct": -0.4213483146067398,
+        "close": 7.09,
+        "sma20": 7.243,
+        "sma50": 6.9708,
+        "sma200": 7.90615
+      }
+    },
+    {
+      "ticker": "601138.SH",
+      "name": "工业富联",
+      "rank": 51,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 0.3%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -0.13182950051265907,
+      "facts": {
+        "marketCapCny": 1352970211923,
+        "return60dPct": 0.3384841795437854,
+        "latestDailyReturnPct": -0.13182950051265907,
+        "maxSingleDayGainPct": -0.13182950051265907,
+        "maxSingleDayLossPct": -0.13182950051265907,
+        "close": 68.18,
+        "sma20": 60.528,
+        "sma50": 67.031,
+        "sma200": 62.15615
+      }
+    },
+    {
+      "ticker": "601728.SH",
+      "name": "中国电信",
+      "rank": 52,
+      "status": "HAWKEYE_PASSED",
+      "mainReason": "total market cap > 300.0亿; 60d return 0.2%",
+      "mainRisk": "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+      "signalDayChangePct": -1.904761904761909,
+      "facts": {
+        "marketCapCny": 565514117160,
+        "return60dPct": 0.1783109093856483,
+        "latestDailyReturnPct": -1.904761904761909,
+        "maxSingleDayGainPct": -1.904761904761909,
+        "maxSingleDayLossPct": -1.904761904761909,
+        "close": 6.18,
+        "sma20": 6.136,
+        "sma50": 5.89444,
+        "sma200": 6.10366
       }
     }
   ],
