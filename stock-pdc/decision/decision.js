@@ -514,27 +514,16 @@ function render() {
 }
 
 async function api(path, options = {}) {
-  const controller = new AbortController();
-  const timeoutMs = path === "/smoke-test" ? 5 * 60 * 1000 : path.endsWith("/secretary") ? 90 * 1000 : 35000;
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const response = await fetch(`${DECISION_API_ENDPOINT}${path}`, {
-      ...options,
-      signal: controller.signal,
-      headers: {
-        "content-type": "application/json",
-        ...(options.headers || {})
-      }
-    });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(payload.error || `Decision API error (${response.status})`);
-    return payload;
-  } catch (caught) {
-    if (caught?.name === "AbortError") throw new Error(path === "/smoke-test" ? "对话 Test 超过 5 分钟未返回，可稍后重试。" : path.endsWith("/secretary") ? "Secretary 超过 90 秒未返回，可继续生成后重试。" : "该评审超过 35 秒未返回，可能是模型额度或网络问题。");
-    throw caught;
-  } finally {
-    clearTimeout(timeout);
-  }
+  const response = await fetch(`${DECISION_API_ENDPOINT}${path}`, {
+    ...options,
+    headers: {
+      "content-type": "application/json",
+      ...(options.headers || {})
+    }
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(payload.error || `Decision API error (${response.status})`);
+  return payload;
 }
 
 async function latestSnapshot() {

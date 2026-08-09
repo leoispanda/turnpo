@@ -534,30 +534,23 @@ async function secretaryReview(env, run) {
   const apiKey = env.OPENAI_API_KEY;
   if (!apiKey) throw new Error("Missing OPENAI_API_KEY for PDC Secretary.");
   const profile = secretaryProfile(env);
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 60000);
-  try {
-    const response = await fetch(OPENAI_RESPONSES_URL, {
-      method: "POST",
-      headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" },
-      signal: controller.signal,
-      body: JSON.stringify({
-        model: profile.model,
-        instructions: "You are the secretary of an internal A-share research committee. Summarize only the supplied second-round PDC records. Do not rank stocks, change scores, make trading instructions, invent facts, or override the deterministic final gate. Produce a concise audit brief that preserves agreements, disagreements, priority risks, and questions for human review.",
-        input: `Second-round committee packet:\n${JSON.stringify(secretaryPacket(run))}`,
-        text: { format: secretarySchema() },
-        max_output_tokens: 1800,
-        reasoning: { effort: "medium" }
-      })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error?.message || "PDC Secretary request failed.");
-    const outputText = extractOutputText(data);
-    if (!outputText) throw new Error("PDC Secretary returned no structured output.");
-    return { profile: publicModelProfile(profile), summary: normalizeSecretarySummary(parseModelJson(outputText)) };
-  } finally {
-    clearTimeout(timeout);
-  }
+  const response = await fetch(OPENAI_RESPONSES_URL, {
+    method: "POST",
+    headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" },
+    body: JSON.stringify({
+      model: profile.model,
+      instructions: "You are the secretary of an internal A-share research committee. Summarize only the supplied second-round PDC records. Do not rank stocks, change scores, make trading instructions, invent facts, or override the deterministic final gate. Produce a concise audit brief that preserves agreements, disagreements, priority risks, and questions for human review.",
+      input: `Second-round committee packet:\n${JSON.stringify(secretaryPacket(run))}`,
+      text: { format: secretarySchema() },
+      max_output_tokens: 1800,
+      reasoning: { effort: "medium" }
+    })
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error?.message || "PDC Secretary request failed.");
+  const outputText = extractOutputText(data);
+  if (!outputText) throw new Error("PDC Secretary returned no structured output.");
+  return { profile: publicModelProfile(profile), summary: normalizeSecretarySummary(parseModelJson(outputText)) };
 }
 
 function reviewInstructions(role, phase) {
@@ -682,16 +675,12 @@ function normalizeReview(value, candidates) {
 async function openAiReview(env, modelProfile, role, candidates, phase) {
   const apiKey = env.OPENAI_API_KEY;
   if (!apiKey) throw new Error("Missing OPENAI_API_KEY.");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 25000);
-  try {
-    const response = await fetch(OPENAI_RESPONSES_URL, {
+  const response = await fetch(OPENAI_RESPONSES_URL, {
       method: "POST",
       headers: {
         authorization: `Bearer ${apiKey}`,
         "content-type": "application/json"
       },
-      signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
         instructions: reviewInstructions(role, phase),
@@ -700,31 +689,24 @@ async function openAiReview(env, modelProfile, role, candidates, phase) {
         max_output_tokens: 8000,
         reasoning: modelProfile.tier === "mini-demo" ? { effort: "medium" } : { mode: "pro", effort: "max" }
       })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error?.message || "OpenAI review request failed.");
-    const outputText = extractOutputText(data);
-    if (!outputText) throw new Error("OpenAI review returned no structured output.");
-    return normalizeReview(parseModelJson(outputText), candidates);
-  } finally {
-    clearTimeout(timeout);
-  }
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error?.message || "OpenAI review request failed.");
+  const outputText = extractOutputText(data);
+  if (!outputText) throw new Error("OpenAI review returned no structured output.");
+  return normalizeReview(parseModelJson(outputText), candidates);
 }
 
 async function claudeReview(env, modelProfile, role, candidates, phase) {
   const apiKey = claudeApiKey(env);
   if (!apiKey) throw new Error("Missing ANTHROPIC_API_KEY or CLAUDE_API_KEY.");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 25000);
-  try {
-    const response = await fetch(ANTHROPIC_MESSAGES_URL, {
+  const response = await fetch(ANTHROPIC_MESSAGES_URL, {
       method: "POST",
       headers: {
         "x-api-key": apiKey,
         "anthropic-version": "2023-06-01",
         "content-type": "application/json"
       },
-      signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
         max_tokens: 8000,
@@ -741,15 +723,12 @@ async function claudeReview(env, modelProfile, role, candidates, phase) {
           }
         }
       })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error?.message || "Claude review request failed.");
-    const outputText = data.content?.find((item) => item.type === "text" && typeof item.text === "string")?.text || "";
-    if (!outputText) throw new Error("Claude review returned no structured output.");
-    return normalizeReview(JSON.parse(outputText), candidates);
-  } finally {
-    clearTimeout(timeout);
-  }
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error?.message || "Claude review request failed.");
+  const outputText = data.content?.find((item) => item.type === "text" && typeof item.text === "string")?.text || "";
+  if (!outputText) throw new Error("Claude review returned no structured output.");
+  return normalizeReview(JSON.parse(outputText), candidates);
 }
 
 function geminiApiKey(env) {
@@ -796,16 +775,12 @@ function kimiChatUrl(env) {
 async function geminiReview(env, modelProfile, role, candidates, phase) {
   const apiKey = geminiApiKey(env);
   if (!apiKey) throw new Error("Missing GEMINI_API_KEY or GOOGLE_GEMINI_API_KEY.");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 25000);
-  try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelProfile.model)}:generateContent`, {
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelProfile.model)}:generateContent`, {
       method: "POST",
       headers: {
         "x-goog-api-key": apiKey,
         "content-type": "application/json"
       },
-      signal: controller.signal,
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: reviewInstructions(role, phase) }] },
         contents: [{
@@ -817,31 +792,24 @@ async function geminiReview(env, modelProfile, role, candidates, phase) {
           responseJsonSchema: portableReviewSchema()
         }
       })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error?.message || "Gemini review request failed.");
-    const outputText = data.candidates?.flatMap((candidate) => candidate.content?.parts || [])
-      ?.find((part) => typeof part.text === "string")?.text || "";
-    if (!outputText) throw new Error("Gemini review returned no structured output.");
-    return normalizeReview(JSON.parse(outputText), candidates);
-  } finally {
-    clearTimeout(timeout);
-  }
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error?.message || "Gemini review request failed.");
+  const outputText = data.candidates?.flatMap((candidate) => candidate.content?.parts || [])
+    ?.find((part) => typeof part.text === "string")?.text || "";
+  if (!outputText) throw new Error("Gemini review returned no structured output.");
+  return normalizeReview(JSON.parse(outputText), candidates);
 }
 
 async function deepseekReview(env, modelProfile, role, candidates, phase) {
   const apiKey = deepseekApiKey(env);
   if (!apiKey) throw new Error("Missing DEEPSEEK_API_KEY or DEEPSEEK_PDC_API_KEY.");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 25000);
-  try {
-    const response = await fetch(DEEPSEEK_CHAT_URL, {
+  const response = await fetch(DEEPSEEK_CHAT_URL, {
       method: "POST",
       headers: {
         authorization: `Bearer ${apiKey}`,
         "content-type": "application/json"
       },
-      signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
         thinking: modelProfile.tier === "mini-demo" ? { type: "disabled" } : { type: "enabled" },
@@ -853,30 +821,23 @@ async function deepseekReview(env, modelProfile, role, candidates, phase) {
         response_format: { type: "json_object" },
         max_tokens: 8000
       })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error?.message || "DeepSeek review request failed.");
-    const outputText = chatCompletionText(data);
-    if (!outputText) throw new Error("DeepSeek review returned no structured output.");
-    return normalizeReview(parseModelJson(outputText), candidates);
-  } finally {
-    clearTimeout(timeout);
-  }
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error?.message || "DeepSeek review request failed.");
+  const outputText = chatCompletionText(data);
+  if (!outputText) throw new Error("DeepSeek review returned no structured output.");
+  return normalizeReview(parseModelJson(outputText), candidates);
 }
 
 async function kimiReview(env, modelProfile, role, candidates, phase) {
   const apiKey = kimiApiKey(env);
   if (!apiKey) throw new Error("Missing KIMI_API_KEY, MOONSHOT_API_KEY, or KIMI_PDC_API_KEY.");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 25000);
-  try {
-    const response = await fetch(kimiChatUrl(env), {
+  const response = await fetch(kimiChatUrl(env), {
       method: "POST",
       headers: {
         authorization: `Bearer ${apiKey}`,
         "content-type": "application/json"
       },
-      signal: controller.signal,
       body: JSON.stringify({
         model: modelProfile.model,
         ...(modelProfile.tier === "mini-demo" ? { thinking: { type: "disabled" } } : { reasoning_effort: "max" }),
@@ -887,15 +848,12 @@ async function kimiReview(env, modelProfile, role, candidates, phase) {
         response_format: { type: "json_object" },
         max_completion_tokens: 8000
       })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(response.status === 401 ? "Kimi authentication was rejected. Check the Cloudflare secret ‘kimi pdc’ is a Kimi Open Platform API Key." : data.error?.message || "Kimi review request failed.");
-    const outputText = chatCompletionText(data);
-    if (!outputText) throw new Error("Kimi review returned no structured output.");
-    return normalizeReview(parseModelJson(outputText), candidates);
-  } finally {
-    clearTimeout(timeout);
-  }
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(response.status === 401 ? "Kimi authentication was rejected. Check the Cloudflare secret ‘kimi pdc’ is a Kimi Open Platform API Key." : data.error?.message || "Kimi review request failed.");
+  const outputText = chatCompletionText(data);
+  if (!outputText) throw new Error("Kimi review returned no structured output.");
+  return normalizeReview(parseModelJson(outputText), candidates);
 }
 
 async function modelReview(env, modelProfile, role, candidates, phase) {
@@ -1012,13 +970,9 @@ function parseModelJson(outputText) {
 async function verifyOpenAiModel(env, profile) {
   const apiKey = env.OPENAI_API_KEY;
   if (!apiKey) throw new Error("Missing OPENAI_API_KEY.");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
-  try {
-    const response = await fetch(OPENAI_RESPONSES_URL, {
+  const response = await fetch(OPENAI_RESPONSES_URL, {
       method: "POST",
       headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" },
-      signal: controller.signal,
       body: JSON.stringify({
         model: profile.model,
         instructions: verificationInstructions(),
@@ -1027,25 +981,18 @@ async function verifyOpenAiModel(env, profile) {
         max_output_tokens: 64,
         reasoning: { effort: "none" }
       })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error?.message || "OpenAI verification request failed.");
-    return verifyStructuredOutput(extractOutputText(data), "OpenAI");
-  } finally {
-    clearTimeout(timeout);
-  }
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error?.message || "OpenAI verification request failed.");
+  return verifyStructuredOutput(extractOutputText(data), "OpenAI");
 }
 
 async function verifyClaudeModel(env, profile) {
   const apiKey = claudeApiKey(env);
   if (!apiKey) throw new Error("Missing ANTHROPIC_API_KEY or CLAUDE_API_KEY.");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
-  try {
-    const response = await fetch(ANTHROPIC_MESSAGES_URL, {
+  const response = await fetch(ANTHROPIC_MESSAGES_URL, {
       method: "POST",
       headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      signal: controller.signal,
       body: JSON.stringify({
         model: profile.model,
         max_tokens: 64,
@@ -1053,52 +1000,38 @@ async function verifyClaudeModel(env, profile) {
         messages: [{ role: "user", content: "Verify readiness now." }],
         output_config: { format: { type: "json_schema", schema: portableVerificationSchema() } }
       })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error?.message || "Claude verification request failed.");
-    const outputText = data.content?.find((item) => item.type === "text" && typeof item.text === "string")?.text || "";
-    return verifyStructuredOutput(outputText, "Claude");
-  } finally {
-    clearTimeout(timeout);
-  }
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error?.message || "Claude verification request failed.");
+  const outputText = data.content?.find((item) => item.type === "text" && typeof item.text === "string")?.text || "";
+  return verifyStructuredOutput(outputText, "Claude");
 }
 
 async function verifyGeminiModel(env, profile) {
   const apiKey = geminiApiKey(env);
   if (!apiKey) throw new Error("Missing GEMINI_API_KEY or GOOGLE_GEMINI_API_KEY.");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
-  try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(profile.model)}:generateContent`, {
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(profile.model)}:generateContent`, {
       method: "POST",
       headers: { "x-goog-api-key": apiKey, "content-type": "application/json" },
-      signal: controller.signal,
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: verificationInstructions() }] },
         contents: [{ role: "user", parts: [{ text: "Verify readiness now." }] }],
         generationConfig: { responseMimeType: "application/json", responseJsonSchema: portableVerificationSchema(), maxOutputTokens: 64 }
       })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error?.message || "Gemini verification request failed.");
-    const outputText = data.candidates?.flatMap((candidate) => candidate.content?.parts || [])
-      ?.find((part) => typeof part.text === "string")?.text || "";
-    return verifyStructuredOutput(outputText, "Gemini");
-  } finally {
-    clearTimeout(timeout);
-  }
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error?.message || "Gemini verification request failed.");
+  const outputText = data.candidates?.flatMap((candidate) => candidate.content?.parts || [])
+    ?.find((part) => typeof part.text === "string")?.text || "";
+  return verifyStructuredOutput(outputText, "Gemini");
 }
 
 async function verifyDeepSeekModel(env, profile) {
   const apiKey = deepseekApiKey(env);
   if (!apiKey) throw new Error("Missing DEEPSEEK_API_KEY or DEEPSEEK_PDC_API_KEY.");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
-  try {
-    const response = await fetch(DEEPSEEK_CHAT_URL, {
+  const response = await fetch(DEEPSEEK_CHAT_URL, {
       method: "POST",
       headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" },
-      signal: controller.signal,
       body: JSON.stringify({
         model: profile.model,
         thinking: { type: "disabled" },
@@ -1109,25 +1042,18 @@ async function verifyDeepSeekModel(env, profile) {
         response_format: { type: "json_object" },
         max_tokens: 64
       })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error?.message || "DeepSeek verification request failed.");
-    return verifyStructuredOutput(chatCompletionText(data), "DeepSeek");
-  } finally {
-    clearTimeout(timeout);
-  }
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error?.message || "DeepSeek verification request failed.");
+  return verifyStructuredOutput(chatCompletionText(data), "DeepSeek");
 }
 
 async function verifyKimiModel(env, profile) {
   const apiKey = kimiApiKey(env);
   if (!apiKey) throw new Error("Missing KIMI_API_KEY, MOONSHOT_API_KEY, or KIMI_PDC_API_KEY.");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
-  try {
-    const response = await fetch(kimiChatUrl(env), {
+  const response = await fetch(kimiChatUrl(env), {
       method: "POST",
       headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" },
-      signal: controller.signal,
       body: JSON.stringify({
         model: profile.model,
         thinking: { type: "disabled" },
@@ -1138,13 +1064,10 @@ async function verifyKimiModel(env, profile) {
         response_format: { type: "json_object" },
         max_completion_tokens: 64
       })
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(response.status === 401 ? "Kimi authentication was rejected. Check the Cloudflare secret ‘kimi pdc’ is a Kimi Open Platform API Key." : data.error?.message || "Kimi verification request failed.");
-    return verifyStructuredOutput(chatCompletionText(data), "Kimi");
-  } finally {
-    clearTimeout(timeout);
-  }
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(response.status === 401 ? "Kimi authentication was rejected. Check the Cloudflare secret ‘kimi pdc’ is a Kimi Open Platform API Key." : data.error?.message || "Kimi verification request failed.");
+  return verifyStructuredOutput(chatCompletionText(data), "Kimi");
 }
 
 async function verifyModel(env, profile) {
