@@ -83,8 +83,10 @@ assert.ok(stockFunction.includes("async function decisionApi(context, mode = OFF
 assert.ok(stockFunction.includes("async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE)"));
 assert.ok(stockFunction.includes("const SMOKE_TEST_PROMPT"));
 assert.ok(stockFunction.includes("const SMOKE_TEST_TIMEOUT_MS = 5 * 60 * 1000"));
+assert.ok(stockFunction.includes("const MAX_SMOKE_TESTS_PER_DAY = 60"));
 assert.ok(stockFunction.includes('thinkingLevel: "low"'));
 assert.ok(decisionJs.includes('path === "/smoke-test" ? 5 * 60 * 1000 : path.endsWith("/secretary")'));
+assert.ok(decisionJs.includes("Promise.all(profiles.map(async (profile) =>"));
 assert.ok(stockFunction.includes("Save after every individual reviewer"));
 assert.ok(stockFunction.includes("function normalizeProvenance(value)"));
 assert.ok(stockFunction.includes("const FULL_PDC_ROLE"));

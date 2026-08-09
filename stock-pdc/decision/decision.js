@@ -759,12 +759,24 @@ async function runSmokeTest() {
   state.smokeTests = Object.fromEntries(profiles.map((profile) => [profile.id, { checking: true }]));
   render();
   try {
-    const result = await api("/smoke-test", {
-      method: "POST",
-      body: JSON.stringify({ modelProfileIds: state.selectedModelProfileIds })
-    });
-    const members = Array.isArray(result.test?.members) ? result.test.members : [];
-    state.smokeTests = Object.fromEntries(members.map((member) => [member.id, member]));
+    const members = await Promise.all(profiles.map(async (profile) => {
+      try {
+        const result = await api("/smoke-test", {
+          method: "POST",
+          body: JSON.stringify({ modelProfileIds: [profile.id] })
+        });
+        const member = Array.isArray(result.test?.members) ? result.test.members[0] : null;
+        if (!member) throw new Error("模型没有返回 Test 记录。");
+        state.smokeTests[profile.id] = member;
+        render();
+        return member;
+      } catch (caught) {
+        const member = { id: profile.id, label: profile.label, ok: false, reply: "", error: caught.message || "Test Run 未完成。" };
+        state.smokeTests[profile.id] = member;
+        render();
+        return member;
+      }
+    }));
     const failed = members.find((member) => !member.ok);
     if (failed) state.error = `${failed.label || failed.id} Test 未通过：${failed.error || "模型未返回完整 PDC 评分。"}`;
     else {
