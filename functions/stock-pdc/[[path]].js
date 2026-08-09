@@ -781,10 +781,15 @@ async function smokeChat(env, modelProfile) {
       return cleanText(data.content?.find((item) => item.type === "text")?.text, 360);
     }
     if (modelProfile.provider === "Google") {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelProfile.model)}:generateContent`, { method: "POST", headers: { "x-goog-api-key": geminiApiKey(env), "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ systemInstruction: { parts: [{ text: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision." }] }, contents: [{ role: "user", parts: [{ text: SMOKE_TEST_PROMPT }] }], generationConfig: { maxOutputTokens: 120 } }) });
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(data.error?.message || "Gemini test request failed.");
-      return cleanText(data.candidates?.flatMap((candidate) => candidate.content?.parts || []).find((part) => typeof part.text === "string")?.text, 360);
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelProfile.model)}:generateContent`, { method: "POST", headers: { "x-goog-api-key": geminiApiKey(env), "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ systemInstruction: { parts: [{ text: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision." }] }, contents: [{ role: "user", parts: [{ text: SMOKE_TEST_PROMPT }] }], generationConfig: { maxOutputTokens: 120 } }) });
+        const data = await response.json().catch(() => ({}));
+        if (response.ok) return cleanText(data.candidates?.flatMap((candidate) => candidate.content?.parts || []).find((part) => typeof part.text === "string")?.text, 360);
+        const message = cleanText(data.error?.message || "Gemini test request failed.", 240);
+        const transient = response.status === 429 || response.status >= 500 || /high demand|temporar/i.test(message);
+        if (!transient || attempt === 2) throw new Error(message);
+        await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
+      }
     }
     const isKimi = modelProfile.provider === "Moonshot";
     const response = await fetch(isKimi ? kimiChatUrl(env) : DEEPSEEK_CHAT_URL, { method: "POST", headers: { authorization: `Bearer ${isKimi ? kimiApiKey(env) : deepseekApiKey(env)}`, "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ model: modelProfile.model, thinking: { type: "disabled" }, messages: [{ role: "system", content: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision." }, { role: "user", content: SMOKE_TEST_PROMPT }], ...(isKimi ? { max_completion_tokens: 120 } : { max_tokens: 120 }) }) });
