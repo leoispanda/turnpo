@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TURNPO_ROOT = path.resolve(__dirname, "..");
-const DEFAULT_SOURCE_ROOT = "/Users/leoyang/Documents/financial freedom/stock-pdc-local";
+const DEFAULT_SOURCE_ROOT = path.join(TURNPO_ROOT, "stock-pdc-engine");
 const OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "rank-flow.json");
 const AB_OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "ab-flow.json");
 const DECISION_CANDIDATE_OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "decision-candidates.json");
@@ -619,7 +619,7 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
   return {
     generatedAt: new Date().toISOString(),
     sourceRoot,
-    sourceKind: "stock-pdc-local daily watchlists + turnpo backfills",
+    sourceKind: "Turnpo Stock PDC engine daily watchlists + backfills",
     strategy: {
       version: "top20-rotation-v2",
       candidateStage: "Hawkeye Radar",

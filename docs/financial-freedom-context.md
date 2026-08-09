@@ -13,29 +13,29 @@ Use this file when the user says things like:
 
 ## Source Project
 
-Canonical local root:
+Canonical project root:
 
 ```text
-/Users/leoyang/Documents/financial freedom
+/Users/leoyang/Documents/turnpo/stock-pdc-engine
 ```
 
 Main project:
 
 ```text
-/Users/leoyang/Documents/financial freedom/stock-pdc-local
+/Users/leoyang/Documents/turnpo/stock-pdc-engine
 ```
 
 Primary README:
 
 ```text
-/Users/leoyang/Documents/financial freedom/stock-pdc-local/README.md
+/Users/leoyang/Documents/turnpo/stock-pdc-engine/README.md
 ```
 
-The source project contains code, market data, outputs, reports, and portfolio-monitoring CSVs. Do not copy all data files into Turnpo by default. Treat this document as an index and bridge.
+The engine source lives in Turnpo. Market data, outputs, reports, and portfolio-monitoring CSVs are generated locally and excluded from Git.
 
 ## What It Is
 
-`stock-pdc-local` is a local stock research and tracking system.
+`stock-pdc-engine` is the local Stock PDC research and tracking system.
 
 It is designed for:
 
@@ -103,33 +103,33 @@ The PDC committee members are:
 Sample / US ticker data:
 
 ```text
-/Users/leoyang/Documents/financial freedom/stock-pdc-local/data
+/Users/leoyang/Documents/turnpo/stock-pdc-engine/data
 ```
 
 A-share data:
 
 ```text
-/Users/leoyang/Documents/financial freedom/stock-pdc-local/data_a_share
-/Users/leoyang/Documents/financial freedom/stock-pdc-local/data_a_share_latest_2026_07_03
+/Users/leoyang/Documents/turnpo/stock-pdc-engine/data_a_share
+/Users/leoyang/Documents/turnpo/stock-pdc-engine/data_a_share_latest_runs
 ```
 
 Main outputs:
 
 ```text
-/Users/leoyang/Documents/financial freedom/stock-pdc-local/outputs
+/Users/leoyang/Documents/turnpo/stock-pdc-engine/outputs
 ```
 
 Portfolio monitor:
 
 ```text
-/Users/leoyang/Documents/financial freedom/stock-pdc-local/portfolio
+/Users/leoyang/Documents/turnpo/stock-pdc-engine/portfolio
 ```
 
 Universe metadata:
 
 ```text
-/Users/leoyang/Documents/financial freedom/stock-pdc-local/outputs_a_share/a_share_universe.csv
-/Users/leoyang/Documents/financial freedom/stock-pdc-local/outputs_a_share_live_mcap/a_share_universe.csv
+/Users/leoyang/Documents/turnpo/stock-pdc-engine/outputs_a_share/a_share_universe.csv
+/Users/leoyang/Documents/turnpo/stock-pdc-engine/outputs_a_share_latest_runs/run_*/a_share_universe.csv
 ```
 
 Common output files:
@@ -156,35 +156,35 @@ portfolio/position_monitor_history.csv
 Run the full PDC loop with Hawkeye Radar:
 
 ```bash
-cd "/Users/leoyang/Documents/financial freedom/stock-pdc-local"
+cd "/Users/leoyang/Documents/turnpo/stock-pdc-engine"
 python scripts/run_pdc.py --top 20 --use-radar
 ```
 
 Run latest A-share data refresh and PDC:
 
 ```bash
-cd "/Users/leoyang/Documents/financial freedom/stock-pdc-local"
+cd "/Users/leoyang/Documents/turnpo/stock-pdc-engine"
 python scripts/run_latest_pdc.py --top 20
 ```
 
 Run PDC against an existing data directory:
 
 ```bash
-cd "/Users/leoyang/Documents/financial freedom/stock-pdc-local"
-python scripts/run_latest_pdc.py --skip-fetch --run-dir data_a_share_latest_2026_07_03 --top 20
+cd "/Users/leoyang/Documents/turnpo/stock-pdc-engine"
+python scripts/run_latest_pdc.py --skip-fetch --run-dir data_a_share_latest_runs/run_YYYYMMDD_HHMMSS --top 20
 ```
 
 Run only Hawkeye Radar:
 
 ```bash
-cd "/Users/leoyang/Documents/financial freedom/stock-pdc-local"
+cd "/Users/leoyang/Documents/turnpo/stock-pdc-engine"
 python main.py --radar-only
 ```
 
 Analyze one ticker with one skill:
 
 ```bash
-cd "/Users/leoyang/Documents/financial freedom/stock-pdc-local"
+cd "/Users/leoyang/Documents/turnpo/stock-pdc-engine"
 python main.py --ticker 600519.SH --skill trend
 python main.py --ticker 600519.SH --skill risk
 python main.py --ticker 600519.SH --skill zhuge
@@ -193,14 +193,14 @@ python main.py --ticker 600519.SH --skill zhuge
 Analyze one ticker with all PDC members:
 
 ```bash
-cd "/Users/leoyang/Documents/financial freedom/stock-pdc-local"
+cd "/Users/leoyang/Documents/turnpo/stock-pdc-engine"
 python main.py --ticker 600519.SH --all-skills
 ```
 
 Run historical replay:
 
 ```bash
-cd "/Users/leoyang/Documents/financial freedom/stock-pdc-local"
+cd "/Users/leoyang/Documents/turnpo/stock-pdc-engine"
 python scripts/run_historical_replay.py --start 2025-08-01 --end 2026-06-26 --top 20 --hold-days 1,5,10,20 --trailing-stop-pct 10
 ```
 
@@ -221,9 +221,6 @@ python scripts/run_historical_replay.py --start 2025-08-01 --end 2026-06-26 --to
 --metadata-csv
 --radar-min-mcap
 --radar-min-return-60d
---radar-max-daily-move
---radar-daily-lookback
---radar-min-bars
 --min-candidate-count
 --min-pdc-pool-size
 --disable-selection-gate
@@ -240,10 +237,8 @@ python scripts/run_historical_replay.py --start 2025-08-01 --end 2026-06-26 --to
 
 ```text
 --top
---candidate-count
 --source tencent|eastmoney
 --bars
---min-amount
 --min-mcap
 --min-bars
 --benchmark
@@ -252,6 +247,8 @@ python scripts/run_historical_replay.py --start 2025-08-01 --end 2026-06-26 --to
 --as-of
 --skip-fetch
 ```
+
+正式每日流程的鹰眼第一步固定只使用两条准入规则：总市值大于 300 亿人民币、近 60 个交易日收益大于 0%。不设候选数上限，不以成交额、均线、量价、突破、过热或风险作为鹰眼过滤；后五项均由 PDC 成员在第二步判断。
 
 `scripts/run_historical_replay.py` supports:
 
@@ -298,7 +295,7 @@ Keep these constraints in mind:
 When working from the Turnpo workspace and the user asks to use Financial Freedom:
 
 1. Read this file first.
-2. Use `/Users/leoyang/Documents/financial freedom/stock-pdc-local` as the project root.
+2. Use `/Users/leoyang/Documents/turnpo/stock-pdc-engine` as the project root.
 3. Read the relevant source README or script before running anything.
 4. Prefer read-only inspection and reporting unless the user explicitly asks to run/update outputs.
 5. If a command writes inside the Financial Freedom directory, request/confirm the needed filesystem permission if the sandbox blocks it.
