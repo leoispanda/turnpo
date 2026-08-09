@@ -20,7 +20,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 24px;
   align-items: end;
-  padding: clamp(20px, 3vw, 38px) 0 14px;
+  padding: clamp(18px, 2vw, 28px) 0 4px;
 }
 
 .decision-kicker {
@@ -42,11 +42,11 @@
 }
 
 .decision-command h1 {
-  margin: 12px 0 0;
+  margin: 8px 0 0;
   color: #15191f;
-  font-size: clamp(38px, 5vw, 62px);
-  line-height: 0.96;
-  letter-spacing: -0.05em;
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
 .decision-command p {
@@ -159,6 +159,42 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
+}
+
+.decision-workflow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.decision-workflow li {
+  display: grid;
+  gap: 4px;
+  min-height: 76px;
+  border: 1px solid rgba(34, 87, 122, 0.14);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 11px 12px;
+}
+
+.decision-workflow span {
+  color: #22577a;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.decision-workflow strong {
+  color: #26313a;
+  font-size: 13px;
+}
+
+.decision-workflow small {
+  color: #73808a;
+  font-size: 11px;
 }
 
 .decision-reading-guide {
@@ -966,6 +1002,10 @@
   .decision-reading-guide,
   .decision-score-grid {
     grid-template-columns: 1fr;
+  }
+
+  .decision-workflow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .decision-model-grid {

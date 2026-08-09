@@ -87,14 +87,14 @@ function selectedModelProfiles() {
 function renderSteps() {
   const list = $("#decisionSteps");
   if (!list) return;
+  const archive = $("#decisionArchive");
   const run = state.run;
   if (!run) {
-    list.innerHTML = `<li class="decision-run-empty">
-      <strong>还没有本轮研究记录</strong>
-      <p>先运行一次对话 Test 确认模型可用，或直接开始生成。完成后，这里会按轮次保留每位模型实际说了什么。</p>
-    </li>`;
+    if (archive) archive.hidden = true;
+    list.innerHTML = "";
     return;
   }
+  if (archive) archive.hidden = false;
 
   const members = run.members || [];
   const firstRound = members.filter((member) => member.roundOne?.rankings?.length).length;
@@ -391,14 +391,13 @@ function renderModels() {
     <article class="decision-model-card ${review ? "is-clickable" : ""}" data-state="${escapeHtml(state.modelStates[member.id] || member.state || "idle")}" data-verification="${verificationState}">
       <span>${escapeHtml(member.provider)} · 完整 PDC</span>
       <h3>${escapeHtml(member.label)}</h3>
-      <p>实际型号：${escapeHtml(member.model)}<br>独立覆盖趋势、量价、风险、过热与反方证伪。</p>
+      <p>型号：${escapeHtml(member.model)}</p>
       <div class="decision-model-status">${escapeHtml(modelStatus(member))}</div>
       ${verificationReceiptMarkup(verification)}
       ${smokeTestMarkup(smokeTest)}
       ${!state.run ? `<button class="decision-member-toggle" type="button" data-member-toggle="${escapeHtml(member.id)}">${state.selectedModelProfileIds.includes(member.id) ? "已加入本轮" : "加入本轮"}</button>` : ""}
       ${review ? `<button class="decision-member-open" type="button" data-member-open="${escapeHtml(member.id)}">${expanded ? "收起结论" : "查看结论"}</button>` : ""}
       ${review && expanded ? `<div class="decision-member-conclusion">
-        <p class="decision-member-hint">先看首轮的独立意见，再看最终复核是否改变。每一部分都能单独复制给 GPT。</p>
         ${reviewPanel(member, "round-one", member.roundOne)}
         ${reviewPanel(member, "round-two", member.roundTwo)}
       </div>` : ""}
@@ -434,8 +433,8 @@ function renderModelPicker() {
   const profiles = selectedModelProfiles();
   select.textContent = profiles.length ? `${profiles.length} 位模型 PDC 已加入` : "请选择至少一位模型 PDC";
   note.textContent = profiles.length
-    ? `${profiles.map((profile) => profile.label).join("、")}。每次开始会先验证实际型号与 JSON 输出；密钥只保留在服务端。`
-    : "当前没有可用模型。请先完成服务端模型配置。";
+    ? profiles.map((profile) => profile.label).join("、")
+    : "未配置模型";
 }
 
 function setText(selector, value) {
