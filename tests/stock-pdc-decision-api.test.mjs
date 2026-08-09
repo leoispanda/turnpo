@@ -70,6 +70,7 @@ let geminiRequest = null;
 let deepseekRequest = null;
 let kimiRequest = null;
 let marketRefreshRequest = null;
+let marketRefreshStatus = 204;
 let reviewRankingLimit = null;
 let nullDimensionScore = false;
 const mockDimensionScores = (index) => ({
@@ -86,7 +87,12 @@ const mockDimensionScores = (index) => ({
 globalThis.fetch = async (_url, options = {}) => {
   if (String(_url).startsWith("https://api.github.com/repos/leoispanda/turnpo/actions/workflows/manual-stock-pdc-refresh.yml/dispatches")) {
     marketRefreshRequest = { url: String(_url), request: JSON.parse(options.body), headers: options.headers };
-    return new Response(null, { status: 204 });
+    return marketRefreshStatus === 204
+      ? new Response(null, { status: 204 })
+      : new Response(JSON.stringify({ message: "Resource not accessible by personal access token" }), {
+        status: marketRefreshStatus,
+        headers: { "content-type": "application/json" }
+      });
   }
   if (String(_url).endsWith("/stock-pdc/hawkeye/latest.json")) {
     return new Response(JSON.stringify(hawkeyePacket()), { status: 200, headers: { "content-type": "application/json" } });
@@ -235,6 +241,17 @@ try {
   const manualOnlyPayload = await response.json();
   assert.equal(manualOnlyPayload.code, "MANUAL_REFRESH_GITHUB_ONLY");
   assert.equal(manualOnlyPayload.workflowUrl, "https://github.com/leoispanda/turnpo/actions/workflows/manual-stock-pdc-refresh.yml");
+
+  marketRefreshStatus = 403;
+  const rejectedRefreshContext = (request) => ({ request, env: { ...env, AUTH_KV: new MemoryKv() }, next: async () => new Response("next") });
+  response = await onRequestPost(rejectedRefreshContext(requestFor("/stock-pdc/decision/api/data-refresh", {})));
+  assert.equal(response.status, 502, "a rejected GitHub dispatch must retain the upstream cause and manual fallback");
+  const rejectedRefreshPayload = await response.json();
+  assert.equal(rejectedRefreshPayload.code, "MANUAL_REFRESH_GITHUB_REJECTED");
+  assert.equal(rejectedRefreshPayload.githubStatus, 403);
+  assert.ok(rejectedRefreshPayload.error.includes("HTTP 403"));
+  assert.equal(rejectedRefreshPayload.workflowUrl, "https://github.com/leoispanda/turnpo/actions/workflows/manual-stock-pdc-refresh.yml");
+  marketRefreshStatus = 204;
 
   response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/models")));
   assert.equal(response.status, 200);

@@ -306,7 +306,17 @@ async function queueManualMarketRefresh(env) {
     }
   );
   if (!response.ok) {
-    return error(`GitHub rejected the manual market refresh (status ${response.status}). Check the workflow and the token's Actions: write permission.`, 502);
+    const githubPayload = await response.json().catch(() => ({}));
+    const githubMessage = cleanText(githubPayload?.message || "GitHub did not provide an error message.", 240);
+    // Do not expose the token, but preserve the upstream status and message so
+    // the owner can distinguish an expired token from a permission or workflow
+    // problem. The GitHub workflow remains a safe manual fallback.
+    return json({
+      error: `GitHub rejected the manual market refresh (HTTP ${response.status}: ${githubMessage}).`,
+      code: "MANUAL_REFRESH_GITHUB_REJECTED",
+      githubStatus: response.status,
+      workflowUrl: MANUAL_MARKET_REFRESH_WORKFLOW_URL
+    }, { status: 502 });
   }
 
   const requestedAt = new Date().toISOString();

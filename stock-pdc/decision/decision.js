@@ -903,6 +903,10 @@ async function refreshMarketData() {
       state.marketRefreshManualOnly = true;
       state.marketRefreshWorkflowUrl = caught.payload.workflowUrl || "";
       state.marketRefreshMessage = "无需配置。请打开下方 GitHub 页面，点击 Run workflow；完成后刷新此页。";
+    } else if (caught.status === 502 && caught.payload?.code === "MANUAL_REFRESH_GITHUB_REJECTED") {
+      state.marketRefreshManualOnly = true;
+      state.marketRefreshWorkflowUrl = caught.payload.workflowUrl || "";
+      state.marketRefreshMessage = `${caught.message || "网站未能代为提交 GitHub 工作流。"} 请打开下方 GitHub 页面，点击 Run workflow；完成后刷新此页。`;
     } else {
       state.marketRefreshError = caught.message || "请稍后重试。";
     }
