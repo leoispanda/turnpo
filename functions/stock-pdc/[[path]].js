@@ -25,6 +25,7 @@ const PDC_SCORING_SYSTEM = "short-term-forward-upside-v2";
 const MAX_DECISION_BODY_BYTES = 96 * 1024;
 const MAX_CANDIDATES = 30;
 const MAX_RUNS_PER_DAY = 8;
+const MAX_SMOKE_TESTS_PER_DAY = 12;
 const RUN_TTL_SECONDS = 180 * 24 * 60 * 60;
 const MODEL_VERIFICATION_TTL_SECONDS = 10 * 60;
 const PORTFOLIO_DEFAULT_CONFIG = Object.freeze({
@@ -236,6 +237,10 @@ function decisionRateKey(date, mode = OFFICIAL_DECISION_MODE) {
 
 function decisionVerificationKey(verificationId, mode = OFFICIAL_DECISION_MODE) {
   return `${decisionPrefix(mode)}:verification:${verificationId}`;
+}
+
+function decisionSmokeTestRateKey(date, mode = OFFICIAL_DECISION_MODE) {
+  return `${decisionPrefix(mode)}:smoke-test-count:${date}`;
 }
 
 function extractOutputText(data) {
@@ -1310,6 +1315,46 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
   return json({ ok: true, run: publicRun(run) });
 }
 
+async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE) {
+  const store = decisionStore(env);
+  if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
+  const body = await readJson(request);
+  const candidate = normalizeCandidate(body.candidate, 0);
+  if (!candidate) return error("A valid current candidate is required for the PDC test run.");
+  const { requestedIds, modelProfiles } = requestedModelProfiles(body, env, mode);
+  if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("No selected PDC model is configured on this deployment.");
+  const date = validDate(body.date) || new Date().toISOString().slice(0, 10);
+  const key = decisionSmokeTestRateKey(date, mode);
+  const currentCount = Number(await store.get(key) || "0");
+  if (currentCount >= MAX_SMOKE_TESTS_PER_DAY) return error("Daily PDC test-run limit reached. Try again tomorrow.", 429);
+  await store.put(key, String(currentCount + 1), { expirationTtl: 24 * 60 * 60 });
+  const members = await Promise.all(modelProfiles.map(async (profile) => {
+    const startedAt = Date.now();
+    try {
+      const review = await modelReview(env, profile, FULL_PDC_ROLE, [candidate], "round-one");
+      const row = review.rankings?.[0];
+      return {
+        id: profile.id,
+        label: profile.label,
+        provider: profile.provider,
+        model: profile.model,
+        ok: Boolean(row),
+        latencyMs: Date.now() - startedAt,
+        result: row ? {
+          ticker: row.ticker,
+          score: row.score,
+          decision: row.decision,
+          forwardUpsideScore: row.forwardPrediction?.forwardUpsideScore ?? null
+        } : null,
+        error: row ? "" : "Model returned no valid PDC ranking."
+      };
+    } catch (caught) {
+      return { id: profile.id, label: profile.label, provider: profile.provider, model: profile.model, ok: false, latencyMs: Date.now() - startedAt, result: null, error: cleanText(caught?.message || "PDC test run failed.", 240) };
+    }
+  }));
+  return json({ ok: members.every((member) => member.ok), test: { mode, date, candidate: { ticker: candidate.ticker, name: candidate.name }, members } });
+}
+
 async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
   if (stage === "round-one" || stage === "round-two") {
     const reviewKey = reviewStageKey(stage);
@@ -1772,6 +1817,7 @@ async function decisionApi(context, mode = OFFICIAL_DECISION_MODE) {
   }
   if (request.method !== "POST") return error("Method not allowed.", 405);
   if (suffix === "verifications") return createModelVerification(request, env, mode);
+  if (suffix === "smoke-test") return smokeTestDecision(request, env, mode);
   if (suffix === "runs") return createRun(request, env, mode);
   const stageMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/(round-one|merge|round-two|risk-check)(?:\/([a-z0-9_.-]+))?$/i);
   if (stageMatch) return advanceRun(env, stageMatch[1], stageMatch[2], stageMatch[3] || "", mode);

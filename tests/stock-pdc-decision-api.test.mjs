@@ -198,6 +198,15 @@ try {
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision-demo/api/runs/${demoRun.run.id}/publish`, {})));
   assert.equal(response.status, 409, "Mini Demo cannot publish to formal PDC");
 
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/smoke-test", {
+    date: "2026-08-07", candidate: candidates[0], modelProfileIds: ["gpt-5.6-sol"]
+  })));
+  assert.equal(response.status, 200, "a non-persistent full PDC test should run one real candidate through the selected model");
+  payload = await response.json();
+  assert.equal(payload.test.members.length, 1);
+  assert.equal(payload.test.members[0].ok, true);
+  assert.equal(payload.test.members[0].result.ticker, "000001.SZ");
+
   const pdcNamedEnv = {
     ...env,
     ANTHROPIC_API_KEY: "",

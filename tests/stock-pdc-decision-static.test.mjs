@@ -12,9 +12,11 @@ const stockJs = fs.readFileSync(new URL("../stock-pdc/stock-pdc.js", import.meta
 
 assert.ok(stockHtml.includes('href="/stock-pdc/decision/"'));
 assert.ok(decisionHtml.includes('id="generateDecision"'));
+assert.ok(decisionHtml.includes('id="testDecision"'));
 assert.ok(decisionHtml.includes('href="/stock-pdc/decision-demo/"'));
 assert.ok(stockHtml.includes('href="/stock-pdc/portfolio/"'));
 assert.ok(demoHtml.includes("Mini Demo 决策"));
+assert.ok(demoHtml.includes('id="testDecision"'));
 assert.ok(portfolioHtml.includes("BUY TODAY"));
 assert.ok(portfolioHtml.includes("HOLD"));
 assert.ok(portfolioHtml.includes("SELL TODAY"));
@@ -37,6 +39,8 @@ assert.ok(decisionHtml.includes("现在买入，未来 5 日会怎样？"));
 assert.ok(decisionJs.includes('const IS_DEMO_MODE = window.location.pathname.startsWith("/stock-pdc/decision-demo")'));
 assert.ok(decisionJs.includes('"/stock-pdc/decision-demo/api"'));
 assert.ok(decisionJs.includes("async function runDecisionFlow()"));
+assert.ok(decisionJs.includes("async function runSmokeTest()"));
+assert.ok(decisionJs.includes('api("/smoke-test"'));
 assert.ok(decisionJs.includes("async function runReviewers(stage)"));
 assert.ok(decisionJs.includes('点击“继续生成”会从已保存的模型 PDC 继续'));
 assert.ok(decisionJs.includes("async function publishDecision()"));
@@ -67,6 +71,7 @@ assert.ok(stockFunction.includes('const DECISION_PATH = `${PAGE_PATH}/decision`;
 assert.ok(stockFunction.includes('const DEMO_DECISION_PATH = `${PAGE_PATH}/decision-demo`;'));
 assert.ok(stockFunction.includes('const PORTFOLIO_PATH = `${PAGE_PATH}/portfolio`;'));
 assert.ok(stockFunction.includes("async function decisionApi(context, mode = OFFICIAL_DECISION_MODE)"));
+assert.ok(stockFunction.includes("async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE)"));
 assert.ok(stockFunction.includes("Save after every individual reviewer"));
 assert.ok(stockFunction.includes("function normalizeProvenance(value)"));
 assert.ok(stockFunction.includes("const FULL_PDC_ROLE"));

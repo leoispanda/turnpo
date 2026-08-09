@@ -50,7 +50,9 @@ const state = {
   modelProfiles: [{ id: IS_DEMO_MODE ? "gpt-5.6-luna" : "gpt-5.6-sol", label: IS_DEMO_MODE ? "GPT-5.6 Luna · Mini Demo" : "GPT-5.6 Sol · Pro PDC", provider: "OpenAI", model: IS_DEMO_MODE ? "gpt-5.6-luna" : "gpt-5.6-sol", tier: IS_DEMO_MODE ? "mini-demo" : "flagship" }],
   selectedModelProfileIds: [IS_DEMO_MODE ? "gpt-5.6-luna" : "gpt-5.6-sol"],
   modelStates: { [IS_DEMO_MODE ? "gpt-5.6-luna" : "gpt-5.6-sol"]: "idle" },
-  verification: {}
+  verification: {},
+  testing: false,
+  smokeTests: {}
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -131,6 +133,10 @@ function stepArtifact(step) {
 function modelStatus(member) {
   const status = state.modelStates[member.id] || member.state || "idle";
   const verification = state.verification[member.id];
+  const smokeTest = state.smokeTests[member.id];
+  if (!state.run && smokeTest?.checking) return "正在进行单股票完整 PDC Test";
+  if (!state.run && smokeTest?.ok) return `完整 Test 已通过 · ${smokeTest.latencyMs || 0}ms`;
+  if (!state.run && smokeTest && smokeTest.ok === false) return `Test 未通过 · ${smokeTest.error || "请检查模型输出"}`;
   if (!state.run && verification?.checking) return "正在验证 API 与实际型号";
   if (!state.run && verification?.ok) return `本轮已验证 · ${verification.latencyMs || 0}ms`;
   if (!state.run && verification && verification.ok === false) return `验证未通过 · ${verification.error || "请检查配置"}`;
@@ -145,6 +151,13 @@ function verificationReceiptMarkup(verification) {
   const checkedAt = verification.checkedAt ? new Date(verification.checkedAt).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) : "刚刚";
   if (!verification.ok) return `<div class="decision-verification-receipt" data-ok="false"><strong>启动前验证未通过</strong><small>${escapeHtml(verification.error || "请检查 API Key、型号或额度。")} · ${escapeHtml(checkedAt)}</small></div>`;
   return `<div class="decision-verification-receipt" data-ok="true"><strong>启动前验证已通过 · ${escapeHtml(verification.latencyMs || 0)}ms</strong><small>返回：${escapeHtml(verification.response || '{"status":"ok"}')} · ${escapeHtml(checkedAt)}</small></div>`;
+}
+
+function smokeTestMarkup(test) {
+  if (!test || test.checking) return "";
+  if (!test.ok) return `<div class="decision-verification-receipt" data-ok="false"><strong>Test Run 未通过</strong><small>${escapeHtml(test.error || "模型未返回完整 PDC 评分。")}</small></div>`;
+  const result = test.result || {};
+  return `<div class="decision-verification-receipt" data-ok="true"><strong>Test Run 已跑通 · ${escapeHtml(test.latencyMs || 0)}ms</strong><small>${escapeHtml(result.ticker || "候选")} · ${escapeHtml(result.score ?? "—")} 分 · ${escapeHtml(result.decision || "—")} · Forward ${escapeHtml(result.forwardUpsideScore ?? "—")}/100</small></div>`;
 }
 
 function dimensionCopyText(row) {
@@ -285,6 +298,7 @@ function renderModels() {
     const review = member.roundTwo || member.roundOne;
     const expanded = state.expandedMemberId === member.id;
     const verification = state.verification[member.id];
+    const smokeTest = state.smokeTests[member.id];
     const verificationState = verification?.checking ? "checking" : verification?.ok ? "passed" : verification ? "failed" : "idle";
     return `
     <article class="decision-model-card ${review ? "is-clickable" : ""}" data-state="${escapeHtml(state.modelStates[member.id] || member.state || "idle")}" data-verification="${verificationState}">
@@ -293,6 +307,7 @@ function renderModels() {
       <p>实际型号：${escapeHtml(member.model)}<br>独立覆盖趋势、量价、风险、过热与反方证伪。</p>
       <div class="decision-model-status">${escapeHtml(modelStatus(member))}</div>
       ${verificationReceiptMarkup(verification)}
+      ${smokeTestMarkup(smokeTest)}
       ${!state.run ? `<button class="decision-member-toggle" type="button" data-member-toggle="${escapeHtml(member.id)}">${state.selectedModelProfileIds.includes(member.id) ? "已加入本轮" : "加入本轮"}</button>` : ""}
       ${review ? `<button class="decision-member-open" type="button" data-member-open="${escapeHtml(member.id)}">${expanded ? "收起结论" : "查看结论"}</button>` : ""}
       ${review && expanded ? `<div class="decision-member-conclusion">
@@ -363,6 +378,7 @@ function setRunSummary() {
   const count = $("#progressCount");
   const copy = $("#progressCopy");
   const button = $("#generateDecision");
+  const testButton = $("#testDecision");
   const runId = $("#runId");
   const mode = $("#decisionMode");
   const copyRun = $("#copyDecisionPacket");
@@ -370,7 +386,7 @@ function setRunSummary() {
 
   if (runId) runId.textContent = run?.id ? run.id.slice(0, 8).toUpperCase() : "等待生成";
   if (snapshot) snapshot.textContent = state.completed > 0 ? `${run?.date || ""} 已锁定` : "尚未锁定";
-  if (status) status.textContent = state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
+  if (status) status.textContent = state.testing ? "Test 中" : state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
   if (count) count.textContent = `${state.completed} / ${steps.length}`;
   if (mode) {
     const profiles = run?.committeeMode ? run.members : selectedModelProfiles();
@@ -378,6 +394,8 @@ function setRunSummary() {
   }
   if (copy) copy.textContent = state.error
     ? `已暂停：${state.error} 点击“继续生成”会从已保存的模型 PDC 继续，不会重复已完成的结论。`
+    : state.testing
+    ? "正在进行单股票完整 PDC Test：不创建 Run、不写入历史、不影响正式决策。"
     : state.running
     ? `正在执行：${steps.find((step) => step.id === state.activeStep)?.title || "准备任务"}`
     : state.completed === steps.length
@@ -386,8 +404,12 @@ function setRunSummary() {
         : "本次 Run 已完成。确认无误后，点击“发布到 PDC”才会追加当天正式记录。"
       : "点击开始生成后，每一个步骤都会在这里留下真实状态与产物。";
   if (button) {
-    button.disabled = state.running;
+    button.disabled = state.running || state.testing;
     button.textContent = state.running ? "正在生成…" : state.run ? "继续生成" : "开始生成";
+  }
+  if (testButton) {
+    testButton.disabled = state.running || state.testing;
+    testButton.textContent = state.testing ? "Test 运行中…" : "Test Run（不生成决策）";
   }
   if (copyRun) copyRun.disabled = !run || state.running;
 }
@@ -658,6 +680,37 @@ async function runDecisionFlow() {
   }
 }
 
+async function runSmokeTest() {
+  if (state.running || state.testing) return;
+  state.testing = true;
+  state.error = "";
+  const profiles = selectedModelProfiles();
+  state.smokeTests = Object.fromEntries(profiles.map((profile) => [profile.id, { checking: true }]));
+  render();
+  try {
+    const snapshot = await latestSnapshot();
+    const candidate = snapshot.candidates[0];
+    if (!candidate) throw new Error("当前事实包没有可用于 Test 的候选股票。");
+    const result = await api("/smoke-test", {
+      method: "POST",
+      body: JSON.stringify({ date: snapshot.date, candidate, modelProfileIds: state.selectedModelProfileIds })
+    });
+    const members = Array.isArray(result.test?.members) ? result.test.members : [];
+    state.smokeTests = Object.fromEntries(members.map((member) => [member.id, member]));
+    const failed = members.find((member) => !member.ok);
+    if (failed) state.error = `${failed.label || failed.id} Test 未通过：${failed.error || "模型未返回完整 PDC 评分。"}`;
+    else {
+      const copy = $("#progressCopy");
+      if (copy) copy.textContent = `${members.length} 位模型已完成单股票完整 PDC Test。未创建 Run，未写入历史，也没有生成交易决策。`;
+    }
+  } catch (caught) {
+    state.error = caught.message || "Test Run 未完成。";
+  } finally {
+    state.testing = false;
+    render();
+  }
+}
+
 async function publishDecision() {
   if (IS_DEMO_MODE || !state.run?.id || state.running) return;
   state.running = true;
@@ -677,6 +730,8 @@ async function publishDecision() {
 $("#generateDecision")?.addEventListener("click", () => {
   if (!state.running) runDecisionFlow();
 });
+
+$("#testDecision")?.addEventListener("click", runSmokeTest);
 
 $("#publishDecision")?.addEventListener("click", publishDecision);
 
