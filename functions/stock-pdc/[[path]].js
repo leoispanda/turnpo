@@ -26,6 +26,7 @@ const MAX_DECISION_BODY_BYTES = 96 * 1024;
 const MAX_CANDIDATES = 30;
 const MAX_RUNS_PER_DAY = 8;
 const MAX_SMOKE_TESTS_PER_DAY = 12;
+const SMOKE_TEST_TIMEOUT_MS = 5 * 60 * 1000;
 const RUN_TTL_SECONDS = 180 * 24 * 60 * 60;
 const MODEL_VERIFICATION_TTL_SECONDS = 10 * 60;
 const PORTFOLIO_DEFAULT_CONFIG = Object.freeze({
@@ -766,7 +767,7 @@ const SMOKE_TEST_PROMPT = "今天股票市场如何？这是连通性测试：�
 
 async function smokeChat(env, modelProfile) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
+  const timeout = setTimeout(() => controller.abort(), SMOKE_TEST_TIMEOUT_MS);
   try {
     if (modelProfile.provider === "OpenAI") {
       const response = await fetch(OPENAI_RESPONSES_URL, { method: "POST", headers: { authorization: `Bearer ${env.OPENAI_API_KEY}`, "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ model: modelProfile.model, instructions: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision.", input: SMOKE_TEST_PROMPT, max_output_tokens: 120, reasoning: { effort: "none" } }) });
@@ -782,9 +783,20 @@ async function smokeChat(env, modelProfile) {
     }
     if (modelProfile.provider === "Google") {
       for (let attempt = 0; attempt < 3; attempt += 1) {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelProfile.model)}:generateContent`, { method: "POST", headers: { "x-goog-api-key": geminiApiKey(env), "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ systemInstruction: { parts: [{ text: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision." }] }, contents: [{ role: "user", parts: [{ text: SMOKE_TEST_PROMPT }] }], generationConfig: { maxOutputTokens: 120 } }) });
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelProfile.model)}:generateContent`, { method: "POST", headers: { "x-goog-api-key": geminiApiKey(env), "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ systemInstruction: { parts: [{ text: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision." }] }, contents: [{ role: "user", parts: [{ text: SMOKE_TEST_PROMPT }] }], generationConfig: { maxOutputTokens: 256, thinkingConfig: { thinkingLevel: "low" } } }) });
         const data = await response.json().catch(() => ({}));
-        if (response.ok) return cleanText(data.candidates?.flatMap((candidate) => candidate.content?.parts || []).find((part) => typeof part.text === "string")?.text, 360);
+        if (response.ok) {
+          const reply = cleanText(data.candidates?.flatMap((candidate) => candidate.content?.parts || [])
+            .filter((part) => part?.thought !== true)
+            .map((part) => part?.text)
+            .filter((text) => typeof text === "string" && text.trim())
+            .join("\n"), 360);
+          if (reply) return reply;
+          const reason = cleanText(data.candidates?.[0]?.finishReason || data.promptFeedback?.blockReason || "Gemini returned no final text.", 160);
+          if (attempt === 2) throw new Error(reason);
+          await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
+          continue;
+        }
         const message = cleanText(data.error?.message || "Gemini test request failed.", 240);
         const transient = response.status === 429 || response.status >= 500 || /high demand|temporar/i.test(message);
         if (!transient || attempt === 2) throw new Error(message);
@@ -1380,7 +1392,8 @@ async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE) {
         error: reply ? "" : "Model returned an empty test reply."
       };
     } catch (caught) {
-      return { id: profile.id, label: profile.label, provider: profile.provider, model: profile.model, ok: false, latencyMs: Date.now() - startedAt, reply: "", error: cleanText(caught?.message || "PDC test run failed.", 240) };
+      const timedOut = caught?.name === "AbortError" || /operation was aborted/i.test(caught?.message || "");
+      return { id: profile.id, label: profile.label, provider: profile.provider, model: profile.model, ok: false, latencyMs: Date.now() - startedAt, reply: "", error: timedOut ? "模型在 5 分钟内未返回，可稍后重试。" : cleanText(caught?.message || "PDC test run failed.", 240) };
     }
   }));
   return json({ ok: members.every((member) => member.ok), test: { mode, date, kind: "CONNECTIVITY_CONVERSATION", members } });
