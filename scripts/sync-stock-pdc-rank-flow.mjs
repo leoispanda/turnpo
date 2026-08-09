@@ -11,6 +11,7 @@ const AB_OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "ab-flow.json");
 const HAWKEYE_OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "hawkeye", "latest.json");
 const BACKFILL_WATCHLIST_DIR = path.join(TURNPO_ROOT, "stock-pdc", "backfill", "daily_watchlists");
 const DEFAULT_BENCHMARK_TICKER = "CSI300ETF";
+const HAWKEYE_MIN_MARKET_DATA_COVERAGE = 0.9;
 const SCORE_FIELDS = [
   "market_regime_score",
   "trend_score",
@@ -880,8 +881,18 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
   if (marketDataProviders.length !== 1 || audit.some((row) => !row.marketDataProvider)) {
     consistencyErrors.push("Hawkeye audit must identify exactly one full-market data provider for every row");
   }
-  if (dataFailed.length) {
-    consistencyErrors.push(`Hawkeye market data is incomplete: ${dataFailed.length} row(s) are DATA_FAILED; PDC generation is blocked.`);
+  const marketDataReadyCount = audit.length - dataFailed.length;
+  const marketDataCoverage = audit.length ? marketDataReadyCount / audit.length : 0;
+  const toleratedDataFailedCount = Math.floor(audit.length * (1 - HAWKEYE_MIN_MARKET_DATA_COVERAGE));
+  const validationWarnings = [];
+  if (marketDataCoverage < HAWKEYE_MIN_MARKET_DATA_COVERAGE) {
+    consistencyErrors.push(
+      `Hawkeye market data coverage ${(marketDataCoverage * 100).toFixed(2)}% is below the required ${(HAWKEYE_MIN_MARKET_DATA_COVERAGE * 100).toFixed(0)}%; PDC generation is blocked.`
+    );
+  } else if (dataFailed.length) {
+    validationWarnings.push(
+      `Hawkeye market data coverage ${(marketDataCoverage * 100).toFixed(2)}%; ${dataFailed.length} DATA_FAILED row(s) were excluded before PDC under the 90% completion policy.`
+    );
   }
   // Every passed Hawkeye name enters the PDC fact packet. No Top N dispatch
   // limit, trend gate, volume gate, or daily-move gate is allowed here.
@@ -901,6 +912,13 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
     sourceGeneratedAt: auditMtime,
     marketDataProvider: marketDataProviders[0] || "",
     validationErrors: consistencyErrors,
+    validationWarnings,
+    dataIntegrity: {
+      requiredCoverageRate: HAWKEYE_MIN_MARKET_DATA_COVERAGE,
+      readyCount: marketDataReadyCount,
+      coverageRate: marketDataCoverage,
+      toleratedDataFailedCount
+    },
     rules: {
       minMarketCapCny: 30_000_000_000,
       minReturn60dPct: 0

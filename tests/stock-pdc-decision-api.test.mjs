@@ -58,6 +58,7 @@ const hawkeyePacket = (date = hawkeyeDate, rows = hawkeyeRows) => ({
   rejectedCount: 0,
   dataFailedCount: 0,
   universeExcludedCount: 0,
+  dataIntegrity: { requiredCoverageRate: 0.9, coverageRate: 1, readyCount: rows.length, toleratedDataFailedCount: 0 },
   dispatchedCount: rows.length,
   candidates: rows
 });

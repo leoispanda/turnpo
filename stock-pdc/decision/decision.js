@@ -596,10 +596,16 @@ async function latestSnapshot() {
   const dataFailedCount = Number(data.dataFailedCount);
   const universeExcludedCount = Number(data.universeExcludedCount);
   const passedCount = Number(data.passedCount);
+  const dataIntegrity = data.dataIntegrity || {};
+  const requiredCoverageRate = Number(dataIntegrity.requiredCoverageRate);
+  const coverageRate = Number(dataIntegrity.coverageRate);
   if (![checkedCount, marketUniverseCount, rejectedCount, dataFailedCount, universeExcludedCount, passedCount].every(Number.isInteger)
     || marketUniverseCount !== checkedCount
     || passedCount + rejectedCount + dataFailedCount + universeExcludedCount !== checkedCount) {
     throw new Error("Hawkeye Radar market-universe accounting is incomplete.");
+  }
+  if (Number.isFinite(requiredCoverageRate) && Number.isFinite(coverageRate) && coverageRate < requiredCoverageRate) {
+    throw new Error("Hawkeye Radar market-data coverage is below its required completion threshold.");
   }
   if (!data.asOfDate || candidates.length !== passedCount || Number(data.dispatchedCount) !== passedCount
     || candidates.some((row) => row?.status !== "HAWKEYE_PASSED"
@@ -621,7 +627,7 @@ async function latestSnapshot() {
   };
   state.dataContract = {
     date: data.asOfDate,
-    governance: { hawkeye: data.rules || {}, dispatchRule: data.dispatchRule || "" },
+    governance: { hawkeye: data.rules || {}, dispatchRule: data.dispatchRule || "", dataIntegrity },
     snapshot: { ...provenance, candidateCount: candidates.length, checkedCount, passedCount }
   };
   return {

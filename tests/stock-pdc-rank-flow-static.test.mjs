@@ -85,6 +85,8 @@ assert.ok(syncScript.includes("Every passed Hawkeye name enters the PDC fact pac
 assert.ok(syncScript.includes("fixedRuleViolations"));
 assert.ok(syncScript.includes("marketDataProvider"));
 assert.ok(syncScript.includes("exactly one full-market data provider"));
+assert.ok(syncScript.includes("HAWKEYE_MIN_MARKET_DATA_COVERAGE = 0.9"));
+assert.ok(syncScript.includes("validationWarnings"));
 
 assert.ok(stockFunction.includes("env.STOCK_PDC_ACCESS_CODE || env.EMBA_ACCESS_CODE"));
 assert.ok(stockFunction.includes('const PAGE_PATH = "/stock-pdc";'));
@@ -119,6 +121,8 @@ if (hawkeye.schemaVersion === "stock-pdc-hawkeye-v2") {
     hawkeye.passedCount + hawkeye.rejectedCount + hawkeye.dataFailedCount + hawkeye.universeExcludedCount,
     hawkeye.checkedCount
   );
+  assert.equal(hawkeye.dataIntegrity.requiredCoverageRate, 0.9);
+  assert.ok(hawkeye.dataIntegrity.coverageRate >= 0 && hawkeye.dataIntegrity.coverageRate <= 1);
 }
 assert.ok(hawkeye.dispatchedCount >= 5);
 assert.equal(hawkeye.dispatchedCount, hawkeye.passedCount);

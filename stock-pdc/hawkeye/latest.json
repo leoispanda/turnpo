@@ -1,6 +1,6 @@
 {
   "schemaVersion": "stock-pdc-hawkeye-v2",
-  "generatedAt": "2026-08-09T21:00:55.871Z",
+  "generatedAt": "2026-08-09T21:04:10.023Z",
   "availability": "ACTIVE",
   "asOfDate": "2026-08-07",
   "sourceFiles": {
@@ -10,6 +10,13 @@
   "sourceGeneratedAt": "2026-08-09T21:00:48.931Z",
   "marketDataProvider": "sina",
   "validationErrors": [],
+  "validationWarnings": [],
+  "dataIntegrity": {
+    "requiredCoverageRate": 0.9,
+    "readyCount": 5538,
+    "coverageRate": 1,
+    "toleratedDataFailedCount": 553
+  },
   "rules": {
     "minMarketCapCny": 30000000000,
     "minReturn60dPct": 0

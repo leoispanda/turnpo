@@ -424,6 +424,8 @@ async function serverHawkeyeSnapshot(request) {
   const dataFailedCount = Number(packet?.dataFailedCount);
   const universeExcludedCount = Number(packet?.universeExcludedCount);
   const passedCount = Number(packet?.passedCount);
+  const requiredCoverageRate = Number(packet?.dataIntegrity?.requiredCoverageRate);
+  const coverageRate = Number(packet?.dataIntegrity?.coverageRate);
   if (!packet?.asOfDate || candidates.length !== passedCount || packet.dispatchedCount !== passedCount) {
     throw new Error("Hawkeye Radar did not provide every passed candidate.");
   }
@@ -431,6 +433,9 @@ async function serverHawkeyeSnapshot(request) {
       || marketUniverseCount !== checkedCount
       || passedCount + rejectedCount + dataFailedCount + universeExcludedCount !== checkedCount) {
     throw new Error("Hawkeye Radar market-universe accounting is incomplete.");
+  }
+  if (Number.isFinite(requiredCoverageRate) && Number.isFinite(coverageRate) && coverageRate < requiredCoverageRate) {
+    throw new Error("Hawkeye Radar market-data coverage is below its required completion threshold.");
   }
   if (candidates.some((row) => (
     row?.status !== "HAWKEYE_PASSED"
