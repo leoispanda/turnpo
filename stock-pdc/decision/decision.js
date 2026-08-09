@@ -12,6 +12,83 @@ function stepIndex(status) {
   return ({ QUEUED: 0, FETCHING: 1, SCREENING: 3, SCORING: 4, READY: 5, PUBLISHED: 6, FAILED: 0 }[status] ?? 0);
 }
 
+function markdownText(value, fallback = "未提供") {
+  const text = String(value ?? "").replaceAll("\r", "").trim();
+  return text ? text.replaceAll("\n", " ") : fallback;
+}
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.append(textarea);
+  textarea.select();
+  const copied = document.execCommand("copy");
+  textarea.remove();
+  if (!copied) throw new Error("浏览器未允许写入剪贴板。");
+}
+
+function buildGenerationMarkdown(run) {
+  const summary = run?.summary || {};
+  const integrity = run?.integrity || {};
+  const errors = Array.isArray(integrity.errors) ? integrity.errors : [];
+  const completed = stepIndex(run?.status);
+  return [
+    "# Stock PDC 今日生成 Run 信息包",
+    "",
+    `- 导出时间：${new Date().toISOString()}`,
+    `- Run ID：${markdownText(run?.id, "尚未创建")}`,
+    `- 运行状态：${markdownText(run?.status, "IDLE")}`,
+    `- 执行信息：${markdownText(run?.message, "尚未创建运行。")}`,
+    `- 计算服务：${run?.computeConfigured === true ? "已连接" : run?.computeConfigured === false ? "未配置" : "未知"}`,
+    "",
+    "## 固定筛选口径",
+    "",
+    "- 全市场 A 股由服务端抓取；浏览器不会提交或选择股票名单。",
+    "- 鹰眼固定规则：总市值 > 300 亿人民币；近 60 个交易日收益 > 0。",
+    "- 所有鹰眼通过者必须进入 PDC；任何数据或模型失败均应记录为 FAILED。",
+    "",
+    "## 本次实际数量",
+    "",
+    `- 全市场 A 股：${markdownText(summary.marketCount)}`,
+    `- 鹰眼通过：${markdownText(summary.candidateCount)}`,
+    `- PDC 已评分：${markdownText(summary.pdcCount)}`,
+    "",
+    "## 执行步骤",
+    "",
+    ...STEPS.map((title, index) => `${index + 1}. ${title}：${run ? (index < completed ? "已完成" : index === completed ? (run.status === "FAILED" ? "FAILED" : "进行中或等待") : "等待") : "尚未开始"}`),
+    "",
+    "## 完整性校验",
+    "",
+    `- 校验结果：${integrity.valid === true ? "通过" : integrity.valid === false ? "未通过" : "尚未执行"}`,
+    `- 规则版本：${markdownText(integrity.rulesVersion)}`,
+    `- 运行摘要哈希：${markdownText(integrity.manifestHash)}`,
+    ...(errors.length ? errors.map((error) => `- FAILED / 校验问题：${markdownText(error)}`) : ["- 未报告校验问题。"]),
+    "",
+    "## 说明",
+    "",
+    "- 本文件只复制页面中本次 Run 的真实状态与已返回信息，不生成或补造评分、候选或模型结论。",
+    "- 研究工具，不构成交易指令。",
+    ""
+  ].join("\n");
+}
+
+async function copyGenerationMarkdown() {
+  const feedback = $("#generationMarkdownFeedback");
+  try {
+    await copyText(buildGenerationMarkdown(state.run));
+    if (feedback) feedback.textContent = "本次 Run 信息包已生成并复制。";
+  } catch (error) {
+    if (feedback) feedback.textContent = `复制失败：${error.message}`;
+  }
+}
+
 function render() {
   const run = state.run;
   $("#runId").textContent = run?.id ? run.id.slice(0, 12).toUpperCase() : "等待创建";
@@ -96,6 +173,7 @@ async function publish() {
 
 $("#startGeneration")?.addEventListener("click", start);
 $("#publishGeneration")?.addEventListener("click", publish);
+$("#copyGenerationMarkdown")?.addEventListener("click", copyGenerationMarkdown);
 try {
   const saved = sessionStorage.getItem(RUN_KEY);
   if (/^[a-f0-9-]{36}$/i.test(saved || "")) {

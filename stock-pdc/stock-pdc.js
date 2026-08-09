@@ -1,4 +1,5 @@
 const $ = (selector) => document.querySelector(selector);
+let currentRankFlow = null;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -55,6 +56,89 @@ function actionLabel(row) {
   return "--";
 }
 
+function markdownText(value, fallback = "未提供") {
+  const text = String(value ?? "").replaceAll("\r", "").trim();
+  return text ? text.replaceAll("\n", " ") : fallback;
+}
+
+function latestDay(data) {
+  const days = (data?.days || []).filter((day) => isTradingWeekday(day.date) && Array.isArray(day.rows) && day.rows.length);
+  return days.reduce((latest, day) => (!latest || String(day.date) > String(latest.date) ? day : latest), null);
+}
+
+function roleScoresMarkdown(scores) {
+  const entries = Object.entries(scores || {}).filter(([, value]) => Number.isFinite(value));
+  return entries.length ? entries.map(([role, value]) => `${role}: ${value}`).join("；") : "未提供";
+}
+
+function buildTodayMarkdown(data) {
+  const day = latestDay(data);
+  if (!day) throw new Error("尚无可复制的每日 PDC 数据。");
+  const verification = data?.verification || {};
+  const verified = verification.status === "VERIFIED";
+  const summary = day.summary || {};
+  const header = [
+    "# Stock PDC 今日信息包",
+    "",
+    `- 研究日期：${markdownText(day.date)}`,
+    `- 导出时间：${new Date().toISOString()}`,
+    `- 数据状态：${verified ? "已验证自动 Run" : "历史展示数据（未作为新的自动生成结果）"}`,
+    `- 数据来源：${markdownText(data?.sourceKind || day.sourceFile)}`,
+    `- Run ID：${markdownText(verification.runId, "未提供")}`,
+    `- 展示产物 SHA-256：${markdownText(verification.displaySha256, "未提供")}`,
+    "",
+    "## 筛选与执行口径",
+    "",
+    "- 鹰眼固定规则：总市值 > 300 亿人民币；近 60 个交易日收益 > 0。",
+    "- 鹰眼仅建立候选池；趋势、量价、突破、过热与风险判断由 PDC 完成。",
+    `- 全市场数量：${markdownText(verification.marketCount, "未提供")}`,
+    `- 鹰眼通过：${markdownText(verification.candidateCount, "未提供")}`,
+    `- PDC 已评分：${markdownText(verification.pdcCount, "未提供")}`,
+    `- 当日展示数量：${markdownText(summary.total || day.rows.length)}`,
+    "",
+    "## 今日 PDC 研究排序",
+    ""
+  ];
+  const rows = day.rows.slice().sort((left, right) => Number(left.rank) - Number(right.rank)).map((row) => [
+    `${markdownText(row.rank, "-")}. **${markdownText(row.name || row.ticker)}**（${markdownText(row.ticker)}）`,
+    `   - PDC 分数：${markdownText(row.score)}`,
+    `   - PDC 状态：${markdownText(row.status)}`,
+    `   - 正式操作状态：${markdownText(row.frontDeskInstruction || row.decision?.action)}`,
+    `   - 信号日变动：${formatPct(Number.isFinite(row.signalDayChangePct) ? row.signalDayChangePct : row.dayChangePct)}`,
+    `   - 角色分数：${roleScoresMarkdown(row.scores || row.research?.scores)}`,
+    `   - 核心理由：${markdownText(row.mainReason || row.research?.mainReason)}`,
+    `   - 主要风险：${markdownText(row.mainRisk || row.research?.mainRisk)}`
+  ].join("\n"));
+  return [...header, ...rows, "", "## 使用说明", "", "- 本文件是当天页面中实际展示数据的复制快照，不补造缺失字段。", "- 研究排序不是交易指令；实际操作仅以 PDC 正式操作状态及人工复核为准。", "- 未验证的历史展示数据不得表述为新的自动生成结果。", ""].join("\n");
+}
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.append(textarea);
+  textarea.select();
+  const copied = document.execCommand("copy");
+  textarea.remove();
+  if (!copied) throw new Error("浏览器未允许写入剪贴板。");
+}
+
+async function copyTodayMarkdown() {
+  const feedback = $("#todayMarkdownFeedback");
+  try {
+    await copyText(buildTodayMarkdown(currentRankFlow));
+    if (feedback) feedback.textContent = "今日 PDC 信息包已生成并复制。";
+  } catch (error) {
+    if (feedback) feedback.textContent = `复制失败：${error.message}`;
+  }
+}
+
 function renderVerification(data) {
   const verification = data?.verification || {};
   if (verification.status === "VERIFIED") {
@@ -77,11 +161,15 @@ function renderCell(day, rank) {
 
 function renderRankList(data) {
   const list = $("#stockRankList");
+  currentRankFlow = data;
+  const copyButton = $("#copyTodayMarkdown");
   const days = (data?.days || []).filter((day) => isTradingWeekday(day.date) && Array.isArray(day.rows) && day.rows.length).slice().reverse();
   if (!days.length) {
+    if (copyButton) copyButton.disabled = true;
     list.innerHTML = `<section class="stock-empty"><h2>暂无可展示的每日 Top 20</h2><p>请先完成一份通过完整性校验的 Stock PDC Run。</p></section>`;
     return;
   }
+  if (copyButton) copyButton.disabled = false;
   const ranks = Array.from({ length: 20 }, (_, index) => index + 1);
   list.innerHTML = `${renderVerification(data)}
     <section class="stock-strategy-note"><h2>每日 Top 20 研究时间流</h2><p>排名是 PDC 研究优先级；“买入候选”只来自引擎的正式操作状态，不能把所有 Top 20 当作买入或持有指令。</p></section>
@@ -91,6 +179,8 @@ function renderRankList(data) {
       ${ranks.map((rank) => `<div class="stock-rank-axis">#${rank}</div>${days.map((day) => renderCell(day, rank)).join("")}`).join("")}
     </div>`;
 }
+
+$("#copyTodayMarkdown")?.addEventListener("click", copyTodayMarkdown);
 
 async function sha256(text) {
   const bytes = new TextEncoder().encode(text);

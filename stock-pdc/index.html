@@ -19,7 +19,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/styles.css?v=0.1.223" />
-    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css" />
+    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css?v=20260809-md-copy" />
   </head>
   <body>
     <header class="topbar">
@@ -39,11 +39,13 @@
         <div class="stock-rank-matrix-wrap" id="stockRankList"></div>
       </section>
       <nav class="stock-bottom-home" aria-label="Stock PDC navigation">
+        <button class="stock-bottom-home-btn stock-markdown-copy-btn" id="copyTodayMarkdown" type="button" disabled>生成并复制今日 MD</button>
         <a class="stock-bottom-home-btn stock-decision-link" href="/stock-pdc/decision/">生成今日数据</a>
         <a class="stock-bottom-home-btn" href="/">回到主页</a>
       </nav>
+      <p class="stock-markdown-copy-feedback" id="todayMarkdownFeedback" role="status" aria-live="polite"></p>
     </main>
 
-    <script src="/stock-pdc/stock-pdc.js?v=20260809"></script>
+    <script src="/stock-pdc/stock-pdc.js?v=20260809-md-copy"></script>
   </body>
 </html>

@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#f5f6f8" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/styles.css?v=0.1.223" />
-    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css" />
+    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css?v=20260809-md-copy" />
     <link rel="stylesheet" href="/stock-pdc/decision/decision.css" />
   </head>
   <body>
@@ -49,8 +49,14 @@
         <div class="stock-section-head"><div><h2 id="resultTitle">完整性校验</h2><p>只有校验通过的 Run 才能发布到每日 Top 20 页面。</p></div><button class="stock-primary-btn decision-publish-btn" id="publishGeneration" type="button" hidden>发布此 Run</button></div>
         <div class="decision-review-content" id="integrityResult"></div>
       </section>
+      <nav class="stock-bottom-home" aria-label="Stock PDC generation navigation">
+        <button class="stock-bottom-home-btn stock-markdown-copy-btn" id="copyGenerationMarkdown" type="button">生成并复制本次 Run MD</button>
+        <a class="stock-bottom-home-btn" href="/stock-pdc/">查看每日 Top 20</a>
+        <a class="stock-bottom-home-btn" href="/">回到主页</a>
+      </nav>
+      <p class="stock-markdown-copy-feedback" id="generationMarkdownFeedback" role="status" aria-live="polite"></p>
     </main>
 
-    <script src="/stock-pdc/decision/decision.js?v=20260809-trusted-run"></script>
+    <script src="/stock-pdc/decision/decision.js?v=20260809-trusted-run-md-copy"></script>
   </body>
 </html>
