@@ -80,7 +80,7 @@ assert.ok(syncScript.includes("equal_weight_top20_next_trading_day_close_to_clos
 assert.ok(syncScript.includes("rank-flow.json"));
 assert.ok(syncScript.includes("candidate_universe.csv"));
 assert.ok(syncScript.includes("hawkeye_radar_audit.csv"));
-assert.ok(syncScript.includes("stock-pdc-hawkeye-v1"));
+assert.ok(syncScript.includes("stock-pdc-hawkeye-v2"));
 assert.ok(syncScript.includes("Every passed Hawkeye name enters the PDC fact packet"));
 assert.ok(syncScript.includes("fixedRuleViolations"));
 
@@ -107,10 +107,17 @@ assert.equal(rankFlow.actions.schemaVersion, "stock-pdc-actions-v1");
 assert.equal(rankFlow.actions.latestDate, rankFlow.latestDate);
 assert.ok(Array.isArray(rankFlow.actions.rows));
 
-assert.equal(hawkeye.schemaVersion, "stock-pdc-hawkeye-v1");
+assert.ok(["stock-pdc-hawkeye-v1", "stock-pdc-hawkeye-v2"].includes(hawkeye.schemaVersion));
 assert.ok(["ACTIVE", "STALE"].includes(hawkeye.availability));
 assert.ok(hawkeye.asOfDate);
 assert.ok(hawkeye.checkedCount >= hawkeye.passedCount);
+if (hawkeye.schemaVersion === "stock-pdc-hawkeye-v2") {
+  assert.equal(hawkeye.marketUniverseCount, hawkeye.checkedCount);
+  assert.equal(
+    hawkeye.passedCount + hawkeye.rejectedCount + hawkeye.dataFailedCount + hawkeye.universeExcludedCount,
+    hawkeye.checkedCount
+  );
+}
 assert.ok(hawkeye.dispatchedCount >= 5);
 assert.equal(hawkeye.dispatchedCount, hawkeye.passedCount);
 assert.equal(hawkeye.candidates.length, hawkeye.dispatchedCount);

@@ -484,11 +484,13 @@ function renderResult() {
   if (!section || !list || !publish) return;
   const final = Array.isArray(state.run?.final) ? state.run.final : [];
   section.hidden = state.completed !== steps.length;
-  publish.hidden = IS_DEMO_MODE || section.hidden || Boolean(state.run?.publishedAt);
+  publish.hidden = IS_DEMO_MODE || section.hidden || Boolean(state.run?.publishedAt) || state.run?.status === "NO_CANDIDATES";
   publish.disabled = state.running;
   if (note && IS_DEMO_MODE) note.textContent = "Mini Demo 只用于研究和模型对比，不构成交易指令，也不会写入正式 PDC 历史。";
   if (section.hidden) return;
-  list.innerHTML = final.length ? final.map((row) => `
+  list.innerHTML = state.run?.status === "NO_CANDIDATES"
+    ? `<div class="stock-empty">本次鹰眼已完整执行，但没有股票同时满足“总市值 &gt; 300 亿”和“近 60 个交易日收益 &gt; 0”。系统未调用任何 PDC 模型，结果已保存为 NO_CANDIDATES。</div>`
+    : final.length ? final.map((row) => `
     <div class="decision-placeholder-row">
       <strong>#${escapeHtml(row.rank)}</strong>
       <span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span>
@@ -534,7 +536,9 @@ async function latestSnapshot() {
   if (data.availability !== "ACTIVE") {
     throw new Error(`Hawkeye Radar is not ready: ${(data.validationErrors || []).join(" ") || "unknown validation failure"}`);
   }
-  if (!data.asOfDate || candidates.length < 5) throw new Error("Hawkeye Radar returned fewer than five valid candidates. PDC generation is blocked.");
+  if (!data.asOfDate || candidates.length !== Number(data.passedCount) || Number(data.dispatchedCount) !== Number(data.passedCount)) {
+    throw new Error("Hawkeye Radar did not provide every passed candidate.");
+  }
   const provenance = {
     snapshotId: `hawkeye-${data.asOfDate}-${data.sourceGeneratedAt || data.generatedAt}`,
     primarySourceId: "stock-pdc-local-hawkeye-radar",
@@ -617,6 +621,11 @@ function completeThrough(stepId) {
 
 function syncRunProgress() {
   if (!state.run) return;
+  if (state.run.status === "NO_CANDIDATES") {
+    state.completed = steps.length;
+    state.activeStep = null;
+    return;
+  }
   state.completed = 2;
   if (Array.isArray(state.run.modelVerification?.members)) {
     state.verification = Object.fromEntries(state.run.modelVerification.members.map((member) => [member.id, member]));
@@ -684,16 +693,20 @@ async function runDecisionFlow() {
   render();
   try {
     if (!state.run) {
-      verificationId = await verifySelectedModels();
       const snapshot = await latestSnapshot();
       state.activeStep = "snapshot";
       render();
+      if (snapshot.candidates.length) verificationId = await verifySelectedModels();
       state.run = (await api("/runs", {
         method: "POST",
         body: JSON.stringify({ modelProfileIds: state.selectedModelProfileIds, verificationId })
       })).run;
       completeThrough("snapshot");
       render();
+      if (state.run.status === "NO_CANDIDATES") {
+        completeThrough("final");
+        return;
+      }
     }
 
     if (!state.run.roundOneComplete) {

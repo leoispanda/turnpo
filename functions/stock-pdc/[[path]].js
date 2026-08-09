@@ -320,7 +320,7 @@ function normalizeSnapshot(value) {
   const candidates = Array.isArray(value?.candidates)
     ? value.candidates.map(normalizeCandidate).filter(Boolean)
     : [];
-  if (!date || candidates.length < 5) return null;
+  if (!date) return null;
   return {
     date,
     source: cleanText(value?.source || "stock-pdc/rank-flow.json", 160),
@@ -342,14 +342,29 @@ async function serverHawkeyeSnapshot(request) {
   const rules = packet?.rules || {};
   const expectedMarketCap = 30_000_000_000;
   const expectedReturn60d = 0;
+  const expectedSchema = "stock-pdc-hawkeye-v2";
   if (packet?.availability !== "ACTIVE") {
     throw new Error(`Hawkeye Radar is not ready: ${(packet?.validationErrors || []).join(" ") || "unknown validation failure"}`);
   }
   if (rules.minMarketCapCny !== expectedMarketCap || rules.minReturn60dPct !== expectedReturn60d) {
     throw new Error("Hawkeye Radar rules do not match the fixed market-cap and 60-day-return policy.");
   }
-  if (!packet?.asOfDate || candidates.length < 5 || candidates.length !== packet.passedCount || packet.dispatchedCount !== packet.passedCount) {
+  if (packet?.schemaVersion !== expectedSchema) {
+    throw new Error("Hawkeye Radar snapshot predates full-market accounting. Regenerate it from the API market snapshot.");
+  }
+  const checkedCount = Number(packet?.checkedCount);
+  const marketUniverseCount = Number(packet?.marketUniverseCount);
+  const rejectedCount = Number(packet?.rejectedCount);
+  const dataFailedCount = Number(packet?.dataFailedCount);
+  const universeExcludedCount = Number(packet?.universeExcludedCount);
+  const passedCount = Number(packet?.passedCount);
+  if (!packet?.asOfDate || candidates.length !== passedCount || packet.dispatchedCount !== passedCount) {
     throw new Error("Hawkeye Radar did not provide every passed candidate.");
+  }
+  if (![checkedCount, marketUniverseCount, rejectedCount, dataFailedCount, universeExcludedCount, passedCount].every(Number.isInteger)
+      || marketUniverseCount !== checkedCount
+      || passedCount + rejectedCount + dataFailedCount + universeExcludedCount !== checkedCount) {
+    throw new Error("Hawkeye Radar market-universe accounting is incomplete.");
   }
   if (candidates.some((row) => (
     row?.status !== "HAWKEYE_PASSED"
@@ -1428,14 +1443,22 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
   } catch (caught) {
     return error(cleanText(caught?.message || "Hawkeye Radar is not ready.", 320), 409);
   }
-  const { requestedIds, modelProfiles } = requestedModelProfiles(body, env, mode);
-  if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("No selected PDC model is configured on this deployment.");
-  const verificationReceipt = await consumeModelVerification(store, body.verificationId, modelProfiles, env, mode);
-  if (verificationReceipt.error) return error(verificationReceipt.error, 409);
+  const now = new Date().toISOString();
+  const noCandidates = snapshot.candidates.length === 0;
+  let modelProfiles = [];
+  let verificationReceipt = { error: "", verification: null };
+  if (!noCandidates) {
+    const requested = requestedModelProfiles(body, env, mode);
+    modelProfiles = requested.modelProfiles;
+    if (!modelProfiles.length || modelProfiles.length !== requested.requestedIds.length) {
+      return error("No selected PDC model is configured on this deployment.");
+    }
+    verificationReceipt = await consumeModelVerification(store, body.verificationId, modelProfiles, env, mode);
+    if (verificationReceipt.error) return error(verificationReceipt.error, 409);
+  }
   const currentCount = Number(await store.get(decisionRateKey(snapshot.date, mode)) || "0");
   if (currentCount >= MAX_RUNS_PER_DAY) return error("Daily decision-run limit reached. Review an existing run instead.", 429);
   await store.put(decisionRateKey(snapshot.date, mode), String(currentCount + 1), { expirationTtl: 24 * 60 * 60 });
-  const now = new Date().toISOString();
   const run = {
     id: crypto.randomUUID(),
     mode,
@@ -1446,7 +1469,7 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
     scoringSystem: PDC_SCORING_SYSTEM,
     modelVerification: verificationReceipt.verification,
     modelProfile: null,
-    status: "SNAPSHOT_LOCKED",
+    status: noCandidates ? "NO_CANDIDATES" : "SNAPSHOT_LOCKED",
     snapshot,
     committee: Object.fromEntries(modelProfiles.map((profile) => [profile.id, {
       profile: publicModelProfile(profile),
@@ -1460,11 +1483,13 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
     secretary: null,
     audit: {
       verification: {
-        status: "complete",
-        startedAt: verificationReceipt.verification.createdAt,
+        status: noCandidates ? "skipped" : "complete",
+        startedAt: noCandidates ? now : verificationReceipt.verification.createdAt,
         completedAt: now,
-        input: { members: verificationReceipt.verification.modelProfileIds || [] },
-        output: { members: publicModelVerification(verificationReceipt.verification)?.members || [] },
+        input: { members: noCandidates ? [] : verificationReceipt.verification.modelProfileIds || [] },
+        output: noCandidates
+          ? { reason: "NO_CANDIDATES: Hawkeye completed successfully with zero passed stocks; models were not called." }
+          : { members: publicModelVerification(verificationReceipt.verification)?.members || [] },
         error: ""
       },
       snapshot: {
@@ -1690,6 +1715,9 @@ async function publishRun(env, runId, mode = OFFICIAL_DECISION_MODE) {
   if (!run) return error("Decision run was not found.", 404);
   if (mode === DEMO_DECISION_MODE || run.mode === DEMO_DECISION_MODE) {
     return error("Mini Demo runs are intentionally isolated and cannot be published to the formal PDC.", 409);
+  }
+  if (run.status === "NO_CANDIDATES") {
+    return error("This Hawkeye run completed with NO_CANDIDATES and has no PDC decision to publish.", 409);
   }
   if (run.status !== "READY_TO_PUBLISH" || !Array.isArray(run.final) || !run.final.length) {
     return error("Finish all review stages before publishing.", 409);

@@ -123,6 +123,7 @@ DAILY_INSTRUCTION_HEADERS = [
 
 CANDIDATE_UNIVERSE_HEADERS = [
     "ticker",
+    "status",
     "passed",
     "name",
     "total_mcap",

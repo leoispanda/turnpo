@@ -42,14 +42,21 @@ const candidates = Array.from({ length: 8 }, (_, index) => ({
 }));
 
 let hawkeyeDate = "2026-08-07";
-const hawkeyePacket = (date = hawkeyeDate, rows = candidates) => ({
+let hawkeyeRows = candidates;
+const hawkeyePacket = (date = hawkeyeDate, rows = hawkeyeRows) => ({
+  schemaVersion: "stock-pdc-hawkeye-v2",
   availability: "ACTIVE",
   asOfDate: date,
   generatedAt: "test",
   sourceGeneratedAt: "test",
   sourceFiles: { candidateUniverse: "outputs/candidate_universe.csv" },
   rules: { minMarketCapCny: 30_000_000_000, minReturn60dPct: 0 },
+  checkedCount: rows.length,
+  marketUniverseCount: rows.length,
   passedCount: rows.length,
+  rejectedCount: 0,
+  dataFailedCount: 0,
+  universeExcludedCount: 0,
   dispatchedCount: rows.length,
   candidates: rows
 });
@@ -400,6 +407,20 @@ try {
   assert.equal(kimiRequest.headers.authorization, "Bearer kimi-test-key");
   assert.equal(kimiRequest.request.response_format.type, "json_object");
   assert.equal(kimiRequest.request.max_completion_tokens, 8000);
+
+  hawkeyeDate = "2026-08-13";
+  hawkeyeRows = [];
+  openAiRequest = null;
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", { modelProfileIds: ["gpt-5.6-sol"] })));
+  assert.equal(response.status, 200, "a successful zero-candidate Hawkeye run should be persisted without model verification");
+  payload = await response.json();
+  assert.equal(payload.run.status, "NO_CANDIDATES");
+  assert.equal(payload.run.snapshot.candidateCount, 0);
+  assert.equal(payload.run.modelVerification, null);
+  assert.equal(payload.run.audit.verification.status, "skipped");
+  assert.equal(openAiRequest, null, "NO_CANDIDATES must not call a PDC model");
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${payload.run.id}/publish`, {})));
+  assert.equal(response.status, 409, "a NO_CANDIDATES audit has no decision to publish");
 } finally {
   globalThis.fetch = originalFetch;
 }

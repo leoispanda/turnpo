@@ -816,14 +816,18 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
   const generatedAt = new Date().toISOString();
   if (missing.length) {
     return {
-      schemaVersion: "stock-pdc-hawkeye-v1",
+      schemaVersion: "stock-pdc-hawkeye-v2",
       generatedAt,
       availability: "UNAVAILABLE",
       asOfDate: rankSnapshot.latestDate || "",
       sourceFiles,
       validationErrors: missing.map((filePath) => `missing ${path.relative(sourceRoot, filePath)}`),
       checkedCount: 0,
+      marketUniverseCount: 0,
       passedCount: 0,
+      rejectedCount: 0,
+      dataFailedCount: 0,
+      universeExcludedCount: 0,
       dispatchedCount: 0,
       candidates: [],
       audit: []
@@ -833,6 +837,7 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
   const audit = readCsv(auditPath).map((row) => ({
     ticker: clean(row.ticker).toUpperCase(),
     name: clean(row.name),
+    status: clean(row.status) || (csvBoolean(row.passed) ? "PASSED_HAWKEYE" : "LEGACY_UNCLASSIFIED"),
     passed: csvBoolean(row.passed),
     totalMcapCny: numberOrNull(row.total_mcap),
     return60dPct: numberOrNull(row.return_60d),
@@ -848,6 +853,10 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
   })).filter((row) => row.ticker);
   const candidateRows = readCsv(candidatePath).filter((row) => csvBoolean(row.passed));
   const passed = audit.filter((row) => row.passed);
+  const rejected = audit.filter((row) => row.status === "REJECTED_HAWKEYE");
+  const dataFailed = audit.filter((row) => row.status.startsWith("DATA_FAILED"));
+  const universeExcluded = audit.filter((row) => row.status.startsWith("UNIVERSE_EXCLUDED"));
+  const accounted = passed.length + rejected.length + dataFailed.length + universeExcluded.length;
   const candidateTickers = new Set(candidateRows.map((row) => clean(row.ticker).toUpperCase()).filter(Boolean));
   const passedTickers = new Set(passed.map((row) => row.ticker));
   const consistencyErrors = [];
@@ -863,10 +872,15 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
   if (fixedRuleViolations.length) {
     consistencyErrors.push("Hawkeye audit contains passed rows that violate the fixed market-cap or 60-day-return rule");
   }
+  if (accounted !== audit.length) {
+    consistencyErrors.push("Hawkeye audit has rows without an explicit PASSED, REJECTED, DATA_FAILED, or UNIVERSE_EXCLUDED status");
+  }
+  if (dataFailed.length) {
+    consistencyErrors.push(`Hawkeye market data is incomplete: ${dataFailed.length} row(s) are DATA_FAILED; PDC generation is blocked.`);
+  }
   // Every passed Hawkeye name enters the PDC fact packet. No Top N dispatch
   // limit, trend gate, volume gate, or daily-move gate is allowed here.
   const candidates = passed.map(hawkeyeCandidate);
-  if (candidates.length < 5) consistencyErrors.push("Hawkeye returned fewer than five valid candidates; PDC generation is blocked.");
   const auditMtime = fs.statSync(auditPath).mtime.toISOString();
   const sourceDate = rankSnapshot.latestDate || "";
   if (!sourceDate) {
@@ -874,7 +888,7 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
   }
 
   return {
-    schemaVersion: "stock-pdc-hawkeye-v1",
+    schemaVersion: "stock-pdc-hawkeye-v2",
     generatedAt,
     availability: consistencyErrors.length ? "STALE" : "ACTIVE",
     asOfDate: sourceDate,
@@ -886,7 +900,11 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
       minReturn60dPct: 0
     },
     checkedCount: audit.length,
+    marketUniverseCount: audit.length,
     passedCount: passed.length,
+    rejectedCount: rejected.length,
+    dataFailedCount: dataFailed.length,
+    universeExcludedCount: universeExcluded.length,
     dispatchedCount: candidates.length,
     dispatchRule: "Every Hawkeye-passed name enters the PDC fact packet. No candidate-count cap or additional Hawkeye filter is applied.",
     candidates,

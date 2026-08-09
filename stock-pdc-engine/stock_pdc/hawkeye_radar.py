@@ -13,11 +13,16 @@ class HawkeyeMetadata:
     ticker: str
     name: str = ""
     total_mcap: float | None = None
+    universe_status: str = ""
+    history_status: str = ""
+    history_error: str = ""
+    market_data_timestamp: str = ""
 
 
 @dataclass(frozen=True)
 class HawkeyeResult:
     ticker: str
+    status: str
     passed: bool
     name: str
     total_mcap: float | None
@@ -69,6 +74,10 @@ def load_hawkeye_metadata(path: Path) -> dict[str, HawkeyeMetadata]:
         ticker_col = _column(reader.fieldnames, "ticker", "symbol")
         name_col = _column(reader.fieldnames, "name", "security_name")
         mcap_col = _column(reader.fieldnames, "total_mcap", "market_cap", "total market cap", "mcap")
+        universe_status_col = _column(reader.fieldnames, "universe_status")
+        history_status_col = _column(reader.fieldnames, "history_status")
+        history_error_col = _column(reader.fieldnames, "history_error")
+        market_timestamp_col = _column(reader.fieldnames, "market_data_timestamp", "snapshot_at")
         if ticker_col is None:
             return {}
 
@@ -81,6 +90,12 @@ def load_hawkeye_metadata(path: Path) -> dict[str, HawkeyeMetadata]:
                 ticker=ticker,
                 name=str(row.get(name_col) or "").strip() if name_col else "",
                 total_mcap=_number(row.get(mcap_col)) if mcap_col else None,
+                universe_status=str(row.get(universe_status_col) or "").strip() if universe_status_col else "",
+                history_status=str(row.get(history_status_col) or "").strip() if history_status_col else "",
+                history_error=str(row.get(history_error_col) or "").strip() if history_error_col else "",
+                market_data_timestamp=(
+                    str(row.get(market_timestamp_col) or "").strip() if market_timestamp_col else ""
+                ),
             )
         return metadata
 
@@ -106,7 +121,7 @@ def _is_clear_uptrend(latest: float, sma20: float | None, sma50: float | None, s
 
 def screen_stock(
     ticker: str,
-    bars: list[Bar],
+    bars: list[Bar] | None,
     metadata: HawkeyeMetadata | None,
     min_market_cap: float,
     min_return_60d: float,
@@ -114,6 +129,7 @@ def screen_stock(
     daily_move_lookback: int,
     min_bars: int,
 ) -> HawkeyeResult:
+    bars = bars or []
     close_values = closes(bars)
     latest_close = close_values[-1] if close_values else None
     latest_sma20 = sma(close_values, 20)
@@ -134,12 +150,124 @@ def screen_stock(
     # 60-day return. Technical and risk interpretation belongs to PDC.
     _ = min_bars, max_daily_move, daily_move_lookback
 
+    if metadata is None:
+        return HawkeyeResult(
+            ticker=ticker,
+            status="DATA_FAILED_MISSING_METADATA",
+            passed=False,
+            name="",
+            total_mcap=None,
+            return_60d=None,
+            latest_daily_return=None,
+            max_single_day_gain=None,
+            max_single_day_loss=None,
+            latest_close=None,
+            sma20=None,
+            sma50=None,
+            sma200=None,
+            reason="",
+            rejection_reason="market metadata missing",
+        )
+
+    if metadata.universe_status.startswith("UNIVERSE_EXCLUDED"):
+        return HawkeyeResult(
+            ticker=ticker,
+            status=metadata.universe_status,
+            passed=False,
+            name=name,
+            total_mcap=total_mcap,
+            return_60d=None,
+            latest_daily_return=None,
+            max_single_day_gain=None,
+            max_single_day_loss=None,
+            latest_close=None,
+            sma20=None,
+            sma50=None,
+            sma200=None,
+            reason="",
+            rejection_reason=metadata.history_error or metadata.universe_status,
+        )
+
     if total_mcap is None:
-        rejections.append("missing total market cap metadata")
+        return HawkeyeResult(
+            ticker=ticker,
+            status="DATA_FAILED_MISSING_MARKET_CAP",
+            passed=False,
+            name=name,
+            total_mcap=None,
+            return_60d=None,
+            latest_daily_return=None,
+            max_single_day_gain=None,
+            max_single_day_loss=None,
+            latest_close=None,
+            sma20=None,
+            sma50=None,
+            sma200=None,
+            reason="",
+            rejection_reason="missing total market cap metadata",
+        )
     elif total_mcap <= min_market_cap:
         rejections.append(f"total market cap {safe_round(total_mcap / 100_000_000)}亿 <= {safe_round(min_market_cap / 100_000_000)}亿")
+        # Once the first hard rule fails, missing history cannot change the
+        # result.  Keep the rejection explicit rather than misclassifying it
+        # as a model or market-data failure.
+        return HawkeyeResult(
+            ticker=ticker,
+            status="REJECTED_HAWKEYE",
+            passed=False,
+            name=name,
+            total_mcap=total_mcap,
+            return_60d=None,
+            latest_daily_return=None,
+            max_single_day_gain=None,
+            max_single_day_loss=None,
+            latest_close=None,
+            sma20=None,
+            sma50=None,
+            sma200=None,
+            reason="",
+            rejection_reason="; ".join(rejections),
+        )
     else:
         reasons.append(f"total market cap > {safe_round(min_market_cap / 100_000_000)}亿")
+
+    if metadata.history_status and metadata.history_status != "HISTORY_READY":
+        return HawkeyeResult(
+            ticker=ticker,
+            status=f"DATA_FAILED_{metadata.history_status}",
+            passed=False,
+            name=name,
+            total_mcap=total_mcap,
+            return_60d=None,
+            latest_daily_return=None,
+            max_single_day_gain=None,
+            max_single_day_loss=None,
+            latest_close=None,
+            sma20=None,
+            sma50=None,
+            sma200=None,
+            reason="; ".join(reasons),
+            rejection_reason=metadata.history_error or metadata.history_status,
+        )
+
+    if not bars:
+        return HawkeyeResult(
+            ticker=ticker,
+            status="DATA_FAILED_MISSING_HISTORY",
+            passed=False,
+            name=name,
+            total_mcap=total_mcap,
+            return_60d=None,
+            latest_daily_return=None,
+            max_single_day_gain=None,
+            max_single_day_loss=None,
+            latest_close=None,
+            sma20=None,
+            sma50=None,
+            sma200=None,
+            reason="; ".join(reasons),
+            rejection_reason="OHLCV history missing",
+        )
 
     if return_60d is None:
         rejections.append("missing 60d return")
@@ -150,6 +278,7 @@ def screen_stock(
 
     return HawkeyeResult(
         ticker=ticker,
+        status="PASSED_HAWKEYE" if not rejections else "REJECTED_HAWKEYE",
         passed=not rejections,
         name=name,
         total_mcap=total_mcap,
@@ -175,10 +304,15 @@ def screen_universe(
     daily_move_lookback: int,
     min_bars: int,
 ) -> list[HawkeyeResult]:
+    # Metadata is the full API market snapshot; `universe` contains only
+    # tickers whose OHLCV history is ready.  Iterating their union prevents a
+    # failed or deliberately unrequested history download from disappearing
+    # from the Hawkeye audit.
+    all_tickers = set(universe) | set(metadata)
     results = [
         screen_stock(
             ticker,
-            bars,
+            universe.get(ticker),
             metadata.get(ticker),
             min_market_cap,
             min_return_60d,
@@ -186,7 +320,7 @@ def screen_universe(
             daily_move_lookback,
             min_bars,
         )
-        for ticker, bars in sorted(universe.items())
+        for ticker in sorted(all_tickers)
     ]
     results.sort(
         key=lambda result: (
@@ -201,6 +335,7 @@ def screen_universe(
 def result_to_row(result: HawkeyeResult) -> dict[str, object]:
     return {
         "ticker": result.ticker,
+        "status": result.status,
         "passed": result.passed,
         "name": result.name,
         "total_mcap": result.total_mcap,
