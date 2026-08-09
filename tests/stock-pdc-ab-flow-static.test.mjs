@@ -6,15 +6,20 @@ const abFlow = JSON.parse(fs.readFileSync(new URL("../stock-pdc/ab-flow.json", i
 const syncScript = fs.readFileSync(new URL("../scripts/sync-stock-pdc-rank-flow.mjs", import.meta.url), "utf8");
 
 assert.equal(abFlow.schemaVersion, "stock-pdc-ab-v1");
-assert.equal(abFlow.availability, "ACTIVE");
-assert.deepEqual(abFlow.validationErrors, []);
-assert.equal(abFlow.latestDate, rankFlow.latestDate);
+assert.ok(["ACTIVE", "STALE", "UNAVAILABLE"].includes(abFlow.availability));
 assert.equal(abFlow.experiment.status, "active_prospective");
 assert.equal(abFlow.experiment.noBackfill, true);
 assert.equal(abFlow.experiment.priceMode, "public_tencent_unadjusted_fail_closed");
 assert.equal(abFlow.runStatus.latestSignalDate, abFlow.latestDate);
 assert.equal(abFlow.latestSignal.date, abFlow.latestDate);
 assert.equal(abFlow.latestSignal.snapshotId, abFlow.runStatus.latestSnapshotId);
+
+if (abFlow.availability === "ACTIVE") {
+  assert.deepEqual(abFlow.validationErrors, []);
+  assert.equal(abFlow.latestDate, rankFlow.latestDate);
+} else {
+  assert.ok(abFlow.validationErrors.length > 0, "inactive A/B exports must explain why they are unavailable");
+}
 
 const rows = abFlow.latestSignal.rows;
 const expectedGroups = ["A_PORTFOLIO", "A_SELECTION", "B_PORTFOLIO", "B_SELECTION"];

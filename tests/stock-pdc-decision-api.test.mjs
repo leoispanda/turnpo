@@ -24,7 +24,7 @@ async function accessCookie(secret) {
   return `turnpo_stock_pdc_access=${expiry}.${hex}`;
 }
 
-const candidates = Array.from({ length: 8 }, (_, index) => ({
+const candidates = Array.from({ length: 120 }, (_, index) => ({
   ticker: `00000${index + 1}.SZ`,
   name: `候选 ${index + 1}`,
   rank: index + 1,
@@ -40,9 +40,14 @@ const originalFetch = globalThis.fetch;
 globalThis.fetch = async (_url, options) => {
   const request = JSON.parse(options.body);
   const packet = JSON.parse(String(request.input).replace("Candidate packet:\n", ""));
+  const roleIndex = ["PDC 综合评审", "趋势与量价评审", "风险与过热审计", "反方证伪评审"]
+    .findIndex((name) => String(request.instructions).includes(name));
+  const selected = request.text.format.name.includes("round-two")
+    ? packet.slice(0, 20)
+    : packet.slice(Math.max(0, roleIndex) * 20, Math.max(0, roleIndex + 1) * 20);
   return new Response(JSON.stringify({
     output_text: JSON.stringify({
-      rankings: packet.map((candidate, index) => ({
+      rankings: selected.map((candidate, index) => ({
         ticker: candidate.ticker,
         score: 95 - index,
         thesis: `${candidate.name} has supplied evidence.`,
@@ -75,20 +80,25 @@ try {
   let payload = await response.json();
   const runId = payload.run.id;
   assert.equal(payload.run.model, "gpt-mini-test");
+  assert.equal(payload.run.snapshot.candidates.length, 120);
 
   for (const stage of ["round-one", "merge", "round-two", "risk-check"]) {
     response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/${stage}`, {})));
     assert.equal(response.status, 200, `${stage} should succeed`);
     payload = await response.json();
+    if (stage === "round-one") assert.equal(payload.run.roundOne.pdc.rankings.length, 20);
+    if (stage === "merge") assert.equal(payload.run.pool.length, 80);
+    if (stage === "round-two") assert.equal(payload.run.roundTwo.risk.rankings.length, 20);
   }
   assert.equal(payload.run.status, "READY_TO_PUBLISH");
-  assert.equal(payload.run.final.length, 8);
+  assert.equal(payload.run.snapshot.candidateCount, 120);
+  assert.equal(payload.run.final.length, 10);
 
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/publish`, {})));
   assert.equal(response.status, 200);
   payload = await response.json();
   assert.equal(payload.run.status, "PUBLISHED");
-  assert.equal(payload.current.decisions.length, 8);
+  assert.equal(payload.current.decisions.length, 10);
 
   response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/history")));
   payload = await response.json();

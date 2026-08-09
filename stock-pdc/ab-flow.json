@@ -1,10 +1,10 @@
 {
   "schemaVersion": "stock-pdc-ab-v1",
-  "generatedAt": "2026-07-29T01:06:11.462Z",
+  "generatedAt": "2026-08-09T14:13:55.473Z",
   "availability": "STALE",
   "latestDate": "2026-07-17",
   "validationErrors": [
-    "A latestDate 2026-07-28 != A/B latestDate 2026-07-17"
+    "A latestDate 2026-08-06 != A/B latestDate 2026-07-17"
   ],
   "experiment": {
     "experimentId": "stock-pdc-a-vs-b1-2026-07-10",

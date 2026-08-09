@@ -1,7 +1,4 @@
-const STOCK_ACCESS_KEY = "turnpo:stock-pdc-access";
-const STOCK_PASSWORD = "emba2026";
 const state = {
-  accessGranted: false,
   data: null,
   decisionHistory: []
 };
@@ -212,12 +209,28 @@ function renderStrategySummary() {
   return `
     <section class="stock-strategy-note" aria-label="Stock PDC strategy rule">
       <h2>Top20 Rotation</h2>
-      <p>鹰眼雷达先筛候选，PDC 只做排序。最终决策只看当日 Top 20，全部委员分数仅保留用于未来调权和复盘。</p>
+      <p>鹰眼雷达先筛候选，PDC 只做排序。每日发布最多 20 个通过筛选的研究席位；候选不足时不补位，委员分数仅保留用于复盘。</p>
       <div class="stock-strategy-meta">
         <span>${escapeHtml(strategy.candidateStage || "Hawkeye Radar")}</span>
         <span>${escapeHtml(strategy.rankingStage || "PDC ranking")}</span>
         <span>${escapeHtml(strategy.exitRule || "Top 20 exit review")}</span>
       </div>
+    </section>
+  `;
+}
+
+function renderDataQualityNotice(days) {
+  const latest = days[0];
+  if (!latest) return "";
+  const candidateCount = latest.rows.length;
+  const missingSlots = Math.max(0, 20 - candidateCount);
+  const returnPending = !Number.isFinite(latest.portfolio?.cumulativeReturnPct);
+  return `
+    <section class="stock-data-quality ${candidateCount < 20 ? "stock-data-quality-partial" : ""}" aria-label="当前榜单数据状态">
+      <strong>${escapeHtml(latest.date)}：${candidateCount} / 20 个研究席位</strong>
+      <p>${candidateCount < 20
+        ? `当日只发布 ${candidateCount} 个 PDC 榜单席位，余下 ${missingSlots} 个席位保持为空，不补位。`
+        : "当日候选池已达到 20 个研究席位。"}${returnPending ? " 下一交易日收益尚未生成。" : ""}</p>
     </section>
   `;
 }
@@ -263,6 +276,7 @@ function renderRankList() {
   const droppedSlots = Array.from({ length: 10 }, (_, index) => index);
   list.innerHTML = `
     ${renderStrategySummary()}
+    ${renderDataQualityNotice(days)}
     ${renderPublishedDecisionHistory()}
     <div class="stock-rank-matrix" style="--date-count: ${days.length}">
       <div class="stock-matrix-corner" aria-hidden="true"></div>
@@ -307,70 +321,7 @@ async function loadData() {
   renderDashboard();
 }
 
-function hasStockAccess() {
-  if (state.accessGranted) return true;
-  if (document.cookie.split(";").some((cookie) => cookie.trim() === "turnpo_stock_pdc_ui=granted")) return true;
-  try {
-    return sessionStorage.getItem(STOCK_ACCESS_KEY) === "granted";
-  } catch {
-    return false;
-  }
-}
-
-function setStockAccess(granted) {
-  state.accessGranted = granted;
-  document.cookie = granted
-    ? "turnpo_stock_pdc_ui=granted; Path=/stock-pdc; Max-Age=604800; SameSite=Lax"
-    : "turnpo_stock_pdc_ui=; Path=/stock-pdc; Max-Age=0; SameSite=Lax";
-  try {
-    if (granted) sessionStorage.setItem(STOCK_ACCESS_KEY, "granted");
-    else sessionStorage.removeItem(STOCK_ACCESS_KEY);
-  } catch {
-    // Keep the live page state even if sessionStorage is unavailable.
-  }
-}
-
-function renderAccessState() {
-  const granted = hasStockAccess();
-  const gate = $("#stockAccessGate");
-  const app = $("#stockApp");
-  const lock = $("#stockLock");
-  document.body.classList.toggle("stock-unlocked", granted);
-  if (gate) gate.hidden = granted;
-  if (app) app.hidden = !granted;
-  if (lock) lock.hidden = !granted;
-  if (granted && !state.data) {
-    loadData().catch((error) => {
-      const list = $("#stockRankList");
-      if (list) list.innerHTML = `<div class="stock-empty">${escapeHtml(error.message)}</div>`;
-    });
-  }
-}
-
-function initAccessGate() {
-  $("#stockAccessForm")?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const passwordInput = $("#stockPassword");
-    const note = $("#stockAccessNote");
-    if ((passwordInput?.value || "").trim() === STOCK_PASSWORD) {
-      setStockAccess(true);
-      if (passwordInput) passwordInput.value = "";
-      if (note) note.textContent = "";
-      renderAccessState();
-      return;
-    }
-    if (note) note.textContent = "Password is incorrect.";
-    passwordInput?.focus();
-  });
-
-  $("#stockLock")?.addEventListener("click", async () => {
-    setStockAccess(false);
-    await fetch("/stock-pdc/logout", { method: "POST" }).catch(() => null);
-    renderAccessState();
-    $("#stockPassword")?.focus();
-  });
-
-  renderAccessState();
-}
-
-initAccessGate();
+loadData().catch((error) => {
+  const list = $("#stockRankList");
+  if (list) list.innerHTML = `<div class="stock-empty">${escapeHtml(error.message)}</div>`;
+});

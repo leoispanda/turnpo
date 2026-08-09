@@ -1,12 +1,12 @@
 const ACCESS_COOKIE = "turnpo_stock_pdc_access";
-const UI_COOKIE = "turnpo_stock_pdc_ui";
 const COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
 const PAGE_PATH = "/stock-pdc";
 const DECISION_PATH = `${PAGE_PATH}/decision`;
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
 const DEFAULT_STOCK_MODEL = "gpt-4o-mini";
-const MAX_DECISION_BODY_BYTES = 96 * 1024;
-const MAX_CANDIDATES = 30;
+const MAX_DECISION_BODY_BYTES = 512 * 1024;
+const MAX_CANDIDATES = 500;
+const MAX_RECOMMENDATIONS_PER_ROLE = 20;
 const MAX_RUNS_PER_DAY = 8;
 const RUN_TTL_SECONDS = 180 * 24 * 60 * 60;
 
@@ -16,6 +16,7 @@ const REVIEW_ROLES = [
   { id: "risk", name: "风险与过热审计", focus: "风险、过热、流动性、下行与不应参与的情形" },
   { id: "counter", name: "反方证伪评审", focus: "寻找论点漏洞、拥挤交易、证据不足和反例" }
 ];
+const MAX_MERGED_CANDIDATES = REVIEW_ROLES.length * MAX_RECOMMENDATIONS_PER_ROLE;
 
 function configuredAccessCode(env) {
   return String(env.STOCK_PDC_ACCESS_CODE || env.EMBA_ACCESS_CODE || "emba2026").trim();
@@ -100,11 +101,11 @@ function normalizeCandidate(value, index) {
   return {
     ticker,
     name: cleanText(value?.name || ticker, 80),
-    rank: Math.max(1, Math.min(99, Math.round(finiteNumber(value?.rank, index + 1)))),
+    rank: Math.max(1, Math.min(MAX_CANDIDATES, Math.round(finiteNumber(value?.rank, index + 1)))),
     score: finiteNumber(value?.score),
     status: cleanText(value?.status, 60),
-    mainReason: cleanText(value?.mainReason, 800),
-    mainRisk: cleanText(value?.mainRisk, 600),
+    mainReason: cleanText(value?.mainReason, 360),
+    mainRisk: cleanText(value?.mainRisk, 240),
     signalDayChangePct: finiteNumber(value?.signalDayChangePct),
     scores: normalizeScores(value?.scores)
   };
@@ -118,7 +119,7 @@ function normalizeSnapshot(value) {
   if (!date || candidates.length < 5) return null;
   return {
     date,
-    source: cleanText(value?.source || "stock-pdc/rank-flow.json", 160),
+    source: cleanText(value?.source || "stock-pdc/decision-candidates.json", 160),
     candidates,
     capturedAt: new Date().toISOString()
   };
@@ -151,7 +152,7 @@ function reviewSchema(name) {
         rankings: {
           type: "array",
           minItems: 1,
-          maxItems: 30,
+          maxItems: MAX_RECOMMENDATIONS_PER_ROLE,
           items: {
             type: "object",
             additionalProperties: false,
@@ -191,6 +192,7 @@ function normalizeReview(value, candidates) {
     })
     .filter(Boolean)
     .sort((left, right) => right.score - left.score)
+    .slice(0, MAX_RECOMMENDATIONS_PER_ROLE)
     .map((row, index) => ({ ...row, rank: index + 1 }));
   if (!rankings.length) throw new Error("Model returned no valid candidate rankings.");
   return { rankings, summary: cleanText(value?.summary, 360) };
@@ -216,7 +218,7 @@ async function openAiReview(env, role, candidates, phase) {
           `Your role is ${role.name}; focus on ${role.focus}.`,
           "Use only the supplied factual candidate packet. Do not invent news, prices, financial results, or external facts.",
           "This is research support, not a trading instruction. Be conservative when evidence is weak.",
-          "Rank only supplied tickers. A high score means stronger research priority for the stated horizon, not a buy instruction.",
+          `Recommend at most ${MAX_RECOMMENDATIONS_PER_ROLE} names from the supplied radar candidate pool. A high score means stronger research priority for the stated horizon, not a buy instruction.`,
           "Use exclude=true when the supplied packet itself shows evidence is inadequate or risk is too high.",
           phase === "round-two"
             ? "This is the second review. Challenge the first-pass consensus and look for reasons a candidate should not advance."
@@ -288,6 +290,28 @@ function decisionResult(run) {
     }));
 }
 
+function publicReview(review) {
+  if (!review || typeof review !== "object") return null;
+  return {
+    summary: cleanText(review.summary, 360),
+    rankings: Array.isArray(review.rankings) ? review.rankings.map((row) => ({
+      ticker: row.ticker,
+      name: row.name,
+      rank: row.rank,
+      score: row.score,
+      thesis: row.thesis,
+      risk: row.risk,
+      exclude: row.exclude
+    })) : []
+  };
+}
+
+function publicReviews(reviews) {
+  return Object.fromEntries(REVIEW_ROLES
+    .filter(({ id }) => reviews?.[id])
+    .map(({ id }) => [id, publicReview(reviews[id])]));
+}
+
 function publicRun(run) {
   return {
     id: run.id,
@@ -296,9 +320,16 @@ function publicRun(run) {
     updatedAt: run.updatedAt,
     model: run.model,
     status: run.status,
-    snapshot: { date: run.snapshot.date, source: run.snapshot.source, candidateCount: run.snapshot.candidates.length },
+    snapshot: {
+      date: run.snapshot.date,
+      source: run.snapshot.source,
+      candidateCount: run.snapshot.candidates.length,
+      candidates: serializableCandidates(run.snapshot.candidates)
+    },
     roles: REVIEW_ROLES.map(({ id, name }) => ({ id, name, state: run.roundOne?.[id] ? "complete" : "idle" })),
+    roundOne: publicReviews(run.roundOne),
     pool: run.pool || [],
+    roundTwo: publicReviews(run.roundTwo),
     final: run.final || [],
     publishedAt: run.publishedAt || ""
   };
@@ -369,7 +400,7 @@ async function advanceRun(env, runId, stage) {
       }
     } else if (stage === "merge") {
       if (!Object.keys(run.roundOne || {}).length) return error("Complete round one before merging candidates.", 409);
-      if (!run.pool?.length) run.pool = consensusFromReviews(run.roundOne, run.snapshot.candidates).slice(0, 20);
+      if (!run.pool?.length) run.pool = consensusFromReviews(run.roundOne, run.snapshot.candidates).slice(0, MAX_MERGED_CANDIDATES);
       run.status = "POOL_READY";
     } else if (stage === "round-two") {
       if (!run.pool?.length) return error("Build the candidate pool before second review.", 409);
@@ -520,16 +551,8 @@ function accessCookie(token) {
   return `${ACCESS_COOKIE}=${token}; Path=${PAGE_PATH}; Max-Age=${COOKIE_MAX_AGE_SECONDS}; HttpOnly; Secure; SameSite=Lax`;
 }
 
-function uiCookie() {
-  return `${UI_COOKIE}=granted; Path=${PAGE_PATH}; Max-Age=${COOKIE_MAX_AGE_SECONDS}; Secure; SameSite=Lax`;
-}
-
 function clearAccessCookie() {
   return `${ACCESS_COOKIE}=; Path=${PAGE_PATH}; Max-Age=0; HttpOnly; Secure; SameSite=Lax`;
-}
-
-function clearUiCookie() {
-  return `${UI_COOKIE}=; Path=${PAGE_PATH}; Max-Age=0; Secure; SameSite=Lax`;
 }
 
 function accessPage(error = "") {
@@ -577,7 +600,7 @@ function accessPage(error = "") {
       <form class="stock-card" method="post">
         <div>
           <h1>股票大作手</h1>
-          <p>Enter the access code to open the Top 20 rank flow.</p>
+          <p>Enter the access code to open the up-to-20 rank flow.</p>
         </div>
         <label>
           <span>Access code</span>
@@ -602,7 +625,6 @@ export async function onRequestGet(context) {
   if (url.pathname === `${PAGE_PATH}/logout`) {
     const headers = new Headers({ location: `${PAGE_PATH}/`, "cache-control": "no-store" });
     headers.append("set-cookie", clearAccessCookie());
-    headers.append("set-cookie", clearUiCookie());
     return new Response(null, { status: 303, headers });
   }
 
@@ -622,7 +644,6 @@ export async function onRequestPost(context) {
   if (url.pathname === `${PAGE_PATH}/logout`) {
     const headers = new Headers({ location: `${PAGE_PATH}/`, "cache-control": "no-store" });
     headers.append("set-cookie", clearAccessCookie());
-    headers.append("set-cookie", clearUiCookie());
     return new Response(null, { status: 303, headers });
   }
 
@@ -641,6 +662,5 @@ export async function onRequestPost(context) {
   const token = await createToken(expectedCode);
   const headers = new Headers({ location: `${PAGE_PATH}/`, "cache-control": "no-store" });
   headers.append("set-cookie", accessCookie(token));
-  headers.append("set-cookie", uiCookie());
   return redirectWithHeaders(headers);
 }

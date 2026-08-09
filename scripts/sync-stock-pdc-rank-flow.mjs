@@ -7,6 +7,7 @@ const TURNPO_ROOT = path.resolve(__dirname, "..");
 const DEFAULT_SOURCE_ROOT = "/Users/leoyang/Documents/financial freedom/stock-pdc-local";
 const OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "rank-flow.json");
 const AB_OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "ab-flow.json");
+const DECISION_CANDIDATE_OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "decision-candidates.json");
 const BACKFILL_WATCHLIST_DIR = path.join(TURNPO_ROOT, "stock-pdc", "backfill", "daily_watchlists");
 const DEFAULT_BENCHMARK_TICKER = "CSI300ETF";
 const SCORE_FIELDS = [
@@ -546,7 +547,11 @@ function buildBenchmark(days, priceDataDirs, priceCache, ticker = DEFAULT_BENCHM
 
 function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
   const changesDir = path.join(sourceRoot, "outputs", "daily_leaderboard_changes");
-  const watchlistFiles = collectWatchlistFiles(sourceRoot);
+  // A signal is valid only for an exchange weekday.  Keeping weekend CSVs in
+  // the history used to make Monday's rank movement compare with a hidden
+  // Saturday/Sunday snapshot instead of the last visible trading session.
+  const watchlistFiles = collectWatchlistFiles(sourceRoot)
+    .filter((fileInfo) => isTradingWeekday(fileInfo.date));
   const latestDate = watchlistFiles.at(-1)?.date || "";
   const priceDataDir = resolvePriceDataDir(sourceRoot, latestDate, explicitPriceDataDir);
   const priceDataDirs = priceDataDirCandidates(sourceRoot, priceDataDir);
@@ -619,7 +624,7 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
       version: "top20-rotation-v2",
       candidateStage: "Hawkeye Radar",
       rankingStage: "PDC scores rank radar-selected candidates",
-      decisionRule: "Top 20 names are the target portfolio. Status fields are research-only.",
+      decisionRule: "Publish up to 20 radar-qualified names. Status fields are research-only.",
       exitRule: "Dropped names go to sell review unless signal day change is positive, then HOLD_DROPPED_UP_DAY.",
       researchRetention: "All factor scores, reasons, and risks are retained for later attribution and tuning."
     },
@@ -632,6 +637,52 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
     portfolio,
     benchmark,
     tickerHistory: buildTickerHistory(days)
+  };
+}
+
+function buildDecisionCandidateSnapshot(sourceRoot) {
+  const historyPath = path.join(sourceRoot, "outputs", "scoring_history.csv");
+  const generatedAt = new Date().toISOString();
+  if (!fs.existsSync(historyPath)) {
+    return {
+      schemaVersion: "stock-pdc-decision-candidates-v1",
+      generatedAt,
+      availability: "UNAVAILABLE",
+      latestDate: "",
+      validationErrors: ["missing outputs/scoring_history.csv"],
+      candidates: []
+    };
+  }
+
+  const historyRows = readCsv(historyPath)
+    .filter((row) => isTradingWeekday(row.run_date));
+  const latestDate = historyRows.map((row) => clean(row.run_date)).filter(Boolean).sort().at(-1) || "";
+  const names = loadNames(sourceRoot);
+  const candidates = historyRows
+    .filter((row) => clean(row.run_date) === latestDate && clean(row.ticker))
+    .map((row, index) => ({
+      ticker: clean(row.ticker).toUpperCase(),
+      name: clean(names.get(clean(row.ticker)) || row.ticker),
+      rank: intOrNull(row.rank) || index + 1,
+      score: numberOrNull(row.final_score),
+      status: clean(row.final_status),
+      mainReason: clean(row.main_reason),
+      mainRisk: clean(row.main_risk),
+      scores: Object.fromEntries(SCORE_FIELDS
+        .map((field) => [field, numberOrNull(row[field])])
+        .filter(([, value]) => value !== null))
+    }))
+    .sort((left, right) => left.rank - right.rank);
+  const validationErrors = [];
+  if (!latestDate) validationErrors.push("no weekday candidate snapshot in outputs/scoring_history.csv");
+  if (!candidates.length) validationErrors.push(`no candidates for ${latestDate || "the latest snapshot"}`);
+  return {
+    schemaVersion: "stock-pdc-decision-candidates-v1",
+    generatedAt,
+    availability: validationErrors.length ? "UNAVAILABLE" : "ACTIVE",
+    latestDate,
+    validationErrors,
+    candidates
   };
 }
 
@@ -760,14 +811,18 @@ const abOutputPath = path.resolve(argValue("--ab-output", AB_OUTPUT_PATH));
 const priceDataDir = argValue("--price-data-dir", process.env.STOCK_PDC_PRICE_DATA_DIR || "");
 const snapshot = buildSnapshot(sourceRoot, priceDataDir);
 const abSnapshot = buildAbSnapshot(sourceRoot, snapshot.latestDate);
+const decisionCandidateSnapshot = buildDecisionCandidateSnapshot(sourceRoot);
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, `${JSON.stringify(snapshot, null, 2)}\n`);
 fs.mkdirSync(path.dirname(abOutputPath), { recursive: true });
 fs.writeFileSync(abOutputPath, `${JSON.stringify(abSnapshot, null, 2)}\n`);
+fs.mkdirSync(path.dirname(DECISION_CANDIDATE_OUTPUT_PATH), { recursive: true });
+fs.writeFileSync(DECISION_CANDIDATE_OUTPUT_PATH, `${JSON.stringify(decisionCandidateSnapshot, null, 2)}\n`);
 
 console.log(`Wrote ${outputPath}`);
 console.log(`Dates: ${snapshot.dates.join(", ") || "none"}`);
 console.log(`Latest: ${snapshot.latestDate || "none"}`);
 console.log(`Price data: ${snapshot.priceDataDir || "none"}`);
 console.log(`A/B: ${abSnapshot.availability} -> ${abOutputPath}`);
+console.log(`Decision candidates: ${decisionCandidateSnapshot.candidates.length} on ${decisionCandidateSnapshot.latestDate || "none"} -> ${DECISION_CANDIDATE_OUTPUT_PATH}`);

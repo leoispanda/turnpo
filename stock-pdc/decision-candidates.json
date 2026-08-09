@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "stock-pdc-decision-candidates-v1",
+  "generatedAt": "2026-08-09T14:13:55.476Z",
+  "availability": "ACTIVE",
+  "latestDate": "2026-08-06",
+  "validationErrors": [],
+  "candidates": [
+    {
+      "ticker": "000333.SZ",
+      "name": "美的集团",
+      "rank": 1,
+      "score": 6.8,
+      "status": "Watch",
+      "mainReason": "volume supports the trend | above 50d SMA by 6.5%; 20d > 50d > 200d trend stack; outperforming benchmark by 17.4% | 6 accumulation vs 1 distribution days; up days carry heavier volume than down days; 20d price gain 7.6% is volume-supported",
+      "mainRisk": "avoid aggressive sizing and wait for cleaner confirmation; symbolic close-tail experiment inspired by five-elements numerology; not a traditional Ziwei chart",
+      "scores": {
+        "market_regime_score": 3.4,
+        "trend_score": 10,
+        "livermore_breakout_score": 5.6,
+        "volume_price_score": 8.2,
+        "candlestick_score": 5,
+        "overheat_score": 8.5,
+        "risk_score": 8.4,
+        "zhuge_orion_score": 4.2,
+        "final_chair_score": 6
+      }
+    },
+    {
+      "ticker": "601225.SH",
+      "name": "陕西煤业",
+      "rank": 2,
+      "score": 6.8,
+      "status": "Watch",
+      "mainReason": "volume supports the trend | above 50d SMA by 4.1%; 20d > 50d > 200d trend stack; 20d momentum 9.1%; outperforming benchmark by 16.5% | 6 accumulation vs 1 distribution days; 20d price gain 9.1% is volume-supported",
+      "mainRisk": "avoid aggressive sizing and wait for cleaner confirmation; symbolic close-tail experiment inspired by five-elements numerology; not a traditional Ziwei chart",
+      "scores": {
+        "market_regime_score": 3.4,
+        "trend_score": 10,
+        "livermore_breakout_score": 4.2,
+        "volume_price_score": 7.2,
+        "candlestick_score": 6.4,
+        "overheat_score": 8.5,
+        "risk_score": 8,
+        "zhuge_orion_score": 4.2,
+        "final_chair_score": 5.8
+      }
+    },
+    {
+      "ticker": "601919.SH",
+      "name": "中远海控",
+      "rank": 3,
+      "score": 6.8,
+      "status": "Watch",
+      "mainReason": "committee evidence is mixed | above 50d SMA by 7.3%; 20d momentum 10.4%; outperforming benchmark by 18.7%",
+      "mainRisk": "avoid aggressive sizing and wait for cleaner confirmation; symbolic close-tail experiment inspired by five-elements numerology; not a traditional Ziwei chart",
+      "scores": {
+        "market_regime_score": 3.4,
+        "trend_score": 10,
+        "livermore_breakout_score": 6.5,
+        "volume_price_score": 5.8,
+        "candlestick_score": 5,
+        "overheat_score": 6.1,
+        "risk_score": 9.4,
+        "zhuge_orion_score": 4.2,
+        "final_chair_score": 5.2
+      }
+    },
+    {
+      "ticker": "002415.SZ",
+      "name": "海康威视",
+      "rank": 4,
+      "score": 6.71,
+      "status": "Wait for Pullback",
+      "mainReason": "volume supports the trend | above 50d SMA by 11.5%; 20d > 50d > 200d trend stack; outperforming benchmark by 17.1% | 5 accumulation vs 1 distribution days; up days carry heavier volume than down days; 20d price gain 5.8% is volume-supported",
+      "mainRisk": "avoid aggressive sizing and wait for cleaner confirmation; symbolic close-tail experiment inspired by five-elements numerology; not a traditional Ziwei chart",
+      "scores": {
+        "market_regime_score": 3.4,
+        "trend_score": 10,
+        "livermore_breakout_score": 5.6,
+        "volume_price_score": 8.2,
+        "candlestick_score": 5,
+        "overheat_score": 4.8,
+        "risk_score": 7.4,
+        "zhuge_orion_score": 4.2,
+        "final_chair_score": 5.4
+      }
+    },
+    {
+      "ticker": "603268.SH",
+      "name": "松发股份",
+      "rank": 5,
+      "score": 6.2,
+      "status": "High Risk Watch",
+      "mainReason": "volume supports the trend | above 50d SMA by 19.9%; 20d > 50d > 200d trend stack; 20d momentum 14.6%; outperforming benchmark by 15.2% | cleared 55d pivot by 4.1%; breakout volume confirmed | 6 accumulation vs 1 distribution days; up days carry heavier volume than down days; latest advance came on strong volume; 20d price gain 14.6% is volume-supported",
+      "mainRisk": "ATR elevated at 5.5%; wide stop distance 19.9%",
+      "scores": {
+        "market_regime_score": 3.4,
+        "trend_score": 10,
+        "livermore_breakout_score": 7.5,
+        "volume_price_score": 9.2,
+        "candlestick_score": 5,
+        "overheat_score": 1.2,
+        "risk_score": 5.2,
+        "zhuge_orion_score": 4.2,
+        "final_chair_score": 4.2
+      }
+    },
+    {
+      "ticker": "603259.SH",
+      "name": "药明康德",
+      "rank": 6,
+      "score": 5.36,
+      "status": "Wait for Pullback",
+      "mainReason": "committee evidence is mixed | above 50d SMA by 23.0%; 20d > 50d > 200d trend stack; 20d momentum 17.9%; 60d momentum 32.9%; outperforming benchmark by 39.1%",
+      "mainRisk": "ATR elevated at 4.6%; wide stop distance 22.0%",
+      "scores": {
+        "market_regime_score": 3.4,
+        "trend_score": 10,
+        "livermore_breakout_score": 4.7,
+        "volume_price_score": 6.8,
+        "candlestick_score": 2,
+        "overheat_score": 2.3,
+        "risk_score": 5.2,
+        "zhuge_orion_score": 4.2,
+        "final_chair_score": 2.2
+      }
+    },
+    {
+      "ticker": "002371.SZ",
+      "name": "北方华创",
+      "rank": 7,
+      "score": 5,
+      "status": "Remove",
+      "mainReason": "committee evidence is mixed | above 50d SMA by 2.5%; 20d > 50d > 200d trend stack; 60d momentum 28.0%; outperforming benchmark by 34.1%",
+      "mainRisk": "ATR high at 8.2%; stop is tight and may shake out; 60d drawdown -20.6%",
+      "scores": {
+        "market_regime_score": 3.4,
+        "trend_score": 9.8,
+        "livermore_breakout_score": 3.3,
+        "volume_price_score": 4.2,
+        "candlestick_score": 5,
+        "overheat_score": 8.5,
+        "risk_score": 3.1,
+        "zhuge_orion_score": 4.2,
+        "final_chair_score": 2.6
+      }
+    }
+  ]
+}

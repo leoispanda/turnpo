@@ -22,7 +22,7 @@
       </a>
       <p>股票大作手 / 今日决策</p>
       <div class="top-actions">
-        <a class="ghost-btn" href="/stock-pdc/">查看 Top 20</a>
+        <a class="ghost-btn" href="/stock-pdc/">查看最多 20 名</a>
       </div>
     </header>
 
@@ -31,11 +31,15 @@
         <div>
           <div class="decision-kicker"><span></span> 多模型研究编排</div>
           <h1 id="decisionTitle">生成今日决策</h1>
-          <p>锁定一份研究快照，让四个 GPT mini 评审角色分别盲评、复核，再经过风险闸门形成最多 10 个研究席位。</p>
+          <p>锁定当日实际通过雷达筛选的候选池，让四个 GPT mini 评审角色分别盲评、复核，再经过风险闸门形成最多 10 个研究席位。</p>
         </div>
         <div class="decision-command-actions">
           <span class="decision-demo-badge" id="decisionMode">GPT mini · API 已连接</span>
-          <button class="stock-primary-btn decision-generate-btn" id="generateDecision" type="button">开始生成</button>
+          <div class="decision-flow-actions">
+            <button class="stock-primary-btn decision-generate-btn" id="generateDecision" type="button">逐步开始</button>
+            <button class="decision-secondary-btn" id="runAllDecision" type="button">一键跑通</button>
+            <button class="stock-primary-btn decision-generate-btn" id="nextDecisionStep" type="button" hidden>下一步</button>
+          </div>
         </div>
       </section>
 
@@ -80,6 +84,17 @@
         <div class="decision-model-grid" id="modelGrid"></div>
       </section>
 
+      <section class="decision-review" id="decisionReview" hidden aria-labelledby="reviewTitle">
+        <div class="stock-section-head">
+          <div>
+            <h2 id="reviewTitle">逐步评审内容</h2>
+            <p id="reviewCopy">每一步完成后会停在这里，供你审阅内容后再继续。</p>
+          </div>
+          <span class="decision-blind-badge">可审阅</span>
+        </div>
+        <div class="decision-review-content" id="reviewContent"></div>
+      </section>
+
       <section class="decision-result" id="decisionResult" hidden aria-labelledby="resultTitle">
         <div class="stock-section-head">
           <div>
@@ -89,8 +104,8 @@
           <button class="stock-primary-btn decision-publish-btn" id="publishDecision" type="button" hidden>发布到 PDC</button>
         </div>
         <div class="decision-result-summary">
-          <article><span>候选池</span><strong>30–40</strong><small>来自第一轮合并去重</small></article>
-          <article><span>第二轮复核</span><strong>4 × Top 30</strong><small>不展示其他模型分数</small></article>
+          <article><span>事实候选</span><strong id="resultCandidateCount">--</strong><small id="resultCandidateNote">以当日实际数量为准</small></article>
+          <article><span>第二轮复核</span><strong>4 位评审</strong><small>只复核合并后的实际候选</small></article>
           <article><span>通过风控</span><strong>≤ 10</strong><small>风险不足时不会强行补足</small></article>
         </div>
         <div class="decision-placeholder-list" id="resultList"></div>
@@ -98,6 +113,6 @@
       </section>
     </main>
 
-    <script src="/stock-pdc/decision/decision.js"></script>
+    <script src="/stock-pdc/decision/decision.js?v=20260809"></script>
   </body>
 </html>
