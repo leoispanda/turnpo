@@ -217,6 +217,8 @@ function cleanText(value, maxLength = 900) {
 }
 
 function finiteNumber(value, fallback = null) {
+  if (value === null || value === undefined || typeof value === "boolean") return fallback;
+  if (typeof value === "string" && !value.trim()) return fallback;
   const number = Number(value);
   return Number.isFinite(number) ? number : fallback;
 }
@@ -456,7 +458,7 @@ function rankingSchemaProperties() {
   };
 }
 
-function reviewSchema(name) {
+function reviewSchema(name, expectedCount) {
   return {
     type: "json_schema",
     name,
@@ -468,8 +470,8 @@ function reviewSchema(name) {
       properties: {
         rankings: {
           type: "array",
-          minItems: 1,
-          maxItems: 30,
+          minItems: expectedCount,
+          maxItems: expectedCount,
           items: {
             type: "object",
             additionalProperties: false,
@@ -483,7 +485,7 @@ function reviewSchema(name) {
   };
 }
 
-function portableReviewSchema() {
+function portableReviewSchema(expectedCount) {
   return {
     type: "object",
     additionalProperties: false,
@@ -491,6 +493,8 @@ function portableReviewSchema() {
     properties: {
       rankings: {
         type: "array",
+        minItems: expectedCount,
+        maxItems: expectedCount,
         items: {
           type: "object",
           additionalProperties: false,
@@ -581,7 +585,7 @@ function reviewInstructions(role, phase) {
     "CatalystInformation is only a dated or timely short-term price catalyst evidenced in the frozen packet. If it or any other dimension lacks factual support, put its id in unavailableDimensions, set that dimension score to 0, and explain the missing data once in dataGaps. Never guess or invent news. The program ignores unavailable dimensions and calculates weighted scores.",
     "Fundamental and valuation are not scored. Return backgroundChecks only to flag clear, fact-supported red flags; false means no flag was evidenced in the supplied packet, not that the company has passed a full diligence review. Never use a low PE or long-term company quality to raise the short-term score.",
     "For every ticker return forwardPrediction: probability in percent that 5D return exceeds +2%, expected 5D return percent, probability in percent that 5D return is below -3%, and a 0-100 forwardUpsideScore. These are forecasts from the frozen facts, not known outcomes.",
-    "Rank only supplied tickers. BUY means a favorable current entry with credible 5D forward upside; WATCH, HOLD, and SELL must be used when that threshold is not met. Use exclude=true when the supplied packet itself shows evidence is inadequate or risk is too high.",
+    "Return exactly one record for every supplied ticker, with no omissions, duplicates, extra tickers, or Top-N truncation. The program performs the ranking after it verifies full coverage. BUY means a favorable current entry with credible 5D forward upside; WATCH, HOLD, and SELL must be used when that threshold is not met. Use exclude=true when the supplied packet itself shows evidence is inadequate or risk is too high.",
     phase === "round-two"
       ? "This is the second review. Challenge the first-pass consensus and look for reasons a candidate should not advance."
       : "This is the first independent review. Do not assume any other reviewer agrees with you."
@@ -590,16 +594,25 @@ function reviewInstructions(role, phase) {
 
 function normalizeDimensionScores(value, unavailableDimensions, dataGaps) {
   const input = value && typeof value === "object" && !Array.isArray(value) ? value : {};
-  const unavailable = new Set((Array.isArray(unavailableDimensions) ? unavailableDimensions : []).filter((id) => PDC_DIMENSIONS.some((dimension) => dimension.id === id)));
+  const validDimensionIds = new Set(PDC_DIMENSIONS.map((dimension) => dimension.id));
+  const unavailableSource = Array.isArray(unavailableDimensions) ? unavailableDimensions : null;
+  const unavailable = new Set((unavailableSource || []).filter((id) => validDimensionIds.has(id)));
+  const unavailableIsValid = unavailableSource !== null
+    && unavailable.size === unavailableSource.length
+    && unavailableSource.every((id, index) => typeof id === "string" && unavailableSource.indexOf(id) === index);
   const dimensionScores = {};
   let coveredWeight = 0;
   let weightedTotal = 0;
+  let valid = unavailableIsValid;
   PDC_DIMENSIONS.forEach((dimension) => {
     const score = finiteNumber(input[dimension.id]);
-    const available = !unavailable.has(dimension.id) && score !== null;
+    const isUnavailable = unavailable.has(dimension.id);
+    const scoreIsValid = score !== null && score >= 0 && score <= 10;
+    const available = !isUnavailable && scoreIsValid;
+    if ((isUnavailable && score !== 0) || (!isUnavailable && !scoreIsValid)) valid = false;
     dimensionScores[dimension.id] = {
       available,
-      score: available ? Math.max(0, Math.min(10, score)) : null,
+      score: available ? score : null,
       evidence: available ? "Scored from the supplied fact packet." : cleanText(dataGaps || "N/A — supporting data was not supplied.", 220)
     };
     if (available) {
@@ -608,6 +621,7 @@ function normalizeDimensionScores(value, unavailableDimensions, dataGaps) {
     }
   });
   return {
+    valid,
     dimensionScores,
     coveragePct: coveredWeight,
     weightedScore: coveredWeight ? Number(((weightedTotal / coveredWeight) * 100).toFixed(2)) : 0
@@ -615,20 +629,25 @@ function normalizeDimensionScores(value, unavailableDimensions, dataGaps) {
 }
 
 function normalizeBackgroundChecks(value) {
-  const input = value && typeof value === "object" && !Array.isArray(value) ? value : {};
-  return Object.fromEntries(BACKGROUND_CHECKS.map((id) => [id, Boolean(input[id])]));
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  if (!BACKGROUND_CHECKS.every((id) => typeof value[id] === "boolean")) return null;
+  return Object.fromEntries(BACKGROUND_CHECKS.map((id) => [id, value[id]]));
 }
 
 function normalizeForwardPrediction(value) {
-  const input = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  const input = value && typeof value === "object" && !Array.isArray(value) ? value : null;
+  if (!input) return null;
   const percentage = (key) => {
     const number = finiteNumber(input[key]);
-    return number === null ? null : Number(Math.max(0, Math.min(100, number)).toFixed(2));
+    return number === null || number < 0 || number > 100 ? null : Number(number.toFixed(2));
   };
   const returnPct = finiteNumber(input.expected5dReturnPct);
+  if (percentage("prob5dUpGt2Pct") === null || returnPct === null || returnPct < -100 || returnPct > 100 || percentage("prob5dDownLtMinus3Pct") === null || percentage("forwardUpsideScore") === null) {
+    return null;
+  }
   return {
     prob5dUpGt2Pct: percentage("prob5dUpGt2Pct"),
-    expected5dReturnPct: returnPct === null ? null : Number(Math.max(-100, Math.min(100, returnPct)).toFixed(2)),
+    expected5dReturnPct: Number(returnPct.toFixed(2)),
     prob5dDownLtMinus3Pct: percentage("prob5dDownLtMinus3Pct"),
     forwardUpsideScore: percentage("forwardUpsideScore")
   };
@@ -655,15 +674,42 @@ function attachPendingForwardOutcomes(review, referenceDate) {
 }
 
 function normalizeReview(value, candidates) {
-  const allowed = new Set(candidates.map((candidate) => candidate.ticker));
+  const expectedTickers = candidates.map((candidate) => candidate.ticker);
+  const allowed = new Set(expectedTickers);
   const byTicker = new Map(candidates.map((candidate) => [candidate.ticker, candidate]));
   const seen = new Set();
-  const rankings = (Array.isArray(value?.rankings) ? value.rankings : [])
+  const duplicateTickers = [];
+  const unexpectedTickers = [];
+  const invalidTickers = [];
+  let malformedRowCount = 0;
+  const rawRankings = Array.isArray(value?.rankings) ? value.rankings : [];
+  const rankings = rawRankings
     .map((row) => {
       const ticker = cleanText(row?.ticker, 24).toUpperCase();
-      if (!allowed.has(ticker) || seen.has(ticker)) return null;
+      if (!ticker) {
+        malformedRowCount += 1;
+        return null;
+      }
+      if (!allowed.has(ticker)) {
+        unexpectedTickers.push(ticker);
+        return null;
+      }
+      if (seen.has(ticker)) {
+        duplicateTickers.push(ticker);
+        return null;
+      }
       seen.add(ticker);
       const dimensions = normalizeDimensionScores(row?.dimensionScores, row?.unavailableDimensions, row?.dataGaps);
+      const backgroundChecks = normalizeBackgroundChecks(row?.backgroundChecks);
+      const forwardPrediction = normalizeForwardPrediction(row?.forwardPrediction);
+      const decision = ["BUY", "WATCH", "HOLD", "SELL"].includes(row?.decision) ? row.decision : "";
+      const confidence = finiteNumber(row?.confidence);
+      const thesis = cleanText(row?.thesis, 260);
+      const risk = cleanText(row?.risk, 220);
+      if (!dimensions.valid || !backgroundChecks || !forwardPrediction || !decision || confidence === null || confidence < 0 || confidence > 100 || !thesis || !risk || typeof row?.exclude !== "boolean") {
+        invalidTickers.push(ticker);
+        return null;
+      }
       return {
         ticker,
         name: byTicker.get(ticker)?.name || ticker,
@@ -671,20 +717,53 @@ function normalizeReview(value, candidates) {
         coveragePct: dimensions.coveragePct,
         dimensionScores: dimensions.dimensionScores,
         dataGaps: cleanText(row?.dataGaps, 240),
-        backgroundChecks: normalizeBackgroundChecks(row?.backgroundChecks),
-        forwardPrediction: normalizeForwardPrediction(row?.forwardPrediction),
-        decision: ["BUY", "WATCH", "HOLD", "SELL"].includes(row?.decision) ? row.decision : "WATCH",
-        confidence: Math.max(0, Math.min(100, finiteNumber(row?.confidence, 0))),
-        thesis: cleanText(row?.thesis, 260),
-        risk: cleanText(row?.risk, 220),
+        backgroundChecks,
+        forwardPrediction,
+        decision,
+        confidence,
+        thesis,
+        risk,
         exclude: Boolean(row?.exclude)
       };
     })
     .filter(Boolean)
     .sort((left, right) => right.score - left.score)
     .map((row, index) => ({ ...row, rank: index + 1 }));
-  if (!rankings.length) throw new Error("Model returned no valid candidate rankings.");
-  return { rankings, summary: cleanText(value?.summary, 360) };
+  const missingTickers = expectedTickers.filter((ticker) => !rankings.some((row) => row.ticker === ticker));
+  const summary = cleanText(value?.summary, 360);
+  const structuralFailure = !Array.isArray(value?.rankings) || !summary || malformedRowCount || duplicateTickers.length || unexpectedTickers.length || invalidTickers.length;
+  const status = structuralFailure || !rankings.length
+    ? "FAILED"
+    : missingTickers.length
+      ? "PARTIAL"
+      : "COMPLETE";
+  return {
+    status,
+    rankings,
+    summary,
+    integrity: {
+      status,
+      expectedCount: expectedTickers.length,
+      receivedCount: rawRankings.length,
+      validCount: rankings.length,
+      missingTickers,
+      duplicateTickers,
+      unexpectedTickers,
+      invalidTickers,
+      malformedRowCount,
+      summaryPresent: Boolean(summary)
+    }
+  };
+}
+
+function reviewIsComplete(review, expectedCount = null) {
+  if (!review || review.status !== "COMPLETE" || review.integrity?.status !== "COMPLETE") return false;
+  if (!Array.isArray(review.rankings) || review.rankings.length !== review.integrity.expectedCount) return false;
+  return expectedCount === null || review.rankings.length === expectedCount;
+}
+
+function modelOutputTokenLimit(candidateCount) {
+  return Math.max(8_000, Math.min(16_000, 1_400 + candidateCount * 240));
 }
 
 async function openAiReview(env, modelProfile, role, candidates, phase) {
@@ -700,8 +779,8 @@ async function openAiReview(env, modelProfile, role, candidates, phase) {
         model: modelProfile.model,
         instructions: reviewInstructions(role, phase),
         input: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`,
-        text: { format: reviewSchema(`stock_pdc_${phase}_${role.id}`) },
-        max_output_tokens: 8000,
+        text: { format: reviewSchema(`stock_pdc_${phase}_${role.id}`, candidates.length) },
+        max_output_tokens: modelOutputTokenLimit(candidates.length),
         reasoning: modelProfile.tier === "mini-demo" ? { effort: "medium" } : { mode: "pro", effort: "max" }
       })
   });
@@ -724,7 +803,7 @@ async function claudeReview(env, modelProfile, role, candidates, phase) {
       },
       body: JSON.stringify({
         model: modelProfile.model,
-        max_tokens: 8000,
+        max_tokens: modelOutputTokenLimit(candidates.length),
         system: reviewInstructions(role, phase),
         messages: [{
           role: "user",
@@ -734,7 +813,7 @@ async function claudeReview(env, modelProfile, role, candidates, phase) {
           ...(modelProfile.tier === "mini-demo" ? {} : { effort: "max" }),
           format: {
             type: "json_schema",
-            schema: portableReviewSchema()
+            schema: portableReviewSchema(candidates.length)
           }
         }
       })
@@ -804,7 +883,8 @@ async function geminiReview(env, modelProfile, role, candidates, phase) {
         }],
         generationConfig: {
           responseMimeType: "application/json",
-          responseJsonSchema: portableReviewSchema()
+          responseJsonSchema: portableReviewSchema(candidates.length),
+          maxOutputTokens: modelOutputTokenLimit(candidates.length)
         }
       })
   });
@@ -834,7 +914,7 @@ async function deepseekReview(env, modelProfile, role, candidates, phase) {
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
         ],
         response_format: { type: "json_object" },
-        max_tokens: 8000
+        max_tokens: modelOutputTokenLimit(candidates.length)
       })
   });
   const data = await response.json().catch(() => ({}));
@@ -861,7 +941,7 @@ async function kimiReview(env, modelProfile, role, candidates, phase) {
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
         ],
         response_format: { type: "json_object" },
-        max_completion_tokens: 8000
+        max_completion_tokens: modelOutputTokenLimit(candidates.length)
       })
   });
   const data = await response.json().catch(() => ({}));
@@ -1209,7 +1289,8 @@ function reviewStageKey(stage) {
 
 function reviewStageComplete(run, stage) {
   const reviewKey = reviewStageKey(stage);
-  return Boolean(reviewKey && REVIEW_ROLES.every((role) => run[reviewKey]?.[role.id]));
+  const expectedCount = stage === "round-one" ? run?.snapshot?.candidates?.length : run?.pool?.length;
+  return Boolean(reviewKey && REVIEW_ROLES.every((role) => reviewIsComplete(run[reviewKey]?.[role.id], expectedCount)));
 }
 
 function isCommitteeRun(run) {
@@ -1230,12 +1311,26 @@ function committeeReviewMap(run, stage) {
 function committeeStageComplete(run, stage) {
   const reviewKey = reviewStageKey(stage);
   const members = committeeMembers(run);
-  return Boolean(reviewKey && members.length && members.every((member) => member[reviewKey]?.rankings?.length));
+  const expectedCount = stage === "round-one" ? run?.snapshot?.candidates?.length : run?.pool?.length;
+  return Boolean(reviewKey && members.length && members.every((member) => reviewIsComplete(member[reviewKey], expectedCount)));
 }
 
 function publicReview(review) {
   if (!review?.rankings?.length) return null;
   return {
+    status: cleanText(review.status, 16),
+    integrity: review.integrity && typeof review.integrity === "object" ? {
+      status: cleanText(review.integrity.status, 16),
+      expectedCount: finiteNumber(review.integrity.expectedCount, null),
+      receivedCount: finiteNumber(review.integrity.receivedCount, null),
+      validCount: finiteNumber(review.integrity.validCount, null),
+      missingTickers: Array.isArray(review.integrity.missingTickers) ? review.integrity.missingTickers.map((ticker) => cleanText(ticker, 24)).filter(Boolean) : [],
+      duplicateTickers: Array.isArray(review.integrity.duplicateTickers) ? review.integrity.duplicateTickers.map((ticker) => cleanText(ticker, 24)).filter(Boolean) : [],
+      unexpectedTickers: Array.isArray(review.integrity.unexpectedTickers) ? review.integrity.unexpectedTickers.map((ticker) => cleanText(ticker, 24)).filter(Boolean) : [],
+      invalidTickers: Array.isArray(review.integrity.invalidTickers) ? review.integrity.invalidTickers.map((ticker) => cleanText(ticker, 24)).filter(Boolean) : [],
+      malformedRowCount: finiteNumber(review.integrity.malformedRowCount, 0),
+      summaryPresent: Boolean(review.integrity.summaryPresent)
+    } : null,
     summary: cleanText(review.summary, 360),
     rankings: review.rankings.slice(0, 30).map((row) => ({
       rank: row.rank,
@@ -1277,13 +1372,21 @@ function publicModelVerification(verification) {
 
 function publicStageAudit(stage) {
   if (!stage || typeof stage !== "object") return null;
+  const attempts = Array.isArray(stage.attempts) ? stage.attempts : [];
   return {
     status: cleanText(stage.status, 32),
     startedAt: cleanText(stage.startedAt, 40),
     completedAt: cleanText(stage.completedAt, 40),
     input: stage.input && typeof stage.input === "object" ? stage.input : {},
     output: stage.output && typeof stage.output === "object" ? stage.output : {},
-    error: cleanText(stage.error, 320)
+    error: cleanText(stage.error, 320),
+    attempts: attempts.slice(-8).map((attempt) => ({
+      status: cleanText(attempt?.status, 32),
+      startedAt: cleanText(attempt?.startedAt, 40),
+      completedAt: cleanText(attempt?.completedAt, 40),
+      output: attempt?.output && typeof attempt.output === "object" ? attempt.output : {},
+      error: cleanText(attempt?.error, 320)
+    }))
   };
 }
 
@@ -1316,7 +1419,19 @@ function publicRun(run) {
     committeeMode: committee,
     members: committee ? committeeMembers(run).map((member) => ({
       ...publicModelProfile(member.profile),
-      state: member.roundTwo?.rankings?.length ? "round_two_complete" : member.roundOne?.rankings?.length ? "round_one_complete" : "idle",
+      state: reviewIsComplete(member.roundTwo, run.pool?.length)
+        ? "round_two_complete"
+        : member.roundTwo?.status === "PARTIAL"
+          ? "round_two_partial"
+          : member.roundTwo?.status === "FAILED"
+            ? "round_two_failed"
+            : reviewIsComplete(member.roundOne, run.snapshot?.candidates?.length)
+              ? "round_one_complete"
+              : member.roundOne?.status === "PARTIAL"
+                ? "round_one_partial"
+                : member.roundOne?.status === "FAILED"
+                  ? "round_one_failed"
+                  : "idle",
       roundOne: publicReview(member.roundOne),
       roundTwo: publicReview(member.roundTwo),
       audit: {
@@ -1544,6 +1659,33 @@ async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE) {
   return json({ ok: members.every((member) => member.ok), test: { mode, date, kind: "CONNECTIVITY_CONVERSATION", members } });
 }
 
+function recordReviewAudit(member, reviewKey, entry) {
+  member.audit ||= {};
+  const previous = member.audit[reviewKey];
+  const previousAttempts = Array.isArray(previous?.attempts)
+    ? previous.attempts
+    : previous
+      ? [{
+          status: previous.status,
+          startedAt: previous.startedAt,
+          completedAt: previous.completedAt,
+          output: previous.output,
+          error: previous.error
+        }]
+      : [];
+  const attempt = {
+    status: entry.status,
+    startedAt: entry.startedAt,
+    completedAt: entry.completedAt,
+    output: entry.output,
+    error: entry.error
+  };
+  member.audit[reviewKey] = {
+    ...entry,
+    attempts: [...previousAttempts, attempt].slice(-8)
+  };
+}
+
 async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
   const store = decisionStore(env);
   if (stage === "round-one" || stage === "round-two") {
@@ -1557,30 +1699,61 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
       : run.pool.map((row) => run.snapshot.candidates.find((candidate) => candidate.ticker === row.ticker)).filter(Boolean);
     if (stage === "round-two" && !candidates.length) return error("Build the candidate pool before second review.", 409);
     for (const member of members) {
-      if (member[reviewKey]?.rankings?.length) continue;
+      if (reviewIsComplete(member[reviewKey], candidates.length)) continue;
       run.status = `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_IN_PROGRESS`;
       const startedAt = new Date().toISOString();
       try {
         member[reviewKey] = attachPendingForwardOutcomes(await modelReview(env, member.profile, FULL_PDC_ROLE, candidates, stage), run.date);
-        member.audit = member.audit || {};
-        member.audit[reviewKey] = {
-          status: "complete",
+        const complete = reviewIsComplete(member[reviewKey], candidates.length);
+        recordReviewAudit(member, reviewKey, {
+          status: complete ? "COMPLETE" : member[reviewKey].status,
           startedAt,
           completedAt: new Date().toISOString(),
           input: { candidateCount: candidates.length, tickers: candidates.map((candidate) => candidate.ticker) },
-          output: { summary: member[reviewKey].summary, rankingCount: member[reviewKey].rankings.length },
+          output: {
+            summary: member[reviewKey].summary,
+            rankingCount: member[reviewKey].rankings.length,
+            integrity: member[reviewKey].integrity
+          },
           error: ""
-        };
+        });
+        if (!complete) {
+          run.status = `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_${member[reviewKey].status}`;
+          await saveRun(store, run);
+          return json({
+            ok: false,
+            integrityError: `${member.profile.label} returned ${member[reviewKey].status}; expected ${candidates.length} valid ticker records and will not advance.`,
+            run: publicRun(run)
+          });
+        }
       } catch (caught) {
-        member.audit = member.audit || {};
-        member.audit[reviewKey] = {
-          status: "failed",
+        const failureMessage = cleanText(caught?.message || "Model review failed.", 320);
+        member[reviewKey] = {
+          status: "FAILED",
+          rankings: [],
+          summary: "",
+          integrity: {
+            status: "FAILED",
+            expectedCount: candidates.length,
+            receivedCount: 0,
+            validCount: 0,
+            missingTickers: candidates.map((candidate) => candidate.ticker),
+            duplicateTickers: [],
+            unexpectedTickers: [],
+            invalidTickers: [],
+            malformedRowCount: 0,
+            summaryPresent: false,
+            error: failureMessage
+          }
+        };
+        recordReviewAudit(member, reviewKey, {
+          status: "FAILED",
           startedAt,
           completedAt: new Date().toISOString(),
           input: { candidateCount: candidates.length, tickers: candidates.map((candidate) => candidate.ticker) },
           output: {},
-          error: cleanText(caught?.message || "Model review failed.", 320)
-        };
+          error: failureMessage
+        });
         await saveRun(store, run);
         throw caught;
       }

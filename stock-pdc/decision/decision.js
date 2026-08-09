@@ -88,7 +88,7 @@ function selectedModelProfiles() {
 const WORKFLOW_STAGES = [
   { id: "verify", title: "模型验证", call: "5 PDC + Secretary Terra" },
   { id: "snapshot", title: "事实快照", call: "行情数据 + Hawkeye" },
-  { id: "round-one", title: "第一轮", call: "5 PDC × Top 30" },
+  { id: "round-one", title: "第一轮", call: "5 PDC × 全部候选 · 完整性校验" },
   { id: "merge", title: "共同复核池", call: "首轮结果 → Top 20" },
   { id: "round-two", title: "第二轮", call: "Top 20 × 5 PDC" },
   { id: "secretary", title: "Secretary 汇总", call: "GPT-5.6 Terra" },
@@ -117,9 +117,9 @@ function workflowStageMeta(stage, run) {
   }
   if (stage.id === "verify") return `${run.modelVerification?.members?.filter((member) => member.ok).length || 0}/${run.modelVerification?.members?.length || 0} 通过`;
   if (stage.id === "snapshot") return `${run.snapshot?.candidateCount || 0} 只候选`;
-  if (stage.id === "round-one") return `${members.filter((member) => member.roundOne?.rankings?.length).length}/${members.length} 返回`;
+  if (stage.id === "round-one") return `${members.filter((member) => member.roundOne?.status === "COMPLETE" && member.roundOne?.integrity?.status === "COMPLETE").length}/${members.length} 完整返回`;
   if (stage.id === "merge") return run.pool?.length ? `${run.pool.length} 只进入复核` : "等待汇总";
-  if (stage.id === "round-two") return `${members.filter((member) => member.roundTwo?.rankings?.length).length}/${members.length} 返回`;
+  if (stage.id === "round-two") return `${members.filter((member) => member.roundTwo?.status === "COMPLETE" && member.roundTwo?.integrity?.status === "COMPLETE").length}/${members.length} 完整返回`;
   if (stage.id === "secretary") return run.secretary?.summary ? "已生成" : run.audit?.secretary?.status === "failed" ? "失败" : "等待汇总";
   return run.audit?.riskCheck?.status === "complete" ? `${run.final?.length || 0} 个保留` : "等待闸门";
 }
@@ -128,7 +128,15 @@ function workflowMemberRecords(members, phase) {
   return `<div class="decision-workflow-members">${members.map((member) => {
     const review = member[phase];
     const audit = member.audit?.[phase];
-    const stateLabel = audit?.status === "failed" ? `失败 · ${audit.error || "未知错误"}` : review ? "已返回" : "等待";
+    const stateLabel = String(audit?.status || "").toUpperCase() === "FAILED"
+      ? `失败 · ${audit.error || "未知错误"}`
+      : review?.status === "PARTIAL"
+        ? `不完整 · ${review.integrity?.validCount ?? 0}/${review.integrity?.expectedCount ?? "—"}`
+        : review?.status === "FAILED"
+          ? "输出无效 · 已阻断"
+          : review?.status === "COMPLETE"
+            ? "完整返回"
+            : "等待";
     return `<details class="decision-workflow-member"><summary><strong>${escapeHtml(member.label)}</strong><small>${escapeHtml(member.model)} · ${escapeHtml(stateLabel)}</small></summary>
       <div><p>${escapeHtml(review?.summary || audit?.error || "尚未产生输出")}</p><small>${escapeHtml(auditTime(audit?.startedAt))} → ${escapeHtml(auditTime(audit?.completedAt))}</small>${rawAuditMarkup({ input: audit?.input || {}, output: review || audit?.output || {}, error: audit?.error || "" }, "全部输入与输出")}</div>
     </details>`;
@@ -180,10 +188,10 @@ function stepArtifact(step) {
   }
   if (!run) return "开始后，这里会显示这一环节的实际产物。";
   const members = run.members || [];
-  const roundOneCount = members.filter((member) => member.roundOne?.rankings?.length).length;
-  const roundTwoCount = members.filter((member) => member.roundTwo?.rankings?.length).length;
+  const roundOneCount = members.filter((member) => member.roundOne?.status === "COMPLETE" && member.roundOne?.integrity?.status === "COMPLETE").length;
+  const roundTwoCount = members.filter((member) => member.roundTwo?.status === "COMPLETE" && member.roundTwo?.integrity?.status === "COMPLETE").length;
   if (step.id === "snapshot") return `${run.snapshot?.candidateCount || 0} 只候选已锁定；所有模型读取同一份事实包。`;
-  if (step.id === "round-one") return `${roundOneCount}/${members.length} 位委员已独立交回首轮 Top 30 与风险判断。`;
+  if (step.id === "round-one") return `${roundOneCount}/${members.length} 位委员已独立交回全部候选评分；页面只展示前 30。`;
   if (step.id === "merge") return run.pool?.length ? `已形成 ${run.pool.length} 只共同复核候选，来自首轮交集与高分股。` : "等待首轮全部完成后，由程序合并候选。";
   if (step.id === "round-two") return `${roundTwoCount}/${members.length} 位委员已交回最终复核结论。`;
   if (step.id === "risk-check") return run.final?.length ? `${run.final.length} 只股票通过当前共识与风险闸门。` : "程序会检查反对票、风险排除与共识门槛。";
@@ -201,6 +209,8 @@ function modelStatus(member) {
   if (!state.run && verification?.ok) return `本轮已验证 · ${verification.latencyMs || 0}ms`;
   if (!state.run && verification && verification.ok === false) return `验证未通过 · ${verification.error || "请检查配置"}`;
   if (status === "active") return "正在形成完整 PDC 结论";
+  if (status === "round_one_partial" || status === "round_two_partial") return "输出不完整 · 已阻断，不会进入下一阶段";
+  if (status === "round_one_failed" || status === "round_two_failed") return "输出无效或模型失败 · 已记录 FAILED";
   if (status === "round_two_complete") return "已完成第二轮结论 · 点击查看";
   if (status === "round_one_complete" || status === "complete") return "已完成第一轮结论 · 点击查看";
   return state.run ? "等待本轮评审" : state.selectedModelProfileIds.includes(member.id) ? "已加入本轮" : "未加入本轮";
@@ -339,7 +349,7 @@ async function copyText(value, button) {
 
 function reviewPanel(member, phase, review) {
   if (!review) return "";
-  const title = phase === "round-two" ? "第二轮 · 最终复核结论" : "第一轮 · 独立盲评结论";
+  const title = phase === "round-two" ? "第二轮 · 最终复核结论（展示前 30）" : "第一轮 · 独立盲评结论（展示前 30）";
   return `<section class="decision-review-panel">
     <div class="decision-review-panel-head">
       <div><strong>${title}</strong><p>${escapeHtml(review.summary || "该模型已提交完整评分。")}</p></div>
@@ -643,19 +653,20 @@ function syncRunProgress() {
 
 async function runReviewers(stage) {
   for (const member of state.run.members || []) {
-    const complete = stage === "round-one"
-      ? member.roundOne?.rankings?.length
-      : member.roundTwo?.rankings?.length;
+    const review = stage === "round-one" ? member.roundOne : member.roundTwo;
+    const complete = review?.status === "COMPLETE" && review?.integrity?.status === "COMPLETE";
     if (complete) continue;
     state.activeStep = stage;
     state.activeMemberId = member.id;
     state.modelStates[member.id] = "active";
     render();
-    state.run = (await api(`/runs/${state.run.id}/${stage}/${member.id}`, { method: "POST", body: "{}" })).run;
+    const result = await api(`/runs/${state.run.id}/${stage}/${member.id}`, { method: "POST", body: "{}" });
+    state.run = result.run;
     const updated = state.run.members.find((item) => item.id === member.id);
     state.modelStates[member.id] = updated?.state || "complete";
     state.activeMemberId = "";
     render();
+    if (result.ok === false) throw new Error(result.integrityError || "模型输出不完整，已阻断后续阶段。");
   }
 }
 

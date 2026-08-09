@@ -144,7 +144,7 @@ assert.ok(stockFunction.includes("async function claudeReview"));
 assert.ok(stockFunction.includes("GEMINI_API_KEY || env.GOOGLE_GEMINI_API_KEY"));
 assert.ok(stockFunction.includes('id: "gemini_api_pdc"'));
 assert.ok(stockFunction.includes("async function geminiReview"));
-assert.ok(stockFunction.includes("responseJsonSchema: portableReviewSchema()"));
+assert.ok(stockFunction.includes("responseJsonSchema: portableReviewSchema(candidates.length)"));
 assert.ok(stockFunction.includes("DEEPSEEK_API_KEY || env.DEEPSEEK_PDC_API_KEY"));
 assert.ok(stockFunction.includes('id: "deepseek_api_pdc"'));
 assert.ok(stockFunction.includes("async function deepseekReview"));

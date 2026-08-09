@@ -67,6 +67,8 @@ let claudeRequest = null;
 let geminiRequest = null;
 let deepseekRequest = null;
 let kimiRequest = null;
+let reviewRankingLimit = null;
+let nullDimensionScore = false;
 const mockDimensionScores = (index) => ({
   marketRegime: 7,
   relativeStrength: 8,
@@ -125,9 +127,12 @@ globalThis.fetch = async (_url, options = {}) => {
       : request.input;
   const packet = JSON.parse(String(packetInput).replace("Candidate packet:\n", ""));
   const review = {
-    rankings: packet.map((candidate, index) => ({
+    rankings: packet.slice(0, reviewRankingLimit ?? packet.length).map((candidate, index) => ({
       ticker: candidate.ticker,
-      dimensionScores: mockDimensionScores(index),
+      dimensionScores: {
+        ...mockDimensionScores(index),
+        ...(nullDimensionScore && index === 0 ? { trendAcceleration: null } : {})
+      },
       unavailableDimensions: ["catalystInformation"],
       dataGaps: "N/A — no short-term catalyst data supplied.",
       backgroundChecks: {
@@ -421,6 +426,42 @@ try {
   assert.equal(openAiRequest, null, "NO_CANDIDATES must not call a PDC model");
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${payload.run.id}/publish`, {})));
   assert.equal(response.status, 409, "a NO_CANDIDATES audit has no decision to publish");
+
+  hawkeyeDate = "2026-08-14";
+  hawkeyeRows = candidates;
+  reviewRankingLimit = 7;
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(["gpt-5.6-sol"]))));
+  assert.equal(response.status, 200);
+  payload = await response.json();
+  const partialRunId = payload.run.id;
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${partialRunId}/round-one/gpt-5.6-sol`, {})));
+  assert.equal(response.status, 200, "a partial response is an audited integrity result, not a completed review");
+  payload = await response.json();
+  assert.equal(payload.ok, false);
+  assert.equal(payload.run.members[0].state, "round_one_partial");
+  assert.equal(payload.run.members[0].roundOne.integrity.status, "PARTIAL");
+  assert.equal(payload.run.members[0].audit.roundOne.status, "PARTIAL");
+  assert.equal(payload.run.roundOneComplete, false);
+  reviewRankingLimit = null;
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${partialRunId}/round-one/gpt-5.6-sol`, {})));
+  assert.equal(response.status, 200, "a fresh complete retry may replace the partial working review");
+  payload = await response.json();
+  assert.equal(payload.ok, true);
+  assert.equal(payload.run.members[0].roundOne.integrity.status, "COMPLETE");
+  assert.equal(payload.run.members[0].audit.roundOne.attempts.length, 2);
+
+  hawkeyeDate = "2026-08-15";
+  nullDimensionScore = true;
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(["gpt-5.6-sol"]))));
+  assert.equal(response.status, 200);
+  payload = await response.json();
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${payload.run.id}/round-one/gpt-5.6-sol`, {})));
+  assert.equal(response.status, 200, "a null numeric score must be recorded as FAILED rather than silently converted to zero");
+  payload = await response.json();
+  assert.equal(payload.ok, false);
+  assert.equal(payload.run.members[0].roundOne.integrity.status, "FAILED");
+  assert.deepEqual(payload.run.members[0].roundOne.integrity.invalidTickers, ["000001.SZ"]);
+  nullDimensionScore = false;
 } finally {
   globalThis.fetch = originalFetch;
 }
