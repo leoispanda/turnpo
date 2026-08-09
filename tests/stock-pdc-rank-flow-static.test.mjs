@@ -83,6 +83,8 @@ assert.ok(syncScript.includes("hawkeye_radar_audit.csv"));
 assert.ok(syncScript.includes("stock-pdc-hawkeye-v2"));
 assert.ok(syncScript.includes("Every passed Hawkeye name enters the PDC fact packet"));
 assert.ok(syncScript.includes("fixedRuleViolations"));
+assert.ok(syncScript.includes("marketDataProvider"));
+assert.ok(syncScript.includes("exactly one full-market data provider"));
 
 assert.ok(stockFunction.includes("env.STOCK_PDC_ACCESS_CODE || env.EMBA_ACCESS_CODE"));
 assert.ok(stockFunction.includes('const PAGE_PATH = "/stock-pdc";'));

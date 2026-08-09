@@ -848,6 +848,7 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
     sma20: numberOrNull(row.sma20),
     sma50: numberOrNull(row.sma50),
     sma200: numberOrNull(row.sma200),
+    marketDataProvider: clean(row.market_data_provider),
     reason: clean(row.reason),
     rejectionReason: clean(row.rejection_reason)
   })).filter((row) => row.ticker);
@@ -875,6 +876,10 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
   if (accounted !== audit.length) {
     consistencyErrors.push("Hawkeye audit has rows without an explicit PASSED, REJECTED, DATA_FAILED, or UNIVERSE_EXCLUDED status");
   }
+  const marketDataProviders = [...new Set(audit.map((row) => row.marketDataProvider).filter(Boolean))];
+  if (marketDataProviders.length !== 1 || audit.some((row) => !row.marketDataProvider)) {
+    consistencyErrors.push("Hawkeye audit must identify exactly one full-market data provider for every row");
+  }
   if (dataFailed.length) {
     consistencyErrors.push(`Hawkeye market data is incomplete: ${dataFailed.length} row(s) are DATA_FAILED; PDC generation is blocked.`);
   }
@@ -894,6 +899,7 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
     asOfDate: sourceDate,
     sourceFiles,
     sourceGeneratedAt: auditMtime,
+    marketDataProvider: marketDataProviders[0] || "",
     validationErrors: consistencyErrors,
     rules: {
       minMarketCapCny: 30_000_000_000,

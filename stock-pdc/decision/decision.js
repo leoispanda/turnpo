@@ -553,8 +553,12 @@ async function latestSnapshot() {
   const expectedSchema = "stock-pdc-hawkeye-v2";
   const expectedMarketCap = 30_000_000_000;
   const expectedReturn60d = 0;
+  const marketDataProvider = String(data.marketDataProvider || "").trim().toLowerCase();
   if (data.schemaVersion !== expectedSchema) {
     throw new Error("Hawkeye Radar snapshot predates full-market accounting. Regenerate it from the API market snapshot.");
+  }
+  if (!["eastmoney", "sina"].includes(marketDataProvider)) {
+    throw new Error("Hawkeye Radar does not identify one verified full-market data provider.");
   }
   if (data.rules?.minMarketCapCny !== expectedMarketCap || data.rules?.minReturn60dPct !== expectedReturn60d) {
     throw new Error("Hawkeye Radar rules do not match the fixed market-cap and 60-day-return policy.");
@@ -580,11 +584,12 @@ async function latestSnapshot() {
   }
   const provenance = {
     snapshotId: `hawkeye-${data.asOfDate}-${data.sourceGeneratedAt || data.generatedAt}`,
-    primarySourceId: "stock-pdc-local-hawkeye-radar",
-    primarySourceLabel: "Stock PDC 本地 Hawkeye Radar",
+    primarySourceId: `stock-pdc-${marketDataProvider}-market-snapshot`,
+    primarySourceLabel: `Stock PDC ${marketDataProvider} 全市场快照`,
     sourceFile: data.sourceFiles?.candidateUniverse || "outputs/candidate_universe.csv",
     priceDataRun: data.asOfDate,
-    backupPolicy: "备用源只用于校验，不进入正式计算。",
+    marketDataProvider,
+    backupPolicy: "完整全市场备用源只在主源失败时整体接管；不同源的股票行永不混合。",
     featureContract: "Deterministic Hawkeye facts, diversified PDC reasoning."
   };
   state.dataContract = {

@@ -17,6 +17,7 @@ class HawkeyeMetadata:
     history_status: str = ""
     history_error: str = ""
     market_data_timestamp: str = ""
+    market_data_provider: str = ""
 
 
 @dataclass(frozen=True)
@@ -36,6 +37,7 @@ class HawkeyeResult:
     sma200: float | None
     reason: str
     rejection_reason: str
+    market_data_provider: str = ""
 
 
 def _normalize_header(value: str) -> str:
@@ -78,6 +80,7 @@ def load_hawkeye_metadata(path: Path) -> dict[str, HawkeyeMetadata]:
         history_status_col = _column(reader.fieldnames, "history_status")
         history_error_col = _column(reader.fieldnames, "history_error")
         market_timestamp_col = _column(reader.fieldnames, "market_data_timestamp", "snapshot_at")
+        market_provider_col = _column(reader.fieldnames, "market_data_provider", "market_data_source")
         if ticker_col is None:
             return {}
 
@@ -95,6 +98,9 @@ def load_hawkeye_metadata(path: Path) -> dict[str, HawkeyeMetadata]:
                 history_error=str(row.get(history_error_col) or "").strip() if history_error_col else "",
                 market_data_timestamp=(
                     str(row.get(market_timestamp_col) or "").strip() if market_timestamp_col else ""
+                ),
+                market_data_provider=(
+                    str(row.get(market_provider_col) or "").strip() if market_provider_col else ""
                 ),
             )
         return metadata
@@ -142,6 +148,7 @@ def screen_stock(
     max_loss = min(daily_returns) if daily_returns else None
     total_mcap = metadata.total_mcap if metadata else None
     name = metadata.name if metadata else ""
+    market_data_provider = metadata.market_data_provider if metadata else ""
 
     reasons: list[str] = []
     rejections: list[str] = []
@@ -165,6 +172,7 @@ def screen_stock(
             sma20=None,
             sma50=None,
             sma200=None,
+            market_data_provider=market_data_provider,
             reason="",
             rejection_reason="market metadata missing",
         )
@@ -184,6 +192,7 @@ def screen_stock(
             sma20=None,
             sma50=None,
             sma200=None,
+            market_data_provider=market_data_provider,
             reason="",
             rejection_reason=metadata.history_error or metadata.universe_status,
         )
@@ -203,6 +212,7 @@ def screen_stock(
             sma20=None,
             sma50=None,
             sma200=None,
+            market_data_provider=market_data_provider,
             reason="",
             rejection_reason="missing total market cap metadata",
         )
@@ -225,6 +235,7 @@ def screen_stock(
             sma20=None,
             sma50=None,
             sma200=None,
+            market_data_provider=market_data_provider,
             reason="",
             rejection_reason="; ".join(rejections),
         )
@@ -246,6 +257,7 @@ def screen_stock(
             sma20=None,
             sma50=None,
             sma200=None,
+            market_data_provider=market_data_provider,
             reason="; ".join(reasons),
             rejection_reason=metadata.history_error or metadata.history_status,
         )
@@ -265,6 +277,7 @@ def screen_stock(
             sma20=None,
             sma50=None,
             sma200=None,
+            market_data_provider=market_data_provider,
             reason="; ".join(reasons),
             rejection_reason="OHLCV history missing",
         )
@@ -290,6 +303,7 @@ def screen_stock(
         sma20=latest_sma20,
         sma50=latest_sma50,
         sma200=latest_sma200,
+        market_data_provider=market_data_provider,
         reason="; ".join(reasons),
         rejection_reason="; ".join(rejections),
     )
@@ -347,6 +361,7 @@ def result_to_row(result: HawkeyeResult) -> dict[str, object]:
         "sma20": result.sma20,
         "sma50": result.sma50,
         "sma200": result.sma200,
+        "market_data_provider": result.market_data_provider,
         "reason": result.reason,
         "rejection_reason": result.rejection_reason,
     }

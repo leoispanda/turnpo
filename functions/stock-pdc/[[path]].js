@@ -295,6 +295,7 @@ function normalizeProvenance(value) {
     primarySourceLabel: cleanText(value.primarySourceLabel, 160),
     sourceFile: cleanText(value.sourceFile, 320),
     priceDataRun: cleanText(value.priceDataRun, 320),
+    marketDataProvider: cleanText(value.marketDataProvider, 80),
     backupPolicy: cleanText(value.backupPolicy, 240),
     featureContract: cleanText(value.featureContract, 240)
   };
@@ -345,6 +346,7 @@ async function serverHawkeyeSnapshot(request) {
   const expectedMarketCap = 30_000_000_000;
   const expectedReturn60d = 0;
   const expectedSchema = "stock-pdc-hawkeye-v2";
+  const marketDataProvider = cleanText(packet?.marketDataProvider, 80).toLowerCase();
   if (packet?.availability !== "ACTIVE") {
     throw new Error(`Hawkeye Radar is not ready: ${(packet?.validationErrors || []).join(" ") || "unknown validation failure"}`);
   }
@@ -353,6 +355,9 @@ async function serverHawkeyeSnapshot(request) {
   }
   if (packet?.schemaVersion !== expectedSchema) {
     throw new Error("Hawkeye Radar snapshot predates full-market accounting. Regenerate it from the API market snapshot.");
+  }
+  if (!["eastmoney", "sina"].includes(marketDataProvider)) {
+    throw new Error("Hawkeye Radar does not identify one verified full-market data provider.");
   }
   const checkedCount = Number(packet?.checkedCount);
   const marketUniverseCount = Number(packet?.marketUniverseCount);
@@ -382,11 +387,12 @@ async function serverHawkeyeSnapshot(request) {
     source: packet.sourceFiles?.candidateUniverse || "outputs/candidate_universe.csv",
     provenance: {
       snapshotId: `hawkeye-${packet.asOfDate}-${packet.sourceGeneratedAt || packet.generatedAt || ""}`,
-      primarySourceId: "stock-pdc-local-hawkeye-radar",
-      primarySourceLabel: "Stock PDC 本地 Hawkeye Radar",
+      primarySourceId: `stock-pdc-${marketDataProvider}-market-snapshot`,
+      primarySourceLabel: `Stock PDC ${marketDataProvider} 全市场快照`,
       sourceFile: packet.sourceFiles?.candidateUniverse || "outputs/candidate_universe.csv",
       priceDataRun: packet.asOfDate,
-      backupPolicy: "备用源只用于校验，不进入正式计算。",
+      marketDataProvider,
+      backupPolicy: "完整全市场备用源只在主源失败时整体接管；不同源的股票行永不混合。",
       featureContract: "Every Hawkeye-passed name enters the PDC. No browser-supplied candidate list is accepted."
     },
     candidates

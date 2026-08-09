@@ -55,6 +55,76 @@ class AShareMarketSnapshotTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "empty page"):
                 fetcher.fetch_candidates()
 
+    def test_market_entrance_falls_back_only_to_a_complete_second_provider(self) -> None:
+        fallback = [
+            fetcher.Candidate(
+                code="600001",
+                name="完整备用市场",
+                exchange="SH",
+                latest_price=10,
+                pct_change=1,
+                turnover_amount=1_000,
+                total_mcap=40_000_000_000,
+                free_float_mcap=20_000_000_000,
+                pe=10,
+                pb=1,
+                turnover_rate=2,
+            )
+        ]
+        with patch.object(fetcher, "fetch_candidates", side_effect=RuntimeError("Eastmoney unavailable")), patch.object(
+            fetcher, "fetch_sina_candidates", return_value=fallback
+        ):
+            provider, candidates = fetcher.fetch_market_candidates()
+
+        self.assertEqual(provider, "sina")
+        self.assertEqual(candidates, fallback)
+
+    def test_sina_market_list_paginates_and_normalizes_market_cap_to_cny(self) -> None:
+        sina_rows = {
+            1: [
+                {
+                    "symbol": "sh600001",
+                    "code": "600001",
+                    "name": "沪股",
+                    "trade": "10",
+                    "changepercent": "1.5",
+                    "amount": "1000",
+                    "mktcap": "3100000",
+                    "nmc": "1500000",
+                    "per": "10",
+                    "pb": "1",
+                    "turnoverratio": "2",
+                },
+                {
+                    "symbol": "bj920000",
+                    "code": "920000",
+                    "name": "北交所",
+                    "trade": "10",
+                    "changepercent": "1.5",
+                    "amount": "1000",
+                    "mktcap": "3200000",
+                    "nmc": "1600000",
+                    "per": "10",
+                    "pb": "1",
+                    "turnoverratio": "2",
+                },
+            ],
+            2: [],
+        }
+
+        def fake_fetch(url: str, params: dict[str, object], **_kwargs: object) -> object:
+            self.assertEqual(url, fetcher.SINA_LIST_URL)
+            return sina_rows[int(params["page"])]
+
+        with patch.object(fetcher, "_fetch_json", side_effect=fake_fetch), patch.object(fetcher, "SINA_PAGE_SIZE", 2), patch.object(
+            fetcher, "SINA_MIN_A_SHARE_UNIVERSE_SIZE", 2
+        ), patch.object(fetcher.time, "sleep"):
+            candidates = fetcher.fetch_sina_candidates()
+
+        self.assertEqual([candidate.ticker for candidate in candidates], ["600001.SH", "920000.BJ"])
+        self.assertEqual(candidates[0].total_mcap, 31_000_000_000)
+        self.assertEqual(candidates[1].free_float_mcap, 16_000_000_000)
+
 
 if __name__ == "__main__":
     unittest.main()

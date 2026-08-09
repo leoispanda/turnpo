@@ -24,6 +24,7 @@ class HawkeyeAccountingTests(unittest.TestCase):
                 total_mcap=50_000_000_000,
                 universe_status="UNIVERSE_INCLUDED_A_SHARE",
                 history_status="HISTORY_READY",
+                market_data_provider="sina",
             ),
             "600002.SH": HawkeyeMetadata(
                 ticker="600002.SH",
@@ -55,6 +56,7 @@ class HawkeyeAccountingTests(unittest.TestCase):
         self.assertEqual(set(by_ticker), set(metadata))
         self.assertTrue(by_ticker["600001.SH"].passed)
         self.assertEqual(by_ticker["600001.SH"].status, "PASSED_HAWKEYE")
+        self.assertEqual(by_ticker["600001.SH"].market_data_provider, "sina")
         self.assertFalse(by_ticker["600002.SH"].passed)
         self.assertEqual(by_ticker["600002.SH"].status, "REJECTED_HAWKEYE")
         self.assertIn("total market cap", by_ticker["600002.SH"].rejection_reason)

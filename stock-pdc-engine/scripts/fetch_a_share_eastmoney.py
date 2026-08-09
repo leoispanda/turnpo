@@ -19,6 +19,13 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 LIST_URL = "https://push2.eastmoney.com/api/qt/clist/get"
 KLINE_URL = "https://push2his.eastmoney.com/api/qt/stock/kline/get"
 TENCENT_KLINE_URL = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
+SINA_LIST_URL = "https://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData"
+SINA_PAGE_SIZE = 100
+SINA_MAX_PAGES = 100
+# This is an integrity floor, not a Hawkeye candidate cap.  A current A-share
+# market snapshot must contain thousands of securities; anything smaller is a
+# truncated source response and must fail rather than become a partial universe.
+SINA_MIN_A_SHARE_UNIVERSE_SIZE = 4_000
 @dataclass(frozen=True)
 class Candidate:
     code: str
@@ -64,14 +71,14 @@ def _number(value: Any) -> float | None:
         return None
 
 
-def _fetch_json_from_curl(request_url: str) -> dict[str, Any]:
+def _fetch_json_from_curl(request_url: str) -> Any:
     curl = subprocess.run(
         ["curl", "-sSL", "--max-time", "30", request_url],
         check=False,
         capture_output=True,
         text=True,
     )
-    if curl.returncode == 0 and curl.stdout.strip().startswith("{"):
+    if curl.returncode == 0 and curl.stdout.strip().startswith(("{", "[")):
         return json.loads(curl.stdout)
     raise RuntimeError(f"curl request failed: {curl.stderr.strip()}")
 
@@ -81,7 +88,7 @@ def _fetch_json(
     params: dict[str, object],
     retries: int = 3,
     curl_first: bool = False,
-) -> dict[str, Any]:
+) -> Any:
     query = urllib.parse.urlencode(params, safe=",:+")
     request_url = f"{url}?{query}"
     if curl_first:
@@ -187,6 +194,118 @@ def fetch_candidates() -> list[Candidate]:
     return candidates
 
 
+def fetch_sina_candidates() -> list[Candidate]:
+    """Fetch one complete A-share universe from Sina's paginated market API.
+
+    Tencent remains the preferred daily-history source.  Its public quote API
+    needs known symbols, so it cannot independently establish the complete
+    market universe required before Hawkeye.  This source provides the other
+    complete market entrance, including total market-cap facts, when Eastmoney
+    is unavailable.  Rows from different sources are never combined.
+    """
+    raw_rows: list[dict[str, Any]] = []
+    seen_symbols: set[str] = set()
+    completed = False
+    for page in range(1, SINA_MAX_PAGES + 1):
+        payload = _fetch_json(
+            SINA_LIST_URL,
+            {
+                "page": page,
+                "num": SINA_PAGE_SIZE,
+                "sort": "symbol",
+                "asc": 1,
+                "node": "hs_a",
+                "symbol": "",
+                "_s_r_a": "page",
+            },
+        )
+        if not isinstance(payload, list):
+            raise RuntimeError(f"Sina market API returned a non-list payload on page {page}")
+        if not payload:
+            completed = True
+            break
+        if len(payload) > SINA_PAGE_SIZE:
+            raise RuntimeError(f"Sina market API exceeded the declared page size on page {page}")
+        page_symbols: set[str] = set()
+        for row in payload:
+            if not isinstance(row, dict):
+                raise RuntimeError(f"Sina market API returned a malformed row on page {page}")
+            symbol = str(row.get("symbol") or row.get("code") or "").strip().lower()
+            if not symbol:
+                raise RuntimeError(f"Sina market API returned a row without a symbol on page {page}")
+            if symbol in seen_symbols or symbol in page_symbols:
+                raise RuntimeError(f"Sina market API repeated a symbol on page {page}: {symbol}")
+            page_symbols.add(symbol)
+            raw_rows.append(row)
+        seen_symbols.update(page_symbols)
+        time.sleep(0.04)
+
+    if not completed:
+        raise RuntimeError(f"Sina market API did not finish within {SINA_MAX_PAGES} pages")
+    if len(raw_rows) < SINA_MIN_A_SHARE_UNIVERSE_SIZE:
+        raise RuntimeError(
+            f"Sina market API returned only {len(raw_rows)} A-share rows; "
+            f"need at least {SINA_MIN_A_SHARE_UNIVERSE_SIZE} for a complete market snapshot"
+        )
+
+    candidates: list[Candidate] = []
+    seen_tickers: set[str] = set()
+    for row in raw_rows:
+        code = str(row.get("code") or "").strip()
+        if code.isdigit():
+            code = code.zfill(6)
+        name = str(row.get("name") or "").strip()
+        exchange = _exchange_for_code(code)
+        if not code or not name or exchange is None:
+            continue
+        ticker = f"{code}.{exchange}"
+        if ticker in seen_tickers:
+            raise RuntimeError(f"Sina market API produced duplicate A-share ticker {ticker}")
+        seen_tickers.add(ticker)
+        # Sina exposes market-cap fields in ten-thousand CNY units.  Convert
+        # exactly once at ingestion so all downstream Hawkeye rules use CNY.
+        total_mcap_raw = _number(row.get("mktcap"))
+        free_float_mcap_raw = _number(row.get("nmc"))
+        candidates.append(
+            Candidate(
+                code=code,
+                name=name,
+                exchange=exchange,
+                latest_price=_number(row.get("trade")),
+                pct_change=_number(row.get("changepercent")),
+                turnover_amount=_number(row.get("amount")),
+                total_mcap=total_mcap_raw * 10_000 if total_mcap_raw is not None else None,
+                free_float_mcap=free_float_mcap_raw * 10_000 if free_float_mcap_raw is not None else None,
+                pe=_number(row.get("per")),
+                pb=_number(row.get("pb")),
+                turnover_rate=_number(row.get("turnoverratio")),
+            )
+        )
+    if len(candidates) < SINA_MIN_A_SHARE_UNIVERSE_SIZE:
+        raise RuntimeError("Sina market API could not normalize a complete A-share universe")
+    return candidates
+
+
+def fetch_market_candidates() -> tuple[str, list[Candidate]]:
+    """Return one complete market snapshot from a single live provider.
+
+    Do not merge a partial Eastmoney response with Sina rows.  Each provider
+    must independently complete the raw market universe, otherwise the next
+    provider is tried and the failed provider is recorded in the terminal
+    error if none succeeds.
+    """
+    failures: list[str] = []
+    for provider, fetcher in (("eastmoney", fetch_candidates), ("sina", fetch_sina_candidates)):
+        try:
+            candidates = fetcher()
+            if not candidates:
+                raise RuntimeError("provider returned an empty A-share universe")
+            return provider, candidates
+        except Exception as exc:
+            failures.append(f"{provider}: {exc}")
+    raise RuntimeError("All full-market providers failed; " + " | ".join(failures))
+
+
 def fetch_kline(secid: str, begin: str, end: str) -> list[dict[str, str]]:
     payload = _fetch_json(
         KLINE_URL,
@@ -283,6 +402,7 @@ def write_market_snapshot(path: Path, rows: list[dict[str, object]]) -> None:
         "history_rows",
         "last_date",
         "market_data_timestamp",
+        "market_data_provider",
     ]
     with path.open("w", encoding="utf-8", newline="") as file:
         writer = csv.DictWriter(file, fieldnames=headers)
@@ -291,7 +411,7 @@ def write_market_snapshot(path: Path, rows: list[dict[str, object]]) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Fetch a liquid A-share universe from Eastmoney.")
+    parser = argparse.ArgumentParser(description="Fetch one complete live A-share market snapshot with provider failover.")
     parser.add_argument("--data-dir", default="data_a_share", help="Output directory for OHLCV CSV files.")
     parser.add_argument(
         "--universe-csv",
@@ -335,7 +455,7 @@ def main() -> int:
     # No preset, no static list and no synthetic recovery path.  A failed
     # market entrance means the daily run is FAILED rather than misleadingly
     # presenting an older or manually selected universe as current data.
-    raw_candidates = fetch_candidates()
+    market_data_provider, raw_candidates = fetch_market_candidates()
     if not raw_candidates:
         raise RuntimeError("Market API returned an empty A-share snapshot")
 
@@ -373,6 +493,7 @@ def main() -> int:
             "history_rows": 0,
             "last_date": "",
             "market_data_timestamp": market_data_timestamp,
+            "market_data_provider": market_data_provider,
         }
         # This is not a candidate filter: the row remains in the immutable
         # market snapshot and Hawkeye later records the market-cap rejection.
@@ -426,6 +547,7 @@ def main() -> int:
     write_market_snapshot(universe_csv, universe_rows)
     print(f"Fetched candidates: {len(raw_candidates)}")
     print(f"Market snapshot: {len(snapshot_rows)}")
+    print(f"Market data provider: {market_data_provider}")
     print(f"History not requested: {not_requested}")
     print(f"Daily histories kept: {kept}")
     print(f"Failed history requests: {failed}")

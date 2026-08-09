@@ -135,6 +135,7 @@ CANDIDATE_UNIVERSE_HEADERS = [
     "sma20",
     "sma50",
     "sma200",
+    "market_data_provider",
     "reason",
     "rejection_reason",
 ]
