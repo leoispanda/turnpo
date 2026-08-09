@@ -37,8 +37,23 @@ const candidates = Array.from({ length: 8 }, (_, index) => ({
   mainReason: "Trend and volume facts supplied.",
   mainRisk: "Review downside risk.",
   signalDayChangePct: 0.5,
-  scores: { trend_score: 8, risk_score: 7 }
+  scores: { trend_score: 8, risk_score: 7 },
+  facts: { marketCapCny: 50_000_000_000 + index, return60dPct: 9 + index }
 }));
+
+const hawkeyeSnapshot = (date, rows = candidates) => ({
+  date,
+  candidates: rows,
+  provenance: {
+    snapshotId: `hawkeye-${date}-test`,
+    primarySourceId: "stock-pdc-local-hawkeye-radar",
+    primarySourceLabel: "Stock PDC 本地 Hawkeye Radar",
+    sourceFile: "outputs/candidate_universe.csv",
+    priceDataRun: date,
+    backupPolicy: "Validation only.",
+    featureContract: "Deterministic Hawkeye facts, diversified PDC reasoning."
+  }
+});
 
 const originalFetch = globalThis.fetch;
 let openAiRequest = null;
@@ -206,7 +221,7 @@ try {
   assert.equal(response.status, 200);
   let demoVerification = await response.json();
   response = await onRequestPost(context(requestFor("/stock-pdc/decision-demo/api/runs", {
-    snapshot: { date: "2026-08-07", candidates },
+    snapshot: hawkeyeSnapshot("2026-08-07"),
     modelProfileIds: ["gpt-5.6-luna"],
     verificationId: demoVerification.verification.id
   })));
@@ -243,24 +258,12 @@ try {
   assert.equal(payload.models.length, 5, "PDC-suffixed Cloudflare secrets should enable every model member");
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", {
-    snapshot: { date: "2026-08-07", candidates },
+    snapshot: hawkeyeSnapshot("2026-08-07"),
     modelProfileIds: ["gpt-5.6-sol"]
   })));
   assert.equal(response.status, 409, "a run must consume a fresh verification");
 
-  const initialSnapshot = {
-    date: "2026-08-07",
-    candidates,
-    provenance: {
-      snapshotId: "pdc-2026-08-07-test",
-      primarySourceId: "stock-pdc-local-frozen-watchlist",
-      primarySourceLabel: "Stock PDC 本地日度数据集",
-      sourceFile: "outputs/daily_watchlists/watchlist_2026-08-07.csv",
-      priceDataRun: "data_a_share_latest_runs/run_20260807",
-      backupPolicy: "Validation only.",
-      featureContract: "Deterministic facts, diversified reasoning."
-    }
-  };
+  const initialSnapshot = hawkeyeSnapshot("2026-08-07");
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(initialSnapshot, ["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
@@ -273,7 +276,7 @@ try {
   assert.equal(payload.run.modelVerification.members[0].response, '{"status":"ok"}');
   assert.equal(payload.run.modelVerification.members.at(-1).id, "pdc_secretary");
   assert.equal(payload.run.members[0].id, "gpt-5.6-sol");
-  assert.equal(payload.run.snapshot.provenance.snapshotId, "pdc-2026-08-07-test");
+  assert.equal(payload.run.snapshot.provenance.snapshotId, "hawkeye-2026-08-07-test");
   assert.equal(payload.run.snapshot.facts.length, 8, "saved fact packet should be available for user copy-out");
 
   for (const memberId of ["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]) {
@@ -288,6 +291,8 @@ try {
   assert.equal(payload.run.members[0].roundOne.rankings[0].forwardPrediction.prob5dUpGt2Pct, 68);
   assert.equal(payload.run.members[0].roundOne.rankings[0].forwardOutcome.returnsPct.day1, null);
   assert.ok(openAiRequest.request.instructions.includes("next 5 trading days"));
+  const firstPdcPacket = JSON.parse(openAiRequest.request.input.replace("Candidate packet:\n", ""));
+  assert.equal(firstPdcPacket[0].facts.marketCapCny, 50_000_000_000, "Hawkeye facts must be preserved in the packet sent to each PDC");
   assert.ok(openAiRequest.request.text.format.schema.properties.rankings.items.properties.forwardPrediction);
 
   for (const stage of ["merge"]) {
@@ -320,7 +325,7 @@ try {
   payload = await response.json();
   assert.equal(payload.run.status, "PUBLISHED");
   assert.equal(payload.current.decisions.length, 7);
-  assert.equal(payload.current.dataSnapshot.snapshotId, "pdc-2026-08-07-test");
+  assert.equal(payload.current.dataSnapshot.snapshotId, "hawkeye-2026-08-07-test");
 
   response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/history")));
   payload = await response.json();
@@ -350,7 +355,7 @@ try {
   assert.equal(portfolioPayload.dashboard.referencePrice, "11:30_LATEST_AVAILABLE_PRICE");
   assert.ok(portfolioPayload.dashboard.noonSnapshot.rows.every((row) => row.referencePrice === 10.2));
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["claude_api_pdc"]))));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(hawkeyeSnapshot("2026-08-08"), ["claude_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const claudeRunId = payload.run.id;
@@ -363,7 +368,7 @@ try {
   assert.ok(claudeRequest.request.system.includes("short-term forward upside"));
   assert.ok(claudeRequest.request.output_config.format.schema.properties.rankings.items.properties.backgroundChecks);
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["gemini_api_pdc"]))));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(hawkeyeSnapshot("2026-08-08"), ["gemini_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const geminiRunId = payload.run.id;
@@ -374,7 +379,7 @@ try {
   assert.equal(geminiRequest.request.generationConfig.responseMimeType, "application/json");
   assert.ok(geminiRequest.request.generationConfig.responseJsonSchema.properties.rankings.items.properties.forwardPrediction);
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["deepseek_api_pdc"]))));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(hawkeyeSnapshot("2026-08-08"), ["deepseek_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const deepseekRunId = payload.run.id;
@@ -384,7 +389,7 @@ try {
   assert.equal(deepseekRequest.headers.authorization, "Bearer deepseek-test-key");
   assert.equal(deepseekRequest.request.response_format.type, "json_object");
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody({ date: "2026-08-08", candidates }, ["kimi_api_pdc"]))));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(hawkeyeSnapshot("2026-08-08"), ["kimi_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();
   const kimiRunId = payload.run.id;

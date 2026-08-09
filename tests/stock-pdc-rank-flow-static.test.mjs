@@ -9,6 +9,7 @@ const stockJs = fs.readFileSync(new URL("../stock-pdc/stock-pdc.js", import.meta
 const syncScript = fs.readFileSync(new URL("../scripts/sync-stock-pdc-rank-flow.mjs", import.meta.url), "utf8");
 const stockFunction = fs.readFileSync(new URL("../functions/stock-pdc/[[path]].js", import.meta.url), "utf8");
 const rankFlow = JSON.parse(fs.readFileSync(new URL("../stock-pdc/rank-flow.json", import.meta.url), "utf8"));
+const hawkeye = JSON.parse(fs.readFileSync(new URL("../stock-pdc/hawkeye/latest.json", import.meta.url), "utf8"));
 
 assert.ok(indexHtml.includes('href="/stock-pdc/"'));
 assert.ok(redirects.includes("/stock-pdc /stock-pdc/ 301"));
@@ -77,6 +78,9 @@ assert.ok(syncScript.includes("Never fill a missing ticker"));
 assert.ok(syncScript.includes("dayChangePct"));
 assert.ok(syncScript.includes("equal_weight_top20_next_trading_day_close_to_close"));
 assert.ok(syncScript.includes("rank-flow.json"));
+assert.ok(syncScript.includes("candidate_universe.csv"));
+assert.ok(syncScript.includes("hawkeye_radar_audit.csv"));
+assert.ok(syncScript.includes("stock-pdc-hawkeye-v1"));
 
 assert.ok(stockFunction.includes("env.STOCK_PDC_ACCESS_CODE || env.EMBA_ACCESS_CODE"));
 assert.ok(stockFunction.includes('const PAGE_PATH = "/stock-pdc";'));
@@ -100,6 +104,17 @@ assert.ok(rankFlow.days.some((day) => Number.isFinite(day.portfolio?.cumulativeR
 assert.equal(rankFlow.actions.schemaVersion, "stock-pdc-actions-v1");
 assert.equal(rankFlow.actions.latestDate, rankFlow.latestDate);
 assert.ok(Array.isArray(rankFlow.actions.rows));
+
+assert.equal(hawkeye.schemaVersion, "stock-pdc-hawkeye-v1");
+assert.ok(["ACTIVE", "STALE"].includes(hawkeye.availability));
+assert.ok(hawkeye.asOfDate);
+assert.ok(hawkeye.checkedCount >= hawkeye.passedCount);
+assert.ok(hawkeye.dispatchedCount >= 5);
+assert.ok(hawkeye.dispatchedCount <= 30);
+assert.equal(hawkeye.candidates.length, hawkeye.dispatchedCount);
+assert.ok(hawkeye.candidates.every((row) => row.status === "HAWKEYE_PASSED"));
+assert.ok(hawkeye.candidates.every((row) => Number.isFinite(row.facts?.return60dPct)));
+assert.ok(hawkeye.audit.some((row) => row.passed));
 
 const backfilledWorkdays = ["2026-06-25", "2026-06-30", "2026-07-01", "2026-07-02"];
 backfilledWorkdays.forEach((date) => {

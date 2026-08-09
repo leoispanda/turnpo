@@ -275,6 +275,14 @@ function normalizeScores(value) {
     .filter(([key, score]) => key && score !== null));
 }
 
+function normalizeFacts(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  return Object.fromEntries(Object.entries(value)
+    .slice(0, 20)
+    .map(([key, fact]) => [cleanText(key, 60), finiteNumber(fact)])
+    .filter(([key, fact]) => key && fact !== null));
+}
+
 function normalizeProvenance(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
   const snapshotId = cleanText(value.snapshotId, 120);
@@ -303,7 +311,8 @@ function normalizeCandidate(value, index) {
     mainReason: cleanText(value?.mainReason, 800),
     mainRisk: cleanText(value?.mainRisk, 600),
     signalDayChangePct: finiteNumber(value?.signalDayChangePct),
-    scores: normalizeScores(value?.scores)
+    scores: normalizeScores(value?.scores),
+    facts: normalizeFacts(value?.facts)
   };
 }
 
@@ -332,7 +341,8 @@ function serializableCandidates(candidates) {
     mainReason: candidate.mainReason,
     mainRisk: candidate.mainRisk,
     signalDayChangePct: candidate.signalDayChangePct,
-    scores: candidate.scores
+    scores: candidate.scores,
+    facts: candidate.facts
   }));
 }
 
@@ -1443,6 +1453,9 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
   const body = await readJson(request);
   const snapshot = normalizeSnapshot(body.snapshot);
   if (!snapshot) return error("A valid daily PDC snapshot with at least five candidates is required.");
+  if (snapshot.provenance?.primarySourceId !== "stock-pdc-local-hawkeye-radar") {
+    return error("PDC generation only accepts an active Hawkeye Radar fact packet.", 409);
+  }
   const { requestedIds, modelProfiles } = requestedModelProfiles(body, env, mode);
   if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("No selected PDC model is configured on this deployment.");
   const verificationReceipt = await consumeModelVerification(store, body.verificationId, modelProfiles, env, mode);

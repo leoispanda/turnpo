@@ -536,42 +536,43 @@ async function api(path, options = {}) {
 }
 
 async function latestSnapshot() {
-  const response = await fetch("/stock-pdc/rank-flow.json", { cache: "no-store" });
-  if (!response.ok) throw new Error("Could not load the current PDC fact snapshot.");
+  const response = await fetch("/stock-pdc/hawkeye/latest.json", { cache: "no-store" });
+  if (!response.ok) throw new Error("Could not load the current Hawkeye Radar snapshot.");
   const data = await response.json();
-  const days = Array.isArray(data.days) ? data.days.filter((day) => Array.isArray(day.rows) && day.rows.length) : [];
-  const latest = days.at(-1);
-  if (!latest?.date || !latest.rows?.length) throw new Error("No current PDC candidates are available.");
-  const governance = data.dataGovernance || {};
-  const dataSnapshot = latest.dataSnapshot || {};
+  const candidates = Array.isArray(data.candidates) ? data.candidates : [];
+  if (data.availability !== "ACTIVE") {
+    throw new Error(`Hawkeye Radar is not ready: ${(data.validationErrors || []).join(" ") || "unknown validation failure"}`);
+  }
+  if (!data.asOfDate || candidates.length < 5) throw new Error("Hawkeye Radar returned fewer than five valid candidates. PDC generation is blocked.");
   const provenance = {
-    snapshotId: dataSnapshot.id || `pdc-${latest.date}-rank-flow`,
-    primarySourceId: dataSnapshot.primarySourceId || governance.primary?.id || "stock-pdc-local-frozen-watchlist",
-    primarySourceLabel: governance.primary?.label || "Stock PDC 本地日度数据集",
-    sourceFile: dataSnapshot.sourceFile || latest.sourceFile || "stock-pdc/rank-flow.json",
-    priceDataRun: dataSnapshot.priceDataRun || data.priceDataDir || "",
-    backupPolicy: governance.backup?.policy || "备用源只用于校验，不进入正式计算。",
-    featureContract: governance.principle || "Deterministic facts, diversified reasoning."
+    snapshotId: `hawkeye-${data.asOfDate}-${data.sourceGeneratedAt || data.generatedAt}`,
+    primarySourceId: "stock-pdc-local-hawkeye-radar",
+    primarySourceLabel: "Stock PDC 本地 Hawkeye Radar",
+    sourceFile: data.sourceFiles?.candidateUniverse || "outputs/candidate_universe.csv",
+    priceDataRun: data.asOfDate,
+    backupPolicy: "备用源只用于校验，不进入正式计算。",
+    featureContract: "Deterministic Hawkeye facts, diversified PDC reasoning."
   };
   state.dataContract = {
-    date: latest.date,
-    governance,
-    snapshot: { ...provenance, candidateCount: latest.rows.length }
+    date: data.asOfDate,
+    governance: { hawkeye: data.rules || {}, dispatchRule: data.dispatchRule || "" },
+    snapshot: { ...provenance, candidateCount: candidates.length, checkedCount: data.checkedCount, passedCount: data.passedCount }
   };
   return {
-    date: latest.date,
+    date: data.asOfDate,
     source: provenance.sourceFile,
     provenance,
-    candidates: latest.rows.slice(0, 30).map((row) => ({
+    candidates: candidates.map((row) => ({
       ticker: row.ticker,
       name: row.name,
       rank: row.rank,
       score: row.score,
       status: row.status,
-      mainReason: row.mainReason || row.research?.mainReason,
-      mainRisk: row.mainRisk || row.research?.mainRisk,
+      mainReason: row.mainReason,
+      mainRisk: row.mainRisk,
       signalDayChangePct: row.signalDayChangePct,
-      scores: row.scores || row.research?.scores
+      scores: row.scores,
+      facts: row.facts
     }))
   };
 }
@@ -579,8 +580,8 @@ async function latestSnapshot() {
 async function loadDataContract() {
   try {
     await latestSnapshot();
-  } catch {
-    // The decision run will show a concrete error if the required fact snapshot cannot be loaded.
+  } catch (caught) {
+    state.error = caught?.message || "Hawkeye Radar is not ready.";
   } finally {
     render();
   }

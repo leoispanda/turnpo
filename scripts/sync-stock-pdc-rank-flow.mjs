@@ -8,6 +8,7 @@ const TURNPO_ROOT = path.resolve(__dirname, "..");
 const DEFAULT_SOURCE_ROOT = "/Users/leoyang/Documents/financial freedom/stock-pdc-local";
 const OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "rank-flow.json");
 const AB_OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "ab-flow.json");
+const HAWKEYE_OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "hawkeye", "latest.json");
 const BACKFILL_WATCHLIST_DIR = path.join(TURNPO_ROOT, "stock-pdc", "backfill", "daily_watchlists");
 const DEFAULT_BENCHMARK_TICKER = "CSI300ETF";
 const SCORE_FIELDS = [
@@ -161,6 +162,10 @@ function intOrNull(value) {
 
 function clean(value) {
   return String(value ?? "").trim();
+}
+
+function csvBoolean(value) {
+  return ["true", "1", "yes"].includes(clean(value).toLowerCase());
 }
 
 function round2(value) {
@@ -769,6 +774,111 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
   };
 }
 
+function hawkeyeCandidate(row, index) {
+  return {
+    ticker: clean(row.ticker).toUpperCase(),
+    name: clean(row.name),
+    rank: index + 1,
+    status: "HAWKEYE_PASSED",
+    mainReason: clean(row.reason),
+    mainRisk: "Hawkeye only verifies deterministic market facts. The PDC must make the investment judgment.",
+    signalDayChangePct: row.latestDailyReturnPct,
+    facts: {
+      marketCapCny: row.totalMcapCny,
+      return60dPct: row.return60dPct,
+      latestDailyReturnPct: row.latestDailyReturnPct,
+      maxSingleDayGainPct: row.maxSingleDayGainPct,
+      maxSingleDayLossPct: row.maxSingleDayLossPct,
+      close: row.close,
+      sma20: row.sma20,
+      sma50: row.sma50,
+      sma200: row.sma200
+    }
+  };
+}
+
+function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
+  const candidatePath = path.join(sourceRoot, "outputs", "candidate_universe.csv");
+  const auditPath = path.join(sourceRoot, "outputs", "hawkeye_radar_audit.csv");
+  const sourceFiles = {
+    candidateUniverse: path.relative(sourceRoot, candidatePath),
+    audit: path.relative(sourceRoot, auditPath)
+  };
+  const missing = [candidatePath, auditPath].filter((filePath) => !fs.existsSync(filePath));
+  const generatedAt = new Date().toISOString();
+  if (missing.length) {
+    return {
+      schemaVersion: "stock-pdc-hawkeye-v1",
+      generatedAt,
+      availability: "UNAVAILABLE",
+      asOfDate: rankSnapshot.latestDate || "",
+      sourceFiles,
+      validationErrors: missing.map((filePath) => `missing ${path.relative(sourceRoot, filePath)}`),
+      checkedCount: 0,
+      passedCount: 0,
+      dispatchedCount: 0,
+      candidates: [],
+      audit: []
+    };
+  }
+
+  const audit = readCsv(auditPath).map((row) => ({
+    ticker: clean(row.ticker).toUpperCase(),
+    name: clean(row.name),
+    passed: csvBoolean(row.passed),
+    totalMcapCny: numberOrNull(row.total_mcap),
+    return60dPct: numberOrNull(row.return_60d),
+    latestDailyReturnPct: numberOrNull(row.latest_daily_return),
+    maxSingleDayGainPct: numberOrNull(row.max_single_day_gain),
+    maxSingleDayLossPct: numberOrNull(row.max_single_day_loss),
+    close: numberOrNull(row.latest_close),
+    sma20: numberOrNull(row.sma20),
+    sma50: numberOrNull(row.sma50),
+    sma200: numberOrNull(row.sma200),
+    reason: clean(row.reason),
+    rejectionReason: clean(row.rejection_reason)
+  })).filter((row) => row.ticker);
+  const candidateRows = readCsv(candidatePath).filter((row) => csvBoolean(row.passed));
+  const passed = audit.filter((row) => row.passed);
+  const candidateTickers = new Set(candidateRows.map((row) => clean(row.ticker).toUpperCase()).filter(Boolean));
+  const passedTickers = new Set(passed.map((row) => row.ticker));
+  const consistencyErrors = [];
+  if (candidateTickers.size !== passedTickers.size || [...candidateTickers].some((ticker) => !passedTickers.has(ticker))) {
+    consistencyErrors.push("candidate_universe.csv does not match the passed rows in hawkeye_radar_audit.csv");
+  }
+  const candidates = passed.slice(0, 30).map(hawkeyeCandidate);
+  if (candidates.length < 5) consistencyErrors.push("Hawkeye returned fewer than five valid candidates; PDC generation is blocked.");
+  const auditMtime = fs.statSync(auditPath).mtime.toISOString();
+  const sourceDate = auditMtime.slice(0, 10);
+  if (rankSnapshot.latestDate && sourceDate < rankSnapshot.latestDate) {
+    consistencyErrors.push(`Hawkeye source generated on ${sourceDate} is older than the latest market snapshot ${rankSnapshot.latestDate}. Refresh Hawkeye before PDC generation.`);
+  }
+
+  return {
+    schemaVersion: "stock-pdc-hawkeye-v1",
+    generatedAt,
+    availability: consistencyErrors.length ? "STALE" : "ACTIVE",
+    asOfDate: sourceDate,
+    sourceFiles,
+    sourceGeneratedAt: auditMtime,
+    validationErrors: consistencyErrors,
+    rules: {
+      minMarketCapCny: 50_000_000_000,
+      minReturn60dPct: 9,
+      requireClearUptrend: "close > SMA20 > SMA50 and above SMA200 when available",
+      maxDailyMovePct: 8,
+      dailyMoveLookback: 1,
+      minHistoryBars: 200
+    },
+    checkedCount: audit.length,
+    passedCount: passed.length,
+    dispatchedCount: candidates.length,
+    dispatchRule: "All Hawkeye-passed names are ordered by the radar's deterministic 60-day-return order; the first 30 are sent to PDC.",
+    candidates,
+    audit
+  };
+}
+
 function buildAbSnapshot(sourceRoot, aLatestDate) {
   const abRoot = path.join(sourceRoot, "outputs_ab");
   const experimentPath = path.join(abRoot, "experiment.json");
@@ -891,17 +1001,22 @@ function buildAbSnapshot(sourceRoot, aLatestDate) {
 const sourceRoot = path.resolve(argValue("--source-root", process.env.STOCK_PDC_ROOT || DEFAULT_SOURCE_ROOT));
 const outputPath = path.resolve(argValue("--output", OUTPUT_PATH));
 const abOutputPath = path.resolve(argValue("--ab-output", AB_OUTPUT_PATH));
+const hawkeyeOutputPath = path.resolve(argValue("--hawkeye-output", HAWKEYE_OUTPUT_PATH));
 const priceDataDir = argValue("--price-data-dir", process.env.STOCK_PDC_PRICE_DATA_DIR || "");
 const snapshot = buildSnapshot(sourceRoot, priceDataDir);
 const abSnapshot = buildAbSnapshot(sourceRoot, snapshot.latestDate);
+const hawkeyeSnapshot = buildHawkeyeSnapshot(sourceRoot, snapshot);
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, `${JSON.stringify(snapshot, null, 2)}\n`);
 fs.mkdirSync(path.dirname(abOutputPath), { recursive: true });
 fs.writeFileSync(abOutputPath, `${JSON.stringify(abSnapshot, null, 2)}\n`);
+fs.mkdirSync(path.dirname(hawkeyeOutputPath), { recursive: true });
+fs.writeFileSync(hawkeyeOutputPath, `${JSON.stringify(hawkeyeSnapshot, null, 2)}\n`);
 
 console.log(`Wrote ${outputPath}`);
 console.log(`Dates: ${snapshot.dates.join(", ") || "none"}`);
 console.log(`Latest: ${snapshot.latestDate || "none"}`);
 console.log(`Price data: ${snapshot.priceDataDir || "none"}`);
 console.log(`A/B: ${abSnapshot.availability} -> ${abOutputPath}`);
+console.log(`Hawkeye: ${hawkeyeSnapshot.availability} (${hawkeyeSnapshot.dispatchedCount}/${hawkeyeSnapshot.passedCount}) -> ${hawkeyeOutputPath}`);
