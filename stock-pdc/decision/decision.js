@@ -134,8 +134,8 @@ function modelStatus(member) {
   const status = state.modelStates[member.id] || member.state || "idle";
   const verification = state.verification[member.id];
   const smokeTest = state.smokeTests[member.id];
-  if (!state.run && smokeTest?.checking) return "正在进行单股票完整 PDC Test";
-  if (!state.run && smokeTest?.ok) return `完整 Test 已通过 · ${smokeTest.latencyMs || 0}ms`;
+  if (!state.run && smokeTest?.checking) return "正在进行轻量对话 Test";
+  if (!state.run && smokeTest?.ok) return `对话 Test 已通过 · ${smokeTest.latencyMs || 0}ms`;
   if (!state.run && smokeTest && smokeTest.ok === false) return `Test 未通过 · ${smokeTest.error || "请检查模型输出"}`;
   if (!state.run && verification?.checking) return "正在验证 API 与实际型号";
   if (!state.run && verification?.ok) return `本轮已验证 · ${verification.latencyMs || 0}ms`;
@@ -155,9 +155,8 @@ function verificationReceiptMarkup(verification) {
 
 function smokeTestMarkup(test) {
   if (!test || test.checking) return "";
-  if (!test.ok) return `<div class="decision-verification-receipt" data-ok="false"><strong>Test Run 未通过</strong><small>${escapeHtml(test.error || "模型未返回完整 PDC 评分。")}</small></div>`;
-  const result = test.result || {};
-  return `<div class="decision-verification-receipt" data-ok="true"><strong>Test Run 已跑通 · ${escapeHtml(test.latencyMs || 0)}ms</strong><small>${escapeHtml(result.ticker || "候选")} · ${escapeHtml(result.score ?? "—")} 分 · ${escapeHtml(result.decision || "—")} · Forward ${escapeHtml(result.forwardUpsideScore ?? "—")}/100</small></div>`;
+  if (!test.ok) return `<div class="decision-verification-receipt" data-ok="false"><strong>对话 Test 未通过</strong><small>${escapeHtml(test.error || "模型未返回对话。")}</small></div>`;
+  return `<div class="decision-verification-receipt" data-ok="true"><strong>对话 Test 已跑通 · ${escapeHtml(test.latencyMs || 0)}ms</strong><small>${escapeHtml(test.reply || "模型已返回。")}</small></div>`;
 }
 
 function dimensionCopyText(row) {
@@ -395,7 +394,7 @@ function setRunSummary() {
   if (copy) copy.textContent = state.error
     ? `已暂停：${state.error} 点击“继续生成”会从已保存的模型 PDC 继续，不会重复已完成的结论。`
     : state.testing
-    ? "正在进行单股票完整 PDC Test：不创建 Run、不写入历史、不影响正式决策。"
+    ? "正在进行轻量对话 Test：不读取股票数据、不做评分、不创建 Run。"
     : state.running
     ? `正在执行：${steps.find((step) => step.id === state.activeStep)?.title || "准备任务"}`
     : state.completed === steps.length
@@ -409,7 +408,7 @@ function setRunSummary() {
   }
   if (testButton) {
     testButton.disabled = state.running || state.testing;
-    testButton.textContent = state.testing ? "Test 运行中…" : "Test Run（不生成决策）";
+    testButton.textContent = state.testing ? "Test 运行中…" : "对话 Test（不生成决策）";
   }
   if (copyRun) copyRun.disabled = !run || state.running;
 }
@@ -688,12 +687,9 @@ async function runSmokeTest() {
   state.smokeTests = Object.fromEntries(profiles.map((profile) => [profile.id, { checking: true }]));
   render();
   try {
-    const snapshot = await latestSnapshot();
-    const candidate = snapshot.candidates[0];
-    if (!candidate) throw new Error("当前事实包没有可用于 Test 的候选股票。");
     const result = await api("/smoke-test", {
       method: "POST",
-      body: JSON.stringify({ date: snapshot.date, candidate, modelProfileIds: state.selectedModelProfileIds })
+      body: JSON.stringify({ modelProfileIds: state.selectedModelProfileIds })
     });
     const members = Array.isArray(result.test?.members) ? result.test.members : [];
     state.smokeTests = Object.fromEntries(members.map((member) => [member.id, member]));
@@ -701,7 +697,7 @@ async function runSmokeTest() {
     if (failed) state.error = `${failed.label || failed.id} Test 未通过：${failed.error || "模型未返回完整 PDC 评分。"}`;
     else {
       const copy = $("#progressCopy");
-      if (copy) copy.textContent = `${members.length} 位模型已完成单股票完整 PDC Test。未创建 Run，未写入历史，也没有生成交易决策。`;
+      if (copy) copy.textContent = `${members.length} 位模型已完成轻量对话 Test。未读取股票数据、未做评分、未创建 Run，也没有生成交易决策。`;
     }
   } catch (caught) {
     state.error = caught.message || "Test Run 未完成。";

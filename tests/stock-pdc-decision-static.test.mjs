@@ -41,6 +41,7 @@ assert.ok(decisionJs.includes('"/stock-pdc/decision-demo/api"'));
 assert.ok(decisionJs.includes("async function runDecisionFlow()"));
 assert.ok(decisionJs.includes("async function runSmokeTest()"));
 assert.ok(decisionJs.includes('api("/smoke-test"'));
+assert.ok(decisionJs.includes("未读取股票数据、未做评分、未创建 Run"));
 assert.ok(decisionJs.includes("async function runReviewers(stage)"));
 assert.ok(decisionJs.includes('点击“继续生成”会从已保存的模型 PDC 继续'));
 assert.ok(decisionJs.includes("async function publishDecision()"));
@@ -72,6 +73,7 @@ assert.ok(stockFunction.includes('const DEMO_DECISION_PATH = `${PAGE_PATH}/decis
 assert.ok(stockFunction.includes('const PORTFOLIO_PATH = `${PAGE_PATH}/portfolio`;'));
 assert.ok(stockFunction.includes("async function decisionApi(context, mode = OFFICIAL_DECISION_MODE)"));
 assert.ok(stockFunction.includes("async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE)"));
+assert.ok(stockFunction.includes("const SMOKE_TEST_PROMPT"));
 assert.ok(stockFunction.includes("Save after every individual reviewer"));
 assert.ok(stockFunction.includes("function normalizeProvenance(value)"));
 assert.ok(stockFunction.includes("const FULL_PDC_ROLE"));

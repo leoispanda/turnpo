@@ -762,6 +762,40 @@ async function modelReview(env, modelProfile, role, candidates, phase) {
   throw new Error("Selected model provider is not supported.");
 }
 
+const SMOKE_TEST_PROMPT = "今天股票市场如何？这是连通性测试：你没有实时行情时，请用不超过两句话说明盘前最应检查的市场风险，并明确说明是否缺少实时数据。";
+
+async function smokeChat(env, modelProfile) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    if (modelProfile.provider === "OpenAI") {
+      const response = await fetch(OPENAI_RESPONSES_URL, { method: "POST", headers: { authorization: `Bearer ${env.OPENAI_API_KEY}`, "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ model: modelProfile.model, instructions: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision.", input: SMOKE_TEST_PROMPT, max_output_tokens: 120, reasoning: { effort: "none" } }) });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error?.message || "OpenAI test request failed.");
+      return cleanText(extractOutputText(data), 360);
+    }
+    if (modelProfile.provider === "Anthropic") {
+      const response = await fetch(ANTHROPIC_MESSAGES_URL, { method: "POST", headers: { "x-api-key": claudeApiKey(env), "anthropic-version": "2023-06-01", "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ model: modelProfile.model, max_tokens: 120, system: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision.", messages: [{ role: "user", content: SMOKE_TEST_PROMPT }], output_config: { effort: "low" } }) });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error?.message || "Claude test request failed.");
+      return cleanText(data.content?.find((item) => item.type === "text")?.text, 360);
+    }
+    if (modelProfile.provider === "Google") {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelProfile.model)}:generateContent`, { method: "POST", headers: { "x-goog-api-key": geminiApiKey(env), "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ systemInstruction: { parts: [{ text: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision." }] }, contents: [{ role: "user", parts: [{ text: SMOKE_TEST_PROMPT }] }], generationConfig: { maxOutputTokens: 120 } }) });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error?.message || "Gemini test request failed.");
+      return cleanText(data.candidates?.flatMap((candidate) => candidate.content?.parts || []).find((part) => typeof part.text === "string")?.text, 360);
+    }
+    const isKimi = modelProfile.provider === "Moonshot";
+    const response = await fetch(isKimi ? kimiChatUrl(env) : DEEPSEEK_CHAT_URL, { method: "POST", headers: { authorization: `Bearer ${isKimi ? kimiApiKey(env) : deepseekApiKey(env)}`, "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ model: modelProfile.model, thinking: { type: "disabled" }, messages: [{ role: "system", content: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision." }, { role: "user", content: SMOKE_TEST_PROMPT }], ...(isKimi ? { max_completion_tokens: 120 } : { max_tokens: 120 }) }) });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error?.message || `${modelProfile.provider} test request failed.`);
+    return cleanText(chatCompletionText(data), 360);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 function verificationSchema(name = "stock_pdc_model_verification") {
   return {
     type: "json_schema",
@@ -1319,8 +1353,6 @@ async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE) {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
   const body = await readJson(request);
-  const candidate = normalizeCandidate(body.candidate, 0);
-  if (!candidate) return error("A valid current candidate is required for the PDC test run.");
   const { requestedIds, modelProfiles } = requestedModelProfiles(body, env, mode);
   if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("No selected PDC model is configured on this deployment.");
   const date = validDate(body.date) || new Date().toISOString().slice(0, 10);
@@ -1331,28 +1363,22 @@ async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE) {
   const members = await Promise.all(modelProfiles.map(async (profile) => {
     const startedAt = Date.now();
     try {
-      const review = await modelReview(env, profile, FULL_PDC_ROLE, [candidate], "round-one");
-      const row = review.rankings?.[0];
+      const reply = await smokeChat(env, profile);
       return {
         id: profile.id,
         label: profile.label,
         provider: profile.provider,
         model: profile.model,
-        ok: Boolean(row),
+        ok: Boolean(reply),
         latencyMs: Date.now() - startedAt,
-        result: row ? {
-          ticker: row.ticker,
-          score: row.score,
-          decision: row.decision,
-          forwardUpsideScore: row.forwardPrediction?.forwardUpsideScore ?? null
-        } : null,
-        error: row ? "" : "Model returned no valid PDC ranking."
+        reply,
+        error: reply ? "" : "Model returned an empty test reply."
       };
     } catch (caught) {
-      return { id: profile.id, label: profile.label, provider: profile.provider, model: profile.model, ok: false, latencyMs: Date.now() - startedAt, result: null, error: cleanText(caught?.message || "PDC test run failed.", 240) };
+      return { id: profile.id, label: profile.label, provider: profile.provider, model: profile.model, ok: false, latencyMs: Date.now() - startedAt, reply: "", error: cleanText(caught?.message || "PDC test run failed.", 240) };
     }
   }));
-  return json({ ok: members.every((member) => member.ok), test: { mode, date, candidate: { ticker: candidate.ticker, name: candidate.name }, members } });
+  return json({ ok: members.every((member) => member.ok), test: { mode, date, kind: "CONNECTIVITY_CONVERSATION", members } });
 }
 
 async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {

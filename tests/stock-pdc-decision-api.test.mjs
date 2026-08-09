@@ -70,6 +70,16 @@ globalThis.fetch = async (_url, options) => {
     if (provider === "deepseek" || provider === "kimi") return new Response(JSON.stringify({ choices: [{ message: { content: result } }] }), { status: 200, headers: { "content-type": "application/json" } });
     return new Response(JSON.stringify({ output_text: result }), { status: 200, headers: { "content-type": "application/json" } });
   }
+  const isSmokeTest = request.input?.includes("今天股票市场如何")
+    || request.messages?.some((message) => String(message.content).includes("今天股票市场如何"))
+    || request.contents?.[0]?.parts?.[0]?.text?.includes("今天股票市场如何");
+  if (isSmokeTest) {
+    const reply = "我没有实时行情；盘前应先检查指数风险偏好。";
+    if (provider === "claude") return new Response(JSON.stringify({ content: [{ type: "text", text: reply }] }), { status: 200, headers: { "content-type": "application/json" } });
+    if (provider === "gemini") return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: reply }] } }] }), { status: 200, headers: { "content-type": "application/json" } });
+    if (provider === "deepseek" || provider === "kimi") return new Response(JSON.stringify({ choices: [{ message: { content: reply } }] }), { status: 200, headers: { "content-type": "application/json" } });
+    return new Response(JSON.stringify({ output_text: reply }), { status: 200, headers: { "content-type": "application/json" } });
+  }
   const packetInput = provider === "claude"
     ? request.messages?.[0]?.content
     : provider === "gemini"
@@ -198,14 +208,12 @@ try {
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision-demo/api/runs/${demoRun.run.id}/publish`, {})));
   assert.equal(response.status, 409, "Mini Demo cannot publish to formal PDC");
 
-  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/smoke-test", {
-    date: "2026-08-07", candidate: candidates[0], modelProfileIds: ["gpt-5.6-sol"]
-  })));
-  assert.equal(response.status, 200, "a non-persistent full PDC test should run one real candidate through the selected model");
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/smoke-test", { modelProfileIds: ["gpt-5.6-sol"] })));
+  assert.equal(response.status, 200, "a non-persistent conversation test should only verify that the selected model can reply");
   payload = await response.json();
   assert.equal(payload.test.members.length, 1);
   assert.equal(payload.test.members[0].ok, true);
-  assert.equal(payload.test.members[0].result.ticker, "000001.SZ");
+  assert.ok(payload.test.members[0].reply.includes("实时行情"));
 
   const pdcNamedEnv = {
     ...env,
