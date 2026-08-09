@@ -29,6 +29,7 @@ const MAX_SMOKE_TESTS_PER_DAY = 60;
 const SMOKE_TEST_TIMEOUT_MS = 5 * 60 * 1000;
 const RUN_TTL_SECONDS = 180 * 24 * 60 * 60;
 const MODEL_VERIFICATION_TTL_SECONDS = 10 * 60;
+const PDC_REVIEW_BATCH_SIZE = 30;
 const MANUAL_MARKET_REFRESH_COOLDOWN_SECONDS = 15 * 60;
 const MANUAL_MARKET_REFRESH_REPOSITORY = "leoispanda/turnpo";
 const MANUAL_MARKET_REFRESH_WORKFLOW = "manual-stock-pdc-refresh.yml";
@@ -836,6 +837,46 @@ function modelOutputTokenLimit(candidateCount) {
   return Math.max(8_000, Math.min(16_000, 1_400 + candidateCount * 240));
 }
 
+function mergeCompletedReviewBatch(previousReview, completedBatch, candidates) {
+  const expectedTickers = candidates.map((candidate) => candidate.ticker);
+  const allowed = new Set(expectedTickers);
+  const previousRankings = Array.isArray(previousReview?.rankings)
+    ? previousReview.rankings.filter((row) => allowed.has(row?.ticker))
+    : [];
+  const byTicker = new Map(previousRankings.map((row) => [row.ticker, row]));
+  completedBatch.rankings.forEach((row) => byTicker.set(row.ticker, row));
+  const rankings = [...byTicker.values()]
+    .sort((left, right) => right.score - left.score)
+    .map((row, index) => ({ ...row, rank: index + 1 }));
+  const missingTickers = expectedTickers.filter((ticker) => !byTicker.has(ticker));
+  const completedBatches = Math.ceil(rankings.length / PDC_REVIEW_BATCH_SIZE);
+  const totalBatches = Math.ceil(expectedTickers.length / PDC_REVIEW_BATCH_SIZE);
+  const batchSummaries = [
+    ...(Array.isArray(previousReview?.batchSummaries) ? previousReview.batchSummaries : []),
+    completedBatch.summary
+  ].map((summary) => cleanText(summary, 360)).filter(Boolean);
+  const complete = !missingTickers.length;
+  return {
+    status: complete ? "COMPLETE" : "IN_PROGRESS",
+    rankings,
+    summary: cleanText(batchSummaries.join("\n"), 1200),
+    batchSummaries,
+    batch: { completed: completedBatches, total: totalBatches, size: PDC_REVIEW_BATCH_SIZE },
+    integrity: {
+      status: complete ? "COMPLETE" : "IN_PROGRESS",
+      expectedCount: expectedTickers.length,
+      receivedCount: rankings.length,
+      validCount: rankings.length,
+      missingTickers,
+      duplicateTickers: [],
+      unexpectedTickers: [],
+      invalidTickers: [],
+      malformedRowCount: 0,
+      summaryPresent: Boolean(batchSummaries.length)
+    }
+  };
+}
+
 async function openAiReview(env, modelProfile, role, candidates, phase) {
   const apiKey = env.OPENAI_API_KEY;
   if (!apiKey) throw new Error("Missing OPENAI_API_KEY.");
@@ -1402,6 +1443,11 @@ function publicReview(review) {
       summaryPresent: Boolean(review.integrity.summaryPresent)
     } : null,
     summary: cleanText(review.summary, 360),
+    batch: review.batch && typeof review.batch === "object" ? {
+      completed: finiteNumber(review.batch.completed, 0),
+      total: finiteNumber(review.batch.total, 0),
+      size: finiteNumber(review.batch.size, PDC_REVIEW_BATCH_SIZE)
+    } : null,
     rankings: review.rankings.slice(0, 30).map((row) => ({
       rank: row.rank,
       ticker: row.ticker,
@@ -1752,7 +1798,10 @@ function recordReviewAudit(member, reviewKey, entry) {
   };
   member.audit[reviewKey] = {
     ...entry,
-    attempts: [...previousAttempts, attempt].slice(-8)
+    // A full-market round can span more than eight independent batches. Keep the
+    // complete within-run trail (including retries) so an audit never appears to
+    // begin halfway through a committee member's work.
+    attempts: [...previousAttempts, attempt].slice(-32)
   };
 }
 
@@ -1772,14 +1821,56 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
       if (reviewIsComplete(member[reviewKey], candidates.length)) continue;
       run.status = `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_IN_PROGRESS`;
       const startedAt = new Date().toISOString();
+      const completedTickers = new Set((member[reviewKey]?.rankings || []).map((row) => row?.ticker).filter(Boolean));
+      const batchCandidates = candidates.filter((candidate) => !completedTickers.has(candidate.ticker)).slice(0, PDC_REVIEW_BATCH_SIZE);
+      if (!batchCandidates.length) {
+        member[reviewKey] = mergeCompletedReviewBatch(member[reviewKey], { rankings: [], summary: "" }, candidates);
+        await saveRun(store, run);
+        continue;
+      }
       try {
-        member[reviewKey] = attachPendingForwardOutcomes(await modelReview(env, member.profile, FULL_PDC_ROLE, candidates, stage), run.date);
+        const batchReview = attachPendingForwardOutcomes(
+          await modelReview(env, member.profile, FULL_PDC_ROLE, batchCandidates, stage),
+          run.date
+        );
+        if (!reviewIsComplete(batchReview, batchCandidates.length)) {
+          const failureMessage = `${member.profile.label} returned ${batchReview.status} for batch ${Math.floor(completedTickers.size / PDC_REVIEW_BATCH_SIZE) + 1}; expected ${batchCandidates.length} valid ticker records.`;
+          // Keep any valid individual conclusions for an explicit retry, but mark
+          // the stage PARTIAL. It remains barred from the next stage until every
+          // missing ticker has later produced a valid record.
+          member[reviewKey] = mergeCompletedReviewBatch(member[reviewKey], batchReview, candidates);
+          member[reviewKey].status = batchReview.status;
+          member[reviewKey].integrity = {
+            ...member[reviewKey].integrity,
+            status: batchReview.status,
+            duplicateTickers: batchReview.integrity.duplicateTickers,
+            unexpectedTickers: batchReview.integrity.unexpectedTickers,
+            invalidTickers: batchReview.integrity.invalidTickers,
+            malformedRowCount: batchReview.integrity.malformedRowCount,
+            error: failureMessage
+          };
+          member[reviewKey].batch = {
+            ...member[reviewKey].batch,
+            completed: Math.floor(completedTickers.size / PDC_REVIEW_BATCH_SIZE)
+          };
+          recordReviewAudit(member, reviewKey, {
+            status: batchReview.status,
+            startedAt,
+            completedAt: new Date().toISOString(),
+            input: { candidateCount: candidates.length, batch: { count: batchCandidates.length, tickers: batchCandidates.map((candidate) => candidate.ticker) } },
+            output: { summary: batchReview.summary, rankingCount: batchReview.rankings.length, integrity: batchReview.integrity },
+            error: failureMessage
+          });
+          await saveRun(store, run);
+          return json({ ok: false, integrityError: failureMessage, run: publicRun(run) });
+        }
+        member[reviewKey] = mergeCompletedReviewBatch(member[reviewKey], batchReview, candidates);
         const complete = reviewIsComplete(member[reviewKey], candidates.length);
         recordReviewAudit(member, reviewKey, {
-          status: complete ? "COMPLETE" : member[reviewKey].status,
+          status: complete ? "COMPLETE" : "IN_PROGRESS",
           startedAt,
           completedAt: new Date().toISOString(),
-          input: { candidateCount: candidates.length, tickers: candidates.map((candidate) => candidate.ticker) },
+          input: { candidateCount: candidates.length, batch: { count: batchCandidates.length, tickers: batchCandidates.map((candidate) => candidate.ticker) } },
           output: {
             summary: member[reviewKey].summary,
             rankingCount: member[reviewKey].rankings.length,
@@ -1788,26 +1879,23 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
           error: ""
         });
         if (!complete) {
-          run.status = `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_${member[reviewKey].status}`;
+          run.status = `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_IN_PROGRESS`;
           await saveRun(store, run);
-          return json({
-            ok: false,
-            integrityError: `${member.profile.label} returned ${member[reviewKey].status}; expected ${candidates.length} valid ticker records and will not advance.`,
-            run: publicRun(run)
-          });
+          return json({ ok: true, run: publicRun(run) });
         }
       } catch (caught) {
         const failureMessage = cleanText(caught?.message || "Model review failed.", 320);
         member[reviewKey] = {
           status: "FAILED",
-          rankings: [],
-          summary: "",
+          rankings: Array.isArray(member[reviewKey]?.rankings) ? member[reviewKey].rankings : [],
+          summary: cleanText(member[reviewKey]?.summary, 1200),
+          batch: member[reviewKey]?.batch || null,
           integrity: {
             status: "FAILED",
             expectedCount: candidates.length,
-            receivedCount: 0,
-            validCount: 0,
-            missingTickers: candidates.map((candidate) => candidate.ticker),
+            receivedCount: completedTickers.size,
+            validCount: completedTickers.size,
+            missingTickers: candidates.filter((candidate) => !completedTickers.has(candidate.ticker)).map((candidate) => candidate.ticker),
             duplicateTickers: [],
             unexpectedTickers: [],
             invalidTickers: [],
@@ -1820,7 +1908,7 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
           status: "FAILED",
           startedAt,
           completedAt: new Date().toISOString(),
-          input: { candidateCount: candidates.length, tickers: candidates.map((candidate) => candidate.ticker) },
+          input: { candidateCount: candidates.length, batch: { count: batchCandidates.length, tickers: batchCandidates.map((candidate) => candidate.ticker) } },
           output: {},
           error: failureMessage
         });

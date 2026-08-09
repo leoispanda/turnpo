@@ -486,6 +486,35 @@ try {
   assert.equal(payload.run.members[0].roundOne.integrity.status, "FAILED");
   assert.deepEqual(payload.run.members[0].roundOne.integrity.invalidTickers, ["000001.SZ"]);
   nullDimensionScore = false;
+
+  hawkeyeDate = "2026-08-16";
+  hawkeyeRows = Array.from({ length: 31 }, (_, index) => ({
+    ...candidates[index % candidates.length],
+    ticker: `300${String(index + 1).padStart(3, "0")}.SZ`,
+    name: `分批候选 ${index + 1}`,
+    rank: index + 1
+  }));
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(["gpt-5.6-sol"]))));
+  assert.equal(response.status, 200);
+  payload = await response.json();
+  const batchedRunId = payload.run.id;
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${batchedRunId}/round-one/gpt-5.6-sol`, {})));
+  assert.equal(response.status, 200, "the first full-market batch should persist without pretending the review is complete");
+  payload = await response.json();
+  assert.equal(payload.ok, true);
+  assert.equal(payload.run.members[0].roundOne.integrity.status, "IN_PROGRESS");
+  assert.equal(payload.run.members[0].roundOne.integrity.validCount, 30);
+  assert.deepEqual(payload.run.members[0].roundOne.batch, { completed: 1, total: 2, size: 30 });
+  assert.equal(payload.run.roundOneComplete, false);
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${batchedRunId}/round-one/gpt-5.6-sol`, {})));
+  assert.equal(response.status, 200, "the final batch should complete the exact full candidate universe");
+  payload = await response.json();
+  assert.equal(payload.ok, true);
+  assert.equal(payload.run.members[0].roundOne.integrity.status, "COMPLETE");
+  assert.equal(payload.run.members[0].roundOne.integrity.validCount, 31);
+  assert.deepEqual(payload.run.members[0].roundOne.batch, { completed: 2, total: 2, size: 30 });
+  assert.equal(payload.run.members[0].audit.roundOne.attempts.length, 2);
+  assert.equal(payload.run.roundOneComplete, true);
 } finally {
   globalThis.fetch = originalFetch;
 }

@@ -135,7 +135,9 @@ function workflowMemberRecords(members, phase) {
     const audit = member.audit?.[phase];
     const stateLabel = String(audit?.status || "").toUpperCase() === "FAILED"
       ? `失败 · ${audit.error || "未知错误"}`
-      : review?.status === "PARTIAL"
+      : review?.status === "IN_PROGRESS"
+        ? `分批处理中 · ${review.integrity?.validCount ?? 0}/${review.integrity?.expectedCount ?? "—"} · 第 ${review.batch?.completed || 0}/${review.batch?.total || "—"} 批`
+        : review?.status === "PARTIAL"
         ? `不完整 · ${review.integrity?.validCount ?? 0}/${review.integrity?.expectedCount ?? "—"}`
         : review?.status === "FAILED"
           ? "输出无效 · 已阻断"
@@ -721,20 +723,29 @@ function syncRunProgress() {
 
 async function runReviewers(stage) {
   for (const member of state.run.members || []) {
-    const review = stage === "round-one" ? member.roundOne : member.roundTwo;
-    const complete = review?.status === "COMPLETE" && review?.integrity?.status === "COMPLETE";
-    if (complete) continue;
-    state.activeStep = stage;
-    state.activeMemberId = member.id;
-    state.modelStates[member.id] = "active";
-    render();
-    const result = await api(`/runs/${state.run.id}/${stage}/${member.id}`, { method: "POST", body: "{}" });
-    state.run = result.run;
-    const updated = state.run.members.find((item) => item.id === member.id);
-    state.modelStates[member.id] = updated?.state || "complete";
-    state.activeMemberId = "";
-    render();
-    if (result.ok === false) throw new Error(result.integrityError || "模型输出不完整，已阻断后续阶段。");
+    while (true) {
+      const current = state.run.members.find((item) => item.id === member.id);
+      const review = stage === "round-one" ? current?.roundOne : current?.roundTwo;
+      const complete = review?.status === "COMPLETE" && review?.integrity?.status === "COMPLETE";
+      if (complete) break;
+      const beforeCount = Number(review?.integrity?.validCount || 0);
+      state.activeStep = stage;
+      state.activeMemberId = member.id;
+      state.modelStates[member.id] = "active";
+      render();
+      const result = await api(`/runs/${state.run.id}/${stage}/${member.id}`, { method: "POST", body: "{}" });
+      state.run = result.run;
+      const updated = state.run.members.find((item) => item.id === member.id);
+      const updatedReview = stage === "round-one" ? updated?.roundOne : updated?.roundTwo;
+      state.modelStates[member.id] = updated?.state || "complete";
+      state.activeMemberId = "";
+      render();
+      if (result.ok === false) throw new Error(result.integrityError || "模型输出不完整，已阻断后续阶段。");
+      const afterCount = Number(updatedReview?.integrity?.validCount || 0);
+      if (!(updatedReview?.status === "COMPLETE" && updatedReview?.integrity?.status === "COMPLETE") && afterCount <= beforeCount) {
+        throw new Error("模型分批复核未产生新的有效股票记录，已暂停以避免无效循环。");
+      }
+    }
   }
 }
 
