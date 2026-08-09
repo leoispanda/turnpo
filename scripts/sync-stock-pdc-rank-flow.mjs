@@ -869,7 +869,7 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
     !Number.isFinite(row.totalMcapCny)
       || row.totalMcapCny <= 30_000_000_000
       || !Number.isFinite(row.return60dPct)
-      || row.return60dPct <= 0
+      || row.return60dPct <= 5
   ));
   if (fixedRuleViolations.length) {
     consistencyErrors.push("Hawkeye audit contains passed rows that violate the fixed market-cap or 60-day-return rule");
@@ -921,7 +921,7 @@ function buildHawkeyeSnapshot(sourceRoot, rankSnapshot) {
     },
     rules: {
       minMarketCapCny: 30_000_000_000,
-      minReturn60dPct: 0
+      minReturn60dPct: 5
     },
     checkedCount: audit.length,
     marketUniverseCount: audit.length,

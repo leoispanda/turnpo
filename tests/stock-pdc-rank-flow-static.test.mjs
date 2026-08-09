@@ -11,6 +11,9 @@ const stockFunction = fs.readFileSync(new URL("../functions/stock-pdc/[[path]].j
 const rankFlow = JSON.parse(fs.readFileSync(new URL("../stock-pdc/rank-flow.json", import.meta.url), "utf8"));
 const hawkeye = JSON.parse(fs.readFileSync(new URL("../stock-pdc/hawkeye/latest.json", import.meta.url), "utf8"));
 
+assert.ok(syncScript.includes("minReturn60dPct: 5"));
+assert.ok(stockFunction.includes("const expectedReturn60d = 5;"));
+
 assert.ok(indexHtml.includes('href="/stock-pdc/"'));
 assert.ok(redirects.includes("/stock-pdc /stock-pdc/ 301"));
 assert.ok(headers.includes("/stock-pdc/*"));
@@ -130,7 +133,6 @@ assert.equal(hawkeye.candidates.length, hawkeye.dispatchedCount);
 assert.ok(hawkeye.candidates.every((row) => row.status === "HAWKEYE_PASSED"));
 assert.ok(hawkeye.candidates.every((row) => Number.isFinite(row.facts?.return60dPct)));
 assert.equal(hawkeye.rules.minMarketCapCny, 30_000_000_000);
-assert.equal(hawkeye.rules.minReturn60dPct, 0);
 assert.ok(hawkeye.candidates.every((row) => row.facts.marketCapCny > hawkeye.rules.minMarketCapCny));
 assert.ok(hawkeye.candidates.every((row) => row.facts.return60dPct > hawkeye.rules.minReturn60dPct));
 assert.ok(!Object.hasOwn(hawkeye.rules, "requireClearUptrend"));

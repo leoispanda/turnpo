@@ -527,7 +527,7 @@ function renderResult() {
   if (note && IS_DEMO_MODE) note.textContent = "Mini Demo 只用于研究和模型对比，不构成交易指令，也不会写入正式 PDC 历史。";
   if (section.hidden) return;
   list.innerHTML = state.run?.status === "NO_CANDIDATES"
-    ? `<div class="stock-empty">本次鹰眼已完整执行，但没有股票同时满足“总市值 &gt; 300 亿”和“近 60 个交易日收益 &gt; 0”。系统未调用任何 PDC 模型，结果已保存为 NO_CANDIDATES。</div>`
+    ? `<div class="stock-empty">本次鹰眼已完整执行，但没有股票同时满足“总市值 &gt; 300 亿”和“近 60 个交易日收益 &gt; 5%”。系统未调用任何 PDC 模型，结果已保存为 NO_CANDIDATES。</div>`
     : final.length ? final.map((row) => `
     <div class="decision-placeholder-row">
       <strong>#${escapeHtml(row.rank)}</strong>
@@ -581,7 +581,7 @@ async function latestSnapshot() {
   }
   const expectedSchema = "stock-pdc-hawkeye-v2";
   const expectedMarketCap = 30_000_000_000;
-  const expectedReturn60d = 0;
+  const expectedReturn60d = 5;
   const marketDataProvider = String(data.marketDataProvider || "").trim().toLowerCase();
   if (data.schemaVersion !== expectedSchema) {
     throw new Error("Hawkeye Radar snapshot predates full-market accounting. Regenerate it from the API market snapshot.");

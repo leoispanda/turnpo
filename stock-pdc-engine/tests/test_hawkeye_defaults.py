@@ -14,13 +14,13 @@ from stock_pdc.config import HAWKEYE_MIN_MARKET_CAP_CNY, HAWKEYE_MIN_RETURN_60D_
 class HawkeyeDefaultTests(unittest.TestCase):
     def test_hawkeye_defaults_keep_the_candidate_pool_broad(self) -> None:
         self.assertEqual(HAWKEYE_MIN_MARKET_CAP_CNY, 30_000_000_000)
-        self.assertEqual(HAWKEYE_MIN_RETURN_60D_PCT, 0.0)
-        self.assertEqual(build_cli_parser().parse_args([]).radar_min_return_60d, 0.0)
+        self.assertEqual(HAWKEYE_MIN_RETURN_60D_PCT, 5.0)
+        self.assertEqual(build_cli_parser().parse_args([]).radar_min_return_60d, 5.0)
         self.assertEqual(
             build_replay_parser()
             .parse_args(["--start", "2026-01-01", "--end", "2026-01-31"])
             .radar_min_return_60d,
-            0.0,
+            5.0,
         )
 
     def test_explicit_hawkeye_threshold_still_overrides_default(self) -> None:
@@ -46,10 +46,10 @@ class HawkeyeDefaultTests(unittest.TestCase):
         )
 
         self.assertEqual(args.variants, "a")
-        self.assertEqual(args.radar_min_return_60d, 0.0)
+        self.assertEqual(args.radar_min_return_60d, 5.0)
         self.assertIn("--use-radar", command)
         threshold_index = command.index("--radar-min-return-60d")
-        self.assertEqual(command[threshold_index + 1], "0.0")
+        self.assertEqual(command[threshold_index + 1], "5.0")
         self.assertEqual(
             build_replay_parser()
             .parse_args(

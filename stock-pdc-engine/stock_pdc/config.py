@@ -59,7 +59,7 @@ DEFAULT_METADATA_CSV = "outputs_a_share/a_share_universe.csv"
 # Hawkeye is a broad pre-PDC universe filter. Trend, volume, overheat, and
 # risk are evaluated by PDC members after this step.
 HAWKEYE_MIN_MARKET_CAP_CNY = 30_000_000_000
-HAWKEYE_MIN_RETURN_60D_PCT = 0.0
+HAWKEYE_MIN_RETURN_60D_PCT = 5.0
 HAWKEYE_MAX_DAILY_MOVE_PCT = 8.0
 HAWKEYE_DAILY_MOVE_LOOKBACK = 1
 HAWKEYE_MIN_BARS = 200

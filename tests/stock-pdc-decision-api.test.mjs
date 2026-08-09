@@ -51,7 +51,7 @@ const hawkeyePacket = (date = hawkeyeDate, rows = hawkeyeRows) => ({
   sourceGeneratedAt: "test",
   marketDataProvider: "eastmoney",
   sourceFiles: { candidateUniverse: "outputs/candidate_universe.csv" },
-  rules: { minMarketCapCny: 30_000_000_000, minReturn60dPct: 0 },
+  rules: { minMarketCapCny: 30_000_000_000, minReturn60dPct: 5 },
   checkedCount: rows.length,
   marketUniverseCount: rows.length,
   passedCount: rows.length,

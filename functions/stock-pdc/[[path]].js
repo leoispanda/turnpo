@@ -404,7 +404,7 @@ async function serverHawkeyeSnapshot(request) {
   const candidates = Array.isArray(packet?.candidates) ? packet.candidates : [];
   const rules = packet?.rules || {};
   const expectedMarketCap = 30_000_000_000;
-  const expectedReturn60d = 0;
+  const expectedReturn60d = 5;
   const expectedSchema = "stock-pdc-hawkeye-v2";
   const marketDataProvider = cleanText(packet?.marketDataProvider, 80).toLowerCase();
   if (packet?.availability !== "ACTIVE") {
