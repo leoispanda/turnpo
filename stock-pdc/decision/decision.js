@@ -172,7 +172,9 @@ function renderSteps() {
   const list = $("#decisionSteps");
   if (list) list.innerHTML = "";
   const archive = $("#decisionArchive");
-  if (archive) archive.hidden = true;
+  if (archive) archive.hidden = !(state.running || state.testing || state.error || state.run);
+  const copy = $("#progressCopy");
+  if (copy) copy.hidden = !(state.running || state.testing || state.error || state.run);
 }
 
 function stepArtifact(step) {
@@ -445,6 +447,7 @@ function setRunSummary() {
   const status = $("#runStatus");
   const count = $("#progressCount");
   const copy = $("#progressCopy");
+  const runStrip = $(".decision-run-strip");
   const button = $("#generateDecision");
   const testButton = $("#testDecision");
   const runId = $("#runId");
@@ -453,9 +456,10 @@ function setRunSummary() {
   const run = state.run;
 
   if (runId) runId.textContent = run?.id ? run.id.slice(0, 8).toUpperCase() : "等待生成";
-  if (snapshot) snapshot.textContent = state.completed > 0 ? `${run?.date || ""} 已锁定` : "尚未锁定";
-  if (status) status.textContent = state.testing ? "Test 中" : state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
-  if (count) count.textContent = state.running ? "生成中" : state.completed === steps.length ? "本轮完成" : state.run ? `已完成 ${state.completed} 步` : "等待运行";
+  if (runStrip) runStrip.hidden = !(state.running || state.testing || state.error || run);
+  if (snapshot) snapshot.textContent = state.error && !run ? "FAILED · 未锁定" : state.completed > 0 ? `${run?.date || ""} 已锁定` : "尚未锁定";
+  if (status) status.textContent = state.error ? "FAILED" : state.testing ? "Test 中" : state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
+  if (count) count.textContent = state.error ? "已阻断" : state.running ? "生成中" : state.completed === steps.length ? "本轮完成" : state.run ? `已完成 ${state.completed} 步` : "等待运行";
   if (mode) {
     const profiles = run?.committeeMode ? run.members : selectedModelProfiles();
     mode.textContent = profiles?.length ? `${profiles.length} 位${IS_DEMO_MODE ? "Mini" : "模型"} PDC · 同一事实包` : "未配置模型";
@@ -546,7 +550,32 @@ async function latestSnapshot() {
   if (data.availability !== "ACTIVE") {
     throw new Error(`Hawkeye Radar is not ready: ${(data.validationErrors || []).join(" ") || "unknown validation failure"}`);
   }
-  if (!data.asOfDate || candidates.length !== Number(data.passedCount) || Number(data.dispatchedCount) !== Number(data.passedCount)) {
+  const expectedSchema = "stock-pdc-hawkeye-v2";
+  const expectedMarketCap = 30_000_000_000;
+  const expectedReturn60d = 0;
+  if (data.schemaVersion !== expectedSchema) {
+    throw new Error("Hawkeye Radar snapshot predates full-market accounting. Regenerate it from the API market snapshot.");
+  }
+  if (data.rules?.minMarketCapCny !== expectedMarketCap || data.rules?.minReturn60dPct !== expectedReturn60d) {
+    throw new Error("Hawkeye Radar rules do not match the fixed market-cap and 60-day-return policy.");
+  }
+  const checkedCount = Number(data.checkedCount);
+  const marketUniverseCount = Number(data.marketUniverseCount);
+  const rejectedCount = Number(data.rejectedCount);
+  const dataFailedCount = Number(data.dataFailedCount);
+  const universeExcludedCount = Number(data.universeExcludedCount);
+  const passedCount = Number(data.passedCount);
+  if (![checkedCount, marketUniverseCount, rejectedCount, dataFailedCount, universeExcludedCount, passedCount].every(Number.isInteger)
+    || marketUniverseCount !== checkedCount
+    || passedCount + rejectedCount + dataFailedCount + universeExcludedCount !== checkedCount) {
+    throw new Error("Hawkeye Radar market-universe accounting is incomplete.");
+  }
+  if (!data.asOfDate || candidates.length !== passedCount || Number(data.dispatchedCount) !== passedCount
+    || candidates.some((row) => row?.status !== "HAWKEYE_PASSED"
+      || !Number.isFinite(row?.facts?.marketCapCny)
+      || row.facts.marketCapCny <= expectedMarketCap
+      || !Number.isFinite(row?.facts?.return60dPct)
+      || row.facts.return60dPct <= expectedReturn60d)) {
     throw new Error("Hawkeye Radar did not provide every passed candidate.");
   }
   const provenance = {
@@ -561,7 +590,7 @@ async function latestSnapshot() {
   state.dataContract = {
     date: data.asOfDate,
     governance: { hawkeye: data.rules || {}, dispatchRule: data.dispatchRule || "" },
-    snapshot: { ...provenance, candidateCount: candidates.length, checkedCount: data.checkedCount, passedCount: data.passedCount }
+    snapshot: { ...provenance, candidateCount: candidates.length, checkedCount, passedCount }
   };
   return {
     date: data.asOfDate,
