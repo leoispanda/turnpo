@@ -230,7 +230,10 @@ try {
   assert.equal(response.status, 409, "Mini and formal PDC must share one manual market-refresh lock");
   const unconfiguredRefreshContext = (request) => ({ request, env: { ...env, STOCK_PDC_GITHUB_TOKEN: "" }, next: async () => new Response("next") });
   response = await onRequestPost(unconfiguredRefreshContext(requestFor("/stock-pdc/decision/api/data-refresh", {})));
-  assert.equal(response.status, 503, "a missing dispatch secret must be explicit instead of pretending the data refresh started");
+  assert.equal(response.status, 503, "a missing dispatch secret must never pretend the data refresh started");
+  const manualOnlyPayload = await response.json();
+  assert.equal(manualOnlyPayload.code, "MANUAL_REFRESH_GITHUB_ONLY");
+  assert.equal(manualOnlyPayload.workflowUrl, "https://github.com/leoispanda/turnpo/actions/workflows/manual-stock-pdc-refresh.yml");
 
   response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/models")));
   assert.equal(response.status, 200);

@@ -273,7 +273,14 @@ function manualMarketRefreshKey() {
 async function queueManualMarketRefresh(env) {
   const token = String(env.STOCK_PDC_GITHUB_TOKEN || "").trim();
   if (!token) {
-    return error("Manual market refresh is not configured. Set the STOCK_PDC_GITHUB_TOKEN Pages secret with GitHub Actions: write permission.", 503);
+    // A token is optional: without it, the owner can still start the exact
+    // same workflow manually in GitHub. Return the link rather than implying
+    // that market data or PDC itself is unavailable.
+    return json({
+      error: "This site is not connected to start the workflow directly.",
+      code: "MANUAL_REFRESH_GITHUB_ONLY",
+      workflowUrl: MANUAL_MARKET_REFRESH_WORKFLOW_URL
+    }, { status: 503 });
   }
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);

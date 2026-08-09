@@ -57,7 +57,8 @@ const state = {
   refreshingMarketData: false,
   marketRefreshMessage: "",
   marketRefreshError: "",
-  marketRefreshWorkflowUrl: ""
+  marketRefreshWorkflowUrl: "",
+  marketRefreshManualOnly: false
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -465,8 +466,8 @@ function setRunSummary() {
   const marketRefreshPending = state.refreshingMarketData || Boolean(state.marketRefreshMessage);
   if (runStrip) runStrip.hidden = !(state.running || state.testing || marketRefreshPending || state.marketRefreshError || state.error || run);
   if (snapshot) snapshot.textContent = marketRefreshPending ? "刷新已提交 · 旧快照不可用" : state.error && !run ? "FAILED · 未锁定" : state.completed > 0 ? `${run?.date || ""} 已锁定` : "尚未锁定";
-  if (status) status.textContent = state.marketRefreshError || state.error ? "FAILED" : marketRefreshPending ? "等待市场刷新" : state.testing ? "Test 中" : state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
-  if (count) count.textContent = state.marketRefreshError || state.error ? "已阻断" : state.refreshingMarketData ? "正在提交" : state.marketRefreshMessage ? "刷新已提交" : state.running ? "生成中" : state.completed === steps.length ? "本轮完成" : state.run ? `已完成 ${state.completed} 步` : "等待运行";
+  if (status) status.textContent = state.marketRefreshError || state.error ? "FAILED" : state.marketRefreshManualOnly ? "待 GitHub 手动启动" : marketRefreshPending ? "等待市场刷新" : state.testing ? "Test 中" : state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
+  if (count) count.textContent = state.marketRefreshError || state.error ? "已阻断" : state.refreshingMarketData ? "正在提交" : state.marketRefreshManualOnly ? "需手动启动" : state.marketRefreshMessage ? "刷新已提交" : state.running ? "生成中" : state.completed === steps.length ? "本轮完成" : state.run ? `已完成 ${state.completed} 步` : "等待运行";
   if (mode) {
     const profiles = run?.committeeMode ? run.members : selectedModelProfiles();
     mode.textContent = profiles?.length ? `${profiles.length} 位${IS_DEMO_MODE ? "Mini" : "模型"} PDC · 同一事实包` : "未配置模型";
@@ -559,7 +560,12 @@ async function api(path, options = {}) {
     }
   });
   const payload = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(payload.error || `Decision API error (${response.status})`);
+  if (!response.ok) {
+    const caught = new Error(payload.error || `Decision API error (${response.status})`);
+    caught.status = response.status;
+    caught.payload = payload;
+    throw caught;
+  }
   return payload;
 }
 
@@ -869,13 +875,20 @@ async function refreshMarketData() {
   state.marketRefreshMessage = "";
   state.marketRefreshError = "";
   state.marketRefreshWorkflowUrl = "";
+  state.marketRefreshManualOnly = false;
   render();
   try {
     const result = await api("/data-refresh", { method: "POST", body: "{}" });
     state.marketRefreshWorkflowUrl = result.workflowUrl || "";
     state.marketRefreshMessage = "已提交手动全市场行情→Hawkeye 刷新。完成后刷新此页；当前旧快照仍不能用于 PDC。";
   } catch (caught) {
-    state.marketRefreshError = caught.message || "请稍后重试。";
+    if (caught.status === 503 && caught.payload?.code === "MANUAL_REFRESH_GITHUB_ONLY") {
+      state.marketRefreshManualOnly = true;
+      state.marketRefreshWorkflowUrl = caught.payload.workflowUrl || "";
+      state.marketRefreshMessage = "无需配置。请打开下方 GitHub 页面，点击 Run workflow；完成后刷新此页。";
+    } else {
+      state.marketRefreshError = caught.message || "请稍后重试。";
+    }
   } finally {
     state.refreshingMarketData = false;
     render();

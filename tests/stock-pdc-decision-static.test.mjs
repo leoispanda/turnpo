@@ -58,6 +58,7 @@ assert.ok(decisionJs.includes("async function runDecisionFlow()"));
 assert.ok(decisionJs.includes("async function runSmokeTest()"));
 assert.ok(decisionJs.includes("async function refreshMarketData()"));
 assert.ok(decisionJs.includes('api("/data-refresh"'));
+assert.ok(decisionJs.includes("MANUAL_REFRESH_GITHUB_ONLY"));
 assert.ok(decisionJs.includes('api("/smoke-test"'));
 assert.ok(decisionJs.includes("未读取股票数据、未做评分、未创建 Run"));
 assert.ok(decisionJs.includes("async function runReviewers(stage)"));
@@ -107,6 +108,7 @@ assert.ok(stockFunction.includes("async function decisionApi(context, mode = OFF
 assert.ok(stockFunction.includes("async function queueManualMarketRefresh(env)"));
 assert.ok(stockFunction.includes('if (suffix === "data-refresh") return queueManualMarketRefresh(env);'));
 assert.ok(stockFunction.includes('const MANUAL_MARKET_REFRESH_WORKFLOW = "manual-stock-pdc-refresh.yml";'));
+assert.ok(stockFunction.includes('code: "MANUAL_REFRESH_GITHUB_ONLY"'));
 assert.ok(manualRefreshWorkflow.includes("workflow_dispatch:"));
 assert.ok(!manualRefreshWorkflow.includes("schedule:"));
 assert.ok(manualRefreshWorkflow.includes("run_latest_pdc.py --top 20 --variants a"));
