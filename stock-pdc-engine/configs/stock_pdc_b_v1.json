@@ -1,0 +1,72 @@
+{
+  "strategyId": "B",
+  "modelVersion": "stock-pdc-b1-2026-07-10",
+  "status": "frozen_prospective",
+  "benchmark": "CSI300ETF",
+  "description": "Profit-oriented alpha ranking with separate entry gates, risk sizing, exposure caps, and exit state.",
+  "alphaWeights": {
+    "trend": 0.45,
+    "breakout": 0.35,
+    "volumePrice": 0.2
+  },
+  "candidate": {
+    "minimumBars": 200,
+    "momentumLookback": 60,
+    "volatilityLookback": 60,
+    "minimumRiskAdjustedMomentumPercentile": 0.7,
+    "requireClearUptrend": true
+  },
+  "entry": {
+    "newRankMaximum": 15,
+    "publishedTopCount": 20,
+    "maximumPositions": 20,
+    "minimumMarketScore": 4.0,
+    "minimumRiskScore": 4.0,
+    "halfRiskBelowScore": 5.0,
+    "minimumOverheatScore": 4.0,
+    "minimumCandlestickScore": 3.2,
+    "halfRiskCandlestickBelowScore": 4.5
+  },
+  "risk": {
+    "perNameRiskBudgetPctNav": 0.4,
+    "maximumWeightPct": 5.0,
+    "maximumStopDistancePct": 12.0,
+    "initialAtrMultiple": 2.5,
+    "trailingAtrMultiple": 3.0,
+    "activateTrailingAtR": 1.0
+  },
+  "exposure": {
+    "marketScoreCapsPct": [
+      {"minimumScore": 7.0, "grossCapPct": 100.0},
+      {"minimumScore": 6.0, "grossCapPct": 80.0},
+      {"minimumScore": 5.0, "grossCapPct": 60.0},
+      {"minimumScore": 4.0, "grossCapPct": 35.0},
+      {"minimumScore": 0.0, "grossCapPct": 20.0}
+    ],
+    "annualizedVolatilityTargetPct": 12.0,
+    "allowLeverage": false,
+    "drawdownCapsPct": [
+      {"drawdownAtOrBelowPct": -12.0, "grossCapPct": 25.0},
+      {"drawdownAtOrBelowPct": -8.0, "grossCapPct": 50.0},
+      {"drawdownAtOrBelowPct": -5.0, "grossCapPct": 75.0}
+    ],
+    "sectorCapPct": 20.0,
+    "sectorCapStatus": "INACTIVE_MISSING_DATA"
+  },
+  "zhugeOrion": {
+    "mode": "shadow_only",
+    "canIncreaseAlphaRank": false,
+    "canIncreaseExposure": false,
+    "canOverrideMarketRiskOrOverheat": false
+  },
+  "comparison": {
+    "minimumPairedTradingDays": 60,
+    "selectionTrackGrossExposurePct": 100.0
+  },
+  "researchCosts": {
+    "commissionBpsPerSide": 3.0,
+    "slippageBpsPerSide": 5.0,
+    "sellStampDutyBps": 5.0,
+    "note": "Configurable paper-research assumptions; sell stamp duty reflects the 2023 half-rate policy and must be revalidated if rules change."
+  }
+}

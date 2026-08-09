@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TURNPO_ROOT = path.resolve(__dirname, "..");
-const DEFAULT_SOURCE_ROOT = "/Users/leoyang/Documents/financial freedom/stock-pdc-local";
+const DEFAULT_SOURCE_ROOT = path.join(TURNPO_ROOT, "stock-pdc-engine");
 const OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "rank-flow.json");
 const AB_OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "ab-flow.json");
 const HAWKEYE_OUTPUT_PATH = path.join(TURNPO_ROOT, "stock-pdc", "hawkeye", "latest.json");
@@ -229,13 +229,21 @@ function resolvePriceDataDir(sourceRoot, latestDate, explicitDataDir = "") {
     "data_a_share_live_mcap_2020_em"
   ].map((candidate) => path.isAbsolute(candidate) ? candidate : path.join(sourceRoot, candidate));
 
+  let mostRecentAvailable = "";
+  let mostRecentBarDate = "";
   for (const dataDir of candidates) {
     if (!fs.existsSync(dataDir) || !fs.statSync(dataDir).isDirectory()) continue;
     const latestBarDate = lastBarDate(dataDir);
     if (!latestDate || latestBarDate >= latestDate) return dataDir;
+    if (latestBarDate > mostRecentBarDate) {
+      mostRecentAvailable = dataDir;
+      mostRecentBarDate = latestBarDate;
+    }
   }
 
-  return "";
+  // A weekend or holiday analysis can be newer than the most recent market bar.
+  // Keep the freshest complete batch instead of presenting a blank price context.
+  return mostRecentAvailable;
 }
 
 function priceDataDirCandidates(sourceRoot, primaryDir) {
@@ -751,7 +759,7 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
   return {
     generatedAt: new Date().toISOString(),
     sourceRoot,
-    sourceKind: "stock-pdc-local daily watchlists + turnpo backfills",
+    sourceKind: "Turnpo Stock PDC engine daily watchlists + backfills",
     dataGovernance: DATA_GOVERNANCE,
     strategy: {
       version: "action-list-v1",
