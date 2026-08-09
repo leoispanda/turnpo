@@ -87,24 +87,112 @@ function selectedModelProfiles() {
 function renderSteps() {
   const list = $("#decisionSteps");
   if (!list) return;
-  list.innerHTML = decisionStages.map((stage) => {
-    const stageSteps = steps.filter((step) => step.stage === stage.id);
-    return `<li class="decision-process-stage" data-stage="${stage.id}">
-      <header><span>${stage.number}</span><div><strong>${escapeHtml(stage.title)}</strong><small>${escapeHtml(stage.detail)}</small></div></header>
-      <ol>${stageSteps.map((step) => {
-        const index = steps.findIndex((item) => item.id === step.id) + 1;
-        return `<li class="decision-step" data-state="${stepState(step)}">
-          <span class="decision-step-index">${index}</span>
-          <div>
-            <h3>${escapeHtml(step.title)}</h3>
-            <p>${escapeHtml(step.detail)}</p>
-            <small class="decision-step-artifact">${escapeHtml(stepArtifact(step))}</small>
-          </div>
-          <span class="decision-step-state">${escapeHtml(stepStateText(step))}</span>
-        </li>`;
-      }).join("")}</ol>
+  const run = state.run;
+  if (!run) {
+    list.innerHTML = `<li class="decision-run-empty">
+      <strong>还没有本轮研究记录</strong>
+      <p>先运行一次对话 Test 确认模型可用，或直接开始生成。完成后，这里会按轮次保留每位模型实际说了什么。</p>
     </li>`;
+    return;
+  }
+
+  const members = run.members || [];
+  const firstRound = members.filter((member) => member.roundOne?.rankings?.length).length;
+  const secondRound = members.filter((member) => member.roundTwo?.rankings?.length).length;
+  const verified = selectedModelProfiles().filter((profile) => state.verification[profile.id]?.ok).length;
+  const final = Array.isArray(run.final) ? run.final : [];
+  const active = state.activeStep;
+  list.innerHTML = [
+    archiveCard({
+      id: "facts",
+      number: "01",
+      title: "本轮事实包与模型",
+      meta: `${run.snapshot?.candidateCount || 0} 只候选 · ${verified}/${selectedModelProfiles().length} 已验证`,
+      open: active === "verify" || active === "snapshot",
+      content: archiveFactsMarkup(run)
+    }),
+    archiveCard({
+      id: "round-one",
+      number: "02",
+      title: "第一轮：各模型独立初判",
+      meta: `${firstRound}/${members.length} 位已返回 · 展开看摘要与 Top 3`,
+      open: active === "round-one",
+      content: archiveMemberMarkup(members, "roundOne", "第一轮尚未有模型返回。")
+    }),
+    archiveCard({
+      id: "pool",
+      number: "03",
+      title: "共同复核池",
+      meta: run.pool?.length ? `${run.pool.length} 只股票进入第二轮` : "等待第一轮汇总",
+      open: active === "merge",
+      content: archivePoolMarkup(run.pool)
+    }),
+    archiveCard({
+      id: "round-two",
+      number: "04",
+      title: "第二轮：各模型复核意见",
+      meta: `${secondRound}/${members.length} 位已返回 · 展开看最终立场`,
+      open: active === "round-two",
+      content: archiveMemberMarkup(members, "roundTwo", "第二轮复核尚未开始。")
+    }),
+    archiveCard({
+      id: "final",
+      number: "05",
+      title: "共识与风险闸门",
+      meta: state.completed === steps.length ? `${final.length} 个研究席位保留` : "等待复核完成后生成",
+      open: active === "risk-check" || active === "final" || state.completed === steps.length,
+      content: archiveFinalMarkup(final)
+    })
+  ].join("");
+}
+
+function archiveCard({ id, number, title, meta, content, open }) {
+  return `<li class="decision-archive-card" data-archive="${escapeHtml(id)}">
+    <details${open ? " open" : ""}>
+      <summary>
+        <span class="decision-archive-index">${escapeHtml(number)}</span>
+        <span><strong>${escapeHtml(title)}</strong><small>${escapeHtml(meta)}</small></span>
+        <span class="decision-archive-open">查看</span>
+      </summary>
+      <div class="decision-archive-content">${content}</div>
+    </details>
+  </li>`;
+}
+
+function archiveFactsMarkup(run) {
+  const verified = selectedModelProfiles().map((profile) => {
+    const check = state.verification[profile.id];
+    const status = check?.ok ? "已验证" : check?.ok === false ? "未通过" : "等待验证";
+    return `<span class="decision-archive-chip" data-ok="${check?.ok === true}">${escapeHtml(profile.label)} · ${escapeHtml(status)}</span>`;
   }).join("");
+  return `<div class="decision-archive-facts">
+    <p><strong>冻结快照：</strong>${escapeHtml(run.date || "—")} · ${escapeHtml(run.snapshot?.candidateCount || 0)} 只候选。所有模型只读这一份事实包。</p>
+    <div class="decision-archive-chips">${verified}</div>
+  </div>`;
+}
+
+function archiveMemberMarkup(members, phase, emptyText) {
+  const returned = members.filter((member) => member[phase]?.rankings?.length);
+  if (!returned.length) return `<p class="decision-archive-empty">${escapeHtml(emptyText)}</p>`;
+  return `<div class="decision-archive-members">${returned.map((member) => {
+    const review = member[phase];
+    const topThree = (review.rankings || []).slice(0, 3).map((row) => `<span>#${escapeHtml(row.rank || "—")} ${escapeHtml(row.name || row.ticker || "未知")} <small>${escapeHtml(row.ticker || "")} · ${escapeHtml(row.score ?? "—")}分</small></span>`).join("");
+    return `<article class="decision-archive-member">
+      <header><strong>${escapeHtml(member.label || member.id)}</strong><small>${escapeHtml(member.model || member.provider || "独立 PDC")}</small></header>
+      <p>${escapeHtml(review.summary || "模型未提供文字摘要，请查看下方完整委员结论。")}</p>
+      <div class="decision-archive-top">${topThree}</div>
+    </article>`;
+  }).join("")}</div>`;
+}
+
+function archivePoolMarkup(pool) {
+  if (!Array.isArray(pool) || !pool.length) return `<p class="decision-archive-empty">第一轮完成后，系统会把值得再次研究的股票汇成同一份共同复核池。</p>`;
+  return `<div class="decision-archive-chips">${pool.map((row, index) => `<span class="decision-archive-chip">#${index + 1} ${escapeHtml(row.name || row.ticker || "未知")} <small>${escapeHtml(row.ticker || "")}</small></span>`).join("")}</div>`;
+}
+
+function archiveFinalMarkup(final) {
+  if (!final.length) return `<p class="decision-archive-empty">暂无股票通过共识与风险闸门。没有强行补足，是系统正常的保护机制。</p>`;
+  return `<div class="decision-archive-final">${final.map((row) => `<article><strong>#${escapeHtml(row.rank)} ${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></strong><span>${escapeHtml(row.consensusScore)} 分 · ${escapeHtml(row.buyVotes ?? 0)}/${escapeHtml(row.requiredSupport || "—")} BUY 支持</span></article>`).join("")}</div>`;
 }
 
 function stepArtifact(step) {
@@ -386,13 +474,15 @@ function setRunSummary() {
   if (runId) runId.textContent = run?.id ? run.id.slice(0, 8).toUpperCase() : "等待生成";
   if (snapshot) snapshot.textContent = state.completed > 0 ? `${run?.date || ""} 已锁定` : "尚未锁定";
   if (status) status.textContent = state.testing ? "Test 中" : state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
-  if (count) count.textContent = `${state.completed} / ${steps.length}`;
+  if (count) count.textContent = state.running ? "生成中" : state.completed === steps.length ? "本轮完成" : state.run ? `已完成 ${state.completed} 步` : "等待运行";
   if (mode) {
     const profiles = run?.committeeMode ? run.members : selectedModelProfiles();
     mode.textContent = profiles?.length ? `${profiles.length} 位${IS_DEMO_MODE ? "Mini" : "模型"} PDC · 同一事实包` : "未配置模型";
   }
   if (copy) copy.textContent = state.error
-    ? `已暂停：${state.error} 点击“继续生成”会从已保存的模型 PDC 继续，不会重复已完成的结论。`
+    ? state.run
+      ? `本轮暂停在${steps.find((step) => step.id === state.activeStep)?.title || "当前阶段"}：${state.error}。已返回的模型结论已保留。`
+      : `本轮尚未开始：${state.error}。可先重新运行对话 Test，或稍后再开始生成。`
     : state.testing
     ? "正在进行轻量对话 Test：不读取股票数据、不做评分、不创建 Run。"
     : state.running
@@ -401,7 +491,7 @@ function setRunSummary() {
       ? IS_DEMO_MODE
         ? "Mini Demo Run 已完成。可复制整包给 GPT 继续讨论；结果不会写入正式 PDC。"
         : "本次 Run 已完成。确认无误后，点击“发布到 PDC”才会追加当天正式记录。"
-      : "点击开始生成后，每一个步骤都会在这里留下真实状态与产物。";
+      : "开始后，这里会直接记录每一轮谁给出了什么结论，而不是只显示流程状态。";
   if (button) {
     button.disabled = state.running || state.testing;
     button.textContent = state.running ? "正在生成…" : state.run ? "继续生成" : "开始生成";
