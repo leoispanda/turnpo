@@ -589,7 +589,7 @@ async function claudeReview(env, modelProfile, role, candidates, phase) {
           content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`
         }],
         output_config: {
-          effort: modelProfile.tier === "mini-demo" ? "low" : "max",
+          ...(modelProfile.tier === "mini-demo" ? {} : { effort: "max" }),
           format: {
             type: "json_schema",
             schema: portableReviewSchema()
@@ -775,7 +775,7 @@ async function smokeChat(env, modelProfile) {
       return cleanText(extractOutputText(data), 360);
     }
     if (modelProfile.provider === "Anthropic") {
-      const response = await fetch(ANTHROPIC_MESSAGES_URL, { method: "POST", headers: { "x-api-key": claudeApiKey(env), "anthropic-version": "2023-06-01", "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ model: modelProfile.model, max_tokens: 120, system: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision.", messages: [{ role: "user", content: SMOKE_TEST_PROMPT }], output_config: { effort: "low" } }) });
+      const response = await fetch(ANTHROPIC_MESSAGES_URL, { method: "POST", headers: { "x-api-key": claudeApiKey(env), "anthropic-version": "2023-06-01", "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ model: modelProfile.model, max_tokens: 120, system: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision.", messages: [{ role: "user", content: SMOKE_TEST_PROMPT }] }) });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(data.error?.message || "Claude test request failed.");
       return cleanText(data.content?.find((item) => item.type === "text")?.text, 360);
