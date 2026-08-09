@@ -80,6 +80,16 @@ globalThis.fetch = async (_url, options) => {
     if (provider === "deepseek" || provider === "kimi") return new Response(JSON.stringify({ choices: [{ message: { content: reply } }] }), { status: 200, headers: { "content-type": "application/json" } });
     return new Response(JSON.stringify({ output_text: reply }), { status: 200, headers: { "content-type": "application/json" } });
   }
+  if (request.input?.startsWith("Second-round committee packet:")) {
+    const secretary = {
+      summary: "Secretary mock summary completed.",
+      agreements: ["Models agree on the leading evidence."],
+      disagreements: ["Models differ on entry timing."],
+      priorityRisks: ["Review downside risk."],
+      reviewQuestions: ["Confirm the next session's price action."]
+    };
+    return new Response(JSON.stringify({ output_text: JSON.stringify(secretary) }), { status: 200, headers: { "content-type": "application/json" } });
+  }
   const packetInput = provider === "claude"
     ? request.messages?.[0]?.content
     : provider === "gemini"
@@ -259,8 +269,9 @@ try {
   assert.equal(payload.run.scoringSystem, "short-term-forward-upside-v2");
   assert.equal(payload.run.committeeMode, true);
   assert.equal(payload.run.members.length, 5);
-  assert.equal(payload.run.modelVerification.members.length, 5);
+  assert.equal(payload.run.modelVerification.members.length, 6);
   assert.equal(payload.run.modelVerification.members[0].response, '{"status":"ok"}');
+  assert.equal(payload.run.modelVerification.members.at(-1).id, "pdc_secretary");
   assert.equal(payload.run.members[0].id, "gpt-5.6-sol");
   assert.equal(payload.run.snapshot.provenance.snapshotId, "pdc-2026-08-07-test");
   assert.equal(payload.run.snapshot.facts.length, 8, "saved fact packet should be available for user copy-out");
@@ -290,6 +301,11 @@ try {
     payload = await response.json();
   }
   assert.equal(payload.run.roundTwoComplete, true);
+  response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/secretary`, {})));
+  assert.equal(response.status, 200, "Secretary summary should succeed");
+  payload = await response.json();
+  assert.equal(payload.run.secretary.profile.model, "gpt-5.6-terra");
+  assert.equal(payload.run.secretary.summary.summary, "Secretary mock summary completed.");
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/risk-check`, {})));
   assert.equal(response.status, 200, "risk-check should succeed");
   payload = await response.json();

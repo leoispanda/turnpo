@@ -28,6 +28,7 @@ const steps = [
   { id: "round-one", stage: "review", title: "第一轮独立盲评", detail: "五位模型只看同一份事实包，不读取其他模型结论。", output: "首轮结论已收齐" },
   { id: "merge", stage: "review", title: "合并共同复核池", detail: "程序去重并汇总首轮排名，找出值得再次研究的候选。", output: "Top 20 已形成" },
   { id: "round-two", stage: "review", title: "第二轮证据复核", detail: "五位模型对共同候选重新检查，并交回最终复核意见。", output: "复核结论已收齐" },
+  { id: "secretary", stage: "review", title: "Secretary 汇总", detail: "GPT Terra 汇总第二轮所有结论、分歧与待复核风险。", output: "Secretary 摘要已生成" },
   { id: "risk-check", stage: "deliver", title: "共识与风险闸门", detail: "程序核对支持票、排除意见、九维评分和风险信号。", output: "风险闸门已完成" },
   { id: "final", stage: "deliver", title: "生成最终研究名单", detail: "只保留通过闸门的研究席位；不足 10 个也不会强行补足。", output: "本轮名单已生成" }
 ];
@@ -84,115 +85,86 @@ function selectedModelProfiles() {
   return selected.length ? selected : state.modelProfiles;
 }
 
-function renderSteps() {
-  const list = $("#decisionSteps");
-  if (!list) return;
-  const archive = $("#decisionArchive");
-  const run = state.run;
+const WORKFLOW_STAGES = [
+  { id: "verify", title: "模型验证", call: "5 PDC + Secretary Terra" },
+  { id: "snapshot", title: "事实快照", call: "行情数据 + Hawkeye" },
+  { id: "round-one", title: "第一轮", call: "5 PDC × Top 30" },
+  { id: "merge", title: "共同复核池", call: "首轮结果 → Top 20" },
+  { id: "round-two", title: "第二轮", call: "Top 20 × 5 PDC" },
+  { id: "secretary", title: "Secretary 汇总", call: "GPT-5.6 Terra" },
+  { id: "risk-check", title: "最终名单", call: "共识 + 风险闸门 → Top 10" }
+];
+
+function auditTime(value) {
+  if (!value) return "—";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? escapeHtml(value) : date.toLocaleString("zh-CN", { hour12: false });
+}
+
+function rawAuditMarkup(value, label = "完整记录") {
+  if (!value || (typeof value === "object" && !Object.keys(value).length)) return "";
+  return `<details class="decision-workflow-raw"><summary>${escapeHtml(label)}</summary><pre>${escapeHtml(JSON.stringify(value, null, 2))}</pre></details>`;
+}
+
+function workflowStageMeta(stage, run) {
+  const members = run?.members || [];
   if (!run) {
-    if (archive) archive.hidden = true;
-    list.innerHTML = "";
-    return;
+    if (stage.id === "verify") {
+      const results = Object.values(state.verification).filter((member) => !member.checking);
+      return results.length ? `${results.filter((member) => member.ok).length}/${results.length} 通过` : stage.call;
+    }
+    return stage.call;
   }
-  if (archive) archive.hidden = false;
-
-  const members = run.members || [];
-  const firstRound = members.filter((member) => member.roundOne?.rankings?.length).length;
-  const secondRound = members.filter((member) => member.roundTwo?.rankings?.length).length;
-  const verified = selectedModelProfiles().filter((profile) => state.verification[profile.id]?.ok).length;
-  const final = Array.isArray(run.final) ? run.final : [];
-  const active = state.activeStep;
-  list.innerHTML = [
-    archiveCard({
-      id: "facts",
-      number: "01",
-      title: "本轮事实包与模型",
-      meta: `${run.snapshot?.candidateCount || 0} 只候选 · ${verified}/${selectedModelProfiles().length} 已验证`,
-      open: active === "verify" || active === "snapshot",
-      content: archiveFactsMarkup(run)
-    }),
-    archiveCard({
-      id: "round-one",
-      number: "02",
-      title: "第一轮：各模型独立初判",
-      meta: `${firstRound}/${members.length} 位已返回 · 展开看摘要与 Top 3`,
-      open: active === "round-one",
-      content: archiveMemberMarkup(members, "roundOne", "第一轮尚未有模型返回。")
-    }),
-    archiveCard({
-      id: "pool",
-      number: "03",
-      title: "共同复核池",
-      meta: run.pool?.length ? `${run.pool.length} 只股票进入第二轮` : "等待第一轮汇总",
-      open: active === "merge",
-      content: archivePoolMarkup(run.pool)
-    }),
-    archiveCard({
-      id: "round-two",
-      number: "04",
-      title: "第二轮：各模型复核意见",
-      meta: `${secondRound}/${members.length} 位已返回 · 展开看最终立场`,
-      open: active === "round-two",
-      content: archiveMemberMarkup(members, "roundTwo", "第二轮复核尚未开始。")
-    }),
-    archiveCard({
-      id: "final",
-      number: "05",
-      title: "共识与风险闸门",
-      meta: state.completed === steps.length ? `${final.length} 个研究席位保留` : "等待复核完成后生成",
-      open: active === "risk-check" || active === "final" || state.completed === steps.length,
-      content: archiveFinalMarkup(final)
-    })
-  ].join("");
+  if (stage.id === "verify") return `${run.modelVerification?.members?.filter((member) => member.ok).length || 0}/${run.modelVerification?.members?.length || 0} 通过`;
+  if (stage.id === "snapshot") return `${run.snapshot?.candidateCount || 0} 只候选`;
+  if (stage.id === "round-one") return `${members.filter((member) => member.roundOne?.rankings?.length).length}/${members.length} 返回`;
+  if (stage.id === "merge") return run.pool?.length ? `${run.pool.length} 只进入复核` : "等待汇总";
+  if (stage.id === "round-two") return `${members.filter((member) => member.roundTwo?.rankings?.length).length}/${members.length} 返回`;
+  if (stage.id === "secretary") return run.secretary?.summary ? "已生成" : run.audit?.secretary?.status === "failed" ? "失败" : "等待汇总";
+  return run.audit?.riskCheck?.status === "complete" ? `${run.final?.length || 0} 个保留` : "等待闸门";
 }
 
-function archiveCard({ id, number, title, meta, content, open }) {
-  return `<li class="decision-archive-card" data-archive="${escapeHtml(id)}">
-    <details${open ? " open" : ""}>
-      <summary>
-        <span class="decision-archive-index">${escapeHtml(number)}</span>
-        <span><strong>${escapeHtml(title)}</strong><small>${escapeHtml(meta)}</small></span>
-        <span class="decision-archive-open">查看</span>
-      </summary>
-      <div class="decision-archive-content">${content}</div>
-    </details>
-  </li>`;
-}
-
-function archiveFactsMarkup(run) {
-  const verified = selectedModelProfiles().map((profile) => {
-    const check = state.verification[profile.id];
-    const status = check?.ok ? "已验证" : check?.ok === false ? "未通过" : "等待验证";
-    return `<span class="decision-archive-chip" data-ok="${check?.ok === true}">${escapeHtml(profile.label)} · ${escapeHtml(status)}</span>`;
-  }).join("");
-  return `<div class="decision-archive-facts">
-    <p><strong>冻结快照：</strong>${escapeHtml(run.date || "—")} · ${escapeHtml(run.snapshot?.candidateCount || 0)} 只候选。所有模型只读这一份事实包。</p>
-    <div class="decision-archive-chips">${verified}</div>
-  </div>`;
-}
-
-function archiveMemberMarkup(members, phase, emptyText) {
-  const returned = members.filter((member) => member[phase]?.rankings?.length);
-  if (!returned.length) return `<p class="decision-archive-empty">${escapeHtml(emptyText)}</p>`;
-  return `<div class="decision-archive-members">${returned.map((member) => {
+function workflowMemberRecords(members, phase) {
+  return `<div class="decision-workflow-members">${members.map((member) => {
     const review = member[phase];
-    const topThree = (review.rankings || []).slice(0, 3).map((row) => `<span>#${escapeHtml(row.rank || "—")} ${escapeHtml(row.name || row.ticker || "未知")} <small>${escapeHtml(row.ticker || "")} · ${escapeHtml(row.score ?? "—")}分</small></span>`).join("");
-    return `<article class="decision-archive-member">
-      <header><strong>${escapeHtml(member.label || member.id)}</strong><small>${escapeHtml(member.model || member.provider || "独立 PDC")}</small></header>
-      <p>${escapeHtml(review.summary || "模型未提供文字摘要，请查看下方完整委员结论。")}</p>
-      <div class="decision-archive-top">${topThree}</div>
-    </article>`;
+    const audit = member.audit?.[phase];
+    const stateLabel = audit?.status === "failed" ? `失败 · ${audit.error || "未知错误"}` : review ? "已返回" : "等待";
+    return `<details class="decision-workflow-member"><summary><strong>${escapeHtml(member.label)}</strong><small>${escapeHtml(member.model)} · ${escapeHtml(stateLabel)}</small></summary>
+      <div><p>${escapeHtml(review?.summary || audit?.error || "尚未产生输出")}</p><small>${escapeHtml(auditTime(audit?.startedAt))} → ${escapeHtml(auditTime(audit?.completedAt))}</small>${rawAuditMarkup({ input: audit?.input || {}, output: review || audit?.output || {}, error: audit?.error || "" }, "全部输入与输出")}</div>
+    </details>`;
   }).join("")}</div>`;
 }
 
-function archivePoolMarkup(pool) {
-  if (!Array.isArray(pool) || !pool.length) return `<p class="decision-archive-empty">第一轮完成后，系统会把值得再次研究的股票汇成同一份共同复核池。</p>`;
-  return `<div class="decision-archive-chips">${pool.map((row, index) => `<span class="decision-archive-chip">#${index + 1} ${escapeHtml(row.name || row.ticker || "未知")} <small>${escapeHtml(row.ticker || "")}</small></span>`).join("")}</div>`;
+function workflowStageContent(stage, run) {
+  if (!run && stage.id === "verify") return rawAuditMarkup({ members: Object.values(state.verification).filter((member) => !member.checking) }, "全部验证记录");
+  const audit = run.audit || {};
+  if (stage.id === "verify") return rawAuditMarkup({ audit: audit.verification, members: run.modelVerification?.members || [] }, "全部验证记录");
+  if (stage.id === "snapshot") return rawAuditMarkup({ audit: audit.snapshot, snapshot: run.snapshot }, "全部冻结事实包");
+  if (stage.id === "round-one") return workflowMemberRecords(run.members || [], "roundOne");
+  if (stage.id === "merge") return rawAuditMarkup({ audit: audit.merge, pool: run.pool || [] }, "全部共同复核池");
+  if (stage.id === "round-two") return workflowMemberRecords(run.members || [], "roundTwo");
+  if (stage.id === "secretary") return `${rawAuditMarkup({ audit: audit.secretary, secretary: run.secretary || {} }, "Secretary 全部输入与输出")}`;
+  return rawAuditMarkup({ audit: audit.riskCheck, final: run.final || [] }, "最终闸门全部记录");
 }
 
-function archiveFinalMarkup(final) {
-  if (!final.length) return `<p class="decision-archive-empty">暂无股票通过共识与风险闸门。没有强行补足，是系统正常的保护机制。</p>`;
-  return `<div class="decision-archive-final">${final.map((row) => `<article><strong>#${escapeHtml(row.rank)} ${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></strong><span>${escapeHtml(row.consensusScore)} 分 · ${escapeHtml(row.buyVotes ?? 0)}/${escapeHtml(row.requiredSupport || "—")} BUY 支持</span></article>`).join("")}</div>`;
+function renderWorkflow() {
+  const workflow = $("#decisionWorkflow");
+  if (!workflow) return;
+  const run = state.run;
+  workflow.innerHTML = WORKFLOW_STAGES.map((stage, index) => {
+    const active = state.activeStep === stage.id;
+    const hasRecord = Boolean(run) || (stage.id === "verify" && Object.values(state.verification).some((member) => !member.checking));
+    const content = hasRecord ? workflowStageContent(stage, run) : "";
+    const card = `<span class="decision-workflow-index">${String(index + 1).padStart(2, "0")}</span><span><strong>${escapeHtml(stage.title)}</strong><small>${escapeHtml(workflowStageMeta(stage, run))}</small></span>`;
+    return `<li data-stage="${escapeHtml(stage.id)}" data-state="${active ? "active" : "idle"}">${hasRecord ? `<details${active ? " open" : ""}><summary>${card}</summary><div class="decision-workflow-content">${content || "<small>尚未产生记录</small>"}</div></details>` : `<div class="decision-workflow-card">${card}</div>`}</li>`;
+  }).join("");
+}
+
+function renderSteps() {
+  const list = $("#decisionSteps");
+  if (list) list.innerHTML = "";
+  const archive = $("#decisionArchive");
+  if (archive) archive.hidden = true;
 }
 
 function stepArtifact(step) {
@@ -530,6 +502,7 @@ function render() {
   } catch {
     // The decision flow still works when browser storage is unavailable.
   }
+  renderWorkflow();
   renderSteps();
   renderDataContract();
   renderModelPicker();
@@ -540,7 +513,7 @@ function render() {
 
 async function api(path, options = {}) {
   const controller = new AbortController();
-  const timeoutMs = path === "/smoke-test" ? 5 * 60 * 1000 : 35000;
+  const timeoutMs = path === "/smoke-test" ? 5 * 60 * 1000 : path.endsWith("/secretary") ? 90 * 1000 : 35000;
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const response = await fetch(`${DECISION_API_ENDPOINT}${path}`, {
@@ -555,7 +528,7 @@ async function api(path, options = {}) {
     if (!response.ok) throw new Error(payload.error || `Decision API error (${response.status})`);
     return payload;
   } catch (caught) {
-    if (caught?.name === "AbortError") throw new Error(path === "/smoke-test" ? "对话 Test 超过 5 分钟未返回，可稍后重试。" : "该评审超过 35 秒未返回，可能是模型额度或网络问题。");
+    if (caught?.name === "AbortError") throw new Error(path === "/smoke-test" ? "对话 Test 超过 5 分钟未返回，可稍后重试。" : path.endsWith("/secretary") ? "Secretary 超过 90 秒未返回，可继续生成后重试。" : "该评审超过 35 秒未返回，可能是模型额度或网络问题。");
     throw caught;
   } finally {
     clearTimeout(timeout);
@@ -652,7 +625,7 @@ function completeThrough(stepId) {
 
 function syncRunProgress() {
   if (!state.run) return;
-  state.completed = 1;
+  state.completed = 2;
   if (Array.isArray(state.run.modelVerification?.members)) {
     state.verification = Object.fromEntries(state.run.modelVerification.members.map((member) => [member.id, member]));
   }
@@ -660,9 +633,10 @@ function syncRunProgress() {
   state.run.members?.forEach((member) => {
     state.modelStates[member.id] = member.state || "idle";
   });
-  if (state.run.roundOneComplete) state.completed = 2;
-  if (state.run.pool?.length) state.completed = 3;
-  if (state.run.roundTwoComplete) state.completed = 4;
+  if (state.run.roundOneComplete) state.completed = 3;
+  if (state.run.pool?.length) state.completed = 4;
+  if (state.run.roundTwoComplete) state.completed = 5;
+  if (state.run.secretary?.summary) state.completed = 6;
   if (state.run.status === "READY_TO_PUBLISH" || state.run.status === "PUBLISHED") state.completed = steps.length;
 }
 
@@ -698,7 +672,7 @@ async function verifySelectedModels() {
   render();
   const failed = results.find((member) => !member.ok);
   if (failed) throw new Error(`${failed.label || failed.id} 验证未通过：${failed.error || "请检查 API Key、实际型号或账户额度。"}`);
-  if (results.length !== profiles.length) throw new Error("模型验证结果不完整，请重试。");
+  if (results.length !== profiles.length + 1) throw new Error("模型或 Secretary 验证结果不完整，请重试。");
   completeThrough("verify");
   return result.verification?.id || "";
 }
@@ -748,6 +722,14 @@ async function runDecisionFlow() {
       state.modelStates = Object.fromEntries((state.run.members || []).map((member) => [member.id, member.state || "idle"]));
       await runReviewers("round-two");
       completeThrough("round-two");
+      render();
+    }
+
+    if (!state.run.secretary?.summary) {
+      state.activeStep = "secretary";
+      render();
+      state.run = (await api(`/runs/${state.run.id}/secretary`, { method: "POST", body: "{}" })).run;
+      completeThrough("secretary");
       render();
     }
 

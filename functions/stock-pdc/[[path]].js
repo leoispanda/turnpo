@@ -12,6 +12,7 @@ const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
 const DEEPSEEK_CHAT_URL = "https://api.deepseek.com/chat/completions";
 const KIMI_CHAT_URL = "https://api.moonshot.cn/v1/chat/completions";
 const DEFAULT_STOCK_MODEL = "gpt-5.6-sol";
+const DEFAULT_SECRETARY_MODEL = "gpt-5.6-terra";
 const DEFAULT_CLAUDE_STOCK_MODEL = "claude-fable-5";
 const DEFAULT_DEEPSEEK_STOCK_MODEL = "deepseek-v4-pro";
 const DEFAULT_KIMI_STOCK_MODEL = "kimi-k3";
@@ -102,6 +103,20 @@ function stockModel(env) {
 
 function demoStockModel(env) {
   return String(env.OPENAI_DEMO_STOCK_MODEL || DEFAULT_DEMO_STOCK_MODEL).trim();
+}
+
+function secretaryStockModel(env) {
+  return String(env.OPENAI_SECRETARY_MODEL || env.STOCK_PDC_SECRETARY_MODEL || DEFAULT_SECRETARY_MODEL).trim();
+}
+
+function secretaryProfile(env) {
+  return {
+    id: "pdc_secretary",
+    label: "Secretary · GPT-5.6 Terra",
+    provider: "OpenAI",
+    model: secretaryStockModel(env),
+    tier: "secretary"
+  };
 }
 
 function claudeApiKey(env) {
@@ -414,6 +429,78 @@ function portableReviewSchema() {
       summary: { type: "string" }
     }
   };
+}
+
+function secretarySchema() {
+  return {
+    type: "json_schema",
+    name: "stock_pdc_secretary_summary",
+    strict: true,
+    schema: {
+      type: "object",
+      additionalProperties: false,
+      required: ["summary", "agreements", "disagreements", "priorityRisks", "reviewQuestions"],
+      properties: {
+        summary: { type: "string" },
+        agreements: { type: "array", items: { type: "string" }, maxItems: 12 },
+        disagreements: { type: "array", items: { type: "string" }, maxItems: 12 },
+        priorityRisks: { type: "array", items: { type: "string" }, maxItems: 12 },
+        reviewQuestions: { type: "array", items: { type: "string" }, maxItems: 12 }
+      }
+    }
+  };
+}
+
+function normalizeSecretarySummary(value) {
+  const cleanList = (items) => (Array.isArray(items) ? items : []).map((item) => cleanText(item, 360)).filter(Boolean).slice(0, 12);
+  return {
+    summary: cleanText(value?.summary, 1200),
+    agreements: cleanList(value?.agreements),
+    disagreements: cleanList(value?.disagreements),
+    priorityRisks: cleanList(value?.priorityRisks),
+    reviewQuestions: cleanList(value?.reviewQuestions)
+  };
+}
+
+function secretaryPacket(run) {
+  return {
+    date: run.date,
+    candidatePool: run.pool || [],
+    secondRound: committeeMembers(run).map((member) => ({
+      model: publicModelProfile(member.profile),
+      review: publicReview(member.roundTwo)
+    }))
+  };
+}
+
+async function secretaryReview(env, run) {
+  const apiKey = env.OPENAI_API_KEY;
+  if (!apiKey) throw new Error("Missing OPENAI_API_KEY for PDC Secretary.");
+  const profile = secretaryProfile(env);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 60000);
+  try {
+    const response = await fetch(OPENAI_RESPONSES_URL, {
+      method: "POST",
+      headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: profile.model,
+        instructions: "You are the secretary of an internal A-share research committee. Summarize only the supplied second-round PDC records. Do not rank stocks, change scores, make trading instructions, invent facts, or override the deterministic final gate. Produce a concise audit brief that preserves agreements, disagreements, priority risks, and questions for human review.",
+        input: `Second-round committee packet:\n${JSON.stringify(secretaryPacket(run))}`,
+        text: { format: secretarySchema() },
+        max_output_tokens: 1800,
+        reasoning: { effort: "medium" }
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error?.message || "PDC Secretary request failed.");
+    const outputText = extractOutputText(data);
+    if (!outputText) throw new Error("PDC Secretary returned no structured output.");
+    return { profile: publicModelProfile(profile), summary: normalizeSecretarySummary(parseModelJson(outputText)) };
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function reviewInstructions(role, phase) {
@@ -1193,6 +1280,18 @@ function publicModelVerification(verification) {
   };
 }
 
+function publicStageAudit(stage) {
+  if (!stage || typeof stage !== "object") return null;
+  return {
+    status: cleanText(stage.status, 32),
+    startedAt: cleanText(stage.startedAt, 40),
+    completedAt: cleanText(stage.completedAt, 40),
+    input: stage.input && typeof stage.input === "object" ? stage.input : {},
+    output: stage.output && typeof stage.output === "object" ? stage.output : {},
+    error: cleanText(stage.error, 320)
+  };
+}
+
 function publicRun(run) {
   const committee = isCommitteeRun(run);
   const modelProfile = !committee && (run.modelProfile || {
@@ -1224,12 +1323,24 @@ function publicRun(run) {
       ...publicModelProfile(member.profile),
       state: member.roundTwo?.rankings?.length ? "round_two_complete" : member.roundOne?.rankings?.length ? "round_one_complete" : "idle",
       roundOne: publicReview(member.roundOne),
-      roundTwo: publicReview(member.roundTwo)
+      roundTwo: publicReview(member.roundTwo),
+      audit: {
+        roundOne: publicStageAudit(member.audit?.roundOne),
+        roundTwo: publicStageAudit(member.audit?.roundTwo)
+      }
     })) : [],
     roles: committee ? [] : REVIEW_ROLES.map(({ id, name }) => ({ id, name, state: run.roundOne?.[id] ? "complete" : "idle" })),
     roundOneComplete: committee ? committeeStageComplete(run, "round-one") : reviewStageComplete(run, "round-one"),
     roundTwoComplete: committee ? committeeStageComplete(run, "round-two") : reviewStageComplete(run, "round-two"),
     pool: run.pool || [],
+    secretary: run.secretary || null,
+    audit: {
+      verification: publicStageAudit(run.audit?.verification),
+      snapshot: publicStageAudit(run.audit?.snapshot),
+      merge: publicStageAudit(run.audit?.merge),
+      secretary: publicStageAudit(run.audit?.secretary),
+      riskCheck: publicStageAudit(run.audit?.riskCheck)
+    },
     final: run.final || [],
     publishedAt: run.publishedAt || ""
   };
@@ -1289,7 +1400,8 @@ async function createModelVerification(request, env, mode = OFFICIAL_DECISION_MO
   const body = await readJson(request);
   const { requestedIds, modelProfiles } = requestedModelProfiles(body, env, mode);
   if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("Every selected PDC model must be configured before verification.");
-  const results = await Promise.all(modelProfiles.map(async (profile) => {
+  const verificationProfiles = [...modelProfiles, secretaryProfile(env)];
+  const results = await Promise.all(verificationProfiles.map(async (profile) => {
     const startedAt = Date.now();
     try {
       const response = await verifyModel(env, profile);
@@ -1301,19 +1413,19 @@ async function createModelVerification(request, env, mode = OFFICIAL_DECISION_MO
   const verification = {
     id: crypto.randomUUID(),
     createdAt: new Date().toISOString(),
-    modelProfileIds: modelProfiles.map((profile) => profile.id),
+    modelProfileIds: verificationProfiles.map((profile) => profile.id),
     members: results
   };
   await store.put(decisionVerificationKey(verification.id, mode), JSON.stringify(verification), { expirationTtl: MODEL_VERIFICATION_TTL_SECONDS });
   return json({ ok: results.every((result) => result.ok), verification });
 }
 
-async function consumeModelVerification(store, verificationId, modelProfiles, mode = OFFICIAL_DECISION_MODE) {
+async function consumeModelVerification(store, verificationId, modelProfiles, env, mode = OFFICIAL_DECISION_MODE) {
   const id = cleanText(verificationId, 80);
   if (!/^[a-f0-9-]{36}$/i.test(id)) return { error: "Run a fresh model verification before generating this PDC decision.", verification: null };
   const verification = await store.get(decisionVerificationKey(id, mode), "json");
   if (!verification || typeof verification !== "object") return { error: "The model verification has expired. Please verify the selected PDC models again.", verification: null };
-  const requested = modelProfiles.map((profile) => `${profile.id}:${profile.model}`).sort();
+  const requested = [...modelProfiles, secretaryProfile(env)].map((profile) => `${profile.id}:${profile.model}`).sort();
   const verified = (Array.isArray(verification.members) ? verification.members : [])
     .filter((member) => member?.ok)
     .map((member) => `${member.id}:${member.model}`)
@@ -1333,7 +1445,7 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
   if (!snapshot) return error("A valid daily PDC snapshot with at least five candidates is required.");
   const { requestedIds, modelProfiles } = requestedModelProfiles(body, env, mode);
   if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("No selected PDC model is configured on this deployment.");
-  const verificationReceipt = await consumeModelVerification(store, body.verificationId, modelProfiles, mode);
+  const verificationReceipt = await consumeModelVerification(store, body.verificationId, modelProfiles, env, mode);
   if (verificationReceipt.error) return error(verificationReceipt.error, 409);
   const currentCount = Number(await store.get(decisionRateKey(snapshot.date, mode)) || "0");
   if (currentCount >= MAX_RUNS_PER_DAY) return error("Daily decision-run limit reached. Review an existing run instead.", 429);
@@ -1354,11 +1466,34 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
     committee: Object.fromEntries(modelProfiles.map((profile) => [profile.id, {
       profile: publicModelProfile(profile),
       roundOne: null,
-      roundTwo: null
+      roundTwo: null,
+      audit: { roundOne: null, roundTwo: null }
     }])),
     roundOne: {},
     pool: [],
     roundTwo: {},
+    secretary: null,
+    audit: {
+      verification: {
+        status: "complete",
+        startedAt: verificationReceipt.verification.createdAt,
+        completedAt: now,
+        input: { members: verificationReceipt.verification.modelProfileIds || [] },
+        output: { members: publicModelVerification(verificationReceipt.verification)?.members || [] },
+        error: ""
+      },
+      snapshot: {
+        status: "complete",
+        startedAt: now,
+        completedAt: now,
+        input: { source: snapshot.source },
+        output: { date: snapshot.date, candidateCount: snapshot.candidates.length, provenance: snapshot.provenance || null },
+        error: ""
+      },
+      merge: null,
+      secretary: null,
+      riskCheck: null
+    },
     final: [],
     publishedAt: ""
   };
@@ -1400,6 +1535,7 @@ async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE) {
 }
 
 async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
+  const store = decisionStore(env);
   if (stage === "round-one" || stage === "round-two") {
     const reviewKey = reviewStageKey(stage);
     const members = requestedModelId
@@ -1413,23 +1549,98 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
     for (const member of members) {
       if (member[reviewKey]?.rankings?.length) continue;
       run.status = `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_IN_PROGRESS`;
-      member[reviewKey] = attachPendingForwardOutcomes(await modelReview(env, member.profile, FULL_PDC_ROLE, candidates, stage), run.date);
+      const startedAt = new Date().toISOString();
+      try {
+        member[reviewKey] = attachPendingForwardOutcomes(await modelReview(env, member.profile, FULL_PDC_ROLE, candidates, stage), run.date);
+        member.audit = member.audit || {};
+        member.audit[reviewKey] = {
+          status: "complete",
+          startedAt,
+          completedAt: new Date().toISOString(),
+          input: { candidateCount: candidates.length, tickers: candidates.map((candidate) => candidate.ticker) },
+          output: { summary: member[reviewKey].summary, rankingCount: member[reviewKey].rankings.length },
+          error: ""
+        };
+      } catch (caught) {
+        member.audit = member.audit || {};
+        member.audit[reviewKey] = {
+          status: "failed",
+          startedAt,
+          completedAt: new Date().toISOString(),
+          input: { candidateCount: candidates.length, tickers: candidates.map((candidate) => candidate.ticker) },
+          output: {},
+          error: cleanText(caught?.message || "Model review failed.", 320)
+        };
+        await saveRun(store, run);
+        throw caught;
+      }
       // Persist one independent PDC conclusion at a time for safe resume after a timeout.
-      await saveRun(decisionStore(env), run);
+      await saveRun(store, run);
     }
     if (committeeStageComplete(run, stage)) run.status = stage === "round-one" ? "ROUND_ONE_COMPLETE" : "ROUND_TWO_COMPLETE";
   } else if (stage === "merge") {
     if (!committeeStageComplete(run, "round-one")) return error("Complete every PDC model before merging candidates.", 409);
+    const startedAt = new Date().toISOString();
     if (!run.pool?.length) run.pool = consensusFromReviews(committeeReviewMap(run, "round-one"), run.snapshot.candidates).slice(0, 20);
+    run.audit = run.audit || {};
+    run.audit.merge = {
+      status: "complete",
+      startedAt,
+      completedAt: new Date().toISOString(),
+      input: { memberCount: committeeMembers(run).length, candidateCount: run.snapshot.candidates.length },
+      output: { pool: run.pool },
+      error: ""
+    };
     run.status = "POOL_READY";
+  } else if (stage === "secretary") {
+    if (!committeeStageComplete(run, "round-two")) return error("Complete every PDC model before Secretary summary.", 409);
+    if (!run.secretary) {
+      const startedAt = new Date().toISOString();
+      try {
+        run.secretary = await secretaryReview(env, run);
+        run.audit = run.audit || {};
+        run.audit.secretary = {
+          status: "complete",
+          startedAt,
+          completedAt: new Date().toISOString(),
+          input: { model: run.secretary.profile, poolCount: run.pool?.length || 0, memberCount: committeeMembers(run).length },
+          output: run.secretary.summary,
+          error: ""
+        };
+      } catch (caught) {
+        run.audit = run.audit || {};
+        run.audit.secretary = {
+          status: "failed",
+          startedAt,
+          completedAt: new Date().toISOString(),
+          input: { model: publicModelProfile(secretaryProfile(env)), poolCount: run.pool?.length || 0, memberCount: committeeMembers(run).length },
+          output: {},
+          error: cleanText(caught?.message || "PDC Secretary failed.", 320)
+        };
+        await saveRun(store, run);
+        throw caught;
+      }
+    }
+    run.status = "SECRETARY_COMPLETE";
   } else if (stage === "risk-check") {
     if (!committeeStageComplete(run, "round-two")) return error("Complete every PDC model before risk review.", 409);
+    if (!run.secretary) return error("Complete the Secretary summary before the final gate.", 409);
+    const startedAt = new Date().toISOString();
     run.final = decisionResult(run);
+    run.audit = run.audit || {};
+    run.audit.riskCheck = {
+      status: "complete",
+      startedAt,
+      completedAt: new Date().toISOString(),
+      input: { poolCount: run.pool?.length || 0, memberCount: committeeMembers(run).length },
+      output: { final: run.final },
+      error: ""
+    };
     run.status = "READY_TO_PUBLISH";
   } else {
     return error("Unknown decision stage.", 404);
   }
-  await saveRun(decisionStore(env), run);
+  await saveRun(store, run);
   return json({ ok: true, run: publicRun(run) });
 }
 
@@ -1863,7 +2074,7 @@ async function decisionApi(context, mode = OFFICIAL_DECISION_MODE) {
   if (suffix === "verifications") return createModelVerification(request, env, mode);
   if (suffix === "smoke-test") return smokeTestDecision(request, env, mode);
   if (suffix === "runs") return createRun(request, env, mode);
-  const stageMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/(round-one|merge|round-two|risk-check)(?:\/([a-z0-9_.-]+))?$/i);
+  const stageMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/(round-one|merge|round-two|secretary|risk-check)(?:\/([a-z0-9_.-]+))?$/i);
   if (stageMatch) return advanceRun(env, stageMatch[1], stageMatch[2], stageMatch[3] || "", mode);
   const publishMatch = suffix.match(/^runs\/([a-f0-9-]{36})\/publish$/i);
   if (publishMatch) return publishRun(env, publishMatch[1], mode);

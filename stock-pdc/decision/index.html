@@ -46,13 +46,7 @@
         </div>
       </section>
 
-      <ol class="decision-workflow" aria-label="本轮步骤">
-        <li><span>01</span><strong>模型验证</strong><small>5 个 API</small></li>
-        <li><span>02</span><strong>事实快照</strong><small>行情数据 + Hawkeye</small></li>
-        <li><span>03</span><strong>第一轮</strong><small>5 PDC × Top 30</small></li>
-        <li><span>04</span><strong>第二轮</strong><small>Top 20 × 5 PDC</small></li>
-        <li><span>05</span><strong>最终名单</strong><small>共识 + 风险闸门</small></li>
-      </ol>
+      <ol class="decision-workflow" id="decisionWorkflow" aria-label="本轮步骤"></ol>
 
       <section class="decision-run-strip" aria-label="本次生成状态" hidden>
         <article><span>运行编号</span><strong id="runId">等待生成</strong></article>

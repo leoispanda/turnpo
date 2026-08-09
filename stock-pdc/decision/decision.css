@@ -163,7 +163,7 @@
 
 .decision-workflow {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
   gap: 8px;
   margin: 0;
   padding: 0;
@@ -171,14 +171,31 @@
 }
 
 .decision-workflow li {
-  display: grid;
-  gap: 4px;
   min-height: 76px;
   border: 1px solid rgba(34, 87, 122, 0.14);
   border-radius: 11px;
   background: rgba(255, 255, 255, 0.7);
+  overflow: hidden;
+}
+
+.decision-workflow-card,
+.decision-workflow summary {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 7px;
+  min-height: 76px;
+  align-content: center;
   padding: 11px 12px;
 }
+
+.decision-workflow summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.decision-workflow summary::-webkit-details-marker { display: none; }
+.decision-workflow summary > span:nth-child(2) { display: grid; gap: 4px; }
+.decision-workflow li[data-state="active"] { border-color: rgba(34, 87, 122, 0.55); box-shadow: 0 0 0 3px rgba(34, 87, 122, 0.08); }
 
 .decision-workflow span {
   color: #22577a;
@@ -196,6 +213,44 @@
   color: #73808a;
   font-size: 11px;
 }
+
+.decision-workflow-content {
+  border-top: 1px solid rgba(34, 87, 122, 0.1);
+  padding: 12px;
+}
+
+.decision-workflow-raw,
+.decision-workflow-member {
+  border: 1px solid rgba(33, 49, 60, 0.1);
+  border-radius: 8px;
+  background: #fafcfd;
+}
+
+.decision-workflow-raw summary,
+.decision-workflow-member summary {
+  cursor: pointer;
+  padding: 9px 10px;
+  color: #365569;
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.decision-workflow-raw pre {
+  max-height: 430px;
+  overflow: auto;
+  margin: 0;
+  border-top: 1px solid rgba(33, 49, 60, 0.08);
+  padding: 11px;
+  color: #31434f;
+  font: 11px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.decision-workflow-members { display: grid; gap: 8px; }
+.decision-workflow-member > div { padding: 0 10px 10px; }
+.decision-workflow-member p { margin: 0 0 5px; color: #4f5f69; font-size: 12px; line-height: 1.55; }
+.decision-workflow-member > div > small { display: block; margin-bottom: 8px; }
 
 .decision-reading-guide {
   display: grid;
