@@ -318,11 +318,12 @@ def screen_universe(
     daily_move_lookback: int,
     min_bars: int,
 ) -> list[HawkeyeResult]:
-    # Metadata is the full API market snapshot; `universe` contains only
-    # tickers whose OHLCV history is ready.  Iterating their union prevents a
-    # failed or deliberately unrequested history download from disappearing
-    # from the Hawkeye audit.
-    all_tickers = set(universe) | set(metadata)
+    # Metadata is the immutable full A-share market snapshot. `universe`
+    # additionally contains required non-equity benchmarks such as CSI300ETF;
+    # those are market context, not A-share universe members. Iterate the raw
+    # snapshot only, so every market row is accounted for exactly once and the
+    # benchmark never becomes a misleading DATA_FAILED stock.
+    all_tickers = set(metadata)
     results = [
         screen_stock(
             ticker,

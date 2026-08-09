@@ -118,6 +118,17 @@
   opacity: 0.5;
 }
 
+.decision-refresh-link {
+  color: #22577a;
+  font-size: 12px;
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.decision-refresh-link:hover {
+  text-decoration: underline;
+}
+
 .decision-publish-btn {
   min-height: 38px;
   padding: 0 16px;

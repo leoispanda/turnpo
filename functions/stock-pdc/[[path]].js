@@ -29,6 +29,10 @@ const MAX_SMOKE_TESTS_PER_DAY = 60;
 const SMOKE_TEST_TIMEOUT_MS = 5 * 60 * 1000;
 const RUN_TTL_SECONDS = 180 * 24 * 60 * 60;
 const MODEL_VERIFICATION_TTL_SECONDS = 10 * 60;
+const MANUAL_MARKET_REFRESH_COOLDOWN_SECONDS = 15 * 60;
+const MANUAL_MARKET_REFRESH_REPOSITORY = "leoispanda/turnpo";
+const MANUAL_MARKET_REFRESH_WORKFLOW = "manual-stock-pdc-refresh.yml";
+const MANUAL_MARKET_REFRESH_WORKFLOW_URL = `https://github.com/${MANUAL_MARKET_REFRESH_REPOSITORY}/actions/workflows/${MANUAL_MARKET_REFRESH_WORKFLOW}`;
 const PORTFOLIO_DEFAULT_CONFIG = Object.freeze({
   maxPositions: 15,
   premarketRankLimit: 20,
@@ -258,6 +262,54 @@ function decisionVerificationKey(verificationId, mode = OFFICIAL_DECISION_MODE) 
 
 function decisionSmokeTestRateKey(date, mode = OFFICIAL_DECISION_MODE) {
   return `${decisionPrefix(mode)}:smoke-test-count:${date}`;
+}
+
+function manualMarketRefreshKey() {
+  // The market snapshot is shared by Mini and formal PDC. One manual request
+  // must therefore lock both pages, rather than queueing two identical jobs.
+  return "stock-pdc:manual-market-refresh";
+}
+
+async function queueManualMarketRefresh(env) {
+  const token = String(env.STOCK_PDC_GITHUB_TOKEN || "").trim();
+  if (!token) {
+    return error("Manual market refresh is not configured. Set the STOCK_PDC_GITHUB_TOKEN Pages secret with GitHub Actions: write permission.", 503);
+  }
+  const store = decisionStore(env);
+  if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
+
+  const lockKey = manualMarketRefreshKey();
+  const existing = await store.get(lockKey, "json");
+  if (existing?.requestedAt) {
+    return error("A manual market refresh is already queued. Wait for it to finish, then reload this page.", 409);
+  }
+
+  const response = await fetch(
+    `https://api.github.com/repos/${MANUAL_MARKET_REFRESH_REPOSITORY}/actions/workflows/${MANUAL_MARKET_REFRESH_WORKFLOW}/dispatches`,
+    {
+      method: "POST",
+      headers: {
+        accept: "application/vnd.github+json",
+        authorization: `Bearer ${token}`,
+        "content-type": "application/json",
+        "x-github-api-version": "2026-03-10"
+      },
+      body: JSON.stringify({ ref: "main" })
+    }
+  );
+  if (!response.ok) {
+    return error(`GitHub rejected the manual market refresh (status ${response.status}). Check the workflow and the token's Actions: write permission.`, 502);
+  }
+
+  const requestedAt = new Date().toISOString();
+  await store.put(lockKey, JSON.stringify({ requestedAt }), { expirationTtl: MANUAL_MARKET_REFRESH_COOLDOWN_SECONDS });
+  return json({
+    ok: true,
+    status: "QUEUED",
+    requestedAt,
+    workflowUrl: MANUAL_MARKET_REFRESH_WORKFLOW_URL,
+    message: "Manual full-market refresh queued. It does not run PDC models or publish a decision."
+  }, { status: 202 });
 }
 
 function extractOutputText(data) {
@@ -2263,6 +2315,7 @@ async function decisionApi(context, mode = OFFICIAL_DECISION_MODE) {
     return error("Unknown decision resource.", 404);
   }
   if (request.method !== "POST") return error("Method not allowed.", 405);
+  if (suffix === "data-refresh") return queueManualMarketRefresh(env);
   if (suffix === "verifications") return createModelVerification(request, env, mode);
   if (suffix === "smoke-test") return smokeTestDecision(request, env, mode);
   if (suffix === "runs") return createRun(request, env, mode);

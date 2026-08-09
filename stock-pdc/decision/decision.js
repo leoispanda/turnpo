@@ -53,7 +53,11 @@ const state = {
   modelStates: { [IS_DEMO_MODE ? "gpt-5.6-luna" : "gpt-5.6-sol"]: "idle" },
   verification: {},
   testing: false,
-  smokeTests: {}
+  smokeTests: {},
+  refreshingMarketData: false,
+  marketRefreshMessage: "",
+  marketRefreshError: "",
+  marketRefreshWorkflowUrl: ""
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -172,9 +176,9 @@ function renderSteps() {
   const list = $("#decisionSteps");
   if (list) list.innerHTML = "";
   const archive = $("#decisionArchive");
-  if (archive) archive.hidden = !(state.running || state.testing || state.error || state.run);
+  if (archive) archive.hidden = !(state.running || state.testing || state.refreshingMarketData || state.marketRefreshMessage || state.marketRefreshError || state.error || state.run);
   const copy = $("#progressCopy");
-  if (copy) copy.hidden = !(state.running || state.testing || state.error || state.run);
+  if (copy) copy.hidden = !(state.running || state.testing || state.refreshingMarketData || state.marketRefreshMessage || state.marketRefreshError || state.error || state.run);
 }
 
 function stepArtifact(step) {
@@ -450,21 +454,30 @@ function setRunSummary() {
   const runStrip = $(".decision-run-strip");
   const button = $("#generateDecision");
   const testButton = $("#testDecision");
+  const refreshButton = $("#refreshMarketData");
+  const refreshLink = $("#manualRefreshWorkflow");
   const runId = $("#runId");
   const mode = $("#decisionMode");
   const copyRunButtons = document.querySelectorAll("[data-copy-run], #copyDecisionPacket");
   const run = state.run;
 
   if (runId) runId.textContent = run?.id ? run.id.slice(0, 8).toUpperCase() : "等待生成";
-  if (runStrip) runStrip.hidden = !(state.running || state.testing || state.error || run);
-  if (snapshot) snapshot.textContent = state.error && !run ? "FAILED · 未锁定" : state.completed > 0 ? `${run?.date || ""} 已锁定` : "尚未锁定";
-  if (status) status.textContent = state.error ? "FAILED" : state.testing ? "Test 中" : state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
-  if (count) count.textContent = state.error ? "已阻断" : state.running ? "生成中" : state.completed === steps.length ? "本轮完成" : state.run ? `已完成 ${state.completed} 步` : "等待运行";
+  const marketRefreshPending = state.refreshingMarketData || Boolean(state.marketRefreshMessage);
+  if (runStrip) runStrip.hidden = !(state.running || state.testing || marketRefreshPending || state.marketRefreshError || state.error || run);
+  if (snapshot) snapshot.textContent = marketRefreshPending ? "刷新已提交 · 旧快照不可用" : state.error && !run ? "FAILED · 未锁定" : state.completed > 0 ? `${run?.date || ""} 已锁定` : "尚未锁定";
+  if (status) status.textContent = state.marketRefreshError || state.error ? "FAILED" : marketRefreshPending ? "等待市场刷新" : state.testing ? "Test 中" : state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
+  if (count) count.textContent = state.marketRefreshError || state.error ? "已阻断" : state.refreshingMarketData ? "正在提交" : state.marketRefreshMessage ? "刷新已提交" : state.running ? "生成中" : state.completed === steps.length ? "本轮完成" : state.run ? `已完成 ${state.completed} 步` : "等待运行";
   if (mode) {
     const profiles = run?.committeeMode ? run.members : selectedModelProfiles();
     mode.textContent = profiles?.length ? `${profiles.length} 位${IS_DEMO_MODE ? "Mini" : "模型"} PDC · 同一事实包` : "未配置模型";
   }
-  if (copy) copy.textContent = state.error
+  if (copy) copy.textContent = state.marketRefreshError
+    ? `市场数据刷新未提交：${state.marketRefreshError}`
+    : state.refreshingMarketData
+    ? "正在提交手动市场数据刷新；不会调用模型、不会自动发布 PDC 决策。"
+    : state.marketRefreshMessage
+    ? state.marketRefreshMessage
+    : state.error
     ? state.run
       ? `本轮暂停在${steps.find((step) => step.id === state.activeStep)?.title || "当前阶段"}：${state.error}。已返回的模型结论已保留。`
       : `本轮尚未开始：${state.error}。可先重新运行对话 Test，或稍后再开始生成。`
@@ -478,12 +491,20 @@ function setRunSummary() {
         : "本次 Run 已完成。确认无误后，点击“发布到 PDC”才会追加当天正式记录。"
       : "开始后，这里会直接记录每一轮谁给出了什么结论，而不是只显示流程状态。";
   if (button) {
-    button.disabled = state.running || state.testing;
+    button.disabled = state.running || state.testing || state.refreshingMarketData;
     button.textContent = state.running ? "正在生成…" : state.run ? "继续生成" : "开始生成";
   }
   if (testButton) {
-    testButton.disabled = state.running || state.testing;
+    testButton.disabled = state.running || state.testing || state.refreshingMarketData;
     testButton.textContent = state.testing ? "Test 运行中…" : "对话 Test（不生成决策）";
+  }
+  if (refreshButton) {
+    refreshButton.disabled = state.running || state.testing || state.refreshingMarketData;
+    refreshButton.textContent = state.refreshingMarketData ? "正在提交刷新…" : "手动刷新市场数据";
+  }
+  if (refreshLink) {
+    refreshLink.hidden = !state.marketRefreshWorkflowUrl;
+    refreshLink.href = state.marketRefreshWorkflowUrl || "#";
   }
   copyRunButtons.forEach((copyRun) => {
     copyRun.disabled = !run || state.running;
@@ -619,6 +640,7 @@ async function latestSnapshot() {
 async function loadDataContract() {
   try {
     await latestSnapshot();
+    state.error = "";
   } catch (caught) {
     state.error = caught?.message || "Hawkeye Radar is not ready.";
   } finally {
@@ -841,6 +863,25 @@ async function runSmokeTest() {
   }
 }
 
+async function refreshMarketData() {
+  if (state.running || state.testing || state.refreshingMarketData) return;
+  state.refreshingMarketData = true;
+  state.marketRefreshMessage = "";
+  state.marketRefreshError = "";
+  state.marketRefreshWorkflowUrl = "";
+  render();
+  try {
+    const result = await api("/data-refresh", { method: "POST", body: "{}" });
+    state.marketRefreshWorkflowUrl = result.workflowUrl || "";
+    state.marketRefreshMessage = "已提交手动全市场行情→Hawkeye 刷新。完成后刷新此页；当前旧快照仍不能用于 PDC。";
+  } catch (caught) {
+    state.marketRefreshError = caught.message || "请稍后重试。";
+  } finally {
+    state.refreshingMarketData = false;
+    render();
+  }
+}
+
 async function publishDecision() {
   if (IS_DEMO_MODE || !state.run?.id || state.running) return;
   state.running = true;
@@ -862,6 +903,8 @@ $("#generateDecision")?.addEventListener("click", () => {
 });
 
 $("#testDecision")?.addEventListener("click", runSmokeTest);
+
+$("#refreshMarketData")?.addEventListener("click", refreshMarketData);
 
 $("#publishDecision")?.addEventListener("click", publishDecision);
 

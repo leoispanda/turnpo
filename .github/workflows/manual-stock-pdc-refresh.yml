@@ -1,0 +1,50 @@
+name: Stock PDC manual market refresh
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stock-pdc-manual-market-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Refresh full-market Hawkeye snapshot
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Generate the full-market Hawkeye snapshot
+        working-directory: stock-pdc-engine
+        run: python scripts/run_latest_pdc.py --top 20 --variants a
+
+      - name: Sync public Stock PDC data packets
+        run: node scripts/sync-stock-pdc-rank-flow.mjs
+
+      - name: Commit the generated data packets
+        run: |
+          git add stock-pdc/rank-flow.json stock-pdc/ab-flow.json stock-pdc/hawkeye/latest.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Refresh Stock PDC market snapshot"
+          git push origin HEAD:main

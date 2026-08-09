@@ -43,7 +43,7 @@ class HawkeyeAccountingTests(unittest.TestCase):
             ),
         }
         results = screen_universe(
-            {"600001.SH": _bars(0.001)},
+            {"600001.SH": _bars(0.001), "CSI300ETF": _bars(0.001)},
             metadata,
             min_market_cap=30_000_000_000,
             min_return_60d=0,
@@ -63,6 +63,7 @@ class HawkeyeAccountingTests(unittest.TestCase):
         self.assertFalse(by_ticker["600003.SH"].passed)
         self.assertEqual(by_ticker["600003.SH"].status, "DATA_FAILED_HISTORY_FETCH_FAILED")
         self.assertEqual(by_ticker["600003.SH"].rejection_reason, "upstream timeout")
+        self.assertNotIn("CSI300ETF", by_ticker)
 
 
 if __name__ == "__main__":

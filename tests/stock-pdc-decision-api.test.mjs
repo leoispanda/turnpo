@@ -68,6 +68,7 @@ let claudeRequest = null;
 let geminiRequest = null;
 let deepseekRequest = null;
 let kimiRequest = null;
+let marketRefreshRequest = null;
 let reviewRankingLimit = null;
 let nullDimensionScore = false;
 const mockDimensionScores = (index) => ({
@@ -82,6 +83,10 @@ const mockDimensionScores = (index) => ({
   downsideFailureRisk: 7
 });
 globalThis.fetch = async (_url, options = {}) => {
+  if (String(_url).startsWith("https://api.github.com/repos/leoispanda/turnpo/actions/workflows/manual-stock-pdc-refresh.yml/dispatches")) {
+    marketRefreshRequest = { url: String(_url), request: JSON.parse(options.body), headers: options.headers };
+    return new Response(null, { status: 204 });
+  }
   if (String(_url).endsWith("/stock-pdc/hawkeye/latest.json")) {
     return new Response(JSON.stringify(hawkeyePacket()), { status: 200, headers: { "content-type": "application/json" } });
   }
@@ -194,6 +199,7 @@ try {
     KIMI_API_KEY: "kimi-test-key",
     KIMI_STOCK_MODEL: "kimi-test-model",
     KIMI_DEMO_STOCK_MODEL: "kimi-mini-test-model",
+    STOCK_PDC_GITHUB_TOKEN: "github-dispatch-test-token",
     STOCK_PDC_ACCESS_CODE: secret
   };
   const context = (request) => ({ request, env, next: async () => new Response("next") });
@@ -213,7 +219,20 @@ try {
     return { modelProfileIds, verificationId: verification.verification.id };
   };
 
-  let response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/models")));
+  let response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/data-refresh", {})));
+  assert.equal(response.status, 202, "manual market refresh should queue the canonical engine workflow");
+  const refreshPayload = await response.json();
+  assert.equal(refreshPayload.status, "QUEUED");
+  assert.equal(marketRefreshRequest.request.ref, "main");
+  assert.equal(marketRefreshRequest.headers.authorization, "Bearer github-dispatch-test-token");
+  assert.equal(refreshPayload.workflowUrl, "https://github.com/leoispanda/turnpo/actions/workflows/manual-stock-pdc-refresh.yml");
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision-demo/api/data-refresh", {})));
+  assert.equal(response.status, 409, "Mini and formal PDC must share one manual market-refresh lock");
+  const unconfiguredRefreshContext = (request) => ({ request, env: { ...env, STOCK_PDC_GITHUB_TOKEN: "" }, next: async () => new Response("next") });
+  response = await onRequestPost(unconfiguredRefreshContext(requestFor("/stock-pdc/decision/api/data-refresh", {})));
+  assert.equal(response.status, 503, "a missing dispatch secret must be explicit instead of pretending the data refresh started");
+
+  response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/models")));
   assert.equal(response.status, 200);
   let payload = await response.json();
   assert.deepEqual(payload.models, [
