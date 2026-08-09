@@ -1,36 +1,22 @@
-# Stock PDC v2
+# Stock PDC 网站页面
 
-## Rule
+本目录包含两个独立页面：
 
-Stock PDC now follows a strict three-step flow:
+1. `/stock-pdc/`：每日 Top 20 研究时间流与 PDC 操作状态展示。
+2. `/stock-pdc/decision/`：创建一次可信的全市场 Stock PDC Run。
 
-1. `Hawkeye Radar` filters the A-share universe down to a candidate pool.
-2. `PDC` scores and ranks only those radar-selected candidates.
-3. `Top 20` is the target portfolio.
+## 可信生成规则
 
-The system does not use `final_status` to decide whether to buy. Status and action-style labels are retained only as research metadata.
+- 浏览器只可创建空的 Run；不得提交股票名单、日期、分数或筛选参数。
+- 受保护的计算服务自行抓取全市场 A 股，且任一股票的历史行情请求失败时整次运行失败。
+- 鹰眼只有两条固定规则：总市值大于 300 亿人民币、60 日收益大于 0。
+- PDC 必须对每一只通过鹰眼的股票评分。候选数与 PDC 评分数必须一一对应。
+- 运行完成后，服务端核对全市场数量、规则版本、运行摘要哈希和展示产物哈希；只有通过校验的 Run 才能发布。
 
-## Portfolio Decision
+## 展示规则
 
-- Buy: names that enter today's Top 20.
-- Hold: names that remain in today's Top 20.
-- Review for exit: names that drop out of today's Top 20.
-- Exception: if a dropped name is up on the signal day, mark `HOLD_DROPPED_UP_DAY / 上涨不卖`.
+- 发布后的页面只读取 `/stock-pdc/runs/<run-id>/display.json`，并在浏览器中再次核对 SHA-256 和 Run ID。
+- `rank-flow.json` 是历史时间流，仅在没有已验证发布 Run 时作为回顾展示，并明确标记为历史数据。
+- Top 20 是 PDC 研究优先级；只有 PDC 引擎给出的正式操作状态才可显示为买入候选，不能把全部 Top 20 表述为买入或持仓指令。
 
-The intended portfolio behavior is to stay aligned with the highest-ranked 20 names.
-
-## Research Retention
-
-Even though Top 20 is the only decision output, all factor information is preserved for later analysis:
-
-- market regime
-- trend
-- Livermore breakout
-- volume-price
-- candlestick
-- overheat
-- risk
-- Zhuge Orion
-- final chair
-
-Reasons, warnings, main risk, and historical rank changes remain in the exported data so the model can be reweighted later based on actual outcomes.
+真实下单始终未启用。页面和引擎只用于研究、观察与人工复核。

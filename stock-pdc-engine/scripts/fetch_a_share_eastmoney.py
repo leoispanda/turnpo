@@ -18,117 +18,6 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 LIST_URL = "https://push2.eastmoney.com/api/qt/clist/get"
 KLINE_URL = "https://push2his.eastmoney.com/api/qt/stock/kline/get"
 TENCENT_KLINE_URL = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
-PRESET_CANDIDATES = [
-    ("600519", "贵州茅台"),
-    ("601398", "工商银行"),
-    ("601288", "农业银行"),
-    ("601939", "建设银行"),
-    ("601988", "中国银行"),
-    ("600036", "招商银行"),
-    ("601318", "中国平安"),
-    ("601328", "交通银行"),
-    ("601166", "兴业银行"),
-    ("600000", "浦发银行"),
-    ("601668", "中国建筑"),
-    ("601857", "中国石油"),
-    ("600028", "中国石化"),
-    ("601088", "中国神华"),
-    ("600900", "长江电力"),
-    ("600941", "中国移动"),
-    ("601728", "中国电信"),
-    ("600050", "中国联通"),
-    ("600030", "中信证券"),
-    ("601688", "华泰证券"),
-    ("300059", "东方财富"),
-    ("000858", "五粮液"),
-    ("000568", "泸州老窖"),
-    ("002304", "洋河股份"),
-    ("600809", "山西汾酒"),
-    ("000333", "美的集团"),
-    ("000651", "格力电器"),
-    ("600690", "海尔智家"),
-    ("600887", "伊利股份"),
-    ("603288", "海天味业"),
-    ("601888", "中国中免"),
-    ("300750", "宁德时代"),
-    ("002594", "比亚迪"),
-    ("300124", "汇川技术"),
-    ("002050", "三花智控"),
-    ("300274", "阳光电源"),
-    ("601012", "隆基绿能"),
-    ("600438", "通威股份"),
-    ("002460", "赣锋锂业"),
-    ("002466", "天齐锂业"),
-    ("300014", "亿纬锂能"),
-    ("600276", "恒瑞医药"),
-    ("300760", "迈瑞医疗"),
-    ("603259", "药明康德"),
-    ("300015", "爱尔眼科"),
-    ("000661", "长春高新"),
-    ("688271", "联影医疗"),
-    ("000963", "华东医药"),
-    ("600309", "万华化学"),
-    ("601899", "紫金矿业"),
-    ("600019", "宝钢股份"),
-    ("600547", "山东黄金"),
-    ("601600", "中国铝业"),
-    ("000807", "云铝股份"),
-    ("600489", "中金黄金"),
-    ("603993", "洛阳钼业"),
-    ("002415", "海康威视"),
-    ("000725", "京东方A"),
-    ("002475", "立讯精密"),
-    ("002371", "北方华创"),
-    ("688981", "中芯国际"),
-    ("688041", "海光信息"),
-    ("688256", "寒武纪"),
-    ("688012", "中微公司"),
-    ("603501", "韦尔股份"),
-    ("600584", "长电科技"),
-    ("000063", "中兴通讯"),
-    ("000938", "紫光股份"),
-    ("002230", "科大讯飞"),
-    ("300308", "中际旭创"),
-    ("300394", "天孚通信"),
-    ("300502", "新易盛"),
-    ("300433", "蓝思科技"),
-    ("002241", "歌尔股份"),
-    ("600570", "恒生电子"),
-    ("300033", "同花顺"),
-    ("002236", "大华股份"),
-    ("002049", "紫光国微"),
-    ("601138", "工业富联"),
-    ("600760", "中航沈飞"),
-    ("000768", "中航西飞"),
-    ("002179", "中航光电"),
-    ("600031", "三一重工"),
-    ("000425", "徐工机械"),
-    ("601766", "中国中车"),
-    ("600406", "国电南瑞"),
-    ("601390", "中国中铁"),
-    ("601186", "中国铁建"),
-    ("601669", "中国电建"),
-    ("601919", "中远海控"),
-    ("600009", "上海机场"),
-    ("600018", "上港集团"),
-    ("601006", "大秦铁路"),
-    ("601816", "京沪高铁"),
-    ("000002", "万科A"),
-    ("600048", "保利发展"),
-    ("002352", "顺丰控股"),
-    ("002714", "牧原股份"),
-    ("300498", "温氏股份"),
-    ("000895", "双汇发展"),
-    ("002027", "分众传媒"),
-    ("601211", "国泰君安"),
-    ("600150", "中国船舶"),
-    ("601989", "中国重工"),
-    ("601985", "中国核电"),
-    ("600011", "华能国际"),
-    ("600905", "三峡能源"),
-]
-
-
 @dataclass(frozen=True)
 class Candidate:
     code: str
@@ -154,7 +43,7 @@ class Candidate:
 
     @property
     def tencent_symbol(self) -> str:
-        prefix = "sh" if self.exchange == "SH" else "sz"
+        prefix = {"SH": "sh", "SZ": "sz", "BJ": "bj"}[self.exchange]
         return f"{prefix}{self.code}"
 
 
@@ -227,34 +116,61 @@ def _exchange_for_code(code: str) -> str | None:
         return "SH"
     if code.startswith(("0", "2", "3")):
         return "SZ"
+    if code.startswith(("4", "8")):
+        return "BJ"
     return None
 
 
 def fetch_candidates() -> list[Candidate]:
-    payload = _fetch_json(
-        LIST_URL,
-        {
-            "pn": 1,
-            "pz": 6000,
-            "po": 1,
-            "np": 1,
-            "fltt": 2,
-            "invt": 2,
-            "fid": "f20",
-            "fs": "m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23",
-            "fields": "f12,f14,f2,f3,f6,f8,f9,f20,f21,f23",
-        },
-    )
-    rows = ((payload.get("data") or {}).get("diff") or [])
+    page_size = 500
+    page = 1
+    expected_total: int | None = None
+    raw_rows: list[dict[str, Any]] = []
+    while expected_total is None or len(raw_rows) < expected_total:
+        payload = _fetch_json(
+            LIST_URL,
+            {
+                "pn": page,
+                "pz": page_size,
+                "po": 1,
+                "np": 1,
+                "fltt": 2,
+                "invt": 2,
+                "fid": "f20",
+                # Shenzhen main board, ChiNext, Shanghai main board, STAR Market,
+                # and Beijing Stock Exchange. No board is omitted for liquidity.
+                "fs": "m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23,m:0+t:81+s:2048",
+                "fields": "f12,f14,f2,f3,f6,f8,f9,f20,f21,f23",
+            },
+        )
+        data = payload.get("data") or {}
+        rows = data.get("diff") or []
+        total = _number(data.get("total"))
+        if total is None or total < 1:
+            raise RuntimeError("Eastmoney did not report a valid full-market total")
+        if expected_total is None:
+            expected_total = int(total)
+        elif expected_total != int(total):
+            raise RuntimeError("Eastmoney full-market total changed while paging")
+        if not rows:
+            raise RuntimeError(f"Eastmoney returned an empty page before all {expected_total} stocks were received")
+        raw_rows.extend(rows)
+        page += 1
+    if expected_total is None or len(raw_rows) != expected_total:
+        raise RuntimeError("Eastmoney full-market pagination did not return the reported stock count")
+
     candidates: list[Candidate] = []
-    for row in rows:
+    seen_tickers: set[str] = set()
+    for row in raw_rows:
         code = str(row.get("f12") or "").strip()
         name = str(row.get("f14") or "").strip()
         exchange = _exchange_for_code(code)
         if not code or not name or exchange is None:
             continue
-        if "ST" in name.upper() or "退" in name:
-            continue
+        ticker = f"{code}.{exchange}"
+        if ticker in seen_tickers:
+            raise RuntimeError(f"Eastmoney returned duplicate ticker {ticker}")
+        seen_tickers.add(ticker)
         candidates.append(
             Candidate(
                 code=code,
@@ -271,32 +187,6 @@ def fetch_candidates() -> list[Candidate]:
             )
         )
     return candidates
-
-
-def preset_candidates() -> list[Candidate]:
-    candidates: list[Candidate] = []
-    for code, name in PRESET_CANDIDATES:
-        exchange = _exchange_for_code(code)
-        if exchange is None:
-            continue
-        candidates.append(
-            Candidate(
-                code=code,
-                name=name,
-                exchange=exchange,
-                latest_price=None,
-                pct_change=None,
-                turnover_amount=None,
-                total_mcap=None,
-                free_float_mcap=None,
-                pe=None,
-                pb=None,
-                turnover_rate=None,
-            )
-        )
-    return candidates
-
-
 def fetch_kline(secid: str, begin: str, end: str) -> list[dict[str, str]]:
     payload = _fetch_json(
         KLINE_URL,
@@ -397,14 +287,13 @@ def write_universe(path: Path, rows: list[dict[str, object]]) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Fetch a liquid A-share universe from Eastmoney.")
+    parser = argparse.ArgumentParser(description="Fetch the full A-share universe from Eastmoney.")
     parser.add_argument("--data-dir", default="data_a_share", help="Output directory for OHLCV CSV files.")
     parser.add_argument(
         "--universe-csv",
         default="outputs_a_share/a_share_universe.csv",
         help="Output CSV containing ticker-name metadata for fetched names.",
     )
-    parser.add_argument("--preset-only", action="store_true", help="Use the built-in liquid A-share preset universe.")
     parser.add_argument(
         "--source",
         choices=["tencent", "eastmoney"],
@@ -412,10 +301,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Historical daily data source.",
     )
     parser.add_argument("--bars", type=int, default=320, help="Daily bars to request from Tencent.")
-    parser.add_argument("--min-mcap", type=float, default=30_000_000_000, help="Minimum total market cap in CNY.")
-    parser.add_argument("--min-bars", type=int, default=200, help="Minimum daily bars required to keep a candidate.")
     parser.add_argument("--days", type=int, default=560, help="Calendar days of daily bars to request.")
-    parser.add_argument("--continue-on-error", action="store_true", help="Skip tickers whose historical data request fails.")
     parser.add_argument("--reuse-existing", action="store_true", help="Reuse existing OHLCV CSV files before requesting data.")
     return parser
 
@@ -427,35 +313,17 @@ def main() -> int:
     begin = (date.today() - timedelta(days=args.days)).strftime("%Y%m%d")
     end = date.today().strftime("%Y%m%d")
 
-    used_preset = args.preset_only
-    if args.preset_only:
-        raw_candidates = preset_candidates()
-    else:
-        try:
-            raw_candidates = fetch_candidates()
-        except Exception as exc:
-            print(f"Candidate list fetch failed; falling back to preset universe: {exc}")
-            raw_candidates = preset_candidates()
-            used_preset = True
-
-    if used_preset:
-        filtered = raw_candidates
-    else:
-        filtered = [
-            candidate
-            for candidate in raw_candidates
-            if (candidate.total_mcap or 0) >= args.min_mcap
-        ]
-        filtered.sort(key=lambda candidate: candidate.total_mcap or 0, reverse=True)
-    # Download every stock that meets the explicitly configured upstream
-    # constraints. Never silently truncate the market universe by rank.
-    selected = filtered
+    # The upstream list is the entire A-share market. Market cap belongs to
+    # Hawkeye, so this fetch step never applies a market-cap, turnover, rank,
+    # trend, or liquidity screen; nor may it fall back to a static universe.
+    raw_candidates = fetch_candidates()
+    selected = raw_candidates
 
     if args.source == "tencent":
         benchmark_bars = fetch_tencent_kline("sh510300", args.bars)
     else:
         benchmark_bars = fetch_kline("1.000300", begin, end)
-    if len(benchmark_bars) >= args.min_bars:
+    if benchmark_bars:
         benchmark_name = "CSI300ETF" if args.source == "tencent" else "CSI300"
         write_bars(data_dir / f"{benchmark_name}.csv", benchmark_bars)
 
@@ -473,12 +341,10 @@ def main() -> int:
                     bars = fetch_kline(candidate.secid, begin, end)
             except Exception as exc:
                 failed += 1
-                if not args.continue_on_error:
-                    raise
-                print(f"Skipped {candidate.ticker}: {exc}")
-                continue
-        if len(bars) < args.min_bars:
-            continue
+                raise RuntimeError(f"Historical data request failed for {candidate.ticker}: {exc}") from exc
+        if not bars:
+            failed += 1
+            raise RuntimeError(f"Historical data request returned no bars for {candidate.ticker}")
         write_bars(bars_path, bars)
         universe_rows.append(
             {
@@ -504,8 +370,8 @@ def main() -> int:
 
     write_universe(universe_csv, universe_rows)
     print(f"Fetched candidates: {len(raw_candidates)}")
-    print(f"Used preset universe: {used_preset}")
-    print(f"Filtered liquid large-cap candidates: {len(filtered)}")
+    print("Used preset universe: False")
+    print(f"Full A-share market candidates: {len(selected)}")
     print(f"Daily histories kept: {kept}")
     print(f"Failed history requests: {failed}")
     print(f"Benchmark rows: {len(benchmark_bars)}")

@@ -13,14 +13,10 @@ from .config import (
     DEFAULT_SELECTION_GATE_MIN_CANDIDATES,
     DEFAULT_SELECTION_GATE_MIN_PDC_POOL,
     DEFAULT_ZHUGE_ORION_PROFILE,
-    HAWKEYE_DAILY_MOVE_LOOKBACK,
-    HAWKEYE_MAX_DAILY_MOVE_PCT,
-    HAWKEYE_MIN_BARS,
-    HAWKEYE_MIN_MARKET_CAP_CNY,
-    HAWKEYE_MIN_RETURN_60D_PCT,
     SKILL_ALIASES,
     pdc_weights_with_zhuge,
 )
+from .decision_memory import record_completed_run, record_failed_run
 from .hawkeye_radar import load_hawkeye_metadata, result_to_row, screen_universe
 from .market_context import build_market_context
 from .outputs import CANDIDATE_UNIVERSE_HEADERS, write_csv
@@ -58,6 +54,23 @@ def build_parser() -> argparse.ArgumentParser:
         help="Directory containing one OHLCV CSV per ticker.",
     )
     parser.add_argument("--outputs-dir", default=DEFAULT_OUTPUTS_DIR, help="Directory for reports and history.")
+    parser.add_argument("--logs-dir", default="logs", help="Append-only Markdown decision audit directory.")
+    parser.add_argument(
+        "--performance-db",
+        default="outputs/performance/pdc_performance.sqlite",
+        help="SQLite database for role and model performance observations.",
+    )
+    parser.add_argument(
+        "--performance-report",
+        default="outputs/performance/pdc_performance_report.md",
+        help="Markdown historical performance report generated after each PDC loop.",
+    )
+    parser.add_argument(
+        "--performance-horizon-sessions",
+        type=int,
+        default=20,
+        help="Fixed trading-session horizon used to resolve directional performance predictions.",
+    )
     parser.add_argument("--top", type=int, default=20, help="Number of ranked names in the Top 20 report.")
     parser.add_argument("--ticker", default=None, help="Run analysis for a single ticker, such as 600519.SH.")
     parser.add_argument("--skill", default=None, help="Run one PDC member skill for --ticker, such as trend or risk.")
@@ -66,11 +79,6 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--use-radar", action="store_true", help="Run Hawkeye Radar before the PDC loop.")
     parser.add_argument("--radar-only", action="store_true", help="Run Hawkeye Radar and write candidate_universe.csv only.")
     parser.add_argument("--metadata-csv", default=DEFAULT_METADATA_CSV, help="Ticker metadata CSV with total_mcap.")
-    parser.add_argument("--radar-min-mcap", type=float, default=HAWKEYE_MIN_MARKET_CAP_CNY)
-    parser.add_argument("--radar-min-return-60d", type=float, default=HAWKEYE_MIN_RETURN_60D_PCT)
-    parser.add_argument("--radar-max-daily-move", type=float, default=HAWKEYE_MAX_DAILY_MOVE_PCT)
-    parser.add_argument("--radar-daily-lookback", type=int, default=HAWKEYE_DAILY_MOVE_LOOKBACK)
-    parser.add_argument("--radar-min-bars", type=int, default=HAWKEYE_MIN_BARS)
     parser.add_argument(
         "--min-candidate-count",
         type=int,
@@ -172,14 +180,14 @@ def _run_hawkeye_radar(
     outputs_dir: Path,
 ) -> tuple[dict[str, object], Path, Path, int, int]:
     metadata = load_hawkeye_metadata(_project_path(args.metadata_csv))
+    stock_universe = {
+        ticker: bars
+        for ticker, bars in universe.items()
+        if ticker not in BENCHMARK_PRIORITY
+    }
     radar_results = screen_universe(
-        universe,
+        stock_universe,
         metadata,
-        min_market_cap=args.radar_min_mcap,
-        min_return_60d=args.radar_min_return_60d,
-        max_daily_move=args.radar_max_daily_move,
-        daily_move_lookback=args.radar_daily_lookback,
-        min_bars=args.radar_min_bars,
     )
     candidate_path = outputs_dir / "candidate_universe.csv"
     audit_path = outputs_dir / "hawkeye_radar_audit.csv"
@@ -240,6 +248,9 @@ def main(argv: list[str] | None = None) -> int:
 
     data_dir = _project_path(args.data_dir)
     outputs_dir = _project_path(args.outputs_dir)
+    logs_dir = _project_path(args.logs_dir)
+    performance_db = _project_path(args.performance_db)
+    performance_report = _project_path(args.performance_report)
     zhuge_context = _zhuge_context(args)
 
     try:
@@ -310,9 +321,30 @@ def main(argv: list[str] | None = None) -> int:
             raise ValueError("No tickers left to score after benchmark filtering.")
 
         output_paths = save_pdc_outputs(evaluations, market_context, outputs_dir, args.as_of, args.top)
+        memory_paths = record_completed_run(
+            performance_db,
+            performance_report,
+            logs_dir,
+            args.as_of,
+            universe,
+            evaluations,
+            audit_path,
+            args.performance_horizon_sessions,
+        )
         top_rows = [report_row(evaluation, args.as_of) for evaluation in evaluations[: args.top]]
 
     except Exception as exc:
+        try:
+            failed_log = record_failed_run(
+                logs_dir,
+                performance_db,
+                args.as_of,
+                str(exc),
+                args.performance_horizon_sessions,
+            )
+            print(f"Stock PDC failure audit: {failed_log}", file=sys.stderr)
+        except Exception as memory_exc:
+            print(f"Stock PDC failure audit also failed: {memory_exc}", file=sys.stderr)
         print(f"Stock PDC failed: {exc}", file=sys.stderr)
         return 1
 
@@ -341,6 +373,9 @@ def main(argv: list[str] | None = None) -> int:
     print(f"Positions: {output_paths['positions_csv']}")
     print(f"Position monitor: {output_paths['position_monitor']}")
     print(f"Position monitor history: {output_paths['position_monitor_history']}")
+    print(f"Decision audit log: {memory_paths['log']}")
+    print(f"Performance database: {memory_paths['database']}")
+    print(f"Performance report: {memory_paths['report']}")
     if candidate_path is not None:
         print(f"Hawkeye candidates: {passed_count}/{checked_count}")
         print(f"Candidate universe: {candidate_path}")

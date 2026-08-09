@@ -191,6 +191,48 @@ outputs/leaderboard_changes_history.csv
 
 `candidate_universe.csv` 只包含通过鹰眼雷达的候选股票。`hawkeye_radar_audit.csv` 包含所有被检查股票及剔除原因。
 
+## 网站可信 Run 产物
+
+`scripts/run_latest_pdc.py` 成功完成全市场抓取、日期校验和 PDC 后，会把以下文件复制到不可变目录 `outputs/runs/<run-id>/`：
+
+```text
+candidate_universe.csv
+hawkeye_radar_audit.csv
+full_pdc_scores.csv
+display.json
+manifest.json
+```
+
+写入 `outputs/latest_ready_run.json` 只表示本地 Run 已验证，**不会**自动提交、部署或更新网站。`manifest.json` 记录每个产物的 SHA-256；`display.json` 是网站每日 Top 20 页面唯一可发布的展示载荷。网站发布服务必须先把该文件放到 `/stock-pdc/runs/<run-id>/display.json`，再携带其 SHA-256 回调并在页面中执行发布。浏览器不参与候选股票或筛选条件的传递。
+
+## PDC Decision Memory 与绩效追踪
+
+每次完整 PDC loop 成功后，系统会追加写入：
+
+```text
+logs/YYYY-MM-DD_PDC_DECISION.md
+outputs/performance/pdc_performance.sqlite
+outputs/performance/pdc_performance_report.md
+```
+
+审计日志保存执行时间、行情时间戳、完整股票池、鹰眼逐股结果、每只股票的全部角色评分及理由、BUY/SELL/HOLD 研究结论、置信等级和实际执行状态。实际执行状态固定为 `NOT_EXECUTED_RESEARCH_ONLY`；系统不连接券商。
+
+SQLite 使用 `pdc_runs`、`role_predictions`、`model_runs` 与 `model_predictions` 四张表，保留未来真实模型接入和动态权重研究所需的独立模型/角色维度。当前 PDC 是确定性引擎，未调用 GPT、Claude 或其他模型，因此日志和报告明确显示没有模型预测，绝不伪造模型评分或摘要。
+
+## 五模型 PDC 的追加审计层
+
+既有的 01–07 多模型流程、Top 30/20/10、Round 2 和正式决策不被此层修改。每一个已验证 Run 会额外生成：
+
+```text
+outputs/runs/<run-id>/committee/02_market_data_package/
+```
+
+其中的 `market_data_package.json` 冻结并哈希鹰眼审计、候选池和确定性 PDC 全量评分；五个模型必须引用同一 `packageSha256`。受保护计算服务在已有阶段完成后，通过 `scripts/record_committee_stage.py` 追加记录 01、03、04、05、06 或 07 的真实输出。该命令拒绝覆盖已存在阶段；Round 1 和 Round 2 必须分别包含 GPT、Claude、Gemini、DeepSeek、Kimi 五个真实 `COMPLETED` 或 `FAILED` 回传，缺少密钥、超时或格式异常必须写为 `FAILED`，不得填补分析。
+
+该审计层只保存和统计现有流程结果；不会改动鹰眼规则、PDC 权重、Top 30/20/10 或正式 BUY/WATCH/HOLD/SELL 结论。
+
+角色绩效的固定观察窗口默认是预测后 20 个交易日：分数大于等于 6 记录为看多、分数小于等于 4 记录为看空，介于两者之间为中性。中性预测保留在审计中，但不计入胜率，避免通过模糊方向虚增准确率。后续行情尚不足 20 个交易日时保留 `PENDING`；缺少后续数据会记录 `FAILED`。该报告只记录证据，不会改变当前 PDC 权重。
+
 B 与 A/B 评估严格使用独立路径：
 
 ```text

@@ -3,116 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>今日决策 | 股票大作手 | Turnpo</title>
-    <meta name="description" content="股票大作手多模型决策生成中心。" />
+    <title>生成今日数据 | 股票大作手 | Turnpo</title>
+    <meta name="description" content="从全市场行情到鹰眼与 PDC 的可信数据生成流程。" />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href="https://www.turnpo.com/stock-pdc/decision/" />
     <meta name="theme-color" content="#f5f6f8" />
     <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png" />
     <link rel="stylesheet" href="/styles.css?v=0.1.223" />
     <link rel="stylesheet" href="/stock-pdc/stock-pdc.css" />
     <link rel="stylesheet" href="/stock-pdc/decision/decision.css" />
   </head>
   <body>
     <header class="topbar stock-decision-topbar">
-      <a class="brand" href="/" aria-label="Turnpo home">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>Turnpo</span>
-      </a>
-      <p>股票大作手 / 今日决策</p>
-      <div class="top-actions">
-        <a class="ghost-btn" href="/stock-pdc/">查看最多 20 名</a>
-      </div>
+      <a class="brand" href="/" aria-label="Turnpo home"><span class="brand-mark" aria-hidden="true"></span><span>Turnpo</span></a>
+      <p>股票大作手 / 生成今日数据</p>
+      <div class="top-actions"><a class="ghost-btn" href="/stock-pdc/">查看每日 Top 20</a></div>
     </header>
 
     <main class="stock-shell stock-decision-shell">
-      <section class="decision-command" aria-labelledby="decisionTitle">
+      <section class="decision-command" aria-labelledby="generationTitle">
         <div>
-          <div class="decision-kicker"><span></span> 多模型研究编排</div>
-          <h1 id="decisionTitle">生成今日决策</h1>
-          <p>锁定当日实际通过雷达筛选的候选池，让四个 GPT mini 评审角色分别盲评、复核，再经过风险闸门形成最多 10 个研究席位。</p>
+          <div class="decision-kicker"><span></span> 可信数据运行</div>
+          <h1 id="generationTitle">生成今日 Stock PDC 数据</h1>
+          <p>服务端将自行抓取全市场 A 股、应用固定鹰眼规则并评分全部通过者。浏览器不会提交或选择股票名单。</p>
         </div>
         <div class="decision-command-actions">
-          <span class="decision-demo-badge" id="decisionMode">GPT mini · API 已连接</span>
-          <div class="decision-flow-actions">
-            <button class="stock-primary-btn decision-generate-btn" id="generateDecision" type="button">逐步开始</button>
-            <button class="decision-secondary-btn" id="runAllDecision" type="button">一键跑通</button>
-            <button class="stock-primary-btn decision-generate-btn" id="nextDecisionStep" type="button" hidden>下一步</button>
-          </div>
+          <span class="decision-demo-badge" id="generationMode">等待计算服务</span>
+          <button class="stock-primary-btn decision-generate-btn" id="startGeneration" type="button">开始生成</button>
         </div>
       </section>
 
-      <section class="decision-run-strip" aria-label="本次生成状态">
-        <article>
-          <span>运行编号</span>
-          <strong id="runId">等待生成</strong>
-        </article>
-        <article>
-          <span>数据快照</span>
-          <strong id="snapshotStatus">尚未锁定</strong>
-        </article>
-        <article>
-          <span>研究状态</span>
-          <strong id="runStatus">准备就绪</strong>
-        </article>
-        <article>
-          <span>最终容量</span>
-          <strong id="finalCapacity">最多 10</strong>
-        </article>
+      <section class="decision-run-strip" aria-label="生成运行状态">
+        <article><span>运行编号</span><strong id="runId">等待创建</strong></article>
+        <article><span>市场数据</span><strong id="marketCount">--</strong></article>
+        <article><span>鹰眼通过</span><strong id="candidateCount">--</strong></article>
+        <article><span>PDC 评分</span><strong id="pdcCount">--</strong></article>
       </section>
 
-      <section class="decision-workspace" aria-labelledby="progressTitle">
-        <div class="stock-section-head">
-          <div>
-            <h2 id="progressTitle">决策流程</h2>
-            <p id="progressCopy" aria-live="polite">点击开始生成后，每一个步骤都会在这里留下状态与产物。</p>
-          </div>
-          <span class="decision-progress-count" id="progressCount">0 / 6</span>
-        </div>
-        <ol class="decision-steps" id="decisionSteps"></ol>
+      <section class="decision-workspace" aria-labelledby="flowTitle">
+        <div class="stock-section-head"><div><h2 id="flowTitle">运行流程</h2><p id="generationMessage" aria-live="polite">尚未创建运行。</p></div><span class="decision-progress-count" id="runStatus">IDLE</span></div>
+        <ol class="decision-steps" id="generationSteps"></ol>
       </section>
 
-      <section class="decision-models" aria-labelledby="modelsTitle">
-        <div class="stock-section-head">
-          <div>
-            <h2 id="modelsTitle">第一轮盲评席</h2>
-            <p>所有模型基于同一份事实包，但不会看到其他模型的判断。</p>
-          </div>
-          <span class="decision-blind-badge">盲评已启用</span>
-        </div>
-        <div class="decision-model-grid" id="modelGrid"></div>
-      </section>
-
-      <section class="decision-review" id="decisionReview" hidden aria-labelledby="reviewTitle">
-        <div class="stock-section-head">
-          <div>
-            <h2 id="reviewTitle">逐步评审内容</h2>
-            <p id="reviewCopy">每一步完成后会停在这里，供你审阅内容后再继续。</p>
-          </div>
-          <span class="decision-blind-badge">可审阅</span>
-        </div>
-        <div class="decision-review-content" id="reviewContent"></div>
-      </section>
-
-      <section class="decision-result" id="decisionResult" hidden aria-labelledby="resultTitle">
-        <div class="stock-section-head">
-          <div>
-            <h2 id="resultTitle">本次决策快照</h2>
-            <p>本次 Run 的实际候选、共识与风险记录。确认后才会写入当前 PDC 的当天历史。</p>
-          </div>
-          <button class="stock-primary-btn decision-publish-btn" id="publishDecision" type="button" hidden>发布到 PDC</button>
-        </div>
-        <div class="decision-result-summary">
-          <article><span>事实候选</span><strong id="resultCandidateCount">--</strong><small id="resultCandidateNote">以当日实际数量为准</small></article>
-          <article><span>第二轮复核</span><strong>4 位评审</strong><small>只复核合并后的实际候选</small></article>
-          <article><span>通过风控</span><strong>≤ 10</strong><small>风险不足时不会强行补足</small></article>
-        </div>
-        <div class="decision-placeholder-list" id="resultList"></div>
-        <p class="decision-research-note">研究工具，不构成交易指令。发布会为该日期追加一份不可覆盖的 PDC 决策记录；历史 Run 与历史日期均会保留。</p>
+      <section class="decision-result" id="generationResult" hidden aria-labelledby="resultTitle">
+        <div class="stock-section-head"><div><h2 id="resultTitle">完整性校验</h2><p>只有校验通过的 Run 才能发布到每日 Top 20 页面。</p></div><button class="stock-primary-btn decision-publish-btn" id="publishGeneration" type="button" hidden>发布此 Run</button></div>
+        <div class="decision-review-content" id="integrityResult"></div>
       </section>
     </main>
 
-    <script src="/stock-pdc/decision/decision.js?v=20260809"></script>
+    <script src="/stock-pdc/decision/decision.js?v=20260809-trusted-run"></script>
   </body>
 </html>

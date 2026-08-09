@@ -376,10 +376,10 @@ function normalizeWatchRow(row, date, previousByTicker, changesByTicker, names, 
     dayChangePct: priceMove.dayChangePct,
     scores: scoreMap(row),
     decision: {
-      policy: "TOP20_TARGET_HOLDING",
-      targetHolding: true,
-      action: changeType === "NEW" ? "ENTER_TOP20" : "KEEP_TOP20",
-      basis: "Top 20 rank only"
+      policy: "TOP20_RESEARCH_RANK",
+      targetHolding: false,
+      action: frontDeskInstruction || "RESEARCH_WATCH",
+      basis: "PDC research rank; action comes from the PDC instruction/status"
     },
     research: {
       finalStatus,
@@ -437,7 +437,7 @@ function summarize(rows, dropped) {
 
   return {
     total: rows.length,
-    targetHoldings: 20,
+    targetHoldings: 0,
     inTop20: rows.length,
     new: count("NEW"),
     up: count("UP"),
@@ -446,7 +446,7 @@ function summarize(rows, dropped) {
     retained: rows.length - count("NEW"),
     dropped: dropped.length,
     avgScore,
-    decisionRule: "Hold the highest-ranked Top 20 names; keep factor scores for research only."
+    decisionRule: "Top 20 is a research ranking. Buy, hold, watch, and exit actions are determined separately by PDC status and instruction."
   };
 }
 
@@ -637,6 +637,10 @@ function buildSnapshot(sourceRoot, explicitPriceDataDir = "") {
     portfolio,
     benchmark,
     tickerHistory: buildTickerHistory(days)
+    ,verification: {
+      status: "LEGACY_UNVERIFIED",
+      note: "Historical Top 20 display data; not a verified full-market automatic run."
+    }
   };
 }
 
@@ -809,6 +813,79 @@ const sourceRoot = path.resolve(argValue("--source-root", process.env.STOCK_PDC_
 const outputPath = path.resolve(argValue("--output", OUTPUT_PATH));
 const abOutputPath = path.resolve(argValue("--ab-output", AB_OUTPUT_PATH));
 const priceDataDir = argValue("--price-data-dir", process.env.STOCK_PDC_PRICE_DATA_DIR || "");
+function buildAutomaticSnapshot(sourceRoot) {
+  const generatedAt = new Date().toISOString();
+  const candidatePath = path.join(sourceRoot, "outputs", "candidate_universe.csv");
+  const auditPath = path.join(sourceRoot, "outputs", "hawkeye_radar_audit.csv");
+  const scoresPath = path.join(sourceRoot, "outputs", "full_pdc_scores.csv");
+  const manifestPath = path.join(sourceRoot, "outputs", "automatic_run.json");
+  const validationErrors = [candidatePath, auditPath, scoresPath, manifestPath]
+    .filter((filePath) => !fs.existsSync(filePath))
+    .map((filePath) => `missing ${path.relative(sourceRoot, filePath)}`);
+
+  if (validationErrors.length) {
+    return {
+      schemaVersion: "stock-pdc-automatic-v1",
+      generatedAt,
+      availability: "UNAVAILABLE",
+      validationErrors,
+      latestDate: "",
+      marketCount: 0,
+      candidateCount: 0,
+      pdcCount: 0,
+      rules: ["总市值 > 300 亿人民币", "近 60 个交易日收益 > 0"],
+      candidates: []
+    };
+  }
+
+  const runManifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  if (runManifest.schema_version !== "stock-pdc-automatic-run-v1") validationErrors.push("invalid automatic run manifest schema");
+  if (runManifest.source_scope !== "full_a_share_market") validationErrors.push("run was not sourced from the full A-share market");
+  const candidateRows = readCsv(candidatePath)
+    .filter((row) => String(row.passed).toLowerCase() === "true");
+  const auditRows = readCsv(auditPath);
+  const scoreRows = readCsv(scoresPath);
+  const scoreByTicker = new Map(scoreRows.map((row) => [clean(row.ticker).toUpperCase(), row]));
+  const candidates = candidateRows
+    .map((candidate) => {
+      const ticker = clean(candidate.ticker).toUpperCase();
+      const score = scoreByTicker.get(ticker);
+      return {
+        ticker,
+        name: clean(candidate.name) || ticker,
+        marketCapCny: numberOrNull(candidate.total_mcap),
+        return60dPct: numberOrNull(candidate.return_60d),
+        rank: intOrNull(score?.rank),
+        finalScore: numberOrNull(score?.final_score),
+        finalStatus: clean(score?.final_status),
+        mainReason: clean(score?.main_reason),
+        mainRisk: clean(score?.main_risk),
+        scores: score ? scoreMap(score) : {}
+      };
+    })
+    .sort((left, right) => (left.rank ?? Number.MAX_SAFE_INTEGER) - (right.rank ?? Number.MAX_SAFE_INTEGER));
+  const analysisDates = [...new Set(scoreRows.map((row) => clean(row.analysis_date)).filter(Boolean))];
+  if (analysisDates.length !== 1) validationErrors.push(`expected one analysis date in full_pdc_scores.csv, found ${analysisDates.length}`);
+  if (candidates.some((row) => row.rank === null)) validationErrors.push("some Hawkeye candidates have no PDC result");
+  if (scoreRows.length !== candidates.length) validationErrors.push(`PDC result count ${scoreRows.length} does not match Hawkeye candidate count ${candidates.length}`);
+  if (analysisDates[0] !== clean(runManifest.analysis_date)) validationErrors.push("PDC analysis date does not match automatic run manifest");
+  if (auditRows.length !== Number(runManifest.market_ticker_count)) validationErrors.push("Hawkeye audit count does not match full-market run manifest");
+
+  return {
+    schemaVersion: "stock-pdc-automatic-v1",
+    generatedAt,
+    availability: validationErrors.length ? "STALE" : "ACTIVE",
+    validationErrors,
+    latestDate: analysisDates[0] || "",
+    marketCount: Number(runManifest.market_ticker_count),
+    candidateCount: candidates.length,
+    pdcCount: scoreRows.length,
+    rules: ["总市值 > 300 亿人民币", "近 60 个交易日收益 > 0"],
+    workflow: ["行情 API 自动抓取", "全市场 A 股数据", "鹰眼固定两条规则", "全部通过者进入 PDC", "PDC 研究排序、风险与观察结论"],
+    candidates
+  };
+}
+
 const snapshot = buildSnapshot(sourceRoot, priceDataDir);
 const abSnapshot = buildAbSnapshot(sourceRoot, snapshot.latestDate);
 const decisionCandidateSnapshot = buildDecisionCandidateSnapshot(sourceRoot);
@@ -821,8 +898,7 @@ fs.mkdirSync(path.dirname(DECISION_CANDIDATE_OUTPUT_PATH), { recursive: true });
 fs.writeFileSync(DECISION_CANDIDATE_OUTPUT_PATH, `${JSON.stringify(decisionCandidateSnapshot, null, 2)}\n`);
 
 console.log(`Wrote ${outputPath}`);
-console.log(`Dates: ${snapshot.dates.join(", ") || "none"}`);
 console.log(`Latest: ${snapshot.latestDate || "none"}`);
-console.log(`Price data: ${snapshot.priceDataDir || "none"}`);
+console.log(`Market checked: ${snapshot.marketCount || 0}`);
 console.log(`A/B: ${abSnapshot.availability} -> ${abOutputPath}`);
 console.log(`Decision candidates: ${decisionCandidateSnapshot.candidates.length} on ${decisionCandidateSnapshot.latestDate || "none"} -> ${DECISION_CANDIDATE_OUTPUT_PATH}`);

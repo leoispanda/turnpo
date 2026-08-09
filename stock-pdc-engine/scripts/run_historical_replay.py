@@ -14,12 +14,6 @@ from stock_pdc.config import (
     DEFAULT_ZHUGE_ORION_PROFILE,
     DEFAULT_SELECTION_GATE_MIN_CANDIDATES,
     DEFAULT_SELECTION_GATE_MIN_PDC_POOL,
-    DEFAULT_SELECTION_GATE_PDC_POOL_SIZE,
-    HAWKEYE_DAILY_MOVE_LOOKBACK,
-    HAWKEYE_MAX_DAILY_MOVE_PCT,
-    HAWKEYE_MIN_BARS,
-    HAWKEYE_MIN_MARKET_CAP_CNY,
-    HAWKEYE_MIN_RETURN_60D_PCT,
     pdc_weights_with_zhuge,
 )
 from stock_pdc.data_loader import load_universe
@@ -261,53 +255,21 @@ def _selection_gate_row(
     }
 
 
-def _metadata_with_market_cap_fallback(
-    metadata: dict[str, HawkeyeMetadata],
-    universe: dict[str, list[Bar]],
-) -> dict[str, HawkeyeMetadata]:
-    fallback: dict[str, HawkeyeMetadata] = {}
-    for ticker in universe:
-        existing = metadata.get(ticker)
-        fallback[ticker] = HawkeyeMetadata(
-            ticker=ticker,
-            name=existing.name if existing else "",
-            total_mcap=1.0,
-        )
-    return fallback
-
-
 def _candidate_screen(
     truncated: dict[str, list[Bar]],
     metadata: dict[str, HawkeyeMetadata],
     benchmark: str,
-    min_market_cap: float,
-    min_return_60d: float,
-    max_daily_move: float,
-    daily_move_lookback: int,
-    radar_min_bars: int,
-    ignore_market_cap: bool,
 ) -> list[dict[str, object]]:
     stock_universe = {
         ticker: bars
         for ticker, bars in truncated.items()
         if ticker != benchmark
     }
-    screen_metadata = metadata
-    screen_min_market_cap = min_market_cap
-    if ignore_market_cap:
-        screen_metadata = _metadata_with_market_cap_fallback(metadata, stock_universe)
-        screen_min_market_cap = 0.0
-
     return [
         result_to_row(result)
         for result in screen_universe(
             stock_universe,
-            screen_metadata,
-            min_market_cap=screen_min_market_cap,
-            min_return_60d=min_return_60d,
-            max_daily_move=max_daily_move,
-            daily_move_lookback=daily_move_lookback,
-            min_bars=radar_min_bars,
+            metadata,
         )
     ]
 
@@ -963,17 +925,6 @@ def build_parser() -> argparse.ArgumentParser:
         help="Minimum PDC scoring pool needed before new buys are allowed.",
     )
     parser.add_argument(
-        "--pdc-pool-size",
-        type=int,
-        default=DEFAULT_SELECTION_GATE_PDC_POOL_SIZE,
-        help="Number of screened candidates sent into the daily PDC.",
-    )
-    parser.add_argument("--radar-min-mcap", type=float, default=HAWKEYE_MIN_MARKET_CAP_CNY)
-    parser.add_argument("--radar-min-return-60d", type=float, default=HAWKEYE_MIN_RETURN_60D_PCT)
-    parser.add_argument("--radar-max-daily-move", type=float, default=HAWKEYE_MAX_DAILY_MOVE_PCT)
-    parser.add_argument("--radar-daily-lookback", type=int, default=HAWKEYE_DAILY_MOVE_LOOKBACK)
-    parser.add_argument("--radar-min-bars", type=int, default=HAWKEYE_MIN_BARS)
-    parser.add_argument(
         "--entry-instructions",
         default="",
         help="Comma-separated front-desk instructions allowed for new entries; empty means buy all Top N rows.",
@@ -1025,11 +976,6 @@ def build_parser() -> argparse.ArgumentParser:
         type=float,
         default=LIMIT_TOLERANCE_PCT,
         help="Tolerance, in percentage points, for detecting limit-up or limit-down moves.",
-    )
-    parser.add_argument(
-        "--ignore-market-cap-filter",
-        action="store_true",
-        help="Run a technical-only comparison when market-cap metadata is unavailable.",
     )
     parser.add_argument("--disable-selection-gate", action="store_true", help="Disable candidate breadth gate for comparison runs.")
     parser.add_argument(
@@ -1099,12 +1045,6 @@ def main() -> int:
             truncated,
             hawkeye_metadata,
             args.benchmark,
-            args.radar_min_mcap,
-            args.radar_min_return_60d,
-            args.radar_max_daily_move,
-            args.radar_daily_lookback,
-            args.radar_min_bars,
-            args.ignore_market_cap_filter,
         )
         for candidate_row in candidate_rows:
             candidate_screen_rows.append(
@@ -1118,7 +1058,7 @@ def main() -> int:
             for row in candidate_rows
             if row.get("passed") is True or str(row.get("passed")).lower() == "true"
         ]
-        pdc_pool_tickers = passed_candidates[: args.pdc_pool_size]
+        pdc_pool_tickers = passed_candidates
         candidate_count = len(passed_candidates)
         pdc_pool_count = len(pdc_pool_tickers)
         gate_row = _selection_gate_row(
@@ -1130,7 +1070,7 @@ def main() -> int:
             0,
             args.disable_selection_gate,
             "hawkeye_radar",
-            args.ignore_market_cap_filter,
+            False,
             passed_candidates,
             pdc_pool_tickers,
         )
@@ -1293,15 +1233,8 @@ def main() -> int:
     gate_summary = {
         "selection_gate_min_candidate_count": args.min_candidate_count,
         "selection_gate_min_pdc_pool_size": args.min_pdc_pool_size,
-        "selection_gate_pdc_pool_size": args.pdc_pool_size,
         "selection_gate_disabled": args.disable_selection_gate,
         "candidate_mode": "hawkeye_radar",
-        "candidate_ignore_market_cap_filter": args.ignore_market_cap_filter,
-        "radar_min_mcap": args.radar_min_mcap,
-        "radar_min_return_60d": args.radar_min_return_60d,
-        "radar_max_daily_move": args.radar_max_daily_move,
-        "radar_daily_lookback": args.radar_daily_lookback,
-        "radar_min_bars": args.radar_min_bars,
         "selection_gate_open_days": gate_open_days,
         "selection_gate_closed_days": gate_closed_days,
     }
@@ -1590,7 +1523,7 @@ def main() -> int:
         "Selection gate: "
         f"open_days={gate_open_days} closed_days={gate_closed_days} "
         f"min_candidates={args.min_candidate_count} min_pdc_pool={args.min_pdc_pool_size} "
-        f"pdc_pool_size={args.pdc_pool_size} ignore_mcap={args.ignore_market_cap_filter}"
+        "pdc_pool=all Hawkeye-qualified names"
     )
     if benchmark_summary:
         print(

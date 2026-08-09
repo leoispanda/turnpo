@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .indicators import closes, pct_change, safe_round, sma
 from .models import Bar
+from .config import HAWKEYE_MIN_MARKET_CAP_CNY, HAWKEYE_MIN_RETURN_60D_PCT
 
 
 @dataclass(frozen=True)
@@ -94,25 +95,10 @@ def _daily_returns(bars: list[Bar], lookback: int) -> list[float]:
     return returns
 
 
-def _is_clear_uptrend(latest: float, sma20: float | None, sma50: float | None, sma200: float | None) -> bool:
-    if sma20 is None or sma50 is None:
-        return False
-    if latest <= sma20 or sma20 <= sma50:
-        return False
-    if sma200 is not None and latest <= sma200:
-        return False
-    return True
-
-
 def screen_stock(
     ticker: str,
     bars: list[Bar],
     metadata: HawkeyeMetadata | None,
-    min_market_cap: float,
-    min_return_60d: float,
-    max_daily_move: float,
-    daily_move_lookback: int,
-    min_bars: int,
 ) -> HawkeyeResult:
     close_values = closes(bars)
     latest_close = close_values[-1] if close_values else None
@@ -120,7 +106,7 @@ def screen_stock(
     latest_sma50 = sma(close_values, 50)
     latest_sma200 = sma(close_values, 200)
     return_60d = pct_change(close_values, 60)
-    daily_returns = _daily_returns(bars, daily_move_lookback)
+    daily_returns = _daily_returns(bars, 1)
     latest_daily_return = daily_returns[-1] if daily_returns else None
     max_gain = max(daily_returns) if daily_returns else None
     max_loss = min(daily_returns) if daily_returns else None
@@ -130,21 +116,20 @@ def screen_stock(
     reasons: list[str] = []
     rejections: list[str] = []
 
-    # Hawkeye has exactly two eligibility rules: market cap and positive
-    # 60-day return. Technical and risk interpretation belongs to PDC.
-    _ = min_bars, max_daily_move, daily_move_lookback
+    # Hawkeye has exactly two fixed eligibility rules. Technical and risk
+    # interpretation belongs exclusively to the PDC members.
 
     if total_mcap is None:
         rejections.append("missing total market cap metadata")
-    elif total_mcap <= min_market_cap:
-        rejections.append(f"total market cap {safe_round(total_mcap / 100_000_000)}亿 <= {safe_round(min_market_cap / 100_000_000)}亿")
+    elif total_mcap <= HAWKEYE_MIN_MARKET_CAP_CNY:
+        rejections.append(f"total market cap {safe_round(total_mcap / 100_000_000)}亿 <= {safe_round(HAWKEYE_MIN_MARKET_CAP_CNY / 100_000_000)}亿")
     else:
-        reasons.append(f"total market cap > {safe_round(min_market_cap / 100_000_000)}亿")
+        reasons.append(f"total market cap > {safe_round(HAWKEYE_MIN_MARKET_CAP_CNY / 100_000_000)}亿")
 
     if return_60d is None:
         rejections.append("missing 60d return")
-    elif return_60d <= min_return_60d:
-        rejections.append(f"60d return {safe_round(return_60d)}% <= {safe_round(min_return_60d)}%")
+    elif return_60d <= HAWKEYE_MIN_RETURN_60D_PCT:
+        rejections.append(f"60d return {safe_round(return_60d)}% <= {safe_round(HAWKEYE_MIN_RETURN_60D_PCT)}%")
     else:
         reasons.append(f"60d return {safe_round(return_60d)}%")
 
@@ -169,22 +154,12 @@ def screen_stock(
 def screen_universe(
     universe: dict[str, list[Bar]],
     metadata: dict[str, HawkeyeMetadata],
-    min_market_cap: float,
-    min_return_60d: float,
-    max_daily_move: float,
-    daily_move_lookback: int,
-    min_bars: int,
 ) -> list[HawkeyeResult]:
     results = [
         screen_stock(
             ticker,
             bars,
             metadata.get(ticker),
-            min_market_cap,
-            min_return_60d,
-            max_daily_move,
-            daily_move_lookback,
-            min_bars,
         )
         for ticker, bars in sorted(universe.items())
     ]
