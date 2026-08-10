@@ -74,6 +74,7 @@ let marketRefreshStatus = 204;
 let reviewRankingLimit = null;
 let nullDimensionScore = false;
 let geminiVerificationPreamble = "";
+let geminiVerificationRequest = null;
 const mockDimensionScores = (index) => ({
   marketRegime: 7,
   relativeStrength: 8,
@@ -106,10 +107,13 @@ globalThis.fetch = async (_url, options = {}) => {
   if (isVerification) {
     const result = JSON.stringify({ status: "ok" });
     if (provider === "claude") return new Response(JSON.stringify({ content: [{ type: "text", text: result }] }), { status: 200, headers: { "content-type": "application/json" } });
-    if (provider === "gemini") return new Response(JSON.stringify({ candidates: [{ content: { parts: [
-      ...(geminiVerificationPreamble ? [{ text: geminiVerificationPreamble }] : []),
-      { text: result }
-    ] } }] }), { status: 200, headers: { "content-type": "application/json" } });
+    if (provider === "gemini") {
+      geminiVerificationRequest = { request, headers: options.headers };
+      return new Response(JSON.stringify({ candidates: [{ content: { parts: [
+        ...(geminiVerificationPreamble ? [{ text: geminiVerificationPreamble }] : []),
+        { text: result }
+      ] } }] }), { status: 200, headers: { "content-type": "application/json" } });
+    }
     if (provider === "deepseek" || provider === "kimi") return new Response(JSON.stringify({ choices: [{ message: { content: result } }] }), { status: 200, headers: { "content-type": "application/json" } });
     return new Response(JSON.stringify({ output_text: result }), { status: 200, headers: { "content-type": "application/json" } });
   }
@@ -281,6 +285,8 @@ try {
   assert.equal(response.status, 200, "Gemini verification should extract its JSON response even when it emits a separate prose preamble part");
   payload = await response.json();
   assert.equal(payload.ok, true, "a Gemini prose preamble must not replace the required structured status object");
+  assert.equal(geminiVerificationRequest.request.generationConfig.maxOutputTokens, 256, "Gemini readiness checks must retain room for final JSON after low-level reasoning");
+  assert.equal(geminiVerificationRequest.request.generationConfig.thinkingConfig.thinkingLevel, "low");
   geminiVerificationPreamble = "";
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision-demo/api/verifications", { modelProfileIds: ["gpt-5.6-luna"] })));

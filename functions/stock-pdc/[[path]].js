@@ -1238,7 +1238,15 @@ async function verifyGeminiModel(env, profile) {
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: verificationInstructions() }] },
         contents: [{ role: "user", parts: [{ text: "Verify readiness now." }] }],
-        generationConfig: { responseMimeType: "application/json", responseJsonSchema: portableVerificationSchema(), maxOutputTokens: 64 }
+        // Gemini 3.1 Pro can consume a 64-token budget in hidden reasoning and
+        // emit no final JSON. Keep reasoning shallow for this non-analytical
+        // readiness probe and reserve enough output for the required object.
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseJsonSchema: portableVerificationSchema(),
+          maxOutputTokens: 256,
+          thinkingConfig: { thinkingLevel: "low" }
+        }
       })
   });
   const data = await response.json().catch(() => ({}));
