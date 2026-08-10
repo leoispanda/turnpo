@@ -14,7 +14,7 @@ It is intentionally **not active** until the bindings below are added. Until the
    npx wrangler deploy
    ```
 
-2. In the deployed Worker’s **Settings → Bindings**, add the same KV namespace currently used by the Pages project under the exact name `AUTH_KV` (or use `STOCK_PDC_KV` in both projects).
+2. Bind the isolated `turnpo_stock_pdc` KV namespace to both the Worker and Pages under the exact name `STOCK_PDC_KV`. This keeps PDC runs separate from the website access-code KV.
 
 3. Add the same model secrets and model-name variables that the Pages PDC already uses: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `DEEPSEEK_API_KEY`, `KIMI_API_KEY`, plus any existing `*_STOCK_MODEL` variables. Do not add placeholder keys.
 

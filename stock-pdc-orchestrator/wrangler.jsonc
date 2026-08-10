@@ -3,6 +3,12 @@
   "name": "turnpo-stock-pdc-orchestrator",
   "main": "src/index.js",
   "compatibility_date": "2026-08-10",
+  "kv_namespaces": [
+    {
+      "binding": "STOCK_PDC_KV",
+      "id": "3256c395bb314f4cb0db4aad8468529f"
+    }
+  ],
   "workflows": [
     {
       "name": "turnpo-stock-pdc-orchestrator",
