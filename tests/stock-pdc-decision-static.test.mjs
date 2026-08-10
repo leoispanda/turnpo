@@ -69,6 +69,9 @@ assert.ok(decisionJs.includes("模型分批复核未产生新的有效股票记�
 assert.ok(decisionJs.includes("已返回的模型结论已保留"));
 assert.ok(decisionJs.includes("async function publishDecision()"));
 assert.ok(decisionJs.includes("async function loadModelProfiles()"));
+assert.ok(decisionJs.includes("const REQUIRED_PDC_MODEL_COUNT = 5;"));
+assert.ok(decisionJs.includes("function committeeProfilesReady()"));
+assert.ok(decisionJs.includes("未齐全前不会创建 Run"));
 assert.ok(decisionJs.includes("async function loadOrchestration()"));
 assert.ok(decisionJs.includes("function scheduleWorkflowPoll()"));
 assert.ok(decisionJs.includes("deferVerification: Boolean(snapshot.candidates.length && state.backgroundWorkflowAvailable)"));

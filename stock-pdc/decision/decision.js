@@ -2,6 +2,7 @@ const IS_DEMO_MODE = window.location.pathname.startsWith("/stock-pdc/decision-de
 const DECISION_API_ENDPOINT = IS_DEMO_MODE ? "/stock-pdc/decision-demo/api" : "/stock-pdc/decision/api";
 const RUN_STORAGE_KEY = IS_DEMO_MODE ? "turnpo-stock-pdc-decision-demo-run" : "turnpo-stock-pdc-decision-run";
 const PDC_MODE_LABEL = IS_DEMO_MODE ? "Mini Demo" : "正式 PDC";
+const REQUIRED_PDC_MODEL_COUNT = 5;
 const PDC_DIMENSIONS = [
   { id: "marketRegime", short: "市场" },
   { id: "relativeStrength", short: "相对强" },
@@ -60,7 +61,9 @@ const state = {
   marketRefreshWorkflowUrl: "",
   marketRefreshManualOnly: false,
   backgroundWorkflowAvailable: false,
-  workflowPolling: false
+  workflowPolling: false,
+  modelProfilesLoaded: false,
+  modelProfilesError: ""
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -90,6 +93,12 @@ function stepStateText(step) {
 function selectedModelProfiles() {
   const selected = state.modelProfiles.filter((profile) => state.selectedModelProfileIds.includes(profile.id));
   return selected.length ? selected : state.modelProfiles;
+}
+
+function committeeProfilesReady() {
+  return state.modelProfilesLoaded
+    && state.modelProfiles.length === REQUIRED_PDC_MODEL_COUNT
+    && selectedModelProfiles().length === REQUIRED_PDC_MODEL_COUNT;
 }
 
 const WORKFLOW_STAGES = [
@@ -493,6 +502,8 @@ function setRunSummary() {
       : `本轮尚未开始：${state.error}。可先重新运行对话 Test，或稍后再开始生成。`
     : state.testing
     ? "正在进行轻量对话 Test：不读取股票数据、不做评分、不创建 Run。"
+    : !state.run && !committeeProfilesReady()
+    ? state.modelProfilesError || `正在加载固定 ${REQUIRED_PDC_MODEL_COUNT} 位 PDC；未齐全前不会创建 Run。`
     : backgroundActive
     ? `后台 PDC 正在执行并保存每一批结果；可离开此页，系统会自动轮询。运行编号：${run.execution.workflowId || run.id}`
     : state.running
@@ -503,7 +514,7 @@ function setRunSummary() {
         : "本次 Run 已完成。确认无误后，点击“发布到 PDC”才会追加当天正式记录。"
       : "开始后，这里会直接记录每一轮谁给出了什么结论，而不是只显示流程状态。";
   if (button) {
-    button.disabled = state.running || backgroundActive || state.testing || state.refreshingMarketData;
+    button.disabled = state.running || backgroundActive || state.testing || state.refreshingMarketData || (!state.run && !committeeProfilesReady());
     button.textContent = backgroundActive ? "后台生成中…" : state.running ? "正在生成…" : state.run ? "继续生成" : "开始生成";
   }
   if (testButton) {
@@ -677,10 +688,16 @@ async function loadModelProfiles() {
     if (Array.isArray(result.models) && result.models.length) {
       state.modelProfiles = result.models;
       state.selectedModelProfileIds = state.modelProfiles.map((profile) => profile.id);
+      state.modelProfilesError = state.modelProfiles.length === REQUIRED_PDC_MODEL_COUNT
+        ? ""
+        : `固定委员会必须是 ${REQUIRED_PDC_MODEL_COUNT} 位 PDC；当前只加载到 ${state.modelProfiles.length} 位。请检查正式 Pages 的模型密钥配置。`;
+    } else {
+      state.modelProfilesError = "未能加载固定 PDC 委员会；不会创建 Run。";
     }
   } catch {
-    // Keep the default PDC profile visible while the authenticated API is unavailable.
+    state.modelProfilesError = "模型委员会未加载完成；不会创建 Run。请刷新页面后重试。";
   } finally {
+    state.modelProfilesLoaded = true;
     render();
   }
 }
@@ -822,6 +839,11 @@ async function verifySelectedModels() {
 }
 
 async function runDecisionFlow() {
+  if (!state.run && !committeeProfilesReady()) {
+    state.error = state.modelProfilesError || `必须先完整加载固定 ${REQUIRED_PDC_MODEL_COUNT} 位 PDC。`;
+    render();
+    return;
+  }
   state.running = true;
   state.error = "";
   let verificationId = "";
