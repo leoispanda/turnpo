@@ -851,6 +851,14 @@ function modelOutputTokenLimit(candidateCount) {
   return 16_000;
 }
 
+function openAiPdcOutputTokenLimit(candidateCount) {
+  // GPT completed batch one at 16k but batch two still failed the 30-record
+  // completeness gate. Its Responses API is the failing path, so only this
+  // provider receives the requested 32k ceiling; other providers retain their
+  // known 16k contract.
+  return 32_000;
+}
+
 function mergeCompletedReviewBatch(previousReview, completedBatch, candidates) {
   const expectedTickers = candidates.map((candidate) => candidate.ticker);
   const allowed = new Set(expectedTickers);
@@ -905,7 +913,7 @@ async function openAiReview(env, modelProfile, role, candidates, phase) {
         instructions: reviewInstructions(role, phase),
         input: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`,
         text: { format: reviewSchema(`stock_pdc_${phase}_${role.id}`, candidates.length) },
-        max_output_tokens: modelOutputTokenLimit(candidates.length),
+        max_output_tokens: openAiPdcOutputTokenLimit(candidates.length),
         // This is analysis, but an all-out reasoning mode can consume the
         // entire shared output budget before the required JSON is emitted.
         // Medium preserves model reasoning while reserving the fixed evidence
