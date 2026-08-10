@@ -197,6 +197,7 @@ assert.ok(stockJs.includes("function renderPublishedDecisionHistory()"));
 assert.ok(workflowConfig.includes('"binding": "STOCK_PDC_WORKFLOW"'));
 assert.ok(workflowWorker.includes('import { WorkflowEntrypoint } from "cloudflare:workers"'));
 assert.ok(workflowWorker.includes("export class StockPdcDecisionWorkflow"));
+assert.ok(workflowWorker.includes('retries: { limit: 0, delay: "1 second", backoff: "constant" }'));
 assert.ok(workflowWorker.includes("round-one:${member.id}:batch:${batch}"));
 assert.ok(workflowWorker.includes("stockPdcWorkflowVerify"));
 
