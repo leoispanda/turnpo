@@ -844,7 +844,11 @@ function reviewIsComplete(review, expectedCount = null) {
 }
 
 function modelOutputTokenLimit(candidateCount) {
-  return Math.max(8_000, Math.min(16_000, 1_400 + candidateCount * 240));
+  // A 30-name PDC batch must emit nine dimension scores, risk checks, and a
+  // five-day forecast for every name. The old 8.6k floor together with maximum
+  // reasoning could leave OpenAI with no final structured output at all.
+  // 16k is the existing cross-provider ceiling, not a fabricated response.
+  return 16_000;
 }
 
 function mergeCompletedReviewBatch(previousReview, completedBatch, candidates) {
@@ -902,13 +906,20 @@ async function openAiReview(env, modelProfile, role, candidates, phase) {
         input: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}`,
         text: { format: reviewSchema(`stock_pdc_${phase}_${role.id}`, candidates.length) },
         max_output_tokens: modelOutputTokenLimit(candidates.length),
-        reasoning: modelProfile.tier === "mini-demo" ? { effort: "medium" } : { mode: "pro", effort: "max" }
+        // This is analysis, but an all-out reasoning mode can consume the
+        // entire shared output budget before the required JSON is emitted.
+        // Medium preserves model reasoning while reserving the fixed evidence
+        // records that the integrity gate requires.
+        reasoning: { effort: "medium" }
       })
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.error?.message || "OpenAI review request failed.");
   const outputText = extractOutputText(data);
-  if (!outputText) throw new Error("OpenAI review returned no structured output.");
+  if (!outputText) {
+    const detail = cleanText(data.incomplete_details?.reason || data.status || "empty response", 120);
+    throw new Error(`OpenAI review returned no structured output (${detail}).`);
+  }
   return normalizeReview(parseModelJson(outputText), candidates);
 }
 

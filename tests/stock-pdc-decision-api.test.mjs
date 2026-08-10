@@ -423,6 +423,8 @@ try {
   const firstPdcPacket = JSON.parse(openAiRequest.request.input.replace("Candidate packet:\n", ""));
   assert.equal(firstPdcPacket[0].facts.marketCapCny, 50_000_000_000, "Hawkeye facts must be preserved in the packet sent to each PDC");
   assert.ok(openAiRequest.request.text.format.schema.properties.rankings.items.properties.forwardPrediction);
+  assert.equal(openAiRequest.request.max_output_tokens, 16000, "OpenAI PDC batches must reserve output room for every required record");
+  assert.equal(openAiRequest.request.reasoning.effort, "medium", "OpenAI PDC batches must not spend their full output budget on hidden reasoning");
 
   for (const stage of ["merge"]) {
     response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/${stage}`, {})));
@@ -528,7 +530,7 @@ try {
   assert.equal(response.status, 200, "Kimi reviewer should succeed");
   assert.equal(kimiRequest.headers.authorization, "Bearer kimi-test-key");
   assert.equal(kimiRequest.request.response_format.type, "json_object");
-  assert.equal(kimiRequest.request.max_completion_tokens, 8000);
+  assert.equal(kimiRequest.request.max_completion_tokens, 16000, "every PDC model receives enough room for a complete evidence record batch");
 
   hawkeyeDate = "2026-08-13";
   hawkeyeRows = [];
