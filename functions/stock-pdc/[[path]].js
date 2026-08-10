@@ -518,7 +518,6 @@ function rankingSchemaProperties() {
       properties: dimensionScoreProperties()
     },
     unavailableDimensions: { type: "array", items: { type: "string", enum: PDC_DIMENSIONS.map((dimension) => dimension.id) } },
-    dataGaps: { type: "string" },
     backgroundChecks: {
       type: "object",
       additionalProperties: false,
@@ -533,8 +532,6 @@ function rankingSchemaProperties() {
     },
     decision: { type: "string", enum: ["BUY", "WATCH", "HOLD", "SELL"] },
     confidence: { type: "number", minimum: 0, maximum: 100 },
-    thesis: { type: "string" },
-    risk: { type: "string" },
     exclude: { type: "boolean" }
   };
 }
@@ -547,7 +544,7 @@ function reviewSchema(name, expectedCount) {
     schema: {
       type: "object",
       additionalProperties: false,
-      required: ["rankings", "summary"],
+      required: ["rankings"],
       properties: {
         rankings: {
           type: "array",
@@ -556,11 +553,10 @@ function reviewSchema(name, expectedCount) {
           items: {
             type: "object",
             additionalProperties: false,
-            required: ["ticker", "dimensionScores", "unavailableDimensions", "dataGaps", "backgroundChecks", "forwardPrediction", "decision", "confidence", "thesis", "risk", "exclude"],
+            required: ["ticker", "dimensionScores", "unavailableDimensions", "backgroundChecks", "forwardPrediction", "decision", "confidence", "exclude"],
             properties: rankingSchemaProperties()
           }
-        },
-        summary: { type: "string" }
+        }
       }
     }
   };
@@ -570,7 +566,7 @@ function portableReviewSchema(expectedCount) {
   return {
     type: "object",
     additionalProperties: false,
-    required: ["rankings", "summary"],
+    required: ["rankings"],
     properties: {
       rankings: {
         type: "array",
@@ -579,78 +575,35 @@ function portableReviewSchema(expectedCount) {
         items: {
           type: "object",
           additionalProperties: false,
-          required: ["ticker", "dimensionScores", "unavailableDimensions", "dataGaps", "backgroundChecks", "forwardPrediction", "decision", "confidence", "thesis", "risk", "exclude"],
+          required: ["ticker", "dimensionScores", "unavailableDimensions", "backgroundChecks", "forwardPrediction", "decision", "confidence", "exclude"],
           properties: rankingSchemaProperties()
         }
-      },
-      summary: { type: "string" }
-    }
-  };
-}
-
-function secretarySchema() {
-  return {
-    type: "json_schema",
-    name: "stock_pdc_secretary_summary",
-    strict: true,
-    schema: {
-      type: "object",
-      additionalProperties: false,
-      required: ["summary", "agreements", "disagreements", "priorityRisks", "reviewQuestions"],
-      properties: {
-        summary: { type: "string" },
-        agreements: { type: "array", items: { type: "string" }, maxItems: 12 },
-        disagreements: { type: "array", items: { type: "string" }, maxItems: 12 },
-        priorityRisks: { type: "array", items: { type: "string" }, maxItems: 12 },
-        reviewQuestions: { type: "array", items: { type: "string" }, maxItems: 12 }
       }
     }
   };
 }
 
-function normalizeSecretarySummary(value) {
-  const cleanList = (items) => (Array.isArray(items) ? items : []).map((item) => cleanText(item, 360)).filter(Boolean).slice(0, 12);
+function deterministicSecretaryMetrics(run) {
+  const members = committeeMembers(run);
+  const rows = consensusFromReviews(committeeReviewMap(run, "round-two"), run.pool || []);
+  const requiredSupport = Math.max(1, Math.ceil(members.length / 2));
   return {
-    summary: cleanText(value?.summary, 1200),
-    agreements: cleanList(value?.agreements),
-    disagreements: cleanList(value?.disagreements),
-    priorityRisks: cleanList(value?.priorityRisks),
-    reviewQuestions: cleanList(value?.reviewQuestions)
+    format: "PDC_SCORECARD_V1",
+    memberCount: members.length,
+    candidateCount: rows.length,
+    requiredSupport,
+    unanimousBuyCount: rows.filter((row) => row.buyVotes === members.length).length,
+    majorityBuyCount: rows.filter((row) => row.buyVotes >= requiredSupport).length,
+    splitDecisionCount: rows.filter((row) => row.buyVotes > 0 && row.buyVotes < requiredSupport).length,
+    riskFlaggedCount: rows.filter((row) => row.backgroundChecks.financialDistressFlag || row.backgroundChecks.stDelistingRisk).length
   };
 }
 
-function secretaryPacket(run) {
+function secretaryReview(run) {
   return {
-    date: run.date,
-    candidatePool: run.pool || [],
-    secondRound: committeeMembers(run).map((member) => ({
-      model: publicModelProfile(member.profile),
-      review: publicReview(member.roundTwo)
-    }))
+    profile: { id: "secretary-scorecard", label: "Secretary · Program Scorecard", provider: "Program", model: "PDC_SCORECARD_V1", tier: "deterministic" },
+    metrics: deterministicSecretaryMetrics(run)
   };
-}
-
-async function secretaryReview(env, run) {
-  const apiKey = env.OPENAI_API_KEY;
-  if (!apiKey) throw new Error("Missing OPENAI_API_KEY for PDC Secretary.");
-  const profile = secretaryProfile(env);
-  const response = await fetch(OPENAI_RESPONSES_URL, {
-    method: "POST",
-    headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" },
-    body: JSON.stringify({
-      model: profile.model,
-      instructions: "You are the secretary of an internal A-share research committee. Summarize only the supplied second-round PDC records. Do not rank stocks, change scores, make trading instructions, invent facts, or override the deterministic final gate. Produce a concise audit brief that preserves agreements, disagreements, priority risks, and questions for human review.",
-      input: `Second-round committee packet:\n${JSON.stringify(secretaryPacket(run))}`,
-      text: { format: secretarySchema() },
-      max_output_tokens: 1800,
-      reasoning: { effort: "medium" }
-    })
-  });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.error?.message || "PDC Secretary request failed.");
-  const outputText = extractOutputText(data);
-  if (!outputText) throw new Error("PDC Secretary returned no structured output.");
-  return { profile: publicModelProfile(profile), summary: normalizeSecretarySummary(parseModelJson(outputText)) };
 }
 
 function reviewInstructions(role, phase) {
@@ -663,17 +616,17 @@ function reviewInstructions(role, phase) {
     "Penalize stocks likely to move sideways even when long-term quality or historical trend is high. A strong historical trend alone is insufficient: judge whether forward momentum remains from this specific entry point.",
     "Score every supplied ticker on the nine fixed short-term dimensions: marketRegime 10%, relativeStrength 15%, trendAcceleration 15%, breakoutConfirmation 15%, volumeFlowConfirmation 12%, catalystInformation 10%, entryTiming 10%, overheatReversalRisk 7%, downsideFailureRisk 6%.",
     "Every available dimension uses one direction: 10 is most favorable for buying now and seeing a continued short-term rise; 0 is least favorable. For overheatReversalRisk, 10 means not overheated and low reversal risk. For downsideFailureRisk, 10 means low downside and failure risk.",
-    "CatalystInformation is only a dated or timely short-term price catalyst evidenced in the frozen packet. If it or any other dimension lacks factual support, put its id in unavailableDimensions, set that dimension score to 0, and explain the missing data once in dataGaps. Never guess or invent news. The program ignores unavailable dimensions and calculates weighted scores.",
+    "CatalystInformation is only a dated or timely short-term price catalyst evidenced in the frozen packet. If it or any other dimension lacks factual support, put its id in unavailableDimensions and set that dimension score to 0. Never guess or invent news. The program ignores unavailable dimensions and calculates weighted scores.",
     "Fundamental and valuation are not scored. Return backgroundChecks only to flag clear, fact-supported red flags; false means no flag was evidenced in the supplied packet, not that the company has passed a full diligence review. Never use a low PE or long-term company quality to raise the short-term score.",
     "For every ticker return forwardPrediction: probability in percent that 5D return exceeds +2%, expected 5D return percent, probability in percent that 5D return is below -3%, and a 0-100 forwardUpsideScore. These are forecasts from the frozen facts, not known outcomes.",
-    "Return exactly one record for every supplied ticker, with no omissions, duplicates, extra tickers, or Top-N truncation. The program performs the ranking after it verifies full coverage. BUY means a favorable current entry with credible 5D forward upside; WATCH, HOLD, and SELL must be used when that threshold is not met. Use exclude=true when the supplied packet itself shows evidence is inadequate or risk is too high.",
+    "Return exactly one fixed-format scorecard record for every supplied ticker, with no omissions, duplicates, extra tickers, Top-N truncation, thesis, risk, data-gap prose, explanation, or summary text. The program performs the ranking after it verifies full coverage. BUY means a favorable current entry with credible 5D forward upside; WATCH, HOLD, and SELL must be used when that threshold is not met. Use exclude=true when the supplied packet itself shows evidence is inadequate or risk is too high.",
     phase === "round-two"
       ? "This is the second review. Challenge the first-pass consensus and look for reasons a candidate should not advance."
       : "This is the first independent review. Do not assume any other reviewer agrees with you."
   ].join(" ");
 }
 
-function normalizeDimensionScores(value, unavailableDimensions, dataGaps) {
+function normalizeDimensionScores(value, unavailableDimensions) {
   const input = value && typeof value === "object" && !Array.isArray(value) ? value : {};
   const validDimensionIds = new Set(PDC_DIMENSIONS.map((dimension) => dimension.id));
   const unavailableSource = Array.isArray(unavailableDimensions) ? unavailableDimensions : null;
@@ -693,8 +646,7 @@ function normalizeDimensionScores(value, unavailableDimensions, dataGaps) {
     if ((isUnavailable && score !== 0) || (!isUnavailable && !scoreIsValid)) valid = false;
     dimensionScores[dimension.id] = {
       available,
-      score: available ? score : null,
-      evidence: available ? "Scored from the supplied fact packet." : cleanText(dataGaps || "N/A — supporting data was not supplied.", 220)
+      score: available ? score : null
     };
     if (available) {
       coveredWeight += dimension.weight;
@@ -755,6 +707,7 @@ function attachPendingForwardOutcomes(review, referenceDate) {
 }
 
 function normalizeReview(value, candidates) {
+  const requiredFields = new Set(["ticker", "dimensionScores", "unavailableDimensions", "backgroundChecks", "forwardPrediction", "decision", "confidence", "exclude"]);
   const expectedTickers = candidates.map((candidate) => candidate.ticker);
   const allowed = new Set(expectedTickers);
   const byTicker = new Map(candidates.map((candidate) => [candidate.ticker, candidate]));
@@ -766,6 +719,10 @@ function normalizeReview(value, candidates) {
   const rawRankings = Array.isArray(value?.rankings) ? value.rankings : [];
   const rankings = rawRankings
     .map((row) => {
+      if (!row || typeof row !== "object" || Array.isArray(row) || Object.keys(row).some((key) => !requiredFields.has(key))) {
+        malformedRowCount += 1;
+        return null;
+      }
       const ticker = cleanText(row?.ticker, 24).toUpperCase();
       if (!ticker) {
         malformedRowCount += 1;
@@ -780,14 +737,12 @@ function normalizeReview(value, candidates) {
         return null;
       }
       seen.add(ticker);
-      const dimensions = normalizeDimensionScores(row?.dimensionScores, row?.unavailableDimensions, row?.dataGaps);
+      const dimensions = normalizeDimensionScores(row?.dimensionScores, row?.unavailableDimensions);
       const backgroundChecks = normalizeBackgroundChecks(row?.backgroundChecks);
       const forwardPrediction = normalizeForwardPrediction(row?.forwardPrediction);
       const decision = ["BUY", "WATCH", "HOLD", "SELL"].includes(row?.decision) ? row.decision : "";
       const confidence = finiteNumber(row?.confidence);
-      const thesis = cleanText(row?.thesis, 260);
-      const risk = cleanText(row?.risk, 220);
-      if (!dimensions.valid || !backgroundChecks || !forwardPrediction || !decision || confidence === null || confidence < 0 || confidence > 100 || !thesis || !risk || typeof row?.exclude !== "boolean") {
+      if (!dimensions.valid || !backgroundChecks || !forwardPrediction || !decision || confidence === null || confidence < 0 || confidence > 100 || typeof row?.exclude !== "boolean") {
         invalidTickers.push(ticker);
         return null;
       }
@@ -797,13 +752,10 @@ function normalizeReview(value, candidates) {
         score: dimensions.weightedScore,
         coveragePct: dimensions.coveragePct,
         dimensionScores: dimensions.dimensionScores,
-        dataGaps: cleanText(row?.dataGaps, 240),
         backgroundChecks,
         forwardPrediction,
         decision,
         confidence,
-        thesis,
-        risk,
         exclude: Boolean(row?.exclude)
       };
     })
@@ -811,8 +763,7 @@ function normalizeReview(value, candidates) {
     .sort((left, right) => right.score - left.score)
     .map((row, index) => ({ ...row, rank: index + 1 }));
   const missingTickers = expectedTickers.filter((ticker) => !rankings.some((row) => row.ticker === ticker));
-  const summary = cleanText(value?.summary, 360);
-  const structuralFailure = !Array.isArray(value?.rankings) || !summary || malformedRowCount || duplicateTickers.length || unexpectedTickers.length || invalidTickers.length;
+  const structuralFailure = !value || typeof value !== "object" || Array.isArray(value) || Object.keys(value).some((key) => key !== "rankings") || !Array.isArray(value?.rankings) || malformedRowCount || duplicateTickers.length || unexpectedTickers.length || invalidTickers.length;
   const status = structuralFailure || !rankings.length
     ? "FAILED"
     : missingTickers.length
@@ -821,7 +772,6 @@ function normalizeReview(value, candidates) {
   return {
     status,
     rankings,
-    summary,
     integrity: {
       status,
       expectedCount: expectedTickers.length,
@@ -831,8 +781,7 @@ function normalizeReview(value, candidates) {
       duplicateTickers,
       unexpectedTickers,
       invalidTickers,
-      malformedRowCount,
-      summaryPresent: Boolean(summary)
+      malformedRowCount
     }
   };
 }
@@ -873,16 +822,10 @@ function mergeCompletedReviewBatch(previousReview, completedBatch, candidates) {
   const missingTickers = expectedTickers.filter((ticker) => !byTicker.has(ticker));
   const completedBatches = Math.ceil(rankings.length / PDC_REVIEW_BATCH_SIZE);
   const totalBatches = Math.ceil(expectedTickers.length / PDC_REVIEW_BATCH_SIZE);
-  const batchSummaries = [
-    ...(Array.isArray(previousReview?.batchSummaries) ? previousReview.batchSummaries : []),
-    completedBatch.summary
-  ].map((summary) => cleanText(summary, 360)).filter(Boolean);
   const complete = !missingTickers.length;
   return {
     status: complete ? "COMPLETE" : "IN_PROGRESS",
     rankings,
-    summary: cleanText(batchSummaries.join("\n"), 1200),
-    batchSummaries,
     batch: { completed: completedBatches, total: totalBatches, size: PDC_REVIEW_BATCH_SIZE },
     integrity: {
       status: complete ? "COMPLETE" : "IN_PROGRESS",
@@ -893,8 +836,7 @@ function mergeCompletedReviewBatch(previousReview, completedBatch, candidates) {
       duplicateTickers: [],
       unexpectedTickers: [],
       invalidTickers: [],
-      malformedRowCount: 0,
-      summaryPresent: Boolean(batchSummaries.length)
+      malformedRowCount: 0
     }
   };
 }
@@ -1060,7 +1002,7 @@ async function deepseekReview(env, modelProfile, role, candidates, phase) {
         thinking: modelProfile.tier === "mini-demo" ? { type: "disabled" } : { type: "enabled" },
         ...(modelProfile.tier === "mini-demo" ? {} : { reasoning_effort: "max" }),
         messages: [
-          { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings and summary.` },
+          { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings.` },
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
         ],
         response_format: { type: "json_object" },
@@ -1087,7 +1029,7 @@ async function kimiReview(env, modelProfile, role, candidates, phase) {
         model: modelProfile.model,
         ...(modelProfile.tier === "mini-demo" ? { thinking: { type: "disabled" } } : { reasoning_effort: "max" }),
         messages: [
-          { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings and summary.` },
+          { role: "system", content: `${reviewInstructions(role, phase)} Return only one valid JSON object with rankings.` },
           { role: "user", content: `Candidate packet:\n${JSON.stringify(serializableCandidates(candidates))}` }
         ],
         response_format: { type: "json_object" },
@@ -1346,9 +1288,7 @@ function consensusFromReviews(reviews, candidates) {
       forwardUpsideScore: []
     },
     backgroundCheckVotes: Object.fromEntries(BACKGROUND_CHECKS.map((id) => [id, 0])),
-    buyVotes: 0,
-    theses: [],
-    risks: []
+    buyVotes: 0
   }]));
   Object.entries(reviews).forEach(([roleId, review]) => {
     review.rankings.forEach((ranking) => {
@@ -1370,8 +1310,6 @@ function consensusFromReviews(reviews, candidates) {
       BACKGROUND_CHECKS.forEach((id) => {
         if (ranking.backgroundChecks?.[id]) row.backgroundCheckVotes[id] += 1;
       });
-      if (ranking.thesis) row.theses.push({ roleId, text: ranking.thesis });
-      if (ranking.risk) row.risks.push({ roleId, text: ranking.risk });
     });
   });
   return [...rows.values()]
@@ -1429,8 +1367,6 @@ function decisionResult(run) {
       requiredSupport,
       buyVotes: row.buyVotes,
       sourceRank: row.sourceRank,
-      thesis: row.theses[0]?.text || "Evidence review completed.",
-      risk: row.risks[0]?.text || "Review the full run before any action.",
       forwardOutcome: pendingForwardOutcome(run.date),
       action: "RESEARCH_REVIEW"
     }));
@@ -1481,10 +1417,8 @@ function publicReview(review) {
       duplicateTickers: Array.isArray(review.integrity.duplicateTickers) ? review.integrity.duplicateTickers.map((ticker) => cleanText(ticker, 24)).filter(Boolean) : [],
       unexpectedTickers: Array.isArray(review.integrity.unexpectedTickers) ? review.integrity.unexpectedTickers.map((ticker) => cleanText(ticker, 24)).filter(Boolean) : [],
       invalidTickers: Array.isArray(review.integrity.invalidTickers) ? review.integrity.invalidTickers.map((ticker) => cleanText(ticker, 24)).filter(Boolean) : [],
-      malformedRowCount: finiteNumber(review.integrity.malformedRowCount, 0),
-      summaryPresent: Boolean(review.integrity.summaryPresent)
+      malformedRowCount: finiteNumber(review.integrity.malformedRowCount, 0)
     } : null,
-    summary: cleanText(review.summary, 360),
     batch: review.batch && typeof review.batch === "object" ? {
       completed: finiteNumber(review.batch.completed, 0),
       total: finiteNumber(review.batch.total, 0),
@@ -1497,14 +1431,11 @@ function publicReview(review) {
       score: row.score,
       coveragePct: row.coveragePct,
       dimensionScores: row.dimensionScores,
-      dataGaps: row.dataGaps,
       backgroundChecks: row.backgroundChecks,
       forwardPrediction: row.forwardPrediction,
       forwardOutcome: row.forwardOutcome || null,
       decision: row.decision,
       confidence: row.confidence,
-      thesis: row.thesis,
-      risk: row.risk,
       exclude: row.exclude
     }))
   };
@@ -1677,7 +1608,7 @@ async function createModelVerification(request, env, mode = OFFICIAL_DECISION_MO
   const body = await readJson(request);
   const { requestedIds, modelProfiles } = requestedModelProfiles(body, env, mode);
   if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("Every selected PDC model must be configured before verification.");
-  const verificationProfiles = [...modelProfiles, secretaryProfile(env)];
+  const verificationProfiles = modelProfiles;
   const results = await Promise.all(verificationProfiles.map(async (profile) => {
     const startedAt = Date.now();
     try {
@@ -1702,7 +1633,7 @@ async function consumeModelVerification(store, verificationId, modelProfiles, en
   if (!/^[a-f0-9-]{36}$/i.test(id)) return { error: "Run a fresh model verification before generating this PDC decision.", verification: null };
   const verification = await store.get(decisionVerificationKey(id, mode), "json");
   if (!verification || typeof verification !== "object") return { error: "The model verification has expired. Please verify the selected PDC models again.", verification: null };
-  const requested = [...modelProfiles, secretaryProfile(env)].map((profile) => `${profile.id}:${profile.model}`).sort();
+  const requested = modelProfiles.map((profile) => `${profile.id}:${profile.model}`).sort();
   const verified = (Array.isArray(verification.members) ? verification.members : [])
     .filter((member) => member?.ok)
     .map((member) => `${member.id}:${member.model}`)
@@ -1826,7 +1757,7 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
         status: noCandidates ? "skipped" : deferVerification ? "pending" : "complete",
         startedAt: noCandidates ? now : deferVerification ? "" : verificationReceipt.verification.createdAt,
         completedAt: noCandidates || deferVerification ? "" : now,
-        input: { members: noCandidates ? [] : deferVerification ? [...modelProfiles, secretaryProfile(env)].map((profile) => profile.id) : verificationReceipt.verification.modelProfileIds || [] },
+        input: { members: noCandidates ? [] : deferVerification ? modelProfiles.map((profile) => profile.id) : verificationReceipt.verification.modelProfileIds || [] },
         output: noCandidates
           ? { reason: "NO_CANDIDATES: Hawkeye completed successfully with zero passed stocks; models were not called." }
           : deferVerification ? {} : { members: publicModelVerification(verificationReceipt.verification)?.members || [] },
@@ -1968,7 +1899,7 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
       const completedTickers = new Set((member[reviewKey]?.rankings || []).map((row) => row?.ticker).filter(Boolean));
       const batchCandidates = candidates.filter((candidate) => !completedTickers.has(candidate.ticker)).slice(0, PDC_REVIEW_BATCH_SIZE);
       if (!batchCandidates.length) {
-        member[reviewKey] = mergeCompletedReviewBatch(member[reviewKey], { rankings: [], summary: "" }, candidates);
+        member[reviewKey] = mergeCompletedReviewBatch(member[reviewKey], { rankings: [] }, candidates);
         await saveRun(store, run);
         continue;
       }
@@ -2002,7 +1933,7 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
             startedAt,
             completedAt: new Date().toISOString(),
             input: { candidateCount: candidates.length, batch: { count: batchCandidates.length, tickers: batchCandidates.map((candidate) => candidate.ticker) } },
-            output: { summary: batchReview.summary, rankingCount: batchReview.rankings.length, integrity: batchReview.integrity },
+            output: { rankingCount: batchReview.rankings.length, integrity: batchReview.integrity },
             error: failureMessage
           });
           await saveRun(store, run);
@@ -2016,7 +1947,6 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
           completedAt: new Date().toISOString(),
           input: { candidateCount: candidates.length, batch: { count: batchCandidates.length, tickers: batchCandidates.map((candidate) => candidate.ticker) } },
           output: {
-            summary: member[reviewKey].summary,
             rankingCount: member[reviewKey].rankings.length,
             integrity: member[reviewKey].integrity
           },
@@ -2032,7 +1962,6 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
         member[reviewKey] = {
           status: "FAILED",
           rankings: Array.isArray(member[reviewKey]?.rankings) ? member[reviewKey].rankings : [],
-          summary: cleanText(member[reviewKey]?.summary, 1200),
           batch: member[reviewKey]?.batch || null,
           integrity: {
             status: "FAILED",
@@ -2044,7 +1973,6 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
             unexpectedTickers: [],
             invalidTickers: [],
             malformedRowCount: 0,
-            summaryPresent: false,
             error: failureMessage
           }
         };
@@ -2082,14 +2010,14 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
     if (!run.secretary) {
       const startedAt = new Date().toISOString();
       try {
-        run.secretary = await secretaryReview(env, run);
+        run.secretary = secretaryReview(run);
         run.audit = run.audit || {};
         run.audit.secretary = {
           status: "complete",
           startedAt,
           completedAt: new Date().toISOString(),
           input: { model: run.secretary.profile, poolCount: run.pool?.length || 0, memberCount: committeeMembers(run).length },
-          output: run.secretary.summary,
+          output: run.secretary.metrics,
           error: ""
         };
       } catch (caught) {
@@ -2098,7 +2026,7 @@ async function advanceCommitteeRun(env, run, stage, requestedModelId = "") {
           status: "failed",
           startedAt,
           completedAt: new Date().toISOString(),
-          input: { model: publicModelProfile(secretaryProfile(env)), poolCount: run.pool?.length || 0, memberCount: committeeMembers(run).length },
+          input: { model: { id: "secretary-scorecard", provider: "Program", model: "PDC_SCORECARD_V1" }, poolCount: run.pool?.length || 0, memberCount: committeeMembers(run).length },
           output: {},
           error: cleanText(caught?.message || "PDC Secretary failed.", 320)
         };
@@ -2222,7 +2150,7 @@ export async function stockPdcWorkflowVerify(env, runId, mode = OFFICIAL_DECISIO
   if (!run) throw new Error("Decision run was not found.");
   if (run.status === "NO_CANDIDATES") return { ok: true, run: publicRun(run) };
   if (run.modelVerification?.members?.length) return { ok: run.modelVerification.members.every((member) => member?.ok), run: publicRun(run) };
-  const profiles = [...committeeMembers(run).map((member) => member.profile), secretaryProfile(env)];
+  const profiles = committeeMembers(run).map((member) => member.profile);
   const startedAt = new Date().toISOString();
   const members = await Promise.all(profiles.map(async (profile) => {
     const started = Date.now();

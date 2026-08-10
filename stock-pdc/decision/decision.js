@@ -102,12 +102,12 @@ function committeeProfilesReady() {
 }
 
 const WORKFLOW_STAGES = [
-  { id: "verify", title: "模型验证", call: "5 PDC + Secretary Terra" },
+  { id: "verify", title: "模型验证", call: "5 PDC" },
   { id: "snapshot", title: "事实快照", call: "行情数据 + Hawkeye" },
   { id: "round-one", title: "第一轮", call: "5 PDC × 全部候选 · 完整性校验" },
   { id: "merge", title: "共同复核池", call: "首轮结果 → Top 20" },
   { id: "round-two", title: "第二轮", call: "Top 20 × 5 PDC" },
-  { id: "secretary", title: "Secretary 汇总", call: "GPT-5.6 Terra" },
+  { id: "secretary", title: "Secretary 汇总", call: "程序统计评分" },
   { id: "risk-check", title: "最终名单", call: "共识 + 风险闸门 → Top 10" }
 ];
 
@@ -136,7 +136,7 @@ function workflowStageMeta(stage, run) {
   if (stage.id === "round-one") return `${members.filter((member) => member.roundOne?.status === "COMPLETE" && member.roundOne?.integrity?.status === "COMPLETE").length}/${members.length} 完整返回`;
   if (stage.id === "merge") return run.pool?.length ? `${run.pool.length} 只进入复核` : "等待汇总";
   if (stage.id === "round-two") return `${members.filter((member) => member.roundTwo?.status === "COMPLETE" && member.roundTwo?.integrity?.status === "COMPLETE").length}/${members.length} 完整返回`;
-  if (stage.id === "secretary") return run.secretary?.summary ? "已生成" : run.audit?.secretary?.status === "failed" ? "失败" : "等待汇总";
+  if (stage.id === "secretary") return run.secretary?.metrics ? "已生成" : run.audit?.secretary?.status === "failed" ? "失败" : "等待汇总";
   return run.audit?.riskCheck?.status === "complete" ? `${run.final?.length || 0} 个保留` : "等待闸门";
 }
 
@@ -156,7 +156,7 @@ function workflowMemberRecords(members, phase) {
             ? "完整返回"
             : "等待";
     return `<details class="decision-workflow-member"><summary><strong>${escapeHtml(member.label)}</strong><small>${escapeHtml(member.model)} · ${escapeHtml(stateLabel)}</small></summary>
-      <div><p>${escapeHtml(review?.summary || audit?.error || "尚未产生输出")}</p><small>${escapeHtml(auditTime(audit?.startedAt))} → ${escapeHtml(auditTime(audit?.completedAt))}</small>${rawAuditMarkup({ input: audit?.input || {}, output: review || audit?.output || {}, error: audit?.error || "" }, "全部输入与输出")}</div>
+      <div><p>${escapeHtml(audit?.error || `固定评分记录：${review?.integrity?.validCount ?? 0}/${review?.integrity?.expectedCount ?? "—"}`)}</p><small>${escapeHtml(auditTime(audit?.startedAt))} → ${escapeHtml(auditTime(audit?.completedAt))}</small>${rawAuditMarkup({ input: audit?.input || {}, output: review || audit?.output || {}, error: audit?.error || "" }, "全部输入与输出")}</div>
     </details>`;
   }).join("")}</div>`;
 }
@@ -256,7 +256,7 @@ function smokeTestMarkup(test) {
 function dimensionCopyText(row) {
   return PDC_DIMENSIONS.map((dimension) => {
     const value = row.dimensionScores?.[dimension.id];
-    return `${dimension.short}：${value?.available ? `${value.score}/10` : "N/A"}${value?.evidence ? `（${value.evidence}）` : ""}`;
+    return `${dimension.short}：${value?.available ? `${value.score}/10` : "N/A"}`;
   }).join("\n");
 }
 
@@ -265,7 +265,7 @@ function dimensionMarkup(row) {
     const value = row.dimensionScores?.[dimension.id];
     const available = Boolean(value?.available);
     const score = available ? `${value.score}/10` : "N/A";
-    return `<span data-available="${available}" title="${escapeHtml(value?.evidence || "未提供数据")}"><b>${dimension.short}</b>${escapeHtml(score)}</span>`;
+    return `<span data-available="${available}"><b>${dimension.short}</b>${escapeHtml(score)}</span>`;
   }).join("");
   return `<details class="decision-dimension-breakdown"><summary>九维评分 · 数据覆盖 ${escapeHtml(row.coveragePct ?? 0)}%</summary><div>${cells}</div></details>`;
 }
@@ -293,8 +293,6 @@ function reviewCopyText(member, review, phase) {
   const phaseTitle = phase === "round-two" ? "第二轮最终复核" : "第一轮独立盲评";
   const rows = (review?.rankings || []).map((row) => [
     `#${row.rank} ${row.name} (${row.ticker}) · ${row.score} 分`,
-    `理由：${row.thesis || "未提供"}`,
-    `风险：${row.risk || "未提供"}`,
     `模型状态：${row.decision || "WATCH"}；信心：${row.confidence ?? 0}/100；数据覆盖：${row.coveragePct ?? 0}%`,
     forwardPredictionCopyText(row),
     backgroundCheckCopyText(row),
@@ -307,12 +305,9 @@ function reviewCopyText(member, review, phase) {
     `日期：${state.run?.date || "未锁定"}`,
     `模型：${member.label}（${member.provider} / ${member.model}）`,
     `阶段：${phaseTitle}`,
-    "请只基于以下冻结事实与模型结论协助我讨论；不要把它视为交易指令。",
+    "固定格式：数值评分、枚举决策、风险 flags 与前瞻概率；不含模型叙述。",
     "",
-    "模型摘要：",
-    review?.summary || "未提供摘要。",
-    "",
-    "排名与依据：",
+    "评分记录：",
     rows || "该阶段尚未返回排名。"
   ].join("\n");
 }
@@ -330,7 +325,7 @@ function fullRunCopyText() {
     member.roundOne ? reviewCopyText(member, member.roundOne, "round-one") : "",
     member.roundTwo ? reviewCopyText(member, member.roundTwo, "round-two") : ""
   ]).filter(Boolean).join("\n\n---\n\n");
-  const final = (run.final || []).map((row) => `#${row.rank} ${row.name} (${row.ticker}) · ${row.consensusScore} 分 · ${row.buyVotes ?? 0}/${row.requiredSupport || "—"} BUY 共识\n数据覆盖：${row.averageCoveragePct ?? 0}%\n5D 上涨超过 +2% 概率共识：${row.forwardPrediction?.prob5dUpGt2Pct ?? "N/A"}%；预期 5D 收益：${row.forwardPrediction?.expected5dReturnPct ?? "N/A"}%；5D 下跌低于 -3% 概率：${row.forwardPrediction?.prob5dDownLtMinus3Pct ?? "N/A"}%\n趋势加速共识：${row.dimensionConsensus?.trendAcceleration?.median ?? "N/A"}/10；买点共识：${row.dimensionConsensus?.entryTiming?.median ?? "N/A"}/10；低反转共识：${row.dimensionConsensus?.overheatReversalRisk?.median ?? "N/A"}/10\n理由：${row.thesis}\n风险：${row.risk}`).join("\n\n");
+  const final = (run.final || []).map((row) => `#${row.rank} ${row.name} (${row.ticker}) · ${row.consensusScore} 分 · ${row.buyVotes ?? 0}/${row.requiredSupport || "—"} BUY 共识\n数据覆盖：${row.averageCoveragePct ?? 0}%\n5D 上涨超过 +2% 概率共识：${row.forwardPrediction?.prob5dUpGt2Pct ?? "N/A"}%；预期 5D 收益：${row.forwardPrediction?.expected5dReturnPct ?? "N/A"}%；5D 下跌低于 -3% 概率：${row.forwardPrediction?.prob5dDownLtMinus3Pct ?? "N/A"}%\n趋势加速共识：${row.dimensionConsensus?.trendAcceleration?.median ?? "N/A"}/10；买点共识：${row.dimensionConsensus?.entryTiming?.median ?? "N/A"}/10；低反转共识：${row.dimensionConsensus?.overheatReversalRisk?.median ?? "N/A"}/10`).join("\n\n");
   return [
     "# Stock PDC 本轮决策包",
     `模式：${PDC_MODE_LABEL}；日期：${run.date}；Run：${run.id}`,
@@ -376,10 +371,10 @@ function reviewPanel(member, phase, review) {
   const title = phase === "round-two" ? "第二轮 · 最终复核结论（展示前 30）" : "第一轮 · 独立盲评结论（展示前 30）";
   return `<section class="decision-review-panel">
     <div class="decision-review-panel-head">
-      <div><strong>${title}</strong><p>${escapeHtml(review.summary || "该模型已提交完整评分。")}</p></div>
+      <div><strong>${title}</strong><p>固定评分记录 · ${escapeHtml(review.integrity?.validCount ?? 0)}/${escapeHtml(review.integrity?.expectedCount ?? 0)}</p></div>
       <button class="decision-member-copy" type="button" data-copy-member="${escapeHtml(member.id)}" data-copy-phase="${phase}">复制给 GPT</button>
     </div>
-    <ol>${review.rankings.slice(0, 30).map((row) => `<li><b>#${escapeHtml(row.rank)}</b><span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span><em>${escapeHtml(row.score)} 分</em><p>${escapeHtml(row.thesis)}<br><small>${escapeHtml(row.decision || "WATCH")} · 信心 ${escapeHtml(row.confidence ?? 0)}/100 · 风险：${escapeHtml(row.risk)}${row.exclude ? " · 建议排除" : ""}</small>${forwardPredictionMarkup(row)}${dimensionMarkup(row)}</p></li>`).join("")}</ol>
+    <ol>${review.rankings.slice(0, 30).map((row) => `<li><b>#${escapeHtml(row.rank)}</b><span>${escapeHtml(row.name)} <small>${escapeHtml(row.ticker)}</small></span><em>${escapeHtml(row.score)} 分</em><p><small>${escapeHtml(row.decision || "WATCH")} · 信心 ${escapeHtml(row.confidence ?? 0)}/100${row.exclude ? " · 排除" : ""}</small>${forwardPredictionMarkup(row)}${dimensionMarkup(row)}</p></li>`).join("")}</ol>
   </section>`;
 }
 
@@ -787,7 +782,7 @@ function syncRunProgress() {
   if (state.run.roundOneComplete) state.completed = 3;
   if (state.run.pool?.length) state.completed = 4;
   if (state.run.roundTwoComplete) state.completed = 5;
-  if (state.run.secretary?.summary) state.completed = 6;
+  if (state.run.secretary?.metrics) state.completed = 6;
   if (state.run.status === "READY_TO_PUBLISH" || state.run.status === "PUBLISHED") state.completed = steps.length;
 }
 
@@ -908,7 +903,7 @@ async function runDecisionFlow() {
       render();
     }
 
-    if (!state.run.secretary?.summary) {
+    if (!state.run.secretary?.metrics) {
       state.activeStep = "secretary";
       render();
       state.run = (await api(`/runs/${state.run.id}/secretary`, { method: "POST", body: "{}" })).run;

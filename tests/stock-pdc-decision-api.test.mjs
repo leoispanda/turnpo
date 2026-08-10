@@ -155,7 +155,6 @@ globalThis.fetch = async (_url, options = {}) => {
         ...(nullDimensionScore && index === 0 ? { trendAcceleration: null } : {})
       },
       unavailableDimensions: ["catalystInformation"],
-      dataGaps: "N/A — no short-term catalyst data supplied.",
       backgroundChecks: {
         fundamentalRedFlag: false,
         valuationExtremeFlag: false,
@@ -171,11 +170,8 @@ globalThis.fetch = async (_url, options = {}) => {
       },
       decision: "BUY",
       confidence: 72,
-      thesis: `${candidate.name} has supplied evidence.`,
-      risk: `${candidate.name} requires risk review.`,
       exclude: false
-    })),
-    summary: "Mock committee review completed."
+    }))
   };
   if (provider === "claude") {
     claudeRequest = { request, headers: options.headers };
@@ -401,9 +397,9 @@ try {
   assert.equal(payload.run.scoringSystem, "short-term-forward-upside-v2");
   assert.equal(payload.run.committeeMode, true);
   assert.equal(payload.run.members.length, 5);
-  assert.equal(payload.run.modelVerification.members.length, 6);
+  assert.equal(payload.run.modelVerification.members.length, 5);
   assert.equal(payload.run.modelVerification.members[0].response, '{"status":"ok"}');
-  assert.equal(payload.run.modelVerification.members.at(-1).id, "pdc_secretary");
+  assert.equal(payload.run.modelVerification.members.some((member) => member.id === "pdc_secretary"), false, "the deterministic Secretary must not consume a sixth model verification");
   assert.equal(payload.run.members[0].id, "gpt-5.6-sol");
   assert.equal(payload.run.snapshot.provenance.snapshotId, "hawkeye-2026-08-07-test");
   assert.equal(payload.run.snapshot.facts.length, 8, "saved fact packet should be available for user copy-out");
@@ -419,6 +415,8 @@ try {
   assert.equal(payload.run.members[0].roundOne.rankings[0].dimensionScores.catalystInformation.available, false);
   assert.equal(payload.run.members[0].roundOne.rankings[0].forwardPrediction.prob5dUpGt2Pct, 68);
   assert.equal(payload.run.members[0].roundOne.rankings[0].forwardOutcome.returnsPct.day1, null);
+  assert.equal(Object.hasOwn(payload.run.members[0].roundOne.rankings[0], "thesis"), false, "model narrative thesis must be removed from the fixed scorecard output");
+  assert.equal(Object.hasOwn(payload.run.members[0].roundOne.rankings[0], "risk"), false, "model narrative risk prose must be removed from the fixed scorecard output");
   assert.ok(openAiRequest.request.instructions.includes("next 5 trading days"));
   const firstPdcPacket = JSON.parse(openAiRequest.request.input.replace("Candidate packet:\n", ""));
   assert.equal(firstPdcPacket[0].facts.marketCapCny, 50_000_000_000, "Hawkeye facts must be preserved in the packet sent to each PDC");
@@ -440,8 +438,9 @@ try {
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/secretary`, {})));
   assert.equal(response.status, 200, "Secretary summary should succeed");
   payload = await response.json();
-  assert.equal(payload.run.secretary.profile.model, "gpt-5.6-terra");
-  assert.equal(payload.run.secretary.summary.summary, "Secretary mock summary completed.");
+  assert.equal(payload.run.secretary.profile.model, "PDC_SCORECARD_V1");
+  assert.equal(payload.run.secretary.metrics.format, "PDC_SCORECARD_V1");
+  assert.equal(payload.run.secretary.metrics.memberCount, 5);
   response = await onRequestPost(context(requestFor(`/stock-pdc/decision/api/runs/${runId}/risk-check`, {})));
   assert.equal(response.status, 200, "risk-check should succeed");
   payload = await response.json();
