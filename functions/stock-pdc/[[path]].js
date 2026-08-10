@@ -1535,6 +1535,15 @@ function publicRun(run) {
     modelVerification: publicModelVerification(run.modelVerification),
     modelProfile: modelProfile ? publicModelProfile(modelProfile) : null,
     status: run.status,
+    execution: run.execution && typeof run.execution === "object" ? {
+      kind: cleanText(run.execution.kind, 64),
+      status: cleanText(run.execution.status, 40),
+      workflowId: cleanText(run.execution.workflowId, 120),
+      queuedAt: cleanText(run.execution.queuedAt, 40),
+      startedAt: cleanText(run.execution.startedAt, 40),
+      completedAt: cleanText(run.execution.completedAt, 40),
+      error: cleanText(run.execution.error, 320)
+    } : null,
     snapshot: {
       date: run.snapshot.date,
       source: run.snapshot.source,
@@ -1673,6 +1682,25 @@ async function consumeModelVerification(store, verificationId, modelProfiles, en
   return { error: "", verification };
 }
 
+function backgroundWorkflowAvailable(env) {
+  return Boolean(env?.STOCK_PDC_ORCHESTRATOR?.fetch && String(env?.ORCHESTRATOR_SHARED_SECRET || "").trim());
+}
+
+async function dispatchBackgroundWorkflow(env, runId, mode) {
+  if (!backgroundWorkflowAvailable(env)) throw new Error("Cloudflare PDC background Workflow is not configured on this deployment.");
+  const response = await env.STOCK_PDC_ORCHESTRATOR.fetch(new Request("https://stock-pdc-orchestrator/start", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-turnpo-orchestrator-key": String(env.ORCHESTRATOR_SHARED_SECRET).trim()
+    },
+    body: JSON.stringify({ runId, mode })
+  }));
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok || !payload?.workflowId) throw new Error(cleanText(payload?.error || `Workflow dispatch failed (HTTP ${response.status}).`, 320));
+  return cleanText(payload.workflowId, 120);
+}
+
 async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
@@ -1686,6 +1714,10 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
   }
   const now = new Date().toISOString();
   const noCandidates = snapshot.candidates.length === 0;
+  const deferVerification = !noCandidates && body.deferVerification === true;
+  if (deferVerification && !backgroundWorkflowAvailable(env)) {
+    return error("Cloudflare PDC background Workflow is not configured on this deployment.", 503);
+  }
   let modelProfiles = [];
   let verificationReceipt = { error: "", verification: null };
   if (!noCandidates) {
@@ -1694,8 +1726,10 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
     if (!modelProfiles.length || modelProfiles.length !== requested.requestedIds.length) {
       return error("No selected PDC model is configured on this deployment.");
     }
-    verificationReceipt = await consumeModelVerification(store, body.verificationId, modelProfiles, env, mode);
-    if (verificationReceipt.error) return error(verificationReceipt.error, 409);
+    if (!deferVerification) {
+      verificationReceipt = await consumeModelVerification(store, body.verificationId, modelProfiles, env, mode);
+      if (verificationReceipt.error) return error(verificationReceipt.error, 409);
+    }
   }
   const currentCount = Number(await store.get(decisionRateKey(snapshot.date, mode)) || "0");
   if (currentCount >= MAX_RUNS_PER_DAY) return error("Daily decision-run limit reached. Review an existing run instead.", 429);
@@ -1710,7 +1744,16 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
     scoringSystem: PDC_SCORING_SYSTEM,
     modelVerification: verificationReceipt.verification,
     modelProfile: null,
-    status: noCandidates ? "NO_CANDIDATES" : "SNAPSHOT_LOCKED",
+    status: noCandidates ? "NO_CANDIDATES" : deferVerification ? "WORKFLOW_QUEUED" : "SNAPSHOT_LOCKED",
+    execution: deferVerification ? {
+      kind: "cloudflare-workflow",
+      status: "QUEUED",
+      workflowId: "",
+      queuedAt: now,
+      startedAt: "",
+      completedAt: "",
+      error: ""
+    } : null,
     snapshot,
     committee: Object.fromEntries(modelProfiles.map((profile) => [profile.id, {
       profile: publicModelProfile(profile),
@@ -1724,13 +1767,13 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
     secretary: null,
     audit: {
       verification: {
-        status: noCandidates ? "skipped" : "complete",
-        startedAt: noCandidates ? now : verificationReceipt.verification.createdAt,
-        completedAt: now,
-        input: { members: noCandidates ? [] : verificationReceipt.verification.modelProfileIds || [] },
+        status: noCandidates ? "skipped" : deferVerification ? "pending" : "complete",
+        startedAt: noCandidates ? now : deferVerification ? "" : verificationReceipt.verification.createdAt,
+        completedAt: noCandidates || deferVerification ? "" : now,
+        input: { members: noCandidates ? [] : deferVerification ? [...modelProfiles, secretaryProfile(env)].map((profile) => profile.id) : verificationReceipt.verification.modelProfileIds || [] },
         output: noCandidates
           ? { reason: "NO_CANDIDATES: Hawkeye completed successfully with zero passed stocks; models were not called." }
-          : { members: publicModelVerification(verificationReceipt.verification)?.members || [] },
+          : deferVerification ? {} : { members: publicModelVerification(verificationReceipt.verification)?.members || [] },
         error: ""
       },
       snapshot: {
@@ -1749,6 +1792,20 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
     publishedAt: ""
   };
   await saveRun(store, run);
+  if (deferVerification) {
+    try {
+      run.execution.workflowId = await dispatchBackgroundWorkflow(env, run.id, mode);
+      await saveRun(store, run);
+    } catch (caught) {
+      const failureMessage = cleanText(caught?.message || "Cloudflare PDC background Workflow dispatch failed.", 320);
+      run.status = "WORKFLOW_DISPATCH_FAILED";
+      run.execution.status = "FAILED";
+      run.execution.completedAt = new Date().toISOString();
+      run.execution.error = failureMessage;
+      await saveRun(store, run);
+      return error(failureMessage, 502);
+    }
+  }
   return json({ ok: true, run: publicRun(run) });
 }
 
@@ -2047,6 +2104,93 @@ async function advanceRun(env, runId, stage, requestedRoleId = "", mode = OFFICI
   } catch (caught) {
     return error(cleanText(caught?.message || "Decision stage failed.", 320), 502);
   }
+}
+
+// These narrowly-scoped exports are consumed only by the separate Cloudflare
+// Workflow Worker. They deliberately reuse the same PDC functions as the Pages
+// API, so background execution cannot bypass Hawkeye, model integrity, or audit
+// rules that apply to an interactive run.
+export async function stockPdcWorkflowRead(env, runId, mode = OFFICIAL_DECISION_MODE) {
+  const store = decisionStore(env);
+  if (!store) throw new Error("Missing STOCK_PDC_KV or AUTH_KV binding.");
+  const run = await loadRun(store, runId, mode);
+  if (!run) throw new Error("Decision run was not found.");
+  return publicRun(run);
+}
+
+export async function stockPdcWorkflowMark(env, runId, mode = OFFICIAL_DECISION_MODE, patch = {}) {
+  const store = decisionStore(env);
+  if (!store) throw new Error("Missing STOCK_PDC_KV or AUTH_KV binding.");
+  const run = await loadRun(store, runId, mode);
+  if (!run) throw new Error("Decision run was not found.");
+  const current = run.execution && typeof run.execution === "object" ? run.execution : {};
+  run.execution = {
+    kind: "cloudflare-workflow",
+    status: cleanText(patch.status || current.status || "QUEUED", 40),
+    workflowId: cleanText(patch.workflowId || current.workflowId, 120),
+    queuedAt: cleanText(current.queuedAt || run.createdAt, 40),
+    startedAt: cleanText(patch.startedAt ?? current.startedAt, 40),
+    completedAt: cleanText(patch.completedAt ?? current.completedAt, 40),
+    error: cleanText(patch.error ?? current.error, 320)
+  };
+  if (patch.runStatus) run.status = cleanText(patch.runStatus, 64);
+  await saveRun(store, run);
+  return publicRun(run);
+}
+
+export async function stockPdcWorkflowVerify(env, runId, mode = OFFICIAL_DECISION_MODE) {
+  const store = decisionStore(env);
+  if (!store) throw new Error("Missing STOCK_PDC_KV or AUTH_KV binding.");
+  const run = await loadRun(store, runId, mode);
+  if (!run) throw new Error("Decision run was not found.");
+  if (run.status === "NO_CANDIDATES") return { ok: true, run: publicRun(run) };
+  if (run.modelVerification?.members?.length) return { ok: run.modelVerification.members.every((member) => member?.ok), run: publicRun(run) };
+  const profiles = [...committeeMembers(run).map((member) => member.profile), secretaryProfile(env)];
+  const startedAt = new Date().toISOString();
+  const members = await Promise.all(profiles.map(async (profile) => {
+    const started = Date.now();
+    try {
+      return verificationResult(profile, started, null, await verifyModel(env, profile));
+    } catch (caught) {
+      return verificationResult(profile, started, caught);
+    }
+  }));
+  const verification = {
+    id: crypto.randomUUID(),
+    createdAt: startedAt,
+    modelProfileIds: profiles.map((profile) => profile.id),
+    members
+  };
+  const ok = members.length === profiles.length && members.every((member) => member.ok);
+  run.modelVerification = verification;
+  run.audit ||= {};
+  run.audit.verification = {
+    status: ok ? "complete" : "FAILED",
+    startedAt,
+    completedAt: new Date().toISOString(),
+    input: { members: verification.modelProfileIds },
+    output: { members: publicModelVerification(verification)?.members || [] },
+    error: ok ? "" : cleanText(members.filter((member) => !member.ok).map((member) => `${member.label}: ${member.error}`).join(" | "), 320)
+  };
+  if (!ok) {
+    run.status = "WORKFLOW_VERIFICATION_FAILED";
+    run.execution = { ...(run.execution || {}), status: "FAILED", completedAt: new Date().toISOString(), error: run.audit.verification.error };
+  } else if (run.status === "WORKFLOW_QUEUED" || run.status === "WORKFLOW_RUNNING") {
+    run.status = "SNAPSHOT_LOCKED";
+  }
+  await saveRun(store, run);
+  return { ok, run: publicRun(run), error: run.audit.verification.error };
+}
+
+export async function stockPdcWorkflowAdvance(env, runId, stage, requestedRoleId = "", mode = OFFICIAL_DECISION_MODE) {
+  const response = await advanceRun(env, runId, stage, requestedRoleId, mode);
+  const payload = await response.json().catch(() => ({}));
+  return {
+    ok: response.ok && payload.ok !== false,
+    status: response.status,
+    error: cleanText(payload.integrityError || payload.error || "", 320),
+    run: payload.run || null
+  };
 }
 
 async function publishRun(env, runId, mode = OFFICIAL_DECISION_MODE) {
@@ -2410,6 +2554,7 @@ async function decisionApi(context, mode = OFFICIAL_DECISION_MODE) {
     const store = decisionStore(env);
     if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
     if (suffix === "models") return json({ ok: true, mode, models: configuredModelProfiles(env, mode).map(publicModelProfile) });
+    if (suffix === "orchestration") return json({ ok: true, available: backgroundWorkflowAvailable(env), kind: backgroundWorkflowAvailable(env) ? "cloudflare-workflow" : "" });
     if (suffix === "current") return json({ ok: true, current: await store.get(decisionCurrentKey(mode), "json") });
     if (suffix === "history") {
       const history = await store.get(decisionHistoryKey(mode), "json");

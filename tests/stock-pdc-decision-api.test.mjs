@@ -317,6 +317,35 @@ try {
   })));
   assert.equal(response.status, 400, "the browser must never supply a Hawkeye candidate list");
 
+  const workflowDispatches = [];
+  const workflowEnv = {
+    ...env,
+    AUTH_KV: new MemoryKv(),
+    ORCHESTRATOR_SHARED_SECRET: "workflow-shared-secret",
+    STOCK_PDC_ORCHESTRATOR: {
+      async fetch(request) {
+        workflowDispatches.push({ url: request.url, headers: request.headers, body: await request.json() });
+        return Response.json({ ok: true, workflowId: "stock-pdc-official-test-workflow" }, { status: 202 });
+      }
+    }
+  };
+  const workflowContext = (request) => ({ request, env: workflowEnv, next: async () => new Response("next") });
+  response = await onRequestGet(workflowContext(requestFor("/stock-pdc/decision/api/orchestration")));
+  assert.equal(response.status, 200, "the page should report whether the optional background workflow is configured");
+  assert.equal((await response.json()).available, true);
+  response = await onRequestPost(workflowContext(requestFor("/stock-pdc/decision/api/runs", {
+    modelProfileIds: ["gpt-5.6-sol"],
+    deferVerification: true
+  })));
+  assert.equal(response.status, 200, "a configured workflow should accept a run without a browser-held verification receipt");
+  payload = await response.json();
+  assert.equal(payload.run.status, "WORKFLOW_QUEUED");
+  assert.equal(payload.run.modelVerification, null, "background verification must be real work in the workflow, not a fabricated receipt");
+  assert.equal(payload.run.execution.status, "QUEUED");
+  assert.equal(payload.run.execution.workflowId, "stock-pdc-official-test-workflow");
+  assert.deepEqual(workflowDispatches[0].body.mode, "official");
+  assert.equal(workflowDispatches[0].headers.get("x-turnpo-orchestrator-key"), "workflow-shared-secret");
+
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]))));
   assert.equal(response.status, 200);
   payload = await response.json();

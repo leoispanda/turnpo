@@ -10,6 +10,8 @@ const decisionJs = fs.readFileSync(new URL("../stock-pdc/decision/decision.js", 
 const stockFunction = fs.readFileSync(new URL("../functions/stock-pdc/[[path]].js", import.meta.url), "utf8");
 const stockJs = fs.readFileSync(new URL("../stock-pdc/stock-pdc.js", import.meta.url), "utf8");
 const manualRefreshWorkflow = fs.readFileSync(new URL("../.github/workflows/manual-stock-pdc-refresh.yml", import.meta.url), "utf8");
+const workflowWorker = fs.readFileSync(new URL("../stock-pdc-orchestrator/src/index.js", import.meta.url), "utf8");
+const workflowConfig = fs.readFileSync(new URL("../stock-pdc-orchestrator/wrangler.jsonc", import.meta.url), "utf8");
 
 assert.ok(stockHtml.includes('href="/stock-pdc/decision/"'));
 assert.ok(decisionHtml.includes('id="generateDecision"'));
@@ -67,6 +69,9 @@ assert.ok(decisionJs.includes("模型分批复核未产生新的有效股票记�
 assert.ok(decisionJs.includes("已返回的模型结论已保留"));
 assert.ok(decisionJs.includes("async function publishDecision()"));
 assert.ok(decisionJs.includes("async function loadModelProfiles()"));
+assert.ok(decisionJs.includes("async function loadOrchestration()"));
+assert.ok(decisionJs.includes("function scheduleWorkflowPoll()"));
+assert.ok(decisionJs.includes("deferVerification: Boolean(snapshot.candidates.length && state.backgroundWorkflowAvailable)"));
 assert.ok(decisionJs.includes("async function loadDataContract()"));
 assert.ok(decisionJs.includes('fetch("/stock-pdc/hawkeye/latest.json"'));
 assert.ok(decisionJs.includes("Hawkeye Radar is not ready"));
@@ -108,6 +113,10 @@ assert.ok(stockFunction.includes('const DECISION_PATH = `${PAGE_PATH}/decision`;
 assert.ok(stockFunction.includes('const DEMO_DECISION_PATH = `${PAGE_PATH}/decision-demo`;'));
 assert.ok(stockFunction.includes('const PORTFOLIO_PATH = `${PAGE_PATH}/portfolio`;'));
 assert.ok(stockFunction.includes("async function decisionApi(context, mode = OFFICIAL_DECISION_MODE)"));
+assert.ok(stockFunction.includes('if (suffix === "orchestration")'));
+assert.ok(stockFunction.includes("function backgroundWorkflowAvailable(env)"));
+assert.ok(stockFunction.includes("async function dispatchBackgroundWorkflow(env, runId, mode)"));
+assert.ok(stockFunction.includes("export async function stockPdcWorkflowVerify"));
 assert.ok(stockFunction.includes("async function queueManualMarketRefresh(env)"));
 assert.ok(stockFunction.includes('if (suffix === "data-refresh") return queueManualMarketRefresh(env);'));
 assert.ok(stockFunction.includes('const MANUAL_MARKET_REFRESH_WORKFLOW = "manual-stock-pdc-refresh.yml";'));
@@ -182,5 +191,10 @@ assert.ok(stockFunction.includes('const KIMI_CHAT_URL = "https://api.moonshot.cn
 assert.ok(stockFunction.includes('return mode === DEMO_DECISION_MODE ? "stock-pdc:decision-demo" : "stock-pdc:decision";'));
 assert.ok(stockJs.includes('fetch("/stock-pdc/decision/api/history"'));
 assert.ok(stockJs.includes("function renderPublishedDecisionHistory()"));
+assert.ok(workflowConfig.includes('"binding": "STOCK_PDC_WORKFLOW"'));
+assert.ok(workflowWorker.includes('import { WorkflowEntrypoint } from "cloudflare:workers"'));
+assert.ok(workflowWorker.includes("export class StockPdcDecisionWorkflow"));
+assert.ok(workflowWorker.includes("round-one:${member.id}:batch:${batch}"));
+assert.ok(workflowWorker.includes("stockPdcWorkflowVerify"));
 
 console.log("Stock PDC decision static checks passed");

@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "turnpo-stock-pdc-orchestrator",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-10",
+  "workflows": [
+    {
+      "name": "turnpo-stock-pdc-orchestrator",
+      "binding": "STOCK_PDC_WORKFLOW",
+      "class_name": "StockPdcDecisionWorkflow"
+    }
+  ]
+}

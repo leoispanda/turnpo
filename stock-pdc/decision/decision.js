@@ -58,7 +58,9 @@ const state = {
   marketRefreshMessage: "",
   marketRefreshError: "",
   marketRefreshWorkflowUrl: "",
-  marketRefreshManualOnly: false
+  marketRefreshManualOnly: false,
+  backgroundWorkflowAvailable: false,
+  workflowPolling: false
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -217,6 +219,10 @@ function modelStatus(member) {
   if (!state.run && verification?.checking) return "正在验证 API 与实际型号";
   if (!state.run && verification?.ok) return `本轮已验证 · ${verification.latencyMs || 0}ms`;
   if (!state.run && verification && verification.ok === false) return `验证未通过 · ${verification.error || "请检查配置"}`;
+  if (state.run?.execution?.status === "QUEUED" || state.run?.execution?.status === "RUNNING") {
+    if (!state.run.modelVerification) return "后台正在验证 API 与实际型号";
+    return "后台正在形成完整 PDC 结论";
+  }
   if (status === "active") return "正在形成完整 PDC 结论";
   if (status === "round_one_partial" || status === "round_two_partial") return "输出不完整 · 已阻断，不会进入下一阶段";
   if (status === "round_one_failed" || status === "round_two_failed") return "输出无效或模型失败 · 已记录 FAILED";
@@ -463,13 +469,14 @@ function setRunSummary() {
   const mode = $("#decisionMode");
   const copyRunButtons = document.querySelectorAll("[data-copy-run], #copyDecisionPacket");
   const run = state.run;
+  const backgroundActive = workflowIsActive(run);
 
   if (runId) runId.textContent = run?.id ? run.id.slice(0, 8).toUpperCase() : "等待生成";
   const marketRefreshPending = state.refreshingMarketData || Boolean(state.marketRefreshMessage);
-  if (runStrip) runStrip.hidden = !(state.running || state.testing || marketRefreshPending || state.marketRefreshError || state.error || run);
+  if (runStrip) runStrip.hidden = !(state.running || backgroundActive || state.testing || marketRefreshPending || state.marketRefreshError || state.error || run);
   if (snapshot) snapshot.textContent = marketRefreshPending ? "刷新已提交 · 旧快照不可用" : state.error && !run ? "FAILED · 未锁定" : state.completed > 0 ? `${run?.date || ""} 已锁定` : "尚未锁定";
-  if (status) status.textContent = state.marketRefreshError || state.error ? "FAILED" : state.marketRefreshManualOnly ? "待 GitHub 手动启动" : marketRefreshPending ? "等待市场刷新" : state.testing ? "Test 中" : state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
-  if (count) count.textContent = state.marketRefreshError || state.error ? "已阻断" : state.refreshingMarketData ? "正在提交" : state.marketRefreshManualOnly ? "需手动启动" : state.marketRefreshMessage ? "刷新已提交" : state.running ? "生成中" : state.completed === steps.length ? "本轮完成" : state.run ? `已完成 ${state.completed} 步` : "等待运行";
+  if (status) status.textContent = state.marketRefreshError || state.error ? "FAILED" : state.marketRefreshManualOnly ? "待 GitHub 手动启动" : marketRefreshPending ? "等待市场刷新" : state.testing ? "Test 中" : backgroundActive ? "后台生成中" : state.running ? "生成中" : state.completed === steps.length ? "等待发布" : "准备就绪";
+  if (count) count.textContent = state.marketRefreshError || state.error ? "已阻断" : state.refreshingMarketData ? "正在提交" : state.marketRefreshManualOnly ? "需手动启动" : state.marketRefreshMessage ? "刷新已提交" : backgroundActive ? "后台处理中" : state.running ? "生成中" : state.completed === steps.length ? "本轮完成" : state.run ? `已完成 ${state.completed} 步` : "等待运行";
   if (mode) {
     const profiles = run?.committeeMode ? run.members : selectedModelProfiles();
     mode.textContent = profiles?.length ? `${profiles.length} 位${IS_DEMO_MODE ? "Mini" : "模型"} PDC · 同一事实包` : "未配置模型";
@@ -486,6 +493,8 @@ function setRunSummary() {
       : `本轮尚未开始：${state.error}。可先重新运行对话 Test，或稍后再开始生成。`
     : state.testing
     ? "正在进行轻量对话 Test：不读取股票数据、不做评分、不创建 Run。"
+    : backgroundActive
+    ? `后台 PDC 正在执行并保存每一批结果；可离开此页，系统会自动轮询。运行编号：${run.execution.workflowId || run.id}`
     : state.running
     ? `正在执行：${steps.find((step) => step.id === state.activeStep)?.title || "准备任务"}`
     : state.completed === steps.length
@@ -494,8 +503,8 @@ function setRunSummary() {
         : "本次 Run 已完成。确认无误后，点击“发布到 PDC”才会追加当天正式记录。"
       : "开始后，这里会直接记录每一轮谁给出了什么结论，而不是只显示流程状态。";
   if (button) {
-    button.disabled = state.running || state.testing || state.refreshingMarketData;
-    button.textContent = state.running ? "正在生成…" : state.run ? "继续生成" : "开始生成";
+    button.disabled = state.running || backgroundActive || state.testing || state.refreshingMarketData;
+    button.textContent = backgroundActive ? "后台生成中…" : state.running ? "正在生成…" : state.run ? "继续生成" : "开始生成";
   }
   if (testButton) {
     testButton.disabled = state.running || state.testing || state.refreshingMarketData;
@@ -676,6 +685,49 @@ async function loadModelProfiles() {
   }
 }
 
+async function loadOrchestration() {
+  try {
+    const result = await api("/orchestration", { headers: { accept: "application/json" } });
+    state.backgroundWorkflowAvailable = Boolean(result.available);
+  } catch {
+    state.backgroundWorkflowAvailable = false;
+  }
+}
+
+function workflowIsActive(run = state.run) {
+  return run?.execution?.kind === "cloudflare-workflow" && ["QUEUED", "RUNNING"].includes(run.execution.status);
+}
+
+function workflowIsTerminalFailure(run = state.run) {
+  return run?.execution?.kind === "cloudflare-workflow" && ["FAILED", "BLOCKED"].includes(run.execution.status);
+}
+
+function scheduleWorkflowPoll() {
+  if (!workflowIsActive() || state.workflowPolling || !state.run?.id) return;
+  state.workflowPolling = true;
+  const poll = async () => {
+    try {
+      const result = await api(`/runs/${state.run.id}`, { headers: { accept: "application/json" } });
+      state.run = result.run;
+      syncRunProgress();
+      if (workflowIsTerminalFailure()) state.error = state.run.execution.error || "后台 PDC 已阻断；请查看对应阶段的 FAILED 审计。";
+      render();
+      if (workflowIsActive()) {
+        window.setTimeout(poll, 5000);
+        return;
+      }
+    } catch {
+      // A network interruption must not rewrite a still-running audited workflow as failed.
+      if (workflowIsActive()) {
+        window.setTimeout(poll, 5000);
+        return;
+      }
+    }
+    state.workflowPolling = false;
+  };
+  window.setTimeout(poll, 1200);
+}
+
 async function restoreSavedRun() {
   try {
     const runId = sessionStorage.getItem(RUN_STORAGE_KEY);
@@ -684,6 +736,7 @@ async function restoreSavedRun() {
     if (!result.run?.publishedAt) {
       state.run = result.run;
       syncRunProgress();
+      scheduleWorkflowPoll();
     } else {
       sessionStorage.removeItem(RUN_STORAGE_KEY);
     }
@@ -786,10 +839,14 @@ async function runDecisionFlow() {
       const snapshot = await latestSnapshot();
       state.activeStep = "snapshot";
       render();
-      if (snapshot.candidates.length) verificationId = await verifySelectedModels();
+      if (snapshot.candidates.length && !state.backgroundWorkflowAvailable) verificationId = await verifySelectedModels();
       state.run = (await api("/runs", {
         method: "POST",
-        body: JSON.stringify({ modelProfileIds: state.selectedModelProfileIds, verificationId })
+        body: JSON.stringify({
+          modelProfileIds: state.selectedModelProfileIds,
+          verificationId,
+          deferVerification: Boolean(snapshot.candidates.length && state.backgroundWorkflowAvailable)
+        })
       })).run;
       completeThrough("snapshot");
       render();
@@ -797,6 +854,15 @@ async function runDecisionFlow() {
         completeThrough("final");
         return;
       }
+      if (workflowIsActive()) {
+        scheduleWorkflowPoll();
+        return;
+      }
+    }
+
+    if (workflowIsActive()) {
+      scheduleWorkflowPoll();
+      return;
     }
 
     if (!state.run.roundOneComplete) {
@@ -952,5 +1018,6 @@ document.querySelectorAll("[data-copy-run]").forEach((button) => {
 
 render();
 loadModelProfiles();
+loadOrchestration();
 loadDataContract();
 restoreSavedRun();
