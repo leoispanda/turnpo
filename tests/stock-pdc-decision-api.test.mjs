@@ -73,6 +73,7 @@ let marketRefreshRequest = null;
 let marketRefreshStatus = 204;
 let reviewRankingLimit = null;
 let nullDimensionScore = false;
+let geminiVerificationPreamble = "";
 const mockDimensionScores = (index) => ({
   marketRegime: 7,
   relativeStrength: 8,
@@ -105,7 +106,10 @@ globalThis.fetch = async (_url, options = {}) => {
   if (isVerification) {
     const result = JSON.stringify({ status: "ok" });
     if (provider === "claude") return new Response(JSON.stringify({ content: [{ type: "text", text: result }] }), { status: 200, headers: { "content-type": "application/json" } });
-    if (provider === "gemini") return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: result }] } }] }), { status: 200, headers: { "content-type": "application/json" } });
+    if (provider === "gemini") return new Response(JSON.stringify({ candidates: [{ content: { parts: [
+      ...(geminiVerificationPreamble ? [{ text: geminiVerificationPreamble }] : []),
+      { text: result }
+    ] } }] }), { status: 200, headers: { "content-type": "application/json" } });
     if (provider === "deepseek" || provider === "kimi") return new Response(JSON.stringify({ choices: [{ message: { content: result } }] }), { status: 200, headers: { "content-type": "application/json" } });
     return new Response(JSON.stringify({ output_text: result }), { status: 200, headers: { "content-type": "application/json" } });
   }
@@ -271,6 +275,13 @@ try {
   assert.deepEqual(payload.models.map((model) => model.model), [
     "gpt-5.6-luna", "claude-mini-test-model", "gemini-3.5-flash-lite", "deepseek-mini-test-model", "kimi-mini-test-model"
   ], "Mini Demo must select the low-cost model group, never the flagship fallback");
+
+  geminiVerificationPreamble = "Here is the requested readiness response:";
+  response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/verifications", { modelProfileIds: ["gemini_api_pdc"] })));
+  assert.equal(response.status, 200, "Gemini verification should extract its JSON response even when it emits a separate prose preamble part");
+  payload = await response.json();
+  assert.equal(payload.ok, true, "a Gemini prose preamble must not replace the required structured status object");
+  geminiVerificationPreamble = "";
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision-demo/api/verifications", { modelProfileIds: ["gpt-5.6-luna"] })));
   assert.equal(response.status, 200);

@@ -958,6 +958,17 @@ function geminiDemoStockModel(env) {
   return String(env.GEMINI_DEMO_STOCK_MODEL || env.GOOGLE_GEMINI_DEMO_STOCK_MODEL || DEFAULT_GEMINI_DEMO_STOCK_MODEL).trim();
 }
 
+function geminiFinalText(data) {
+  // Gemini may put a short non-thought preamble and the structured response in
+  // separate parts. Keep every final text part; parseModelJson still requires a
+  // real JSON object and never treats prose alone as a successful response.
+  return data?.candidates?.flatMap((candidate) => candidate.content?.parts || [])
+    ?.filter((part) => part?.thought !== true)
+    .map((part) => part?.text)
+    .filter((text) => typeof text === "string" && text.trim())
+    .join("\n") || "";
+}
+
 function deepseekApiKey(env) {
   return String(env.DEEPSEEK_API_KEY || env.DEEPSEEK_PDC_API_KEY || env.DEEPSEEK_API_PDC || env.DEEPSEEK_API_KEY_PDC || env.DEEPSEEK_PDC || env.deepseek_api_pdc || env["deepseek api pdc"] || "").trim();
 }
@@ -1011,10 +1022,9 @@ async function geminiReview(env, modelProfile, role, candidates, phase) {
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.error?.message || "Gemini review request failed.");
-  const outputText = data.candidates?.flatMap((candidate) => candidate.content?.parts || [])
-    ?.find((part) => typeof part.text === "string")?.text || "";
+  const outputText = geminiFinalText(data);
   if (!outputText) throw new Error("Gemini review returned no structured output.");
-  return normalizeReview(JSON.parse(outputText), candidates);
+  return normalizeReview(parseModelJson(outputText), candidates);
 }
 
 async function deepseekReview(env, modelProfile, role, candidates, phase) {
@@ -1104,11 +1114,7 @@ async function smokeChat(env, modelProfile) {
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelProfile.model)}:generateContent`, { method: "POST", headers: { "x-goog-api-key": geminiApiKey(env), "content-type": "application/json" }, signal: controller.signal, body: JSON.stringify({ systemInstruction: { parts: [{ text: "You are a concise Stock PDC connectivity test assistant. Do not make a trading decision." }] }, contents: [{ role: "user", parts: [{ text: SMOKE_TEST_PROMPT }] }], generationConfig: { maxOutputTokens: 256, thinkingConfig: { thinkingLevel: "low" } } }) });
         const data = await response.json().catch(() => ({}));
         if (response.ok) {
-          const reply = cleanText(data.candidates?.flatMap((candidate) => candidate.content?.parts || [])
-            .filter((part) => part?.thought !== true)
-            .map((part) => part?.text)
-            .filter((text) => typeof text === "string" && text.trim())
-            .join("\n"), 360);
+          const reply = cleanText(geminiFinalText(data), 360);
           if (reply) return reply;
           const reason = cleanText(data.candidates?.[0]?.finishReason || data.promptFeedback?.blockReason || "Gemini returned no final text.", 160);
           if (attempt === 2) throw new Error(reason);
@@ -1237,8 +1243,7 @@ async function verifyGeminiModel(env, profile) {
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.error?.message || "Gemini verification request failed.");
-  const outputText = data.candidates?.flatMap((candidate) => candidate.content?.parts || [])
-    ?.find((part) => typeof part.text === "string")?.text || "";
+  const outputText = geminiFinalText(data);
   return verifyStructuredOutput(outputText, "Gemini");
 }
 
