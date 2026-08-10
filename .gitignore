@@ -9,3 +9,5 @@ connections*
 *.vcf
 .DS_Store
 .tmp-stock-pdc-backfill*/
+.env.local
+.local-stock-pdc/

@@ -897,7 +897,7 @@ async function refreshMarketData() {
   try {
     const result = await api("/data-refresh", { method: "POST", body: "{}" });
     state.marketRefreshWorkflowUrl = result.workflowUrl || "";
-    state.marketRefreshMessage = "已提交手动全市场行情→Hawkeye 刷新。完成后刷新此页；当前旧快照仍不能用于 PDC。";
+    state.marketRefreshMessage = result.message || "已提交手动全市场行情→Hawkeye 刷新。完成后刷新此页；当前旧快照仍不能用于 PDC。";
   } catch (caught) {
     if (caught.status === 503 && caught.payload?.code === "MANUAL_REFRESH_GITHUB_ONLY") {
       state.marketRefreshManualOnly = true;

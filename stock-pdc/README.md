@@ -34,3 +34,23 @@ Even though Top 20 is the only decision output, all factor information is preser
 - final chair
 
 Reasons, warnings, main risk, and historical rank changes remain in the exported data so the model can be reweighted later based on actual outcomes.
+
+## Local generation runtime
+
+The public Turnpo site is display-only. To run the real manual generation flow
+on the operator's computer, copy `.env.local.example` to `.env.local`, add the
+same model-provider API keys used by the PDC, then start:
+
+```bash
+node scripts/local-stock-pdc-server.mjs
+```
+
+Open `http://127.0.0.1:8788/stock-pdc/decision/`. The existing **刷新市场数据**
+button then runs `行情 API → 全市场 A 股 → Hawkeye` locally, and both Mini and
+formal PDC pages call the same local PDC API. It never dispatches GitHub Actions
+and does not use Cloudflare secrets. The local audit store is in
+`.local-stock-pdc/` and is intentionally excluded from Git.
+
+When the local run is complete and reviewed, commit and push the generated
+`stock-pdc/hawkeye/latest.json` and other public data packets manually to update
+the public display site.
