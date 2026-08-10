@@ -1706,6 +1706,30 @@ async function dispatchBackgroundWorkflow(env, runId, mode) {
   return cleanText(payload.workflowId, 120);
 }
 
+async function dispatchBackgroundSmokeTest(env, body, mode) {
+  if (!backgroundWorkflowAvailable(env)) throw new Error("Cloudflare PDC background Workflow is not configured on this deployment.");
+  const response = await env.STOCK_PDC_ORCHESTRATOR.fetch(new Request("https://stock-pdc-orchestrator/smoke-test", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-turnpo-orchestrator-key": String(env.ORCHESTRATOR_SHARED_SECRET).trim()
+    },
+    // The browser may request model IDs and a date only. Provider credentials
+    // never pass through Pages or the browser.
+    body: JSON.stringify({
+      mode,
+      modelProfileIds: Array.isArray(body?.modelProfileIds) ? body.modelProfileIds : [],
+      modelProfileId: body?.modelProfileId || "",
+      date: body?.date || ""
+    })
+  }));
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok || !payload || typeof payload !== "object") {
+    throw new Error(cleanText(payload?.error || `Worker connectivity test failed (HTTP ${response.status}).`, 320));
+  }
+  return payload;
+}
+
 async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
   const store = decisionStore(env);
   if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
@@ -1814,16 +1838,19 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
   return json({ ok: true, run: publicRun(run) });
 }
 
-async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE) {
+export async function stockPdcWorkerSmokeTest(env, body = {}, mode = OFFICIAL_DECISION_MODE) {
   const store = decisionStore(env);
-  if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
-  const body = await readJson(request);
+  if (!store) throw new Error("Missing STOCK_PDC_KV or AUTH_KV binding.");
   const { requestedIds, modelProfiles } = requestedModelProfiles(body, env, mode);
-  if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) return error("No selected PDC model is configured on this deployment.");
+  if (!modelProfiles.length || modelProfiles.length !== requestedIds.length) throw new Error("No selected PDC model is configured on this deployment.");
   const date = validDate(body.date) || new Date().toISOString().slice(0, 10);
   const key = decisionSmokeTestRateKey(date, mode);
   const currentCount = Number(await store.get(key) || "0");
-  if (currentCount >= MAX_SMOKE_TESTS_PER_DAY) return error("Daily PDC test-run limit reached. Try again tomorrow.", 429);
+  if (currentCount >= MAX_SMOKE_TESTS_PER_DAY) {
+    const error = new Error("Daily PDC test-run limit reached. Try again tomorrow.");
+    error.status = 429;
+    throw error;
+  }
   await store.put(key, String(currentCount + 1), { expirationTtl: 24 * 60 * 60 });
   const members = await Promise.all(modelProfiles.map(async (profile) => {
     const startedAt = Date.now();
@@ -1844,7 +1871,25 @@ async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE) {
       return { id: profile.id, label: profile.label, provider: profile.provider, model: profile.model, ok: false, latencyMs: Date.now() - startedAt, reply: "", error: timedOut ? "模型在 5 分钟内未返回，可稍后重试。" : cleanText(caught?.message || "PDC test run failed.", 240) };
     }
   }));
-  return json({ ok: members.every((member) => member.ok), test: { mode, date, kind: "CONNECTIVITY_CONVERSATION", members } });
+  return { ok: members.every((member) => member.ok), test: { mode, date, kind: "CONNECTIVITY_CONVERSATION", members } };
+}
+
+async function smokeTestDecision(request, env, mode = OFFICIAL_DECISION_MODE) {
+  const body = await readJson(request);
+  if (backgroundWorkflowAvailable(env)) {
+    try {
+      return json(await dispatchBackgroundSmokeTest(env, body, mode));
+    } catch (caught) {
+      const status = Number(caught?.status) === 429 ? 429 : 502;
+      return error(cleanText(caught?.message || "Worker PDC connectivity test failed.", 320), status);
+    }
+  }
+  try {
+    return json(await stockPdcWorkerSmokeTest(env, body, mode));
+  } catch (caught) {
+    const status = Number(caught?.status) === 429 ? 429 : 500;
+    return error(cleanText(caught?.message || "PDC test run failed.", 320), status);
+  }
 }
 
 function recordReviewAudit(member, reviewKey, entry) {

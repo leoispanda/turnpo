@@ -335,7 +335,19 @@ try {
     ORCHESTRATOR_SHARED_SECRET: "workflow-shared-secret",
     STOCK_PDC_ORCHESTRATOR: {
       async fetch(request) {
-        workflowDispatches.push({ url: request.url, headers: request.headers, body: await request.json() });
+        const body = await request.json();
+        workflowDispatches.push({ url: request.url, headers: request.headers, body });
+        if (request.url.endsWith("/smoke-test")) {
+          return Response.json({
+            ok: true,
+            test: {
+              mode: body.mode,
+              date: body.date || "2026-08-07",
+              kind: "CONNECTIVITY_CONVERSATION",
+              members: (body.modelProfileIds || []).map((id) => ({ id, ok: true, reply: "Worker-only test reply." }))
+            }
+          });
+        }
         return Response.json({ ok: true, workflowId: "stock-pdc-official-test-workflow" }, { status: 202 });
       }
     }
@@ -354,6 +366,14 @@ try {
   const workflowOnlyPagesContext = (request) => ({ request, env: workflowOnlyPagesEnv, next: async () => new Response("next") });
   response = await onRequestGet(workflowOnlyPagesContext(requestFor("/stock-pdc/decision/api/models")));
   assert.equal((await response.json()).models.length, 5, "the browser must show the fixed five-member committee when the Worker owns model secrets");
+  response = await onRequestPost(workflowOnlyPagesContext(requestFor("/stock-pdc/decision/api/smoke-test", { modelProfileIds: ["gpt-5.6-sol"] })));
+  assert.equal(response.status, 200, "a connectivity test must use the Worker when Pages does not own provider keys");
+  payload = await response.json();
+  assert.equal(payload.ok, true);
+  assert.equal(payload.test.members[0].reply, "Worker-only test reply.");
+  assert.ok(workflowDispatches.at(-1).url.endsWith("/smoke-test"));
+  assert.equal(workflowDispatches.at(-1).headers.get("x-turnpo-orchestrator-key"), "workflow-shared-secret");
+  assert.equal(Object.hasOwn(workflowDispatches.at(-1).body, "apiKey"), false, "Pages must never forward provider credentials to the Worker");
   response = await onRequestPost(workflowContext(requestFor("/stock-pdc/decision/api/runs", {
     modelProfileIds: ["gpt-5.6-sol"],
     deferVerification: true

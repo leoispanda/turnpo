@@ -3,7 +3,8 @@ import {
   stockPdcWorkflowAdvance,
   stockPdcWorkflowMark,
   stockPdcWorkflowRead,
-  stockPdcWorkflowVerify
+  stockPdcWorkflowVerify,
+  stockPdcWorkerSmokeTest
 } from "../../functions/stock-pdc/[[path]].js";
 
 const MODE_PATTERN = /^(official|demo)$/;
@@ -47,14 +48,27 @@ async function advanceStage(env, runId, mode, stage, memberId = "") {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    if (request.method !== "POST" || url.pathname !== "/start") return new Response("Not found", { status: 404 });
+    if (request.method !== "POST" || !["/start", "/smoke-test"].includes(url.pathname)) return new Response("Not found", { status: 404 });
     if (!env.ORCHESTRATOR_SHARED_SECRET || request.headers.get("x-turnpo-orchestrator-key") !== env.ORCHESTRATOR_SHARED_SECRET) {
       return Response.json({ ok: false, error: "Unauthorized Stock PDC Workflow dispatch." }, { status: 401 });
     }
     const body = await request.json().catch(() => ({}));
-    const runId = text(body?.runId, 80);
     const mode = text(body?.mode, 16) || "official";
-    if (!RUN_ID_PATTERN.test(runId) || !MODE_PATTERN.test(mode)) {
+    if (!MODE_PATTERN.test(mode)) {
+      return Response.json({ ok: false, error: "Invalid Stock PDC mode." }, { status: 400 });
+    }
+    if (url.pathname === "/smoke-test") {
+      try {
+        // This executes only a real provider connectivity conversation. It does
+        // not create a PDC run, candidate snapshot, score, or decision.
+        return Response.json(await stockPdcWorkerSmokeTest(env, body, mode));
+      } catch (caught) {
+        const status = Number(caught?.status) === 429 ? 429 : 502;
+        return Response.json({ ok: false, error: text(caught?.message || "Worker PDC connectivity test failed.") }, { status });
+      }
+    }
+    const runId = text(body?.runId, 80);
+    if (!RUN_ID_PATTERN.test(runId)) {
       return Response.json({ ok: false, error: "Invalid Stock PDC Workflow request." }, { status: 400 });
     }
     const workflowId = `stock-pdc-${mode}-${runId}`;
