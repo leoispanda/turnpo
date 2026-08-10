@@ -118,6 +118,7 @@ assert.ok(stockFunction.includes('const PORTFOLIO_PATH = `${PAGE_PATH}/portfolio
 assert.ok(stockFunction.includes("async function decisionApi(context, mode = OFFICIAL_DECISION_MODE)"));
 assert.ok(stockFunction.includes('if (suffix === "orchestration")'));
 assert.ok(stockFunction.includes("function backgroundWorkflowAvailable(env)"));
+assert.ok(stockFunction.includes("configuredModelProfiles(env, mode, backgroundWorkflowAvailable(env))"));
 assert.ok(stockFunction.includes("async function dispatchBackgroundWorkflow(env, runId, mode)"));
 assert.ok(stockFunction.includes("export async function stockPdcWorkflowVerify"));
 assert.ok(stockFunction.includes("async function queueManualMarketRefresh(env)"));

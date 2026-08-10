@@ -333,6 +333,16 @@ try {
   response = await onRequestGet(workflowContext(requestFor("/stock-pdc/decision/api/orchestration")));
   assert.equal(response.status, 200, "the page should report whether the optional background workflow is configured");
   assert.equal((await response.json()).available, true);
+  const workflowOnlyPagesEnv = {
+    ...workflowEnv,
+    ANTHROPIC_API_KEY: "",
+    GEMINI_API_KEY: "",
+    DEEPSEEK_API_KEY: "",
+    KIMI_API_KEY: ""
+  };
+  const workflowOnlyPagesContext = (request) => ({ request, env: workflowOnlyPagesEnv, next: async () => new Response("next") });
+  response = await onRequestGet(workflowOnlyPagesContext(requestFor("/stock-pdc/decision/api/models")));
+  assert.equal((await response.json()).models.length, 5, "the browser must show the fixed five-member committee when the Worker owns model secrets");
   response = await onRequestPost(workflowContext(requestFor("/stock-pdc/decision/api/runs", {
     modelProfileIds: ["gpt-5.6-sol"],
     deferVerification: true

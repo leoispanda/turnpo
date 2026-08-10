@@ -135,7 +135,7 @@ function claudeDemoStockModel(env) {
   return String(env.ANTHROPIC_DEMO_STOCK_MODEL || env.CLAUDE_DEMO_STOCK_MODEL || DEFAULT_CLAUDE_DEMO_STOCK_MODEL).trim();
 }
 
-function configuredModelProfiles(env, mode = OFFICIAL_DECISION_MODE) {
+function configuredModelProfiles(env, mode = OFFICIAL_DECISION_MODE, forceFullCommittee = false) {
   const demo = mode === DEMO_DECISION_MODE;
   const profiles = [{
     id: demo ? "gpt-5.6-luna" : "gpt-5.6-sol",
@@ -144,7 +144,7 @@ function configuredModelProfiles(env, mode = OFFICIAL_DECISION_MODE) {
     model: demo ? demoStockModel(env) : stockModel(env),
     tier: demo ? "mini-demo" : "flagship"
   }];
-  if (claudeApiKey(env)) {
+  if (forceFullCommittee || claudeApiKey(env)) {
     profiles.push({
       id: "claude_api_pdc",
       label: demo ? "Claude · Mini Demo" : "Claude Fable 5 PDC",
@@ -153,7 +153,7 @@ function configuredModelProfiles(env, mode = OFFICIAL_DECISION_MODE) {
       tier: demo ? "mini-demo" : "flagship"
     });
   }
-  if (geminiApiKey(env)) {
+  if (forceFullCommittee || geminiApiKey(env)) {
     profiles.push({
       id: "gemini_api_pdc",
       label: demo ? "Gemini Flash · Mini Demo" : "Gemini 3.1 Pro PDC",
@@ -162,7 +162,7 @@ function configuredModelProfiles(env, mode = OFFICIAL_DECISION_MODE) {
       tier: demo ? "mini-demo" : "flagship"
     });
   }
-  if (deepseekApiKey(env)) {
+  if (forceFullCommittee || deepseekApiKey(env)) {
     profiles.push({
       id: "deepseek_api_pdc",
       label: demo ? "DeepSeek Flash · Mini Demo" : "DeepSeek API PDC",
@@ -171,7 +171,7 @@ function configuredModelProfiles(env, mode = OFFICIAL_DECISION_MODE) {
       tier: demo ? "mini-demo" : "flagship"
     });
   }
-  if (kimiApiKey(env)) {
+  if (forceFullCommittee || kimiApiKey(env)) {
     profiles.push({
       id: "kimi_api_pdc",
       label: demo ? "Kimi · Mini Demo" : "Kimi API PDC",
@@ -1629,10 +1629,10 @@ function verificationResult(profile, startedAt, caught = null, response = null) 
 }
 
 function requestedModelProfiles(body, env, mode = OFFICIAL_DECISION_MODE) {
+  const availableProfiles = configuredModelProfiles(env, mode, backgroundWorkflowAvailable(env));
   const requestedIds = Array.isArray(body.modelProfileIds)
     ? body.modelProfileIds.map((id) => cleanText(id, 64)).filter(Boolean)
-    : body.modelProfileId ? [cleanText(body.modelProfileId, 64)] : configuredModelProfiles(env, mode).map((profile) => profile.id);
-  const availableProfiles = configuredModelProfiles(env, mode);
+    : body.modelProfileId ? [cleanText(body.modelProfileId, 64)] : availableProfiles.map((profile) => profile.id);
   return {
     requestedIds: [...new Set(requestedIds)],
     modelProfiles: availableProfiles.filter((profile) => requestedIds.includes(profile.id))
@@ -2553,7 +2553,7 @@ async function decisionApi(context, mode = OFFICIAL_DECISION_MODE) {
   if (request.method === "GET") {
     const store = decisionStore(env);
     if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
-    if (suffix === "models") return json({ ok: true, mode, models: configuredModelProfiles(env, mode).map(publicModelProfile) });
+    if (suffix === "models") return json({ ok: true, mode, models: configuredModelProfiles(env, mode, backgroundWorkflowAvailable(env)).map(publicModelProfile) });
     if (suffix === "orchestration") return json({ ok: true, available: backgroundWorkflowAvailable(env), kind: backgroundWorkflowAvailable(env) ? "cloudflare-workflow" : "" });
     if (suffix === "current") return json({ ok: true, current: await store.get(decisionCurrentKey(mode), "json") });
     if (suffix === "history") {
