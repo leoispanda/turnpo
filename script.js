@@ -7443,7 +7443,7 @@ $("#openAdminOwnerProfile").addEventListener("click", () => {
 $("#openAdminDashboard").addEventListener("click", () => setRoute("admin"));
 $("#refreshAdminDashboard").addEventListener("click", renderAdminDashboard);
 $("#themeToggle").addEventListener("click", toggleTheme);
-$("#openRegistration").addEventListener("click", () => setRegistrationDrawer(true));
+$("#openRegistration")?.addEventListener("click", () => setRegistrationDrawer(true));
 $("#openAiImport").addEventListener("click", () => setAiImportDrawer(true));
 $("#openJobsPage")?.addEventListener("click", () => setRoute(jobsRoute(activeUsername)));
 $("#openJobsModule")?.addEventListener("click", openJobsModule);
