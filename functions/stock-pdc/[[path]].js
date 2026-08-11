@@ -30,6 +30,7 @@ const SMOKE_TEST_TIMEOUT_MS = 5 * 60 * 1000;
 const RUN_TTL_SECONDS = 180 * 24 * 60 * 60;
 const MODEL_VERIFICATION_TTL_SECONDS = 10 * 60;
 const PDC_REVIEW_BATCH_SIZE = 30;
+const PDC_MEMBER_STAGE_STORAGE = "PDC_MEMBER_STAGE_V1";
 const MANUAL_MARKET_REFRESH_COOLDOWN_SECONDS = 15 * 60;
 const MANUAL_MARKET_REFRESH_REPOSITORY = "leoispanda/turnpo";
 const MANUAL_MARKET_REFRESH_WORKFLOW = "manual-stock-pdc-refresh.yml";
@@ -239,6 +240,15 @@ function decisionPrefix(mode = OFFICIAL_DECISION_MODE) {
 
 function decisionRunKey(runId, mode = OFFICIAL_DECISION_MODE) {
   return `${decisionPrefix(mode)}:run:${runId}`;
+}
+
+// A committee member never shares a mutable scoring record with another
+// member. This prevents a parallel OpenAI/Claude/Gemini/DeepSeek/Kimi write
+// from overwriting another model's independently auditable result.
+function decisionMemberStageKey(runId, stage, memberId, mode = OFFICIAL_DECISION_MODE) {
+  const safeStage = stage === "round-two" ? "round-two" : "round-one";
+  const safeMember = cleanText(memberId, 80).replace(/[^a-z0-9_.-]/gi, "_");
+  return `${decisionPrefix(mode)}:run:${cleanText(runId, 80)}:member:${safeStage}:${safeMember}`;
 }
 
 function decisionDayKey(date, mode = OFFICIAL_DECISION_MODE) {
@@ -1500,6 +1510,7 @@ function publicRun(run) {
     status: run.status,
     execution: run.execution && typeof run.execution === "object" ? {
       kind: cleanText(run.execution.kind, 64),
+      memberStageStorage: cleanText(run.execution.memberStageStorage, 64),
       status: cleanText(run.execution.status, 40),
       workflowId: cleanText(run.execution.workflowId, 120),
       queuedAt: cleanText(run.execution.queuedAt, 40),
@@ -1575,6 +1586,93 @@ async function saveRun(store, run) {
 async function loadRun(store, runId, mode = OFFICIAL_DECISION_MODE) {
   const run = await store.get(decisionRunKey(cleanText(runId, 80), mode), "json");
   return run && typeof run === "object" ? run : null;
+}
+
+function usesMemberStageStorage(run) {
+  return run?.execution?.memberStageStorage === PDC_MEMBER_STAGE_STORAGE;
+}
+
+function stageCandidates(run, stage) {
+  if (stage === "round-one") return Array.isArray(run?.snapshot?.candidates) ? run.snapshot.candidates : [];
+  if (stage !== "round-two" || !Array.isArray(run?.pool)) return [];
+  const byTicker = new Map((run.snapshot?.candidates || []).map((candidate) => [candidate.ticker, candidate]));
+  return run.pool.map((row) => byTicker.get(row?.ticker)).filter(Boolean);
+}
+
+function memberStageAudit(previous, entry) {
+  const attempts = Array.isArray(previous?.attempts) ? previous.attempts : [];
+  return {
+    ...entry,
+    attempts: [...attempts, {
+      status: entry.status,
+      startedAt: entry.startedAt,
+      completedAt: entry.completedAt,
+      output: entry.output,
+      error: entry.error
+    }].slice(-32)
+  };
+}
+
+function newMemberStageRecord(run, member, stage, candidates) {
+  const now = new Date().toISOString();
+  return {
+    storage: PDC_MEMBER_STAGE_STORAGE,
+    runId: run.id,
+    mode: run.mode,
+    stage,
+    memberId: member.profile.id,
+    profile: publicModelProfile(member.profile),
+    status: "IDLE",
+    createdAt: now,
+    updatedAt: now,
+    input: {
+      snapshotId: cleanText(run.snapshot?.provenance?.snapshotId, 160),
+      candidateCount: candidates.length,
+      candidateTickers: candidates.map((candidate) => candidate.ticker)
+    },
+    review: null,
+    audit: null
+  };
+}
+
+async function loadMemberStageRecord(store, run, member, stage, candidates) {
+  const key = decisionMemberStageKey(run.id, stage, member.profile.id, run.mode);
+  const record = await store.get(key, "json");
+  if (record && typeof record === "object" && record.storage === PDC_MEMBER_STAGE_STORAGE) return { key, record };
+  return { key, record: newMemberStageRecord(run, member, stage, candidates) };
+}
+
+async function saveMemberStageRecord(store, key, record) {
+  record.updatedAt = new Date().toISOString();
+  await store.put(key, JSON.stringify(record), { expirationTtl: RUN_TTL_SECONDS });
+  return record;
+}
+
+async function hydrateMemberStageReviews(store, run) {
+  if (!usesMemberStageStorage(run) || !isCommitteeRun(run)) return run;
+  const stages = ["round-one", "round-two"];
+  await Promise.all(stages.flatMap((stage) => {
+    const reviewKey = reviewStageKey(stage);
+    const candidates = stageCandidates(run, stage);
+    // Round two has no input until the consensus pool exists.
+    if (!candidates.length) return [];
+    return committeeMembers(run).map(async (member) => {
+      const key = decisionMemberStageKey(run.id, stage, member.profile.id, run.mode);
+      const record = await store.get(key, "json");
+      if (!record || typeof record !== "object" || record.storage !== PDC_MEMBER_STAGE_STORAGE) return;
+      if (record.review && typeof record.review === "object") member[reviewKey] = record.review;
+      if (record.audit && typeof record.audit === "object") {
+        member.audit ||= {};
+        member.audit[reviewKey] = record.audit;
+      }
+    });
+  }));
+  return run;
+}
+
+async function loadHydratedRun(store, runId, mode = OFFICIAL_DECISION_MODE) {
+  const run = await loadRun(store, runId, mode);
+  return run ? hydrateMemberStageReviews(store, run) : null;
 }
 
 function verificationResult(profile, startedAt, caught = null, response = null) {
@@ -1734,6 +1832,7 @@ async function createRun(request, env, mode = OFFICIAL_DECISION_MODE) {
     status: noCandidates ? "NO_CANDIDATES" : deferVerification ? "WORKFLOW_QUEUED" : "SNAPSHOT_LOCKED",
     execution: deferVerification ? {
       kind: "cloudflare-workflow",
+      memberStageStorage: PDC_MEMBER_STAGE_STORAGE,
       status: "QUEUED",
       workflowId: "",
       queuedAt: now,
@@ -2063,6 +2162,9 @@ async function advanceRun(env, runId, stage, requestedRoleId = "", mode = OFFICI
   const run = await loadRun(store, runId, mode);
   if (!run) return error("Decision run was not found.", 404);
   if (run.publishedAt) return error("Published decision runs are immutable.", 409);
+  if (usesMemberStageStorage(run) && ["round-one", "round-two"].includes(stage)) {
+    return error("This workflow-backed committee scores through its independent model records. Do not advance a shared scoring stage directly.", 409);
+  }
   if (isCommitteeRun(run)) {
     try {
       return await advanceCommitteeRun(env, run, stage, requestedRoleId);
@@ -2115,10 +2217,142 @@ async function advanceRun(env, runId, stage, requestedRoleId = "", mode = OFFICI
 // Workflow Worker. They deliberately reuse the same PDC functions as the Pages
 // API, so background execution cannot bypass Hawkeye, model integrity, or audit
 // rules that apply to an interactive run.
+export async function stockPdcWorkflowScoreMemberBatch(env, runId, mode = OFFICIAL_DECISION_MODE, stage, memberId) {
+  const store = decisionStore(env);
+  if (!store) throw new Error("Missing STOCK_PDC_KV or AUTH_KV binding.");
+  if (!["round-one", "round-two"].includes(stage)) throw new Error("Unknown PDC member stage.");
+  const run = await loadRun(store, runId, mode);
+  if (!run || !isCommitteeRun(run)) throw new Error("Committee decision run was not found.");
+  if (!usesMemberStageStorage(run)) throw new Error("This legacy PDC run cannot use independent member storage. Start a new run.");
+  const member = committeeMembers(run).find((item) => item.profile.id === memberId);
+  if (!member) throw new Error("Unknown PDC model member.");
+  const candidates = stageCandidates(run, stage);
+  if (!candidates.length) throw new Error(stage === "round-two" ? "Build the candidate pool before second review." : "Hawkeye candidate snapshot is empty.");
+  const reviewKey = reviewStageKey(stage);
+  const { key, record } = await loadMemberStageRecord(store, run, member, stage, candidates);
+  if (reviewIsComplete(record.review, candidates.length)) return { ok: true, complete: true, status: "COMPLETE", memberId, stage };
+  if (["FAILED", "PARTIAL"].includes(record.status) || ["FAILED", "PARTIAL"].includes(record.review?.status)) {
+    return { ok: false, complete: false, status: record.review?.status || record.status, memberId, stage, error: cleanText(record.audit?.error, 320) };
+  }
+  const completedTickers = new Set((record.review?.rankings || []).map((row) => row?.ticker).filter(Boolean));
+  const batchCandidates = candidates.filter((candidate) => !completedTickers.has(candidate.ticker)).slice(0, PDC_REVIEW_BATCH_SIZE);
+  if (!batchCandidates.length) {
+    record.review = mergeCompletedReviewBatch(record.review, { rankings: [] }, candidates);
+    record.status = record.review.status;
+    await saveMemberStageRecord(store, key, record);
+    return { ok: reviewIsComplete(record.review, candidates.length), complete: reviewIsComplete(record.review, candidates.length), status: record.status, memberId, stage };
+  }
+  const startedAt = new Date().toISOString();
+  record.status = "IN_PROGRESS";
+  await saveMemberStageRecord(store, key, record);
+  try {
+    const batchReview = attachPendingForwardOutcomes(
+      await modelReview(env, member.profile, FULL_PDC_ROLE, batchCandidates, stage),
+      run.date
+    );
+    if (!reviewIsComplete(batchReview, batchCandidates.length)) {
+      const failureMessage = `${member.profile.label} returned ${batchReview.status} for batch ${Math.floor(completedTickers.size / PDC_REVIEW_BATCH_SIZE) + 1}; expected ${batchCandidates.length} valid ticker records.`;
+      record.review = mergeCompletedReviewBatch(record.review, batchReview, candidates);
+      record.review.status = batchReview.status;
+      record.review.integrity = {
+        ...record.review.integrity,
+        status: batchReview.status,
+        duplicateTickers: batchReview.integrity.duplicateTickers,
+        unexpectedTickers: batchReview.integrity.unexpectedTickers,
+        invalidTickers: batchReview.integrity.invalidTickers,
+        malformedRowCount: batchReview.integrity.malformedRowCount,
+        error: failureMessage
+      };
+      record.status = batchReview.status;
+      record.audit = memberStageAudit(record.audit, {
+        status: batchReview.status,
+        startedAt,
+        completedAt: new Date().toISOString(),
+        input: { candidateCount: candidates.length, batch: { count: batchCandidates.length, tickers: batchCandidates.map((candidate) => candidate.ticker) } },
+        output: { rankingCount: batchReview.rankings.length, integrity: batchReview.integrity },
+        error: failureMessage
+      });
+      await saveMemberStageRecord(store, key, record);
+      return { ok: false, complete: false, status: record.status, memberId, stage, error: failureMessage };
+    }
+    record.review = mergeCompletedReviewBatch(record.review, batchReview, candidates);
+    const complete = reviewIsComplete(record.review, candidates.length);
+    record.status = complete ? "COMPLETE" : "IN_PROGRESS";
+    record.audit = memberStageAudit(record.audit, {
+      status: record.status,
+      startedAt,
+      completedAt: new Date().toISOString(),
+      input: { candidateCount: candidates.length, batch: { count: batchCandidates.length, tickers: batchCandidates.map((candidate) => candidate.ticker) } },
+      output: { rankingCount: record.review.rankings.length, integrity: record.review.integrity },
+      error: ""
+    });
+    await saveMemberStageRecord(store, key, record);
+    return { ok: true, complete, status: record.status, memberId, stage };
+  } catch (caught) {
+    const failureMessage = cleanText(caught?.message || "Model review failed.", 320);
+    record.review = {
+      status: "FAILED",
+      rankings: Array.isArray(record.review?.rankings) ? record.review.rankings : [],
+      batch: record.review?.batch || null,
+      integrity: {
+        status: "FAILED",
+        expectedCount: candidates.length,
+        receivedCount: completedTickers.size,
+        validCount: completedTickers.size,
+        missingTickers: candidates.filter((candidate) => !completedTickers.has(candidate.ticker)).map((candidate) => candidate.ticker),
+        duplicateTickers: [],
+        unexpectedTickers: [],
+        invalidTickers: [],
+        malformedRowCount: 0,
+        error: failureMessage
+      }
+    };
+    record.status = "FAILED";
+    record.audit = memberStageAudit(record.audit, {
+      status: "FAILED",
+      startedAt,
+      completedAt: new Date().toISOString(),
+      input: { candidateCount: candidates.length, batch: { count: batchCandidates.length, tickers: batchCandidates.map((candidate) => candidate.ticker) } },
+      output: {},
+      error: failureMessage
+    });
+    await saveMemberStageRecord(store, key, record);
+    return { ok: false, complete: false, status: "FAILED", memberId, stage, error: failureMessage };
+  }
+}
+
+export async function stockPdcWorkflowFinalizeMemberStage(env, runId, mode = OFFICIAL_DECISION_MODE, stage) {
+  const store = decisionStore(env);
+  if (!store) throw new Error("Missing STOCK_PDC_KV or AUTH_KV binding.");
+  const run = await loadHydratedRun(store, runId, mode);
+  if (!run || !isCommitteeRun(run)) throw new Error("Committee decision run was not found.");
+  const reviewKey = reviewStageKey(stage);
+  if (!reviewKey) throw new Error("Unknown PDC member stage.");
+  const candidates = stageCandidates(run, stage);
+  const members = committeeMembers(run);
+  const incomplete = members
+    .filter((member) => !reviewIsComplete(member[reviewKey], candidates.length))
+    .map((member) => ({ label: member.profile.label, status: member[reviewKey]?.status || "NOT_STARTED", error: cleanText(member[reviewKey]?.integrity?.error || member.audit?.[reviewKey]?.error, 180) }));
+  run.status = incomplete.length
+    ? `${stage === "round-one" ? "ROUND_ONE" : "ROUND_TWO"}_BLOCKED`
+    : stage === "round-one" ? "ROUND_ONE_COMPLETE" : "ROUND_TWO_COMPLETE";
+  run.audit ||= {};
+  run.audit[stage === "round-one" ? "roundOne" : "roundTwo"] = {
+    status: incomplete.length ? "BLOCKED" : "complete",
+    startedAt: cleanText(run.audit?.[stage === "round-one" ? "roundOne" : "roundTwo"]?.startedAt, 40) || new Date().toISOString(),
+    completedAt: new Date().toISOString(),
+    input: { memberCount: members.length, candidateCount: candidates.length, storage: PDC_MEMBER_STAGE_STORAGE },
+    output: { completeMembers: members.length - incomplete.length, incompleteMembers: incomplete },
+    error: incomplete.length ? incomplete.map((member) => `${member.label}: ${member.status}${member.error ? ` (${member.error})` : ""}`).join(" | ") : ""
+  };
+  await saveRun(store, run);
+  return { ok: !incomplete.length, run: publicRun(run), error: run.audit[stage === "round-one" ? "roundOne" : "roundTwo"].error };
+}
+
 export async function stockPdcWorkflowRead(env, runId, mode = OFFICIAL_DECISION_MODE) {
   const store = decisionStore(env);
   if (!store) throw new Error("Missing STOCK_PDC_KV or AUTH_KV binding.");
-  const run = await loadRun(store, runId, mode);
+  const run = await loadHydratedRun(store, runId, mode);
   if (!run) throw new Error("Decision run was not found.");
   return publicRun(run);
 }
@@ -2131,6 +2365,7 @@ export async function stockPdcWorkflowMark(env, runId, mode = OFFICIAL_DECISION_
   const current = run.execution && typeof run.execution === "object" ? run.execution : {};
   run.execution = {
     kind: "cloudflare-workflow",
+    memberStageStorage: cleanText(current.memberStageStorage, 64),
     status: cleanText(patch.status || current.status || "QUEUED", 40),
     workflowId: cleanText(patch.workflowId || current.workflowId, 120),
     queuedAt: cleanText(current.queuedAt || run.createdAt, 40),
@@ -2188,6 +2423,13 @@ export async function stockPdcWorkflowVerify(env, runId, mode = OFFICIAL_DECISIO
 }
 
 export async function stockPdcWorkflowAdvance(env, runId, stage, requestedRoleId = "", mode = OFFICIAL_DECISION_MODE) {
+  // Merge immutable per-member stage records into the parent only at a stage
+  // barrier. Scoring itself never writes this shared run object.
+  const store = decisionStore(env);
+  if (!store) throw new Error("Missing STOCK_PDC_KV or AUTH_KV binding.");
+  const hydrated = await loadHydratedRun(store, runId, mode);
+  if (!hydrated) throw new Error("Decision run was not found.");
+  if (usesMemberStageStorage(hydrated) && !["round-one", "round-two"].includes(stage)) await saveRun(store, hydrated);
   const response = await advanceRun(env, runId, stage, requestedRoleId, mode);
   const payload = await response.json().catch(() => ({}));
   return {
@@ -2569,7 +2811,7 @@ async function decisionApi(context, mode = OFFICIAL_DECISION_MODE) {
     }
     const runMatch = suffix.match(/^runs\/([a-f0-9-]{36})$/i);
     if (runMatch) {
-      const run = await loadRun(store, runMatch[1], mode);
+      const run = await loadHydratedRun(store, runMatch[1], mode);
       return run ? json({ ok: true, run: publicRun(run) }) : error("Decision run was not found.", 404);
     }
     return error("Unknown decision resource.", 404);

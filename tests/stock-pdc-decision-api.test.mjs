@@ -1,5 +1,11 @@
 import assert from "node:assert/strict";
-import { onRequestGet, onRequestPost } from "../functions/stock-pdc/[[path]].js";
+import {
+  onRequestGet,
+  onRequestPost,
+  stockPdcWorkflowFinalizeMemberStage,
+  stockPdcWorkflowRead,
+  stockPdcWorkflowScoreMemberBatch
+} from "../functions/stock-pdc/[[path]].js";
 
 class MemoryKv {
   constructor() {
@@ -72,6 +78,7 @@ let kimiRequest = null;
 let marketRefreshRequest = null;
 let marketRefreshStatus = 204;
 let reviewRankingLimit = null;
+let reviewRankingLimits = {};
 let nullDimensionScore = false;
 let geminiVerificationPreamble = "";
 let geminiVerificationRequest = null;
@@ -148,7 +155,7 @@ globalThis.fetch = async (_url, options = {}) => {
       : request.input;
   const packet = JSON.parse(String(packetInput).replace("Candidate packet:\n", ""));
   const review = {
-    rankings: packet.slice(0, reviewRankingLimit ?? packet.length).map((candidate, index) => ({
+    rankings: packet.slice(0, reviewRankingLimits[provider] ?? reviewRankingLimit ?? packet.length).map((candidate, index) => ({
       ticker: candidate.ticker,
       dimensionScores: {
         ...mockDimensionScores(index),
@@ -377,7 +384,7 @@ try {
   assert.equal(workflowDispatches.at(-1).headers.get("x-turnpo-orchestrator-key"), "workflow-shared-secret");
   assert.equal(Object.hasOwn(workflowDispatches.at(-1).body, "apiKey"), false, "Pages must never forward provider credentials to the Worker");
   response = await onRequestPost(workflowContext(requestFor("/stock-pdc/decision/api/runs", {
-    modelProfileIds: ["gpt-5.6-sol"],
+    modelProfileIds: ["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"],
     deferVerification: true
   })));
   assert.equal(response.status, 200, "a configured workflow should accept a run without a browser-held verification receipt");
@@ -388,6 +395,43 @@ try {
   assert.equal(payload.run.execution.workflowId, "stock-pdc-official-test-workflow");
   assert.deepEqual(workflowDispatches[0].body.mode, "official");
   assert.equal(workflowDispatches[0].headers.get("x-turnpo-orchestrator-key"), "workflow-shared-secret");
+
+  // Background committee scoring writes one immutable KV record per model and
+  // stage. These requests may run simultaneously without replacing the parent
+  // run or another model's in-flight result.
+  const workflowRunId = payload.run.id;
+  const workflowMemberIds = ["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"];
+  const independentScores = await Promise.all(workflowMemberIds.map((memberId) => (
+    stockPdcWorkflowScoreMemberBatch(workflowEnv, workflowRunId, "official", "round-one", memberId)
+  )));
+  assert.ok(independentScores.every((result) => result.ok && result.complete), "each independent PDC member should complete its own stage record");
+  const memberStageKeys = [...workflowEnv.AUTH_KV.values.keys()].filter((key) => key.includes(`run:${workflowRunId}:member:round-one:`));
+  assert.equal(memberStageKeys.length, 5, "each PDC member must own a separate Round 1 KV record");
+  const rawWorkflowRunKey = [...workflowEnv.AUTH_KV.values.keys()].find((key) => key.endsWith(`run:${workflowRunId}`));
+  const rawWorkflowRun = JSON.parse(workflowEnv.AUTH_KV.values.get(rawWorkflowRunKey));
+  assert.equal(rawWorkflowRun.committee["gpt-5.6-sol"].roundOne, null, "parallel member scoring must not mutate the shared parent run");
+  const hydratedWorkflowRun = await stockPdcWorkflowRead(workflowEnv, workflowRunId, "official");
+  assert.equal(hydratedWorkflowRun.roundOneComplete, true, "run reads must assemble every independent member record at the stage barrier");
+  const roundOneBarrier = await stockPdcWorkflowFinalizeMemberStage(workflowEnv, workflowRunId, "official", "round-one");
+  assert.equal(roundOneBarrier.ok, true, "the stage barrier must advance only after all independent PDC members are complete");
+
+  // A malformed member response must not prevent the other four independent
+  // PDCs from finishing and persisting their own records.
+  reviewRankingLimits = { openai: 7 };
+  response = await onRequestPost(workflowContext(requestFor("/stock-pdc/decision/api/runs", {
+    modelProfileIds: workflowMemberIds,
+    deferVerification: true
+  })));
+  assert.equal(response.status, 200);
+  const partialWorkflowRunId = (await response.json()).run.id;
+  const partialIndependentScores = await Promise.all(workflowMemberIds.map((memberId) => (
+    stockPdcWorkflowScoreMemberBatch(workflowEnv, partialWorkflowRunId, "official", "round-one", memberId)
+  )));
+  assert.equal(partialIndependentScores.find((result) => result.memberId === "gpt-5.6-sol").status, "PARTIAL");
+  assert.ok(partialIndependentScores.filter((result) => result.memberId !== "gpt-5.6-sol").every((result) => result.ok && result.complete), "one failed PDC must not cancel the four independent PDCs");
+  const partialBarrier = await stockPdcWorkflowFinalizeMemberStage(workflowEnv, partialWorkflowRunId, "official", "round-one");
+  assert.equal(partialBarrier.ok, false, "a PARTIAL member must still block the stage barrier");
+  reviewRankingLimits = {};
 
   response = await onRequestPost(context(requestFor("/stock-pdc/decision/api/runs", await verifiedRunBody(["gpt-5.6-sol", "claude_api_pdc", "gemini_api_pdc", "deepseek_api_pdc", "kimi_api_pdc"]))));
   assert.equal(response.status, 200);

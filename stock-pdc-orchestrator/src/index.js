@@ -1,8 +1,10 @@
 import { WorkflowEntrypoint } from "cloudflare:workers";
 import {
   stockPdcWorkflowAdvance,
+  stockPdcWorkflowFinalizeMemberStage,
   stockPdcWorkflowMark,
   stockPdcWorkflowRead,
+  stockPdcWorkflowScoreMemberBatch,
   stockPdcWorkflowVerify,
   stockPdcWorkerSmokeTest
 } from "../../functions/stock-pdc/[[path]].js";
@@ -37,6 +39,31 @@ function reviewFor(member, stage) {
 
 function reviewComplete(review) {
   return review?.status === "COMPLETE" && review?.integrity?.status === "COMPLETE";
+}
+
+async function scoreCommitteeStage(env, step, runId, mode, stage, run) {
+  const candidates = stage === "round-one" ? run.snapshot?.candidateCount || 0 : run.pool?.length || 0;
+  const maxBatches = Math.max(1, Math.ceil(candidates / BATCH_SIZE));
+  const members = run.members || [];
+  // Every wave starts all PDCs together. Each call owns a distinct KV record
+  // (`run + stage + member`) and therefore cannot overwrite another model's
+  // audit/result even when Cloudflare executes them at the same time.
+  for (let batch = 1; batch <= maxBatches; batch += 1) {
+    await Promise.all(members.map((member) => step.do(
+      `${stage}:${member.id}:batch:${batch}`,
+      // No application wall-time cutoff: a formal PDC batch remains pending
+      // until its provider returns or fails, while the Workflow stays durable.
+      noRetryStepConfig(),
+      () => stockPdcWorkflowScoreMemberBatch(env, runId, mode, stage, member.id)
+    )));
+  }
+  const finalized = await step.do(
+    `${stage}:barrier`,
+    noRetryStepConfig(),
+    () => stockPdcWorkflowFinalizeMemberStage(env, runId, mode, stage)
+  );
+  if (!finalized.ok) throw workflowError(finalized.error || `${stage} did not receive complete independent PDC records.`);
+  return finalized.run;
 }
 
 async function advanceStage(env, runId, mode, stage, memberId = "") {
@@ -101,37 +128,15 @@ export class StockPdcDecisionWorkflow extends WorkflowEntrypoint {
         error: ""
       }));
 
-      const verification = await step.do("verify:all-models", noRetryStepConfig("15 minutes"), () => stockPdcWorkflowVerify(this.env, runId, mode));
+      const verification = await step.do("verify:all-models", noRetryStepConfig(), () => stockPdcWorkflowVerify(this.env, runId, mode));
       if (!verification.ok) throw workflowError(verification.error || "At least one required PDC model verification failed.");
 
       const runAfterVerification = await step.do("read:after-verification", () => stockPdcWorkflowRead(this.env, runId, mode));
-      for (const member of runAfterVerification.members || []) {
-        const maxBatches = Math.max(1, Math.ceil((runAfterVerification.snapshot?.candidateCount || 0) / BATCH_SIZE));
-        for (let batch = 1; batch <= maxBatches; batch += 1) {
-          const before = await step.do(`read:round-one:${member.id}:${batch}`, () => stockPdcWorkflowRead(this.env, runId, mode));
-          const current = before.members?.find((item) => item.id === member.id);
-          if (reviewComplete(reviewFor(current, "round-one"))) break;
-          const updated = await step.do(`round-one:${member.id}:batch:${batch}`, noRetryStepConfig("15 minutes"), () => advanceStage(this.env, runId, mode, "round-one", member.id));
-          const updatedMember = updated.members?.find((item) => item.id === member.id);
-          if (reviewComplete(reviewFor(updatedMember, "round-one"))) break;
-          if (batch === maxBatches) throw workflowError(`${member.label} round one did not return every Hawkeye candidate.`);
-        }
-      }
+      await scoreCommitteeStage(this.env, step, runId, mode, "round-one", runAfterVerification);
 
       await step.do("merge:top-20", noRetryStepConfig(), () => advanceStage(this.env, runId, mode, "merge"));
       const runAfterMerge = await step.do("read:after-merge", () => stockPdcWorkflowRead(this.env, runId, mode));
-      for (const member of runAfterMerge.members || []) {
-        const maxBatches = Math.max(1, Math.ceil((runAfterMerge.pool?.length || 0) / BATCH_SIZE));
-        for (let batch = 1; batch <= maxBatches; batch += 1) {
-          const before = await step.do(`read:round-two:${member.id}:${batch}`, () => stockPdcWorkflowRead(this.env, runId, mode));
-          const current = before.members?.find((item) => item.id === member.id);
-          if (reviewComplete(reviewFor(current, "round-two"))) break;
-          const updated = await step.do(`round-two:${member.id}:batch:${batch}`, noRetryStepConfig("15 minutes"), () => advanceStage(this.env, runId, mode, "round-two", member.id));
-          const updatedMember = updated.members?.find((item) => item.id === member.id);
-          if (reviewComplete(reviewFor(updatedMember, "round-two"))) break;
-          if (batch === maxBatches) throw workflowError(`${member.label} round two did not return every shared-pool candidate.`);
-        }
-      }
+      await scoreCommitteeStage(this.env, step, runId, mode, "round-two", runAfterMerge);
 
       await step.do("secretary:summary", noRetryStepConfig("15 minutes"), () => advanceStage(this.env, runId, mode, "secretary"));
       await step.do("risk-check:final", noRetryStepConfig(), () => advanceStage(this.env, runId, mode, "risk-check"));
