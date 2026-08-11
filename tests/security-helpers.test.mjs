@@ -203,6 +203,7 @@ const env = {
   PROFILE_KV: new MemoryKv(),
   TURNPO_AUTH_SECRET: "test-secret",
   RESEND_API_KEY: "test-resend",
+  REGISTRATION_ENABLED: "true",
   TURNPO_OWNER_EMAIL_PROFILES: "known@example.com:alice"
 };
 const existingRegisterResponse = await registerPost({
@@ -229,6 +230,26 @@ assert.equal(existingRegisterBody.error, undefined);
 assert.equal(await env.AUTH_KV.get("auth:registration:known@example.com"), null);
 assert.ok(await env.AUTH_KV.get("auth:code:known@example.com"));
 assert.equal(sentEmails.length, 1);
+
+const closedRegisterResponse = await registerPost({
+  env: { ...env, REGISTRATION_ENABLED: "false" },
+  request: new Request("https://www.turnpo.com/api/auth/register", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      origin: "https://www.turnpo.com"
+    },
+    body: JSON.stringify({
+      name: "New User",
+      email: "new@example.com",
+      acknowledgements
+    })
+  })
+});
+assert.equal(closedRegisterResponse.status, 403);
+assert.deepEqual(await closedRegisterResponse.json(), {
+  error: "Public profile creation is temporarily unavailable."
+});
 
 globalThis.fetch = originalFetch;
 

@@ -114,6 +114,9 @@ async function createLoginSession(env, email, profile, { displayName = "" } = {}
 }
 
 export async function onRequestPost({ request, env }) {
+  if (env.REGISTRATION_ENABLED !== "true") {
+    return json({ error: "Public profile creation is temporarily unavailable." }, { status: 403 });
+  }
   const authError = requireAuthConfig(env);
   if (authError) return json({ error: "Auth is not configured." }, { status: 500 });
   const profileError = requireProfileStoreConfig(env);
