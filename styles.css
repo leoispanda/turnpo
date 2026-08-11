@@ -91,6 +91,10 @@ button:disabled {
   opacity: 0.62;
 }
 
+#registrationSubmit:disabled {
+  cursor: not-allowed;
+}
+
 a {
   color: inherit;
   text-decoration: none;

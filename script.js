@@ -6748,6 +6748,10 @@ async function authRequest(path, payload) {
 
 async function registerProfile(event) {
   event.preventDefault();
+  if ($("#registrationSubmit").disabled) {
+    $("#registrationNote").textContent = "Registration is temporarily closed.";
+    return;
+  }
   const name = $("#registerName").value.trim();
   const email = $("#registerEmail").value.trim().toLowerCase();
   if (!name || !email) {
