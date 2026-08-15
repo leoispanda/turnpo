@@ -195,6 +195,7 @@ async function executeOpenAi({ env, model, system_instruction, payload, response
     const result = baseResult("openai", model, startedAt);
     result.error_code = error?.name === "AbortError" ? "TIMEOUT" : "NETWORK_ERROR";
     result.retryable = true;
+    if (error?.__openaiTransportDiagnostic) result.network_diagnostic = error.__openaiTransportDiagnostic;
     return result;
   }
 }

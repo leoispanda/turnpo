@@ -69,7 +69,7 @@ function publicCost(cost, trackingStatus = "UNAVAILABLE") {
   };
 }
 
-function emptyResult({ input, errorCode, latencyMs = "UNAVAILABLE", usage, cost, retryCount = 0 }) {
+function emptyResult({ input, errorCode, latencyMs = "UNAVAILABLE", usage, cost, retryCount = 0, networkDiagnostic }) {
   return {
     contract_version: input.contract_version,
     request_id: input.request_id,
@@ -82,7 +82,8 @@ function emptyResult({ input, errorCode, latencyMs = "UNAVAILABLE", usage, cost,
     usage: usage || unavailableUsage(retryCount),
     cost: publicCost(cost || { estimated_usd: null, pricing_status: "NOT_CONFIGURED" }),
     latency_ms: latencyMs,
-    error_code: errorCode
+    error_code: errorCode,
+    ...(networkDiagnostic ? { network_diagnostic: networkDiagnostic } : {})
   };
 }
 
@@ -114,7 +115,8 @@ function normalizeProviderFailure({ input, result, retryCount, startedAt, env })
     latencyMs: Number.isFinite(result?.latency_ms) ? Date.now() - startedAt : "UNAVAILABLE",
     usage,
     cost,
-    retryCount
+    retryCount,
+    networkDiagnostic: result?.network_diagnostic
   });
 }
 
