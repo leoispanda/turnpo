@@ -801,6 +801,17 @@ td small {
   white-space: nowrap;
 }
 
+.stock-action-label {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  color: #65707a;
+  font-size: 8px;
+  font-weight: 720;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .stock-day-change {
   display: block;
   min-width: 44px;

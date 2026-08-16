@@ -78,6 +78,13 @@ try {
   payload = await response.json();
   assert.equal(payload.run.id, runId);
   assert.equal(payload.run.displayUrl, `/stock-pdc/runs/${runId}/display.json`);
+
+  await env.AUTH_KV.put("stock-pdc:decision:history", JSON.stringify({ dates: ["2026-08-07"] }));
+  await env.AUTH_KV.put("stock-pdc:decision:day:2026-08-07", JSON.stringify({ date: "2026-08-07", decisions: [{ rank: 1, ticker: "600985.SH", name: "淮北矿业" }] }));
+  response = await onRequestGet(context(requestFor("/stock-pdc/decision/api/history")));
+  assert.equal(response.status, 200);
+  payload = await response.json();
+  assert.equal(payload.days[0].decisions[0].ticker, "600985.SH");
 } finally {
   globalThis.fetch = originalFetch;
 }

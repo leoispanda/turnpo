@@ -45,6 +45,30 @@ function generationCurrentKey() {
   return "stock-pdc:generation:current";
 }
 
+function historicalDecisionDayKey(date) {
+  return `stock-pdc:decision:day:${date}`;
+}
+
+function historicalDecisionHistoryKey() {
+  return "stock-pdc:decision:history";
+}
+
+function validHistoricalDecisionDate(value) {
+  const date = cleanText(value, 10);
+  return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "";
+}
+
+async function historicalDecisionHistory(env) {
+  const store = decisionStore(env);
+  if (!store) return error("Missing STOCK_PDC_KV or AUTH_KV binding.", 500);
+  const history = await store.get(historicalDecisionHistoryKey(), "json");
+  const dates = Array.isArray(history?.dates)
+    ? history.dates.map(validHistoricalDecisionDate).filter(Boolean).sort().reverse().slice(0, 365)
+    : [];
+  const days = await Promise.all(dates.map((date) => store.get(historicalDecisionDayKey(date), "json")));
+  return json({ ok: true, days: days.filter(Boolean) });
+}
+
 function generationCallbackToken(env) {
   return String(env.STOCK_PDC_GENERATOR_CALLBACK_TOKEN || "").trim();
 }
@@ -372,7 +396,10 @@ export async function onRequestGet(context) {
   }
 
   if (url.pathname.startsWith(`${DECISION_PATH}/api`)) {
-    if (await isAuthorized(request, env)) return generationApi(context);
+    if (await isAuthorized(request, env)) {
+      if (url.pathname === `${DECISION_PATH}/api/history`) return historicalDecisionHistory(env);
+      return generationApi(context);
+    }
     return error("Stock PDC access is required.", 401);
   }
 
