@@ -10,6 +10,7 @@ outputs/
 outputs_b/
 outputs_ab/
 portfolio/
+runs/
 outputs/*.xlsx
 outputs/*.html
 outputs/candidate_universe.csv

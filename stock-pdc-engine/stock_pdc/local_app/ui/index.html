@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>选股神器</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="选股神器首页">
+          <span class="brand-mark">选</span>
+          <span>
+            <span class="eyebrow">STOCK PDC · LOCAL RUNTIME</span>
+            <strong>选股神器</strong>
+          </span>
+        </a>
+        <div class="top-actions">
+          <button class="button ghost" id="refreshButton" type="button">刷新</button>
+          <button class="button secondary" id="newRunButton" type="button">新建 Run</button>
+          <button class="button primary" id="openCodexButton" type="button">打开 Codex</button>
+        </div>
+      </header>
+
+      <section class="hero-card">
+        <div>
+          <p class="eyebrow">LOCAL DECISION WORKFLOW</p>
+          <h1>选股神器<br /><span>一步一步完成研究决策</span></h1>
+          <p class="hero-copy">每一步先生成 Attempt，再检查并选择 Checkpoint。未通过当前步骤，下一步不会解锁。</p>
+        </div>
+        <div class="hero-run" id="heroRunCard">
+          <span class="label">当前 Run</span>
+          <strong id="currentRunLabel">尚未创建</strong>
+          <small id="currentStepLabel">先新建一个本地 Run</small>
+        </div>
+      </section>
+
+      <section class="notice" id="message" role="status">
+        先创建 Run，然后从 Stage 01 开始。研究模式已开启，真实下单始终关闭。
+      </section>
+      <section class="notice file-notice" id="fileNotice" hidden>
+        当前是直接打开 HTML 文件。请双击 <strong>选股神器.command</strong>，让页面通过本地服务启动，才能使用 Run 和 Stage API。
+      </section>
+
+      <section class="status-grid" aria-label="系统状态">
+        <article class="status-card">
+          <span class="label">本地服务</span>
+          <strong id="serviceStatus">检查中…</strong>
+          <small id="serviceDetail">—</small>
+        </article>
+        <article class="status-card">
+          <span class="label">Codex Bridge</span>
+          <strong id="codexStatus">检查中…</strong>
+          <small id="codexDetail">—</small>
+        </article>
+        <article class="status-card">
+          <span class="label">PDC Core</span>
+          <strong id="pipelineStatus">检查中…</strong>
+          <small id="pipelineDetail">—</small>
+        </article>
+        <article class="status-card safe-card">
+          <span class="label">交易权限</span>
+          <strong>研究模式</strong>
+          <small>真实下单始终关闭</small>
+        </article>
+      </section>
+
+      <section class="panel workflow-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">THE WORKFLOW</p>
+            <h2>执行进度</h2>
+          </div>
+          <span class="panel-meta" id="workflowMeta">创建 Run 后从左到右推进</span>
+        </div>
+        <div class="progress-rail" id="progressRail" aria-label="PDC 1–9 执行进度"></div>
+      </section>
+
+      <section class="workspace-grid">
+        <section class="panel action-panel">
+          <div class="panel-heading compact-heading">
+            <div>
+              <p class="eyebrow">CURRENT STEP</p>
+              <h2 id="currentStageTitle">先创建 Run</h2>
+            </div>
+            <span class="step-badge" id="currentStageBadge">—</span>
+          </div>
+          <p class="stage-description" id="currentStageDescription">创建本地 Run 后，系统会从 Frozen Facts 开始。每个 Stage 都会保留独立 Attempt。</p>
+          <div class="current-action" id="currentAction"></div>
+          <section class="codex-job-panel" id="codexJobPanel" hidden aria-live="polite"></section>
+          <div class="attempt-inspector" id="attemptInspector" hidden></div>
+        </section>
+
+        <section class="panel runs-panel">
+          <div class="panel-heading compact-heading">
+            <div>
+              <p class="eyebrow">RUN HISTORY</p>
+              <h2>最近 Run</h2>
+            </div>
+            <span class="panel-meta">本地保存</span>
+          </div>
+          <div id="runsList" class="empty-state">暂时没有已登记的本地 Run。</div>
+        </section>
+      </section>
+
+      <section class="panel stage-audit-panel" id="stageAuditPanel" hidden>
+        <div class="panel-heading compact-heading">
+          <div>
+            <p class="eyebrow">FULL STAGE AUDIT</p>
+            <h2>逐 Stage 文件审计</h2>
+          </div>
+          <span class="panel-meta">读取本地不可变 Attempt 文件</span>
+        </div>
+        <p class="audit-intro">选择任意 Stage 和历史 Attempt，即可逐份阅读 input、config、output、validation、checkpoint、audit 的完整 JSON 内容与哈希。</p>
+        <div class="audit-stage-list" id="auditStageList"></div>
+        <div class="audit-detail" id="auditDetail"></div>
+      </section>
+
+      <section class="panel final-decision-panel" id="finalDecisionPanel" hidden>
+        <div class="panel-heading compact-heading">
+          <div>
+            <p class="eyebrow">STAGE 09 · RESEARCH OUTPUT</p>
+            <h2>最终研究结论</h2>
+          </div>
+          <span class="panel-meta">只供人工复核 · 不会下单</span>
+        </div>
+        <div class="final-decision-summary" id="finalDecisionSummary"></div>
+        <div class="final-decision-list" id="finalDecisionList"></div>
+      </section>
+
+      <footer>
+        <span id="workspacePath">Workspace: —</span>
+        <span>Loopback only · Research mode · No live orders</span>
+      </footer>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

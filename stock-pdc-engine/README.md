@@ -158,6 +158,10 @@ python main.py --ticker 600519.SH --skill zhuge
 python main.py --ticker 600519.SH --all-skills
 ```
 
+## 本地 PDC 工作台
+
+本地 1–9 Stage 工作台由 [LOCAL_PDC.md](LOCAL_PDC.md) 说明。在 Finder 中双击 `PDC Local.app`（或 `PDC Local.command`）即可启动只绑定本机回环地址的 Dashboard；不要在 Codex 文件树里点击启动器，因为那会打开源码。页面可以创建 Run、逐个运行 Stage、检查 Attempt 并选择 Checkpoint。当前 Stage 执行使用本地确定性 Core，所有结果保持研究模式，不连接券商、不下单。
+
 带个人风险姿态：
 
 ```bash

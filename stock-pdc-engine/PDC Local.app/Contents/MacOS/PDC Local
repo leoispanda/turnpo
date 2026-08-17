@@ -1,0 +1,20 @@
+#!/bin/zsh
+set -e
+
+APP_ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
+cd "$APP_ROOT"
+
+# Finder launches apps with a minimal PATH.  Prefer the modern Python used by
+# this project instead of the old system Python that cannot parse `X | None`.
+for PYTHON_BIN in /usr/local/bin/python3 /opt/homebrew/bin/python3 /usr/bin/python3; do
+  if [[ -x "$PYTHON_BIN" ]]; then
+    break
+  fi
+done
+if [[ ! -x "$PYTHON_BIN" ]]; then
+  print -u2 "PDC Local could not find Python 3."
+  exit 1
+fi
+
+LOG_FILE="${TMPDIR:-/tmp}/pdc-local-launcher.log"
+exec "$PYTHON_BIN" scripts/start_pdc_local.py "$@" >>"$LOG_FILE" 2>&1
