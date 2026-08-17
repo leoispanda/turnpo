@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://turnpo.internal/contracts/pdc-ai-contract-v1.schema.json",
+  "title": "PDC AI Contract v1",
+  "description": "Strict local-PDC input and scorecard output contract. stock-pdc-local owns the semantics; the generic Turnpo Provider Gateway validates the dereferenced output schema supplied in response_schema.",
+  "oneOf": [
+    { "$ref": "#/$defs/input" },
+    { "$ref": "#/$defs/output" }
+  ],
+  "$defs": {
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ticker"],
+      "properties": {
+        "ticker": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,31}$" },
+        "name": { "type": "string", "maxLength": 160 },
+        "rank": { "type": "integer", "minimum": 1, "maximum": 100000 },
+        "fact_ids": { "type": "array", "maxItems": 50, "items": { "type": "string", "maxLength": 160 } }
+      }
+    },
+    "frozen_facts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package_sha256", "market_data_date", "rules_version", "source_scope", "data"],
+      "properties": {
+        "package_sha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "market_data_date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "rules_version": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "source_scope": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "data": {
+          "type": "object",
+          "description": "Frozen, caller-owned facts. Runtime limits size/depth and rejects secret-like field names.",
+          "additionalProperties": true
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "snapshot_id", "task_type", "candidates", "frozen_facts", "evaluation_schema_version"],
+      "properties": {
+        "run_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{2,79}$" },
+        "snapshot_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{2,127}$" },
+        "task_type": { "type": "string", "enum": ["stock_evaluation", "ranking_scorecard", "round_1_member", "round_2_member"] },
+        "candidates": { "type": "array", "minItems": 1, "maxItems": 100, "items": { "$ref": "#/$defs/candidate" } },
+        "frozen_facts": { "$ref": "#/$defs/frozen_facts" },
+        "evaluation_schema_version": { "const": "pdc-ai-contract-v1" },
+        "model_selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["provider"],
+          "properties": {
+            "provider": { "type": "string", "enum": ["openai", "claude", "gemini", "deepseek", "kimi"] },
+            "model": { "type": "string", "maxLength": 160 }
+          }
+        },
+        "budget": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "max_output_tokens": { "type": "integer", "minimum": 256, "maximum": 16000 },
+            "max_total_tokens": { "type": "integer", "minimum": 256, "maximum": 20000 },
+            "max_cost_usd": { "type": "number", "minimum": 0, "maximum": 100 }
+          }
+        },
+        "timeout_ms": { "type": "integer", "minimum": 1000, "maximum": 30000 },
+        "retry": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "max_attempts": { "type": "integer", "minimum": 1, "maximum": 3 }
+          }
+        }
+      }
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["market_regime", "trend", "livermore_breakout", "volume_price", "candlestick", "overheat", "risk", "zhuge_orion", "final_chair"],
+      "properties": {
+        "market_regime": { "type": "number", "minimum": 0, "maximum": 10 },
+        "trend": { "type": "number", "minimum": 0, "maximum": 10 },
+        "livermore_breakout": { "type": "number", "minimum": 0, "maximum": 10 },
+        "volume_price": { "type": "number", "minimum": 0, "maximum": 10 },
+        "candlestick": { "type": "number", "minimum": 0, "maximum": 10 },
+        "overheat": { "type": "number", "minimum": 0, "maximum": 10 },
+        "risk": { "type": "number", "minimum": 0, "maximum": 10 },
+        "zhuge_orion": { "type": "number", "minimum": 0, "maximum": 10 },
+        "final_chair": { "type": "number", "minimum": 0, "maximum": 10 }
+      }
+    },
+    "scorecard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ticker", "dimensions", "score", "confidence", "risk_flags", "decision"],
+      "properties": {
+        "ticker": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,31}$" },
+        "dimensions": { "$ref": "#/$defs/dimensions" },
+        "score": { "type": "number", "minimum": 0, "maximum": 10 },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "risk_flags": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string",
+            "enum": ["MISSING_DATA", "DATA_STALE", "HIGH_VOLATILITY", "OVERHEATED", "WEAK_TREND", "LIQUIDITY_RISK", "MARKET_REGIME_RISK", "BREAKOUT_UNCONFIRMED", "MODEL_DISAGREEMENT"]
+          }
+        },
+        "decision": { "type": "string", "enum": ["BUY", "WATCH", "HOLD", "SELL"] }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scorecards"],
+      "properties": {
+        "scorecards": { "type": "array", "minItems": 1, "maxItems": 100, "items": { "$ref": "#/$defs/scorecard" } }
+      }
+    }
+  }
+}

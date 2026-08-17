@@ -9,8 +9,8 @@ import {
   requestKey,
   validateJsonMutationRequest
 } from "../auth/_utils.js";
+import { extractOpenAiOutputText, fetchOpenAiResponses } from "./_openai.js";
 
-const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
 const DEFAULT_MODEL = "gpt-4o-mini";
 const MAX_SOURCE_CHARS = 12000;
 const MAX_AI_IMPORT_BODY_BYTES = 64 * 1024;
@@ -43,14 +43,6 @@ function textDocumentFromDraft(draft) {
     "",
     "Review note: This is a text-only draft. Keep it hidden until the profile owner edits, adds any images manually, approves, and chooses to publish it."
   ].join("\n");
-}
-
-function extractOutputText(data) {
-  if (typeof data.output_text === "string") return data.output_text;
-  const content = data.output
-    ?.flatMap((item) => item.content || [])
-    ?.find((item) => item.type === "output_text" && typeof item.text === "string");
-  return content?.text || "";
 }
 
 function extractMonth(value = "") {
@@ -119,13 +111,9 @@ export async function onRequestPost({ request, env }) {
   const sourceTextForModel = text.slice(0, MAX_SOURCE_CHARS);
   const model = env.OPENAI_MODEL || DEFAULT_MODEL;
 
-  const response = await fetch(OPENAI_RESPONSES_URL, {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${apiKey}`,
-      "content-type": "application/json"
-    },
-    body: JSON.stringify({
+  const response = await fetchOpenAiResponses({
+    apiKey,
+    body: {
       model,
       instructions: [
         "You generate Turnpo text-only profile drafts from user-provided personal material.",
@@ -209,7 +197,7 @@ export async function onRequestPost({ request, env }) {
         }
       },
       max_output_tokens: 8000
-    })
+    }
   });
 
   const data = await response.json().catch(() => ({}));
@@ -217,7 +205,7 @@ export async function onRequestPost({ request, env }) {
     return json({ error: data.error?.message || "OpenAI import failed." }, { status: 502 });
   }
 
-  const outputText = extractOutputText(data);
+  const outputText = extractOpenAiOutputText(data);
   if (!outputText) return json({ error: "OpenAI did not return a text draft." }, { status: 502 });
 
   try {

@@ -6,6 +6,7 @@ import {
   requestContentLengthTooLarge,
   validateJsonMutationRequest
 } from "../auth/_utils.js";
+import { extractOpenAiOutputText, fetchOpenAiResponses } from "../ai/_openai.js";
 
 const MAX_JOB_SEARCH_BODY_BYTES = 32 * 1024;
 const MAX_MARKDOWN_CHARS = 24000;
@@ -14,7 +15,6 @@ const MAX_RESULTS = 40;
 const MAX_SEARCHES_PER_HOUR = 40;
 const REQUEST_TIMEOUT_MS = 8000;
 const OPENAI_REQUEST_TIMEOUT_MS = 7000;
-const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
 const DEFAULT_OPENAI_JOBS_MODEL = "gpt-4o-mini";
 const ARBEITNOW_URL = "https://www.arbeitnow.com/api/job-board-api";
 const REMOTIVE_URL = "https://remotive.com/api/remote-jobs";
@@ -267,14 +267,6 @@ function searchProfileFromMarkdown(markdown = "") {
   };
 }
 
-function extractOutputText(data) {
-  if (typeof data.output_text === "string") return data.output_text;
-  const content = data.output
-    ?.flatMap((item) => item.content || [])
-    ?.find((item) => item.type === "output_text" && typeof item.text === "string");
-  return content?.text || "";
-}
-
 function arrayFromModel(value, maxItems = 12) {
   return uniqueStrings(Array.isArray(value) ? value : [], maxItems);
 }
@@ -319,18 +311,12 @@ function mergeAiSearchProfile(aiProfile = {}, fallbackProfile = {}, markdown = "
 async function searchProfileFromOpenAi(markdown, fallbackProfile, env = {}, errors = []) {
   const apiKey = env.OPENAI_API_KEY;
   if (!apiKey) return { profile: fallbackProfile, ai: { used: false, reason: "missing-key" } };
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), OPENAI_REQUEST_TIMEOUT_MS);
   const model = env.OPENAI_JOBS_MODEL || env.OPENAI_MODEL || DEFAULT_OPENAI_JOBS_MODEL;
   try {
-    const response = await fetch(OPENAI_RESPONSES_URL, {
-      method: "POST",
-      headers: {
-        authorization: `Bearer ${apiKey}`,
-        "content-type": "application/json"
-      },
-      signal: controller.signal,
-      body: JSON.stringify({
+    const response = await fetchOpenAiResponses({
+      apiKey,
+      timeoutMs: OPENAI_REQUEST_TIMEOUT_MS,
+      body: {
         model,
         instructions: [
           "You analyze a Turnpo personal Markdown profile for job search.",
@@ -389,11 +375,11 @@ async function searchProfileFromOpenAi(markdown, fallbackProfile, env = {}, erro
             }
           }
         }
-      })
+      }
     });
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`.trim());
     const data = await response.json();
-    const text = extractOutputText(data);
+    const text = extractOpenAiOutputText(data);
     const aiProfile = JSON.parse(text);
     return {
       profile: mergeAiSearchProfile(aiProfile, fallbackProfile, markdown),
@@ -402,8 +388,6 @@ async function searchProfileFromOpenAi(markdown, fallbackProfile, env = {}, erro
   } catch (error) {
     errors.push(`OpenAI mini profile: ${error.message || "unavailable"}`);
     return { profile: fallbackProfile, ai: { used: false, reason: "fallback", model } };
-  } finally {
-    clearTimeout(timeoutId);
   }
 }
 

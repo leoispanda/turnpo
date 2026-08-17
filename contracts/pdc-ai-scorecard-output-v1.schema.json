@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://turnpo.internal/contracts/pdc-ai-scorecard-output-v1.schema.json",
+  "title": "PDC AI Contract v1 Scorecard Output",
+  "description": "Strict output schema owned by stock-pdc-local and supplied to Turnpo as response_schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scorecards"],
+  "properties": {
+    "scorecards": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ticker", "dimensions", "score", "confidence", "risk_flags", "decision"],
+        "properties": {
+          "ticker": { "type": "string", "minLength": 1, "maxLength": 32 },
+          "dimensions": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["market_regime", "trend", "livermore_breakout", "volume_price", "candlestick", "overheat", "risk", "zhuge_orion", "final_chair"],
+            "properties": {
+              "market_regime": { "type": "number", "minimum": 0, "maximum": 10 },
+              "trend": { "type": "number", "minimum": 0, "maximum": 10 },
+              "livermore_breakout": { "type": "number", "minimum": 0, "maximum": 10 },
+              "volume_price": { "type": "number", "minimum": 0, "maximum": 10 },
+              "candlestick": { "type": "number", "minimum": 0, "maximum": 10 },
+              "overheat": { "type": "number", "minimum": 0, "maximum": 10 },
+              "risk": { "type": "number", "minimum": 0, "maximum": 10 },
+              "zhuge_orion": { "type": "number", "minimum": 0, "maximum": 10 },
+              "final_chair": { "type": "number", "minimum": 0, "maximum": 10 }
+            }
+          },
+          "score": { "type": "number", "minimum": 0, "maximum": 10 },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "risk_flags": {
+            "type": "array",
+            "maxItems": 12,
+            "items": {
+              "type": "string",
+              "enum": ["MISSING_DATA", "DATA_STALE", "HIGH_VOLATILITY", "OVERHEATED", "WEAK_TREND", "LIQUIDITY_RISK", "MARKET_REGIME_RISK", "BREAKOUT_UNCONFIRMED", "MODEL_DISAGREEMENT"]
+            }
+          },
+          "decision": { "type": "string", "enum": ["BUY", "WATCH", "HOLD", "SELL"] }
+        }
+      }
+    }
+  }
+}
