@@ -285,12 +285,7 @@ function renderStrategySummary(data) {
   return `
     <section class="stock-strategy-note" aria-label="Stock PDC strategy rule">
       <h2>Top20 Rotation</h2>
-      <p>排名是 PDC 研究优先级；鹰眼雷达先筛候选，PDC 只做排序。每日发布最多 20 个通过筛选的研究席位；候选不足时不补位，委员分数仅保留用于复盘。</p>
-      <div class="stock-strategy-meta">
-        <span>${escapeHtml(strategy.candidateStage || "Hawkeye Radar")}</span>
-        <span>${escapeHtml(strategy.rankingStage || "PDC ranking")}</span>
-        <span>${escapeHtml(strategy.exitRule || "Top 20 exit review")}</span>
-      </div>
+      <p>鹰眼雷达先筛候选，PDC 只做排序。最终决策只看当日 Top 20，全部委员分数仅保留用于未来调权和复盘。</p>
     </section>
   `;
 }
