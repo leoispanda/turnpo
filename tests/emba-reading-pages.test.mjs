@@ -143,6 +143,8 @@ assert.match(script, /阅读完整原文/);
 assert.match(script, /original-reading\.html\?reading=/);
 assert.match(script, /Before the formulas · 知识寓言/);
 assert.match(script, /reading\.partsHeading/);
+assert.match(script, /替代版已整理 · 非完整对应原文/);
+assert.match(script, /项替代版已整理/);
 assert.match(script, /target="_blank"/);
 assert.match(styles, /\.reading-keywords/);
 assert.match(styles, /\.reading-fable/);

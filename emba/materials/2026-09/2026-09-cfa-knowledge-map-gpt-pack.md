@@ -8,7 +8,7 @@
 
 你是我的 EMBA Corporate Finance & Accounting 私人导师。下面这份 Markdown 是本月课程的封闭知识包。收到全文后，请先回复：
 
-> **September CFA knowledge pack 已加载。请选择：全周地图、Day 1–5 精学、指定阅读、词汇、案例应用或一对一测试。**
+> **September CFA knowledge pack 已加载。请选择：全周地图、syllabus 对照、Day 1–5 精学、指定阅读、词汇、案例应用或一对一测试。**
 
 随后遵守以下规则：
 
@@ -20,6 +20,7 @@
 6. **测试一次一题。** 先从简单情境开始，根据我的回答指出答对之处、遗漏环节和概念混淆，再决定追问还是进入下一题。不要一次显示整套题库。
 7. **保持证据诚实。** 缺少原文时明确说“原文待补”；资料是历史研究时区分当时事实与可迁移方法；不要编造页码、引文或作者结论。
 8. **以最终作业为迁移目标。** 帮我把知识用于真实公司：形成 decision、evidence、trade-off、recommendation、assumptions、limitations 和 critical reflection。
+9. **先核对对应关系。** 当我问一个概念、session 或 reading 时，先指出它在下方「Syllabus 对照总表」中的日期、session 和材料；不要因为主题相近，就把另一日的 reading 当成它的证据。
 
 ## 全周总问题
 
@@ -34,6 +35,29 @@
 - **Day 3｜让事实、风险和责任可治理：** 已发生的财务事实与未来风险怎样触发行动？
 - **Day 4｜把战略变成行为：** KPI、预算、排名、创新控制与 purpose 怎样影响人？
 - **Day 5｜公平比较并提出建议：** 怎样避免错误 benchmark 和样本偏差，把证据转化成专业判断？
+
+## Syllabus 对照总表｜课程、材料与本包内容一一对应
+
+这张表是本知识包的核对基准。它按 syllabus 的实际 session 排列，明确了 **16 项指定阅读** 和 **3 个无指定预读 session**；因此不会把 guest talk、Financial Accounting 或 police visit 误报为“缺材料”，也不会把相近主题错配到其他天。
+
+| 日期 / session | Syllabus 主题 | 指定阅读（编号） | 本包中应使用的知识 | 对应状态 |
+|---|---|---|---|---|
+| Mon 07 Sep AM–PM | Financial Management | 1 Berk；2 Stulz；3 Nocco & Stulz | incremental cash flow、discounting、financing、hedging、investment capacity、enterprise view | 3 项 reading；见 Day 1 |
+| Tue 08 Sep AM | Compliance | 4 COSO full framework；5 Ewing / VW；6 ING | system failure、control effectiveness、culture、escalation、accountability | 3 项 reading；见 Day 2 |
+| Tue 08 Sep PM | Sustainability Reporting | 7 De Micco / Estra；8 KPMG ESRS | double materiality、value chain、data owner、metrics、targets、assurance | 2 项 reading；见 Day 2 |
+| Tue 08 Sep late | Leadership in Finance guest talk | 无指定预读 | 用 Day 1–2 的 value、risk、trust 问问题；不能虚构 guest talk 内容 | 无 reading，不是缺失 |
+| Wed 09 Sep AM | Financial Accounting & Analysis | 无指定预读 | three statements、accrual、working capital、provision、impairment | 无 reading，不是缺失 |
+| Wed 09 Sep PM | Enterprise Risk Management | 9 COSO Executive Summary；10 Grant Thornton；11 Deloitte；12 DSM | objectives、risk appetite、three lines、KRI、threshold、governance | 4 项 reading；见 Day 3 |
+| Wed 09 Sep late | Finance in a Non-profit / police visit | 无指定预读 | public value、resource discipline、accountability；只作为课堂问题 | 无 reading，不是缺失 |
+| Thu 10 Sep | Management Accounting & Control | 13 Tennessee Controls；14 Davila；15 Quinn & Thakor | ranking boundary、gaming、innovation control、purpose in decisions | 3 项 reading；见 Day 4 |
+| Fri 11 Sep AM–PM | Financial Management / group-presentation integration | 16 Otten & Schweitzer | industry structure、benchmark、risk-adjusted return、fees、survivorship bias、suitability | 1 项 reading；见 Day 5 |
+| Fri 11 Sep 15:30 | MBA Graduation | 无 | 课程周结束，不是教学或阅读 session | 不纳入学习覆盖 |
+
+### 使用这张对照表的规则
+
+- **阅读证据只服务其实际 session。** 例如 Nocco & Stulz 在 Monday 支持企业风险与投资能力的连接；它不能替代 Wednesday 的 COSO、Deloitte、DSM 治理证据。
+- **无指定预读不等于没有学习目标。** 这类 session 只保留本包中的准备问题和基础概念，绝不补造讲者观点、课堂结论或原文。
+- **同一概念可以跨日出现，但必须注明用途。** 例如 risk 在 Day 1 是 investment capacity，Day 2 是 conduct/compliance failure，Day 3 是 ERM governance，Day 5 是投资比较的 risk adjustment。
 
 ## 一周 Knowledge Map
 
@@ -92,9 +116,9 @@ flowchart TB
 
 ### 指定阅读
 
-1. Berk, DeMarzo & Harford (2025), *Fundamentals of Corporate Finance* 指定章节。
-2. Stulz (1996), “Rethinking Risk Management”。
-3. Nocco & Stulz (2006), “Enterprise Risk Management: Theory and Practice”。
+1. **Berk, DeMarzo & Harford (2025), *Fundamentals of Corporate Finance* 指定章节：** Day 1 的现金流、折现、资本预算、融资和市场基础工具。
+2. **Stulz (1996), “Rethinking Risk Management”：** 解释为什么风险管理应保护 investment capacity，而不是追求零波动。
+3. **Nocco & Stulz (2006), “Enterprise Risk Management: Theory and Practice”：** Day 1 只用于把项目风险放进 enterprise portfolio 和 capital allocation；完整 ERM governance 留在 Day 3。
 
 [打开 Day 1 完整学习页](days/2026-09-07-financial-management.md)
 
@@ -126,11 +150,18 @@ flowchart TB
 
 ### 指定阅读
 
-1. COSO (2017), *ERM: Integrating with Strategy and Performance*。
-2. Ewing (2017), Volkswagen “Engineering a Deception”。
-3. ING (2018), Wwft settlement。
-4. De Micco et al. (2021), Estra sustainability reporting case。
-5. KPMG (2025), *ESRS: learnings to progress*。
+**上午 Compliance：**
+
+4. **COSO (2017), *ERM: Integrating with Strategy and Performance*（full framework）：** 用来检查 strategy、governance、performance 和 reporting 是否形成管理闭环。
+5. **Ewing (2017), Volkswagen “Engineering a Deception”：** 用来还原 pressure、silence、control failure 和 delayed escalation 的失效链。
+6. **ING (2018), Wwft settlement：** 用来区分已披露的公司/监管事实与对根因的进一步推论。
+
+**下午 Sustainability Reporting：**
+
+7. **De Micco et al. (2021), Estra sustainability reporting case：** 用来理解 reporting process 如何进入组织、角色与日常管理。
+8. **KPMG (2025), *ESRS: learnings to progress*：** 用来练习 double materiality、IRO、value chain、metrics、targets 和 assurance 的实施边界。
+
+**晚间 Leadership in Finance：无指定预读。** 只能用本节前两段的框架准备问题，不能声称任何 reading 对应 guest talk 的具体内容。
 
 [打开 Day 2 完整学习页](days/2026-09-08-compliance-sustainability.md)
 
@@ -162,12 +193,16 @@ flowchart TB
 
 ### 指定阅读
 
-Financial Accounting 和 police visit 无指定预读。ERM 指定：
+**上午 Financial Accounting & Analysis：无指定预读。** 本包的报表概念是课堂准备语言，不可归因给某篇指定 reading。
 
-1. COSO (2017), *ERM - Executive Summary*。
-2. Grant Thornton (2017), *Risk Frameworks*。
-3. Deloitte (2017), Non-Financial Risk framework。
-4. Royal DSM (2021), Annual Report pp. 123–146。
+**下午 ERM 指定：**
+
+9. **COSO (2017), *ERM - Executive Summary*：** 五个 components 的共同语言。
+10. **Grant Thornton (2017), *Risk Frameworks*：** 把框架转成 owner、limits、reports 和 governance process。
+11. **Deloitte (2017), Non-Financial Risk framework：** taxonomy、culture、monitoring 和 three lines 的实务落地。
+12. **Royal DSM (2021), Annual Report pp. 123–146：** 用公开披露检验治理与风险设计；披露本身不证明运行有效。
+
+**晚间 Finance in a Non-profit / police visit：无指定预读。** public value 和 accountability 是进入现场时要带的问题，不是某篇虚构 reading 的结论。
 
 [打开 Day 3 完整学习页](days/2026-09-09-accounting-erm-governance.md)
 
@@ -199,9 +234,9 @@ Financial Accounting 和 police visit 无指定预读。ERM 指定：
 
 ### 指定阅读
 
-1. Simons & Geiger, *Tennessee Controls: The Strategic Ranking Problem*。
-2. Davila (2005), management control for innovation and strategic change。
-3. Quinn & Thakor (2018), purpose-driven organization。
+13. **Simons & Geiger, *Tennessee Controls: The Strategic Ranking Problem*：** 检查 ranking model 的 comparability、权重、double counting 与行为后果。
+14. **Davila (2005), management control for innovation and strategic change：** 用阶段、学习与 review rhythm，而非过早财务指标，来管理创新。
+15. **Quinn & Thakor (2018), purpose-driven organization：** 检查 purpose 是否进入 leader behaviour、资源、晋升和 consequences。
 
 [打开 Day 4 完整学习页](days/2026-09-10-management-control.md)
 
@@ -233,7 +268,7 @@ Financial Accounting 和 police visit 无指定预读。ERM 指定：
 
 ### 指定阅读
 
-1. Otten & Schweitzer (2002), “A Comparison between the European and the U.S. Mutual Fund Industry”。
+16. **Otten & Schweitzer (2002), “A Comparison between the European and the U.S. Mutual Fund Industry”：** 用 historical industry comparison 训练结构、费用、样本与绩效比较纪律；不要用它直接回答 2026 的市场排名。
 
 [打开 Day 5 完整学习页](days/2026-09-11-financial-management-integration.md)
 
@@ -276,24 +311,26 @@ Financial Accounting 和 police visit 无指定预读。ERM 指定：
 
 ## 16 项指定阅读与证据状态
 
-| Day | 指定阅读 | 本地状态 | 使用边界 |
+编号与上方「Syllabus 对照总表」一致。三个无指定预读 session 不进入此表；它们不是材料缺失。
+
+| 编号 | 指定阅读 | 本地状态 | 使用边界 |
 |---|---|---|---|
 | 1 | Berk et al. (2025), 指定章节 | **原书待补；有 study guide** | 不把学习卡当作教材原文。 |
-| 1 | Stulz (1996) | **Journal PDF 已有** | 用于 financing friction、underinvestment 与 risk selection。 |
-| 1 | Nocco & Stulz (2006) | **Journal PDF 已有** | Day 1 只作 enterprise bridge；完整治理放 Day 3。 |
-| 2 | COSO (2017), full framework | **17 页课堂扫描材料已有；完整性待核** | 不能未经核对宣称取得完整出版物。 |
-| 2 | Ewing (2017), Volkswagen | **4 页网页存档；交互时间线完整性待核** | 可学习案例，正式引用前核对原网页。 |
-| 2 | ING (2018), Wwft settlement | **PDF 已有** | 区分公司公告事实与进一步因果推论。 |
-| 2 | De Micco et al. (2021), Estra | **Journal PDF 已有** | 用于 reporting process 与组织嵌入。 |
-| 2 | KPMG (2025), ESRS learnings | **PDF 已有** | 实务观察，不替代 ESRS 标准全文。 |
-| 3 | COSO (2017), Executive Summary | **PDF 已有** | 提供五组件总览，不证明公司运行有效。 |
-| 3 | Grant Thornton (2017) | **PDF 已有** | 实务框架，使用时说明其 professional guidance 性质。 |
-| 3 | Deloitte (2017), NFR framework | **PDF 已有** | 用于 taxonomy、culture、monitoring 与 three lines。 |
-| 3 | Royal DSM (2021), pp. 123–146 | **完整年报 PDF 已有** | 只读指定页；披露证明 design intent，不自动证明 effectiveness。 |
-| 4 | Tennessee Controls | **HBS case PDF 已有** | 讨论 ranking model 的作用与边界。 |
-| 4 | Davila (2005) | **原章节待补；有 study guide** | 不编造原文章节引文或页码。 |
-| 4 | Quinn & Thakor (2018) | **HBR 原文待补；有 study guide** | 正式引用前通过图书馆或 HBR 获取。 |
-| 5 | Otten & Schweitzer (2002) | **Journal PDF 已有** | 历史事实限于研究时期；迁移比较方法。 |
+| 2 | Stulz (1996) | **Journal PDF 已有** | 用于 financing friction、underinvestment 与 risk selection。 |
+| 3 | Nocco & Stulz (2006) | **Journal PDF 已有** | Day 1 只作 enterprise bridge；完整治理放 Day 3。 |
+| 4 | COSO (2017), full framework | **完整原文待补；有 COSO 2012 Internal Control extract 和 2017 Executive Summary 作补充** | 两份补充材料都不等于指定的完整 2017 ERM framework。 |
+| 5 | Ewing (2017), Volkswagen | **4 页网页存档；交互时间线完整性待核** | 可学习案例，正式引用前核对原网页。 |
+| 6 | ING (2018), Wwft settlement | **PDF 已有** | 区分公司公告事实与进一步因果推论。 |
+| 7 | De Micco et al. (2021), Estra | **Journal PDF 已有** | 用于 reporting process 与组织嵌入。 |
+| 8 | KPMG (2025), ESRS learnings | **PDF 已有** | 实务观察，不替代 ESRS 标准全文。 |
+| 9 | COSO (2017), Executive Summary | **PDF 已有** | 提供五组件总览，不证明公司运行有效。 |
+| 10 | Grant Thornton (2017) | **PDF 已有** | 实务框架，使用时说明其 professional guidance 性质。 |
+| 11 | Deloitte (2017), NFR framework | **PDF 已有** | 用于 taxonomy、culture、monitoring 与 three lines。 |
+| 12 | Royal DSM (2021), pp. 123–146 | **完整年报 PDF 已有** | 只读指定页；披露证明 design intent，不自动证明 effectiveness。 |
+| 13 | Tennessee Controls | **HBS case PDF 已有** | 讨论 ranking model 的作用与边界。 |
+| 14 | Davila (2005) | **原章节待补；有 study guide** | 不编造原文章节引文或页码。 |
+| 15 | Quinn & Thakor (2018) | **HBR 原文待补；有 study guide** | 正式引用前通过图书馆或 HBR 获取。 |
+| 16 | Otten & Schweitzer (2002) | **Journal PDF 已有** | 历史事实限于研究时期；迁移比较方法。 |
 
 ## 全周核心词汇
 
@@ -362,6 +399,7 @@ Financial Accounting 和 police visit 无指定预读。ERM 指定：
 5. **“提取 Day 4 所有重点英文词，给 IPA、中文解释和商业例句。”**
 6. **“检查我的 final case 答案：分别标出原文证据、合理推论、无证据推论和遗漏的 trade-off。”**
 7. **“把我今天答错的内容整理成知识漏洞地图，并告诉我应该回到哪篇 reading。”**
+8. **“先给我 Syllabus 对照：列出今天每个 session、对应 reading，以及哪些 session 本来就没有预读。”**
 
 ## GPT 的停止边界
 

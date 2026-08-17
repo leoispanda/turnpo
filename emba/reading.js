@@ -30,8 +30,7 @@ function originalReadingUrl(id = "") {
 function statusLabel(status = "", hasFullText = false) {
   if (hasFullText) return "完整原文已收录";
   if (status === "source-available") return "原文已收录";
-  if (status === "alternative-available") return "正式原文待补 · 替代资料可读";
-  return "正式原文待补 · 学习包";
+  return "替代版已整理 · 非完整对应原文";
 }
 
 function sourceLink(reading) {
@@ -61,7 +60,7 @@ function renderIndex(readings, fullReadings) {
         <span><strong>16</strong> 项指定阅读</span>
         <span><strong>${fullReadings.length}</strong> 项完整原文</span>
         <span><strong>${paragraphCount}</strong> 个原文阅读段</span>
-        <span><strong>${readings.length - fullReadings.length}</strong> 项待取得正文</span>
+        <span><strong>${readings.length - fullReadings.length}</strong> 项替代版已整理</span>
       </div>
     </header>
     <div class="reading-day-list">
@@ -124,7 +123,7 @@ function renderReading(reading, readings, fullIds) {
           <h1>${escapeHtml(reading.title)}</h1>
           <p class="reading-citation">${escapeHtml(reading.citation)}</p>
           <div class="reading-hero-actions">
-            ${fullIds.has(reading.id) ? `<a class="reading-original-link" href="${originalReadingUrl(reading.id)}" target="_blank" rel="noopener noreferrer">阅读完整原文 →</a>` : reading.excerpts?.length ? `<a class="reading-original-link" href="${originalReadingUrl(reading.id)}" target="_blank" rel="noopener noreferrer">阅读核心原文 →</a>` : `<span class="reading-original-unavailable">完整原文待补</span>`}
+            ${fullIds.has(reading.id) ? `<a class="reading-original-link" href="${originalReadingUrl(reading.id)}" target="_blank" rel="noopener noreferrer">阅读完整原文 →</a>` : reading.excerpts?.length ? `<a class="reading-original-link" href="${originalReadingUrl(reading.id)}" target="_blank" rel="noopener noreferrer">阅读核心原文 →</a>` : `<span class="reading-original-unavailable">${escapeHtml(statusLabel(reading.status))}</span>`}
             ${sourceLink(reading)}
           </div>
         </header>
