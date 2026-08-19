@@ -106,9 +106,12 @@ def inputs(blocked: dict[str, dict] | None = None) -> DailyInputs:
 class FakeSeats:
     """Both seats, answering every round; each failure mode is opt-in."""
 
-    def __init__(self, *, fail: set[str] | None = None, spread: bool = True) -> None:
+    def __init__(
+        self, *, fail: set[str] | None = None, spread: bool = True, revise: bool = False
+    ) -> None:
         self.fail = fail or set()
         self.spread = spread
+        self.revise = revise
         self.calls: list[dict] = []
 
     def __call__(self, member, workspace, prompt, schema, payload, timeout_seconds=0):
@@ -162,16 +165,29 @@ class FakeSeats:
                 ["fake"], 0, "", "",
             )
         if stage == review.REVIEW_STAGE_ID:
-            return RunnerOutcome(
-                True,
-                {
-                    "assessments": [
-                        {"ticker": ticker, "confidence": 0.8, "challenge": "c", "revisions": []}
-                        for ticker in tickers
-                    ]
-                },
-                ["fake"], 0, "", "",
-            )
+            assessments = []
+            for index, ticker in enumerate(tickers):
+                revisions = []
+                if self.revise and index == 0:
+                    # A comparison against the next finalist: the shape the first
+                    # real run produced and the old contract rejected.
+                    revisions = [{
+                        "dimension": "risk",
+                        "from_score": payload["comparisons"][0]["yourScores"]["risk"],
+                        "to_score": 9.5,
+                        "fact_refs": [
+                            {"ticker": ticker, "field": "atr_pct"},
+                            {"ticker": tickers[1], "field": "atr_pct"},
+                        ],
+                        "note": "peer comparison",
+                    }]
+                assessments.append({
+                    "ticker": ticker,
+                    "confidence": 0.8,
+                    "challenge": "c",
+                    "revisions": revisions,
+                })
+            return RunnerOutcome(True, {"assessments": assessments}, ["fake"], 0, "", "")
         raise AssertionError(stage)
 
 
@@ -251,6 +267,39 @@ class HappyPathTest(unittest.TestCase):
         self.assertEqual(record["runtimeMode"], "DAILY_TOP10")
         self.assertFalse(record["liveTrading"])
         self.assertTrue(record["researchOnly"])
+
+
+class ReviewRevisionTest(unittest.TestCase):
+    """The round-three path that the first real run never got to exercise."""
+
+    def setUp(self) -> None:
+        self.result, self.ledger, self._tmp = run(FakeSeats(revise=True))
+
+    def tearDown(self) -> None:
+        self._tmp.cleanup()
+
+    def test_a_cited_revision_survives_into_the_final_matrix(self) -> None:
+        target = self.result["target"]
+        after = json.loads((target / "d3-final-sol.json").read_text(encoding="utf-8"))
+        moved = [card for card in after if card["dimensions"]["risk"] == 9.5]
+        self.assertTrue(moved)
+
+    def test_a_cross_ticker_citation_is_kept_in_the_audit(self) -> None:
+        record = json.loads(
+            (self.result["target"] / "d3-review.json").read_text(encoding="utf-8")
+        )
+        revisions = [
+            revision
+            for member in record["memberResults"]
+            for item in member["assessments"]
+            for revision in item["revisions"]
+        ]
+        self.assertTrue(revisions)
+        self.assertTrue(any(revision["cross_ticker_refs"] for revision in revisions))
+
+    def test_the_review_round_still_produced_ten_seats(self) -> None:
+        self.assertEqual(len(self.result["rows"]), 10)
+        self.assertEqual(self.result["degradationStatus"], DEGRADATION_NONE)
 
 
 class DegradationTest(unittest.TestCase):

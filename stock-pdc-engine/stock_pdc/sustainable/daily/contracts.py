@@ -24,6 +24,7 @@ from ..contracts import (
     scorecard_schema,
     validate_scorecards,
 )
+from .facts import NUMERIC_FIELDS, fact_id
 
 
 DISCOVERY_SCHEMA_VERSION = "pdc-daily-discovery-v1"
@@ -98,8 +99,19 @@ def detail_schema(max_items: int) -> dict[str, Any]:
     return scorecard_schema(max_items)
 
 
-def review_schema(max_items: int) -> dict[str, Any]:
-    """Round 3 output: one assessment per finalist, revisions cite fact ids."""
+def review_schema(tickers: tuple[str, ...], max_items: int) -> dict[str, Any]:
+    """Round 3 output: one assessment per finalist, revisions cite frozen facts.
+
+    A citation is a ticker and a field, each drawn from an enumeration, not a
+    dotted string the seat has to spell. The first real run showed why: one seat
+    wrote `600968.SZ.pivot55` for `600968.SH` and lost twenty-five otherwise
+    valid revisions to a single mistyped exchange suffix. Enumerated, that
+    mistake cannot be expressed.
+
+    The ticker enum is the whole finalist set, not the revision's own ticker,
+    because the round's job is comparing twenty candidates: "its ATR is double
+    the one ranked above it" is evidence, and both numbers are in the packet.
+    """
     return {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
@@ -134,21 +146,31 @@ def review_schema(max_items: int) -> dict[str, Any]:
                                     "dimension",
                                     "from_score",
                                     "to_score",
-                                    "fact_ids",
+                                    "fact_refs",
                                     "note",
                                 ],
                                 "properties": {
                                     "dimension": {"type": "string", "enum": list(DIMENSIONS)},
                                     "from_score": {"type": "number", "minimum": 0, "maximum": 10},
                                     "to_score": {"type": "number", "minimum": 0, "maximum": 10},
-                                    "fact_ids": {
+                                    "fact_refs": {
                                         "type": "array",
                                         "minItems": 1,
                                         "maxItems": MAX_FACT_IDS,
                                         "items": {
-                                            "type": "string",
-                                            "minLength": 1,
-                                            "maxLength": 64,
+                                            "type": "object",
+                                            "additionalProperties": False,
+                                            "required": ["ticker", "field"],
+                                            "properties": {
+                                                "ticker": {
+                                                    "type": "string",
+                                                    "enum": list(tickers),
+                                                },
+                                                "field": {
+                                                    "type": "string",
+                                                    "enum": list(NUMERIC_FIELDS),
+                                                },
+                                            },
                                         },
                                     },
                                     "note": {"type": "string", "maxLength": MAX_REVISION_NOTE},
@@ -267,19 +289,81 @@ def validate_scorecard_subset(
     return validate_scorecards(value, tuple(returned))
 
 
+def resolve_fact_refs(
+    item: dict[str, Any],
+    own_ticker: str,
+    fact_index: dict[str, set[str]],
+    label: str,
+) -> list[tuple[str, str]]:
+    """Return the ``(ticker, field)`` pairs one revision cites, or raise.
+
+    The schema asks for objects, but a CLI whose structured-output support is
+    weaker may still emit the older dotted strings, so those are parsed too. The
+    shape is forgiving; the meaning is not. Every citation must resolve to a
+    field that actually has a value on a candidate in this round's frozen facts,
+    so a fabricated reference is rejected either way.
+    """
+    refs = item.get("fact_refs")
+    parsed: list[tuple[str, str]] = []
+    if isinstance(refs, list) and refs:
+        for ref in refs:
+            if not isinstance(ref, dict):
+                raise ContractError(f"{label} 的 fact_refs 每一项必须是对象")
+            parsed.append((
+                str(ref.get("ticker") or "").strip().upper(),
+                str(ref.get("field") or "").strip(),
+            ))
+    else:
+        legacy = item.get("fact_ids")
+        if not isinstance(legacy, list) or not legacy:
+            raise ContractError(f"{label} 的修改缺少 fact_refs")
+        for ref in legacy:
+            token = str(ref).strip()
+            if not token:
+                continue
+            # `600968.SH.pivot55` splits into candidate and field; a bare field
+            # name is read as this revision's own candidate.
+            candidate, separator, field = token.rpartition(".")
+            parsed.append(((candidate or own_ticker).upper(), field if separator else token))
+
+    if not parsed:
+        raise ContractError(f"{label} 的修改缺少 fact_refs")
+
+    unknown: list[str] = []
+    resolved: list[tuple[str, str]] = []
+    for candidate, field in parsed:
+        if field not in fact_index.get(candidate, set()):
+            unknown.append(f"{candidate}.{field}")
+            continue
+        if (candidate, field) not in resolved:
+            resolved.append((candidate, field))
+    if unknown:
+        raise ContractError(
+            f"{label} 引用了本轮冻结事实中不存在的依据：{', '.join(unknown)}"
+        )
+    return resolved[:MAX_FACT_IDS]
+
+
 def validate_assessments(
     value: object,
     expected_tickers: tuple[str, ...],
     own_cards: dict[str, dict[str, Any]],
-    fact_ids: dict[str, set[str]],
+    fact_index: dict[str, set[str]],
 ) -> list[dict[str, Any]]:
     """Return one seat's normalized final review, or raise.
 
     Three rules do the work. Coverage is exact, so a seat cannot quietly drop the
     finalists it has nothing to say about. ``from_score`` must match what that
     seat actually submitted in the detail round, so history cannot be restated.
-    And every revision must cite fact ids that exist for that ticker, so the
-    final round moves scores on evidence rather than on a second impression.
+    And every revision must cite facts that exist in this round's frozen table,
+    so the final round moves scores on evidence rather than on a second
+    impression.
+
+    A citation may name any finalist, not only the revision's own. The first real
+    run showed a seat arguing "this candidate's ATR against the one ranked above
+    it" — a comparison is exactly the kind of reasoning a cross-sectional round
+    should produce, and both numbers were already in the packet it was handed.
+    Cross-ticker citations are recorded rather than forbidden.
     """
     if not isinstance(value, dict):
         raise ContractError("输出必须是 JSON 对象")
@@ -308,7 +392,6 @@ def validate_assessments(
         card = own_cards.get(ticker)
         if card is None:
             raise ContractError(f"{ticker} 没有本席位的第二轮打分，无法校验修改")
-        known_ids = fact_ids.get(ticker, set())
 
         revisions: list[dict[str, Any]] = []
         seen_dimensions: set[str] = set()
@@ -331,21 +414,23 @@ def validate_assessments(
                 # A revision that changes nothing is not a revision; saying so
                 # belongs in `challenge`.
                 raise ContractError(f"{ticker}/{dimension} 的修改前后分数相同")
-            refs = item.get("fact_ids")
-            if not isinstance(refs, list) or not refs:
-                raise ContractError(f"{ticker}/{dimension} 的修改缺少 fact_ids")
-            cited = [str(ref).strip() for ref in refs if str(ref).strip()]
-            unknown = [ref for ref in cited if ref not in known_ids]
-            if not cited or unknown:
-                raise ContractError(
-                    f"{ticker}/{dimension} 引用了不存在的 fact_id：{', '.join(unknown) or '空'}"
-                )
+            resolved = resolve_fact_refs(item, ticker, fact_index, f"{ticker}/{dimension}")
             seen_dimensions.add(dimension)
             revisions.append({
                 "dimension": dimension,
                 "from_score": from_score,
                 "to_score": to_score,
-                "fact_ids": cited[:MAX_FACT_IDS],
+                "fact_refs": [
+                    {"ticker": candidate, "field": field} for candidate, field in resolved
+                ],
+                # The fully qualified form is kept for the audit trail, so a
+                # revision can be traced to the exact frozen value it cited.
+                "fact_ids": [fact_id(candidate, field) for candidate, field in resolved],
+                "cross_ticker_refs": [
+                    fact_id(candidate, field)
+                    for candidate, field in resolved
+                    if candidate != ticker
+                ],
                 "note": str(item.get("note") or "")[:MAX_REVISION_NOTE],
             })
 
@@ -373,6 +458,7 @@ __all__ = [
     "ContractError",
     "detail_schema",
     "discovery_schema",
+    "resolve_fact_refs",
     "review_schema",
     "validate_assessments",
     "validate_picks",

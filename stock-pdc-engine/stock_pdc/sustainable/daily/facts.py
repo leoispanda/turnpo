@@ -263,21 +263,23 @@ def render_table(table: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def render_record(record: dict[str, Any]) -> str:
+    """One candidate's measurements and signals, as a seat reads them."""
+    values = record["values"]
+    numbers = " ".join(
+        f"{FIELD_HEADERS[name]}={_cell(values.get(name))}"
+        for name in NUMERIC_FIELDS
+        if values.get(name) is not None
+    )
+    block = f"{record['ticker']} [{record['latestDate']}] {numbers}"
+    for name, text in sorted(record["signals"].items()):
+        block += f"\n  {name}: {text}"
+    return block
+
+
 def render_detail(table: dict[str, Any]) -> str:
     """The fuller per-candidate view used from the detail round onwards."""
-    blocks: list[str] = []
-    for record in table["records"]:
-        values = record["values"]
-        numbers = " ".join(
-            f"{FIELD_HEADERS[name]}={_cell(values.get(name))}"
-            for name in NUMERIC_FIELDS
-            if values.get(name) is not None
-        )
-        block = f"{record['ticker']} [{record['latestDate']}] {numbers}"
-        for name, text in sorted(record["signals"].items()):
-            block += f"\n  {name}: {text}"
-        blocks.append(block)
-    return "\n".join(blocks)
+    return "\n".join(render_record(record) for record in table["records"])
 
 
 def render_fact_ids(table: dict[str, Any]) -> str:
@@ -289,3 +291,18 @@ def render_fact_ids(table: dict[str, Any]) -> str:
 
 def all_fact_ids(table: dict[str, Any]) -> dict[str, set[str]]:
     return {record["ticker"]: set(fact_ids(record)) for record in table["records"]}
+
+
+def available_fields(record: dict[str, Any]) -> tuple[str, ...]:
+    """The field names this candidate actually has a value for."""
+    return tuple(name for name in NUMERIC_FIELDS if record["values"].get(name) is not None)
+
+
+def fields_by_ticker(table: dict[str, Any]) -> dict[str, set[str]]:
+    """The citable field names per candidate.
+
+    A citation names a ticker and a field separately rather than a single
+    dotted string. Both are enumerated in the schema, which is what makes a
+    mistyped exchange suffix impossible instead of merely rejected.
+    """
+    return {record["ticker"]: set(available_fields(record)) for record in table["records"]}

@@ -47,14 +47,28 @@ def build_payload(
             continue
         peer_by_ticker[card["ticker"]] = card
 
+    records = facts_module.records_by_ticker(table)
     items: list[dict[str, Any]] = []
     for ticker in table["tickers"]:
         mine = own_cards.get(ticker)
         peer = peer_by_ticker.get(ticker)
         if mine is None or peer is None:
             continue
+        record = records[ticker]
         items.append({
             "ticker": ticker,
+            # Facts sit beside the scores they explain. Held apart in separate
+            # sections, a seat has to cross-reference twenty blocks by hand,
+            # and the first real run showed exactly the slips that invites.
+            "facts": facts_module.render_record(record),
+            # Only the exceptions are listed. Repeating the same seventeen field
+            # names under twenty candidates cost 4.5k characters and told the
+            # seat nothing it could not read once.
+            "unavailableFields": [
+                name
+                for name in facts_module.NUMERIC_FIELDS
+                if name not in facts_module.available_fields(record)
+            ],
             "yourScores": {name: mine["dimensions"][name] for name in DIMENSIONS},
             "yourDecision": mine["decision"],
             "yourNote": mine["note"],
@@ -78,8 +92,6 @@ def build_payload(
         "parentFactsHash": table.get("parentFactsHash", table["factsHash"]),
         "candidateCount": len(items),
         "tickers": [item["ticker"] for item in items],
-        "facts": facts_module.render_detail(table),
-        "factIds": facts_module.render_fact_ids(table),
         "comparisons": items,
     }
 
@@ -92,25 +104,22 @@ def prompt_for(payload: dict[str, Any]) -> str:
     )
     return f"""You scored these {payload['candidateCount']} stocks earlier. They are the finalists. An independent reviewer scored the same stocks from the same facts; their scores appear beside yours under an opaque label.
 
-Re-read the original frozen facts below and, for each finalist, return one assessment: a `confidence` between 0 and 1 in your own scores, a short `challenge` stating the strongest objection you have to the current picture, and a `revisions` array.
+Each block below carries one candidate: its frozen facts, your scores, and the reviewer's. For each finalist return one assessment: a `confidence` between 0 and 1 in your own scores, a short `challenge` stating the strongest objection you have to the current picture, and a `revisions` array.
 
 Rules for `revisions`:
 - Include an entry only for a dimension you are actually changing. Standing by all of your scores is a complete and expected answer: return an empty array.
 - `from_score` must equal the score you submitted; you cannot restate history.
-- Every revision must carry `fact_ids` drawn from the list of available fact ids below. An id that is not in that list will be rejected and your whole answer discarded.
+- Every revision must carry `fact_refs`, each naming a `ticker` and a `field`. Copy the ticker exactly as it appears in the block. Every field in the column list below is citable for a candidate unless that block's `unavailableFields` says otherwise.
+- A `fact_ref` may name **any** finalist, not only the one you are revising. If your reason is a comparison — this candidate's volatility against another's — cite both, each under its own ticker.
 - Do not split the difference. Moving toward the other number because it is different is not a reason.
 - Do not defer to the reviewer. You have no information about who or what produced those scores, and none is available.
 - Do not introduce facts that are not in this message, and do not produce a fresh set of scores; only cited changes to individual dimensions are accepted.
 
 Do not browse, do not use tools, do not read any file. These are research labels only; nothing here places an order.
 
-Available fact ids:
-{payload['factIds']}
+Column meanings: {facts_module.FIELD_MEANINGS}.
 
-Frozen facts:
-{payload['facts']}
-
-Your scores and the reviewer's scores:
+Candidates:
 {comparisons}"""
 
 
@@ -119,7 +128,7 @@ def review_one(
     workspace: Path,
     payload: dict[str, Any],
     own_cards: dict[str, dict[str, Any]],
-    fact_ids: dict[str, set[str]],
+    fact_index: dict[str, set[str]],
     ledger: QuotaLedger,
     timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
     invoker: Invoker = default_invoke,
@@ -140,7 +149,7 @@ def review_one(
             member,
             workspace,
             prompt_for(payload),
-            review_schema(max(payload["candidateCount"], 1)),
+            review_schema(tuple(payload["tickers"]), max(payload["candidateCount"], 1)),
             payload,
             timeout_seconds=timeout_seconds,
             invoker=invoker,
@@ -154,7 +163,7 @@ def review_one(
         return record
     try:
         record["assessments"] = validate_assessments(
-            outcome.output, tuple(payload["tickers"]), own_cards, fact_ids
+            outcome.output, tuple(payload["tickers"]), own_cards, fact_index
         )
     except ContractError as exc:
         record["failureReason"] = f"契约校验失败：{exc}"
@@ -206,7 +215,7 @@ def run_review(
     packet, seal = build_peer_packet(run_id, REVIEW_STAGE_ID, narrowed)
     assert_packet_is_blind(packet, tuple(narrowed))
     label_by_member = seal["labelByMember"]
-    fact_ids = facts_module.all_fact_ids(table)
+    fact_index = facts_module.fields_by_ticker(table)
     own = {
         member_id: {card["ticker"]: card for card in cards}
         for member_id, cards in narrowed.items()
@@ -226,7 +235,7 @@ def run_review(
             workspace_root / member.member_id,
             payload,
             own[member.member_id],
-            fact_ids,
+            fact_index,
             ledger,
             timeout_seconds,
             invoker,
