@@ -3,6 +3,7 @@ __pycache__/
 .DS_Store
 data_a_share/
 data_a_share_latest_runs/
+logs/
 data_a_share_latest_*/
 outputs_a_share/
 outputs_a_share_latest_runs/
