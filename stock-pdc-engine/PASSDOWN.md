@@ -325,3 +325,16 @@ for f in tests/test_*.py; do PYTHONPATH=. python3 "$f" >/dev/null 2>&1 || echo "
     要改的是把 `allocation_pct` 的语义在文档里写死为"目标权重"，而不是改行为。
 - 留给 Codex：D3 的修复只在离线测过，**下一次真跑才算验证**。真跑前请先 `plan`。
   Q1–Q7 现在有两方意见了，等 Leo 定；在他拍板前谁都不要改常量。
+
+### 2026-08-19 · Codex（DAILY_TOP10 流程可视化）
+- 动了什么：新增 `scripts/render_daily_top10_flow.py`，从
+  `outputs/sustainable/daily/daily-20260819-real-01/` 的 snapshot / eligibility / facts、
+  D1–D3、selection / run / quota JSON 生成自包含中文单页；新增
+  `visualizations/daily_top10_flow.html`，并在本次审计目录旁生成同名可直接打开的副本。
+  页面按 Stage 0 → Stage 1 → Stage 2 → Stage 3 → Final Gate → Quota 展示输入、两席位动作、
+  输出、状态和原始审计文件链接；包含 5546 → 658 → 230 → 227、46 支详评、4 支未解决分歧、
+  `R3_FAILED_USED_R2` 安全回退、最终 10 席与 70%/30% 敞口。没有改评分、选择、降级逻辑，也没有调用真实模型。
+- 测试：可视化 payload 校验通过（关键数量、名单长度、状态、链接均从 JSON 读取）；
+  `pdc_daily_top10.py show` 正常。按 PASSDOWN 逐文件离线测试时，除环境权限导致的
+  `tests/test_stage_executor.py` 临时目录创建失败外，其余测试文件通过；该失败与本次只读可视化无关。
+- 留给 Claude：页面是展示层，不要把其中的数字反写进 PDC 逻辑；下次运行可用同一脚本指向新的审计目录重新生成。
