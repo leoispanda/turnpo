@@ -575,6 +575,16 @@ td small {
   font-weight: 760;
 }
 
+.stock-date-head-daily {
+  border: 1px solid rgba(34, 87, 122, 0.34);
+  background: linear-gradient(180deg, rgba(232, 243, 249, 0.98), rgba(255, 255, 255, 0.9));
+  color: #22577a;
+}
+
+.stock-date-head-daily small {
+  color: #22577a;
+}
+
 .stock-rank-cell {
   display: grid;
   grid-template-columns: minmax(70px, 1fr) minmax(44px, auto) minmax(36px, auto);
@@ -601,6 +611,40 @@ td small {
 .stock-rank-cell.stock-price-neutral {
   border-color: rgba(34, 87, 122, 0.28);
   background: rgba(34, 87, 122, 0.09);
+}
+
+.stock-rank-cell.stock-daily-top10-cell {
+  grid-template-columns: minmax(82px, 1fr) minmax(48px, auto) auto;
+  border-color: rgba(34, 87, 122, 0.38);
+  background: linear-gradient(145deg, rgba(232, 243, 249, 0.95), rgba(255, 255, 255, 0.92));
+}
+
+.stock-name small.stock-daily-sector {
+  color: #22577a !important;
+  font-weight: 760;
+}
+
+.stock-daily-top10-score,
+.stock-daily-top10-action {
+  display: block;
+  color: #22577a;
+  font-size: 10px;
+  font-weight: 850;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.stock-daily-top10-action {
+  border-radius: 999px;
+  background: rgba(20, 113, 67, 0.1);
+  color: #147143;
+  padding: 4px 5px;
+  text-align: center;
+}
+
+.stock-strategy-note-daily {
+  border-color: rgba(34, 87, 122, 0.28);
+  background: linear-gradient(135deg, rgba(232, 243, 249, 0.95), rgba(255, 255, 255, 0.9));
 }
 
 .stock-rank-cell-empty {
@@ -676,6 +720,22 @@ td small {
 .stock-data-quality-partial {
   border-color: rgba(161, 98, 7, 0.22);
   background: #fff8e8;
+}
+
+.stock-data-quality-daily {
+  border-color: rgba(34, 87, 122, 0.28);
+  background: rgba(232, 243, 249, 0.9);
+}
+
+.stock-data-quality-daily a {
+  color: #22577a;
+  font-weight: 780;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.stock-data-quality-daily a:hover {
+  text-decoration: underline;
 }
 
 .stock-published-decisions {

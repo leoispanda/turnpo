@@ -345,3 +345,15 @@ for f in tests/test_*.py; do PYTHONPATH=. python3 "$f" >/dev/null 2>&1 || echo "
   每张 Stage 卡片增加明显的“点击展开”提示，并支持从总览卡片直接跳到对应详情。没有改 PDC 逻辑、评分、选择或降级，也没有调用模型。
 - 测试：用户已在本地页面确认可以看到细节；页面仍从本次审计 JSON 生成，关键数据 payload 校验保持通过。
 - 留给 Claude：后续刷新页面时沿用同一脚本即可保留总览和展开交互。
+
+### 2026-08-19 · Codex（Turnpo DAILY_TOP10 时间流接入）
+- 动了什么：新增 `stock-pdc-engine/scripts/export_daily_top10_turnpo.py`，从真实审计目录的
+  `selection.json` / `run.json` / `snapshot.json` / `eligibility.json` 生成
+  `stock-pdc/daily-top10.json`；Turnpo `/stock-pdc/` 现在把该记录合并为最新时间流列，保留旧
+  Top20 历史，并在每格显示共识分、行业、目标仓位、风险、过热、止损与分歧摘要。页面明确标注
+  `DAILY_TOP10` 为研究清单，不进入验证 Run、不连接券商、不自动下单。
+- 测试：10 席数据校验通过（Run `daily-20260819-real-01`、投资 70%、现金 30%）；JSON 校验、
+  导出脚本 AST 解析、浏览器 JS `--check`、`git diff --check` 通过；Node 运行时模拟加载
+  `rank-flow.json` + `daily-top10.json`，确认 DAILY_TOP10、江苏银行、共识分和旧 Top20 均渲染。
+- 留给 Claude：后续每日真实运行后，用 `python3 scripts/export_daily_top10_turnpo.py
+  --audit-dir <新审计目录>` 刷新 Turnpo 数据文件；不要把这条研究清单接到 Decision Run 发布 API。
