@@ -47,6 +47,7 @@ DEFAULT_SCORES_CSV = "outputs/full_pdc_scores.csv"
 DEFAULT_UNIVERSE_CSV = "outputs_a_share/a_share_universe.csv"
 DEFAULT_BARS_ROOT = "data_a_share_latest_runs"
 DEFAULT_OUTPUTS_DIR = "outputs"
+DEFAULT_SECTOR_MAP = "configs/a_share_industry_sina_sw1.json"
 
 
 def _project_path(value: str | Path) -> Path:
@@ -259,7 +260,11 @@ def _add_common(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--disagreement-limit", type=float, default=DEFAULT_TOTAL_DISAGREEMENT_LIMIT)
     parser.add_argument("--challenge-threshold", type=float, default=2.0)
     parser.add_argument("--posture", default="", help="个人风险姿态：全局敞口调节，不影响排序")
-    parser.add_argument("--sector-map", default=None, help="可选 {ticker: 行业} JSON，用于行业集中度")
+    parser.add_argument(
+        "--sector-map",
+        default=DEFAULT_SECTOR_MAP,
+        help=f"{{ticker: 行业}} JSON（默认 {DEFAULT_SECTOR_MAP}）",
+    )
     parser.add_argument("--timeout", type=int, default=900)
     parser.add_argument("--max-calls", type=int, default=MAX_CALLS_PER_MEMBER)
     parser.add_argument("--skip-review", action="store_true", help="跳过第三轮，直接用第二轮共识")

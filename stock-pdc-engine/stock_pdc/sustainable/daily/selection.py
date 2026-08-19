@@ -210,6 +210,10 @@ def select(
         if gate["rank"] > config.seats + config.turnover_buffer:
             dropped.append({"ticker": ticker, "reason": "OUTSIDE_BUFFER"})
             continue
+        if not sector_has_room(ticker):
+            gate["softReasons"].append(GATE_SECTOR_CAP)
+            dropped.append({"ticker": ticker, "reason": GATE_SECTOR_CAP})
+            continue
         seat(ticker, ACTION_HOLD if gate["entryEligible"] else ACTION_PAUSE, gate)
 
     # Then new entries, strictly from the top of the ranking.
@@ -287,6 +291,7 @@ def carry_forward(
     previous: dict[str, int],
     blocked: dict[str, list[str]],
     config: SelectionConfig = SelectionConfig(),
+    available: set[str] | None = None,
 ) -> dict[str, Any]:
     """Yesterday's seats, re-checked, when today cannot produce a new opinion.
 
@@ -301,6 +306,12 @@ def carry_forward(
             break
         if ticker in blocked:
             dropped.append({"ticker": ticker, "reason": ",".join(blocked[ticker])})
+            continue
+        if available is not None and ticker not in available:
+            # A name absent from today's frozen fact table cannot honestly be
+            # described as "re-checked".  In a degraded run it becomes cash
+            # instead of surviving indefinitely on yesterday's opinion.
+            dropped.append({"ticker": ticker, "reason": "NOT_IN_TODAY_INPUT"})
             continue
         seats.append({
             "rank": len(seats) + 1,
@@ -353,13 +364,11 @@ def allocate(
 ) -> dict[str, Any]:
     """Equal seats, scaled by the global exposure dial; the rest is cash."""
     share = round(100.0 / max(selection["seatCount"], 1), 4)
-    total = 0.0
     for seat in selection["seats"]:
         if seat["action"] == ACTION_CASH:
             seat["allocation_pct"] = round(share, 2)
         else:
             seat["allocation_pct"] = round(share * factor, 2)
-        total += seat["allocation_pct"]
     selection["exposureFactor"] = factor
     selection["investedPct"] = round(
         sum(
@@ -369,5 +378,8 @@ def allocate(
         ),
         2,
     )
-    selection["cashReservePct"] = round(100.0 - total, 2)
+    # Cash seats are already explicit allocations.  The reserve is therefore
+    # all capital not invested in non-cash seats: cash seats plus the unscaled
+    # part of active seats when the global exposure factor is below one.
+    selection["cashReservePct"] = round(100.0 - selection["investedPct"], 2)
     return selection

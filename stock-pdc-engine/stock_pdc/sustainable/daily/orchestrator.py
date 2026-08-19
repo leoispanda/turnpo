@@ -308,7 +308,12 @@ def run_daily(
         allow_new_buys = final_ranking is not None
         if final_ranking is None:
             # No two-seat opinion today: carry yesterday forward, re-checked.
-            selected = selection_module.carry_forward(previous, blocked, config.selection)
+            selected = selection_module.carry_forward(
+                previous,
+                blocked,
+                config.selection,
+                available=set(records_by_ticker),
+            )
             notes: dict[str, dict[str, Any]] = {}
         else:
             selected = selection_module.select(

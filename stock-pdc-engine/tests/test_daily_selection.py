@@ -154,6 +154,19 @@ class SectorCapTest(unittest.TestCase):
         blocked = [gate for gate in result["gates"] if GATE_SECTOR_CAP in gate["softReasons"]]
         self.assertTrue(blocked)
 
+    def test_held_names_cannot_bypass_the_sector_cap(self) -> None:
+        sectors = {f"T{index + 1:02d}": "银行" for index in range(20)}
+        previous = {f"T{index + 1:02d}": index + 1 for index in range(5)}
+        result = select(
+            ranking(), records(), {}, previous,
+            SelectionConfig(max_per_sector=2, sectors=sectors),
+        )
+        non_cash = [seat for seat in result["seats"] if seat["action"] != ACTION_CASH]
+        self.assertEqual(len(non_cash), 2)
+        self.assertTrue(
+            any(item["reason"] == GATE_SECTOR_CAP for item in result["droppedHoldings"])
+        )
+
 
 class ExposureTest(unittest.TestCase):
     def test_a_neutral_market_deploys_the_whole_book(self) -> None:
@@ -188,6 +201,7 @@ class ExposureTest(unittest.TestCase):
         cash = [seat for seat in result["seats"] if seat["action"] == ACTION_CASH]
         self.assertEqual(cash[0]["allocation_pct"], 10.0)
         self.assertEqual(result["investedPct"], 10.0)
+        self.assertEqual(result["cashReservePct"], 90.0)
 
 
 class CarryForwardTest(unittest.TestCase):
@@ -208,6 +222,14 @@ class CarryForwardTest(unittest.TestCase):
     def test_with_no_history_the_whole_book_is_cash(self) -> None:
         result = carry_forward({}, {})
         self.assertEqual(result["cashSeats"], 10)
+
+    def test_a_holding_missing_from_todays_inputs_becomes_cash(self) -> None:
+        result = carry_forward({"T01": 1, "T02": 2}, {}, available={"T02"})
+        self.assertNotIn("T01", [seat["ticker"] for seat in result["seats"]])
+        self.assertIn(
+            {"ticker": "T01", "reason": "NOT_IN_TODAY_INPUT"},
+            result["droppedHoldings"],
+        )
 
 
 if __name__ == "__main__":

@@ -159,9 +159,31 @@ def guarded_invoke(
         )
     attempt = ledger.calls_in_round(member.member_id, round_id) + 1
     started = time.monotonic()
-    outcome = invoker(
-        member, workspace, prompt, schema, payload, timeout_seconds=timeout_seconds
-    )
+    try:
+        outcome = invoker(
+            member, workspace, prompt, schema, payload, timeout_seconds=timeout_seconds
+        )
+    except BaseException as exc:
+        # A CLI may already have consumed quota before an unexpected local
+        # exception reaches us.  Record that attempt before either degrading
+        # (ordinary Exception) or respecting process-level interruption.
+        elapsed = time.monotonic() - started
+        error = f"{type(exc).__name__}: {exc}"
+        ledger.record(
+            CallRecord(
+                round_id=round_id,
+                member_id=member.member_id,
+                attempt=attempt,
+                ok=False,
+                prompt_chars=len(prompt),
+                output_chars=0,
+                seconds=round(elapsed, 3),
+                error=error,
+            )
+        )
+        if not isinstance(exc, Exception):
+            raise
+        return RunnerOutcome(False, None, [], None, error, "")
     elapsed = time.monotonic() - started
     ledger.record(
         CallRecord(

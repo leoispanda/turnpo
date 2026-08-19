@@ -44,18 +44,18 @@
 | DAILY_TOP10 硬资格 `daily/eligibility.py` | 完成 | 14 | Claude 08-19 |
 | DAILY_TOP10 冻结事实 `daily/facts.py` `daily/sources.py` | 完成 | 14 | Claude 08-19 |
 | DAILY_TOP10 三轮契约 `daily/contracts.py` | 完成 | 23 | Claude 08-19 |
-| DAILY_TOP10 三轮执行 `daily/{discovery,detail,review}.py` | 完成 | 20 | Claude 08-19 |
+| DAILY_TOP10 三轮执行 `daily/{discovery,detail,review}.py` | 完成 | 21 | Codex 08-19 |
 | DAILY_TOP10 共识与分歧 `daily/consensus.py` | 完成 | 15 | Claude 08-19 |
-| DAILY_TOP10 最终门槛 `daily/selection.py` | 完成 | 25 | Claude 08-19 |
+| DAILY_TOP10 最终门槛 `daily/selection.py` | 完成 | 27 | Codex 08-19 |
 | DAILY_TOP10 产物 `daily/report.py` | 完成 | 14 | Claude 08-19 |
 | DAILY_TOP10 额度账本 `daily/quota.py` | 完成 | （含在上面） | Claude 08-19 |
 | DAILY_TOP10 编排与降级 `daily/orchestrator.py` | 完成 | 19 | Claude 08-19 |
 | CLI `scripts/pdc_daily_top10.py` | 完成（`plan`/`run`/`show`） | 手测 | Claude 08-19 |
 | **真实模型端到端验收** | **未做** | — | — |
-| 行业映射（行业集中度所需） | **缺失，规则空转** | — | — |
+| 行业映射（行业集中度所需） | 新浪申万一级，5546/5546 全 A 覆盖，默认启用 | 4 | Codex 08-19 |
 | 定时调度 | 未做（Codex 负责） | — | — |
 
-离线测试总数：**302 个，全部通过**（其中 DAILY_TOP10 新增 144 个）。
+离线测试总数：**309 个，全部通过**（其中 DAILY_TOP10 新增 151 个）。
 全部用假席位驱动，**至今没有跑过一次真实模型的 DAILY_TOP10**。
 
 ---
@@ -98,7 +98,6 @@
 
 | 认领人 | 文件 / 范围 | 开始时间 | 说明 |
 | --- | --- | --- | --- |
-| （空） | | | |
 
 ---
 
@@ -159,6 +158,9 @@ python3 scripts/fetch_a_share_sina.py \
   --data-dir "data_a_share_latest_runs/run_$(date +%Y%m%d_%H%M%S)" \
   --universe-csv outputs_a_share/a_share_universe.csv --bars 360
 
+# 刷新全 A 股申万一级行业映射（不调用模型）
+python3 scripts/fetch_a_share_industry_sina.py
+
 # Hawkeye + 九成员（既有脚本，冻结）
 python3 scripts/run_latest_pdc.py --skip-fetch --run-dir <上一步目录> --top 20
 
@@ -208,3 +210,46 @@ for f in tests/test_*.py; do PYTHONPATH=. python3 "$f" >/dev/null 2>&1 || echo "
 - 测试：提交前后 302 个全通过。
 - 留给对方：**现在有回滚点了**（见 §1）。提交请加 `--no-verify`，原因见 §1 的注。
   未 push，远端还没有这两个 commit。
+
+### 2026-08-19 · Codex
+- 动了什么：完成 Q1–Q7 与 DAILY_TOP10 代码审查，**没有改任何策略常量或 §5 冻结规则，
+  没有跑真实模型**。确定性修复 4 处：
+  1. `daily/quota.py`：底层 invoker 抛异常时原先完全不记账；现在先记失败调用再安全降级，
+     `KeyboardInterrupt` 等进程级中断仍在记账后原样抛出。
+  2. `daily/selection.py`：旧持仓原先先入座、可绕过行业上限；现在持仓和新标的一视同仁。
+  3. `daily/orchestrator.py` + `selection.py`：R1/R2 降级时，昨日持仓若已不在今日冻结事实表，
+     原先仍会无限期 `PAUSE`；现在变 CASH 并记录 `NOT_IN_TODAY_INPUT`。
+  4. `daily/selection.py`：有 CASH 席位时 `cashReservePct` 原先漏算这些现金（如仅 1 支可买会
+     显示投资 10%、现金 0%）；现在恒等于 `100% - investedPct`。
+- Q1–Q7 建议（请 Leo 拍板后再改代码）：
+  - **Q1**：市场档位暂保留 `0.5/0.7/0.9/1.0`，但“姿态未设置”应按 `neutral=0.9`，
+    不应默认为满风险 `1.0`。现阶段没有证据支持重画整条市场曲线，先只消除缺省值的乐观偏置。
+  - **Q2**：止损距离硬上限建议 **10%**，不是 12%。10 个等权席位下，每支计划风险上限约
+    对应组合 1%；实际跳空/跌停仍可能更差，所以 10% 是上限而不是损失保证。
+  - **Q3**：换手缓冲建议 **Top10 + 5（到第 15 名才退出）**。日频双模型噪声会让 +3 偏勤换；
+    硬门槛、Remove、BLOCKED 仍立即退出，不受缓冲保护。
+  - **Q4**：单行业最多 **2 席**。10 席里 3 席就是 30% 集中度，和“分散的每日清单”冲突；
+    2 席对应 20%，更直观。行业数据现已落地，可真正执行。
+  - **Q5**：新 BUY 的未解决分歧阈值建议 **1.0 分**；若以后要区分持仓，可让 HOLD/PAUSE
+    保留 1.5。当前只有一个阈值时先用 1.0，宁可 CASH，不用平均数掩盖两模型明显分歧。
+  - **Q6**：建议继续**不前置剔除 Remove**。它会一次砍掉 122/303，且把旧引擎结论通过
+    候选集合泄给席位；保留盲评、只在最终门槛阻止 Remove 入座更干净。
+  - **Q7**：不建议用模型自报 confidence 选 `main_reason`。建议把两席位 note 去重后按稳定
+    顺序并列（必要时截长），同时保留全部 risk flags；自报置信度尚未校准，不应决定人类看到的解释。
+- 代码审查结论：第二轮每次输出只能含当次 `outstanding`，额度账本将循环硬限为每席最多 2 次；
+  修复异常漏账后没有死循环或超预算路径。R1/R2 任一席失败时 `final_ranking=None`，只能
+  `PAUSE/CASH`；R3 失败回退的仍是完整双席 R2 共识，没有发现单席位独自产出 BUY 的口子。
+  仍有两个**策略问题**未擅改：模型打分卡的 `decision` 当前完全不参与最终门槛（理论上两席
+  都写 SELL、数值却过线仍可能 BUY）；旧持仓只触发软门槛时会以 `PAUSE` 占席且仍显示目标仓位。
+  这两条关系到 SELL/PAUSE 语义，请 Claude 不要先改，等 Leo 明确口径。
+- 行业映射：新增 `daily/industry.py`、`scripts/fetch_a_share_industry_sina.py` 和
+  `configs/a_share_industry_sina_sw1.json`。来源是新浪公开 `Market_Center.getHQNodes` 动态发现
+  31 个申万一级节点，再用 `getHQNodeData` 拉各节点成分，并与同源 `hs_a` 全市场逐 ticker
+  对账；2026-08-19 实测 **5546/5546（100%）**、无跨行业重复，仓库现有 universe 678/678
+  覆盖。刷新器默认不足 100% 就拒绝覆盖旧文件；DAILY_TOP10 默认加载该映射，`plan` 已显示
+  “行业集中度 启用”。没有拿代码前缀冒充行业。
+- 测试：完整命令逐文件运行，**309 个全部通过**；新增额度异常、持仓行业绕过、降级缺失持仓、
+  CASH 储备和新浪映射契约守护测试。另跑 `pdc_daily_top10.py plan` 成功：297 支通过硬资格，
+  预计每席 3–4 次调用；该命令没有调用模型。
+- 留给 Claude：请重点复核上面两个未改的 SELL/PAUSE 语义问题，以及 Q1–Q7 建议；Leo 未拍板前
+  不要调常量。行业上限现在不再空转。首次真实 DAILY_TOP10 仍为待办，只能等 Leo 明确同意且只跑一次。

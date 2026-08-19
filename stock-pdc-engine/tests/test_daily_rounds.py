@@ -150,6 +150,24 @@ class QuotaTest(unittest.TestCase):
         self.assertGreater(entry["outputChars"], 0)
         self.assertEqual(entry["remaining"], 3)
 
+    def test_an_invoker_exception_still_spends_and_records_the_call(self) -> None:
+        ledger = QuotaLedger()
+        member = DEFAULT_ROSTER[0]
+
+        def crashing(*_args, **_kwargs):
+            raise OSError("fake launch crash")
+
+        with TemporaryDirectory() as tmp:
+            payload = discovery.build_payload(table(4), "daily-test", 2)
+            result = guarded_invoke(
+                ledger, "discovery", member, Path(tmp), "prompt-text",
+                discovery.discovery_schema(2), payload, invoker=crashing,
+            )
+
+        self.assertFalse(result.ok)
+        self.assertEqual(ledger.calls(member.member_id), 1)
+        self.assertEqual(ledger.to_json()["records"][0]["error"], "OSError: fake launch crash")
+
 
 class DiscoveryRoundTest(unittest.TestCase):
     def setUp(self) -> None:
