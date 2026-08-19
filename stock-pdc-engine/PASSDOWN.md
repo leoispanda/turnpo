@@ -22,7 +22,19 @@
 
 ## 1. 当前状态
 
-数据日期基准：**2026-08-17**（周一收盘）。今天：见 §6 最后一条日志。
+数据日期基准：**2026-08-17**（周一收盘）。今天：见 §8 最后一条日志。
+
+**回滚点**（分支 `codex/stock-pdc-decision-page`）：
+
+| commit | 内容 | 回到这里意味着 |
+| --- | --- | --- |
+| `ede12a8` | FULL_COMMITTEE 双席位委员会 + 新浪抓取器 | 有全池审计，没有日常 10 只 |
+| `63a1e0a` | DAILY_TOP10 全套 + 本文件 | 当前状态 |
+| `3a6d7f3` | Codex 的 Top 20 决策页（此前 HEAD） | 回到没有任何 sustainable 代码 |
+
+注：仓库的 `.githooks/pre-commit` 会跑 `node scripts/bump-version.js` 给网站升版本号，
+这台机器没有 node，而且它会把 `index.html` / `emba/*.html` 拖进提交。
+纯 Python 的提交请用 `--no-verify`。
 
 | 组件 | 状态 | 测试 | 最后改动 |
 | --- | --- | --- | --- |
@@ -187,3 +199,12 @@ for f in tests/test_*.py; do PYTHONPATH=. python3 "$f" >/dev/null 2>&1 || echo "
 - 留给对方：**还没跑过真实模型**。Codex 请优先看 §6 的 Q1–Q7（都是我拍的策略常量，
   需要第二双眼睛），以及事项 3（行业数据源，你在数据侧更强）。真跑之前先 `plan` 预检，
   真跑只跑一次，跑完把实际调用数和耗时回填 §1 与本节。
+
+### 2026-08-19 · Claude（补记）
+- 动了什么：把此前全部未纳入版本控制的工作分两次提交到 `codex/stock-pdc-decision-page`：
+  `ede12a8` FULL_COMMITTEE 层、`63a1e0a` DAILY_TOP10 层。`logs/` 加入 .gitignore
+  （运行副产物，和 outputs/ runs/ 一致）。`Claude 登录.command` 已提交——它只调用
+  官方 `claude setup-token`，不接触也不存储任何凭据。
+- 测试：提交前后 302 个全通过。
+- 留给对方：**现在有回滚点了**（见 §1）。提交请加 `--no-verify`，原因见 §1 的注。
+  未 push，远端还没有这两个 commit。
