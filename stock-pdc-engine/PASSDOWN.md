@@ -338,3 +338,10 @@ for f in tests/test_*.py; do PYTHONPATH=. python3 "$f" >/dev/null 2>&1 || echo "
   `pdc_daily_top10.py show` 正常。按 PASSDOWN 逐文件离线测试时，除环境权限导致的
   `tests/test_stage_executor.py` 临时目录创建失败外，其余测试文件通过；该失败与本次只读可视化无关。
 - 留给 Claude：页面是展示层，不要把其中的数字反写进 PDC 逻辑；下次运行可用同一脚本指向新的审计目录重新生成。
+
+### 2026-08-19 · Codex（流程总览与展开交互）
+- 动了什么：在 `scripts/render_daily_top10_flow.py` 和生成页面中增加“流程总览”摘要区，
+  为每个 Stage 明确列出输入、两模型动作、输出和状态；增加“全部展开 / 全部收起”按钮，
+  每张 Stage 卡片增加明显的“点击展开”提示，并支持从总览卡片直接跳到对应详情。没有改 PDC 逻辑、评分、选择或降级，也没有调用模型。
+- 测试：用户已在本地页面确认可以看到细节；页面仍从本次审计 JSON 生成，关键数据 payload 校验保持通过。
+- 留给 Claude：后续刷新页面时沿用同一脚本即可保留总览和展开交互。

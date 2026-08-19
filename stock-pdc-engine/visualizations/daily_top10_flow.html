@@ -71,6 +71,25 @@
     .fact { border: 1px solid var(--line); background: var(--panel); border-radius: 14px; padding: 12px 14px; min-width: 0; }
     .fact-label { color: var(--muted); font-size: 11px; font-weight: 700; }
     .fact-value { display: block; font-size: 16px; font-weight: 800; overflow-wrap: anywhere; margin-top: 3px; }
+    .overview { margin: 28px 0 18px; }
+    .overview-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 11px; }
+    .overview-title { font-size: 17px; font-weight: 800; }
+    .overview-note { color: var(--muted); font-size: 12px; margin-top: 3px; }
+    .overview-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+    .overview-controls button { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); padding: 8px 11px; cursor: pointer; font: inherit; font-size: 12px; }
+    .overview-controls button:hover { border-color: var(--blue); color: var(--blue); }
+    .overview-controls button:focus-visible, .overview-card:focus-visible { outline: 3px solid color-mix(in srgb, var(--blue) 35%, transparent); outline-offset: 2px; }
+    .overview-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 9px; }
+    .overview-card { min-width: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); color: var(--ink); padding: 13px; text-align: left; cursor: pointer; font: inherit; }
+    .overview-card:hover { border-color: var(--blue); background: var(--blue-soft); }
+    .overview-card .kicker { color: var(--blue); font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+    .overview-card h3 { font-size: 14px; margin-top: 4px; }
+    .overview-card .line { color: var(--muted); font-size: 11px; margin-top: 7px; }
+    .overview-card .out { font-size: 13px; font-weight: 800; margin-top: 7px; }
+    .overview-card .state { display: inline-flex; margin-top: 8px; padding: 4px 7px; border-radius: 999px; font-size: 10px; font-weight: 800; }
+    .overview-card .state.success { color: var(--green); background: var(--green-soft); }
+    .overview-card .state.warning { color: var(--yellow); background: var(--yellow-soft); }
+    .overview-card .state.orange { color: var(--orange); background: var(--orange-soft); }
     .timeline { display: flex; align-items: stretch; gap: 0; margin: 28px 0 20px; overflow-x: auto; padding: 3px 0 8px; }
     .timeline-node { flex: 1 0 145px; min-width: 145px; border: 1px solid var(--line); background: var(--panel); padding: 13px 14px; }
     .timeline-node:first-child { border-radius: 14px 0 0 14px; }
@@ -84,11 +103,14 @@
     summary.stage-summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 82px minmax(200px, 1fr) auto auto; gap: 18px; align-items: center; padding: 21px 24px; }
     summary.stage-summary::-webkit-details-marker { display: none; }
     summary.stage-summary:hover { background: var(--panel-soft); }
+    summary.stage-summary:focus-visible { outline: 3px solid color-mix(in srgb, var(--blue) 35%, transparent); outline-offset: -3px; }
     .stage-number { color: var(--blue); font-size: 12px; font-weight: 900; letter-spacing: .12em; }
     .stage-title { font-size: 19px; font-weight: 850; letter-spacing: -.02em; }
     .stage-flow { color: var(--muted); font-size: 12px; margin-top: 3px; }
     .stage-result { text-align: right; font-size: 13px; font-weight: 800; white-space: nowrap; }
     .stage-result span { display: block; color: var(--muted); font-size: 11px; font-weight: 600; }
+    .stage-toggle { color: var(--blue); font-style: normal; font-weight: 800; }
+    details.stage-card[open] .stage-toggle { color: var(--muted); }
     .status { padding: 6px 10px; }
     .stage-body { border-top: 1px solid var(--line); padding: 22px 24px 26px; }
     .section-intro { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
@@ -142,12 +164,17 @@
       .hero { padding: 22px 18px 18px; border-radius: 18px; }
       .hero-row { flex-direction: column; }
       .run-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .overview-head { align-items: flex-start; flex-direction: column; }
+      .overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       summary.stage-summary { grid-template-columns: 1fr auto; gap: 8px 12px; padding: 18px; }
       .stage-number { grid-column: 1 / -1; }
       .stage-result { text-align: left; }
       .stage-body { padding: 18px; }
       .two-col, .three-col { grid-template-columns: 1fr; }
       .list-row { grid-template-columns: 28px 88px minmax(70px, 1fr) 48px; }
+    }
+    @media (max-width: 420px) {
+      .overview-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -165,6 +192,13 @@
       <div class="run-facts" id="run-facts"></div>
     </header>
 
+    <section class="overview" aria-labelledby="overview-title">
+      <div class="overview-head">
+        <div><h2 class="overview-title" id="overview-title">流程总览</h2><p class="overview-note">先看每一轮做什么；点击任意卡片直接展开对应细节。</p></div>
+        <div class="overview-controls" aria-label="阶段展开控制"><button type="button" id="expand-all">全部展开</button><button type="button" id="collapse-all">全部收起</button></div>
+      </div>
+      <div class="overview-grid" id="overview-grid"></div>
+    </section>
     <nav class="timeline" id="timeline" aria-label="DAILY_TOP10 流程"></nav>
     <main class="stage-stack" id="stages"></main>
     <footer class="footer">
@@ -192,11 +226,11 @@
     const metric = (label, value, sub = '') => `<div class="metric"><div class="label">${esc(label)}</div><div class="value">${esc(value)}</div>${sub ? `<div class="sub">${esc(sub)}</div>` : ''}</div>`;
     const sources = (items) => `<div class="source-list"><span class="muted" style="font-size:11px;align-self:center">审计文件</span>${items.map(item => `<a href="${esc(item.href)}" target="_blank" rel="noreferrer">${esc(item.name)}</a>`).join('')}</div>`;
     const stage = (number, title, flow, result, resultSub, status, body, open = false) => `
-      <details class="stage-card" ${open ? 'open' : ''}>
+      <details id="stage-${esc(number)}" class="stage-card" ${open ? 'open' : ''}>
         <summary class="stage-summary">
           <div class="stage-number">STAGE ${esc(number)}</div>
           <div><div class="stage-title">${esc(title)}</div><div class="stage-flow">${esc(flow)}</div></div>
-          <div class="stage-result">${esc(result)}<span>${esc(resultSub)}</span></div>
+          <div class="stage-result">${esc(result)}<span>${esc(resultSub)} · <em class="stage-toggle">点击展开⌄</em></span></div>
           <span class="status ${statusClass(status)}">${status === 'orange' ? '安全降级' : status === 'warning' ? '有分歧' : '通过'}</span>
         </summary>
         <div class="stage-body">${body}</div>
@@ -221,6 +255,24 @@
       ['Q', '额度', `${fmt(DATA.quota.totalCalls)} 次调用`],
     ];
     $('timeline').innerHTML = timeline.map((item, index) => `${index ? '<div class="timeline-arrow" aria-hidden="true">→</div>' : ''}<div class="timeline-node"><span class="small">${esc(item[0])}</span><strong>${esc(item[1])}</strong><span class="small">${esc(item[2])}</span></div>`).join('');
+
+    const overview = [
+      { id: '0', kicker: 'STAGE 0', title: '数据冻结与硬资格', input: `输入 ${fmt(DATA.stage0.fullMarketCount)} → ${fmt(DATA.stage0.marketCapCount)} → ${fmt(DATA.stage0.hawkeyeCount)}`, work: '两模型：未介入；先冻结事实并拦截不合格标的', output: `${fmt(DATA.stage0.eligibleCount)} 支通过`, state: '通过', tone: 'success' },
+      { id: '1', kicker: 'STAGE 1', title: '双模型独立初选', input: `输入 ${fmt(DATA.stage1.inputCount)} 支`, work: `Codex / Claude 各 1 次，各提 Top${fmt(DATA.stage1.pickCount)}`, output: `${fmt(DATA.stage1.unionSize)} 支并集`, state: '通过', tone: 'success' },
+      { id: '2', kicker: 'STAGE 2', title: '九维详细评分', input: `输入 ${fmt(DATA.stage2.poolSize)} 支并集`, work: `两模型同池各 ${fmt(DATA.stage2.callsPerMember.sol)} 次，九维评分`, output: `${fmt(DATA.stage2.unresolvedCount)} 支未解决分歧`, state: '有分歧', tone: 'warning' },
+      { id: '3', kicker: 'STAGE 3', title: 'Top20 匿名终审', input: `输入 Top${fmt(DATA.stage3.preliminaryCount)}`, work: '席位 A / B 交叉审查；契约检查 fact_id', output: DATA.stage3.degradationStatus, state: '安全回退', tone: 'orange' },
+      { id: 'F', kicker: 'FINAL GATE', title: '最终 10 席位', input: '输入 R2 完整共识', work: '硬资格、风险、止损、行业上限与仓位门槛', output: `${fmt(DATA.final.seatCount)} 支 · ${pct(DATA.final.investedPct)} 投资`, state: '通过', tone: 'success' },
+      { id: 'Q', kicker: 'QUOTA', title: '额度与耗时', input: `输入 ${fmt(DATA.quota.totalCalls)} 次调用记录`, work: '按席位 / 轮次记账，显示剩余额度', output: DATA.quota.wallClockEstimate, state: '已记账', tone: 'success' },
+    ];
+    $('overview-grid').innerHTML = overview.map(item => `<button type="button" class="overview-card" data-stage-target="stage-${esc(item.id)}"><span class="kicker">${esc(item.kicker)}</span><h3>${esc(item.title)}</h3><div class="line">${esc(item.input)}</div><div class="line">${esc(item.work)}</div><div class="out">输出：${esc(item.output)}</div><span class="state ${esc(item.tone)}">${esc(item.state)} · 点击看细节</span></button>`).join('');
+    $('expand-all').addEventListener('click', () => document.querySelectorAll('details.stage-card').forEach(card => { card.open = true; }));
+    $('collapse-all').addEventListener('click', () => document.querySelectorAll('details.stage-card').forEach(card => { card.open = false; }));
+    document.querySelectorAll('[data-stage-target]').forEach(control => control.addEventListener('click', () => {
+      const target = document.getElementById(control.dataset.stageTarget);
+      if (!target) return;
+      target.open = true;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
 
     const s0 = DATA.stage0;
     const blockedReasons = Object.entries(s0.blockedReasonCounts || {}).map(([key, value]) => pill(key, fmt(value), 'orange')).join('');
