@@ -100,7 +100,9 @@ function dayRunTimestamp(day) {
   const raw = audit.generatedAt || audit.frozenAt
     || (day?.date === state.data?.latestDate ? state.data?.generatedAt : "");
   if (!raw) return "";
-  return String(raw).replace("T", " ").replace(/\.\d+/, "").slice(0, 16);
+  const rawText = String(raw);
+  const timezone = /(?:Z|\+00:00)$/.test(rawText) ? " UTC" : "";
+  return `${rawText.replace("T", " ").replace(/\.\d+/, "").slice(0, 16)}${timezone}`;
 }
 
 function dayModeLabel(day) {
