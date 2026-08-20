@@ -593,6 +593,34 @@ body::before {
   font-weight: 760;
 }
 
+.stock-date-head .stock-date-timestamp {
+  color: #a0a8b0;
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.stock-date-flow-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 17px;
+  border-radius: 999px;
+  background: rgba(34, 87, 122, 0.1);
+  color: #22577a;
+  padding: 2px 6px;
+  font-size: 8px;
+  font-weight: 820;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.stock-date-flow-link:hover {
+  background: #22577a;
+  color: #ffffff;
+  text-decoration: none;
+}
+
 .stock-rank-cell {
   display: grid;
   grid-template-columns: minmax(70px, 1fr) minmax(44px, auto) minmax(36px, auto);
@@ -664,6 +692,36 @@ body::before {
   font-size: 11px;
   font-weight: 760;
   line-height: 1;
+}
+
+.stock-flow-audit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+  color: #65707a;
+  font-size: 11px;
+  font-weight: 720;
+}
+
+.stock-flow-audit-row a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  border-radius: 999px;
+  background: #22577a;
+  color: #ffffff;
+  padding: 0 11px;
+  font-size: 11px;
+  font-weight: 820;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.stock-flow-audit-row a:hover {
+  background: #15191f;
+  text-decoration: none;
 }
 
 .stock-published-decisions {

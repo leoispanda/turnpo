@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "pdc-daily-snapshot-v1",
+  "runId": "daily-20260819-real-01",
+  "runtimeMode": "DAILY_TOP10",
+  "analysisDate": "2026-08-19",
+  "frozenAt": "2026-08-19T19:08:24+00:00",
+  "snapshotId": "snap-2026-08-19-9817a60bfaa2",
+  "candidateSetHash": "9817a60bfaa2edb9d556a41d23c5f9c06dd0a0a784df2e565138475fbe3ac05c",
+  "factsHash": "0197cdbe351aff65a44eda612c9578f7b7e5a9e6e260094cb01c7898d3ae11f1",
+  "candidateCount": 227,
+  "screenedCount": 230,
+  "dataFreshnessStatus": "FRESH",
+  "dataAgeDays": 0,
+  "dataDir": "/Users/leoyang/Documents/turnpo/stock-pdc-engine/data_a_share_latest_runs/run_20260819_202615",
+  "scoresPath": "/Users/leoyang/Documents/turnpo/stock-pdc-engine/outputs/full_pdc_scores.csv",
+  "universePath": "/Users/leoyang/Documents/turnpo/stock-pdc-engine/outputs_a_share/a_share_universe.csv"
+}

@@ -1,0 +1,696 @@
+{
+  "schemaVersion": "pdc-daily-discovery-record-v1",
+  "runId": "daily-20260819-real-01",
+  "stageId": "D1",
+  "factsHash": "0197cdbe351aff65a44eda612c9578f7b7e5a9e6e260094cb01c7898d3ae11f1",
+  "candidateCount": 227,
+  "picksRequested": 30,
+  "memberResults": [
+    {
+      "schemaVersion": "pdc-daily-discovery-record-v1",
+      "memberId": "sol",
+      "modelId": "gpt",
+      "status": "COMPLETED",
+      "failureReason": "",
+      "picksRequested": 30,
+      "picks": [
+        {
+          "ticker": "603259.SH",
+          "rank": 1,
+          "lightweight_score": 9.8,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY"
+          ]
+        },
+        {
+          "ticker": "600547.SH",
+          "rank": 2,
+          "lightweight_score": 9.6,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "PIVOT_PROXIMITY",
+            "VOLUME_SUPPORT"
+          ]
+        },
+        {
+          "ticker": "601919.SH",
+          "rank": 3,
+          "lightweight_score": 9.4,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY",
+            "LIQUIDITY_DEEP"
+          ]
+        },
+        {
+          "ticker": "600926.SH",
+          "rank": 4,
+          "lightweight_score": 9.3,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "LIQUIDITY_DEEP"
+          ]
+        },
+        {
+          "ticker": "002142.SZ",
+          "rank": 5,
+          "lightweight_score": 9.2,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "LIQUIDITY_DEEP"
+          ]
+        },
+        {
+          "ticker": "002648.SZ",
+          "rank": 6,
+          "lightweight_score": 9.1,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "PIVOT_PROXIMITY",
+            "RSI_ROOM"
+          ]
+        },
+        {
+          "ticker": "603129.SH",
+          "rank": 7,
+          "lightweight_score": 9.0,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY"
+          ]
+        },
+        {
+          "ticker": "002493.SZ",
+          "rank": 8,
+          "lightweight_score": 8.9,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY"
+          ]
+        },
+        {
+          "ticker": "600737.SH",
+          "rank": 9,
+          "lightweight_score": 8.8,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "PIVOT_PROXIMITY",
+            "VOLUME_SUPPORT"
+          ]
+        },
+        {
+          "ticker": "600663.SH",
+          "rank": 10,
+          "lightweight_score": 8.8,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY"
+          ]
+        },
+        {
+          "ticker": "600489.SH",
+          "rank": 11,
+          "lightweight_score": 8.7,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "PIVOT_PROXIMITY",
+            "LIQUIDITY_DEEP"
+          ]
+        },
+        {
+          "ticker": "601728.SH",
+          "rank": 12,
+          "lightweight_score": 8.7,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "PIVOT_PROXIMITY",
+            "LARGE_CAP"
+          ]
+        },
+        {
+          "ticker": "601998.SH",
+          "rank": 13,
+          "lightweight_score": 8.6,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "PIVOT_PROXIMITY",
+            "LARGE_CAP"
+          ]
+        },
+        {
+          "ticker": "600428.SH",
+          "rank": 14,
+          "lightweight_score": 8.6,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY",
+            "RSI_ROOM"
+          ]
+        },
+        {
+          "ticker": "600985.SH",
+          "rank": 15,
+          "lightweight_score": 8.5,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY"
+          ]
+        },
+        {
+          "ticker": "603268.SH",
+          "rank": 16,
+          "lightweight_score": 8.5,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY"
+          ]
+        },
+        {
+          "ticker": "688617.SH",
+          "rank": 17,
+          "lightweight_score": 8.4,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "RSI_ROOM",
+            "STOP_TIGHT"
+          ]
+        },
+        {
+          "ticker": "600346.SH",
+          "rank": 18,
+          "lightweight_score": 8.4,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "PIVOT_PROXIMITY",
+            "LIQUIDITY_DEEP"
+          ]
+        },
+        {
+          "ticker": "300832.SZ",
+          "rank": 19,
+          "lightweight_score": 8.3,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "PIVOT_PROXIMITY",
+            "STOP_TIGHT"
+          ]
+        },
+        {
+          "ticker": "600795.SH",
+          "rank": 20,
+          "lightweight_score": 8.3,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "LIQUIDITY_DEEP"
+          ]
+        },
+        {
+          "ticker": "601665.SH",
+          "rank": 21,
+          "lightweight_score": 8.2,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "STOP_TIGHT"
+          ]
+        },
+        {
+          "ticker": "600919.SH",
+          "rank": 22,
+          "lightweight_score": 8.2,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "LIQUIDITY_DEEP"
+          ]
+        },
+        {
+          "ticker": "002966.SZ",
+          "rank": 23,
+          "lightweight_score": 8.1,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "RSI_ROOM"
+          ]
+        },
+        {
+          "ticker": "601009.SH",
+          "rank": 24,
+          "lightweight_score": 8.1,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "LIQUIDITY_DEEP"
+          ]
+        },
+        {
+          "ticker": "601225.SH",
+          "rank": 25,
+          "lightweight_score": 8.0,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "RSI_ROOM",
+            "LIQUIDITY_DEEP"
+          ]
+        },
+        {
+          "ticker": "601233.SH",
+          "rank": 26,
+          "lightweight_score": 8.0,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY",
+            "RSI_ROOM"
+          ]
+        },
+        {
+          "ticker": "688002.SH",
+          "rank": 27,
+          "lightweight_score": 7.9,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY",
+            "VOLUME_SUPPORT"
+          ]
+        },
+        {
+          "ticker": "688428.SH",
+          "rank": 28,
+          "lightweight_score": 7.9,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY",
+            "RSI_ROOM"
+          ]
+        },
+        {
+          "ticker": "603127.SH",
+          "rank": 29,
+          "lightweight_score": 7.8,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "ABOVE_SMA50",
+            "VOLUME_SUPPORT"
+          ]
+        },
+        {
+          "ticker": "603156.SH",
+          "rank": 30,
+          "lightweight_score": 7.8,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "PIVOT_PROXIMITY",
+            "VOLUME_SUPPORT"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaVersion": "pdc-daily-discovery-record-v1",
+      "memberId": "claude",
+      "modelId": "claude",
+      "status": "COMPLETED",
+      "failureReason": "",
+      "picksRequested": 30,
+      "picks": [
+        {
+          "ticker": "000703.SZ",
+          "rank": 1,
+          "lightweight_score": 9.2,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "MOMENTUM_20D",
+            "VOLUME_SUPPORT"
+          ]
+        },
+        {
+          "ticker": "601919.SH",
+          "rank": 2,
+          "lightweight_score": 9.0,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "LIQUIDITY_DEEP"
+          ]
+        },
+        {
+          "ticker": "601857.SH",
+          "rank": 3,
+          "lightweight_score": 8.8,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LARGE_CAP",
+            "LIQUIDITY_DEEP"
+          ]
+        },
+        {
+          "ticker": "601998.SH",
+          "rank": 4,
+          "lightweight_score": 8.7,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LARGE_CAP",
+            "MOMENTUM_20D"
+          ]
+        },
+        {
+          "ticker": "601728.SH",
+          "rank": 5,
+          "lightweight_score": 8.6,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LARGE_CAP",
+            "LOW_VOLATILITY"
+          ]
+        },
+        {
+          "ticker": "601229.SH",
+          "rank": 6,
+          "lightweight_score": 8.5,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "STOP_TIGHT"
+          ]
+        },
+        {
+          "ticker": "002142.SZ",
+          "rank": 7,
+          "lightweight_score": 8.4,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LARGE_CAP",
+            "LOW_VOLATILITY"
+          ]
+        },
+        {
+          "ticker": "600926.SH",
+          "rank": 8,
+          "lightweight_score": 8.3,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "STOP_TIGHT"
+          ]
+        },
+        {
+          "ticker": "601009.SH",
+          "rank": 9,
+          "lightweight_score": 8.1,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "ABOVE_SMA50"
+          ]
+        },
+        {
+          "ticker": "002966.SZ",
+          "rank": 10,
+          "lightweight_score": 8.0,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "BASE_TIGHT"
+          ]
+        },
+        {
+          "ticker": "600968.SH",
+          "rank": 11,
+          "lightweight_score": 7.9,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "RSI_ROOM",
+            "BASE_TIGHT"
+          ]
+        },
+        {
+          "ticker": "601665.SH",
+          "rank": 12,
+          "lightweight_score": 7.7,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "BASE_TIGHT"
+          ]
+        },
+        {
+          "ticker": "000301.SZ",
+          "rank": 13,
+          "lightweight_score": 7.8,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY"
+          ]
+        },
+        {
+          "ticker": "002648.SZ",
+          "rank": 14,
+          "lightweight_score": 7.6,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "MOMENTUM_60D",
+            "BASE_TIGHT"
+          ]
+        },
+        {
+          "ticker": "000975.SZ",
+          "rank": 15,
+          "lightweight_score": 7.5,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "PIVOT_PROXIMITY",
+            "VOLUME_SUPPORT"
+          ]
+        },
+        {
+          "ticker": "600985.SH",
+          "rank": 16,
+          "lightweight_score": 7.4,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "PIVOT_PROXIMITY",
+            "ABOVE_SMA50"
+          ]
+        },
+        {
+          "ticker": "002493.SZ",
+          "rank": 17,
+          "lightweight_score": 7.3,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "ABOVE_SMA50",
+            "PIVOT_PROXIMITY"
+          ]
+        },
+        {
+          "ticker": "600988.SH",
+          "rank": 18,
+          "lightweight_score": 7.2,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "VOLUME_SUPPORT",
+            "ABOVE_SMA50"
+          ]
+        },
+        {
+          "ticker": "600489.SH",
+          "rank": 19,
+          "lightweight_score": 7.1,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_20D",
+            "VOLUME_SUPPORT",
+            "ABOVE_SMA50"
+          ]
+        },
+        {
+          "ticker": "601988.SH",
+          "rank": 20,
+          "lightweight_score": 7.0,
+          "reason_codes": [
+            "TREND_STACK",
+            "LARGE_CAP",
+            "LIQUIDITY_DEEP",
+            "PIVOT_PROXIMITY"
+          ]
+        },
+        {
+          "ticker": "601939.SH",
+          "rank": 21,
+          "lightweight_score": 6.9,
+          "reason_codes": [
+            "TREND_STACK",
+            "LARGE_CAP",
+            "LIQUIDITY_DEEP",
+            "ABOVE_SMA50"
+          ]
+        },
+        {
+          "ticker": "601088.SH",
+          "rank": 22,
+          "lightweight_score": 6.8,
+          "reason_codes": [
+            "TREND_STACK",
+            "LARGE_CAP",
+            "LIQUIDITY_DEEP",
+            "LOW_VOLATILITY"
+          ]
+        },
+        {
+          "ticker": "600941.SH",
+          "rank": 23,
+          "lightweight_score": 6.6,
+          "reason_codes": [
+            "TREND_STACK",
+            "LARGE_CAP",
+            "LOW_VOLATILITY",
+            "RSI_ROOM"
+          ]
+        },
+        {
+          "ticker": "000651.SZ",
+          "rank": 24,
+          "lightweight_score": 6.5,
+          "reason_codes": [
+            "TREND_STACK",
+            "LARGE_CAP",
+            "LOW_VOLATILITY",
+            "RSI_ROOM"
+          ]
+        },
+        {
+          "ticker": "600298.SH",
+          "rank": 25,
+          "lightweight_score": 6.5,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "ABOVE_SMA50",
+            "PIVOT_PROXIMITY"
+          ]
+        },
+        {
+          "ticker": "000333.SZ",
+          "rank": 26,
+          "lightweight_score": 6.3,
+          "reason_codes": [
+            "LARGE_CAP",
+            "LIQUIDITY_DEEP",
+            "ABOVE_SMA50",
+            "RSI_ROOM"
+          ]
+        },
+        {
+          "ticker": "300628.SZ",
+          "rank": 27,
+          "lightweight_score": 6.4,
+          "reason_codes": [
+            "TREND_STACK",
+            "PIVOT_PROXIMITY",
+            "LOW_VOLATILITY",
+            "BASE_TIGHT"
+          ]
+        },
+        {
+          "ticker": "603127.SH",
+          "rank": 28,
+          "lightweight_score": 6.2,
+          "reason_codes": [
+            "TREND_STACK",
+            "MOMENTUM_60D",
+            "MOMENTUM_20D",
+            "VOLUME_SUPPORT"
+          ]
+        },
+        {
+          "ticker": "300759.SZ",
+          "rank": 29,
+          "lightweight_score": 6.0,
+          "reason_codes": [
+            "MOMENTUM_60D",
+            "MOMENTUM_20D",
+            "VOLUME_SUPPORT",
+            "RELATIVE_STRENGTH"
+          ]
+        },
+        {
+          "ticker": "600547.SH",
+          "rank": 30,
+          "lightweight_score": 5.8,
+          "reason_codes": [
+            "MOMENTUM_20D",
+            "PIVOT_PROXIMITY",
+            "VOLUME_SUPPORT",
+            "RELATIVE_STRENGTH"
+          ]
+        }
+      ]
+    }
+  ],
+  "completedMembers": [
+    "sol",
+    "claude"
+  ],
+  "failedMembers": [],
+  "quorumMet": true
+}

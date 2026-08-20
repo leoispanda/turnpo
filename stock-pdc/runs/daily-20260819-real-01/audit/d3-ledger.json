@@ -1,0 +1,13 @@
+{
+  "runId": "daily-20260819-real-01",
+  "stageId": "D3",
+  "sealed": true,
+  "labelByMember": {
+    "claude": "B",
+    "sol": "A"
+  },
+  "memberByLabel": {
+    "B": "claude",
+    "A": "sol"
+  }
+}

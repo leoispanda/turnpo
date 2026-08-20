@@ -1,0 +1,15 @@
+{
+  "schema_version": "stock-pdc-automatic-run-v1",
+  "generated_at": "2026-08-19T20:41:29",
+  "analysis_date": "2026-08-19",
+  "market_data_date": "2026-08-19",
+  "source": "tencent",
+  "source_scope": "full_a_share_market",
+  "market_ticker_count": 658,
+  "hawkeye_rules": {
+    "total_market_cap_cny_gt": 30000000000,
+    "return_60d_pct_gt": 0.0
+  },
+  "data_dir": "/Users/leoyang/Documents/turnpo/stock-pdc-engine/data_a_share_latest_runs/run_20260819_202615",
+  "universe_csv": "/Users/leoyang/Documents/turnpo/stock-pdc-engine/outputs_a_share/a_share_universe.csv"
+}

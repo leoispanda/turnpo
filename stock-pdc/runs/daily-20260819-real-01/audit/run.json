@@ -1,0 +1,318 @@
+{
+  "schemaVersion": "pdc-daily-run-v1",
+  "runId": "daily-20260819-real-01",
+  "runtimeMode": "DAILY_TOP10",
+  "researchOnly": true,
+  "liveTrading": false,
+  "analysisDate": "2026-08-19",
+  "snapshot": {
+    "schemaVersion": "pdc-daily-snapshot-v1",
+    "runId": "daily-20260819-real-01",
+    "runtimeMode": "DAILY_TOP10",
+    "analysisDate": "2026-08-19",
+    "frozenAt": "2026-08-19T19:08:24+00:00",
+    "snapshotId": "snap-2026-08-19-9817a60bfaa2",
+    "candidateSetHash": "9817a60bfaa2edb9d556a41d23c5f9c06dd0a0a784df2e565138475fbe3ac05c",
+    "factsHash": "0197cdbe351aff65a44eda612c9578f7b7e5a9e6e260094cb01c7898d3ae11f1",
+    "candidateCount": 227,
+    "screenedCount": 230,
+    "dataFreshnessStatus": "FRESH",
+    "dataAgeDays": 0,
+    "dataDir": "/Users/leoyang/Documents/turnpo/stock-pdc-engine/data_a_share_latest_runs/run_20260819_202615",
+    "scoresPath": "/Users/leoyang/Documents/turnpo/stock-pdc-engine/outputs/full_pdc_scores.csv",
+    "universePath": "/Users/leoyang/Documents/turnpo/stock-pdc-engine/outputs_a_share/a_share_universe.csv"
+  },
+  "degradationStatus": "R3_FAILED_USED_R2",
+  "degradation": [
+    "终审轮未达法定人数，安全降级为第二轮共识：sol 契约校验失败：600968.SH/livermore_breakout 引用了不存在的 fact_id：600968.SZ.pivot55；claude 契约校验失败：000651.SZ/risk 引用了不存在的 fact_id：600919.SH.atr_pct, 600919.SH.stop_dist_pct"
+  ],
+  "allowedNewBuys": true,
+  "unionSize": 46,
+  "preliminaryTop": 20,
+  "disagreementLimit": 1.5,
+  "exposureFactor": 0.7,
+  "posture": "",
+  "seats": [
+    {
+      "rank": 1,
+      "ticker": "600919.SH",
+      "action": "BUY",
+      "consensusRank": 1,
+      "consensusTotal": 8.4375,
+      "seatTotals": {
+        "claude": 7.965,
+        "sol": 8.91
+      },
+      "totalDisagreement": 0.945,
+      "riskScore": 9.4,
+      "overheatScore": 8.5,
+      "sector": "银行",
+      "gateReasons": [],
+      "stopDistancePct": 5.04,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 2,
+      "ticker": "601919.SH",
+      "action": "BUY",
+      "consensusRank": 2,
+      "consensusTotal": 8.1625,
+      "seatTotals": {
+        "claude": 7.455,
+        "sol": 8.87
+      },
+      "totalDisagreement": 1.415,
+      "riskScore": 8.4,
+      "overheatScore": 5.7,
+      "sector": "交通运输",
+      "gateReasons": [],
+      "stopDistancePct": 10.55,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 3,
+      "ticker": "601009.SH",
+      "action": "BUY",
+      "consensusRank": 3,
+      "consensusTotal": 7.9975,
+      "seatTotals": {
+        "claude": 7.575,
+        "sol": 8.42
+      },
+      "totalDisagreement": 0.845,
+      "riskScore": 8.4,
+      "overheatScore": 8.5,
+      "sector": "银行",
+      "gateReasons": [],
+      "stopDistancePct": 6.04,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 4,
+      "ticker": "600795.SH",
+      "action": "BUY",
+      "consensusRank": 4,
+      "consensusTotal": 7.95,
+      "seatTotals": {
+        "claude": 7.34,
+        "sol": 8.56
+      },
+      "totalDisagreement": 1.22,
+      "riskScore": 9.4,
+      "overheatScore": 8.5,
+      "sector": "公用事业",
+      "gateReasons": [],
+      "stopDistancePct": 6.52,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 5,
+      "ticker": "601229.SH",
+      "action": "BUY",
+      "consensusRank": 5,
+      "consensusTotal": 7.8625,
+      "seatTotals": {
+        "claude": 7.305,
+        "sol": 8.42
+      },
+      "totalDisagreement": 1.115,
+      "riskScore": 9.4,
+      "overheatScore": 8.5,
+      "sector": "银行",
+      "gateReasons": [],
+      "stopDistancePct": 6.61,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 6,
+      "ticker": "000651.SZ",
+      "action": "BUY",
+      "consensusRank": 6,
+      "consensusTotal": 7.8525,
+      "seatTotals": {
+        "claude": 7.385,
+        "sol": 8.32
+      },
+      "totalDisagreement": 0.935,
+      "riskScore": 9.4,
+      "overheatScore": 7.5,
+      "sector": "家用电器",
+      "gateReasons": [],
+      "stopDistancePct": 4.32,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 7,
+      "ticker": "600941.SH",
+      "action": "BUY",
+      "consensusRank": 12,
+      "consensusTotal": 7.2975,
+      "seatTotals": {
+        "claude": 6.945,
+        "sol": 7.65
+      },
+      "totalDisagreement": 0.705,
+      "riskScore": 8.4,
+      "overheatScore": 7.5,
+      "sector": "通信",
+      "gateReasons": [],
+      "stopDistancePct": 3.6,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 8,
+      "ticker": "600968.SH",
+      "action": "BUY",
+      "consensusRank": 13,
+      "consensusTotal": 7.295,
+      "seatTotals": {
+        "claude": 6.68,
+        "sol": 7.91
+      },
+      "totalDisagreement": 1.23,
+      "riskScore": 8.4,
+      "overheatScore": 6.5,
+      "sector": "石油石化",
+      "gateReasons": [],
+      "stopDistancePct": 9.4,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 9,
+      "ticker": "601857.SH",
+      "action": "BUY",
+      "consensusRank": 14,
+      "consensusTotal": 7.2625,
+      "seatTotals": {
+        "claude": 6.945,
+        "sol": 7.58
+      },
+      "totalDisagreement": 0.635,
+      "riskScore": 8.4,
+      "overheatScore": 7.2,
+      "sector": "石油石化",
+      "gateReasons": [],
+      "stopDistancePct": 7.58,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 10,
+      "ticker": "002648.SZ",
+      "action": "BUY",
+      "consensusRank": 18,
+      "consensusTotal": 6.905,
+      "seatTotals": {
+        "claude": 6.48,
+        "sol": 7.33
+      },
+      "totalDisagreement": 0.85,
+      "riskScore": 8.4,
+      "overheatScore": 6.5,
+      "sector": "基础化工",
+      "gateReasons": [],
+      "stopDistancePct": 9.92,
+      "allocation_pct": 7.0
+    }
+  ],
+  "quota": {
+    "schemaVersion": "pdc-daily-quota-v1",
+    "maxCallsPerMember": 4,
+    "totalCalls": 6,
+    "byMember": {
+      "claude": {
+        "calls": 3,
+        "remaining": 1,
+        "promptChars": 108626,
+        "outputChars": 28986,
+        "seconds": 629.38,
+        "failedCalls": 0
+      },
+      "sol": {
+        "calls": 3,
+        "remaining": 1,
+        "promptChars": 108626,
+        "outputChars": 30281,
+        "seconds": 223.13,
+        "failedCalls": 0
+      }
+    },
+    "byRound": {
+      "detail": {
+        "calls": 2,
+        "seconds": 377.81
+      },
+      "discovery": {
+        "calls": 2,
+        "seconds": 154.05
+      },
+      "review": {
+        "calls": 2,
+        "seconds": 320.64
+      }
+    },
+    "records": [
+      {
+        "round_id": "discovery",
+        "member_id": "sol",
+        "attempt": 1,
+        "ok": true,
+        "prompt_chars": 26057,
+        "output_chars": 4401,
+        "seconds": 34.62,
+        "error": ""
+      },
+      {
+        "round_id": "discovery",
+        "member_id": "claude",
+        "attempt": 1,
+        "ok": true,
+        "prompt_chars": 26057,
+        "output_chars": 4372,
+        "seconds": 119.434,
+        "error": ""
+      },
+      {
+        "round_id": "detail",
+        "member_id": "sol",
+        "attempt": 1,
+        "ok": true,
+        "prompt_chars": 42627,
+        "output_chars": 16140,
+        "seconds": 97.48,
+        "error": ""
+      },
+      {
+        "round_id": "detail",
+        "member_id": "claude",
+        "attempt": 1,
+        "ok": true,
+        "prompt_chars": 42627,
+        "output_chars": 18919,
+        "seconds": 280.333,
+        "error": ""
+      },
+      {
+        "round_id": "review",
+        "member_id": "sol",
+        "attempt": 1,
+        "ok": true,
+        "prompt_chars": 39942,
+        "output_chars": 9740,
+        "seconds": 91.034,
+        "error": ""
+      },
+      {
+        "round_id": "review",
+        "member_id": "claude",
+        "attempt": 1,
+        "ok": true,
+        "prompt_chars": 39942,
+        "output_chars": 5695,
+        "seconds": 229.61,
+        "error": ""
+      }
+    ]
+  },
+  "previousTradeDate": "",
+  "previousSeatCount": 0
+}

@@ -1,0 +1,760 @@
+{
+  "schemaVersion": "pdc-daily-selection-v1",
+  "seatCount": 10,
+  "seats": [
+    {
+      "rank": 1,
+      "ticker": "600919.SH",
+      "action": "BUY",
+      "consensusRank": 1,
+      "consensusTotal": 8.4375,
+      "seatTotals": {
+        "claude": 7.965,
+        "sol": 8.91
+      },
+      "totalDisagreement": 0.945,
+      "riskScore": 9.4,
+      "overheatScore": 8.5,
+      "sector": "银行",
+      "gateReasons": [],
+      "stopDistancePct": 5.04,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 2,
+      "ticker": "601919.SH",
+      "action": "BUY",
+      "consensusRank": 2,
+      "consensusTotal": 8.1625,
+      "seatTotals": {
+        "claude": 7.455,
+        "sol": 8.87
+      },
+      "totalDisagreement": 1.415,
+      "riskScore": 8.4,
+      "overheatScore": 5.7,
+      "sector": "交通运输",
+      "gateReasons": [],
+      "stopDistancePct": 10.55,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 3,
+      "ticker": "601009.SH",
+      "action": "BUY",
+      "consensusRank": 3,
+      "consensusTotal": 7.9975,
+      "seatTotals": {
+        "claude": 7.575,
+        "sol": 8.42
+      },
+      "totalDisagreement": 0.845,
+      "riskScore": 8.4,
+      "overheatScore": 8.5,
+      "sector": "银行",
+      "gateReasons": [],
+      "stopDistancePct": 6.04,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 4,
+      "ticker": "600795.SH",
+      "action": "BUY",
+      "consensusRank": 4,
+      "consensusTotal": 7.95,
+      "seatTotals": {
+        "claude": 7.34,
+        "sol": 8.56
+      },
+      "totalDisagreement": 1.22,
+      "riskScore": 9.4,
+      "overheatScore": 8.5,
+      "sector": "公用事业",
+      "gateReasons": [],
+      "stopDistancePct": 6.52,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 5,
+      "ticker": "601229.SH",
+      "action": "BUY",
+      "consensusRank": 5,
+      "consensusTotal": 7.8625,
+      "seatTotals": {
+        "claude": 7.305,
+        "sol": 8.42
+      },
+      "totalDisagreement": 1.115,
+      "riskScore": 9.4,
+      "overheatScore": 8.5,
+      "sector": "银行",
+      "gateReasons": [],
+      "stopDistancePct": 6.61,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 6,
+      "ticker": "000651.SZ",
+      "action": "BUY",
+      "consensusRank": 6,
+      "consensusTotal": 7.8525,
+      "seatTotals": {
+        "claude": 7.385,
+        "sol": 8.32
+      },
+      "totalDisagreement": 0.935,
+      "riskScore": 9.4,
+      "overheatScore": 7.5,
+      "sector": "家用电器",
+      "gateReasons": [],
+      "stopDistancePct": 4.32,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 7,
+      "ticker": "600941.SH",
+      "action": "BUY",
+      "consensusRank": 12,
+      "consensusTotal": 7.2975,
+      "seatTotals": {
+        "claude": 6.945,
+        "sol": 7.65
+      },
+      "totalDisagreement": 0.705,
+      "riskScore": 8.4,
+      "overheatScore": 7.5,
+      "sector": "通信",
+      "gateReasons": [],
+      "stopDistancePct": 3.6,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 8,
+      "ticker": "600968.SH",
+      "action": "BUY",
+      "consensusRank": 13,
+      "consensusTotal": 7.295,
+      "seatTotals": {
+        "claude": 6.68,
+        "sol": 7.91
+      },
+      "totalDisagreement": 1.23,
+      "riskScore": 8.4,
+      "overheatScore": 6.5,
+      "sector": "石油石化",
+      "gateReasons": [],
+      "stopDistancePct": 9.4,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 9,
+      "ticker": "601857.SH",
+      "action": "BUY",
+      "consensusRank": 14,
+      "consensusTotal": 7.2625,
+      "seatTotals": {
+        "claude": 6.945,
+        "sol": 7.58
+      },
+      "totalDisagreement": 0.635,
+      "riskScore": 8.4,
+      "overheatScore": 7.2,
+      "sector": "石油石化",
+      "gateReasons": [],
+      "stopDistancePct": 7.58,
+      "allocation_pct": 7.0
+    },
+    {
+      "rank": 10,
+      "ticker": "002648.SZ",
+      "action": "BUY",
+      "consensusRank": 18,
+      "consensusTotal": 6.905,
+      "seatTotals": {
+        "claude": 6.48,
+        "sol": 7.33
+      },
+      "totalDisagreement": 0.85,
+      "riskScore": 8.4,
+      "overheatScore": 6.5,
+      "sector": "基础化工",
+      "gateReasons": [],
+      "stopDistancePct": 9.92,
+      "allocation_pct": 7.0
+    }
+  ],
+  "cashSeats": 0,
+  "allowNewBuys": true,
+  "turnoverBuffer": 3,
+  "sectorCapStatus": "ACTIVE",
+  "maxPerSector": 3,
+  "maxStopDistancePct": 12.0,
+  "unresolvedTickers": [
+    "300759.SZ",
+    "600547.SH",
+    "600737.SH",
+    "688617.SH"
+  ],
+  "droppedHoldings": [],
+  "gates": [
+    {
+      "ticker": "600919.SH",
+      "rank": 1,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 5.04,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601919.SH",
+      "rank": 2,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 10.55,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601009.SH",
+      "rank": 3,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 6.04,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600795.SH",
+      "rank": 4,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 6.52,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601229.SH",
+      "rank": 5,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 6.61,
+      "blockReasons": []
+    },
+    {
+      "ticker": "000651.SZ",
+      "rank": 6,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 4.32,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601998.SH",
+      "rank": 7,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [
+        "SECTOR_CAP"
+      ],
+      "stopDistancePct": 9.3,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600926.SH",
+      "rank": 8,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [
+        "SECTOR_CAP"
+      ],
+      "stopDistancePct": 6.48,
+      "blockReasons": []
+    },
+    {
+      "ticker": "002142.SZ",
+      "rank": 9,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [
+        "SECTOR_CAP"
+      ],
+      "stopDistancePct": 5.85,
+      "blockReasons": []
+    },
+    {
+      "ticker": "603129.SH",
+      "rank": 10,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 18.54,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601665.SH",
+      "rank": 11,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [
+        "SECTOR_CAP"
+      ],
+      "stopDistancePct": 5.65,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600941.SH",
+      "rank": 12,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 3.6,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600968.SH",
+      "rank": 13,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 9.4,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601857.SH",
+      "rank": 14,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 7.58,
+      "blockReasons": []
+    },
+    {
+      "ticker": "002966.SZ",
+      "rank": 15,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [
+        "SECTOR_CAP"
+      ],
+      "stopDistancePct": 8.58,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601988.SH",
+      "rank": 16,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [
+        "SECTOR_CAP"
+      ],
+      "stopDistancePct": 3.68,
+      "blockReasons": []
+    },
+    {
+      "ticker": "000703.SZ",
+      "rank": 17,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "RISK_FLOOR",
+        "OVERHEATED",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 26.51,
+      "blockReasons": []
+    },
+    {
+      "ticker": "002648.SZ",
+      "rank": 18,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 9.92,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601728.SH",
+      "rank": 19,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 11.02,
+      "blockReasons": []
+    },
+    {
+      "ticker": "300832.SZ",
+      "rank": 20,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "OVERHEATED",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 16.58,
+      "blockReasons": []
+    },
+    {
+      "ticker": "000301.SZ",
+      "rank": 21,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 9.47,
+      "blockReasons": []
+    },
+    {
+      "ticker": "000333.SZ",
+      "rank": 22,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 2.83,
+      "blockReasons": []
+    },
+    {
+      "ticker": "002493.SZ",
+      "rank": 23,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 12.79,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600985.SH",
+      "rank": 24,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 11.77,
+      "blockReasons": []
+    },
+    {
+      "ticker": "688617.SH",
+      "rank": 25,
+      "seatable": false,
+      "entryEligible": false,
+      "hardReasons": [
+        "UNRESOLVED_DISAGREEMENT"
+      ],
+      "softReasons": [],
+      "stopDistancePct": 11.37,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600346.SH",
+      "rank": 26,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 10.2,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600547.SH",
+      "rank": 27,
+      "seatable": false,
+      "entryEligible": false,
+      "hardReasons": [
+        "UNRESOLVED_DISAGREEMENT"
+      ],
+      "softReasons": [
+        "RISK_FLOOR",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 21.93,
+      "blockReasons": []
+    },
+    {
+      "ticker": "300628.SZ",
+      "rank": 28,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 9.37,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601088.SH",
+      "rank": 29,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 8.32,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600298.SH",
+      "rank": 30,
+      "seatable": true,
+      "entryEligible": true,
+      "hardReasons": [],
+      "softReasons": [],
+      "stopDistancePct": 9.65,
+      "blockReasons": []
+    },
+    {
+      "ticker": "603259.SH",
+      "rank": 31,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "RISK_FLOOR",
+        "OVERHEATED",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 28.63,
+      "blockReasons": []
+    },
+    {
+      "ticker": "603156.SH",
+      "rank": 32,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "SCORE_FLOOR",
+        "RISK_FLOOR",
+        "OVERHEATED",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 24.12,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601939.SH",
+      "rank": 33,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "SCORE_FLOOR"
+      ],
+      "stopDistancePct": 4.82,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600663.SH",
+      "rank": 34,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "SCORE_FLOOR",
+        "RISK_FLOOR",
+        "OVERHEATED",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 27.67,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600428.SH",
+      "rank": 35,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "SCORE_FLOOR",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 21.57,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601225.SH",
+      "rank": 36,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "SCORE_FLOOR"
+      ],
+      "stopDistancePct": 7.37,
+      "blockReasons": []
+    },
+    {
+      "ticker": "601233.SH",
+      "rank": 37,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "SCORE_FLOOR"
+      ],
+      "stopDistancePct": 6.32,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600489.SH",
+      "rank": 38,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "SCORE_FLOOR",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 18.54,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600737.SH",
+      "rank": 39,
+      "seatable": false,
+      "entryEligible": false,
+      "hardReasons": [
+        "UNRESOLVED_DISAGREEMENT"
+      ],
+      "softReasons": [
+        "SCORE_FLOOR",
+        "RISK_FLOOR",
+        "OVERHEATED",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 22.27,
+      "blockReasons": []
+    },
+    {
+      "ticker": "603268.SH",
+      "rank": 40,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "SCORE_FLOOR",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 14.14,
+      "blockReasons": []
+    },
+    {
+      "ticker": "688002.SH",
+      "rank": 41,
+      "seatable": false,
+      "entryEligible": false,
+      "hardReasons": [
+        "ENGINE_REMOVE"
+      ],
+      "softReasons": [
+        "SCORE_FLOOR"
+      ],
+      "stopDistancePct": 9.16,
+      "blockReasons": []
+    },
+    {
+      "ticker": "000975.SZ",
+      "rank": 42,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "SCORE_FLOOR",
+        "RISK_FLOOR",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 24.02,
+      "blockReasons": []
+    },
+    {
+      "ticker": "688428.SH",
+      "rank": 43,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "SCORE_FLOOR"
+      ],
+      "stopDistancePct": 11.02,
+      "blockReasons": []
+    },
+    {
+      "ticker": "600988.SH",
+      "rank": 44,
+      "seatable": false,
+      "entryEligible": false,
+      "hardReasons": [
+        "ENGINE_REMOVE",
+        "RISK_FLOOR"
+      ],
+      "softReasons": [
+        "SCORE_FLOOR",
+        "RISK_FLOOR",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 22.06,
+      "blockReasons": []
+    },
+    {
+      "ticker": "300759.SZ",
+      "rank": 45,
+      "seatable": false,
+      "entryEligible": false,
+      "hardReasons": [
+        "ENGINE_REMOVE",
+        "RISK_FLOOR",
+        "UNRESOLVED_DISAGREEMENT"
+      ],
+      "softReasons": [
+        "SCORE_FLOOR",
+        "RISK_FLOOR",
+        "OVERHEATED",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 39.1,
+      "blockReasons": []
+    },
+    {
+      "ticker": "603127.SH",
+      "rank": 46,
+      "seatable": true,
+      "entryEligible": false,
+      "hardReasons": [],
+      "softReasons": [
+        "SCORE_FLOOR",
+        "RISK_FLOOR",
+        "STOP_DISTANCE"
+      ],
+      "stopDistancePct": 15.37,
+      "blockReasons": []
+    }
+  ],
+  "exposureFactor": 0.7,
+  "investedPct": 70.0,
+  "cashReservePct": 30.0
+}

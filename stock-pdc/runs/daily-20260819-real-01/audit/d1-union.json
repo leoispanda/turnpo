@@ -1,0 +1,1147 @@
+{
+  "schemaVersion": "pdc-daily-union-v1",
+  "runId": "daily-20260819-real-01",
+  "unionSize": 46,
+  "tickers": [
+    "000301.SZ",
+    "000333.SZ",
+    "000651.SZ",
+    "000703.SZ",
+    "000975.SZ",
+    "002142.SZ",
+    "002493.SZ",
+    "002648.SZ",
+    "002966.SZ",
+    "300628.SZ",
+    "300759.SZ",
+    "300832.SZ",
+    "600298.SH",
+    "600346.SH",
+    "600428.SH",
+    "600489.SH",
+    "600547.SH",
+    "600663.SH",
+    "600737.SH",
+    "600795.SH",
+    "600919.SH",
+    "600926.SH",
+    "600941.SH",
+    "600968.SH",
+    "600985.SH",
+    "600988.SH",
+    "601009.SH",
+    "601088.SH",
+    "601225.SH",
+    "601229.SH",
+    "601233.SH",
+    "601665.SH",
+    "601728.SH",
+    "601857.SH",
+    "601919.SH",
+    "601939.SH",
+    "601988.SH",
+    "601998.SH",
+    "603127.SH",
+    "603129.SH",
+    "603156.SH",
+    "603259.SH",
+    "603268.SH",
+    "688002.SH",
+    "688428.SH",
+    "688617.SH"
+  ],
+  "nominations": {
+    "603259.SH": {
+      "ticker": "603259.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 1
+      },
+      "scores": {
+        "sol": 9.8
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY"
+        ]
+      },
+      "bothSeats": false
+    },
+    "600547.SH": {
+      "ticker": "600547.SH",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 2,
+        "claude": 30
+      },
+      "scores": {
+        "sol": 9.6,
+        "claude": 5.8
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "PIVOT_PROXIMITY",
+          "VOLUME_SUPPORT"
+        ],
+        "claude": [
+          "MOMENTUM_20D",
+          "PIVOT_PROXIMITY",
+          "VOLUME_SUPPORT",
+          "RELATIVE_STRENGTH"
+        ]
+      },
+      "bothSeats": true
+    },
+    "601919.SH": {
+      "ticker": "601919.SH",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 3,
+        "claude": 2
+      },
+      "scores": {
+        "sol": 9.4,
+        "claude": 9.0
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY",
+          "LIQUIDITY_DEEP"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "LIQUIDITY_DEEP"
+        ]
+      },
+      "bothSeats": true
+    },
+    "600926.SH": {
+      "ticker": "600926.SH",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 4,
+        "claude": 8
+      },
+      "scores": {
+        "sol": 9.3,
+        "claude": 8.3
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "LIQUIDITY_DEEP"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "STOP_TIGHT"
+        ]
+      },
+      "bothSeats": true
+    },
+    "002142.SZ": {
+      "ticker": "002142.SZ",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 5,
+        "claude": 7
+      },
+      "scores": {
+        "sol": 9.2,
+        "claude": 8.4
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "LIQUIDITY_DEEP"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LARGE_CAP",
+          "LOW_VOLATILITY"
+        ]
+      },
+      "bothSeats": true
+    },
+    "002648.SZ": {
+      "ticker": "002648.SZ",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 6,
+        "claude": 14
+      },
+      "scores": {
+        "sol": 9.1,
+        "claude": 7.6
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "PIVOT_PROXIMITY",
+          "RSI_ROOM"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "MOMENTUM_60D",
+          "BASE_TIGHT"
+        ]
+      },
+      "bothSeats": true
+    },
+    "603129.SH": {
+      "ticker": "603129.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 7
+      },
+      "scores": {
+        "sol": 9.0
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY"
+        ]
+      },
+      "bothSeats": false
+    },
+    "002493.SZ": {
+      "ticker": "002493.SZ",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 8,
+        "claude": 17
+      },
+      "scores": {
+        "sol": 8.9,
+        "claude": 7.3
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "ABOVE_SMA50",
+          "PIVOT_PROXIMITY"
+        ]
+      },
+      "bothSeats": true
+    },
+    "600737.SH": {
+      "ticker": "600737.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 9
+      },
+      "scores": {
+        "sol": 8.8
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "PIVOT_PROXIMITY",
+          "VOLUME_SUPPORT"
+        ]
+      },
+      "bothSeats": false
+    },
+    "600663.SH": {
+      "ticker": "600663.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 10
+      },
+      "scores": {
+        "sol": 8.8
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY"
+        ]
+      },
+      "bothSeats": false
+    },
+    "600489.SH": {
+      "ticker": "600489.SH",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 11,
+        "claude": 19
+      },
+      "scores": {
+        "sol": 8.7,
+        "claude": 7.1
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "PIVOT_PROXIMITY",
+          "LIQUIDITY_DEEP"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "VOLUME_SUPPORT",
+          "ABOVE_SMA50"
+        ]
+      },
+      "bothSeats": true
+    },
+    "601728.SH": {
+      "ticker": "601728.SH",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 12,
+        "claude": 5
+      },
+      "scores": {
+        "sol": 8.7,
+        "claude": 8.6
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "PIVOT_PROXIMITY",
+          "LARGE_CAP"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LARGE_CAP",
+          "LOW_VOLATILITY"
+        ]
+      },
+      "bothSeats": true
+    },
+    "601998.SH": {
+      "ticker": "601998.SH",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 13,
+        "claude": 4
+      },
+      "scores": {
+        "sol": 8.6,
+        "claude": 8.7
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "PIVOT_PROXIMITY",
+          "LARGE_CAP"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LARGE_CAP",
+          "MOMENTUM_20D"
+        ]
+      },
+      "bothSeats": true
+    },
+    "600428.SH": {
+      "ticker": "600428.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 14
+      },
+      "scores": {
+        "sol": 8.6
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY",
+          "RSI_ROOM"
+        ]
+      },
+      "bothSeats": false
+    },
+    "600985.SH": {
+      "ticker": "600985.SH",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 15,
+        "claude": 16
+      },
+      "scores": {
+        "sol": 8.5,
+        "claude": 7.4
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY",
+          "ABOVE_SMA50"
+        ]
+      },
+      "bothSeats": true
+    },
+    "603268.SH": {
+      "ticker": "603268.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 16
+      },
+      "scores": {
+        "sol": 8.5
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY"
+        ]
+      },
+      "bothSeats": false
+    },
+    "688617.SH": {
+      "ticker": "688617.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 17
+      },
+      "scores": {
+        "sol": 8.4
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "RSI_ROOM",
+          "STOP_TIGHT"
+        ]
+      },
+      "bothSeats": false
+    },
+    "600346.SH": {
+      "ticker": "600346.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 18
+      },
+      "scores": {
+        "sol": 8.4
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "PIVOT_PROXIMITY",
+          "LIQUIDITY_DEEP"
+        ]
+      },
+      "bothSeats": false
+    },
+    "300832.SZ": {
+      "ticker": "300832.SZ",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 19
+      },
+      "scores": {
+        "sol": 8.3
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "PIVOT_PROXIMITY",
+          "STOP_TIGHT"
+        ]
+      },
+      "bothSeats": false
+    },
+    "600795.SH": {
+      "ticker": "600795.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 20
+      },
+      "scores": {
+        "sol": 8.3
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "LIQUIDITY_DEEP"
+        ]
+      },
+      "bothSeats": false
+    },
+    "601665.SH": {
+      "ticker": "601665.SH",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 21,
+        "claude": 12
+      },
+      "scores": {
+        "sol": 8.2,
+        "claude": 7.7
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "STOP_TIGHT"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "BASE_TIGHT"
+        ]
+      },
+      "bothSeats": true
+    },
+    "600919.SH": {
+      "ticker": "600919.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 22
+      },
+      "scores": {
+        "sol": 8.2
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "LIQUIDITY_DEEP"
+        ]
+      },
+      "bothSeats": false
+    },
+    "002966.SZ": {
+      "ticker": "002966.SZ",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 23,
+        "claude": 10
+      },
+      "scores": {
+        "sol": 8.1,
+        "claude": 8.0
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "RSI_ROOM"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "BASE_TIGHT"
+        ]
+      },
+      "bothSeats": true
+    },
+    "601009.SH": {
+      "ticker": "601009.SH",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 24,
+        "claude": 9
+      },
+      "scores": {
+        "sol": 8.1,
+        "claude": 8.1
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "LIQUIDITY_DEEP"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "ABOVE_SMA50"
+        ]
+      },
+      "bothSeats": true
+    },
+    "601225.SH": {
+      "ticker": "601225.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 25
+      },
+      "scores": {
+        "sol": 8.0
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "RSI_ROOM",
+          "LIQUIDITY_DEEP"
+        ]
+      },
+      "bothSeats": false
+    },
+    "601233.SH": {
+      "ticker": "601233.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 26
+      },
+      "scores": {
+        "sol": 8.0
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY",
+          "RSI_ROOM"
+        ]
+      },
+      "bothSeats": false
+    },
+    "688002.SH": {
+      "ticker": "688002.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 27
+      },
+      "scores": {
+        "sol": 7.9
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY",
+          "VOLUME_SUPPORT"
+        ]
+      },
+      "bothSeats": false
+    },
+    "688428.SH": {
+      "ticker": "688428.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 28
+      },
+      "scores": {
+        "sol": 7.9
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY",
+          "RSI_ROOM"
+        ]
+      },
+      "bothSeats": false
+    },
+    "603127.SH": {
+      "ticker": "603127.SH",
+      "nominatedBy": [
+        "claude",
+        "sol"
+      ],
+      "ranks": {
+        "sol": 29,
+        "claude": 28
+      },
+      "scores": {
+        "sol": 7.8,
+        "claude": 6.2
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "ABOVE_SMA50",
+          "VOLUME_SUPPORT"
+        ],
+        "claude": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "MOMENTUM_20D",
+          "VOLUME_SUPPORT"
+        ]
+      },
+      "bothSeats": true
+    },
+    "603156.SH": {
+      "ticker": "603156.SH",
+      "nominatedBy": [
+        "sol"
+      ],
+      "ranks": {
+        "sol": 30
+      },
+      "scores": {
+        "sol": 7.8
+      },
+      "reasonCodes": {
+        "sol": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "PIVOT_PROXIMITY",
+          "VOLUME_SUPPORT"
+        ]
+      },
+      "bothSeats": false
+    },
+    "000703.SZ": {
+      "ticker": "000703.SZ",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 1
+      },
+      "scores": {
+        "claude": 9.2
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "MOMENTUM_20D",
+          "VOLUME_SUPPORT"
+        ]
+      },
+      "bothSeats": false
+    },
+    "601857.SH": {
+      "ticker": "601857.SH",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 3
+      },
+      "scores": {
+        "claude": 8.8
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LARGE_CAP",
+          "LIQUIDITY_DEEP"
+        ]
+      },
+      "bothSeats": false
+    },
+    "601229.SH": {
+      "ticker": "601229.SH",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 6
+      },
+      "scores": {
+        "claude": 8.5
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "STOP_TIGHT"
+        ]
+      },
+      "bothSeats": false
+    },
+    "600968.SH": {
+      "ticker": "600968.SH",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 11
+      },
+      "scores": {
+        "claude": 7.9
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "RSI_ROOM",
+          "BASE_TIGHT"
+        ]
+      },
+      "bothSeats": false
+    },
+    "000301.SZ": {
+      "ticker": "000301.SZ",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 13
+      },
+      "scores": {
+        "claude": 7.8
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "MOMENTUM_60D",
+          "PIVOT_PROXIMITY"
+        ]
+      },
+      "bothSeats": false
+    },
+    "000975.SZ": {
+      "ticker": "000975.SZ",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 15
+      },
+      "scores": {
+        "claude": 7.5
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "MOMENTUM_20D",
+          "PIVOT_PROXIMITY",
+          "VOLUME_SUPPORT"
+        ]
+      },
+      "bothSeats": false
+    },
+    "600988.SH": {
+      "ticker": "600988.SH",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 18
+      },
+      "scores": {
+        "claude": 7.2
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "VOLUME_SUPPORT",
+          "ABOVE_SMA50"
+        ]
+      },
+      "bothSeats": false
+    },
+    "601988.SH": {
+      "ticker": "601988.SH",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 20
+      },
+      "scores": {
+        "claude": 7.0
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "LARGE_CAP",
+          "LIQUIDITY_DEEP",
+          "PIVOT_PROXIMITY"
+        ]
+      },
+      "bothSeats": false
+    },
+    "601939.SH": {
+      "ticker": "601939.SH",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 21
+      },
+      "scores": {
+        "claude": 6.9
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "LARGE_CAP",
+          "LIQUIDITY_DEEP",
+          "ABOVE_SMA50"
+        ]
+      },
+      "bothSeats": false
+    },
+    "601088.SH": {
+      "ticker": "601088.SH",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 22
+      },
+      "scores": {
+        "claude": 6.8
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "LARGE_CAP",
+          "LIQUIDITY_DEEP",
+          "LOW_VOLATILITY"
+        ]
+      },
+      "bothSeats": false
+    },
+    "600941.SH": {
+      "ticker": "600941.SH",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 23
+      },
+      "scores": {
+        "claude": 6.6
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "LARGE_CAP",
+          "LOW_VOLATILITY",
+          "RSI_ROOM"
+        ]
+      },
+      "bothSeats": false
+    },
+    "000651.SZ": {
+      "ticker": "000651.SZ",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 24
+      },
+      "scores": {
+        "claude": 6.5
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "LARGE_CAP",
+          "LOW_VOLATILITY",
+          "RSI_ROOM"
+        ]
+      },
+      "bothSeats": false
+    },
+    "600298.SH": {
+      "ticker": "600298.SH",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 25
+      },
+      "scores": {
+        "claude": 6.5
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "MOMENTUM_60D",
+          "ABOVE_SMA50",
+          "PIVOT_PROXIMITY"
+        ]
+      },
+      "bothSeats": false
+    },
+    "000333.SZ": {
+      "ticker": "000333.SZ",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 26
+      },
+      "scores": {
+        "claude": 6.3
+      },
+      "reasonCodes": {
+        "claude": [
+          "LARGE_CAP",
+          "LIQUIDITY_DEEP",
+          "ABOVE_SMA50",
+          "RSI_ROOM"
+        ]
+      },
+      "bothSeats": false
+    },
+    "300628.SZ": {
+      "ticker": "300628.SZ",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 27
+      },
+      "scores": {
+        "claude": 6.4
+      },
+      "reasonCodes": {
+        "claude": [
+          "TREND_STACK",
+          "PIVOT_PROXIMITY",
+          "LOW_VOLATILITY",
+          "BASE_TIGHT"
+        ]
+      },
+      "bothSeats": false
+    },
+    "300759.SZ": {
+      "ticker": "300759.SZ",
+      "nominatedBy": [
+        "claude"
+      ],
+      "ranks": {
+        "claude": 29
+      },
+      "scores": {
+        "claude": 6.0
+      },
+      "reasonCodes": {
+        "claude": [
+          "MOMENTUM_60D",
+          "MOMENTUM_20D",
+          "VOLUME_SUPPORT",
+          "RELATIVE_STRENGTH"
+        ]
+      },
+      "bothSeats": false
+    }
+  }
+}

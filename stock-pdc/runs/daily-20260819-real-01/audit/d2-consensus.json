@@ -1,0 +1,6064 @@
+{
+  "schemaVersion": "pdc-daily-consensus-v1",
+  "aggregationMode": "deterministic",
+  "weights": {
+    "market_regime": 0.09,
+    "trend": 0.18,
+    "livermore_breakout": 0.17,
+    "volume_price": 0.14,
+    "candlestick": 0.08,
+    "overheat": 0.11,
+    "risk": 0.18,
+    "zhuge_orion": 0.02,
+    "final_chair": 0.03
+  },
+  "memberIds": [
+    "claude",
+    "sol"
+  ],
+  "poolSize": 46,
+  "highDisagreementCount": 3,
+  "rows": [
+    {
+      "ticker": "600919.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 8.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 10.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        }
+      },
+      "seatTotals": {
+        "claude": 7.965,
+        "sol": 8.91
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.75,
+        "livermore_breakout": 9.25,
+        "volume_price": 9.0,
+        "candlestick": 8.0,
+        "overheat": 8.5,
+        "risk": 8.75,
+        "zhuge_orion": 5.0,
+        "final_chair": 9.5
+      },
+      "consensusTotal": 8.4375,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 0.945,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.87,
+      "riskScore": 9.4,
+      "overheatScore": 8.5,
+      "finalStatus": "Watch",
+      "rank": 1,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601919.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 5.0,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 10.0,
+          "candlestick": 8.0,
+          "overheat": 7.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        }
+      },
+      "seatTotals": {
+        "claude": 7.455,
+        "sol": 8.87
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 8.25,
+        "livermore_breakout": 9.25,
+        "volume_price": 9.0,
+        "candlestick": 8.0,
+        "overheat": 6.0,
+        "risk": 8.25,
+        "zhuge_orion": 5.0,
+        "final_chair": 9.5
+      },
+      "consensusTotal": 8.1625,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 1.415,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "volume_price",
+        "overheat"
+      ],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.845,
+      "riskScore": 8.4,
+      "overheatScore": 5.7,
+      "finalStatus": "Watch",
+      "rank": 2,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601009.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 6.5,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 9.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        }
+      },
+      "seatTotals": {
+        "claude": 7.575,
+        "sol": 8.42
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.75,
+        "livermore_breakout": 8.75,
+        "volume_price": 7.75,
+        "candlestick": 8.0,
+        "overheat": 8.5,
+        "risk": 7.75,
+        "zhuge_orion": 5.0,
+        "final_chair": 9.5
+      },
+      "consensusTotal": 7.9975,
+      "absoluteDisagreement": 2.5,
+      "totalDisagreement": 0.845,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.835,
+      "riskScore": 8.4,
+      "overheatScore": 8.5,
+      "finalStatus": "Watch",
+      "rank": 3,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600795.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 7.5,
+          "candlestick": 8.0,
+          "overheat": 7.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 10.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        }
+      },
+      "seatTotals": {
+        "claude": 7.34,
+        "sol": 8.56
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 6.5,
+        "livermore_breakout": 8.5,
+        "volume_price": 8.75,
+        "candlestick": 8.0,
+        "overheat": 8.0,
+        "risk": 8.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 9.5
+      },
+      "consensusTotal": 7.95,
+      "absoluteDisagreement": 2.5,
+      "totalDisagreement": 1.22,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "volume_price",
+        "overheat"
+      ],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.835,
+      "riskScore": 9.4,
+      "overheatScore": 8.5,
+      "finalStatus": "Watch",
+      "rank": 4,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601229.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 8.5,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 7.5,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.5
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        }
+      },
+      "seatTotals": {
+        "claude": 7.305,
+        "sol": 8.42
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 6.5,
+        "livermore_breakout": 9.25,
+        "volume_price": 7.5,
+        "candlestick": 8.0,
+        "overheat": 8.25,
+        "risk": 8.25,
+        "zhuge_orion": 5.0,
+        "final_chair": 8.75
+      },
+      "consensusTotal": 7.8625,
+      "absoluteDisagreement": 1.5,
+      "totalDisagreement": 1.115,
+      "highDisagreement": false,
+      "challengedDimensions": [],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.81,
+      "riskScore": 9.4,
+      "overheatScore": 8.5,
+      "finalStatus": "Watch",
+      "rank": 5,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "000651.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 8.0,
+          "volume_price": 6.0,
+          "candlestick": 8.0,
+          "overheat": 8.5,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        }
+      },
+      "seatTotals": {
+        "claude": 7.385,
+        "sol": 8.32
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.25,
+        "livermore_breakout": 8.5,
+        "volume_price": 7.0,
+        "candlestick": 8.0,
+        "overheat": 8.25,
+        "risk": 8.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 9.0
+      },
+      "consensusTotal": 7.8525,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 0.935,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.835,
+      "riskScore": 9.4,
+      "overheatScore": 7.5,
+      "finalStatus": "Watch",
+      "rank": 6,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601998.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 7.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.5
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 9.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        }
+      },
+      "seatTotals": {
+        "claude": 7.25,
+        "sol": 8.27
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.25,
+        "livermore_breakout": 9.25,
+        "volume_price": 8.0,
+        "candlestick": 8.0,
+        "overheat": 7.5,
+        "risk": 7.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 8.75
+      },
+      "consensusTotal": 7.76,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 1.02,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.785,
+      "riskScore": 8.4,
+      "overheatScore": 8.0,
+      "finalStatus": "Watch",
+      "rank": 7,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600926.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 7.5,
+          "volume_price": 6.5,
+          "candlestick": 8.0,
+          "overheat": 7.5,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        }
+      },
+      "seatTotals": {
+        "claude": 7.17,
+        "sol": 8.28
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 6.5,
+        "livermore_breakout": 8.25,
+        "volume_price": 7.25,
+        "candlestick": 8.0,
+        "overheat": 8.25,
+        "risk": 8.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 9.5
+      },
+      "consensusTotal": 7.725,
+      "absoluteDisagreement": 1.5,
+      "totalDisagreement": 1.11,
+      "highDisagreement": false,
+      "challengedDimensions": [],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.81,
+      "riskScore": 9.4,
+      "overheatScore": 8.5,
+      "finalStatus": "Watch",
+      "rank": 8,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "002142.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 7.0,
+          "livermore_breakout": 8.5,
+          "volume_price": 6.0,
+          "candlestick": 5.0,
+          "overheat": 8.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        }
+      },
+      "seatTotals": {
+        "claude": 7.265,
+        "sol": 8.05
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.5,
+        "livermore_breakout": 8.75,
+        "volume_price": 6.5,
+        "candlestick": 5.0,
+        "overheat": 8.5,
+        "risk": 8.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 9.0
+      },
+      "consensusTotal": 7.6575,
+      "absoluteDisagreement": 1.0,
+      "totalDisagreement": 0.785,
+      "highDisagreement": false,
+      "challengedDimensions": [],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.805,
+      "riskScore": 8.4,
+      "overheatScore": 8.5,
+      "finalStatus": "Watch",
+      "rank": 9,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "603129.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 8.0,
+          "livermore_breakout": 8.5,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 5.5,
+          "risk": 5.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 9.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        }
+      },
+      "seatTotals": {
+        "claude": 7.04,
+        "sol": 8.27
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 9.0,
+        "livermore_breakout": 9.25,
+        "volume_price": 8.0,
+        "candlestick": 8.0,
+        "overheat": 6.75,
+        "risk": 5.25,
+        "zhuge_orion": 5.0,
+        "final_chair": 8.0
+      },
+      "consensusTotal": 7.655,
+      "absoluteDisagreement": 2.5,
+      "totalDisagreement": 1.23,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "volume_price",
+        "overheat",
+        "final_chair"
+      ],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.815,
+      "riskScore": 5.2,
+      "overheatScore": 6.5,
+      "finalStatus": "Watch",
+      "rank": 10,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601665.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 7.0,
+          "volume_price": 6.0,
+          "candlestick": 5.0,
+          "overheat": 7.5,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 8.0,
+          "candlestick": 5.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.745,
+        "sol": 8.19
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.25,
+        "livermore_breakout": 8.0,
+        "volume_price": 7.0,
+        "candlestick": 5.0,
+        "overheat": 8.25,
+        "risk": 8.25,
+        "zhuge_orion": 5.0,
+        "final_chair": 8.5
+      },
+      "consensusTotal": 7.4675,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 1.445,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "livermore_breakout",
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 1,
+        "WATCH": 1,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.725,
+      "riskScore": 9.4,
+      "overheatScore": 8.5,
+      "finalStatus": "Watch",
+      "rank": 11,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600941.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 5.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 6.0,
+          "candlestick": 8.0,
+          "overheat": 8.5,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 6.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.945,
+        "sol": 7.65
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 5.5,
+        "livermore_breakout": 7.0,
+        "volume_price": 7.0,
+        "candlestick": 8.0,
+        "overheat": 8.25,
+        "risk": 8.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 9.5
+      },
+      "consensusTotal": 7.2975,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 0.705,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 1,
+        "WATCH": 1,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.765,
+      "riskScore": 8.4,
+      "overheatScore": 7.5,
+      "finalStatus": "Watch",
+      "rank": 12,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600968.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 7.5,
+          "candlestick": 5.0,
+          "overheat": 5.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.5
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 10.0,
+          "candlestick": 5.0,
+          "overheat": 7.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.68,
+        "sol": 7.91
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 6.25,
+        "livermore_breakout": 9.25,
+        "volume_price": 8.75,
+        "candlestick": 5.0,
+        "overheat": 6.0,
+        "risk": 7.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 9.25
+      },
+      "consensusTotal": 7.295,
+      "absoluteDisagreement": 2.5,
+      "totalDisagreement": 1.23,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "volume_price",
+        "overheat"
+      ],
+      "decisionVotes": {
+        "BUY": 1,
+        "WATCH": 1,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.76,
+      "riskScore": 8.4,
+      "overheatScore": 6.5,
+      "finalStatus": "Watch",
+      "rank": 13,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601857.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 7.5,
+          "volume_price": 6.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.945,
+        "sol": 7.58
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 6.5,
+        "livermore_breakout": 7.75,
+        "volume_price": 6.5,
+        "candlestick": 8.0,
+        "overheat": 8.5,
+        "risk": 7.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 8.5
+      },
+      "consensusTotal": 7.2625,
+      "absoluteDisagreement": 1.0,
+      "totalDisagreement": 0.635,
+      "highDisagreement": false,
+      "challengedDimensions": [],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.795,
+      "riskScore": 8.4,
+      "overheatScore": 7.2,
+      "finalStatus": "Watch",
+      "rank": 14,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "002966.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 5.5,
+          "candlestick": 5.0,
+          "overheat": 8.0,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.5
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 9.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.825,
+        "sol": 7.69
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 6.5,
+        "livermore_breakout": 8.5,
+        "volume_price": 6.25,
+        "candlestick": 5.0,
+        "overheat": 8.5,
+        "risk": 7.75,
+        "zhuge_orion": 5.0,
+        "final_chair": 8.75
+      },
+      "consensusTotal": 7.2575,
+      "absoluteDisagreement": 1.5,
+      "totalDisagreement": 0.865,
+      "highDisagreement": false,
+      "challengedDimensions": [],
+      "decisionVotes": {
+        "BUY": 1,
+        "WATCH": 1,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.74,
+      "riskScore": 8.4,
+      "overheatScore": 8.0,
+      "finalStatus": "Watch",
+      "rank": 15,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601988.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 5.0,
+          "candlestick": 5.0,
+          "overheat": 8.5,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 5.0,
+          "candlestick": 5.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.625,
+        "sol": 7.42
+      },
+      "seatDecisions": {
+        "claude": "BUY",
+        "sol": "BUY"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 6.5,
+        "livermore_breakout": 7.5,
+        "volume_price": 5.0,
+        "candlestick": 5.0,
+        "overheat": 8.75,
+        "risk": 8.25,
+        "zhuge_orion": 5.0,
+        "final_chair": 8.5
+      },
+      "consensusTotal": 7.0225,
+      "absoluteDisagreement": 1.5,
+      "totalDisagreement": 0.795,
+      "highDisagreement": false,
+      "challengedDimensions": [],
+      "decisionVotes": {
+        "BUY": 2,
+        "WATCH": 0,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.74,
+      "riskScore": 7.4,
+      "overheatScore": 8.5,
+      "finalStatus": "Watch",
+      "rank": 16,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "000703.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 8.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 8.5,
+          "candlestick": 8.0,
+          "overheat": 2.5,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 10.0,
+          "candlestick": 8.0,
+          "overheat": 4.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.56,
+        "sol": 7.39
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 9.25,
+        "livermore_breakout": 8.25,
+        "volume_price": 9.25,
+        "candlestick": 8.0,
+        "overheat": 3.25,
+        "risk": 3.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.0
+      },
+      "consensusTotal": 6.975,
+      "absoluteDisagreement": 1.5,
+      "totalDisagreement": 0.83,
+      "highDisagreement": false,
+      "challengedDimensions": [],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.8,
+      "riskScore": 4.2,
+      "overheatScore": 2.2,
+      "finalStatus": "High Risk Watch",
+      "rank": 17,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "002648.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 7.5,
+          "volume_price": 6.5,
+          "candlestick": 4.0,
+          "overheat": 5.5,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 8.0,
+          "candlestick": 4.0,
+          "overheat": 7.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.48,
+        "sol": 7.33
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.75,
+        "livermore_breakout": 7.75,
+        "volume_price": 7.25,
+        "candlestick": 4.0,
+        "overheat": 6.25,
+        "risk": 6.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.5
+      },
+      "consensusTotal": 6.905,
+      "absoluteDisagreement": 1.5,
+      "totalDisagreement": 0.85,
+      "highDisagreement": false,
+      "challengedDimensions": [],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.765,
+      "riskScore": 8.4,
+      "overheatScore": 6.5,
+      "finalStatus": "Watch",
+      "rank": 18,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601728.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 5.5,
+          "candlestick": 7.0,
+          "overheat": 7.0,
+          "risk": 6.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.39,
+        "sol": 7.35
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.0,
+        "livermore_breakout": 7.5,
+        "volume_price": 6.25,
+        "candlestick": 7.5,
+        "overheat": 7.5,
+        "risk": 6.25,
+        "zhuge_orion": 5.0,
+        "final_chair": 4.5
+      },
+      "consensusTotal": 6.87,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 0.96,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.705,
+      "riskScore": 7.4,
+      "overheatScore": 7.2,
+      "finalStatus": "Watch",
+      "rank": 19,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "300832.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 7.5,
+          "candlestick": 5.0,
+          "overheat": 3.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 10.0,
+          "candlestick": 5.0,
+          "overheat": 5.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.06,
+        "sol": 7.29
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.5,
+        "livermore_breakout": 8.0,
+        "volume_price": 8.75,
+        "candlestick": 5.0,
+        "overheat": 4.0,
+        "risk": 5.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.5
+      },
+      "consensusTotal": 6.675,
+      "absoluteDisagreement": 3.0,
+      "totalDisagreement": 1.23,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "volume_price",
+        "overheat"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.745,
+      "riskScore": 5.2,
+      "overheatScore": 2.9,
+      "finalStatus": "High Risk Watch",
+      "rank": 20,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "000301.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 5.5,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 4.5,
+          "risk": 5.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.5
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 9.0,
+          "candlestick": 5.0,
+          "overheat": 6.0,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.075,
+        "sol": 7.27
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 8.25,
+        "livermore_breakout": 6.25,
+        "volume_price": 8.0,
+        "candlestick": 5.0,
+        "overheat": 5.25,
+        "risk": 5.75,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.25
+      },
+      "consensusTotal": 6.6725,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 1.195,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.755,
+      "riskScore": 8.4,
+      "overheatScore": 5.6,
+      "finalStatus": "Watch",
+      "rank": 21,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "000333.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 6.0,
+          "trend": 5.0,
+          "livermore_breakout": 4.0,
+          "volume_price": 6.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 6.0,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.96,
+        "sol": 7.33
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.0,
+        "trend": 6.0,
+        "livermore_breakout": 5.0,
+        "volume_price": 6.5,
+        "candlestick": 8.0,
+        "overheat": 8.5,
+        "risk": 7.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 5.0
+      },
+      "consensusTotal": 6.645,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 1.37,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "market_regime",
+        "trend",
+        "livermore_breakout",
+        "final_chair"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.71,
+      "riskScore": 6.9,
+      "overheatScore": 6.6,
+      "finalStatus": "Watch",
+      "rank": 22,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "002493.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 5.5,
+          "volume_price": 7.5,
+          "candlestick": 8.0,
+          "overheat": 5.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 6.0,
+          "volume_price": 9.0,
+          "candlestick": 8.0,
+          "overheat": 7.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        }
+      },
+      "seatTotals": {
+        "claude": 6.185,
+        "sol": 7.09
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.25,
+        "livermore_breakout": 5.75,
+        "volume_price": 8.25,
+        "candlestick": 8.0,
+        "overheat": 6.0,
+        "risk": 5.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.5
+      },
+      "consensusTotal": 6.6375,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 0.905,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "overheat"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.76,
+      "riskScore": 6.4,
+      "overheatScore": 5.7,
+      "finalStatus": "Watch",
+      "rank": 23,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600985.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 6.5,
+          "volume_price": 6.0,
+          "candlestick": 5.0,
+          "overheat": 5.5,
+          "risk": 4.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 8.0,
+          "candlestick": 5.0,
+          "overheat": 7.0,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.96,
+        "sol": 7.15
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 8.25,
+        "livermore_breakout": 6.75,
+        "volume_price": 7.0,
+        "candlestick": 5.0,
+        "overheat": 6.25,
+        "risk": 5.25,
+        "zhuge_orion": 5.0,
+        "final_chair": 4.5
+      },
+      "consensusTotal": 6.555,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 1.19,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.705,
+      "riskScore": 6.4,
+      "overheatScore": 5.7,
+      "finalStatus": "Watch",
+      "rank": 24,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "688617.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 5.0,
+          "trend": 5.0,
+          "livermore_breakout": 6.5,
+          "volume_price": 6.5,
+          "candlestick": 5.0,
+          "overheat": 7.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 9.0,
+          "candlestick": 5.0,
+          "overheat": 8.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.745,
+        "sol": 7.29
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 6.5,
+        "trend": 6.0,
+        "livermore_breakout": 7.75,
+        "volume_price": 7.75,
+        "candlestick": 5.0,
+        "overheat": 7.5,
+        "risk": 5.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.5
+      },
+      "consensusTotal": 6.5175,
+      "absoluteDisagreement": 3.0,
+      "totalDisagreement": 1.545,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "market_regime",
+        "trend",
+        "livermore_breakout",
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.69,
+      "riskScore": 5.2,
+      "overheatScore": 7.2,
+      "finalStatus": "Watch",
+      "rank": 25,
+      "unresolvedDisagreement": true
+    },
+    {
+      "ticker": "600346.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 4.5,
+          "trend": 5.0,
+          "livermore_breakout": 5.5,
+          "volume_price": 6.5,
+          "candlestick": 8.0,
+          "overheat": 4.5,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 6.0,
+          "volume_price": 9.0,
+          "candlestick": 8.0,
+          "overheat": 6.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.675,
+        "sol": 7.16
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 6.25,
+        "trend": 6.0,
+        "livermore_breakout": 5.75,
+        "volume_price": 7.75,
+        "candlestick": 8.0,
+        "overheat": 5.25,
+        "risk": 6.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.5
+      },
+      "consensusTotal": 6.4175,
+      "absoluteDisagreement": 3.5,
+      "totalDisagreement": 1.485,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "market_regime",
+        "trend",
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.71,
+      "riskScore": 6.2,
+      "overheatScore": 4.0,
+      "finalStatus": "High Risk Watch",
+      "rank": 26,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600547.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 4.0,
+          "trend": 5.0,
+          "livermore_breakout": 8.5,
+          "volume_price": 6.5,
+          "candlestick": 8.0,
+          "overheat": 3.5,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 6.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.58,
+        "sol": 7.1
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 6.0,
+        "trend": 6.0,
+        "livermore_breakout": 9.25,
+        "volume_price": 7.25,
+        "candlestick": 8.0,
+        "overheat": 4.75,
+        "risk": 4.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 5.0
+      },
+      "consensusTotal": 6.34,
+      "absoluteDisagreement": 4.0,
+      "totalDisagreement": 1.52,
+      "highDisagreement": true,
+      "challengedDimensions": [
+        "market_regime",
+        "trend",
+        "overheat",
+        "final_chair"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.72,
+      "riskScore": 4.0,
+      "overheatScore": 3.3,
+      "finalStatus": "High Risk Watch",
+      "rank": 27,
+      "unresolvedDisagreement": true
+    },
+    {
+      "ticker": "300628.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 6.5,
+          "volume_price": 5.0,
+          "candlestick": 4.0,
+          "overheat": 7.0,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 5.0,
+          "candlestick": 4.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.905,
+        "sol": 6.76
+      },
+      "seatDecisions": {
+        "claude": "HOLD",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.0,
+        "livermore_breakout": 6.75,
+        "volume_price": 5.0,
+        "candlestick": 4.0,
+        "overheat": 7.5,
+        "risk": 6.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 4.5
+      },
+      "consensusTotal": 6.3325,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 0.855,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 1,
+        "HOLD": 1,
+        "SELL": 0
+      },
+      "meanConfidence": 0.695,
+      "riskScore": 8.4,
+      "overheatScore": 8.0,
+      "finalStatus": "Watch",
+      "rank": 28,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601088.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 4.0,
+          "volume_price": 5.0,
+          "candlestick": 8.0,
+          "overheat": 7.0,
+          "risk": 6.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 5.0,
+          "volume_price": 5.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.89,
+        "sol": 6.74
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.0,
+        "livermore_breakout": 4.5,
+        "volume_price": 5.0,
+        "candlestick": 8.0,
+        "overheat": 7.5,
+        "risk": 6.75,
+        "zhuge_orion": 5.0,
+        "final_chair": 4.5
+      },
+      "consensusTotal": 6.315,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 0.85,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.695,
+      "riskScore": 8.0,
+      "overheatScore": 8.0,
+      "finalStatus": "Watch",
+      "rank": 29,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600298.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 6.5,
+          "candlestick": 5.0,
+          "overheat": 7.0,
+          "risk": 5.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 9.0,
+          "candlestick": 5.0,
+          "overheat": 8.0,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.69,
+        "sol": 6.6
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.25,
+        "livermore_breakout": 3.0,
+        "volume_price": 7.75,
+        "candlestick": 5.0,
+        "overheat": 7.5,
+        "risk": 5.75,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.0
+      },
+      "consensusTotal": 6.145,
+      "absoluteDisagreement": 2.5,
+      "totalDisagreement": 0.91,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.73,
+      "riskScore": 7.4,
+      "overheatScore": 8.0,
+      "finalStatus": "Watch",
+      "rank": 30,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "603259.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 6.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 1.0,
+          "risk": 3.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.5
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 9.0,
+          "candlestick": 5.0,
+          "overheat": 2.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.415,
+        "sol": 6.82
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 8.75,
+        "livermore_breakout": 7.0,
+        "volume_price": 8.0,
+        "candlestick": 5.0,
+        "overheat": 1.5,
+        "risk": 3.75,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.25
+      },
+      "consensusTotal": 6.1175,
+      "absoluteDisagreement": 2.5,
+      "totalDisagreement": 1.405,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "livermore_breakout",
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.735,
+      "riskScore": 4.2,
+      "overheatScore": 1.0,
+      "finalStatus": "High Risk Watch",
+      "rank": 31,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "603156.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 7.0,
+          "livermore_breakout": 6.5,
+          "volume_price": 8.0,
+          "candlestick": 5.0,
+          "overheat": 0.0,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.5
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 10.0,
+          "candlestick": 5.0,
+          "overheat": 0.0,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.35,
+        "sol": 6.53
+      },
+      "seatDecisions": {
+        "claude": "SELL",
+        "sol": "HOLD"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 8.5,
+        "livermore_breakout": 7.25,
+        "volume_price": 9.0,
+        "candlestick": 5.0,
+        "overheat": 0.0,
+        "risk": 3.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 6.75
+      },
+      "consensusTotal": 5.94,
+      "absoluteDisagreement": 3.0,
+      "totalDisagreement": 1.18,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 0,
+        "HOLD": 1,
+        "SELL": 1
+      },
+      "meanConfidence": 0.745,
+      "riskScore": 4.2,
+      "overheatScore": 1.0,
+      "finalStatus": "High Risk Watch",
+      "rank": 32,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601939.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 4.0,
+          "volume_price": 3.0,
+          "candlestick": 5.0,
+          "overheat": 8.5,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 5.0,
+          "volume_price": 3.0,
+          "candlestick": 5.0,
+          "overheat": 9.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.535,
+        "sol": 6.33
+      },
+      "seatDecisions": {
+        "claude": "HOLD",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 6.25,
+        "livermore_breakout": 4.5,
+        "volume_price": 3.0,
+        "candlestick": 5.0,
+        "overheat": 8.75,
+        "risk": 7.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 4.5
+      },
+      "consensusTotal": 5.9325,
+      "absoluteDisagreement": 1.5,
+      "totalDisagreement": 0.795,
+      "highDisagreement": false,
+      "challengedDimensions": [],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 1,
+        "HOLD": 1,
+        "SELL": 0
+      },
+      "meanConfidence": 0.7,
+      "riskScore": 8.4,
+      "overheatScore": 7.5,
+      "finalStatus": "Watch",
+      "rank": 33,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600663.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 2.0,
+          "risk": 4.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 10.0,
+          "candlestick": 5.0,
+          "overheat": 4.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.3,
+        "sol": 6.3
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 9.0,
+        "livermore_breakout": 3.0,
+        "volume_price": 8.5,
+        "candlestick": 5.0,
+        "overheat": 3.0,
+        "risk": 4.25,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.0
+      },
+      "consensusTotal": 5.8,
+      "absoluteDisagreement": 3.0,
+      "totalDisagreement": 1.0,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "volume_price",
+        "overheat"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.685,
+      "riskScore": 4.2,
+      "overheatScore": 1.9,
+      "finalStatus": "High Risk Watch",
+      "rank": 34,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600428.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 6.0,
+          "candlestick": 5.0,
+          "overheat": 3.5,
+          "risk": 4.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 8.0,
+          "candlestick": 5.0,
+          "overheat": 6.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.325,
+        "sol": 6.24
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 9.0,
+        "livermore_breakout": 3.0,
+        "volume_price": 7.0,
+        "candlestick": 5.0,
+        "overheat": 4.75,
+        "risk": 4.25,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.0
+      },
+      "consensusTotal": 5.7825,
+      "absoluteDisagreement": 2.5,
+      "totalDisagreement": 0.915,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "volume_price",
+        "overheat"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.74,
+      "riskScore": 5.2,
+      "overheatScore": 5.0,
+      "finalStatus": "Wait for Pullback",
+      "rank": 35,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601225.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.0,
+          "candlestick": 5.0,
+          "overheat": 6.5,
+          "risk": 5.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.0,
+          "candlestick": 5.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        }
+      },
+      "seatTotals": {
+        "claude": 5.245,
+        "sol": 6.16
+      },
+      "seatDecisions": {
+        "claude": "HOLD",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.0,
+        "livermore_breakout": 3.0,
+        "volume_price": 5.0,
+        "candlestick": 5.0,
+        "overheat": 7.25,
+        "risk": 6.25,
+        "zhuge_orion": 5.0,
+        "final_chair": 4.5
+      },
+      "consensusTotal": 5.7025,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 0.915,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 1,
+        "HOLD": 1,
+        "SELL": 0
+      },
+      "meanConfidence": 0.67,
+      "riskScore": 8.4,
+      "overheatScore": 8.5,
+      "finalStatus": "Watch",
+      "rank": 36,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "601233.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.0,
+          "candlestick": 4.0,
+          "overheat": 5.5,
+          "risk": 4.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.0,
+          "candlestick": 4.0,
+          "overheat": 8.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        }
+      },
+      "seatTotals": {
+        "claude": 4.965,
+        "sol": 6.26
+      },
+      "seatDecisions": {
+        "claude": "HOLD",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.25,
+        "livermore_breakout": 3.0,
+        "volume_price": 5.0,
+        "candlestick": 4.0,
+        "overheat": 6.75,
+        "risk": 6.25,
+        "zhuge_orion": 5.0,
+        "final_chair": 4.5
+      },
+      "consensusTotal": 5.6125,
+      "absoluteDisagreement": 3.5,
+      "totalDisagreement": 1.295,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "overheat",
+        "risk"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 1,
+        "HOLD": 1,
+        "SELL": 0
+      },
+      "meanConfidence": 0.67,
+      "riskScore": 7.4,
+      "overheatScore": 7.0,
+      "finalStatus": "Watch",
+      "rank": 37,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600489.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 3.5,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 10.0,
+          "candlestick": 5.0,
+          "overheat": 6.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        }
+      },
+      "seatTotals": {
+        "claude": 4.925,
+        "sol": 6.16
+      },
+      "seatDecisions": {
+        "claude": "WATCH",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 6.75,
+        "livermore_breakout": 3.0,
+        "volume_price": 8.5,
+        "candlestick": 5.0,
+        "overheat": 4.75,
+        "risk": 4.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 7.0
+      },
+      "consensusTotal": 5.5425,
+      "absoluteDisagreement": 3.0,
+      "totalDisagreement": 1.235,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "volume_price",
+        "overheat"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 2,
+        "HOLD": 0,
+        "SELL": 0
+      },
+      "meanConfidence": 0.715,
+      "riskScore": 5.2,
+      "overheatScore": 5.0,
+      "finalStatus": "Wait for Pullback",
+      "rank": 38,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600737.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 6.0,
+          "volume_price": 5.5,
+          "candlestick": 3.0,
+          "overheat": 2.0,
+          "risk": 2.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 8.0,
+          "candlestick": 3.0,
+          "overheat": 3.0,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        }
+      },
+      "seatTotals": {
+        "claude": 4.63,
+        "sol": 6.18
+      },
+      "seatDecisions": {
+        "claude": "SELL",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.5,
+        "livermore_breakout": 7.0,
+        "volume_price": 6.75,
+        "candlestick": 3.0,
+        "overheat": 2.5,
+        "risk": 2.75,
+        "zhuge_orion": 5.0,
+        "final_chair": 4.5
+      },
+      "consensusTotal": 5.405,
+      "absoluteDisagreement": 3.0,
+      "totalDisagreement": 1.55,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "livermore_breakout",
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 1,
+        "HOLD": 0,
+        "SELL": 1
+      },
+      "meanConfidence": 0.7,
+      "riskScore": 4.2,
+      "overheatScore": 2.2,
+      "finalStatus": "High Risk Watch",
+      "rank": 39,
+      "unresolvedDisagreement": true
+    },
+    {
+      "ticker": "603268.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 7.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.5,
+          "candlestick": 1.5,
+          "overheat": 3.5,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 10.0,
+          "candlestick": 2.0,
+          "overheat": 4.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        }
+      },
+      "seatTotals": {
+        "claude": 4.675,
+        "sol": 6.06
+      },
+      "seatDecisions": {
+        "claude": "SELL",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 8.0,
+        "livermore_breakout": 3.0,
+        "volume_price": 7.75,
+        "candlestick": 1.75,
+        "overheat": 3.75,
+        "risk": 4.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 6.5
+      },
+      "consensusTotal": 5.3675,
+      "absoluteDisagreement": 4.5,
+      "totalDisagreement": 1.385,
+      "highDisagreement": true,
+      "challengedDimensions": [
+        "trend",
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 1,
+        "HOLD": 0,
+        "SELL": 1
+      },
+      "meanConfidence": 0.725,
+      "riskScore": 6.4,
+      "overheatScore": 4.8,
+      "finalStatus": "Wait for Pullback",
+      "rank": 40,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "688002.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.5,
+          "candlestick": 5.0,
+          "overheat": 5.0,
+          "risk": 2.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 6.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        }
+      },
+      "seatTotals": {
+        "claude": 4.61,
+        "sol": 5.86
+      },
+      "seatDecisions": {
+        "claude": "HOLD",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.75,
+        "livermore_breakout": 3.0,
+        "volume_price": 6.25,
+        "candlestick": 5.0,
+        "overheat": 5.5,
+        "risk": 3.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 4.5
+      },
+      "consensusTotal": 5.235,
+      "absoluteDisagreement": 2.5,
+      "totalDisagreement": 1.25,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "risk"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 1,
+        "HOLD": 1,
+        "SELL": 0
+      },
+      "meanConfidence": 0.68,
+      "riskScore": 6.0,
+      "overheatScore": 5.6,
+      "finalStatus": "Remove",
+      "rank": 41,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "000975.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 6.0,
+          "candlestick": 2.0,
+          "overheat": 3.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 8.0,
+          "candlestick": 2.0,
+          "overheat": 6.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        }
+      },
+      "seatTotals": {
+        "claude": 4.46,
+        "sol": 5.61
+      },
+      "seatDecisions": {
+        "claude": "SELL",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 6.75,
+        "livermore_breakout": 3.0,
+        "volume_price": 7.0,
+        "candlestick": 2.0,
+        "overheat": 4.5,
+        "risk": 4.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 6.0
+      },
+      "consensusTotal": 5.035,
+      "absoluteDisagreement": 3.0,
+      "totalDisagreement": 1.15,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "volume_price",
+        "overheat"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 1,
+        "HOLD": 0,
+        "SELL": 1
+      },
+      "meanConfidence": 0.715,
+      "riskScore": 4.2,
+      "overheatScore": 4.2,
+      "finalStatus": "High Risk Watch",
+      "rank": 42,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "688428.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 6.0,
+          "candlestick": 1.5,
+          "overheat": 3.5,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 2.0,
+          "overheat": 4.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        }
+      },
+      "seatTotals": {
+        "claude": 4.445,
+        "sol": 5.46
+      },
+      "seatDecisions": {
+        "claude": "SELL",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.25,
+        "livermore_breakout": 3.0,
+        "volume_price": 6.5,
+        "candlestick": 1.75,
+        "overheat": 3.75,
+        "risk": 4.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 6.0
+      },
+      "consensusTotal": 4.9525,
+      "absoluteDisagreement": 2.0,
+      "totalDisagreement": 1.015,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "risk",
+        "final_chair"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 1,
+        "HOLD": 0,
+        "SELL": 1
+      },
+      "meanConfidence": 0.665,
+      "riskScore": 6.4,
+      "overheatScore": 4.8,
+      "finalStatus": "Wait for Pullback",
+      "rank": 43,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "600988.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.5,
+          "candlestick": 5.0,
+          "overheat": 3.5,
+          "risk": 2.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 7.0,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        }
+      },
+      "seatTotals": {
+        "claude": 4.265,
+        "sol": 5.61
+      },
+      "seatDecisions": {
+        "claude": "HOLD",
+        "sol": "WATCH"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 6.75,
+        "livermore_breakout": 3.0,
+        "volume_price": 6.25,
+        "candlestick": 5.0,
+        "overheat": 5.25,
+        "risk": 2.5,
+        "zhuge_orion": 5.0,
+        "final_chair": 4.5
+      },
+      "consensusTotal": 4.9375,
+      "absoluteDisagreement": 3.5,
+      "totalDisagreement": 1.345,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "overheat"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 1,
+        "HOLD": 1,
+        "SELL": 0
+      },
+      "meanConfidence": 0.685,
+      "riskScore": 3.2,
+      "overheatScore": 5.0,
+      "finalStatus": "Remove",
+      "rank": 44,
+      "unresolvedDisagreement": false
+    },
+    {
+      "ticker": "300759.SZ",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.5,
+          "candlestick": 1.5,
+          "overheat": 0.5,
+          "risk": 2.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 9.0,
+          "candlestick": 2.0,
+          "overheat": 2.0,
+          "risk": 2.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        }
+      },
+      "seatTotals": {
+        "claude": 3.805,
+        "sol": 5.31
+      },
+      "seatDecisions": {
+        "claude": "SELL",
+        "sol": "HOLD"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 8.0,
+        "livermore_breakout": 3.0,
+        "volume_price": 7.25,
+        "candlestick": 1.75,
+        "overheat": 1.25,
+        "risk": 2.0,
+        "zhuge_orion": 5.0,
+        "final_chair": 6.0
+      },
+      "consensusTotal": 4.5575,
+      "absoluteDisagreement": 4.0,
+      "totalDisagreement": 1.505,
+      "highDisagreement": true,
+      "challengedDimensions": [
+        "trend",
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 0,
+        "HOLD": 1,
+        "SELL": 1
+      },
+      "meanConfidence": 0.76,
+      "riskScore": 3.2,
+      "overheatScore": 1.2,
+      "finalStatus": "Remove",
+      "rank": 45,
+      "unresolvedDisagreement": true
+    },
+    {
+      "ticker": "603127.SH",
+      "seatDimensions": {
+        "claude": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.0,
+          "candlestick": 1.5,
+          "overheat": 3.5,
+          "risk": 1.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "sol": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 2.0,
+          "overheat": 5.0,
+          "risk": 2.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        }
+      },
+      "seatTotals": {
+        "claude": 3.885,
+        "sol": 5.21
+      },
+      "seatDecisions": {
+        "claude": "SELL",
+        "sol": "HOLD"
+      },
+      "consensusDimensions": {
+        "market_regime": 7.5,
+        "trend": 7.25,
+        "livermore_breakout": 3.0,
+        "volume_price": 6.0,
+        "candlestick": 1.75,
+        "overheat": 4.25,
+        "risk": 1.75,
+        "zhuge_orion": 5.0,
+        "final_chair": 6.5
+      },
+      "consensusTotal": 4.5475,
+      "absoluteDisagreement": 3.5,
+      "totalDisagreement": 1.325,
+      "highDisagreement": false,
+      "challengedDimensions": [
+        "trend",
+        "volume_price"
+      ],
+      "decisionVotes": {
+        "BUY": 0,
+        "WATCH": 0,
+        "HOLD": 1,
+        "SELL": 1
+      },
+      "meanConfidence": 0.7,
+      "riskScore": 3.8,
+      "overheatScore": 4.8,
+      "finalStatus": "High Risk Watch",
+      "rank": 46,
+      "unresolvedDisagreement": false
+    }
+  ],
+  "stage": "post-detail",
+  "disagreementLimit": 1.5,
+  "unresolvedCount": 4,
+  "disagreementMatrix": {
+    "schemaVersion": "pdc-sustainable-disagreement-v1",
+    "memberIds": [
+      "claude",
+      "sol"
+    ],
+    "threshold": 2.0,
+    "highDisagreementThreshold": 4.0,
+    "candidateCount": 46,
+    "challengedCount": 37,
+    "highDisagreementCount": 3,
+    "rows": [
+      {
+        "ticker": "000301.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 5.5,
+            "sol": 7.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 7.0,
+            "sol": 9.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 4.5,
+            "sol": 6.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 5.5,
+            "sol": 6.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "volume_price"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "000333.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "trend": {
+            "claude": 5.0,
+            "sol": 7.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 4.0,
+            "sol": 6.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "volume_price": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 6.0,
+            "difference": 2.0,
+            "challenge": true
+          }
+        },
+        "challengedDimensions": [
+          "market_regime",
+          "trend",
+          "livermore_breakout",
+          "final_chair"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "000651.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 8.5,
+            "sol": 8.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 9.0,
+            "sol": 9.0,
+            "difference": 0.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "volume_price"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "000703.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 8.5,
+            "sol": 10.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 8.5,
+            "sol": 8.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 8.5,
+            "sol": 10.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 2.5,
+            "sol": 4.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 3.0,
+            "sol": 4.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 7.0,
+            "sol": 7.0,
+            "difference": 0.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [],
+        "maxDifference": 1.5,
+        "needsChallenge": false,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "000975.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 5.5,
+            "sol": 8.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 2.0,
+            "sol": 2.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 3.0,
+            "sol": 6.0,
+            "difference": 3.0,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 4.0,
+            "sol": 4.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 6.0,
+            "sol": 6.0,
+            "difference": 0.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "volume_price",
+          "overheat"
+        ],
+        "maxDifference": 3.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "002142.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 8.5,
+            "sol": 9.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 9.0,
+            "sol": 9.0,
+            "difference": 0.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [],
+        "maxDifference": 1.0,
+        "needsChallenge": false,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "002493.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 5.5,
+            "sol": 6.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 5.0,
+            "sol": 7.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "overheat"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "002648.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 7.5,
+            "sol": 8.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 7.5,
+            "sol": 8.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 4.0,
+            "sol": 4.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 5.5,
+            "sol": 7.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [],
+        "maxDifference": 1.5,
+        "needsChallenge": false,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "002966.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.5,
+            "sol": 7.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 7.5,
+            "sol": 8.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 8.5,
+            "sol": 9.0,
+            "difference": 0.5,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [],
+        "maxDifference": 1.5,
+        "needsChallenge": false,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "300628.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 6.5,
+            "sol": 7.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 4.0,
+            "sol": 4.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "300759.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 10.0,
+            "difference": 4.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.5,
+            "sol": 9.0,
+            "difference": 3.5,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 1.5,
+            "sol": 2.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 0.5,
+            "sol": 2.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 2.0,
+            "sol": 2.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 6.0,
+            "sol": 6.0,
+            "difference": 0.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "volume_price"
+        ],
+        "maxDifference": 4.0,
+        "needsChallenge": true,
+        "highDisagreement": true
+      },
+      {
+        "ticker": "300832.SZ",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 9.0,
+            "difference": 3.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 7.5,
+            "sol": 10.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 3.0,
+            "sol": 5.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "volume_price",
+          "overheat"
+        ],
+        "maxDifference": 3.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600298.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.5,
+            "sol": 9.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 5.5,
+            "sol": 6.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 7.0,
+            "sol": 7.0,
+            "difference": 0.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "volume_price"
+        ],
+        "maxDifference": 2.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600346.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 4.5,
+            "sol": 8.0,
+            "difference": 3.5,
+            "challenge": true
+          },
+          "trend": {
+            "claude": 5.0,
+            "sol": 7.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 5.5,
+            "sol": 6.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.5,
+            "sol": 9.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 4.5,
+            "sol": 6.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "market_regime",
+          "trend",
+          "volume_price"
+        ],
+        "maxDifference": 3.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600428.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 8.0,
+            "sol": 10.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 3.5,
+            "sol": 6.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 4.5,
+            "sol": 4.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 7.0,
+            "sol": 7.0,
+            "difference": 0.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "volume_price",
+          "overheat"
+        ],
+        "maxDifference": 2.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600489.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 5.5,
+            "sol": 8.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 7.0,
+            "sol": 10.0,
+            "difference": 3.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 3.5,
+            "sol": 6.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 4.0,
+            "sol": 4.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 7.0,
+            "sol": 7.0,
+            "difference": 0.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "volume_price",
+          "overheat"
+        ],
+        "maxDifference": 3.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600547.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 4.0,
+            "sol": 8.0,
+            "difference": 4.0,
+            "challenge": true
+          },
+          "trend": {
+            "claude": 5.0,
+            "sol": 7.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 8.5,
+            "sol": 10.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 3.5,
+            "sol": 6.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 4.0,
+            "sol": 4.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 6.0,
+            "difference": 2.0,
+            "challenge": true
+          }
+        },
+        "challengedDimensions": [
+          "market_regime",
+          "trend",
+          "overheat",
+          "final_chair"
+        ],
+        "maxDifference": 4.0,
+        "needsChallenge": true,
+        "highDisagreement": true
+      },
+      {
+        "ticker": "600663.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 8.0,
+            "sol": 10.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 7.0,
+            "sol": 10.0,
+            "difference": 3.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 2.0,
+            "sol": 4.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 4.5,
+            "sol": 4.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 7.0,
+            "sol": 7.0,
+            "difference": 0.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "volume_price",
+          "overheat"
+        ],
+        "maxDifference": 3.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600737.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 9.0,
+            "difference": 3.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "volume_price": {
+            "claude": 5.5,
+            "sol": 8.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 2.0,
+            "sol": 3.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 2.5,
+            "sol": 3.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "livermore_breakout",
+          "volume_price"
+        ],
+        "maxDifference": 3.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600795.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 7.5,
+            "sol": 10.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 7.0,
+            "sol": 9.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 9.0,
+            "sol": 10.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "volume_price",
+          "overheat"
+        ],
+        "maxDifference": 2.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600919.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 7.5,
+            "sol": 8.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 8.5,
+            "sol": 10.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 8.0,
+            "sol": 10.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 8.5,
+            "sol": 9.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 9.0,
+            "sol": 10.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "volume_price"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600926.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 9.0,
+            "sol": 10.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [],
+        "maxDifference": 1.5,
+        "needsChallenge": false,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600941.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 5.0,
+            "sol": 6.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 7.0,
+            "sol": 7.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 8.5,
+            "sol": 8.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 9.0,
+            "sol": 10.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "volume_price"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600968.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 5.5,
+            "sol": 7.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 8.5,
+            "sol": 10.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 7.5,
+            "sol": 10.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 5.0,
+            "sol": 7.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 7.0,
+            "sol": 7.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 8.5,
+            "sol": 10.0,
+            "difference": 1.5,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "volume_price",
+          "overheat"
+        ],
+        "maxDifference": 2.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600985.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 6.5,
+            "sol": 7.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 5.5,
+            "sol": 7.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 4.5,
+            "sol": 6.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "volume_price"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "600988.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 5.5,
+            "sol": 8.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.5,
+            "sol": 7.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 3.5,
+            "sol": 7.0,
+            "difference": 3.5,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 2.0,
+            "sol": 3.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "overheat"
+        ],
+        "maxDifference": 3.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601009.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 7.5,
+            "sol": 8.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 8.5,
+            "sol": 9.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.5,
+            "sol": 9.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 7.5,
+            "sol": 8.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 9.0,
+            "sol": 10.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "volume_price"
+        ],
+        "maxDifference": 2.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601088.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 6.5,
+            "sol": 7.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601225.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 5.5,
+            "sol": 7.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601229.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 8.5,
+            "sol": 10.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 8.5,
+            "sol": 9.0,
+            "difference": 0.5,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [],
+        "maxDifference": 1.5,
+        "needsChallenge": false,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601233.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 4.0,
+            "sol": 4.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 5.5,
+            "sol": 8.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 4.5,
+            "sol": 8.0,
+            "difference": 3.5,
+            "challenge": true
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "overheat",
+          "risk"
+        ],
+        "maxDifference": 3.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601665.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 7.0,
+            "sol": 9.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "volume_price": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "livermore_breakout",
+          "volume_price"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601728.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.5,
+            "sol": 7.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 6.5,
+            "sol": 6.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601857.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 7.5,
+            "sol": 8.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 7.0,
+            "sol": 7.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [],
+        "maxDifference": 1.0,
+        "needsChallenge": false,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601919.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 8.5,
+            "sol": 10.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 8.0,
+            "sol": 10.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 5.0,
+            "sol": 7.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 9.0,
+            "sol": 10.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "volume_price",
+          "overheat"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601939.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 5.5,
+            "sol": 7.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 8.5,
+            "sol": 9.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [],
+        "maxDifference": 1.5,
+        "needsChallenge": false,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601988.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 8.5,
+            "sol": 9.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 7.5,
+            "sol": 9.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 8.0,
+            "sol": 9.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [],
+        "maxDifference": 1.5,
+        "needsChallenge": false,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "601998.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 8.5,
+            "sol": 10.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 7.0,
+            "sol": 9.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 7.0,
+            "sol": 7.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 8.5,
+            "sol": 9.0,
+            "difference": 0.5,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "volume_price"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "603127.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 5.5,
+            "sol": 9.0,
+            "difference": 3.5,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.0,
+            "sol": 7.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 1.5,
+            "sol": 2.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 3.5,
+            "sol": 5.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 1.5,
+            "sol": 2.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "volume_price"
+        ],
+        "maxDifference": 3.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "603129.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 8.0,
+            "sol": 10.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 8.5,
+            "sol": 10.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 7.0,
+            "sol": 9.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 8.0,
+            "sol": 8.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 5.5,
+            "sol": 8.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "risk": {
+            "claude": 5.5,
+            "sol": 5.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 7.0,
+            "sol": 9.0,
+            "difference": 2.0,
+            "challenge": true
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "volume_price",
+          "overheat",
+          "final_chair"
+        ],
+        "maxDifference": 2.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "603156.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 7.0,
+            "sol": 10.0,
+            "difference": 3.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 8.0,
+            "sol": 10.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 0.0,
+            "sol": 0.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 6.5,
+            "sol": 7.0,
+            "difference": 0.5,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "volume_price"
+        ],
+        "maxDifference": 3.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "603259.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 7.5,
+            "sol": 10.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 6.0,
+            "sol": 8.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "volume_price": {
+            "claude": 7.0,
+            "sol": 9.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 1.0,
+            "sol": 2.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 3.5,
+            "sol": 4.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "livermore_breakout",
+          "volume_price"
+        ],
+        "maxDifference": 2.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "603268.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 7.0,
+            "sol": 9.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.5,
+            "sol": 10.0,
+            "difference": 4.5,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 1.5,
+            "sol": 2.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 3.5,
+            "sol": 4.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "volume_price"
+        ],
+        "maxDifference": 4.5,
+        "needsChallenge": true,
+        "highDisagreement": true
+      },
+      {
+        "ticker": "688002.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.5,
+            "sol": 9.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 5.5,
+            "sol": 7.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 5.0,
+            "sol": 6.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 2.0,
+            "sol": 4.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 4.0,
+            "sol": 5.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "trend",
+          "risk"
+        ],
+        "maxDifference": 2.5,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "688428.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "trend": {
+            "claude": 6.5,
+            "sol": 8.0,
+            "difference": 1.5,
+            "challenge": false
+          },
+          "livermore_breakout": {
+            "claude": 3.0,
+            "sol": 3.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "volume_price": {
+            "claude": 6.0,
+            "sol": 7.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "candlestick": {
+            "claude": 1.5,
+            "sol": 2.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 3.5,
+            "sol": 4.0,
+            "difference": 0.5,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 3.0,
+            "sol": 5.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 5.0,
+            "sol": 7.0,
+            "difference": 2.0,
+            "challenge": true
+          }
+        },
+        "challengedDimensions": [
+          "risk",
+          "final_chair"
+        ],
+        "maxDifference": 2.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      },
+      {
+        "ticker": "688617.SH",
+        "dimensions": {
+          "market_regime": {
+            "claude": 5.0,
+            "sol": 8.0,
+            "difference": 3.0,
+            "challenge": true
+          },
+          "trend": {
+            "claude": 5.0,
+            "sol": 7.0,
+            "difference": 2.0,
+            "challenge": true
+          },
+          "livermore_breakout": {
+            "claude": 6.5,
+            "sol": 9.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "volume_price": {
+            "claude": 6.5,
+            "sol": 9.0,
+            "difference": 2.5,
+            "challenge": true
+          },
+          "candlestick": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "overheat": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          },
+          "risk": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "zhuge_orion": {
+            "claude": 5.0,
+            "sol": 5.0,
+            "difference": 0.0,
+            "challenge": false
+          },
+          "final_chair": {
+            "claude": 7.0,
+            "sol": 8.0,
+            "difference": 1.0,
+            "challenge": false
+          }
+        },
+        "challengedDimensions": [
+          "market_regime",
+          "trend",
+          "livermore_breakout",
+          "volume_price"
+        ],
+        "maxDifference": 3.0,
+        "needsChallenge": true,
+        "highDisagreement": false
+      }
+    ]
+  }
+}

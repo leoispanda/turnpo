@@ -1,0 +1,625 @@
+{
+  "schemaVersion": "pdc-daily-review-record-v1",
+  "runId": "daily-20260819-real-01",
+  "stageId": "D3",
+  "factsHash": "6b73c2be6bc0e6b303f94742825f919170ba7310c1000ab7383339f29966c0af",
+  "candidateCount": 20,
+  "tickers": [
+    "000651.SZ",
+    "000703.SZ",
+    "002142.SZ",
+    "002648.SZ",
+    "002966.SZ",
+    "300832.SZ",
+    "600795.SH",
+    "600919.SH",
+    "600926.SH",
+    "600941.SH",
+    "600968.SH",
+    "601009.SH",
+    "601229.SH",
+    "601665.SH",
+    "601728.SH",
+    "601857.SH",
+    "601919.SH",
+    "601988.SH",
+    "601998.SH",
+    "603129.SH"
+  ],
+  "memberResults": [
+    {
+      "schemaVersion": "pdc-daily-review-record-v1",
+      "memberId": "sol",
+      "status": "FAILED",
+      "failureReason": "契约校验失败：600968.SH/livermore_breakout 引用了不存在的 fact_id：600968.SZ.pivot55",
+      "candidateCount": 20,
+      "assessments": [],
+      "rejectedOutput": {
+        "assessments": [
+          {
+            "ticker": "000651.SZ",
+            "confidence": 0.86,
+            "challenge": "Price remains 2.7% below the pivot, so confirmation is still pending.",
+            "revisions": []
+          },
+          {
+            "ticker": "000703.SZ",
+            "confidence": 0.9,
+            "challenge": "RSI 72.6 and a 26.5% extension above the 50-day average create substantial pullback risk.",
+            "revisions": []
+          },
+          {
+            "ticker": "002142.SZ",
+            "confidence": 0.84,
+            "challenge": "It is at, but has not yet cleared, the 55-day pivot.",
+            "revisions": [
+              {
+                "dimension": "livermore_breakout",
+                "from_score": 9,
+                "to_score": 8,
+                "fact_ids": [
+                  "002142.SZ.pivot_dist_pct",
+                  "002142.SZ.pivot55",
+                  "002142.SZ.close"
+                ],
+                "note": "A pre-breakout setup at -0.03% from pivot is strong, but not equivalent to a confirmed clearance."
+              }
+            ]
+          },
+          {
+            "ticker": "002648.SZ",
+            "confidence": 0.82,
+            "challenge": "The stock is still below pivot and its 9.9% distance above the 50-day average leaves less room for an immediate entry.",
+            "revisions": [
+              {
+                "dimension": "livermore_breakout",
+                "from_score": 8,
+                "to_score": 7,
+                "fact_ids": [
+                  "002648.SZ.pivot_dist_pct",
+                  "002648.SZ.sma50_dist_pct"
+                ],
+                "note": "At 1.25% below pivot, the breakout remains unconfirmed."
+              },
+              {
+                "dimension": "overheat",
+                "from_score": 7,
+                "to_score": 6,
+                "fact_ids": [
+                  "002648.SZ.rsi14",
+                  "002648.SZ.sma50_dist_pct"
+                ],
+                "note": "RSI 65.5 together with a near-10% extension above the 50-day average warrants more caution."
+              },
+              {
+                "dimension": "final_chair",
+                "from_score": 8,
+                "to_score": 7,
+                "fact_ids": [
+                  "002648.SZ.pivot_dist_pct",
+                  "002648.SZ.rsi14"
+                ],
+                "note": "The unresolved pivot and elevated extension make the overall setup less complete."
+              }
+            ]
+          },
+          {
+            "ticker": "002966.SZ",
+            "confidence": 0.78,
+            "challenge": "The pivot is unconfirmed and turnover is only ¥3.1亿.",
+            "revisions": [
+              {
+                "dimension": "volume_price",
+                "from_score": 7,
+                "to_score": 6,
+                "fact_ids": [
+                  "002966.SZ.turnover_yi",
+                  "002966.SZ.vol20_pct",
+                  "002966.SZ.mom20_pct"
+                ],
+                "note": "The stated volume support is positive, but low absolute turnover and modest volume expansion limit conviction."
+              },
+              {
+                "dimension": "final_chair",
+                "from_score": 9,
+                "to_score": 8,
+                "fact_ids": [
+                  "002966.SZ.pivot_dist_pct",
+                  "002966.SZ.turnover_yi"
+                ],
+                "note": "Near-pivot positioning is constructive, but it is not a confirmed breakout and liquidity is comparatively limited."
+              }
+            ]
+          },
+          {
+            "ticker": "300832.SZ",
+            "confidence": 0.87,
+            "challenge": "RSI 71.4, a 17.8% 50-day extension, and 4.0% ATR leave it vulnerable to a sharp pullback.",
+            "revisions": [
+              {
+                "dimension": "final_chair",
+                "from_score": 8,
+                "to_score": 7,
+                "fact_ids": [
+                  "300832.SZ.rsi14",
+                  "300832.SZ.sma50_dist_pct",
+                  "300832.SZ.atr_pct"
+                ],
+                "note": "Strong trend and volume evidence are offset by a materially stretched and volatile entry condition."
+              }
+            ]
+          },
+          {
+            "ticker": "600795.SH",
+            "confidence": 0.85,
+            "challenge": "It is still 1.9% below the pivot, so the breakout has not been confirmed.",
+            "revisions": [
+              {
+                "dimension": "livermore_breakout",
+                "from_score": 9,
+                "to_score": 8,
+                "fact_ids": [
+                  "600795.SH.pivot_dist_pct",
+                  "600795.SH.pivot55",
+                  "600795.SH.close"
+                ],
+                "note": "The setup is high quality, but remains a near-pivot setup rather than a confirmed breakout."
+              },
+              {
+                "dimension": "final_chair",
+                "from_score": 10,
+                "to_score": 9,
+                "fact_ids": [
+                  "600795.SH.pivot_dist_pct",
+                  "600795.SH.atr_pct"
+                ],
+                "note": "Low ATR and constructive evidence support a high score, while the unconfirmed pivot prevents a maximum overall score."
+              }
+            ]
+          },
+          {
+            "ticker": "600919.SH",
+            "confidence": 0.84,
+            "challenge": "The 0.4% pivot clearance is very fresh and susceptible to a failed-breakout retest.",
+            "revisions": [
+              {
+                "dimension": "livermore_breakout",
+                "from_score": 10,
+                "to_score": 9,
+                "fact_ids": [
+                  "600919.SH.pivot_dist_pct",
+                  "600919.SH.vol20_pct"
+                ],
+                "note": "Breakout volume is constructive, but a 0.42% clearance is too slight for a maximum breakout score."
+              },
+              {
+                "dimension": "final_chair",
+                "from_score": 10,
+                "to_score": 9,
+                "fact_ids": [
+                  "600919.SH.pivot_dist_pct",
+                  "600919.SH.atr_pct"
+                ],
+                "note": "The setup is strong, but the minimal clearance means confirmation remains early."
+              }
+            ]
+          },
+          {
+            "ticker": "600926.SH",
+            "confidence": 0.85,
+            "challenge": "The breakout is only 1.0% beyond pivot, leaving meaningful failed-breakout risk.",
+            "revisions": [
+              {
+                "dimension": "final_chair",
+                "from_score": 10,
+                "to_score": 9,
+                "fact_ids": [
+                  "600926.SH.pivot_dist_pct",
+                  "600926.SH.atr_pct"
+                ],
+                "note": "Low volatility and a clean pivot clearance are strong, but the initial clearance is not enough for a maximum integrated score."
+              }
+            ]
+          },
+          {
+            "ticker": "600941.SH",
+            "confidence": 0.78,
+            "challenge": "Momentum is modest, price is 2.3% below pivot, and the 200-day distance is only 1.2%.",
+            "revisions": [
+              {
+                "dimension": "final_chair",
+                "from_score": 10,
+                "to_score": 8,
+                "fact_ids": [
+                  "600941.SH.pivot_dist_pct",
+                  "600941.SH.mom60_pct",
+                  "600941.SH.sma200_dist_pct"
+                ],
+                "note": "Risk control is strong, but the unconfirmed pivot and low-momentum long-term trend do not support a maximum overall score."
+              }
+            ]
+          },
+          {
+            "ticker": "600968.SH",
+            "confidence": 0.8,
+            "challenge": "The 11.7% base width, RSI 66.7, and 9.4% 50-day extension make this a less controlled breakout.",
+            "revisions": [
+              {
+                "dimension": "livermore_breakout",
+                "from_score": 10,
+                "to_score": 9,
+                "fact_ids": [
+                  "600968.SH.pivot_dist_pct",
+                  "600968.SZ.pivot55",
+                  "600968.SH.sma50_dist_pct"
+                ],
+                "note": "The breakout is volume-confirmed, but its wider base and already extended position argue against a maximum score."
+              },
+              {
+                "dimension": "overheat",
+                "from_score": 7,
+                "to_score": 6,
+                "fact_ids": [
+                  "600968.SH.rsi14",
+                  "600968.SH.sma50_dist_pct"
+                ],
+                "note": "RSI 66.7 and a 9.4% extension above the 50-day average increase chase risk."
+              },
+              {
+                "dimension": "final_chair",
+                "from_score": 10,
+                "to_score": 9,
+                "fact_ids": [
+                  "600968.SH.rsi14",
+                  "600968.SH.sma50_dist_pct",
+                  "600968.SH.pivot_dist_pct"
+                ],
+                "note": "The evidence remains positive, but the entry is more extended than a maximum-score setup."
+              }
+            ]
+          },
+          {
+            "ticker": "601009.SH",
+            "confidence": 0.84,
+            "challenge": "It remains 0.4% beneath the pivot, so the setup still needs confirmation.",
+            "revisions": [
+              {
+                "dimension": "livermore_breakout",
+                "from_score": 9,
+                "to_score": 8,
+                "fact_ids": [
+                  "601009.SH.pivot_dist_pct",
+                  "601009.SH.pivot55",
+                  "601009.SH.close"
+                ],
+                "note": "The base and volume evidence are constructive, but price has not cleared resistance."
+              },
+              {
+                "dimension": "final_chair",
+                "from_score": 10,
+                "to_score": 9,
+                "fact_ids": [
+                  "601009.SH.pivot_dist_pct",
+                  "601009.SH.atr_pct"
+                ],
+                "note": "The broad setup is strong, but an unconfirmed pivot prevents a maximum integrated score."
+              }
+            ]
+          },
+          {
+            "ticker": "601229.SH",
+            "confidence": 0.87,
+            "challenge": "The 1.6% clearance is constructive but still early enough to require follow-through.",
+            "revisions": []
+          },
+          {
+            "ticker": "601665.SH",
+            "confidence": 0.74,
+            "challenge": "The 0.16% pivot clearance is marginal and turnover is only ¥2.75亿.",
+            "revisions": [
+              {
+                "dimension": "livermore_breakout",
+                "from_score": 9,
+                "to_score": 7,
+                "fact_ids": [
+                  "601665.SH.pivot_dist_pct",
+                  "601665.SH.pivot55",
+                  "601665.SH.close"
+                ],
+                "note": "A 0.16% clearance is too small to treat as a high-conviction breakout."
+              },
+              {
+                "dimension": "volume_price",
+                "from_score": 8,
+                "to_score": 7,
+                "fact_ids": [
+                  "601665.SH.turnover_yi",
+                  "601665.SH.vol20_pct",
+                  "601665.SH.mom20_pct"
+                ],
+                "note": "The price-volume evidence is positive but lacks stronger accumulation or breakout-volume confirmation."
+              },
+              {
+                "dimension": "final_chair",
+                "from_score": 9,
+                "to_score": 8,
+                "fact_ids": [
+                  "601665.SH.pivot_dist_pct",
+                  "601665.SH.turnover_yi"
+                ],
+                "note": "The trend is constructive, but the marginal pivot clearance and modest turnover reduce overall conviction."
+              }
+            ]
+          },
+          {
+            "ticker": "601728.SH",
+            "confidence": 0.85,
+            "challenge": "Despite the bullish candle, price is still below pivot and the stop is 11.0% away.",
+            "revisions": []
+          },
+          {
+            "ticker": "601857.SH",
+            "confidence": 0.82,
+            "challenge": "It is 0.5% below pivot, with only limited volume-price confirmation beyond the latest advance.",
+            "revisions": [
+              {
+                "dimension": "final_chair",
+                "from_score": 9,
+                "to_score": 8,
+                "fact_ids": [
+                  "601857.SH.pivot_dist_pct",
+                  "601857.SH.vol20_pct",
+                  "601857.SH.atr_pct"
+                ],
+                "note": "Controlled RSI supports the setup, but the breakout remains unconfirmed and volume evidence is not broad-based."
+              }
+            ]
+          },
+          {
+            "ticker": "601919.SH",
+            "confidence": 0.86,
+            "challenge": "The stock is 13.4% above its 50-day average and the technical stop is 10.6% away.",
+            "revisions": [
+              {
+                "dimension": "final_chair",
+                "from_score": 10,
+                "to_score": 9,
+                "fact_ids": [
+                  "601919.SH.sma50_dist_pct",
+                  "601919.SH.stop_dist_pct",
+                  "601919.SH.rsi14"
+                ],
+                "note": "Trend and volume are excellent, but the extended position and wider stop prevent a maximum integrated score."
+              }
+            ]
+          },
+          {
+            "ticker": "601988.SH",
+            "confidence": 0.86,
+            "challenge": "Volume-price is neutral and price remains 1.5% below pivot.",
+            "revisions": []
+          },
+          {
+            "ticker": "601998.SH",
+            "confidence": 0.84,
+            "challenge": "The pivot breakout is constructive, but the volume evidence is narrower than a top-tier accumulation pattern.",
+            "revisions": [
+              {
+                "dimension": "volume_price",
+                "from_score": 9,
+                "to_score": 8,
+                "fact_ids": [
+                  "601998.SH.vol20_pct",
+                  "601998.SH.mom20_pct",
+                  "601998.SH.turnover_yi"
+                ],
+                "note": "Confirmed breakout volume supports the move, but the frozen evidence does not show broader accumulation-versus-distribution confirmation."
+              }
+            ]
+          },
+          {
+            "ticker": "603129.SH",
+            "confidence": 0.8,
+            "challenge": "The 18.1% 20-day advance, 18.5% 50-day extension, and 4.1% ATR create a demanding entry.",
+            "revisions": [
+              {
+                "dimension": "overheat",
+                "from_score": 8,
+                "to_score": 6,
+                "fact_ids": [
+                  "603129.SH.mom20_pct",
+                  "603129.SH.sma50_dist_pct",
+                  "603129.SH.atr_pct"
+                ],
+                "note": "RSI is controlled, but the magnitude of the recent advance and extension materially increases chase risk."
+              },
+              {
+                "dimension": "final_chair",
+                "from_score": 9,
+                "to_score": 8,
+                "fact_ids": [
+                  "603129.SH.mom20_pct",
+                  "603129.SH.sma50_dist_pct",
+                  "603129.SH.atr_pct"
+                ],
+                "note": "Breakout and volume confirmation are strong, but the extended, higher-volatility entry reduces the integrated assessment."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "schemaVersion": "pdc-daily-review-record-v1",
+      "memberId": "claude",
+      "status": "FAILED",
+      "failureReason": "契约校验失败：000651.SZ/risk 引用了不存在的 fact_id：600919.SH.atr_pct, 600919.SH.stop_dist_pct",
+      "candidateCount": 20,
+      "assessments": [],
+      "rejectedOutput": {
+        "assessments": [
+          {
+            "ticker": "000651.SZ",
+            "confidence": 0.72,
+            "challenge": "RSI is only 38.9 with weak 1.1% 20-day momentum, so the buy case rests on trend/risk alignment alone without price confirmation yet.",
+            "revisions": [
+              {
+                "dimension": "risk",
+                "from_score": 8,
+                "to_score": 8.5,
+                "fact_ids": [
+                  "000651.SZ.atr_pct",
+                  "000651.SZ.stop_dist_pct",
+                  "600919.SH.atr_pct",
+                  "600919.SH.stop_dist_pct"
+                ],
+                "note": "000651 has a tighter stop (4.32% vs 5.04%) and lower ATR (1.74% vs 1.82%) than 600919, which I scored 8.5 on risk; 000651 dominates on both metrics so it should not score lower."
+              }
+            ]
+          },
+          {
+            "ticker": "000703.SZ",
+            "confidence": 0.8,
+            "challenge": "RSI 72.6 after a 25.9% 20-day advance and 5.51% ATR is a genuine chase-risk setup, not just an overheat footnote.",
+            "revisions": []
+          },
+          {
+            "ticker": "002142.SZ",
+            "confidence": 0.75,
+            "challenge": "Sitting exactly at the pivot (-0.03%) with no volume-confirmation language means only proximity is known, not that a breakout is actually underway.",
+            "revisions": []
+          },
+          {
+            "ticker": "002648.SZ",
+            "confidence": 0.7,
+            "challenge": "The doji candle directly contradicts the volume-supported 9.6% momentum reading, leaving real ambiguity about near-term direction.",
+            "revisions": []
+          },
+          {
+            "ticker": "002966.SZ",
+            "confidence": 0.68,
+            "challenge": "Turnover of only ¥3.1亿 on a ¥385亿 cap stock is a genuine execution constraint that could distort the apparent pivot proximity signal.",
+            "revisions": []
+          },
+          {
+            "ticker": "300832.SZ",
+            "confidence": 0.72,
+            "challenge": "RSI 71.4 combined with 17.8% extension above the 50d SMA is a genuinely stretched setup where a routine pullback could hit the stop.",
+            "revisions": []
+          },
+          {
+            "ticker": "600795.SH",
+            "confidence": 0.75,
+            "challenge": "No full trend-stack (20>50>200) language accompanies this setup despite the strong candle and volume, so the longer-horizon trend confirmation is thinner than the top-tier names.",
+            "revisions": []
+          },
+          {
+            "ticker": "600919.SH",
+            "confidence": 0.8,
+            "challenge": "This is among the cleanest setups (confirmed breakout, tight base, full trend stack, low ATR); my risk is understating just how strong the full stack + breakout-volume combination is.",
+            "revisions": []
+          },
+          {
+            "ticker": "600926.SH",
+            "confidence": 0.73,
+            "challenge": "No trend-stack or accumulation-day-count language accompanies the pivot clearance here, so breakout confirmation is thinner than peers like 600919 that carry both.",
+            "revisions": []
+          },
+          {
+            "ticker": "600941.SH",
+            "confidence": 0.65,
+            "challenge": "A mega-cap with a nearly flat 200d trend (1.17%) and the weakest 60d momentum in the entire set (2.3%) looks closer to range-bound drift than an active breakout.",
+            "revisions": []
+          },
+          {
+            "ticker": "600968.SH",
+            "confidence": 0.68,
+            "challenge": "Turnover of only ¥3.3亿 despite a confirmed breakout raises the same liquidity-execution concern flagged for 002966 and 601665.",
+            "revisions": []
+          },
+          {
+            "ticker": "601009.SH",
+            "confidence": 0.78,
+            "challenge": "Full trend-stack alignment and volume confirmation are solid, but 5.3% 20d momentum is modest for a name sitting this close to its pivot.",
+            "revisions": []
+          },
+          {
+            "ticker": "601229.SH",
+            "confidence": 0.75,
+            "challenge": "Breakout volume is confirmed and the stop is tight, but the absence of full trend-stack language means the longer-term trend isn't as fully aligned as the top-tier names.",
+            "revisions": []
+          },
+          {
+            "ticker": "601665.SH",
+            "confidence": 0.68,
+            "challenge": "Turnover of only ¥2.75亿 is the thinnest in the entire finalist set, compounding the fact that the pivot clearance itself lacks volume-confirmation language.",
+            "revisions": []
+          },
+          {
+            "ticker": "601728.SH",
+            "confidence": 0.6,
+            "challenge": "The 'mixed committee evidence' framing likely dragged down unrelated dimensions where the underlying momentum and pivot-distance numbers are actually strong.",
+            "revisions": [
+              {
+                "dimension": "trend",
+                "from_score": 6,
+                "to_score": 6.5,
+                "fact_ids": [
+                  "601728.SH.mom20_pct",
+                  "601728.SH.mom60_pct",
+                  "601728.SH.sma50_dist_pct",
+                  "601998.SH.mom20_pct",
+                  "601998.SH.mom60_pct",
+                  "601998.SH.sma50_dist_pct"
+                ],
+                "note": "601728 beats 601998 on mom20 (10.47 vs 8.95), mom60 (11.04 vs 10.17) and 50d extension (11.48 vs 9.29) yet scored lower on trend; correcting for consistency."
+              },
+              {
+                "dimension": "livermore_breakout",
+                "from_score": 7,
+                "to_score": 7.5,
+                "fact_ids": [
+                  "601728.SH.pivot_dist_pct",
+                  "300832.SZ.pivot_dist_pct",
+                  "601857.SH.pivot_dist_pct"
+                ],
+                "note": "601728's pivot distance (-0.30%) beats 300832 (-0.48%, scored 8.0) and 601857 (-0.53%, scored 7.5) yet scored lowest of the three; raising for consistency."
+              }
+            ]
+          },
+          {
+            "ticker": "601857.SH",
+            "confidence": 0.75,
+            "challenge": "Mega-cap size (¥20,517亿) paired with only 0.13% turnover rate means real slippage risk despite the otherwise clean technical setup.",
+            "revisions": []
+          },
+          {
+            "ticker": "601919.SH",
+            "confidence": 0.78,
+            "challenge": "RSI 66.7 is elevated for a name also carrying full trend-stack and breakout-volume confirmation — a mild overheat risk that could compress upside before the risk controls matter.",
+            "revisions": []
+          },
+          {
+            "ticker": "601988.SH",
+            "confidence": 0.72,
+            "challenge": "The volume-price signal is explicitly neutral even though every other dimension aligns, a real confirmation gap for a mega-cap breakout candidate.",
+            "revisions": []
+          },
+          {
+            "ticker": "601998.SH",
+            "confidence": 0.75,
+            "challenge": "The 2.6% pivot clearance is solid, but only 0.24% turnover rate on a ¥4,541亿 cap is a liquidity-vs-size concern comparable to what I flagged more heavily for smaller names.",
+            "revisions": []
+          },
+          {
+            "ticker": "603129.SH",
+            "confidence": 0.65,
+            "challenge": "RSI 56.9 looks controlled, but 18.1% 20d and 29.5% 60d momentum after already clearing the pivot suggest this could be in the later stage of its move rather than an early breakout.",
+            "revisions": []
+          }
+        ]
+      }
+    }
+  ],
+  "quorumMet": false
+}

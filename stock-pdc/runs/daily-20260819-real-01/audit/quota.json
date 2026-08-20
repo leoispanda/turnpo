@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "pdc-daily-quota-v1",
+  "maxCallsPerMember": 4,
+  "totalCalls": 6,
+  "byMember": {
+    "claude": {
+      "calls": 3,
+      "remaining": 1,
+      "promptChars": 108626,
+      "outputChars": 28986,
+      "seconds": 629.38,
+      "failedCalls": 0
+    },
+    "sol": {
+      "calls": 3,
+      "remaining": 1,
+      "promptChars": 108626,
+      "outputChars": 30281,
+      "seconds": 223.13,
+      "failedCalls": 0
+    }
+  },
+  "byRound": {
+    "detail": {
+      "calls": 2,
+      "seconds": 377.81
+    },
+    "discovery": {
+      "calls": 2,
+      "seconds": 154.05
+    },
+    "review": {
+      "calls": 2,
+      "seconds": 320.64
+    }
+  },
+  "records": [
+    {
+      "round_id": "discovery",
+      "member_id": "sol",
+      "attempt": 1,
+      "ok": true,
+      "prompt_chars": 26057,
+      "output_chars": 4401,
+      "seconds": 34.62,
+      "error": ""
+    },
+    {
+      "round_id": "discovery",
+      "member_id": "claude",
+      "attempt": 1,
+      "ok": true,
+      "prompt_chars": 26057,
+      "output_chars": 4372,
+      "seconds": 119.434,
+      "error": ""
+    },
+    {
+      "round_id": "detail",
+      "member_id": "sol",
+      "attempt": 1,
+      "ok": true,
+      "prompt_chars": 42627,
+      "output_chars": 16140,
+      "seconds": 97.48,
+      "error": ""
+    },
+    {
+      "round_id": "detail",
+      "member_id": "claude",
+      "attempt": 1,
+      "ok": true,
+      "prompt_chars": 42627,
+      "output_chars": 18919,
+      "seconds": 280.333,
+      "error": ""
+    },
+    {
+      "round_id": "review",
+      "member_id": "sol",
+      "attempt": 1,
+      "ok": true,
+      "prompt_chars": 39942,
+      "output_chars": 9740,
+      "seconds": 91.034,
+      "error": ""
+    },
+    {
+      "round_id": "review",
+      "member_id": "claude",
+      "attempt": 1,
+      "ok": true,
+      "prompt_chars": 39942,
+      "output_chars": 5695,
+      "seconds": 229.61,
+      "error": ""
+    }
+  ]
+}

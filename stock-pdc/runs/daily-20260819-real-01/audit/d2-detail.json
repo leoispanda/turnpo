@@ -1,0 +1,3776 @@
+{
+  "schemaVersion": "pdc-daily-detail-record-v1",
+  "runId": "daily-20260819-real-01",
+  "stageId": "D2",
+  "factsHash": "38b700a15d7f7602a90cab5d6811b767960defe4dd67c80e6ad6e4c613d277c0",
+  "candidateCount": 46,
+  "tickers": [
+    "000301.SZ",
+    "000333.SZ",
+    "000651.SZ",
+    "000703.SZ",
+    "000975.SZ",
+    "002142.SZ",
+    "002493.SZ",
+    "002648.SZ",
+    "002966.SZ",
+    "300628.SZ",
+    "300759.SZ",
+    "300832.SZ",
+    "600298.SH",
+    "600346.SH",
+    "600428.SH",
+    "600489.SH",
+    "600547.SH",
+    "600663.SH",
+    "600737.SH",
+    "600795.SH",
+    "600919.SH",
+    "600926.SH",
+    "600941.SH",
+    "600968.SH",
+    "600985.SH",
+    "600988.SH",
+    "601009.SH",
+    "601088.SH",
+    "601225.SH",
+    "601229.SH",
+    "601233.SH",
+    "601665.SH",
+    "601728.SH",
+    "601857.SH",
+    "601919.SH",
+    "601939.SH",
+    "601988.SH",
+    "601998.SH",
+    "603127.SH",
+    "603129.SH",
+    "603156.SH",
+    "603259.SH",
+    "603268.SH",
+    "688002.SH",
+    "688428.SH",
+    "688617.SH"
+  ],
+  "memberResults": [
+    {
+      "schemaVersion": "pdc-daily-detail-record-v1",
+      "memberId": "sol",
+      "modelId": "gpt",
+      "status": "COMPLETED",
+      "failureReason": "",
+      "candidateCount": 46,
+      "callCount": 1,
+      "scorecards": [
+        {
+          "ticker": "000301.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 9.0,
+            "livermore_breakout": 7.0,
+            "volume_price": 9.0,
+            "candlestick": 5.0,
+            "overheat": 6.0,
+            "risk": 6.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.0
+          },
+          "confidence": 0.86,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "Close remains 4.0% below the 55-day pivot."
+        },
+        {
+          "ticker": "000333.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 6.0,
+            "volume_price": 7.0,
+            "candlestick": 8.0,
+            "overheat": 9.0,
+            "risk": 8.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 6.0
+          },
+          "confidence": 0.82,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "RSI is only 34.2 despite the constructive moving-average stack."
+        },
+        {
+          "ticker": "000651.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 9.0,
+            "volume_price": 8.0,
+            "candlestick": 8.0,
+            "overheat": 8.0,
+            "risk": 9.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.92,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "It is only 2.7% below the pivot with a 4.3% technical stop distance."
+        },
+        {
+          "ticker": "000703.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 10.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 10.0,
+            "candlestick": 8.0,
+            "overheat": 4.0,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.9,
+          "risk_flags": [
+            "HIGH_VOLATILITY",
+            "OVERHEATED"
+          ],
+          "decision": "WATCH",
+          "note": "RSI is 72.6 after a 25.9% 20-day advance."
+        },
+        {
+          "ticker": "000975.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 8.0,
+            "candlestick": 2.0,
+            "overheat": 6.0,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 6.0
+          },
+          "confidence": 0.88,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "The latest candle is a shooting-star rejection after the advance."
+        },
+        {
+          "ticker": "002142.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 9.0,
+            "volume_price": 7.0,
+            "candlestick": 5.0,
+            "overheat": 9.0,
+            "risk": 9.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.91,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "Close is essentially at the 55-day pivot, only 0.03% below it."
+        },
+        {
+          "ticker": "002493.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 6.0,
+            "volume_price": 9.0,
+            "candlestick": 8.0,
+            "overheat": 7.0,
+            "risk": 5.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.0
+          },
+          "confidence": 0.87,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "The technical stop is 12.8% below the close."
+        },
+        {
+          "ticker": "002648.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 8.0,
+            "candlestick": 4.0,
+            "overheat": 7.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.0
+          },
+          "confidence": 0.88,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "The doji-like candle signals indecision just 1.3% below the pivot."
+        },
+        {
+          "ticker": "002966.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 9.0,
+            "volume_price": 7.0,
+            "candlestick": 5.0,
+            "overheat": 9.0,
+            "risk": 8.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.88,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "Close is only 0.35% below the 55-day pivot with low 2.1% ATR."
+        },
+        {
+          "ticker": "300628.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 7.0,
+            "volume_price": 5.0,
+            "candlestick": 4.0,
+            "overheat": 8.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 5.0
+          },
+          "confidence": 0.84,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "Volume-price evidence is neutral despite proximity to the pivot."
+        },
+        {
+          "ticker": "300759.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 10.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 9.0,
+            "candlestick": 2.0,
+            "overheat": 2.0,
+            "risk": 2.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 6.0
+          },
+          "confidence": 0.92,
+          "risk_flags": [
+            "HIGH_VOLATILITY",
+            "OVERHEATED",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "HOLD",
+          "note": "RSI is 79.1 after a 91.5% 60-day gain."
+        },
+        {
+          "ticker": "300832.SZ",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 9.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 10.0,
+            "candlestick": 5.0,
+            "overheat": 5.0,
+            "risk": 5.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.0
+          },
+          "confidence": 0.89,
+          "risk_flags": [
+            "OVERHEATED",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "RSI is 71.4 at a new 60-day-high area."
+        },
+        {
+          "ticker": "600298.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 9.0,
+            "candlestick": 5.0,
+            "overheat": 8.0,
+            "risk": 6.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.86,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "There is no clear Livermore pivot setup."
+        },
+        {
+          "ticker": "600346.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 6.0,
+            "volume_price": 9.0,
+            "candlestick": 8.0,
+            "overheat": 6.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.0
+          },
+          "confidence": 0.87,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "Price remains 6.7% below its 200-day SMA."
+        },
+        {
+          "ticker": "600428.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 10.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 8.0,
+            "candlestick": 5.0,
+            "overheat": 6.0,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.88,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "The close is 21.6% above its technical stop."
+        },
+        {
+          "ticker": "600489.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 10.0,
+            "candlestick": 5.0,
+            "overheat": 6.0,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.88,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "No clear Livermore pivot is present."
+        },
+        {
+          "ticker": "600547.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 10.0,
+            "volume_price": 8.0,
+            "candlestick": 8.0,
+            "overheat": 6.0,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 6.0
+          },
+          "confidence": 0.89,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "WEAK_TREND"
+          ],
+          "decision": "WATCH",
+          "note": "Price cleared the pivot by 0.2% but remains 9.8% below the 200-day SMA."
+        },
+        {
+          "ticker": "600663.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 10.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 10.0,
+            "candlestick": 5.0,
+            "overheat": 4.0,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.87,
+          "risk_flags": [
+            "OVERHEATED",
+            "LIQUIDITY_RISK",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "Session turnover was only CNY 1.399亿 despite the 36.1% 20-day rise."
+        },
+        {
+          "ticker": "600737.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 9.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 8.0,
+            "candlestick": 3.0,
+            "overheat": 3.0,
+            "risk": 3.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 5.0
+          },
+          "confidence": 0.9,
+          "risk_flags": [
+            "HIGH_VOLATILITY",
+            "OVERHEATED",
+            "MODEL_DISAGREEMENT"
+          ],
+          "decision": "WATCH",
+          "note": "RSI is 74.4 and the latest close was weak after a 15.1% 10-day advance."
+        },
+        {
+          "ticker": "600795.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 9.0,
+            "volume_price": 10.0,
+            "candlestick": 8.0,
+            "overheat": 9.0,
+            "risk": 9.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 10.0
+          },
+          "confidence": 0.92,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "The setup combines a 1.9% pivot distance with 1.9% ATR and a 6.5% stop distance."
+        },
+        {
+          "ticker": "600919.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 10.0,
+            "volume_price": 10.0,
+            "candlestick": 8.0,
+            "overheat": 9.0,
+            "risk": 9.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 10.0
+          },
+          "confidence": 0.94,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "It cleared the pivot by 0.4% with breakout-volume confirmation and 1.8% ATR."
+        },
+        {
+          "ticker": "600926.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 9.0,
+            "volume_price": 8.0,
+            "candlestick": 8.0,
+            "overheat": 9.0,
+            "risk": 9.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 10.0
+          },
+          "confidence": 0.92,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "A 1.0% pivot clearance comes with a low 1.7% ATR."
+        },
+        {
+          "ticker": "600941.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 6.0,
+            "livermore_breakout": 7.0,
+            "volume_price": 8.0,
+            "candlestick": 8.0,
+            "overheat": 8.0,
+            "risk": 9.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 10.0
+          },
+          "confidence": 0.88,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "The technical stop is only 3.6% below the close."
+        },
+        {
+          "ticker": "600968.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 10.0,
+            "volume_price": 10.0,
+            "candlestick": 5.0,
+            "overheat": 7.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 10.0
+          },
+          "confidence": 0.92,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "The stock cleared its pivot by 1.5% on confirmed breakout volume."
+        },
+        {
+          "ticker": "600985.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 9.0,
+            "livermore_breakout": 7.0,
+            "volume_price": 8.0,
+            "candlestick": 5.0,
+            "overheat": 7.0,
+            "risk": 6.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 5.0
+          },
+          "confidence": 0.86,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "The committee evidence is mixed despite strong 60-day momentum."
+        },
+        {
+          "ticker": "600988.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 7.0,
+            "candlestick": 5.0,
+            "overheat": 7.0,
+            "risk": 3.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 5.0
+          },
+          "confidence": 0.87,
+          "risk_flags": [
+            "HIGH_VOLATILITY",
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "ATR is 6.6% and the close is 7.1% below its pivot."
+        },
+        {
+          "ticker": "601009.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 9.0,
+            "volume_price": 9.0,
+            "candlestick": 8.0,
+            "overheat": 9.0,
+            "risk": 8.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 10.0
+          },
+          "confidence": 0.92,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "The close is within 0.4% of pivot after a strong-volume advance."
+        },
+        {
+          "ticker": "601088.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 5.0,
+            "volume_price": 5.0,
+            "candlestick": 8.0,
+            "overheat": 8.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 5.0
+          },
+          "confidence": 0.84,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "Volume-price evidence is neutral and price is 7.2% below pivot."
+        },
+        {
+          "ticker": "601225.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 5.0,
+            "candlestick": 5.0,
+            "overheat": 8.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 5.0
+          },
+          "confidence": 0.84,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "There is no clear Livermore pivot setup."
+        },
+        {
+          "ticker": "601229.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 10.0,
+            "volume_price": 8.0,
+            "candlestick": 8.0,
+            "overheat": 9.0,
+            "risk": 9.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.92,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "The pivot was cleared by 1.6% with volume confirmation and 1.9% ATR."
+        },
+        {
+          "ticker": "601233.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 5.0,
+            "candlestick": 4.0,
+            "overheat": 8.0,
+            "risk": 8.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 5.0
+          },
+          "confidence": 0.84,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "Volume-price evidence is neutral with no clear pivot setup."
+        },
+        {
+          "ticker": "601665.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 9.0,
+            "volume_price": 8.0,
+            "candlestick": 5.0,
+            "overheat": 9.0,
+            "risk": 9.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.9,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "It has just cleared the pivot while ATR is only 1.9%."
+        },
+        {
+          "ticker": "601728.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 7.0,
+            "candlestick": 8.0,
+            "overheat": 8.0,
+            "risk": 6.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 5.0
+          },
+          "confidence": 0.86,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "Close is still 0.3% below the pivot despite the bullish engulfing candle."
+        },
+        {
+          "ticker": "601857.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 7.0,
+            "candlestick": 8.0,
+            "overheat": 9.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.89,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "Price is within 0.5% of pivot with RSI a controlled 48.6."
+        },
+        {
+          "ticker": "601919.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 9.0,
+            "livermore_breakout": 10.0,
+            "volume_price": 10.0,
+            "candlestick": 8.0,
+            "overheat": 7.0,
+            "risk": 9.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 10.0
+          },
+          "confidence": 0.94,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "The pivot was cleared by 1.2% on confirmed breakout volume with 1.9% ATR."
+        },
+        {
+          "ticker": "601939.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 5.0,
+            "volume_price": 3.0,
+            "candlestick": 5.0,
+            "overheat": 9.0,
+            "risk": 8.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 5.0
+          },
+          "confidence": 0.85,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "Down days carry heavier volume than up days."
+        },
+        {
+          "ticker": "601988.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 5.0,
+            "candlestick": 5.0,
+            "overheat": 9.0,
+            "risk": 9.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.88,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "The stop is only 3.7% below the close and RSI is 47.1."
+        },
+        {
+          "ticker": "601998.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 10.0,
+            "volume_price": 9.0,
+            "candlestick": 8.0,
+            "overheat": 8.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.92,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "The 2.6% pivot clearance is confirmed by breakout volume."
+        },
+        {
+          "ticker": "603127.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 9.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 7.0,
+            "candlestick": 2.0,
+            "overheat": 5.0,
+            "risk": 2.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.9,
+          "risk_flags": [
+            "HIGH_VOLATILITY",
+            "OVERHEATED",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "HOLD",
+          "note": "Volatility is 5.5% and the close is 10.6% below pivot after a strong bearish candle."
+        },
+        {
+          "ticker": "603129.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 10.0,
+            "livermore_breakout": 10.0,
+            "volume_price": 9.0,
+            "candlestick": 8.0,
+            "overheat": 8.0,
+            "risk": 5.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.93,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "It cleared the pivot by 1.9% with breakout-volume confirmation."
+        },
+        {
+          "ticker": "603156.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 10.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 10.0,
+            "candlestick": 5.0,
+            "overheat": 0.0,
+            "risk": 3.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.94,
+          "risk_flags": [
+            "OVERHEATED",
+            "HIGH_VOLATILITY"
+          ],
+          "decision": "HOLD",
+          "note": "RSI is an extreme 92.3 after a 56.0% 20-day advance."
+        },
+        {
+          "ticker": "603259.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 10.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 9.0,
+            "candlestick": 5.0,
+            "overheat": 2.0,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.0
+          },
+          "confidence": 0.92,
+          "risk_flags": [
+            "OVERHEATED",
+            "HIGH_VOLATILITY",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "RSI is 79.5 after a 60.0% 60-day rise."
+        },
+        {
+          "ticker": "603268.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 9.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 10.0,
+            "candlestick": 2.0,
+            "overheat": 4.0,
+            "risk": 5.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.9,
+          "risk_flags": [
+            "OVERHEATED",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "The latest candle closed strongly bearish while still 5.0% below pivot."
+        },
+        {
+          "ticker": "688002.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 9.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 7.0,
+            "candlestick": 5.0,
+            "overheat": 6.0,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 5.0
+          },
+          "confidence": 0.86,
+          "risk_flags": [
+            "HIGH_VOLATILITY",
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "The close remains 9.4% below pivot with a 6.2% ATR."
+        },
+        {
+          "ticker": "688428.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 8.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 7.0,
+            "candlestick": 2.0,
+            "overheat": 4.0,
+            "risk": 5.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.88,
+          "risk_flags": [
+            "OVERHEATED",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "A strong bearish candle arrived while price remains 8.3% below pivot."
+        },
+        {
+          "ticker": "688617.SH",
+          "dimensions": {
+            "market_regime": 8.0,
+            "trend": 7.0,
+            "livermore_breakout": 9.0,
+            "volume_price": 9.0,
+            "candlestick": 5.0,
+            "overheat": 8.0,
+            "risk": 5.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.0
+          },
+          "confidence": 0.88,
+          "risk_flags": [
+            "WEAK_TREND"
+          ],
+          "decision": "WATCH",
+          "note": "Price has only just matched the pivot but remains 2.2% below its 200-day SMA."
+        }
+      ]
+    },
+    {
+      "schemaVersion": "pdc-daily-detail-record-v1",
+      "memberId": "claude",
+      "modelId": "claude",
+      "status": "COMPLETED",
+      "failureReason": "",
+      "candidateCount": 46,
+      "callCount": 1,
+      "scorecards": [
+        {
+          "ticker": "000301.SZ",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 7.5,
+            "livermore_breakout": 5.5,
+            "volume_price": 7.0,
+            "candlestick": 5.0,
+            "overheat": 4.5,
+            "risk": 5.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 6.5
+          },
+          "confidence": 0.65,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "12.8% 20d gain is volume-supported (6 acc/2 dist) but RSI 69.5 and 3.96% below the pivot leave the breakout unconfirmed"
+        },
+        {
+          "ticker": "000333.SZ",
+          "dimensions": {
+            "market_regime": 6.0,
+            "trend": 5.0,
+            "livermore_breakout": 4.0,
+            "volume_price": 6.0,
+            "candlestick": 8.0,
+            "overheat": 8.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.6,
+          "risk_flags": [
+            "WEAK_TREND",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "strong bullish candle but 20d momentum is flat (-0.09%), so the price move hasn't caught up with the candle yet"
+        },
+        {
+          "ticker": "000651.SZ",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.5,
+            "livermore_breakout": 8.0,
+            "volume_price": 6.0,
+            "candlestick": 8.0,
+            "overheat": 8.5,
+            "risk": 8.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.75,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "trend, breakout and risk controls all align 2.7% from the pivot with low 1.7% ATR risk and RSI only 38.9"
+        },
+        {
+          "ticker": "000703.SZ",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 8.5,
+            "livermore_breakout": 8.5,
+            "volume_price": 8.5,
+            "candlestick": 8.0,
+            "overheat": 2.5,
+            "risk": 3.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.7,
+          "risk_flags": [
+            "OVERHEATED",
+            "HIGH_VOLATILITY"
+          ],
+          "decision": "WATCH",
+          "note": "volume-confirmed breakout 1.1% from pivot but RSI 72.6 and 26.5% extension above the 50d SMA signal overheating risk"
+        },
+        {
+          "ticker": "000975.SZ",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 5.5,
+            "livermore_breakout": 3.0,
+            "volume_price": 6.0,
+            "candlestick": 2.0,
+            "overheat": 3.0,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 6.0
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "OVERHEATED",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "SELL",
+          "note": "shooting-star rejection after a 19% 20d advance with RSI 67.6 signals exhaustion at extended levels"
+        },
+        {
+          "ticker": "002142.SZ",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 7.0,
+            "livermore_breakout": 8.5,
+            "volume_price": 6.0,
+            "candlestick": 5.0,
+            "overheat": 8.0,
+            "risk": 8.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.7,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "BUY",
+          "note": "sits right at the 55d pivot (-0.03%) with RSI 50.9 controlled and full trend-stack alignment, a clean pre-breakout setup"
+        },
+        {
+          "ticker": "002493.SZ",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.5,
+            "livermore_breakout": 5.5,
+            "volume_price": 7.5,
+            "candlestick": 8.0,
+            "overheat": 5.0,
+            "risk": 5.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.65,
+          "risk_flags": [],
+          "decision": "WATCH",
+          "note": "5 accumulation vs 1 distribution days with a strong volume-backed advance, but RSI 62 and 12.8% extension above 50d SMA leave less room"
+        },
+        {
+          "ticker": "002648.SZ",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 7.5,
+            "livermore_breakout": 7.5,
+            "volume_price": 6.5,
+            "candlestick": 4.0,
+            "overheat": 5.5,
+            "risk": 6.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.65,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "doji indecision candle within 1.3% of the 55d pivot signals the breakout is not yet confirmed despite trend-stack alignment"
+        },
+        {
+          "ticker": "002966.SZ",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 5.5,
+            "candlestick": 5.0,
+            "overheat": 8.0,
+            "risk": 7.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.5
+          },
+          "confidence": 0.6,
+          "risk_flags": [
+            "LIQUIDITY_RISK"
+          ],
+          "decision": "WATCH",
+          "note": "0.35% below the 55d pivot with RSI 51.6 controlled, but daily turnover of only ¥3.1亿 raises liquidity risk"
+        },
+        {
+          "ticker": "300628.SZ",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 6.5,
+            "volume_price": 5.0,
+            "candlestick": 4.0,
+            "overheat": 7.0,
+            "risk": 6.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED",
+            "MODEL_DISAGREEMENT"
+          ],
+          "decision": "HOLD",
+          "note": "doji indecision candle and mixed committee evidence despite trend-stack alignment, no clear catalyst"
+        },
+        {
+          "ticker": "300759.SZ",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 5.5,
+            "candlestick": 1.5,
+            "overheat": 0.5,
+            "risk": 2.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 6.0
+          },
+          "confidence": 0.6,
+          "risk_flags": [
+            "OVERHEATED",
+            "HIGH_VOLATILITY",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "SELL",
+          "note": "strong bearish candle closed near low after a 21.2% 10-day advance, RSI 79.1 and 39.5% extension above 50d SMA signal a blow-off top"
+        },
+        {
+          "ticker": "300832.SZ",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 7.5,
+            "candlestick": 5.0,
+            "overheat": 3.0,
+            "risk": 5.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.6,
+          "risk_flags": [
+            "OVERHEATED"
+          ],
+          "decision": "WATCH",
+          "note": "within 0.5% of the 55d pivot with strong 6v1 accumulation, but RSI 71.4 leaves little room before a pullback"
+        },
+        {
+          "ticker": "600298.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.5,
+            "livermore_breakout": 3.0,
+            "volume_price": 6.5,
+            "candlestick": 5.0,
+            "overheat": 7.0,
+            "risk": 5.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.6,
+          "risk_flags": [
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "no clear Livermore pivot setup despite solid 60d momentum of 18.8% and controlled RSI 55.7"
+        },
+        {
+          "ticker": "600346.SH",
+          "dimensions": {
+            "market_regime": 4.5,
+            "trend": 5.0,
+            "livermore_breakout": 5.5,
+            "volume_price": 6.5,
+            "candlestick": 8.0,
+            "overheat": 4.5,
+            "risk": 6.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "MARKET_REGIME_RISK",
+            "WEAK_TREND"
+          ],
+          "decision": "WATCH",
+          "note": "15% 20d surge but price remains 6.7% below the 200d SMA, the constructive slope conflicts with the longer-term downtrend"
+        },
+        {
+          "ticker": "600428.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 8.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 6.0,
+            "candlestick": 5.0,
+            "overheat": 3.5,
+            "risk": 4.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.6,
+          "risk_flags": [
+            "OVERHEATED",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "60d momentum of 59% is exceptional but 23% extension above the 50d SMA with no clear pivot setup raises pullback risk"
+        },
+        {
+          "ticker": "600489.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 5.5,
+            "livermore_breakout": 3.0,
+            "volume_price": 7.0,
+            "candlestick": 5.0,
+            "overheat": 3.5,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "OVERHEATED",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "18.5% extension above the 50d SMA with RSI 67.3 and no clear pivot setup, momentum without structure"
+        },
+        {
+          "ticker": "600547.SH",
+          "dimensions": {
+            "market_regime": 4.0,
+            "trend": 5.0,
+            "livermore_breakout": 8.5,
+            "volume_price": 6.5,
+            "candlestick": 8.0,
+            "overheat": 3.5,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "MARKET_REGIME_RISK",
+            "OVERHEATED",
+            "WEAK_TREND",
+            "MODEL_DISAGREEMENT"
+          ],
+          "decision": "WATCH",
+          "note": "cleared the 55d pivot with confirmed breakout volume, but remains 9.8% below the 200d SMA, a breakout inside a longer downtrend"
+        },
+        {
+          "ticker": "600663.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 8.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 7.0,
+            "candlestick": 5.0,
+            "overheat": 2.0,
+            "risk": 4.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.5,
+          "risk_flags": [
+            "OVERHEATED",
+            "LIQUIDITY_RISK"
+          ],
+          "decision": "WATCH",
+          "note": "36% 20d momentum is extreme with RSI 71.9 and only ¥1.4亿 daily turnover, thin liquidity amplifies reversal risk"
+        },
+        {
+          "ticker": "600737.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 6.0,
+            "volume_price": 5.5,
+            "candlestick": 3.0,
+            "overheat": 2.0,
+            "risk": 2.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.5,
+          "risk_flags": [
+            "OVERHEATED",
+            "HIGH_VOLATILITY",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "SELL",
+          "note": "weak close after a 15.1% 10-day advance right at the pivot, RSI 74.4 and 7.0% turnover rate signal speculative exhaustion"
+        },
+        {
+          "ticker": "600795.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 8.0,
+            "volume_price": 7.5,
+            "candlestick": 8.0,
+            "overheat": 7.0,
+            "risk": 8.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.75,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "trend, breakout and risk controls all align with low 1.9% ATR risk and controlled RSI 59.3 within 1.9% of the pivot"
+        },
+        {
+          "ticker": "600919.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 7.5,
+            "livermore_breakout": 8.5,
+            "volume_price": 8.0,
+            "candlestick": 8.0,
+            "overheat": 8.0,
+            "risk": 8.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.8,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "cleared the 55d pivot with confirmed breakout volume, low 1.8% ATR risk, and full trend-stack alignment"
+        },
+        {
+          "ticker": "600926.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 7.5,
+            "volume_price": 6.5,
+            "candlestick": 8.0,
+            "overheat": 7.5,
+            "risk": 8.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.7,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "cleared the 55d pivot by 1.0% with low 1.7% ATR risk and controlled RSI 58.2, a clean low-volatility breakout"
+        },
+        {
+          "ticker": "600941.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 5.0,
+            "livermore_breakout": 7.0,
+            "volume_price": 6.0,
+            "candlestick": 8.0,
+            "overheat": 8.5,
+            "risk": 8.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.65,
+          "risk_flags": [
+            "WEAK_TREND"
+          ],
+          "decision": "WATCH",
+          "note": "mega-cap (21,074亿) with flat 200d trend (only 1.17%) and modest 8.7% benchmark outperformance, stable but low-momentum"
+        },
+        {
+          "ticker": "600968.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 5.5,
+            "livermore_breakout": 8.5,
+            "volume_price": 7.5,
+            "candlestick": 5.0,
+            "overheat": 5.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.5
+          },
+          "confidence": 0.6,
+          "risk_flags": [
+            "LIQUIDITY_RISK"
+          ],
+          "decision": "WATCH",
+          "note": "cleared the 55d pivot with confirmed breakout volume, though daily turnover of only ¥3.3亿 warrants a liquidity check"
+        },
+        {
+          "ticker": "600985.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 7.5,
+            "livermore_breakout": 6.5,
+            "volume_price": 6.0,
+            "candlestick": 5.0,
+            "overheat": 5.5,
+            "risk": 4.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT"
+          ],
+          "decision": "WATCH",
+          "note": "committee evidence is mixed despite strong 60d momentum of 28.3% and full trend-stack alignment"
+        },
+        {
+          "ticker": "600988.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 5.5,
+            "livermore_breakout": 3.0,
+            "volume_price": 5.5,
+            "candlestick": 5.0,
+            "overheat": 3.5,
+            "risk": 2.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.5,
+          "risk_flags": [
+            "OVERHEATED",
+            "HIGH_VOLATILITY",
+            "BREAKOUT_UNCONFIRMED",
+            "MODEL_DISAGREEMENT"
+          ],
+          "decision": "HOLD",
+          "note": "24.3% extension above the 50d SMA with 6.6% ATR and mixed committee evidence, extended and volatile without a clear setup"
+        },
+        {
+          "ticker": "601009.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 7.5,
+            "livermore_breakout": 8.5,
+            "volume_price": 6.5,
+            "candlestick": 8.0,
+            "overheat": 8.0,
+            "risk": 7.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.75,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "within 0.4% of the 55d pivot with RSI 49.3 controlled and full trend-stack alignment, low 2.1% ATR risk"
+        },
+        {
+          "ticker": "601088.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 4.0,
+            "volume_price": 5.0,
+            "candlestick": 8.0,
+            "overheat": 7.0,
+            "risk": 6.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "WATCH",
+          "note": "7.2% below the 55d pivot and 6.5% off the 60d high with mixed committee evidence, needs to reclaim highs to confirm"
+        },
+        {
+          "ticker": "601225.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 5.0,
+            "candlestick": 5.0,
+            "overheat": 6.5,
+            "risk": 5.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.5,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "HOLD",
+          "note": "no clear Livermore pivot setup and neutral volume-price picture despite trend-stack alignment, lacks a catalyst"
+        },
+        {
+          "ticker": "601229.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 8.5,
+            "volume_price": 7.0,
+            "candlestick": 8.0,
+            "overheat": 7.5,
+            "risk": 7.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.5
+          },
+          "confidence": 0.7,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "cleared the 55d pivot with confirmed breakout volume and low 1.9% ATR risk, RSI 56.5 controlled"
+        },
+        {
+          "ticker": "601233.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.5,
+            "livermore_breakout": 3.0,
+            "volume_price": 5.0,
+            "candlestick": 4.0,
+            "overheat": 5.5,
+            "risk": 4.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.5,
+          "risk_flags": [
+            "MODEL_DISAGREEMENT",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "HOLD",
+          "note": "doji indecision candle and no clear pivot setup with mixed committee evidence despite 60d momentum of 17.6%"
+        },
+        {
+          "ticker": "601665.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.5,
+            "livermore_breakout": 7.0,
+            "volume_price": 6.0,
+            "candlestick": 5.0,
+            "overheat": 7.5,
+            "risk": 7.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.0
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "LIQUIDITY_RISK"
+          ],
+          "decision": "WATCH",
+          "note": "cleared the 55d pivot with RSI 56.5 controlled, but daily turnover of only ¥2.75亿 signals thin liquidity"
+        },
+        {
+          "ticker": "601728.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 7.0,
+            "volume_price": 5.5,
+            "candlestick": 7.0,
+            "overheat": 7.0,
+            "risk": 6.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "LIQUIDITY_RISK",
+            "MODEL_DISAGREEMENT"
+          ],
+          "decision": "WATCH",
+          "note": "bullish engulfing within 0.3% of the pivot, but 0.17% turnover against a 6,085亿 mcap signals limited liquidity relative to size"
+        },
+        {
+          "ticker": "601857.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 7.5,
+            "volume_price": 6.0,
+            "candlestick": 8.0,
+            "overheat": 8.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.0
+          },
+          "confidence": 0.7,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "mega-cap (20,517亿) within 0.5% of the pivot with RSI 48.6 controlled and full committee alignment"
+        },
+        {
+          "ticker": "601919.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 7.5,
+            "livermore_breakout": 8.5,
+            "volume_price": 8.0,
+            "candlestick": 8.0,
+            "overheat": 5.0,
+            "risk": 7.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 9.0
+          },
+          "confidence": 0.75,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "cleared the 55d pivot with confirmed breakout volume, 7 accumulation vs 1 distribution days, and low 1.9% ATR risk"
+        },
+        {
+          "ticker": "601939.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 5.5,
+            "livermore_breakout": 4.0,
+            "volume_price": 3.0,
+            "candlestick": 5.0,
+            "overheat": 8.5,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "WEAK_TREND"
+          ],
+          "decision": "HOLD",
+          "note": "down days carry heavier volume than up days despite the trend-stack alignment, distribution pressure under the surface"
+        },
+        {
+          "ticker": "601988.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.0,
+            "livermore_breakout": 7.0,
+            "volume_price": 5.0,
+            "candlestick": 5.0,
+            "overheat": 8.5,
+            "risk": 7.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.0
+          },
+          "confidence": 0.6,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "trend, breakout and risk controls align with RSI 47.1 controlled and tight 2.1% ATR risk near the pivot"
+        },
+        {
+          "ticker": "601998.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.5,
+            "livermore_breakout": 8.5,
+            "volume_price": 7.0,
+            "candlestick": 8.0,
+            "overheat": 7.0,
+            "risk": 7.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 8.5
+          },
+          "confidence": 0.65,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "cleared the 55d pivot by 2.6% with confirmed breakout volume and controlled RSI 58.5"
+        },
+        {
+          "ticker": "603127.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 5.5,
+            "livermore_breakout": 3.0,
+            "volume_price": 5.0,
+            "candlestick": 1.5,
+            "overheat": 3.5,
+            "risk": 1.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 6.0
+          },
+          "confidence": 0.5,
+          "risk_flags": [
+            "OVERHEATED",
+            "HIGH_VOLATILITY",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "SELL",
+          "note": "strong bearish candle closed near low, 7.6% below the 60d high, ATR 6.55% and 7.4% turnover signal a volatile reversal"
+        },
+        {
+          "ticker": "603129.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 8.0,
+            "livermore_breakout": 8.5,
+            "volume_price": 7.0,
+            "candlestick": 8.0,
+            "overheat": 5.5,
+            "risk": 5.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.7,
+          "risk_flags": [],
+          "decision": "BUY",
+          "note": "cleared the 55d pivot with confirmed breakout volume and RSI 56.9 still controlled despite 18.1% 20d momentum"
+        },
+        {
+          "ticker": "603156.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 7.0,
+            "livermore_breakout": 6.5,
+            "volume_price": 8.0,
+            "candlestick": 5.0,
+            "overheat": 0.0,
+            "risk": 3.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 6.5
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "OVERHEATED",
+            "HIGH_VOLATILITY"
+          ],
+          "decision": "SELL",
+          "note": "RSI 92.3 is an extreme overbought reading with a 56% 20-day surge, parabolic move at high risk of sharp mean reversion"
+        },
+        {
+          "ticker": "603259.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 7.5,
+            "livermore_breakout": 6.0,
+            "volume_price": 7.0,
+            "candlestick": 5.0,
+            "overheat": 1.0,
+            "risk": 3.5,
+            "zhuge_orion": 5.0,
+            "final_chair": 6.5
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "OVERHEATED"
+          ],
+          "decision": "WATCH",
+          "note": "RSI 79.5 with 28.6% extension above the 50d SMA despite a massive 60% 60d gain, momentum is real but chasing carries mean-reversion risk"
+        },
+        {
+          "ticker": "603268.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 7.0,
+            "livermore_breakout": 3.0,
+            "volume_price": 5.5,
+            "candlestick": 1.5,
+            "overheat": 3.5,
+            "risk": 4.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 6.0
+          },
+          "confidence": 0.55,
+          "risk_flags": [
+            "OVERHEATED",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "SELL",
+          "note": "strong bearish candle closed near low with RSI 72.1, a reversal signal at extended levels despite 30.8% 60d momentum"
+        },
+        {
+          "ticker": "688002.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.5,
+            "livermore_breakout": 3.0,
+            "volume_price": 5.5,
+            "candlestick": 5.0,
+            "overheat": 5.0,
+            "risk": 2.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 4.0
+          },
+          "confidence": 0.5,
+          "risk_flags": [
+            "HIGH_VOLATILITY",
+            "BREAKOUT_UNCONFIRMED",
+            "MODEL_DISAGREEMENT"
+          ],
+          "decision": "HOLD",
+          "note": "7.25% below the 60d high with no clear pivot setup and mixed committee evidence, high 6.2% ATR adds volatility risk"
+        },
+        {
+          "ticker": "688428.SH",
+          "dimensions": {
+            "market_regime": 7.0,
+            "trend": 6.5,
+            "livermore_breakout": 3.0,
+            "volume_price": 6.0,
+            "candlestick": 1.5,
+            "overheat": 3.5,
+            "risk": 3.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 5.0
+          },
+          "confidence": 0.45,
+          "risk_flags": [
+            "OVERHEATED",
+            "HIGH_VOLATILITY",
+            "LIQUIDITY_RISK",
+            "BREAKOUT_UNCONFIRMED"
+          ],
+          "decision": "SELL",
+          "note": "strong bearish candle closed near low with RSI 71.8 and only ¥3.6亿 daily turnover, reversal risk compounded by thin liquidity"
+        },
+        {
+          "ticker": "688617.SH",
+          "dimensions": {
+            "market_regime": 5.0,
+            "trend": 5.0,
+            "livermore_breakout": 6.5,
+            "volume_price": 6.5,
+            "candlestick": 5.0,
+            "overheat": 7.0,
+            "risk": 5.0,
+            "zhuge_orion": 5.0,
+            "final_chair": 7.0
+          },
+          "confidence": 0.5,
+          "risk_flags": [
+            "MARKET_REGIME_RISK",
+            "WEAK_TREND",
+            "LIQUIDITY_RISK"
+          ],
+          "decision": "WATCH",
+          "note": "cleared the pivot by just 0.04% while still 2.2% below the 200d SMA, a marginal breakout inside a still-negative long-term trend"
+        }
+      ]
+    }
+  ],
+  "submissions": {
+    "sol": [
+      {
+        "ticker": "000301.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 9.0,
+          "candlestick": 5.0,
+          "overheat": 6.0,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "confidence": 0.86,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "Close remains 4.0% below the 55-day pivot."
+      },
+      {
+        "ticker": "000333.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 6.0,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "confidence": 0.82,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "RSI is only 34.2 despite the constructive moving-average stack."
+      },
+      {
+        "ticker": "000651.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.92,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "It is only 2.7% below the pivot with a 4.3% technical stop distance."
+      },
+      {
+        "ticker": "000703.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 10.0,
+          "candlestick": 8.0,
+          "overheat": 4.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.9,
+        "risk_flags": [
+          "HIGH_VOLATILITY",
+          "OVERHEATED"
+        ],
+        "decision": "WATCH",
+        "note": "RSI is 72.6 after a 25.9% 20-day advance."
+      },
+      {
+        "ticker": "000975.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 8.0,
+          "candlestick": 2.0,
+          "overheat": 6.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "confidence": 0.88,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "The latest candle is a shooting-star rejection after the advance."
+      },
+      {
+        "ticker": "002142.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.91,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "Close is essentially at the 55-day pivot, only 0.03% below it."
+      },
+      {
+        "ticker": "002493.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 6.0,
+          "volume_price": 9.0,
+          "candlestick": 8.0,
+          "overheat": 7.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "confidence": 0.87,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "The technical stop is 12.8% below the close."
+      },
+      {
+        "ticker": "002648.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 8.0,
+          "candlestick": 4.0,
+          "overheat": 7.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "confidence": 0.88,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "The doji-like candle signals indecision just 1.3% below the pivot."
+      },
+      {
+        "ticker": "002966.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 9.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.88,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "Close is only 0.35% below the 55-day pivot with low 2.1% ATR."
+      },
+      {
+        "ticker": "300628.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 5.0,
+          "candlestick": 4.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "confidence": 0.84,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "Volume-price evidence is neutral despite proximity to the pivot."
+      },
+      {
+        "ticker": "300759.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 9.0,
+          "candlestick": 2.0,
+          "overheat": 2.0,
+          "risk": 2.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "confidence": 0.92,
+        "risk_flags": [
+          "HIGH_VOLATILITY",
+          "OVERHEATED",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "HOLD",
+        "note": "RSI is 79.1 after a 91.5% 60-day gain."
+      },
+      {
+        "ticker": "300832.SZ",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 10.0,
+          "candlestick": 5.0,
+          "overheat": 5.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "confidence": 0.89,
+        "risk_flags": [
+          "OVERHEATED",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "RSI is 71.4 at a new 60-day-high area."
+      },
+      {
+        "ticker": "600298.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 9.0,
+          "candlestick": 5.0,
+          "overheat": 8.0,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.86,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "There is no clear Livermore pivot setup."
+      },
+      {
+        "ticker": "600346.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 6.0,
+          "volume_price": 9.0,
+          "candlestick": 8.0,
+          "overheat": 6.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "confidence": 0.87,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "Price remains 6.7% below its 200-day SMA."
+      },
+      {
+        "ticker": "600428.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 8.0,
+          "candlestick": 5.0,
+          "overheat": 6.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.88,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "The close is 21.6% above its technical stop."
+      },
+      {
+        "ticker": "600489.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 10.0,
+          "candlestick": 5.0,
+          "overheat": 6.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.88,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "No clear Livermore pivot is present."
+      },
+      {
+        "ticker": "600547.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 6.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "confidence": 0.89,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "WEAK_TREND"
+        ],
+        "decision": "WATCH",
+        "note": "Price cleared the pivot by 0.2% but remains 9.8% below the 200-day SMA."
+      },
+      {
+        "ticker": "600663.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 10.0,
+          "candlestick": 5.0,
+          "overheat": 4.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.87,
+        "risk_flags": [
+          "OVERHEATED",
+          "LIQUIDITY_RISK",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "Session turnover was only CNY 1.399亿 despite the 36.1% 20-day rise."
+      },
+      {
+        "ticker": "600737.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 8.0,
+          "candlestick": 3.0,
+          "overheat": 3.0,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "confidence": 0.9,
+        "risk_flags": [
+          "HIGH_VOLATILITY",
+          "OVERHEATED",
+          "MODEL_DISAGREEMENT"
+        ],
+        "decision": "WATCH",
+        "note": "RSI is 74.4 and the latest close was weak after a 15.1% 10-day advance."
+      },
+      {
+        "ticker": "600795.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 10.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        },
+        "confidence": 0.92,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "The setup combines a 1.9% pivot distance with 1.9% ATR and a 6.5% stop distance."
+      },
+      {
+        "ticker": "600919.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 10.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        },
+        "confidence": 0.94,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "It cleared the pivot by 0.4% with breakout-volume confirmation and 1.8% ATR."
+      },
+      {
+        "ticker": "600926.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        },
+        "confidence": 0.92,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "A 1.0% pivot clearance comes with a low 1.7% ATR."
+      },
+      {
+        "ticker": "600941.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 6.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        },
+        "confidence": 0.88,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "The technical stop is only 3.6% below the close."
+      },
+      {
+        "ticker": "600968.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 10.0,
+          "candlestick": 5.0,
+          "overheat": 7.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        },
+        "confidence": 0.92,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "The stock cleared its pivot by 1.5% on confirmed breakout volume."
+      },
+      {
+        "ticker": "600985.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 8.0,
+          "candlestick": 5.0,
+          "overheat": 7.0,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "confidence": 0.86,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "The committee evidence is mixed despite strong 60-day momentum."
+      },
+      {
+        "ticker": "600988.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 7.0,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "confidence": 0.87,
+        "risk_flags": [
+          "HIGH_VOLATILITY",
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "ATR is 6.6% and the close is 7.1% below its pivot."
+      },
+      {
+        "ticker": "601009.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 9.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        },
+        "confidence": 0.92,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "The close is within 0.4% of pivot after a strong-volume advance."
+      },
+      {
+        "ticker": "601088.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 5.0,
+          "volume_price": 5.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "confidence": 0.84,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "Volume-price evidence is neutral and price is 7.2% below pivot."
+      },
+      {
+        "ticker": "601225.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.0,
+          "candlestick": 5.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "confidence": 0.84,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "There is no clear Livermore pivot setup."
+      },
+      {
+        "ticker": "601229.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.92,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "The pivot was cleared by 1.6% with volume confirmation and 1.9% ATR."
+      },
+      {
+        "ticker": "601233.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.0,
+          "candlestick": 4.0,
+          "overheat": 8.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "confidence": 0.84,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "Volume-price evidence is neutral with no clear pivot setup."
+      },
+      {
+        "ticker": "601665.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 8.0,
+          "candlestick": 5.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.9,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "It has just cleared the pivot while ATR is only 1.9%."
+      },
+      {
+        "ticker": "601728.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "confidence": 0.86,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "Close is still 0.3% below the pivot despite the bullish engulfing candle."
+      },
+      {
+        "ticker": "601857.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 9.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.89,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "Price is within 0.5% of pivot with RSI a controlled 48.6."
+      },
+      {
+        "ticker": "601919.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 10.0,
+          "candlestick": 8.0,
+          "overheat": 7.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 10.0
+        },
+        "confidence": 0.94,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "The pivot was cleared by 1.2% on confirmed breakout volume with 1.9% ATR."
+      },
+      {
+        "ticker": "601939.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 5.0,
+          "volume_price": 3.0,
+          "candlestick": 5.0,
+          "overheat": 9.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "confidence": 0.85,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "Down days carry heavier volume than up days."
+      },
+      {
+        "ticker": "601988.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 5.0,
+          "candlestick": 5.0,
+          "overheat": 9.0,
+          "risk": 9.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.88,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "The stop is only 3.7% below the close and RSI is 47.1."
+      },
+      {
+        "ticker": "601998.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 9.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.92,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "The 2.6% pivot clearance is confirmed by breakout volume."
+      },
+      {
+        "ticker": "603127.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 2.0,
+          "overheat": 5.0,
+          "risk": 2.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.9,
+        "risk_flags": [
+          "HIGH_VOLATILITY",
+          "OVERHEATED",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "HOLD",
+        "note": "Volatility is 5.5% and the close is 10.6% below pivot after a strong bearish candle."
+      },
+      {
+        "ticker": "603129.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 10.0,
+          "volume_price": 9.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.93,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "It cleared the pivot by 1.9% with breakout-volume confirmation."
+      },
+      {
+        "ticker": "603156.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 10.0,
+          "candlestick": 5.0,
+          "overheat": 0.0,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.94,
+        "risk_flags": [
+          "OVERHEATED",
+          "HIGH_VOLATILITY"
+        ],
+        "decision": "HOLD",
+        "note": "RSI is an extreme 92.3 after a 56.0% 20-day advance."
+      },
+      {
+        "ticker": "603259.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 10.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 9.0,
+          "candlestick": 5.0,
+          "overheat": 2.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "confidence": 0.92,
+        "risk_flags": [
+          "OVERHEATED",
+          "HIGH_VOLATILITY",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "RSI is 79.5 after a 60.0% 60-day rise."
+      },
+      {
+        "ticker": "603268.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 10.0,
+          "candlestick": 2.0,
+          "overheat": 4.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.9,
+        "risk_flags": [
+          "OVERHEATED",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "The latest candle closed strongly bearish while still 5.0% below pivot."
+      },
+      {
+        "ticker": "688002.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 9.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 6.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "confidence": 0.86,
+        "risk_flags": [
+          "HIGH_VOLATILITY",
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "The close remains 9.4% below pivot with a 6.2% ATR."
+      },
+      {
+        "ticker": "688428.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 2.0,
+          "overheat": 4.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.88,
+        "risk_flags": [
+          "OVERHEATED",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "A strong bearish candle arrived while price remains 8.3% below pivot."
+      },
+      {
+        "ticker": "688617.SH",
+        "dimensions": {
+          "market_regime": 8.0,
+          "trend": 7.0,
+          "livermore_breakout": 9.0,
+          "volume_price": 9.0,
+          "candlestick": 5.0,
+          "overheat": 8.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "confidence": 0.88,
+        "risk_flags": [
+          "WEAK_TREND"
+        ],
+        "decision": "WATCH",
+        "note": "Price has only just matched the pivot but remains 2.2% below its 200-day SMA."
+      }
+    ],
+    "claude": [
+      {
+        "ticker": "000301.SZ",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 5.5,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 4.5,
+          "risk": 5.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.5
+        },
+        "confidence": 0.65,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "12.8% 20d gain is volume-supported (6 acc/2 dist) but RSI 69.5 and 3.96% below the pivot leave the breakout unconfirmed"
+      },
+      {
+        "ticker": "000333.SZ",
+        "dimensions": {
+          "market_regime": 6.0,
+          "trend": 5.0,
+          "livermore_breakout": 4.0,
+          "volume_price": 6.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.6,
+        "risk_flags": [
+          "WEAK_TREND",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "strong bullish candle but 20d momentum is flat (-0.09%), so the price move hasn't caught up with the candle yet"
+      },
+      {
+        "ticker": "000651.SZ",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 8.0,
+          "volume_price": 6.0,
+          "candlestick": 8.0,
+          "overheat": 8.5,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.75,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "trend, breakout and risk controls all align 2.7% from the pivot with low 1.7% ATR risk and RSI only 38.9"
+      },
+      {
+        "ticker": "000703.SZ",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 8.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 8.5,
+          "candlestick": 8.0,
+          "overheat": 2.5,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.7,
+        "risk_flags": [
+          "OVERHEATED",
+          "HIGH_VOLATILITY"
+        ],
+        "decision": "WATCH",
+        "note": "volume-confirmed breakout 1.1% from pivot but RSI 72.6 and 26.5% extension above the 50d SMA signal overheating risk"
+      },
+      {
+        "ticker": "000975.SZ",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 6.0,
+          "candlestick": 2.0,
+          "overheat": 3.0,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "OVERHEATED",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "SELL",
+        "note": "shooting-star rejection after a 19% 20d advance with RSI 67.6 signals exhaustion at extended levels"
+      },
+      {
+        "ticker": "002142.SZ",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 7.0,
+          "livermore_breakout": 8.5,
+          "volume_price": 6.0,
+          "candlestick": 5.0,
+          "overheat": 8.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.7,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "BUY",
+        "note": "sits right at the 55d pivot (-0.03%) with RSI 50.9 controlled and full trend-stack alignment, a clean pre-breakout setup"
+      },
+      {
+        "ticker": "002493.SZ",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 5.5,
+          "volume_price": 7.5,
+          "candlestick": 8.0,
+          "overheat": 5.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.65,
+        "risk_flags": [],
+        "decision": "WATCH",
+        "note": "5 accumulation vs 1 distribution days with a strong volume-backed advance, but RSI 62 and 12.8% extension above 50d SMA leave less room"
+      },
+      {
+        "ticker": "002648.SZ",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 7.5,
+          "volume_price": 6.5,
+          "candlestick": 4.0,
+          "overheat": 5.5,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.65,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "doji indecision candle within 1.3% of the 55d pivot signals the breakout is not yet confirmed despite trend-stack alignment"
+      },
+      {
+        "ticker": "002966.SZ",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 5.5,
+          "candlestick": 5.0,
+          "overheat": 8.0,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.5
+        },
+        "confidence": 0.6,
+        "risk_flags": [
+          "LIQUIDITY_RISK"
+        ],
+        "decision": "WATCH",
+        "note": "0.35% below the 55d pivot with RSI 51.6 controlled, but daily turnover of only ¥3.1亿 raises liquidity risk"
+      },
+      {
+        "ticker": "300628.SZ",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 6.5,
+          "volume_price": 5.0,
+          "candlestick": 4.0,
+          "overheat": 7.0,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED",
+          "MODEL_DISAGREEMENT"
+        ],
+        "decision": "HOLD",
+        "note": "doji indecision candle and mixed committee evidence despite trend-stack alignment, no clear catalyst"
+      },
+      {
+        "ticker": "300759.SZ",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.5,
+          "candlestick": 1.5,
+          "overheat": 0.5,
+          "risk": 2.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "confidence": 0.6,
+        "risk_flags": [
+          "OVERHEATED",
+          "HIGH_VOLATILITY",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "SELL",
+        "note": "strong bearish candle closed near low after a 21.2% 10-day advance, RSI 79.1 and 39.5% extension above 50d SMA signal a blow-off top"
+      },
+      {
+        "ticker": "300832.SZ",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 7.5,
+          "candlestick": 5.0,
+          "overheat": 3.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.6,
+        "risk_flags": [
+          "OVERHEATED"
+        ],
+        "decision": "WATCH",
+        "note": "within 0.5% of the 55d pivot with strong 6v1 accumulation, but RSI 71.4 leaves little room before a pullback"
+      },
+      {
+        "ticker": "600298.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 6.5,
+          "candlestick": 5.0,
+          "overheat": 7.0,
+          "risk": 5.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.6,
+        "risk_flags": [
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "no clear Livermore pivot setup despite solid 60d momentum of 18.8% and controlled RSI 55.7"
+      },
+      {
+        "ticker": "600346.SH",
+        "dimensions": {
+          "market_regime": 4.5,
+          "trend": 5.0,
+          "livermore_breakout": 5.5,
+          "volume_price": 6.5,
+          "candlestick": 8.0,
+          "overheat": 4.5,
+          "risk": 6.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "MARKET_REGIME_RISK",
+          "WEAK_TREND"
+        ],
+        "decision": "WATCH",
+        "note": "15% 20d surge but price remains 6.7% below the 200d SMA, the constructive slope conflicts with the longer-term downtrend"
+      },
+      {
+        "ticker": "600428.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 6.0,
+          "candlestick": 5.0,
+          "overheat": 3.5,
+          "risk": 4.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.6,
+        "risk_flags": [
+          "OVERHEATED",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "60d momentum of 59% is exceptional but 23% extension above the 50d SMA with no clear pivot setup raises pullback risk"
+      },
+      {
+        "ticker": "600489.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 3.5,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "OVERHEATED",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "18.5% extension above the 50d SMA with RSI 67.3 and no clear pivot setup, momentum without structure"
+      },
+      {
+        "ticker": "600547.SH",
+        "dimensions": {
+          "market_regime": 4.0,
+          "trend": 5.0,
+          "livermore_breakout": 8.5,
+          "volume_price": 6.5,
+          "candlestick": 8.0,
+          "overheat": 3.5,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "MARKET_REGIME_RISK",
+          "OVERHEATED",
+          "WEAK_TREND",
+          "MODEL_DISAGREEMENT"
+        ],
+        "decision": "WATCH",
+        "note": "cleared the 55d pivot with confirmed breakout volume, but remains 9.8% below the 200d SMA, a breakout inside a longer downtrend"
+      },
+      {
+        "ticker": "600663.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 8.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 2.0,
+          "risk": 4.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.5,
+        "risk_flags": [
+          "OVERHEATED",
+          "LIQUIDITY_RISK"
+        ],
+        "decision": "WATCH",
+        "note": "36% 20d momentum is extreme with RSI 71.9 and only ¥1.4亿 daily turnover, thin liquidity amplifies reversal risk"
+      },
+      {
+        "ticker": "600737.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 6.0,
+          "volume_price": 5.5,
+          "candlestick": 3.0,
+          "overheat": 2.0,
+          "risk": 2.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.5,
+        "risk_flags": [
+          "OVERHEATED",
+          "HIGH_VOLATILITY",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "SELL",
+        "note": "weak close after a 15.1% 10-day advance right at the pivot, RSI 74.4 and 7.0% turnover rate signal speculative exhaustion"
+      },
+      {
+        "ticker": "600795.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 8.0,
+          "volume_price": 7.5,
+          "candlestick": 8.0,
+          "overheat": 7.0,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.75,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "trend, breakout and risk controls all align with low 1.9% ATR risk and controlled RSI 59.3 within 1.9% of the pivot"
+      },
+      {
+        "ticker": "600919.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 8.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.8,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "cleared the 55d pivot with confirmed breakout volume, low 1.8% ATR risk, and full trend-stack alignment"
+      },
+      {
+        "ticker": "600926.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 7.5,
+          "volume_price": 6.5,
+          "candlestick": 8.0,
+          "overheat": 7.5,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.7,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "cleared the 55d pivot by 1.0% with low 1.7% ATR risk and controlled RSI 58.2, a clean low-volatility breakout"
+      },
+      {
+        "ticker": "600941.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 5.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 6.0,
+          "candlestick": 8.0,
+          "overheat": 8.5,
+          "risk": 8.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.65,
+        "risk_flags": [
+          "WEAK_TREND"
+        ],
+        "decision": "WATCH",
+        "note": "mega-cap (21,074亿) with flat 200d trend (only 1.17%) and modest 8.7% benchmark outperformance, stable but low-momentum"
+      },
+      {
+        "ticker": "600968.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 7.5,
+          "candlestick": 5.0,
+          "overheat": 5.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.5
+        },
+        "confidence": 0.6,
+        "risk_flags": [
+          "LIQUIDITY_RISK"
+        ],
+        "decision": "WATCH",
+        "note": "cleared the 55d pivot with confirmed breakout volume, though daily turnover of only ¥3.3亿 warrants a liquidity check"
+      },
+      {
+        "ticker": "600985.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 6.5,
+          "volume_price": 6.0,
+          "candlestick": 5.0,
+          "overheat": 5.5,
+          "risk": 4.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT"
+        ],
+        "decision": "WATCH",
+        "note": "committee evidence is mixed despite strong 60d momentum of 28.3% and full trend-stack alignment"
+      },
+      {
+        "ticker": "600988.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.5,
+          "candlestick": 5.0,
+          "overheat": 3.5,
+          "risk": 2.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.5,
+        "risk_flags": [
+          "OVERHEATED",
+          "HIGH_VOLATILITY",
+          "BREAKOUT_UNCONFIRMED",
+          "MODEL_DISAGREEMENT"
+        ],
+        "decision": "HOLD",
+        "note": "24.3% extension above the 50d SMA with 6.6% ATR and mixed committee evidence, extended and volatile without a clear setup"
+      },
+      {
+        "ticker": "601009.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 6.5,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.75,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "within 0.4% of the 55d pivot with RSI 49.3 controlled and full trend-stack alignment, low 2.1% ATR risk"
+      },
+      {
+        "ticker": "601088.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 4.0,
+          "volume_price": 5.0,
+          "candlestick": 8.0,
+          "overheat": 7.0,
+          "risk": 6.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "WATCH",
+        "note": "7.2% below the 55d pivot and 6.5% off the 60d high with mixed committee evidence, needs to reclaim highs to confirm"
+      },
+      {
+        "ticker": "601225.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.0,
+          "candlestick": 5.0,
+          "overheat": 6.5,
+          "risk": 5.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.5,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "HOLD",
+        "note": "no clear Livermore pivot setup and neutral volume-price picture despite trend-stack alignment, lacks a catalyst"
+      },
+      {
+        "ticker": "601229.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 8.5,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 7.5,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.5
+        },
+        "confidence": 0.7,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "cleared the 55d pivot with confirmed breakout volume and low 1.9% ATR risk, RSI 56.5 controlled"
+      },
+      {
+        "ticker": "601233.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.0,
+          "candlestick": 4.0,
+          "overheat": 5.5,
+          "risk": 4.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.5,
+        "risk_flags": [
+          "MODEL_DISAGREEMENT",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "HOLD",
+        "note": "doji indecision candle and no clear pivot setup with mixed committee evidence despite 60d momentum of 17.6%"
+      },
+      {
+        "ticker": "601665.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 7.0,
+          "volume_price": 6.0,
+          "candlestick": 5.0,
+          "overheat": 7.5,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "LIQUIDITY_RISK"
+        ],
+        "decision": "WATCH",
+        "note": "cleared the 55d pivot with RSI 56.5 controlled, but daily turnover of only ¥2.75亿 signals thin liquidity"
+      },
+      {
+        "ticker": "601728.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 5.5,
+          "candlestick": 7.0,
+          "overheat": 7.0,
+          "risk": 6.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "LIQUIDITY_RISK",
+          "MODEL_DISAGREEMENT"
+        ],
+        "decision": "WATCH",
+        "note": "bullish engulfing within 0.3% of the pivot, but 0.17% turnover against a 6,085亿 mcap signals limited liquidity relative to size"
+      },
+      {
+        "ticker": "601857.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 7.5,
+          "volume_price": 6.0,
+          "candlestick": 8.0,
+          "overheat": 8.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "confidence": 0.7,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "mega-cap (20,517亿) within 0.5% of the pivot with RSI 48.6 controlled and full committee alignment"
+      },
+      {
+        "ticker": "601919.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 8.0,
+          "candlestick": 8.0,
+          "overheat": 5.0,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 9.0
+        },
+        "confidence": 0.75,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "cleared the 55d pivot with confirmed breakout volume, 7 accumulation vs 1 distribution days, and low 1.9% ATR risk"
+      },
+      {
+        "ticker": "601939.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 4.0,
+          "volume_price": 3.0,
+          "candlestick": 5.0,
+          "overheat": 8.5,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "WEAK_TREND"
+        ],
+        "decision": "HOLD",
+        "note": "down days carry heavier volume than up days despite the trend-stack alignment, distribution pressure under the surface"
+      },
+      {
+        "ticker": "601988.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.0,
+          "livermore_breakout": 7.0,
+          "volume_price": 5.0,
+          "candlestick": 5.0,
+          "overheat": 8.5,
+          "risk": 7.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.0
+        },
+        "confidence": 0.6,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "trend, breakout and risk controls align with RSI 47.1 controlled and tight 2.1% ATR risk near the pivot"
+      },
+      {
+        "ticker": "601998.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 8.5,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 7.0,
+          "risk": 7.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 8.5
+        },
+        "confidence": 0.65,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "cleared the 55d pivot by 2.6% with confirmed breakout volume and controlled RSI 58.5"
+      },
+      {
+        "ticker": "603127.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 5.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.0,
+          "candlestick": 1.5,
+          "overheat": 3.5,
+          "risk": 1.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "confidence": 0.5,
+        "risk_flags": [
+          "OVERHEATED",
+          "HIGH_VOLATILITY",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "SELL",
+        "note": "strong bearish candle closed near low, 7.6% below the 60d high, ATR 6.55% and 7.4% turnover signal a volatile reversal"
+      },
+      {
+        "ticker": "603129.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 8.0,
+          "livermore_breakout": 8.5,
+          "volume_price": 7.0,
+          "candlestick": 8.0,
+          "overheat": 5.5,
+          "risk": 5.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.7,
+        "risk_flags": [],
+        "decision": "BUY",
+        "note": "cleared the 55d pivot with confirmed breakout volume and RSI 56.9 still controlled despite 18.1% 20d momentum"
+      },
+      {
+        "ticker": "603156.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 7.0,
+          "livermore_breakout": 6.5,
+          "volume_price": 8.0,
+          "candlestick": 5.0,
+          "overheat": 0.0,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.5
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "OVERHEATED",
+          "HIGH_VOLATILITY"
+        ],
+        "decision": "SELL",
+        "note": "RSI 92.3 is an extreme overbought reading with a 56% 20-day surge, parabolic move at high risk of sharp mean reversion"
+      },
+      {
+        "ticker": "603259.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 7.5,
+          "livermore_breakout": 6.0,
+          "volume_price": 7.0,
+          "candlestick": 5.0,
+          "overheat": 1.0,
+          "risk": 3.5,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.5
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "OVERHEATED"
+        ],
+        "decision": "WATCH",
+        "note": "RSI 79.5 with 28.6% extension above the 50d SMA despite a massive 60% 60d gain, momentum is real but chasing carries mean-reversion risk"
+      },
+      {
+        "ticker": "603268.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 7.0,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.5,
+          "candlestick": 1.5,
+          "overheat": 3.5,
+          "risk": 4.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 6.0
+        },
+        "confidence": 0.55,
+        "risk_flags": [
+          "OVERHEATED",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "SELL",
+        "note": "strong bearish candle closed near low with RSI 72.1, a reversal signal at extended levels despite 30.8% 60d momentum"
+      },
+      {
+        "ticker": "688002.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 5.5,
+          "candlestick": 5.0,
+          "overheat": 5.0,
+          "risk": 2.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 4.0
+        },
+        "confidence": 0.5,
+        "risk_flags": [
+          "HIGH_VOLATILITY",
+          "BREAKOUT_UNCONFIRMED",
+          "MODEL_DISAGREEMENT"
+        ],
+        "decision": "HOLD",
+        "note": "7.25% below the 60d high with no clear pivot setup and mixed committee evidence, high 6.2% ATR adds volatility risk"
+      },
+      {
+        "ticker": "688428.SH",
+        "dimensions": {
+          "market_regime": 7.0,
+          "trend": 6.5,
+          "livermore_breakout": 3.0,
+          "volume_price": 6.0,
+          "candlestick": 1.5,
+          "overheat": 3.5,
+          "risk": 3.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 5.0
+        },
+        "confidence": 0.45,
+        "risk_flags": [
+          "OVERHEATED",
+          "HIGH_VOLATILITY",
+          "LIQUIDITY_RISK",
+          "BREAKOUT_UNCONFIRMED"
+        ],
+        "decision": "SELL",
+        "note": "strong bearish candle closed near low with RSI 71.8 and only ¥3.6亿 daily turnover, reversal risk compounded by thin liquidity"
+      },
+      {
+        "ticker": "688617.SH",
+        "dimensions": {
+          "market_regime": 5.0,
+          "trend": 5.0,
+          "livermore_breakout": 6.5,
+          "volume_price": 6.5,
+          "candlestick": 5.0,
+          "overheat": 7.0,
+          "risk": 5.0,
+          "zhuge_orion": 5.0,
+          "final_chair": 7.0
+        },
+        "confidence": 0.5,
+        "risk_flags": [
+          "MARKET_REGIME_RISK",
+          "WEAK_TREND",
+          "LIQUIDITY_RISK"
+        ],
+        "decision": "WATCH",
+        "note": "cleared the pivot by just 0.04% while still 2.2% below the 200d SMA, a marginal breakout inside a still-negative long-term trend"
+      }
+    ]
+  },
+  "quorumMet": true
+}

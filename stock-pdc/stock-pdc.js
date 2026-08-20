@@ -88,6 +88,25 @@ function weekdayLabel(value) {
   return ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"][weekday];
 }
 
+function dayFlowUrl(day) {
+  const audit = day?.audit || {};
+  if (audit.flowUrl) return String(audit.flowUrl);
+  if (audit.runtimeMode !== "DAILY_TOP10" || !audit.runId) return "";
+  return `/stock-pdc/runs/${encodeURIComponent(audit.runId)}/daily_top10_flow.html`;
+}
+
+function dayRunTimestamp(day) {
+  const audit = day?.audit || {};
+  const raw = audit.generatedAt || audit.frozenAt
+    || (day?.date === state.data?.latestDate ? state.data?.generatedAt : "");
+  if (!raw) return "";
+  return String(raw).replace("T", " ").replace(/\.\d+/, "").slice(0, 16);
+}
+
+function dayModeLabel(day) {
+  return day?.audit?.runtimeMode === "DAILY_TOP10" ? "DAILY_TOP10" : "";
+}
+
 function rowByRank(day, rank) {
   return (day.rows || []).find((row) => Number(row.rank) === rank) || null;
 }
@@ -209,6 +228,9 @@ function latestPortfolioSummary(days) {
 function renderStrategySummary() {
   const strategy = state.data?.strategy;
   if (!strategy) return "";
+  const latestDay = visibleDays()[0] || null;
+  const flowUrl = dayFlowUrl(latestDay);
+  const flowTimestamp = dayRunTimestamp(latestDay);
   return `
     <section class="stock-strategy-note" aria-label="Stock PDC strategy rule">
       <h2>Top20 Rotation</h2>
@@ -218,6 +240,7 @@ function renderStrategySummary() {
         <span>${escapeHtml(strategy.rankingStage || "PDC ranking")}</span>
         <span>${escapeHtml(strategy.exitRule || "Top 20 exit review")}</span>
       </div>
+      ${flowUrl ? `<div class="stock-flow-audit-row"><span>最新 DAILY_TOP10 · ${escapeHtml(latestDay.date)}${flowTimestamp ? ` · 记录 ${escapeHtml(flowTimestamp)}` : ""}</span><a href="${escapeHtml(flowUrl)}" target="_blank" rel="noreferrer">查看完整流程</a></div>` : ""}
     </section>
   `;
 }
@@ -341,12 +364,14 @@ function renderRankList() {
   list.innerHTML = `
     ${renderStrategySummary()}
     ${renderPublishedDecisionHistory()}
-    <div class="stock-rank-matrix" style="--date-count: ${days.length}">
+      <div class="stock-rank-matrix" style="--date-count: ${days.length}">
       <div class="stock-matrix-corner" aria-hidden="true"></div>
       ${days.map((day) => `
-        <time class="stock-date-head" datetime="${escapeHtml(day.date)}" title="${escapeHtml(day.date)}">
+        <time class="stock-date-head" datetime="${escapeHtml(day.date)}" title="${escapeHtml(`${day.date}${dayRunTimestamp(day) ? ` · 记录 ${dayRunTimestamp(day)}` : ""}`)}">
           <span>${escapeHtml(shortDate(day.date))}</span>
-          <small>${escapeHtml(weekdayLabel(day.date))}</small>
+          <small>${escapeHtml([dayModeLabel(day), weekdayLabel(day.date)].filter(Boolean).join(" · "))}</small>
+          ${dayRunTimestamp(day) ? `<small class="stock-date-timestamp">${escapeHtml(dayRunTimestamp(day))}</small>` : ""}
+          ${dayFlowUrl(day) ? `<a class="stock-date-flow-link" href="${escapeHtml(dayFlowUrl(day))}" target="_blank" rel="noreferrer">查看流程</a>` : ""}
         </time>
       `).join("")}
       ${ranks.map((rank) => `
