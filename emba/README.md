@@ -8,11 +8,13 @@ The static page keeps this browser-only code for local preview:
 emba2026
 ```
 
-This browser constant is not production security. On Cloudflare Pages, `/emba/*` and `/api/emba/*` fail closed unless the Pages environment variable is configured:
+This browser constant is not production security. On Cloudflare Pages, `EMBA_ACCESS_CODE` can override the default for `/emba/*` and `/api/emba/*`:
 
 ```text
 EMBA_ACCESS_CODE=emba2026
 ```
+
+If the variable is temporarily unavailable, the original compatibility password `emba2026` remains available so the EMBA module is not locked out. Set `EMBA_ACCESS_CODE` in the Pages production environment to use a different password.
 
 ## Cloud Sync
 
