@@ -5,6 +5,7 @@ import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 
 const { normalizeLibraryPayload, requireEmbaAccess } = await import("../functions/api/emba/_utils.js");
+const { onRequestPost: embaAccessPost } = await import("../functions/emba/[[path]].js");
 
 const embaJs = fs.readFileSync(new URL("../emba/emba.js", import.meta.url), "utf8");
 const embaCss = fs.readFileSync(new URL("../emba/emba.css", import.meta.url), "utf8");
@@ -185,8 +186,8 @@ assert.ok(classmateJs.includes("renderRows();"));
 assert.ok(embaFunction.includes('accessCookie(token, path = "/")'));
 assert.ok(embaFunction.includes('clearAccessCookie(path = "/")'));
 assert.ok(embaFunction.includes("appendClearCookies"));
-assert.ok(embaFunction.includes("EMBA access is not configured."));
-assert.ok(!embaFunction.includes('env.EMBA_ACCESS_CODE || "emba2026"'));
+assert.ok(embaFunction.includes('const DEFAULT_EMBA_ACCESS_CODE = "emba2026"'));
+assert.ok(embaFunction.includes("env.EMBA_ACCESS_CODE || DEFAULT_EMBA_ACCESS_CODE"));
 
 assert.ok(embaApiUtils.includes("turnpo_emba_access"));
 assert.ok(embaApiUtils.includes("validateSameOriginRequest"));
@@ -209,11 +210,40 @@ assert.ok(embaApiUtils.includes("reflectionRevision: cleanRevision"));
 assert.ok(embaApiUtils.includes("followUpRevision: cleanRevision"));
 assert.ok(embaApiUtils.includes("markdownRevision: cleanRevision"));
 assert.ok(embaApiUtils.includes("memoryRevision: cleanRevision"));
-assert.ok(embaApiUtils.includes("EMBA access is not configured."));
-assert.ok(!embaApiUtils.includes('env.EMBA_ACCESS_CODE || "emba2026"'));
-const unconfiguredAccess = await requireEmbaAccess(new Request("https://www.turnpo.com/api/emba/library"), {});
-assert.equal(unconfiguredAccess.status, 503);
-assert.equal((await unconfiguredAccess.json()).error, "EMBA access is not configured.");
+assert.ok(embaApiUtils.includes('const DEFAULT_EMBA_ACCESS_CODE = "emba2026"'));
+assert.ok(embaApiUtils.includes("env.EMBA_ACCESS_CODE || DEFAULT_EMBA_ACCESS_CODE"));
+const defaultAccess = await requireEmbaAccess(new Request("https://www.turnpo.com/api/emba/library"), {});
+assert.equal(defaultAccess.status, 401);
+assert.equal((await defaultAccess.json()).error, "EMBA access required.");
+
+const defaultLogin = await embaAccessPost({
+  request: new Request("https://www.turnpo.com/emba/", {
+    method: "POST",
+    body: new URLSearchParams({ accessCode: "emba2026" })
+  }),
+  env: {}
+});
+assert.equal(defaultLogin.status, 303);
+assert.equal(defaultLogin.headers.get("location"), "/emba/");
+const defaultCookie = defaultLogin.headers.get("set-cookie") || "";
+const defaultToken = defaultCookie.match(/turnpo_emba_access=([^;]+)/)?.[1] || "";
+assert.ok(defaultToken);
+const authorizedDefaultAccess = await requireEmbaAccess(
+  new Request("https://www.turnpo.com/api/emba/library", {
+    headers: { cookie: `turnpo_emba_access=${defaultToken}` }
+  }),
+  {}
+);
+assert.equal(authorizedDefaultAccess, null);
+
+const configuredPasswordLogin = await embaAccessPost({
+  request: new Request("https://www.turnpo.com/emba/", {
+    method: "POST",
+    body: new URLSearchParams({ accessCode: "custom-emba-code" })
+  }),
+  env: { EMBA_ACCESS_CODE: "custom-emba-code" }
+});
+assert.equal(configuredPasswordLogin.status, 303);
 
 assert.ok(embaLibraryApi.includes("env.EMBA_DB"));
 assert.ok(embaLibraryApi.includes("CREATE TABLE IF NOT EXISTS emba_state"));
@@ -233,6 +263,7 @@ assert.ok(embaFileApi.includes("writeHttpMetadata"));
 assert.ok(embaReadme.includes("D1 database binding name: EMBA_DB"));
 assert.ok(embaReadme.includes("R2 bucket binding name: EMBA_BUCKET"));
 assert.ok(embaReadme.includes("The private knowledge base lives under `emba/content/`"));
+assert.ok(embaReadme.includes("original compatibility password `emba2026`"));
 assert.ok(embaReadme.includes("Original PDF, PPT, Word, image, and case files should stay"));
 assert.ok(embaReadme.includes("## Canonical Layers"));
 assert.ok(embaReadme.includes("one search input"));

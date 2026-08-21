@@ -7,6 +7,7 @@ import {
 } from "../auth/_utils.js";
 
 const ACCESS_COOKIE = "turnpo_emba_access";
+const DEFAULT_EMBA_ACCESS_CODE = "emba2026";
 const DEFAULT_START_MONTH = "2026-06";
 const DEFAULT_END_MONTH = "2028-12";
 const MAX_LIBRARY_BODY_BYTES = 900 * 1024;
@@ -23,7 +24,7 @@ const HIDDEN_MATERIAL_FILES = new Set([
 export { json, MAX_UPLOAD_BYTES };
 
 function configuredAccessCode(env) {
-  return String(env.EMBA_ACCESS_CODE || "").trim();
+  return String(env.EMBA_ACCESS_CODE || DEFAULT_EMBA_ACCESS_CODE).trim();
 }
 
 function cookieValue(request, name) {
@@ -70,9 +71,6 @@ async function isValidToken(token, secret) {
 
 export async function requireEmbaAccess(request, env) {
   const accessCode = configuredAccessCode(env);
-  if (!accessCode) {
-    return json({ error: "EMBA access is not configured.", configured: false }, { status: 503 });
-  }
   const token = cookieValue(request, ACCESS_COOKIE);
   if (await isValidToken(token, accessCode)) return null;
   return json({ error: "EMBA access required." }, { status: 401 });
