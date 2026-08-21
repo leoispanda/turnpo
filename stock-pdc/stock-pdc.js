@@ -394,7 +394,6 @@ function renderRankList() {
 }
 
 function renderDashboard() {
-  renderActionPanel();
   renderRankList();
 }
 

@@ -20,7 +20,7 @@ assert.ok(headers.includes("/stock-pdc/*"));
 
 assert.ok(stockHtml.includes("<title>股票大作手 Top 20 | Turnpo</title>"));
 assert.ok(stockHtml.includes('id="stockRankList"'));
-assert.ok(stockHtml.includes('id="stockActionPanel"'));
+assert.ok(!stockHtml.includes('id="stockActionPanel"'));
 assert.ok(stockHtml.includes("stock-color-wall"));
 assert.ok(stockHtml.includes("stock-color-panel"));
 assert.ok(stockHtml.includes("stock-rank-matrix-wrap"));
@@ -63,6 +63,7 @@ assert.ok(stockJs.includes("星期五"));
 assert.ok(stockJs.includes("renderRankList"));
 assert.ok(stockJs.includes("renderActionPanel"));
 assert.ok(stockJs.includes("actionDetail"));
+assert.ok(!stockJs.includes("  renderActionPanel();"));
 assert.ok(stockJs.includes("即使结果与昨天相同"));
 assert.ok(stockJs.includes("完整 PDC 买入闸门"));
 assert.ok(stockJs.includes("sourceInstruction"));
