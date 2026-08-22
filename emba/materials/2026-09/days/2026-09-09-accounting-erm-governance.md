@@ -233,3 +233,27 @@ Syllabus 标注无预读。现场观察可以围绕 Police 的主要目标、预
 ### 最后把四项阅读连成一条主线
 
 COSO 说明 ERM 应怎样连接战略与绩效；Grant Thornton 把原则变成组织框架；Deloitte 补充 non-financial risk 的 taxonomy、culture 与 three lines；DSM 让你检查公开披露能支持多强的结论。合在一起，Wednesday 的判断是：**好治理不是风险从未发生，而是事实能够被正确记录，风险能够被及时看见，并且始终有人必须采取行动和接受检验。**
+
+## 今日 Assignment｜Financial Accounting & Analysis：让数字可复算、可解释
+
+以 **ASML 2025 consolidated financial statements** 为主，并在有意义时与 2024 比较。今天先完成计算底稿，而不是直接写结论。
+
+### 计算表必须包含
+
+| 项目 | 今天要记录 |
+| --- | --- |
+| Revenue development | 2025 与 2024 revenue、绝对变化、同比变化，以及年报解释的业务驱动。 |
+| Debt ratio | 使用课堂口径；若老师未指定，明确写出你采用的公式并两年一致。 |
+| Current ratio | Current assets ÷ current liabilities。 |
+| Quick ratio | 先记录课程定义；若无指定，明确采用的分子口径。 |
+| ROE | Net income ÷ average shareholders' equity；说明是否使用平均权益。 |
+
+### 每个比率都写三句话
+
+1. 数字是什么、相对 2024 如何变化；
+2. 年报中什么事实解释了变化；
+3. 对流动性、杠杆、盈利能力、融资能力或利益相关者意味着什么。
+
+### 今天的可交付物
+
+一个有原始数字、公式、计算结果、年报页码与初步解释的 spreadsheet / table。最后写下：在什么条件下 ASML 可以进一步加杠杆，以及在作出该判断前仍需要哪些资料（debt maturity、liquidity headroom、backlog、export-control exposure、commitments 等）。

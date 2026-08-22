@@ -197,3 +197,26 @@ Davila 挑战“控制一定扼杀创新”的简单看法。合适的 MCS 可�
 ### 最后把三项阅读连成一条主线
 
 Tennessee Controls 提醒你模型会提高一致性，也会制造盲点；Davila 说明控制能够为创新建立学习纪律，而不必只做结果监督；Quinn & Thakor 则把注意力带到数字之外，检查组织的 purpose 是否在真实资源和后果中兑现。三项阅读共同说明：**好的控制不是让人服从更多数字，而是让正确的信息、行为和学习服务于战略。**
+
+## 今日 Assignment｜Tennessee Controls：从“单一评分”写到可治理的决策系统
+
+这题不是复述案例。你的任务是说明怎样让 formal asset-acquisition process 保留可比性，同时不让一个 numerical score 取代战略判断。
+
+### 两段回答骨架
+
+**1. Strategic Control Model 怎样改善决策**
+
+把 Strategic Ranking Index 放进完整循环：战略假设与优先级 → 项目证据与比较 → 资源配置 → 实施反馈 → 战略复核。指出它应暴露假设、不确定性与项目之间的互补／冲突，而非自动决定投资。
+
+**2. Simons' Levers of Control 怎样补强 diagnostic control**
+
+| 控制杠杆 | 应写出的作用 |
+| --- | --- |
+| Diagnostic system | 保留 ranking、预算纪律与计划偏差追踪。 |
+| Belief system | 让经理知道公司追求什么战略价值，而不只追逐分数。 |
+| Boundary system | 设定 ethics、safety、compliance、capital-at-risk 与 strategic-fit 等不可跨越门槛。 |
+| Interactive control | 围绕重大不确定性进行高层持续讨论，用新证据决定 continue、stage、pivot 或 stop。 |
+
+### 今天的可交付物
+
+写出一页 answer map，并准备一段 critical reflection：SRI 提升一致性，却也可能制造 false precision、隐藏主观权重、double count、奖励“会推销的提案人”，并低估战略互补性与学习价值。解决方案不是废掉数字，而是 **diagnostic screen + boundaries + interactive review + staged funding**。

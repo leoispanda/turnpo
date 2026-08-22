@@ -551,3 +551,26 @@ Friday 只有一项指定阅读。读深一篇比拼凑额外材料更符合 syl
 ### 把这篇阅读放回整周
 
 Monday 教你风险与回报不能分开；Tuesday 提醒披露和行为必须可信；Wednesday 要求证据、前视判断与责任相连；Thursday 说明指标会改变行为。Friday 把整周能力集中到一项专业动作：**在证据边界内进行公平比较，把历史表现、风险、费用、行业结构和投资者需求整合起来，并形成能够经受反方追问的 professional recommendation。**
+
+## 今日 Assignment｜Team 6 Pension Fund Case：完成董事会展示
+
+今天把 Monday 建立的基金背景与全周的风险、披露和控制视角，收束为一份能说服 board of trustees 的 presentation。课堂约有一小时用于整合，因此材料必须在课前准备好。
+
+### 建议的 6 页展示结构
+
+1. **Board decision**：基金是否应开展 Impact Investing；你的结论先行。
+2. **Fund context**：公司／pension fund、参与者特征、投资目标、当前约束与 fiduciary duty。
+3. **Why / why not**：潜在回报、长期风险、受益人利益、成本、流动性、greenwashing 与 measurement risk。
+4. **Where impact works**：比较 public equities、bonds、private markets、infrastructure / real assets；说明选择依据，而非宣称唯一答案。
+5. **Investment requirements**：intentionality、additionality、透明度、net returns、费用、impact metrics、独立验证、流动性与 concentration limits。
+6. **Recommendation and governance**：从小比例 pilot 开始；谁负责、看哪些 financial/impact KPIs、何时 review、什么阈值下不扩张或退出。
+
+### 每位成员都要准备的三问
+
+- “这会不会损害退休成员的回报？”
+- “怎样证明 impact，而不是贴标签？”
+- “在市场压力或现金需求上升时，illiquid impact allocation 怎么办？”
+
+### 今天的可交付物
+
+完成 deck、明确每页 speaker、统一关键数字与来源，并进行一次 5 分钟演练。最终目标不是展示你们读过多少资料，而是让董事会知道：**建议什么、为什么现在做、如何控制风险、谁对结果负责。**

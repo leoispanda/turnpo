@@ -333,3 +333,30 @@ KPMG 汇总首批 Dutch CSRD reporters 的实践经验。阅读重点是 DMA、I
 ### 最后把五项阅读连成一条主线
 
 COSO 提供观察组织的骨架；Volkswagen 展示目标与沉默怎样使专业判断失效；ING 展示控制积压怎样变成重大法律与信任损失；Estra 说明报告过程如何进入组织管理；KPMG 则揭示 ESRS 落地时的数据和边界难点。五项资料共同说明：**可信经营依赖的不是更多承诺，而是能让异常被看见、被负责并被关闭的组织能力。**
+
+## 今日 Assignment｜Compliance 与 Sustainability Reporting：建立两张比较表
+
+今天有两条独立作业线；都要准备。不要先写长文，先把 Heineken 与 ASML 放进同一张证据表。
+
+### 上午｜Compliance assignment
+
+以两家公司 **2025 annual reports** 为依据，完成一个 principal-risk 比较表：
+
+- 风险如何呈现：位置、分类、战略关联、责任人、风险变化与量化方式；
+- 共通风险与行业特有风险；
+- 哪些主要属于 compliance risk；
+- 两家公司怎样通过 policies、training、monitoring、speak-up、audit、remediation 与 board oversight 管理这些风险；
+- 差异应由商业模式、地域、监管、供应链和技术暴露解释，而不是简单说谁“治理更好”。
+
+### 下午｜Sustainability Reporting assignment
+
+以两家公司 **2024 annual reports** 为依据，完成 DMA 比较表：
+
+- DMA 的步骤、stakeholder input、governance 与 validation；
+- impact materiality 与 financial materiality 是否明确区分并连接；
+- value-chain boundary、time horizon、IROs、metrics、targets、assurance 与方法局限；
+- 最终判断谁更透明，并先写出一个可能反驳你结论的证据。
+
+### 今天的可交付物
+
+两张并列的 Heineken–ASML comparison tables；每个关键格子必须有 report page。明天再把其中最有力的差异转化为段落与结论。
