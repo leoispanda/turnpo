@@ -49,6 +49,7 @@ The rule is simple:
 | --- | --- | --- | --- |
 | 2026-06 | [June 2026 EMBA Preparation Index](./2026/06_June/2026-06_EMBA_Preparation_Index.md) | admission, enrolment, onboarding, programme planning, fees, electives | Preparation-stage document analysis plus source-document mirrors for the main June MBA preparation PDFs. |
 | 2026-07 | [July 2026 EMBA Learning Index](./2026/07_July/2026-07_EMBA_Learning_Index.md) | leadership, learning, coaching, AI, inclusion, organizational learning | Official Leading in Learning programme mirror plus handwritten notes converted into searchable Markdown. |
+| 2026-09 | [Corporate Finance and Accounting Index](./2026/09_September/2026-09_EMBA_Corporate_Finance_Accounting_Index.md) | financial management, accounting, compliance, sustainability, control, governance | Five learning-and-assignment streams integrated into one executive decision system. |
 
 ## Current Corpus
 
@@ -56,6 +57,7 @@ The rule is simple:
 | --- | --- | --- | --- |
 | 2026-06 | One monthly index, one preparation document analysis, and nine source-document mirrors | Nine June source PDFs are uploaded to private R2 under `emba/2026-06/material/` and served through `/api/emba/file/...`; Markdown mirrors remain the searchable retrieval layer | Admission, signed acceptance, enrolment, onboarding, fees, programme structure, elective strategy, strategic thinking, alternative-MBA comparison |
 | 2026-07 | One monthly index, six official/classroom PDF mirrors, one overall handwritten-note analysis, 13 per-image Markdown notes, one source-first thinking synthesis, one T01-T19 review file, and one E001-E120 evidence ledger | Original handwritten images remain under `/emba/materials/2026-07/handwritten-notes/images/`; six July PDFs are stored in private R2 and served through `/api/emba/file/...` | Official schedule, LDT, team building, PBL, alumni, MBA operations, leadership practice, listening, organizational learning, AI, inclusion, source evidence, and personal review |
+| 2026-09 | One monthly index and one five-stream assignment-readiness plan | Canvas assignment instructions are preserved as a private source summary; course syllabus and readings remain in `emba/materials/2026-09/` | Financial leadership, Team 6 impact investing, ASML/Heineken comparison, ratio analysis, DMA, compliance, and strategic control |
 
 ## Courses And Sessions
 
@@ -70,6 +72,7 @@ The rule is simple:
 | Personal Thinking Journey | 2026-07 | [Leo's EMBA Thinking Journey - July 2026](./2026/07_July/reflections/2026-07-leo-thinking-journey.md) |
 | Personal Reflections | 2026-07 | [July 2026 Personal Reflections - Source, Context, Codex Completion](./2026/07_July/reflections/2026-07-questions-and-reflections-review.md) |
 | Personal Evidence Ledger | 2026-07 | [July 2026 Personal Reflection Evidence Ledger](./2026/07_July/reflections/2026-07-personal-marker-original-extract.md) |
+| Corporate Finance and Accounting | 2026-09 | [September 2026 Corporate Finance and Accounting Index](./2026/09_September/2026-09_EMBA_Corporate_Finance_Accounting_Index.md) and [five-stream assignment readiness plan](./2026/09_September/assignments/2026-09-five-stream-assignment-readiness-plan.md) |
 
 ## Content Types
 
