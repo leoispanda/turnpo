@@ -1,10 +1,10 @@
+import { cookieValue, hmacHex, isValidToken, timingSafeEqual } from "../_shared/security.js";
+
 const ACCESS_COOKIE = "turnpo_emba_access";
 const UI_COOKIE = "turnpo_emba_ui";
 const COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
-const DEFAULT_EMBA_ACCESS_CODE = "emba2026";
-
 function configuredAccessCode(env) {
-  return String(env.EMBA_ACCESS_CODE || DEFAULT_EMBA_ACCESS_CODE).trim();
+  return String(env?.EMBA_ACCESS_CODE || "").trim();
 }
 
 function html(body, init = {}) {
@@ -22,52 +22,10 @@ function redirectWithHeaders(headers) {
   return new Response(null, { status: 303, headers });
 }
 
-function cookieValue(request, name) {
-  const cookie = request.headers.get("cookie") || "";
-  return cookie
-    .split(";")
-    .map((part) => part.trim())
-    .find((part) => part.startsWith(`${name}=`))
-    ?.slice(name.length + 1) || "";
-}
-
-function timingSafeEqual(left, right) {
-  const a = String(left);
-  const b = String(right);
-  let mismatch = a.length === b.length ? 0 : 1;
-  const length = Math.max(a.length, b.length);
-  for (let i = 0; i < length; i += 1) {
-    mismatch |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
-  }
-  return mismatch === 0;
-}
-
-async function hmacHex(secret, value) {
-  const encoder = new TextEncoder();
-  const key = await crypto.subtle.importKey(
-    "raw",
-    encoder.encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
-  const signature = await crypto.subtle.sign("HMAC", key, encoder.encode(value));
-  return [...new Uint8Array(signature)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
-}
-
 async function createToken(secret) {
   const expiresAt = Math.floor(Date.now() / 1000) + COOKIE_MAX_AGE_SECONDS;
   const signature = await hmacHex(secret, String(expiresAt));
   return `${expiresAt}.${signature}`;
-}
-
-async function isValidToken(token, secret) {
-  if (!secret) return false;
-  const [expiresAt, signature] = String(token || "").split(".");
-  const expiry = Number(expiresAt);
-  if (!Number.isFinite(expiry) || expiry < Math.floor(Date.now() / 1000) || !signature) return false;
-  const expected = await hmacHex(secret, String(expiresAt));
-  return timingSafeEqual(signature, expected);
 }
 
 function accessCookie(token, path = "/") {
@@ -146,8 +104,10 @@ function accessPage(error = "") {
 }
 
 async function authorizedToken(request, env) {
+  const accessCode = configuredAccessCode(env);
+  if (!accessCode) return "";
   const token = cookieValue(request, ACCESS_COOKIE);
-  return await isValidToken(token, configuredAccessCode(env)) ? token : "";
+  return await isValidToken(token, accessCode) ? token : "";
 }
 
 function appendClearCookies(headers) {
@@ -166,6 +126,7 @@ export async function onRequestGet(context) {
     return new Response(null, { status: 303, headers });
   }
 
+  if (!configuredAccessCode(env)) return accessPage("EMBA access is not configured.");
   const token = await authorizedToken(request, env);
   if (token) {
     const response = await context.next();
@@ -193,6 +154,7 @@ export async function onRequestPost(context) {
   const formData = await request.formData();
   const accessCode = String(formData.get("accessCode") || "").trim();
   const expectedCode = configuredAccessCode(env);
+  if (!expectedCode) return accessPage("EMBA access is not configured.");
   if (!timingSafeEqual(accessCode, expectedCode)) {
     return accessPage("Access code is incorrect.");
   }

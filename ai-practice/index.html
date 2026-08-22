@@ -35,14 +35,14 @@
     </header>
 
     <section class="practice-access-gate" id="practiceAccessGate" aria-label="AI Practice access">
-      <form class="practice-access-card" id="practiceAccessForm">
+      <form class="practice-access-card" id="practiceAccessForm" method="post">
         <div>
           <h1>AI Practice</h1>
           <p>Enter the access password to open the practice workspace.</p>
         </div>
         <label>
           <span>Password</span>
-          <input id="practicePassword" type="password" autocomplete="current-password" placeholder="Enter password" required />
+          <input id="practicePassword" name="accessCode" type="password" autocomplete="current-password" placeholder="Enter password" required />
         </label>
         <button class="practice-primary-btn" type="submit">Enter</button>
         <p class="practice-access-note" id="practiceAccessNote" aria-live="polite"></p>

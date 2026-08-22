@@ -5,6 +5,7 @@ import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 
 const { normalizeLibraryPayload, requireEmbaAccess } = await import("../functions/api/emba/_utils.js");
+const { onRequestGet: embaAccessGet, onRequestPost: embaAccessPost } = await import("../functions/emba/[[path]].js");
 
 const embaJs = fs.readFileSync(new URL("../emba/emba.js", import.meta.url), "utf8");
 const embaCss = fs.readFileSync(new URL("../emba/emba.css", import.meta.url), "utf8");
@@ -164,6 +165,8 @@ assert.ok(embaHtml.includes(`/emba/emba.css?v=${turnpoVersion}`));
 assert.ok(embaHtml.includes(`/emba/emba.js?v=${turnpoVersion}`));
 assert.ok(embaHtml.includes('id="embaKnowledgeStatus" aria-live="polite" hidden'));
 assert.ok(embaHtml.includes('id="embaKnowledgeResults" aria-label="Knowledge base search results" hidden'));
+assert.ok(embaHtml.includes('<form class="emba-access-card" id="embaAccessForm" method="post">'));
+assert.ok(embaHtml.includes('name="accessCode"'));
 assert.ok(!embaHtml.includes('id="embaKnowledgePreview"'));
 assert.ok(!embaHtml.includes("Search monthly indexes, converted Markdown mirrors"));
 assert.ok(!embaHtml.includes("/emba/content/00_EMBA_Master_Index.md"));
@@ -185,8 +188,8 @@ assert.ok(classmateJs.includes("renderRows();"));
 assert.ok(embaFunction.includes('accessCookie(token, path = "/")'));
 assert.ok(embaFunction.includes('clearAccessCookie(path = "/")'));
 assert.ok(embaFunction.includes("appendClearCookies"));
-assert.ok(embaFunction.includes('const DEFAULT_EMBA_ACCESS_CODE = "emba2026"'));
-assert.ok(embaFunction.includes("env.EMBA_ACCESS_CODE || DEFAULT_EMBA_ACCESS_CODE"));
+assert.equal(embaFunction.includes("DEFAULT_EMBA_ACCESS_CODE"), false);
+assert.ok(embaFunction.includes("EMBA access is not configured."));
 
 assert.ok(embaApiUtils.includes("turnpo_emba_access"));
 assert.ok(embaApiUtils.includes("validateSameOriginRequest"));
@@ -209,11 +212,45 @@ assert.ok(embaApiUtils.includes("reflectionRevision: cleanRevision"));
 assert.ok(embaApiUtils.includes("followUpRevision: cleanRevision"));
 assert.ok(embaApiUtils.includes("markdownRevision: cleanRevision"));
 assert.ok(embaApiUtils.includes("memoryRevision: cleanRevision"));
-assert.ok(embaApiUtils.includes('const DEFAULT_EMBA_ACCESS_CODE = "emba2026"'));
-assert.ok(embaApiUtils.includes("env.EMBA_ACCESS_CODE || DEFAULT_EMBA_ACCESS_CODE"));
+assert.equal(embaApiUtils.includes("DEFAULT_EMBA_ACCESS_CODE"), false);
+assert.ok(embaApiUtils.includes("EMBA access is not configured."));
 const defaultAccess = await requireEmbaAccess(new Request("https://www.turnpo.com/api/emba/library"), {});
-assert.equal(defaultAccess.status, 401);
-assert.equal((await defaultAccess.json()).error, "EMBA access required.");
+assert.equal(defaultAccess.status, 503);
+assert.equal((await defaultAccess.json()).error, "EMBA access is not configured.");
+
+const missingLogin = await embaAccessPost({
+  request: new Request("https://www.turnpo.com/emba/", {
+    method: "POST",
+    body: new URLSearchParams({ accessCode: "anything" })
+  }),
+  env: {}
+});
+assert.equal(missingLogin.status, 200);
+assert.ok((await missingLogin.text()).includes("EMBA access is not configured."));
+
+const missingPage = await embaAccessGet({
+  request: new Request("https://www.turnpo.com/emba/"),
+  env: {}
+});
+assert.equal(missingPage.status, 200);
+assert.ok((await missingPage.text()).includes("EMBA access is not configured."));
+
+const configuredLogin = await embaAccessPost({
+  request: new Request("https://www.turnpo.com/emba/", {
+    method: "POST",
+    body: new URLSearchParams({ accessCode: "custom-emba-code" })
+  }),
+  env: { EMBA_ACCESS_CODE: "custom-emba-code" }
+});
+assert.equal(configuredLogin.status, 303);
+const embaToken = (configuredLogin.headers.get("set-cookie") || "").match(/turnpo_emba_access=([^;]+)/)?.[1] || "";
+assert.ok(embaToken);
+assert.equal(await requireEmbaAccess(
+  new Request("https://www.turnpo.com/api/emba/library", {
+    headers: { cookie: `turnpo_emba_access=${embaToken}` }
+  }),
+  { EMBA_ACCESS_CODE: "custom-emba-code" }
+), null);
 
 assert.ok(embaLibraryApi.includes("env.EMBA_DB"));
 assert.ok(embaLibraryApi.includes("CREATE TABLE IF NOT EXISTS emba_state"));
@@ -233,7 +270,8 @@ assert.ok(embaFileApi.includes("writeHttpMetadata"));
 assert.ok(embaReadme.includes("D1 database binding name: EMBA_DB"));
 assert.ok(embaReadme.includes("R2 bucket binding name: EMBA_BUCKET"));
 assert.ok(embaReadme.includes("The private knowledge base lives under `emba/content/`"));
-assert.ok(embaReadme.includes("original compatibility password `emba2026`"));
+assert.ok(embaReadme.includes("EMBA_ACCESS_CODE"));
+assert.equal(embaReadme.includes("original compatibility password"), false);
 assert.ok(embaReadme.includes("Original PDF, PPT, Word, image, and case files should stay"));
 assert.ok(embaReadme.includes("## Canonical Layers"));
 assert.ok(embaReadme.includes("one search input"));

@@ -1,5 +1,4 @@
 const EMBA_ACCESS_KEY = "turnpo:emba-access";
-const EMBA_PASSWORD = "emba2026";
 const EMBA_LIBRARY_KEY = "turnpo:emba-library";
 const EMBA_LIBRARY_API = "/api/emba/library";
 const EMBA_UPLOAD_API = "/api/emba/upload";
@@ -1856,21 +1855,6 @@ async function loadCloudLibrary() {
 }
 
 function initAccessGate() {
-  $("#embaAccessForm")?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const passwordInput = $("#embaPassword");
-    const note = $("#embaAccessNote");
-    if ((passwordInput?.value || "").trim() === EMBA_PASSWORD) {
-      setEmbaAccess(true);
-      if (passwordInput) passwordInput.value = "";
-      if (note) note.textContent = "";
-      renderAccessState();
-      return;
-    }
-    if (note) note.textContent = "Password is incorrect.";
-    passwordInput?.focus();
-  });
-
   $("#embaLock")?.addEventListener("click", async () => {
     setEmbaAccess(false);
     setEditMode(false);

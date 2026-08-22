@@ -1,6 +1,23 @@
 import assert from "node:assert/strict";
 
 import { onRequestPost as searchJobs } from "../functions/api/jobs/search.js";
+import { sessionKey, userKey } from "../functions/api/auth/_utils.js";
+
+class MemoryKv {
+  constructor() {
+    this.records = new Map();
+  }
+
+  async get(key, type) {
+    const value = this.records.get(key);
+    if (value === undefined) return null;
+    return type === "json" ? JSON.parse(value) : value;
+  }
+
+  async put(key, value) {
+    this.records.set(key, String(value));
+  }
+}
 
 function jsonResponse(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -142,8 +159,24 @@ globalThis.fetch = async (url) => {
   throw new Error(`Unexpected URL ${href}`);
 };
 
+const authEnv = {
+  AUTH_KV: new MemoryKv(),
+  TURNPO_AUTH_SECRET: "test-secret"
+};
+await authEnv.AUTH_KV.put(sessionKey("test-session"), JSON.stringify({
+  userId: "test-user",
+  email: "test@example.com",
+  profile: "leo"
+}));
+await authEnv.AUTH_KV.put(userKey("test-user"), JSON.stringify({
+  id: "test-user",
+  email: "test@example.com",
+  profile: "leo",
+  status: "active"
+}));
+
 try {
-  const response = await searchJobs({
+  const unauthenticated = await searchJobs({
     request: new Request("https://www.turnpo.com/api/jobs/search", {
       method: "POST",
       headers: {
@@ -151,10 +184,29 @@ try {
         origin: "https://www.turnpo.com"
       },
       body: JSON.stringify({
+        markdown: "# Leo\n\nLocation: Eindhoven, Netherlands\n\nAI knowledge management and learning systems.",
+        limit: 6
+      })
+    }),
+    env: authEnv
+  });
+  assert.equal(unauthenticated.status, 401);
+  assert.equal(fetchCalls.length, 0);
+
+  const response = await searchJobs({
+    request: new Request("https://www.turnpo.com/api/jobs/search", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        origin: "https://www.turnpo.com",
+        cookie: "turnpo_owner_session=test-session"
+      },
+      body: JSON.stringify({
         markdown: "# Leo\n\nLocation: Eindhoven, Netherlands\n\nL&KM Solution Designer at ASML. AI knowledge management, learning systems, project management, stakeholder work, and Eindhoven hybrid work.",
         limit: 6
       })
-    })
+    }),
+    env: authEnv
   });
   assert.equal(response.status, 200);
   const data = await response.json();
@@ -195,7 +247,8 @@ try {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        origin: "https://www.turnpo.com"
+        origin: "https://www.turnpo.com",
+        cookie: "turnpo_owner_session=test-session"
       },
       body: JSON.stringify({
         markdown: "# Leo\n\nLocation: Eindhoven, Netherlands\n\nRecent follow-ups absorbed into personal Markdown\n- Eindhoven nearby roles\n- AI learning enablement and knowledge management roles",
@@ -203,6 +256,7 @@ try {
       })
     }),
     env: {
+      ...authEnv,
       OPENAI_API_KEY: "test-key",
       OPENAI_JOBS_MODEL: "gpt-4o-mini"
     }

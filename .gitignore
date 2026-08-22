@@ -11,3 +11,6 @@ connections*
 .tmp-stock-pdc-backfill*/
 .env.local
 .local-stock-pdc/
+
+# Personal EMBA contact exports never belong in source history.
+/emba/**/*-linkedin.csv

@@ -4,6 +4,7 @@ import {
   json,
   readJson,
   requestContentLengthTooLarge,
+  requireUserSession,
   validateJsonMutationRequest
 } from "../auth/_utils.js";
 
@@ -625,6 +626,8 @@ export async function onRequestPost({ request, env = {} }) {
   if (requestContentLengthTooLarge(request, MAX_JOB_SEARCH_BODY_BYTES)) {
     return json({ error: "Job search request is too large." }, { status: 413 });
   }
+  const auth = await requireUserSession(request, env);
+  if (auth.error) return json({ error: auth.error }, { status: auth.status });
   if (env.AUTH_KV) {
     const clientAttempts = await incrementWindow(env, clientRateKey(request, "jobs-search"), 60 * 60);
     if (clientAttempts > MAX_SEARCHES_PER_HOUR) {
