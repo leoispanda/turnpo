@@ -511,7 +511,7 @@
       "id": "2026-09",
       "month": "2026-09",
       "title": "September 2026",
-      "materialsRevision": 22,
+      "materialsRevision": 23,
       "reflectionRevision": 1,
       "followUpRevision": 0,
       "markdownRevision": 1,
@@ -522,6 +522,18 @@
           "type": "course_overview",
           "file": "/emba/materials/2026-09/2026-09-cfa-knowledge-map-gpt-pack.md",
           "notes": "五天知识依赖图、16 项阅读证据状态、核心术语、integrated case 分析顺序与 GPT 教学指令；打开后可一键复制完整 Markdown。"
+        },
+        {
+          "title": "NEW｜EMBA 9 月学习与作业总索引",
+          "type": "monthly_index",
+          "file": "/emba/content/2026/09_September/2026-09_EMBA_Corporate_Finance_Accounting_Index.md",
+          "notes": "把 Financial Management、Compliance、Sustainability Reporting、Financial Accounting & Analysis 与 Management Control 组织为五条相互连接的学习与作业线。"
+        },
+        {
+          "title": "NEW｜五天作业准备计划与学习优化",
+          "type": "assignment_plan",
+          "file": "/emba/content/2026/09_September/assignments/2026-09-five-stream-assignment-readiness-plan.md",
+          "notes": "第 6 组 Impact Investing、ASML/Heineken 比较、ASML 比率分析与 Tennessee Controls 的课前准备、证据框架、每日节奏和高分策略。"
         },
         {
           "title": "Day 1｜Financial Management",
