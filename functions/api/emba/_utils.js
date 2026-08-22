@@ -5,9 +5,9 @@ import {
   validateJsonMutationRequest,
   validateSameOriginRequest
 } from "../auth/_utils.js";
+import { cookieValue, isValidToken } from "../../_shared/security.js";
 
 const ACCESS_COOKIE = "turnpo_emba_access";
-const DEFAULT_EMBA_ACCESS_CODE = "emba2026";
 const DEFAULT_START_MONTH = "2026-06";
 const DEFAULT_END_MONTH = "2028-12";
 const MAX_LIBRARY_BODY_BYTES = 900 * 1024;
@@ -24,53 +24,14 @@ const HIDDEN_MATERIAL_FILES = new Set([
 export { json, MAX_UPLOAD_BYTES };
 
 function configuredAccessCode(env) {
-  return String(env.EMBA_ACCESS_CODE || DEFAULT_EMBA_ACCESS_CODE).trim();
-}
-
-function cookieValue(request, name) {
-  const cookie = request.headers.get("cookie") || "";
-  return cookie
-    .split(";")
-    .map((part) => part.trim())
-    .find((part) => part.startsWith(`${name}=`))
-    ?.slice(name.length + 1) || "";
-}
-
-function timingSafeEqual(left, right) {
-  const a = String(left);
-  const b = String(right);
-  let mismatch = a.length === b.length ? 0 : 1;
-  const length = Math.max(a.length, b.length);
-  for (let i = 0; i < length; i += 1) {
-    mismatch |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
-  }
-  return mismatch === 0;
-}
-
-async function hmacHex(secret, value) {
-  const encoder = new TextEncoder();
-  const key = await crypto.subtle.importKey(
-    "raw",
-    encoder.encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
-  const signature = await crypto.subtle.sign("HMAC", key, encoder.encode(value));
-  return [...new Uint8Array(signature)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
-}
-
-async function isValidToken(token, secret) {
-  if (!secret) return false;
-  const [expiresAt, signature] = String(token || "").split(".");
-  const expiry = Number(expiresAt);
-  if (!Number.isFinite(expiry) || expiry < Math.floor(Date.now() / 1000) || !signature) return false;
-  const expected = await hmacHex(secret, String(expiresAt));
-  return timingSafeEqual(signature, expected);
+  return String(env?.EMBA_ACCESS_CODE || "").trim();
 }
 
 export async function requireEmbaAccess(request, env) {
   const accessCode = configuredAccessCode(env);
+  if (!accessCode) {
+    return json({ error: "EMBA access is not configured." }, { status: 503 });
+  }
   const token = cookieValue(request, ACCESS_COOKIE);
   if (await isValidToken(token, accessCode)) return null;
   return json({ error: "EMBA access required." }, { status: 401 });

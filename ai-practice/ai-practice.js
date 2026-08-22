@@ -1,5 +1,4 @@
 const PRACTICE_ACCESS_KEY = "turnpo:ai-practice-access";
-const PRACTICE_PASSWORD = "emba2026";
 const PRACTICE_ITEMS_KEY = "turnpo:ai-practice-items";
 
 const state = {
@@ -163,21 +162,6 @@ function resetPracticeForm() {
 }
 
 function initAccessGate() {
-  $("#practiceAccessForm")?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const passwordInput = $("#practicePassword");
-    const note = $("#practiceAccessNote");
-    if ((passwordInput?.value || "").trim() === PRACTICE_PASSWORD) {
-      setPracticeAccess(true);
-      if (passwordInput) passwordInput.value = "";
-      if (note) note.textContent = "";
-      renderAccessState();
-      return;
-    }
-    if (note) note.textContent = "Password is incorrect.";
-    passwordInput?.focus();
-  });
-
   $("#practiceLock")?.addEventListener("click", async () => {
     setPracticeAccess(false);
     await fetch("/ai-practice/logout", { method: "POST" }).catch(() => null);

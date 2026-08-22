@@ -2,19 +2,7 @@
 
 This folder powers the private Turnpo EMBA timeline and searchable learning archive at `/emba/`.
 
-The static page keeps this browser-only code for local preview:
-
-```text
-emba2026
-```
-
-This browser constant is not production security. On Cloudflare Pages, `EMBA_ACCESS_CODE` can override the default for `/emba/*` and `/api/emba/*`:
-
-```text
-EMBA_ACCESS_CODE=emba2026
-```
-
-If the variable is temporarily unavailable, the original compatibility password `emba2026` remains available so the EMBA module is not locked out. Set `EMBA_ACCESS_CODE` in the Pages production environment to use a different password.
+EMBA access is configured only through the `EMBA_ACCESS_CODE` environment secret. There is no browser-only or compatibility fallback. If the variable is missing, the UI and protected APIs fail closed with a configuration error.
 
 ## Cloud Sync
 

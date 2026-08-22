@@ -36,14 +36,14 @@
     </header>
 
     <section class="emba-access-gate" id="embaAccessGate" aria-label="EMBA access">
-      <form class="emba-access-card" id="embaAccessForm">
+      <form class="emba-access-card" id="embaAccessForm" method="post">
         <div>
           <h1>EMBA Timeline</h1>
           <p>Enter the access password to open the learning timeline.</p>
         </div>
         <label>
           <span>Password</span>
-          <input id="embaPassword" type="password" autocomplete="current-password" placeholder="Enter password" required />
+          <input id="embaPassword" name="accessCode" type="password" autocomplete="current-password" placeholder="Enter password" required />
         </label>
         <button class="gold-btn" type="submit">Enter</button>
         <p class="emba-access-note" id="embaAccessNote" aria-live="polite"></p>

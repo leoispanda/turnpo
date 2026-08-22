@@ -6,6 +6,7 @@ import {
   validateJsonMutationRequest
 } from "../functions/api/auth/_utils.js";
 import { onRequestPost as registerPost } from "../functions/api/auth/register.js";
+import { cookieValue, hmacHex, isValidToken, timingSafeEqual } from "../functions/_shared/security.js";
 
 class MemoryKv {
   constructor() {
@@ -59,6 +60,21 @@ assert.deepEqual(validateJsonMutationRequest(new Request("https://www.turnpo.com
   error: "Same-origin request required.",
   status: 403
 });
+
+assert.equal(timingSafeEqual("same", "same"), true);
+assert.equal(timingSafeEqual("same", "different"), false);
+assert.equal(cookieValue(new Request("https://www.turnpo.com/", {
+  headers: { cookie: "first=one; second=two" }
+}), "second"), "two");
+const futureExpiry = Math.floor(Date.now() / 1000) + 300;
+const validSignature = await hmacHex("unit-test-secret", String(futureExpiry));
+assert.equal(await isValidToken(`${futureExpiry}.${validSignature}`, "unit-test-secret"), true);
+assert.equal(await isValidToken(`${futureExpiry}.${validSignature}`, "wrong-test-secret"), false);
+assert.equal(await isValidToken(`${futureExpiry}.${validSignature}`, ""), false);
+assert.equal(await isValidToken("not-a-token", "unit-test-secret"), false);
+const expired = Math.floor(Date.now() / 1000) - 1;
+const expiredSignature = await hmacHex("unit-test-secret", String(expired));
+assert.equal(await isValidToken(`${expired}.${expiredSignature}`, "unit-test-secret"), false);
 
 const cleaned = cleanOwnerProfileForStorage({
   username: "alice",
