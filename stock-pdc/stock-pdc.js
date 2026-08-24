@@ -3,6 +3,7 @@ const STOCK_PASSWORD = "emba2026";
 const state = {
   accessGranted: false,
   data: null,
+  dailyTop10: null,
   decisionHistory: []
 };
 
@@ -63,6 +64,54 @@ function formatPct(value, fallback = "--") {
 
 function formatValuePct(value, fallback = "--") {
   return Number.isFinite(value) ? `${value.toFixed(2)}%` : fallback;
+}
+
+function latestDailyTop10(data) {
+  const days = (data?.days || [])
+    .filter((day) => isTradingWeekday(day.date) && Array.isArray(day.rows) && day.rows.length)
+    .slice()
+    .sort((left, right) => String(right.date).localeCompare(String(left.date)));
+  return days[0] || null;
+}
+
+function renderDailyTop10Panel() {
+  const panel = $("#stockDailyTop10Panel");
+  if (!panel) return;
+  const day = latestDailyTop10(state.dailyTop10);
+  if (!day) {
+    panel.innerHTML = "";
+    return;
+  }
+  const summary = day.summary || {};
+  const rows = day.rows.slice().sort((left, right) => Number(left.rank) - Number(right.rank));
+  panel.innerHTML = `
+    <div class="stock-daily-top10-head">
+      <div>
+        <h2>今日 DAILY_TOP10</h2>
+        <p>双模型共识研究清单；仅供研究与人工复核，不连接券商、不自动下单。</p>
+      </div>
+      <time datetime="${escapeHtml(day.date)}">${escapeHtml(day.date)}</time>
+    </div>
+    <div class="stock-daily-top10-summary" aria-label="DAILY_TOP10 summary">
+      <span>投资 ${escapeHtml(formatValuePct(Number(summary.investedPct)))}</span>
+      <span>现金 ${escapeHtml(formatValuePct(Number(summary.cashReservePct)))}</span>
+      <span>平均分 ${escapeHtml(Number.isFinite(summary.avgScore) ? summary.avgScore.toFixed(2) : "--")}</span>
+      <span>状态 ${escapeHtml(summary.degradationStatus || "NONE")}</span>
+    </div>
+    <div class="stock-daily-top10-grid">
+      ${rows.map((row) => `
+        <article class="stock-daily-top10-card" aria-label="${escapeHtml(`${row.rank} ${row.name || row.ticker}`)}">
+          <div>
+            <small>#${escapeHtml(row.rank)} · ${escapeHtml(row.ticker)}</small>
+            <h3>${escapeHtml(row.name || row.ticker)}</h3>
+          </div>
+          <strong>${escapeHtml(Number.isFinite(row.consensusTotal) ? row.consensusTotal.toFixed(2) : "--")}</strong>
+          <p>${escapeHtml(row.sector || "未分组")} · 目标仓位 ${escapeHtml(formatValuePct(Number(row.allocation_pct), "0.00%"))}</p>
+          <span class="stock-daily-top10-action">${escapeHtml(row.frontDeskInstruction || row.status || "研究观察")}</span>
+        </article>
+      `).join("")}
+    </div>
+  `;
 }
 
 function droppedRankDelta(row) {
@@ -394,17 +443,20 @@ function renderRankList() {
 }
 
 function renderDashboard() {
+  renderDailyTop10Panel();
   renderActionPanel();
   renderRankList();
 }
 
 async function loadData() {
-  const [rankResponse, decisionResponse] = await Promise.all([
+  const [rankResponse, decisionResponse, dailyResponse] = await Promise.all([
     fetch("/stock-pdc/rank-flow.json", { cache: "no-store" }),
-    fetch("/stock-pdc/decision/api/history", { cache: "no-store" }).catch(() => null)
+    fetch("/stock-pdc/decision/api/history", { cache: "no-store" }).catch(() => null),
+    fetch("/stock-pdc/daily-top10.json", { cache: "no-store" }).catch(() => null)
   ]);
   if (!rankResponse.ok) throw new Error(`Could not load rank-flow.json (${rankResponse.status})`);
   state.data = await rankResponse.json();
+  if (dailyResponse?.ok) state.dailyTop10 = await dailyResponse.json().catch(() => null);
   if (decisionResponse?.ok) {
     const decisionData = await decisionResponse.json().catch(() => ({}));
     state.decisionHistory = Array.isArray(decisionData.days) ? decisionData.days : [];
