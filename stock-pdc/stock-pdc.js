@@ -147,15 +147,19 @@ function dayFlowUrl(day) {
 function dayRunTimestamp(day) {
   const audit = day?.audit || {};
   const raw = audit.generatedAt || audit.frozenAt
-    || (day?.date === state.data?.latestDate ? state.data?.generatedAt : "");
+    || (day?.date === state.data?.latestDate && !isDailyTop10Day(day) ? state.data?.generatedAt : "");
   if (!raw) return "";
   const rawText = String(raw);
   const timezone = /(?:Z|\+00:00)$/.test(rawText) ? " UTC" : "";
   return `${rawText.replace("T", " ").replace(/\.\d+/, "").slice(0, 16)}${timezone}`;
 }
 
+function isDailyTop10Day(day) {
+  return String(day?.kind || day?.sourceKind || "").toUpperCase() === "DAILY_TOP10";
+}
+
 function dayModeLabel(day) {
-  return day?.audit?.runtimeMode === "DAILY_TOP10" ? "DAILY_TOP10" : "";
+  return isDailyTop10Day(day) ? "DAILY_TOP10" : "";
 }
 
 function rowByRank(day, rank) {
@@ -402,6 +406,26 @@ function renderPublishedDecisionHistory() {
   `;
 }
 
+function mergeDailyTop10IntoRankFlow(historical, dailyTop10) {
+  const daysByDate = new Map((historical.days || []).map((day) => [String(day.date), day]));
+  (dailyTop10?.days || [])
+    .filter((day) => isTradingWeekday(day.date) && Array.isArray(day.rows) && day.rows.length)
+    .forEach((day) => {
+      daysByDate.set(String(day.date), {
+        ...day,
+        kind: "DAILY_TOP10",
+        sourceFile: day.sourceFile || dailyTop10?.source?.selectionFile || ""
+      });
+    });
+  const days = [...daysByDate.values()].sort((left, right) => String(left.date).localeCompare(String(right.date)));
+  return {
+    ...historical,
+    dates: days.map((day) => day.date),
+    days,
+    latestDate: days.at(-1)?.date || historical.latestDate
+  };
+}
+
 function renderRankList() {
   const list = $("#stockRankList");
   if (!list) return;
@@ -457,6 +481,7 @@ async function loadData() {
   if (!rankResponse.ok) throw new Error(`Could not load rank-flow.json (${rankResponse.status})`);
   state.data = await rankResponse.json();
   if (dailyResponse?.ok) state.dailyTop10 = await dailyResponse.json().catch(() => null);
+  if (state.dailyTop10) state.data = mergeDailyTop10IntoRankFlow(state.data, state.dailyTop10);
   if (decisionResponse?.ok) {
     const decisionData = await decisionResponse.json().catch(() => ({}));
     state.decisionHistory = Array.isArray(decisionData.days) ? decisionData.days : [];
