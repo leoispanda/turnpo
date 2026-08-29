@@ -60,12 +60,21 @@ export function cleanMonthKey(value = "", fallback = "") {
   return /^\d{4}-(0[1-9]|1[0-2])$/.test(month) ? month : fallback;
 }
 
+const BARE_DOMAIN_PATTERN = /^[\w-]+(\.[\w-]+)+(\/|\?|#|$)/;
+const URL_SCHEME_PATTERN = /^[a-z][a-z0-9+.-]*:/i;
+
 function safePrivateUrl(value = "") {
   const url = cleanText(value, 2000);
   if (!url || /^data:/i.test(url) || url.includes("\\")) return "";
   if (url.startsWith("/") && !url.startsWith("//") && !url.includes("..")) return url;
+  // Same reasoning as safePublicUrl in the auth utils: a hand-typed bare domain
+  // should not be silently dropped. Anything with a scheme is left alone so the
+  // protocol check below still rejects it.
+  const candidate = !URL_SCHEME_PATTERN.test(url) && BARE_DOMAIN_PATTERN.test(url)
+    ? `https://${url}`
+    : url;
   try {
-    const parsed = new URL(url);
+    const parsed = new URL(candidate);
     return parsed.protocol === "https:" || parsed.protocol === "http:" ? parsed.href : "";
   } catch {
     return "";

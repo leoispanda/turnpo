@@ -576,4 +576,18 @@ assert.deepEqual(JSON.parse(JSON.stringify({
   reviewDate: "2026-07-10"
 });
 
+// 裸域名补 https,与公开档案的 safePublicUrl 保持一致;危险协议仍须拒绝。
+const materialFile = (file) => normalizeLibraryPayload({
+  months: [{ month: "2026-07", materials: [{ title: "M", file }] }]
+}).months[0].materials[0].file;
+
+assert.equal(materialFile("www.dishkai.com"), "https://www.dishkai.com/");
+assert.equal(materialFile("example.org/reading.pdf"), "https://example.org/reading.pdf");
+assert.equal(materialFile("https://example.org/x.pdf"), "https://example.org/x.pdf");
+assert.equal(materialFile("/emba/materials/2026-07/a.md"), "/emba/materials/2026-07/a.md");
+assert.equal(materialFile("javascript:alert(1)"), "");
+assert.equal(materialFile("data:text/html,<script>"), "");
+assert.equal(materialFile("//evil.example.com"), "");
+assert.equal(materialFile("not a url"), "");
+
 console.log("EMBA cloud static checks passed");
