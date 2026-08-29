@@ -100,12 +100,22 @@ function normalizeIdList(value) {
   return Array.isArray(value) ? value.map(String).filter(Boolean) : [];
 }
 
+const BARE_DOMAIN_PATTERN = /^[\w-]+(\.[\w-]+)+(\/|\?|#|$)/;
+const URL_SCHEME_PATTERN = /^[a-z][a-z0-9+.-]*:/i;
+
 function safePublicUrl(value = "") {
   const url = String(value || "").trim();
   if (!url) return "";
   if (url.startsWith("/") && !url.startsWith("//")) return url;
+  // People type "www.dishkai.com", not "https://www.dishkai.com". Assume https
+  // for a bare domain instead of silently discarding the value. Anything that
+  // already carries a scheme is left untouched, so javascript:, data: and the
+  // rest still fall through to the protocol check below and are rejected.
+  const candidate = !URL_SCHEME_PATTERN.test(url) && BARE_DOMAIN_PATTERN.test(url)
+    ? `https://${url}`
+    : url;
   try {
-    const parsed = new URL(url);
+    const parsed = new URL(candidate);
     return parsed.protocol === "http:" || parsed.protocol === "https:" ? parsed.href : "";
   } catch {
     return "";

@@ -269,4 +269,38 @@ assert.deepEqual(await closedRegisterResponse.json(), {
 
 globalThis.fetch = originalFetch;
 
+// 裸域名自动补 https:少打协议不应让链接静默消失,
+// 但 javascript:/data:/协议相对地址 仍必须被拒绝。
+const linkUrls = (url) => cleanOwnerProfileForStorage(
+  { username: "leo", links: [{ label: "Site", url }] },
+  "leo",
+  "owner@example.com"
+).links;
+
+assert.equal(linkUrls("www.dishkai.com")[0].url, "https://www.dishkai.com/");
+assert.equal(linkUrls("dishkai.com/menu")[0].url, "https://dishkai.com/menu");
+assert.equal(linkUrls("dishkai.com?ref=turnpo")[0].url, "https://dishkai.com/?ref=turnpo");
+assert.equal(linkUrls("https://www.turnpo.com/")[0].url, "https://www.turnpo.com/");
+assert.equal(linkUrls("/assets/turnpo-logo-512.png")[0].url, "/assets/turnpo-logo-512.png");
+assert.deepEqual(linkUrls("javascript:alert(1)"), []);
+assert.deepEqual(linkUrls("data:text/html,<script>"), []);
+assert.deepEqual(linkUrls("//evil.example.com"), []);
+assert.deepEqual(linkUrls("mailto:someone@example.com"), []);
+assert.deepEqual(linkUrls("not a url"), []);
+assert.deepEqual(linkUrls("localhost"), []);
+
+// 这正是 Dishkai 卡片丢链接的路径:作品条目的 link 字段。
+const dishkaiWork = cleanOwnerProfileForStorage({
+  username: "leo",
+  aiWorks: [{
+    id: "work-dishkai",
+    title: "Dishkai",
+    link: "www.dishkai.com",
+    status: "published",
+    userApproved: true
+  }]
+}, "leo", "owner@example.com");
+assert.equal(dishkaiWork.aiWorks[0].link, "https://www.dishkai.com/");
+assert.equal(publicProfile(dishkaiWork).aiWorks[0].link, "https://www.dishkai.com/");
+
 console.log("security helper checks passed");
