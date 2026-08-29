@@ -853,23 +853,30 @@ export async function sendLoginCode(env, email, code) {
   const from = env.TURNPO_AUTH_FROM_EMAIL || "Turnpo <login@turnpo.com>";
   if (!apiKey) return { ok: false, error: "Missing RESEND_API_KEY." };
 
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${apiKey}`,
-      "content-type": "application/json"
-    },
-    body: JSON.stringify({
-      from,
-      to: email,
-      subject: "Your Turnpo login code",
-      text: `Your Turnpo login code is ${code}. It expires in 10 minutes.`,
-      html: `<p>Your Turnpo login code is <strong>${code}</strong>.</p><p>It expires in 10 minutes.</p>`
-    })
-  });
+  let response;
+  try {
+    response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${apiKey}`,
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        from,
+        to: email,
+        subject: "Your Turnpo login code",
+        text: `Your Turnpo login code is ${code}. It expires in 10 minutes.`,
+        html: `<p>Your Turnpo login code is <strong>${code}</strong>.</p><p>It expires in 10 minutes.</p>`
+      })
+    });
+  } catch (error) {
+    // An invalid header value or a network failure used to escape as an
+    // unhandled rejection, which surfaces as an opaque edge error.
+    return { ok: false, error: `resend_request_failed: ${error?.message || error}` };
+  }
 
   if (response.ok) return { ok: true };
-  return { ok: false, error: await response.text() };
+  return { ok: false, error: `resend_status_${response.status}: ${await response.text()}` };
 }
 
 function parseList(value) {

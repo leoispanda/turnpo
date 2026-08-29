@@ -53,7 +53,17 @@ export async function onRequestPost({ request, env }) {
   }), { expirationTtl: CODE_TTL_SECONDS });
 
   const sent = await sendLoginCode(env, email, code);
-  if (!sent.ok) return json({ error: "Could not send login code." }, { status: 502 });
+  if (!sent.ok) {
+    // The reason is deliberately server-side only; it never carries the code or
+    // the provider key, and the caller must not learn whether the address exists.
+    console.log(JSON.stringify({
+      event: "turnpo_login_code_send_failed",
+      reason: String(sent.error || "unknown").slice(0, 600)
+    }));
+    // Cloudflare swaps a 502 body for its own plain-text error page, so the JSON
+    // message below never reached the browser. 500 passes through untouched.
+    return json({ error: "Could not send login code." }, { status: 500 });
+  }
 
   return json({ ok: true, message: "If this email is approved, a login code will be sent." });
 }
