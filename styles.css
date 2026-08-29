@@ -470,6 +470,12 @@ main {
   color: var(--gold);
 }
 
+.search-box input::-webkit-search-decoration,
+.search-box input::-webkit-search-cancel-button {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
 .search-box input {
   min-height: 42px;
   border: 0;
@@ -477,6 +483,9 @@ main {
   background: transparent;
   color: var(--text);
   font-size: 16px;
+  /* type="search" 会带来原生装饰,这里抹平,保持既有外观 */
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .search-results {
@@ -1254,9 +1263,13 @@ h1 {
 }
 
 .life-atlas-map {
+  /* 球体下半"沉入"的目标色,跟随主题的页面底色 */
+  --atlas-sink-rgb: 5, 5, 5;
+  /* 文案后方遮罩色:深色主题压暗,浅色主题提亮,保证文字始终可读 */
+  --atlas-scrim-rgb: 0, 0, 0;
   width: 100%;
   height: 100%;
-  min-height: clamp(600px, 50vw, 720px);
+  min-height: clamp(640px, 54vw, 780px);
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -1274,17 +1287,25 @@ h1 {
 
 .life-atlas-map::before {
   background:
-    radial-gradient(ellipse at 50% 4%, rgba(255, 242, 218, 0.08), transparent 24%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.38) 22%, rgba(0, 0, 0, 0.08) 42%, transparent 58%, rgba(0, 0, 0, 0.08) 100%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.34), transparent 15%, transparent 54%, rgba(0, 0, 0, 0.24));
+    /* 文案后方的柔和暗区,替代原先横贯整幅的黑色幕布 */
+    radial-gradient(ellipse 52% 62% at 12% 40%, rgba(var(--atlas-scrim-rgb), 0.78), rgba(var(--atlas-scrim-rgb), 0.42) 46%, rgba(var(--atlas-scrim-rgb), 0) 74%),
+    linear-gradient(90deg, rgba(var(--atlas-scrim-rgb), 0.34), rgba(var(--atlas-scrim-rgb), 0.16) 26%, rgba(var(--atlas-scrim-rgb), 0) 52%, rgba(var(--atlas-scrim-rgb), 0.06) 100%),
+    linear-gradient(180deg, rgba(var(--atlas-scrim-rgb), 0.16), rgba(var(--atlas-scrim-rgb), 0) 15%, rgba(var(--atlas-scrim-rgb), 0) 54%, rgba(var(--atlas-scrim-rgb), 0.10));
   opacity: 1;
   z-index: 6;
 }
 
 .life-atlas-map::after {
   background:
-    linear-gradient(180deg, transparent 42%, rgba(0, 4, 14, 0.3) 61%, rgba(0, 0, 0, 0.9) 86%, rgba(0, 0, 0, 0.98) 100%),
-    radial-gradient(ellipse at 50% 96%, rgba(0, 0, 0, 0.98), transparent 42%);
+    /* 下半沉入页面:淡到页面底色 #050505,而非比页面更黑的纯黑 */
+    linear-gradient(
+      180deg,
+      rgba(var(--atlas-sink-rgb), 0) 44%,
+      rgba(var(--atlas-sink-rgb), 0.22) 62%,
+      rgba(var(--atlas-sink-rgb), 0.62) 78%,
+      rgba(var(--atlas-sink-rgb), 0.9) 90%,
+      rgb(var(--atlas-sink-rgb)) 98%
+    );
   mix-blend-mode: normal;
   z-index: 6;
 }
@@ -1348,16 +1369,16 @@ h1 {
 
 .life-atlas-static-fallback::before {
   background:
-    radial-gradient(ellipse at 70% 18%, rgba(248, 224, 185, 0.1), transparent 21%),
-    radial-gradient(ellipse at 54% 56%, transparent 31%, rgba(72, 178, 255, 0.16) 48%, transparent 64%);
+    radial-gradient(ellipse at 70% 18%, rgba(248, 224, 185, 0.1), rgba(248, 224, 185, 0) 21%),
+    radial-gradient(circle at 50% 50%, rgba(72, 178, 255, 0) 31%, rgba(72, 178, 255, 0.16) 48%, rgba(72, 178, 255, 0) 64%);
   mix-blend-mode: screen;
   z-index: 2;
 }
 
 .life-atlas-static-fallback::after {
   background:
-    linear-gradient(90deg, rgba(0, 4, 14, 0.22), transparent 24%, transparent 74%, rgba(0, 4, 14, 0.2)),
-    radial-gradient(ellipse at center, transparent 45%, rgba(0, 5, 18, 0.28) 100%);
+    linear-gradient(90deg, rgba(0, 4, 14, 0.22), rgba(0, 4, 14, 0) 24%, rgba(0, 4, 14, 0) 74%, rgba(0, 4, 14, 0.2)),
+    radial-gradient(circle at center, rgba(0, 5, 18, 0) 45%, rgba(0, 5, 18, 0.28) 100%);
   z-index: 3;
 }
 
@@ -1375,6 +1396,9 @@ h1 {
 }
 
 .life-atlas-marker {
+  /* 点光源配色令牌,浅色主题在下方覆盖 */
+  --marker-core: #fffaf0;
+  --marker-glow-rgb: 255, 200, 125;
   width: 4px;
   height: 4px;
   position: absolute;
@@ -1382,39 +1406,55 @@ h1 {
   top: var(--y);
   border-radius: 50%;
   border: 0;
-  background: rgba(255, 226, 171, 0.92);
-  box-shadow: 0 0 4px rgba(255, 218, 151, 0.22);
+  /* 实心小亮点保持锐利;发光交给下面的光晕层。纯渐变球在任何缩放下都会糊。 */
+  background: var(--marker-core);
+  box-shadow:
+    0 0 0 0.5px rgba(30, 16, 0, 0.5),
+    0 0 3px rgba(var(--marker-glow-rgb), 0.5);
   cursor: default;
   transform: translate(-50%, -50%);
   animation: mapPinIn 520ms ease both;
   animation-delay: var(--delay, 0ms);
   outline: none;
-  transition: opacity 180ms ease, box-shadow 180ms ease, transform 180ms ease, background 180ms ease;
+  transition: opacity 180ms ease, transform 180ms ease, filter 180ms ease;
   z-index: 7;
 }
 
 .life-atlas-marker::before {
+  /* 光晕层:只有衰减,没有核 */
   content: "";
   position: absolute;
-  inset: -4px;
+  inset: -7px;
   border-radius: 50%;
-  background: transparent;
-  opacity: 0;
+  background: radial-gradient(
+    circle,
+    rgba(var(--marker-glow-rgb), 0.34) 0%,
+    rgba(var(--marker-glow-rgb), 0.15) 32%,
+    rgba(var(--marker-glow-rgb), 0.05) 56%,
+    rgba(var(--marker-glow-rgb), 0) 78%
+  );
+  opacity: 1;
   pointer-events: none;
+  z-index: -1;
 }
 
 .life-atlas-marker.is-major {
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 224, 170, 0.96);
+  width: 6px;
+  height: 6px;
   box-shadow:
-    0 0 8px rgba(255, 221, 166, 0.42),
-    0 0 18px rgba(255, 185, 88, 0.16);
+    0 0 0 0.5px rgba(30, 16, 0, 0.45),
+    0 0 5px rgba(var(--marker-glow-rgb), 0.6);
 }
 
 .life-atlas-marker.is-major::before {
-  inset: -11px;
-  background: radial-gradient(circle, rgba(255, 214, 139, 0.2), rgba(255, 184, 92, 0.08) 45%, transparent 72%);
+  inset: -14px;
+  background: radial-gradient(
+    circle,
+    rgba(var(--marker-glow-rgb), 0.42) 0%,
+    rgba(var(--marker-glow-rgb), 0.18) 30%,
+    rgba(var(--marker-glow-rgb), 0.06) 55%,
+    rgba(var(--marker-glow-rgb), 0) 80%
+  );
   opacity: 1;
 }
 
@@ -1442,17 +1482,14 @@ h1 {
 .life-atlas-marker:hover,
 .life-atlas-marker:focus,
 .life-atlas-marker.is-active {
-  background: rgba(255, 239, 205, 0.98);
   transform: translate(-50%, -50%) scale(1.18);
-  box-shadow:
-    0 0 6px rgba(255, 226, 171, 0.38),
-    0 0 12px rgba(255, 194, 99, 0.1);
 }
 
 .life-atlas-marker:hover::before,
 .life-atlas-marker:focus::before,
 .life-atlas-marker.is-active::before {
-  opacity: 0.95;
+  opacity: 1;
+  filter: brightness(1.25) drop-shadow(0 0 4px rgba(var(--marker-glow-rgb), 0.55));
 }
 
 .life-atlas-marker:hover .life-atlas-marker-label,
@@ -3767,30 +3804,32 @@ body.theme-light .travel-map-canvas {
   box-shadow: none;
 }
 
+body.theme-light .life-atlas-map {
+  --atlas-sink-rgb: 247, 249, 252;
+  --atlas-scrim-rgb: 247, 249, 252;
+}
+
 body.theme-light .life-atlas-image {
   filter: saturate(1.2) contrast(1.12) brightness(0.84) drop-shadow(0 0 42px rgba(75, 176, 255, 0.26));
 }
 
 body.theme-light .life-atlas-marker {
+  /* 球体在浅色主题下依然是深色,亮核保持明亮,外圈转琥珀以贴合浅色页面 */
+  --marker-core: #fff4dc;
+  --marker-glow-rgb: 198, 143, 58;
   border-color: transparent;
-  background: rgba(203, 157, 76, 0.86);
-  box-shadow: 0 0 4px rgba(191, 134, 43, 0.2);
 }
 
 body.theme-light .life-atlas-marker.is-major {
-  background: rgba(196, 137, 53, 0.94);
   box-shadow:
-    0 0 8px rgba(191, 134, 43, 0.28),
-    0 0 16px rgba(155, 113, 50, 0.12);
+    0 0 0 0.5px rgba(46, 28, 0, 0.4),
+    0 0 5px rgba(var(--marker-glow-rgb), 0.55);
 }
 
 body.theme-light .life-atlas-marker:hover,
 body.theme-light .life-atlas-marker:focus,
 body.theme-light .life-atlas-marker.is-active {
-  background: #ffebb2;
-  box-shadow:
-    0 0 7px rgba(191, 134, 43, 0.28),
-    0 0 14px rgba(155, 113, 50, 0.1);
+  background: var(--marker-core);
 }
 
 body.theme-light .travel-place-add input,
@@ -4205,7 +4244,6 @@ body.theme-light .image-lightbox-close {
     align-items: stretch;
   }
 
-  .search-box,
   .section-head,
   .jobs-head,
   .job-match-head,
@@ -4284,7 +4322,18 @@ body.theme-light .image-lightbox-close {
   }
 
   .search-box {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .search-box svg {
+    margin-left: 4px;
+  }
+
+  .search-box .gold-btn {
+    grid-column: 1 / -1;
   }
 
   .search-box input,

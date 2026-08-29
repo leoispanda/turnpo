@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.430" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.431" />
     <script id="jsonLd" type="application/ld+json">{}</script>
   </head>
   <body>
@@ -57,9 +57,9 @@
         <div class="search-copy">
           <h1>Turnpo</h1>
           <p class="headline">Beyond the title<br />Beyond the resume<br />The turning points that made you</p>
-          <form class="search-box" id="searchForm">
+          <form class="search-box" id="searchForm" role="search">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.8 18.4a7.6 7.6 0 1 1 0-15.2 7.6 7.6 0 0 1 0 15.2zM16.4 16.4 21 21"/></svg>
-            <input id="personSearch" autocomplete="off" placeholder="Type the name" />
+            <input id="personSearch" type="search" name="q" autocomplete="off" enterkeyhint="search" placeholder="Type the name" />
             <button class="gold-btn" type="submit">Search</button>
           </form>
           <div class="search-results" id="searchResults" aria-live="polite"></div>
@@ -371,7 +371,7 @@
         </details>
         <div class="founder-tools">
           <button class="ghost-btn" id="homeOwnerLogin" type="button">Founder mode</button>
-    <span class="version-badge">v0.1.430</span>
+    <span class="version-badge">v0.1.431</span>
           <span class="data-mode-status" id="dataModeStatus">Viewing published public profile</span>
           <div class="owner-tool-grid owner-only">
             <button class="gold-btn" id="saveProfileState" type="button">Save</button>
@@ -603,6 +603,6 @@
       </figure>
     </div>
 
-    <script src="/script.js?v=0.1.430"></script>
+    <script src="/script.js?v=0.1.431"></script>
   </body>
 </html>
