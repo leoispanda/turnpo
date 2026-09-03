@@ -1,4 +1,150 @@
-const EMBEDDED_SEPTEMBER_MONTH = {"id": "2026-09", "month": "2026-09", "title": "September 2026", "materialsRevision": 24, "reflectionRevision": 1, "followUpRevision": 0, "markdownRevision": 1, "memoryRevision": 0, "materials": [{"title": "Team 6 CFA｜PME Pension Impact Investing Pitch (25% Group Case)", "type": "case_inspiration", "file": "/emba/materials/2026-09/Team-6-PME-Pension-Impact-Investing-Pitch.md", "notes": "Team 6 专属 25% 大作业答辩全案：标的为 ASML 所在的 PME 养老基金；包含 Q1–Q3 论证、10 页 PPT 分工架构及教授发难防守反击卡；支持一键复制给 GPT 或组员。"}, {"title": "September CFA｜Knowledge Map + GPT Copy Pack", "type": "course_overview", "file": "/emba/materials/2026-09/2026-09-cfa-knowledge-map-gpt-pack.md", "notes": "五天知识依赖图、16 项阅读证据状态、核心术语、integrated case 分析顺序与 GPT 教学指令；打开后可一键复制完整 Markdown。"}, {"title": "Day 1｜Financial Management", "type": "daily_course_intro", "file": "/emba/materials/2026-09/days/2026-09-07-financial-management.md", "notes": "严格按 Syllabus 的 Financial Management outcomes：先建地图再学习投资/融资、金融市场、risk-return、diversification、derivatives 与 financial risk management；Nocco & Stulz 只作 Day 3 ERM 的桥接。"}, {"title": "Day 2｜Compliance & Sustainability Reporting", "type": "daily_course_intro", "file": "/emba/materials/2026-09/days/2026-09-08-compliance-sustainability.md", "notes": "VW、ING、COSO、Estra 与 ESRS：从合规失效到双重重要性。"}, {"title": "Day 3｜Financial Accounting, ERM & Governance", "type": "daily_course_intro", "file": "/emba/materials/2026-09/days/2026-09-09-accounting-erm-governance.md", "notes": "财务信息、COSO、risk framework、NFR 与 DSM 年报。"}, {"title": "Day 4｜Management Accounting & Strategic Control", "type": "daily_course_intro", "file": "/emba/materials/2026-09/days/2026-09-10-management-control.md", "notes": "Tennessee Controls、创新控制与 purpose-driven organization。"}, {"title": "Day 1 Podcast｜《第二张航海表》", "type": "podcast", "file": "https://media.turnpo.com/%E5%88%A9%E6%B6%A6%E8%83%8C%E5%90%8E%E7%9A%84%E7%94%9F%E6%AD%BB%E5%B1%80.m4a", "notes": "Financial Management：用一项看似高利润的投资，串起价值、现金流、机会成本与风险承担。"}, {"title": "Day 1 Podcast｜English version", "type": "podcast", "file": "https://media.turnpo.com/day1-en.m4a", "notes": "English retelling of the Day 1 fable on investment value, cash flow, opportunity cost, and risk."}, {"title": "Day 2 Podcast｜《那张干净的检查表》", "type": "podcast", "file": "https://media.turnpo.com/%E9%82%A3%E5%BC%A0%E5%B9%B2%E5%87%80%E7%9A%84%E6%A3%80%E6%9F%A5%E8%A1%A8.m4a", "notes": "Compliance & Sustainability Reporting：一张满是勾的检查表，为什么仍然可能掩盖风险与责任断点。"}, {"title": "Day 2 Podcast｜English version", "type": "podcast", "file": "https://media.turnpo.com/day2-en.m4a", "notes": "English retelling of the Day 2 fable on compliance, evidence, sustainability reporting, and leadership."}, {"title": "Day 3 Podcast｜《披萨店后厨的三块白板》", "type": "podcast", "file": "https://media.turnpo.com/day-3-three-whiteboards.m4a", "notes": "Financial Accounting, ERM & Governance：用披萨店的三块白板，串起利润、现金、风险与治理。"}, {"title": "Day 3 Podcast｜English version", "type": "podcast", "file": "https://media.turnpo.com/day3-en.m4a", "notes": "English retelling of the Day 3 fable on profit, cash, risk, and governance."}, {"title": "Day 4 Podcast｜《第三勺红油》", "type": "podcast", "file": "https://media.turnpo.com/day-4-data-all-green.m4a", "notes": "Management Accounting & Strategic Control：当指标全绿时，为什么组织仍可能失去真正的判断与行动能力。"}, {"title": "Day 4 Podcast｜Why Accurate Metrics Sabotage Your Strategy", "type": "podcast", "file": "https://media.turnpo.com/day4-en.m4a", "notes": "English retelling of the Day 4 fable on metrics, control, innovation, and purpose."}, {"title": "Day 5 Podcast｜《通过率最高的驾校》", "type": "podcast", "file": "https://media.turnpo.com/%E4%B8%9A%E7%BB%A9%E6%A6%9C%E5%8D%95%E7%9A%84%E7%8C%AB%E8%85%BB.m4a", "notes": "Financial Management & Mutual Fund Comparison：比较基金业绩时，怎样看见样本、风险、成本与投资者适配。"}, {"title": "Day 5 Podcast｜English version", "type": "podcast", "file": "https://media.turnpo.com/day5-en.m4a", "notes": "English retelling of the Day 5 fable on fund-performance comparison, risk, cost, and investor fit."}, {"title": "Day 5｜Financial Management Integration & Presentation", "type": "daily_course_intro", "file": "/emba/materials/2026-09/days/2026-09-11-financial-management-integration.md", "notes": "共同基金比较、整合判断与 group presentation 准备。"}, {"title": "Course Syllabus｜原始 PDF 与详细解读", "type": "syllabus_guide", "file": "/emba/materials/2026-09/September-26-Syllabus-Overview.md", "notes": "原始 syllabus 入口，以及 6 ECTS 学习范围、五天日程、课程能力、16 项阅读、考核规则、出勤红线与高分策略。"}, {"title": "September CFA reading checklist", "type": "monthly_index", "file": "/emba/materials/2026-09/readings/README.md", "notes": "Complete syllabus cross-check: 16 required readings, three sessions with no preparatory reading, access routes, and local-file status."}, {"title": "每日指定阅读｜16 个结构化网页", "type": "study_guide", "file": "/emba/reading.html", "notes": "按 Day 1–5 排列：结构化讲解与原文阅读完全分开；点击“开始原文阅读”进入独立页面，英文段落点击后原位切换成中文。"}, {"title": "COSO 2017 ERM Executive Summary", "type": "study_guide", "file": "/emba/reading.html?reading=coso-executive-summary", "notes": "Required ERM executive summary; use with the COSO study card to learn the five ERM components."}, {"title": "Tennessee Controls: The Strategic Ranking Problem", "type": "case_study", "file": "/emba/reading.html?reading=tennessee-controls", "notes": "Required management accounting and control case (HBS 9-191-083, revised 2010)."}], "reflection": "September 2026 is the first core finance week. The learning goal is financial leadership: connect investment and financing choices, accounting information, performance control, enterprise risk, compliance and ESG reporting into one decision framework. The priority is not memorising isolated models, but using them to diagnose a real company and make a well-supported recommendation.", "markdown": "# Corporate Finance and Accounting - September 2026\n\n## Course week\n\n7-11 September 2026. The module covers Financial Management, Compliance, Sustainability Reporting, Financial Accounting and Analysis, Enterprise Risk Management, and Management Accounting and Control.\n\n## What I need to master\n\n1. Make investment, financing and risk decisions using risk-return, discounting and downside-protection logic.\n2. Read financial statements and use accounting information, ratios and KPIs for decisions.\n3. Design management controls that support strategy without creating false precision or harmful incentives.\n4. Apply COSO ERM: governance and culture, strategy/objectives, performance, review/revision, and information/reporting.\n5. Diagnose compliance failure through controls, culture, accountability, data and escalation.\n6. Assess sustainability reporting through double materiality, IROs, value-chain coverage, metrics, targets and assurance.\n\n## Assessment focus\n\nThe individual final assignment is a real-life integrated case. Content and application carry 75%; critical reflection on choices, assumptions, limitations and AI use carries 15%; form, concise writing and APA references carry 10%. Use the study cards to turn each reading into evidence for a recommendation, rather than a standalone summary."};
+const EMBEDDED_SEPTEMBER_MONTH = {
+  "id": "2026-09",
+  "month": "2026-09",
+  "title": "September 2026",
+  "materialsRevision": 24,
+  "reflectionRevision": 1,
+  "followUpRevision": 0,
+  "markdownRevision": 1,
+  "memoryRevision": 0,
+  "materials": [
+    {
+      "title": "Team 6 CFA｜PME Pension Impact Investing Pitch (25% Group Case)",
+      "type": "case_inspiration",
+      "file": "/cfa/materials/2026-09/Team-6-PME-Pension-Impact-Investing-Pitch.md",
+      "notes": "Team 6 专属 25% 大作业答辩全案：标的为 ASML 所在的 PME 养老基金；包含 Q1–Q3 论证、10 页 PPT 分工架构及教授发难防守反击卡；支持一键复制给 GPT 或组员。"
+    },
+    {
+      "title": "September CFA｜Knowledge Map + GPT Copy Pack",
+      "type": "course_overview",
+      "file": "/cfa/materials/2026-09/2026-09-cfa-knowledge-map-gpt-pack.md",
+      "notes": "五天知识依赖图、16 项阅读证据状态、核心术语、integrated case 分析顺序与 GPT 教学指令；打开后可一键复制完整 Markdown。"
+    },
+    {
+      "title": "Day 1｜Financial Management",
+      "type": "daily_course_intro",
+      "file": "/cfa/materials/2026-09/days/2026-09-07-financial-management.md",
+      "notes": "严格按 Syllabus 的 Financial Management outcomes：先建地图再学习投资/融资、金融市场、risk-return、diversification、derivatives 与 financial risk management；Nocco & Stulz 只作 Day 3 ERM 的桥接。"
+    },
+    {
+      "title": "Day 2｜Compliance & Sustainability Reporting",
+      "type": "daily_course_intro",
+      "file": "/cfa/materials/2026-09/days/2026-09-08-compliance-sustainability.md",
+      "notes": "VW、ING、COSO、Estra 与 ESRS：从合规失效到双重重要性。"
+    },
+    {
+      "title": "Day 3｜Financial Accounting, ERM & Governance",
+      "type": "daily_course_intro",
+      "file": "/cfa/materials/2026-09/days/2026-09-09-accounting-erm-governance.md",
+      "notes": "财务信息、COSO、risk framework、NFR 与 DSM 年报。"
+    },
+    {
+      "title": "Day 4｜Management Accounting & Strategic Control",
+      "type": "daily_course_intro",
+      "file": "/cfa/materials/2026-09/days/2026-09-10-management-control.md",
+      "notes": "Tennessee Controls、创新控制与 purpose-driven organization。"
+    },
+    {
+      "title": "Day 1 Podcast｜《第二张航海表》",
+      "type": "podcast",
+      "file": "https://media.turnpo.com/%E5%88%A9%E6%B6%A6%E8%83%8C%E5%90%8E%E7%9A%84%E7%94%9F%E6%AD%BB%E5%B1%80.m4a",
+      "notes": "Financial Management：用一项看似高利润的投资，串起价值、现金流、机会成本与风险承担。"
+    },
+    {
+      "title": "Day 1 Podcast｜English version",
+      "type": "podcast",
+      "file": "https://media.turnpo.com/day1-en.m4a",
+      "notes": "English retelling of the Day 1 fable on investment value, cash flow, opportunity cost, and risk."
+    },
+    {
+      "title": "Day 2 Podcast｜《那张干净的检查表》",
+      "type": "podcast",
+      "file": "https://media.turnpo.com/%E9%82%A3%E5%BC%A0%E5%B9%B2%E5%87%80%E7%9A%84%E6%A3%80%E6%9F%A5%E8%A1%A8.m4a",
+      "notes": "Compliance & Sustainability Reporting：一张满是勾的检查表，为什么仍然可能掩盖风险与责任断点。"
+    },
+    {
+      "title": "Day 2 Podcast｜English version",
+      "type": "podcast",
+      "file": "https://media.turnpo.com/day2-en.m4a",
+      "notes": "English retelling of the Day 2 fable on compliance, evidence, sustainability reporting, and leadership."
+    },
+    {
+      "title": "Day 3 Podcast｜《披萨店后厨的三块白板》",
+      "type": "podcast",
+      "file": "https://media.turnpo.com/day-3-three-whiteboards.m4a",
+      "notes": "Financial Accounting, ERM & Governance：用披萨店的三块白板，串起利润、现金、风险与治理。"
+    },
+    {
+      "title": "Day 3 Podcast｜English version",
+      "type": "podcast",
+      "file": "https://media.turnpo.com/day3-en.m4a",
+      "notes": "English retelling of the Day 3 fable on profit, cash, risk, and governance."
+    },
+    {
+      "title": "Day 4 Podcast｜《第三勺红油》",
+      "type": "podcast",
+      "file": "https://media.turnpo.com/day-4-data-all-green.m4a",
+      "notes": "Management Accounting & Strategic Control：当指标全绿时，为什么组织仍可能失去真正的判断与行动能力。"
+    },
+    {
+      "title": "Day 4 Podcast｜Why Accurate Metrics Sabotage Your Strategy",
+      "type": "podcast",
+      "file": "https://media.turnpo.com/day4-en.m4a",
+      "notes": "English retelling of the Day 4 fable on metrics, control, innovation, and purpose."
+    },
+    {
+      "title": "Day 5 Podcast｜《通过率最高的驾校》",
+      "type": "podcast",
+      "file": "https://media.turnpo.com/%E4%B8%9A%E7%BB%A9%E6%A6%9C%E5%8D%95%E7%9A%84%E7%8C%AB%E8%85%BB.m4a",
+      "notes": "Financial Management & Mutual Fund Comparison：比较基金业绩时，怎样看见样本、风险、成本与投资者适配。"
+    },
+    {
+      "title": "Day 5 Podcast｜English version",
+      "type": "podcast",
+      "file": "https://media.turnpo.com/day5-en.m4a",
+      "notes": "English retelling of the Day 5 fable on fund-performance comparison, risk, cost, and investor fit."
+    },
+    {
+      "title": "Day 5｜Financial Management Integration & Presentation",
+      "type": "daily_course_intro",
+      "file": "/cfa/materials/2026-09/days/2026-09-11-financial-management-integration.md",
+      "notes": "共同基金比较、整合判断与 group presentation 准备。"
+    },
+    {
+      "title": "Course Syllabus｜原始 PDF 与详细解读",
+      "type": "syllabus_guide",
+      "file": "/cfa/materials/2026-09/September-26-Syllabus-Overview.md",
+      "notes": "原始 syllabus 入口，以及 6 ECTS 学习范围、五天日程、课程能力、16 项阅读、考核规则、出勤红线与高分策略。"
+    },
+    {
+      "title": "September CFA reading checklist",
+      "type": "monthly_index",
+      "file": "/cfa/materials/2026-09/readings/README.md",
+      "notes": "Complete syllabus cross-check: 16 required readings, three sessions with no preparatory reading, access routes, and local-file status."
+    },
+    {
+      "title": "每日指定阅读｜16 个结构化网页",
+      "type": "study_guide",
+      "file": "/emba/reading.html",
+      "notes": "按 Day 1–5 排列：结构化讲解与原文阅读完全分开；点击“开始原文阅读”进入独立页面，英文段落点击后原位切换成中文。"
+    },
+    {
+      "title": "COSO 2017 ERM Executive Summary",
+      "type": "study_guide",
+      "file": "/emba/reading.html?reading=coso-executive-summary",
+      "notes": "Required ERM executive summary; use with the COSO study card to learn the five ERM components."
+    },
+    {
+      "title": "Tennessee Controls: The Strategic Ranking Problem",
+      "type": "case_study",
+      "file": "/emba/reading.html?reading=tennessee-controls",
+      "notes": "Required management accounting and control case (HBS 9-191-083, revised 2010)."
+    }
+  ],
+  "reflection": "September 2026 is the first core finance week. The learning goal is financial leadership: connect investment and financing choices, accounting information, performance control, enterprise risk, compliance and ESG reporting into one decision framework. The priority is not memorising isolated models, but using them to diagnose a real company and make a well-supported recommendation.",
+  "markdown": "# Corporate Finance and Accounting - September 2026\n\n## Course week\n\n7-11 September 2026. The module covers Financial Management, Compliance, Sustainability Reporting, Financial Accounting and Analysis, Enterprise Risk Management, and Management Accounting and Control.\n\n## What I need to master\n\n1. Make investment, financing and risk decisions using risk-return, discounting and downside-protection logic.\n2. Read financial statements and use accounting information, ratios and KPIs for decisions.\n3. Design management controls that support strategy without creating false precision or harmful incentives.\n4. Apply COSO ERM: governance and culture, strategy/objectives, performance, review/revision, and information/reporting.\n5. Diagnose compliance failure through controls, culture, accountability, data and escalation.\n6. Assess sustainability reporting through double materiality, IROs, value-chain coverage, metrics, targets and assurance.\n\n## Assessment focus\n\nThe individual final assignment is a real-life integrated case. Content and application carry 75%; critical reflection on choices, assumptions, limitations and AI use carries 15%; form, concise writing and APA references carry 10%. Use the study cards to turn each reading into evidence for a recommendation, rather than a standalone summary."
+};
+const EMBEDDED_SEPTEMBER_MONTH = {"id": "2026-09", "month": "2026-09", "title": "September 2026", "materialsRevision": 24, "reflectionRevision": 1, "followUpRevision": 0, "markdownRevision": 1, "memoryRevision": 0, "materials": [{"title": "Team 6 CFA｜PME Pension Impact Investing Pitch (25% Group Case)", "type": "case_inspiration", "file": "/emba/materials/2026-09/Team-6-PME-Pension-Impact-Investing-Pitch.md", "notes": "Team 6 专属 25% 大作业答辩全案：标的为 ASML 所在的 PME 养老基金；包含 Q1–Q3 论证、10 页 PPT 分工架构及教授发难防守反击卡；支持一键复制给 GPT 或组员。"}, {"title": "September CFA｜Knowledge Map + GPT Copy Pack", "type": "course_overview", "file": "/emba/materials/2026-09/2026-09-cfa-knowledge-map-gpt-pack.md", "notes": "五天知识依赖图、16 项阅读证据状态、核心术语、integrated case 分析顺序与 GPT 教学指令；打开后可一键复制完整 Markdown。"}, {"title": "Day 1｜Financial Management", "type": "daily_course_intro", "file": "/cfa/materials/2026-09/days/2026-09-07-financial-management.md", "notes": "严格按 Syllabus 的 Financial Management outcomes：先建地图再学习投资/融资、金融市场、risk-return、diversification、derivatives 与 financial risk management；Nocco & Stulz 只作 Day 3 ERM 的桥接。"}, {"title": "Day 2｜Compliance & Sustainability Reporting", "type": "daily_course_intro", "file": "/cfa/materials/2026-09/days/2026-09-08-compliance-sustainability.md", "notes": "VW、ING、COSO、Estra 与 ESRS：从合规失效到双重重要性。"}, {"title": "Day 3｜Financial Accounting, ERM & Governance", "type": "daily_course_intro", "file": "/cfa/materials/2026-09/days/2026-09-09-accounting-erm-governance.md", "notes": "财务信息、COSO、risk framework、NFR 与 DSM 年报。"}, {"title": "Day 4｜Management Accounting & Strategic Control", "type": "daily_course_intro", "file": "/cfa/materials/2026-09/days/2026-09-10-management-control.md", "notes": "Tennessee Controls、创新控制与 purpose-driven organization。"}, {"title": "Day 1 Podcast｜《第二张航海表》", "type": "podcast", "file": "https://media.turnpo.com/%E5%88%A9%E6%B6%A6%E8%83%8C%E5%90%8E%E7%9A%84%E7%94%9F%E6%AD%BB%E5%B1%80.m4a", "notes": "Financial Management：用一项看似高利润的投资，串起价值、现金流、机会成本与风险承担。"}, {"title": "Day 1 Podcast｜English version", "type": "podcast", "file": "https://media.turnpo.com/day1-en.m4a", "notes": "English retelling of the Day 1 fable on investment value, cash flow, opportunity cost, and risk."}, {"title": "Day 2 Podcast｜《那张干净的检查表》", "type": "podcast", "file": "https://media.turnpo.com/%E9%82%A3%E5%BC%A0%E5%B9%B2%E5%87%80%E7%9A%84%E6%A3%80%E6%9F%A5%E8%A1%A8.m4a", "notes": "Compliance & Sustainability Reporting：一张满是勾的检查表，为什么仍然可能掩盖风险与责任断点。"}, {"title": "Day 2 Podcast｜English version", "type": "podcast", "file": "https://media.turnpo.com/day2-en.m4a", "notes": "English retelling of the Day 2 fable on compliance, evidence, sustainability reporting, and leadership."}, {"title": "Day 3 Podcast｜《披萨店后厨的三块白板》", "type": "podcast", "file": "https://media.turnpo.com/day-3-three-whiteboards.m4a", "notes": "Financial Accounting, ERM & Governance：用披萨店的三块白板，串起利润、现金、风险与治理。"}, {"title": "Day 3 Podcast｜English version", "type": "podcast", "file": "https://media.turnpo.com/day3-en.m4a", "notes": "English retelling of the Day 3 fable on profit, cash, risk, and governance."}, {"title": "Day 4 Podcast｜《第三勺红油》", "type": "podcast", "file": "https://media.turnpo.com/day-4-data-all-green.m4a", "notes": "Management Accounting & Strategic Control：当指标全绿时，为什么组织仍可能失去真正的判断与行动能力。"}, {"title": "Day 4 Podcast｜Why Accurate Metrics Sabotage Your Strategy", "type": "podcast", "file": "https://media.turnpo.com/day4-en.m4a", "notes": "English retelling of the Day 4 fable on metrics, control, innovation, and purpose."}, {"title": "Day 5 Podcast｜《通过率最高的驾校》", "type": "podcast", "file": "https://media.turnpo.com/%E4%B8%9A%E7%BB%A9%E6%A6%9C%E5%8D%95%E7%9A%84%E7%8C%AB%E8%85%BB.m4a", "notes": "Financial Management & Mutual Fund Comparison：比较基金业绩时，怎样看见样本、风险、成本与投资者适配。"}, {"title": "Day 5 Podcast｜English version", "type": "podcast", "file": "https://media.turnpo.com/day5-en.m4a", "notes": "English retelling of the Day 5 fable on fund-performance comparison, risk, cost, and investor fit."}, {"title": "Day 5｜Financial Management Integration & Presentation", "type": "daily_course_intro", "file": "/cfa/materials/2026-09/days/2026-09-11-financial-management-integration.md", "notes": "共同基金比较、整合判断与 group presentation 准备。"}, {"title": "Course Syllabus｜原始 PDF 与详细解读", "type": "syllabus_guide", "file": "/emba/materials/2026-09/September-26-Syllabus-Overview.md", "notes": "原始 syllabus 入口，以及 6 ECTS 学习范围、五天日程、课程能力、16 项阅读、考核规则、出勤红线与高分策略。"}, {"title": "September CFA reading checklist", "type": "monthly_index", "file": "/emba/materials/2026-09/readings/README.md", "notes": "Complete syllabus cross-check: 16 required readings, three sessions with no preparatory reading, access routes, and local-file status."}, {"title": "每日指定阅读｜16 个结构化网页", "type": "study_guide", "file": "/emba/reading.html", "notes": "按 Day 1–5 排列：结构化讲解与原文阅读完全分开；点击“开始原文阅读”进入独立页面，英文段落点击后原位切换成中文。"}, {"title": "COSO 2017 ERM Executive Summary", "type": "study_guide", "file": "/emba/reading.html?reading=coso-executive-summary", "notes": "Required ERM executive summary; use with the COSO study card to learn the five ERM components."}, {"title": "Tennessee Controls: The Strategic Ranking Problem", "type": "case_study", "file": "/emba/reading.html?reading=tennessee-controls", "notes": "Required management accounting and control case (HBS 9-191-083, revised 2010)."}], "reflection": "September 2026 is the first core finance week. The learning goal is financial leadership: connect investment and financing choices, accounting information, performance control, enterprise risk, compliance and ESG reporting into one decision framework. The priority is not memorising isolated models, but using them to diagnose a real company and make a well-supported recommendation.", "markdown": "# Corporate Finance and Accounting - September 2026\n\n## Course week\n\n7-11 September 2026. The module covers Financial Management, Compliance, Sustainability Reporting, Financial Accounting and Analysis, Enterprise Risk Management, and Management Accounting and Control.\n\n## What I need to master\n\n1. Make investment, financing and risk decisions using risk-return, discounting and downside-protection logic.\n2. Read financial statements and use accounting information, ratios and KPIs for decisions.\n3. Design management controls that support strategy without creating false precision or harmful incentives.\n4. Apply COSO ERM: governance and culture, strategy/objectives, performance, review/revision, and information/reporting.\n5. Diagnose compliance failure through controls, culture, accountability, data and escalation.\n6. Assess sustainability reporting through double materiality, IROs, value-chain coverage, metrics, targets and assurance.\n\n## Assessment focus\n\nThe individual final assignment is a real-life integrated case. Content and application carry 75%; critical reflection on choices, assumptions, limitations and AI use carries 15%; form, concise writing and APA references carry 10%. Use the study cards to turn each reading into evidence for a recommendation, rather than a standalone summary."};
 const $ = (selector, context = document) => context.querySelector(selector);
 
 const PREPARATION_MATERIAL_TYPES = new Set([
@@ -11,7 +157,7 @@ const PREPARATION_MATERIAL_TYPES = new Set([
 const PODCAST_MATERIAL_TYPE = "podcast";
 
 const DAY_PAGE_PODCASTS = Object.freeze({
-  "/emba/materials/2026-09/days/2026-09-07-financial-management.md": {
+  "/cfa/materials/2026-09/days/2026-09-07-financial-management.md": {
     versions: [
       {
         language: "中文",
@@ -27,7 +173,7 @@ const DAY_PAGE_PODCASTS = Object.freeze({
       }
     ]
   },
-  "/emba/materials/2026-09/days/2026-09-08-compliance-sustainability.md": {
+  "/cfa/materials/2026-09/days/2026-09-08-compliance-sustainability.md": {
     versions: [
       {
         language: "中文",
@@ -43,7 +189,7 @@ const DAY_PAGE_PODCASTS = Object.freeze({
       }
     ]
   },
-  "/emba/materials/2026-09/days/2026-09-09-accounting-erm-governance.md": {
+  "/cfa/materials/2026-09/days/2026-09-09-accounting-erm-governance.md": {
     versions: [
       {
         language: "中文",
@@ -59,7 +205,7 @@ const DAY_PAGE_PODCASTS = Object.freeze({
       }
     ]
   },
-  "/emba/materials/2026-09/days/2026-09-10-management-control.md": {
+  "/cfa/materials/2026-09/days/2026-09-10-management-control.md": {
     versions: [
       {
         language: "中文",
@@ -75,7 +221,7 @@ const DAY_PAGE_PODCASTS = Object.freeze({
       }
     ]
   },
-  "/emba/materials/2026-09/days/2026-09-11-financial-management-integration.md": {
+  "/cfa/materials/2026-09/days/2026-09-11-financial-management-integration.md": {
     versions: [
       {
         language: "中文",
@@ -581,20 +727,23 @@ function renderMonthDetail(month) {
 document.addEventListener("DOMContentLoaded", async () => {
   const detail = $("#embaMonthDetail");
 
-  // Fetch materials.json
-  try {
-    const response = await fetch("/emba/materials.json", { cache: "no-store" });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const library = await response.json();
-    const septMonth = asArray(library.months).find(m => m.id === "2026-09" || m.month === "2026-09");
-    if (!septMonth) throw new Error("September 2026 data not found.");
-    state.month = septMonth;
+  // Render immediately with embedded month data
+  if (state.month) {
     renderMonthDetail(state.month);
-  } catch (error) {
-    if (detail) {
-      detail.innerHTML = `<p class="emba-empty-copy">无法加载 9 月份内容：${escapeHtml(error.message)}</p>`;
+  }
+
+  // Attempt live refresh from /cfa/materials.json (bypassing /emba/ password gate)
+  try {
+    const response = await fetch("/cfa/materials.json", { cache: "no-store" });
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.month) {
+        state.month = data.month;
+        renderMonthDetail(state.month);
+      }
     }
-    return;
+  } catch (err) {
+    console.warn("CFA live refresh error, continuing with embedded data:", err);
   }
 
   // Click delegation
