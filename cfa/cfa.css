@@ -1,0 +1,29 @@
+/* CFA Standalone Page Styling leveraging emba.css */
+body {
+  min-height: 100vh;
+}
+
+.emba-stage {
+  padding-top: 36px;
+  padding-bottom: 80px;
+}
+
+.cfa-page-banner {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.cfa-page-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(177, 138, 47, 0.1);
+  border: 1px solid rgba(177, 138, 47, 0.2);
+  padding: 4px 12px;
+  border-radius: 999px;
+  color: #9a772a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

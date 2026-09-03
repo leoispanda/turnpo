@@ -518,6 +518,12 @@
       "memoryRevision": 0,
       "materials": [
         {
+          "title": "Team 6 CFA｜PME Pension Impact Investing Pitch (25% Group Case)",
+          "type": "case_inspiration",
+          "file": "/emba/materials/2026-09/Team-6-PME-Pension-Impact-Investing-Pitch.md",
+          "notes": "Team 6 专属 25% 大作业答辩全案：标的为 ASML 所在的 PME 养老基金；包含 Q1–Q3 论证、10 页 PPT 分工架构及教授发难防守反击卡；支持一键复制给 GPT 或组员。"
+        },
+        {
           "title": "September CFA｜Knowledge Map + GPT Copy Pack",
           "type": "course_overview",
           "file": "/emba/materials/2026-09/2026-09-cfa-knowledge-map-gpt-pack.md",
