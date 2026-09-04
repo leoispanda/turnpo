@@ -21,7 +21,22 @@
       </div>
     </header>
 
-    <main class="emba-shell" id="cfaApp">
+    <section class="emba-access-gate" id="cfaAccessGate" aria-label="CFA access">
+      <form class="emba-access-card" id="cfaAccessForm">
+        <div>
+          <h1>CFA Hub</h1>
+          <p>Enter the Team 6 password to open the September 2026 CFA hub.</p>
+        </div>
+        <label>
+          <span>Password</span>
+          <input id="cfaPassword" type="password" autocomplete="current-password" placeholder="Enter password" required />
+        </label>
+        <button class="gold-btn" type="submit">Enter</button>
+        <p class="emba-access-note" id="cfaAccessNote" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <main class="emba-shell" id="cfaApp" hidden>
       <section class="emba-stage" aria-label="September 2026 CFA">
         <section class="emba-month-detail" id="embaMonthDetail" aria-live="polite">
           <p class="emba-empty-copy" style="text-align: center; padding: 48px 0;">正在加载 2026 年 9 月课程内容…</p>
