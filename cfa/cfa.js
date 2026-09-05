@@ -187,7 +187,7 @@ function initCfaAccess() {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     if (input.value.trim() !== CFA_ACCESS_PASSWORD) {
-      if (note) note.textContent = "Incorrect password.";
+      if (note) note.textContent = "Incorrect access code. Please try again.";
       input.select();
       return;
     }
