@@ -50,13 +50,6 @@ const CFA_I18N = Object.freeze({
     wrongPassword: "Incorrect access code. Please try again.",
     openingMaterial: "Opening course material…",
     unableMaterial: "Unable to open this material:",
-    courseAudio: "Course audio",
-    recommendedFirstListen: "Recommended first listen",
-    podcastLanguage: "Podcast language",
-    chineseAudio: "Chinese audio",
-    englishAudio: "English audio",
-    browserNoAudio: "Your browser does not support audio playback.",
-    noCourseAudio: "No course audio is available yet.",
     noMaterials: "No materials are available yet.",
     noMaterialsYet: "No materials yet",
     noSupportingGuidesYet: "No supporting guides yet",
@@ -106,9 +99,7 @@ const CFA_I18N = Object.freeze({
     backToSections: "← Back to course sections",
     fullMaterial: "September 2026 CFA · Full material",
     defaultMaterial: "Material",
-    copyForGpt: "Copy for GPT",
     backToMaterials: "← Back to materials",
-    copiedForGpt: "Copied the full material. Ready to paste into GPT.",
     unknownError: "Unknown error",
     openLearningPage: "Open learning page →",
     openSourceFile: "Open source file →",
@@ -116,7 +107,23 @@ const CFA_I18N = Object.freeze({
     languageEnglish: "English",
     languageDutch: "Dutch",
     languageGerman: "German",
-    monthSeptember: "September"
+    monthSeptember: "September",
+    courseDate: "September 2026",
+    courseTitle: "Corporate Finance & Accounting",
+    courseSummary: "An integrated five-day module covering corporate finance, accounting, management control, enterprise risk, compliance and sustainability reporting.",
+    courseMeta: "7–11 September 2026 · 6 ECTS · MaastrichtMBA / EMBA",
+    courseSyllabus: "Course Syllabus",
+    courseSyllabusNotes: "Course structure, learning goals, schedule, assessment and required readings.",
+    openCourseSyllabus: "Open Course Syllabus",
+    team6Presentation: "25% Group Presentation",
+    team6HomepageNotes: "Assess impact investing from the employer perspective, test BeFrank’s suitability, and consider an alternative pension arrangement only if the evidence requires it.",
+    courseWeek: "Course Week",
+    courseWeekNotes: "Open a day for its overview, key topics and required readings.",
+    openDay: "Open Day {day}",
+    courseMap: "Course Map",
+    courseMapNotes: "Optional five-day map of the module.",
+    openCourseMap: "Open Course Map",
+    backToCourseWeek: "← Back to Course Week"
   }),
   nl: Object.freeze({
     languageLabel: "Taal",
@@ -164,13 +171,6 @@ const CFA_I18N = Object.freeze({
     wrongPassword: "Onjuiste toegangscode. Probeer het opnieuw.",
     openingMaterial: "Cursusmateriaal openen…",
     unableMaterial: "Dit materiaal kan niet worden geopend:",
-    courseAudio: "Cursusaudio",
-    recommendedFirstListen: "Aanbevolen eerste luisterbeurt",
-    podcastLanguage: "Podcasttaal",
-    chineseAudio: "Chinese audio",
-    englishAudio: "Engelse audio",
-    browserNoAudio: "Je browser ondersteunt geen audioweergave.",
-    noCourseAudio: "Er is nog geen cursusaudio beschikbaar.",
     noMaterials: "Er is nog geen materiaal beschikbaar.",
     noMaterialsYet: "Nog geen materiaal",
     noSupportingGuidesYet: "Nog geen ondersteunende gidsen",
@@ -220,9 +220,7 @@ const CFA_I18N = Object.freeze({
     backToSections: "← Terug naar cursusonderdelen",
     fullMaterial: "September 2026 CFA · Volledig materiaal",
     defaultMaterial: "Materiaal",
-    copyForGpt: "Kopiëren voor GPT",
     backToMaterials: "← Terug naar materialen",
-    copiedForGpt: "Het volledige materiaal is gekopieerd. Klaar om in GPT te plakken.",
     unknownError: "Onbekende fout",
     openLearningPage: "Open leerpagina →",
     openSourceFile: "Open bronbestand →",
@@ -230,7 +228,23 @@ const CFA_I18N = Object.freeze({
     languageEnglish: "Engels",
     languageDutch: "Nederlands",
     languageGerman: "Duits",
-    monthSeptember: "september"
+    monthSeptember: "september",
+    courseDate: "September 2026",
+    courseTitle: "Corporate Finance & Accounting",
+    courseSummary: "Een geïntegreerde vijfdaagse module over corporate finance, accounting, management control, enterprise risk, compliance en sustainability reporting.",
+    courseMeta: "7–11 september 2026 · 6 ECTS · MaastrichtMBA / EMBA",
+    courseSyllabus: "Cursussyllabus",
+    courseSyllabusNotes: "Cursusstructuur, leerdoelen, planning, beoordeling en verplichte readings.",
+    openCourseSyllabus: "Open cursussyllabus",
+    team6Presentation: "Groepspresentatie van 25%",
+    team6HomepageNotes: "Beoordeel impact investing vanuit werkgeversperspectief, toets de geschiktheid van BeFrank en overweeg alleen een alternatieve pensioenregeling als het bewijs dat nodig maakt.",
+    courseWeek: "Cursusweek",
+    courseWeekNotes: "Open een dag voor het overzicht, de kernonderwerpen en de verplichte readings.",
+    openDay: "Open materiaal van dag {day}",
+    courseMap: "Cursuskaart",
+    courseMapNotes: "Optionele kaart van de vijfdaagse module.",
+    openCourseMap: "Open cursuskaart",
+    backToCourseWeek: "← Terug naar de cursusweek"
   }),
   de: Object.freeze({
     languageLabel: "Sprache",
@@ -278,13 +292,6 @@ const CFA_I18N = Object.freeze({
     wrongPassword: "Falscher Zugangscode. Bitte versuchen Sie es erneut.",
     openingMaterial: "Kursmaterial wird geöffnet…",
     unableMaterial: "Dieses Material konnte nicht geöffnet werden:",
-    courseAudio: "Kursaudio",
-    recommendedFirstListen: "Empfohlene erste Hörsession",
-    podcastLanguage: "Podcastsprache",
-    chineseAudio: "Chinesische Audiofassung",
-    englishAudio: "Englische Audiofassung",
-    browserNoAudio: "Ihr Browser unterstützt keine Audiowiedergabe.",
-    noCourseAudio: "Noch kein Kursaudio verfügbar.",
     noMaterials: "Noch keine Materialien verfügbar.",
     noMaterialsYet: "Noch keine Materialien",
     noSupportingGuidesYet: "Noch keine ergänzenden Leitfäden",
@@ -334,9 +341,7 @@ const CFA_I18N = Object.freeze({
     backToSections: "← Zurück zu den Kursabschnitten",
     fullMaterial: "September 2026 CFA · Vollständiges Material",
     defaultMaterial: "Material",
-    copyForGpt: "Für GPT kopieren",
     backToMaterials: "← Zurück zu den Materialien",
-    copiedForGpt: "Das vollständige Material wurde kopiert und kann in GPT eingefügt werden.",
     unknownError: "Unbekannter Fehler",
     openLearningPage: "Lernseite öffnen →",
     openSourceFile: "Quelldatei öffnen →",
@@ -344,7 +349,23 @@ const CFA_I18N = Object.freeze({
     languageEnglish: "Englisch",
     languageDutch: "Niederländisch",
     languageGerman: "Deutsch",
-    monthSeptember: "September"
+    monthSeptember: "September",
+    courseDate: "September 2026",
+    courseTitle: "Corporate Finance & Accounting",
+    courseSummary: "Ein integriertes fünftägiges Modul zu Corporate Finance, Accounting, Management Control, Enterprise Risk, Compliance und Sustainability Reporting.",
+    courseMeta: "7.–11. September 2026 · 6 ECTS · MaastrichtMBA / EMBA",
+    courseSyllabus: "Kurssyllabus",
+    courseSyllabusNotes: "Kursstruktur, Lernziele, Zeitplan, Bewertung und Pflichtlektüren.",
+    openCourseSyllabus: "Kurssyllabus öffnen",
+    team6Presentation: "Gruppenpräsentation (25%)",
+    team6HomepageNotes: "Bewerte Impact Investing aus Arbeitgeberperspektive, prüfe die Eignung von BeFrank und ziehe eine alternative Altersvorsorgelösung nur in Betracht, wenn die Evidenz dies erfordert.",
+    courseWeek: "Kurswoche",
+    courseWeekNotes: "Öffne einen Tag für Überblick, Kernthemen und Pflichtlektüren.",
+    openDay: "Material für Tag {day} öffnen",
+    courseMap: "Kurskarte",
+    courseMapNotes: "Optionale Karte der fünftägigen Modulstruktur.",
+    openCourseMap: "Kurskarte öffnen",
+    backToCourseWeek: "← Zurück zur Kurswoche"
   })
 });
 
@@ -355,9 +376,9 @@ const CORE_MATERIAL_TRANSLATIONS = Object.freeze({
     de: { file: "/cfa/materials/de/team-6-befrank-impact-investing.md", title: "Team 6 | BeFrank & Impact Investing", notes: "Team 6 untersucht aus Arbeitgeberperspektive, ob Impact Investing für die Beschäftigten sinnvoll ist. Der Fall prüft, ob das Unternehmen BeFrank bitten sollte, mehr Impact Investing in sein Pensionsangebot aufzunehmen, und welche alternative Altersvorsorgelösung geprüft werden könnte, falls BeFrank dafür nicht die geeignetste Lösung ist.", cta: "Team-6-Aufgabe öffnen →" }
   },
   "/cfa/materials/2026-09/2026-09-cfa-knowledge-map-gpt-pack.md": {
-    en: { file: "/cfa/materials/en/knowledge-map.md", title: "September CFA · Knowledge Map & GPT Copy Pack", notes: "A five-day knowledge map covering the required readings, evidence status, core vocabulary, integrated-case sequence, and guided-study prompts.", cta: "Open Knowledge Map →" },
-    nl: { file: "/cfa/materials/nl/knowledge-map.md", title: "September CFA · Kenniskaart & GPT Copy Pack", notes: "Een vijfdaagse kenniskaart met verplichte readings, bewijsstatus, kernbegrippen, de volgorde van de geïntegreerde case en prompts voor begeleid studeren.", cta: "Open kenniskaart →" },
-    de: { file: "/cfa/materials/de/knowledge-map.md", title: "September CFA · Wissenskarte & GPT Copy Pack", notes: "Eine fünftägige Wissenskarte mit Pflichtlektüren, Evidenzstatus, Kernbegriffen, der Sequenz des integrierten Falls und Prompts für angeleitetes Lernen.", cta: "Wissenskarte öffnen →" }
+    en: { file: "/cfa/materials/en/knowledge-map.md", title: "September CFA · Course Map", notes: "A concise map of the five days, their role in the course and the link to the Team 6 assignment.", cta: "Open Course Map →" },
+    nl: { file: "/cfa/materials/nl/knowledge-map.md", title: "September CFA · Cursuskaart", notes: "Een beknopte kaart van de vijf dagen, hun rol in de cursus en de verbinding met de Team 6-opdracht.", cta: "Open cursuskaart →" },
+    de: { file: "/cfa/materials/de/knowledge-map.md", title: "September CFA · Kurskarte", notes: "Eine kompakte Karte der fünf Tage, ihrer Rolle im Kurs und der Verbindung zur Team-6-Aufgabe.", cta: "Kurskarte öffnen →" }
   },
   "/cfa/materials/2026-09/days/2026-09-07-financial-management.md": {
     en: { file: "/cfa/materials/en/day-1-financial-management.md", title: "Day 1 · Financial Management", notes: "Investment and financing decisions, financial markets, risk and return, diversification, derivatives, and financial risk management, with Nocco & Stulz as the bridge into Day 3 ERM.", cta: "Open Day 1 Materials →" },
@@ -383,6 +404,14 @@ const CORE_MATERIAL_TRANSLATIONS = Object.freeze({
     en: { file: "/cfa/materials/en/day-5-financial-management-integration.md", title: "Day 5 · Financial Management Integration & Presentation", notes: "Mutual-fund comparison, integrated financial judgement, and preparation for the group presentation.", cta: "Open Day 5 Materials →" },
     nl: { file: "/cfa/materials/nl/day-5-financial-management-integration.md", title: "Dag 5 · Integratie van Financial Management & presentatie", notes: "Vergelijking van beleggingsfondsen, geïntegreerd financieel oordeel en voorbereiding op de groepspresentatie.", cta: "Open materiaal van dag 5 →" },
     de: { file: "/cfa/materials/de/day-5-financial-management-integration.md", title: "Tag 5 · Integration von Financial Management & Präsentation", notes: "Vergleich von Investmentfonds, integriertes finanzielles Urteil und Vorbereitung auf die Gruppenpräsentation.", cta: "Material für Tag 5 öffnen →" }
+  }
+});
+
+const SIMPLE_MATERIAL_TRANSLATIONS = Object.freeze({
+  "/cfa/materials/2026-09/September-26-Syllabus-Overview.md": {
+    en: { file: "/cfa/materials/en/course-syllabus.md", title: "Course Syllabus", notes: "Course structure, learning goals, schedule, assessment and required readings.", cta: "Open Course Syllabus →" },
+    nl: { file: "/cfa/materials/nl/course-syllabus.md", title: "Cursussyllabus", notes: "Cursusstructuur, leerdoelen, planning, beoordeling en verplichte readings.", cta: "Open cursussyllabus →" },
+    de: { file: "/cfa/materials/de/course-syllabus.md", title: "Kurssyllabus", notes: "Kursstruktur, Lernziele, Zeitplan, Bewertung und Pflichtlektüren.", cta: "Kurssyllabus öffnen →" }
   }
 });
 
@@ -598,107 +627,9 @@ function initCfaAccess() {
   });
 }
 
-const PREPARATION_MATERIAL_TYPES = new Set([
-  "course_overview",
-  "course_requirements",
-  "daily_course_intro",
-  "reading_learning_map",
-  "case_inspiration",
-  "case_material",
-  "syllabus_guide",
-  "presentation_prep"
-]);
-const PODCAST_MATERIAL_TYPE = "podcast";
-const FEATURED_COURSE_TYPES = new Set(["case_inspiration", "course_overview", "daily_course_intro"]);
-
-const DAY_PAGE_PODCASTS = Object.freeze({
-  "/cfa/materials/2026-09/days/2026-09-07-financial-management.md": {
-    versions: [
-      {
-        language: "zh",
-        title: "Day 1 Podcast · The Second Navigation Chart",
-        description: "Listen to the story before exploring investment value, cash flow, opportunity cost and risk-taking.",
-        file: "https://media.turnpo.com/%E5%88%A9%E6%B6%A6%E8%83%8C%E5%90%8E%E7%9A%84%E7%94%9F%E6%AD%BB%E5%B1%80.m4a"
-      },
-      {
-        language: "en",
-        title: "Day 1 Podcast · English version",
-        description: "Listen to the English retelling before exploring investment value, cash flow, opportunity cost, and risk.",
-        file: "https://media.turnpo.com/day1-en.m4a"
-      }
-    ]
-  },
-  "/cfa/materials/2026-09/days/2026-09-08-compliance-sustainability.md": {
-    versions: [
-      {
-        language: "zh",
-        title: "Day 2 Podcast · The Clean Checklist",
-        description: "Listen to the story before exploring compliance, evidence chains, sustainability reporting and financial leadership.",
-        file: "https://media.turnpo.com/%E9%82%A3%E5%BC%A0%E5%B9%B2%E5%87%80%E7%9A%84%E6%A3%80%E6%9F%A5%E8%A1%A8.m4a"
-      },
-      {
-        language: "en",
-        title: "Day 2 Podcast · English version",
-        description: "Listen to the English retelling before exploring compliance, evidence, sustainability reporting, and financial leadership.",
-        file: "https://media.turnpo.com/day2-en.m4a"
-      }
-    ]
-  },
-  "/cfa/materials/2026-09/days/2026-09-09-accounting-erm-governance.md": {
-    versions: [
-      {
-        language: "zh",
-        title: "Day 3 Podcast · Three Whiteboards in the Pizza Kitchen",
-        description: "Listen to the story before connecting profit, cash, risk and governance.",
-        file: "https://media.turnpo.com/day-3-three-whiteboards.m4a"
-      },
-      {
-        language: "en",
-        title: "Day 3 Podcast · English version",
-        description: "Listen to the English retelling before connecting profit, cash, risk, and governance.",
-        file: "https://media.turnpo.com/day3-en.m4a"
-      }
-    ]
-  },
-  "/cfa/materials/2026-09/days/2026-09-10-management-control.md": {
-    versions: [
-      {
-        language: "zh",
-        title: "Day 4 Podcast · The Third Spoon of Chilli Oil",
-        description: "Listen to the story before connecting metrics, control, innovation and purpose in one strategic judgement.",
-        file: "https://media.turnpo.com/day-4-data-all-green.m4a"
-      },
-      {
-        language: "en",
-        title: "Day 4 Podcast · Why Accurate Metrics Sabotage Your Strategy",
-        description: "Listen to the English retelling before exploring metrics, control, innovation, and purpose in one strategic judgment.",
-        file: "https://media.turnpo.com/day4-en.m4a"
-      }
-    ]
-  },
-  "/cfa/materials/2026-09/days/2026-09-11-financial-management-integration.md": {
-    versions: [
-      {
-        language: "zh",
-        title: "Day 5 Podcast · The Driving School with the Highest Pass Rate",
-        description: "Listen to the story before comparing fund performance through sample selection, risk, cost and investor fit.",
-        file: "https://media.turnpo.com/%E4%B8%9A%E7%BB%A9%E6%A6%9C%E5%8D%95%E7%9A%84%E7%8C%AB%E8%85%BB.m4a"
-      },
-      {
-        language: "en",
-        title: "Day 5 Podcast · English version",
-        description: "Listen to the English retelling before comparing fund performance through sample, risk, cost, and investor fit.",
-        file: "https://media.turnpo.com/day5-en.m4a"
-      }
-    ]
-  }
-});
-
 const state = {
   month: EMBEDDED_SEPTEMBER_MONTH,
-  openBlockId: "",
-  materialReader: null,
-  podcastLanguage: "en"
+  materialReader: null
 };
 
 function normalizeCfaLanguage(value) {
@@ -745,78 +676,17 @@ function canonicalMaterialFile(file = "") {
   return coreMaterialLookup(file)?.canonical || String(file || "");
 }
 
-const PODCAST_COPY = Object.freeze({
-  1: {
-    zh: { en: "The Second Navigation Chart", nl: "De tweede navigatiekaart", de: "Die zweite Navigationskarte" },
-    en: { en: "The Second Navigation Chart · English version", nl: "De tweede navigatiekaart · Engelse versie", de: "Die zweite Navigationskarte · englische Fassung" },
-    descriptions: {
-      en: "Listen to the story before exploring investment value, cash flow, opportunity cost and risk-taking.",
-      nl: "Luister naar het verhaal voordat je investment value, cash flow, opportunity cost en risk-taking verkent.",
-      de: "Höre die Geschichte, bevor du Investitionswert, Cashflow, Opportunitätskosten und Risikobereitschaft untersuchst."
-    }
-  },
-  2: {
-    zh: { en: "The Clean Checklist", nl: "De schone checklist", de: "Die saubere Checkliste" },
-    en: { en: "The Clean Checklist · English version", nl: "De schone checklist · Engelse versie", de: "Die saubere Checkliste · englische Fassung" },
-    descriptions: {
-      en: "Listen to the story before exploring compliance, evidence chains, sustainability reporting and financial leadership.",
-      nl: "Luister naar het verhaal voordat je compliance, bewijsketens, sustainability reporting en financieel leiderschap verkent.",
-      de: "Höre die Geschichte, bevor du Compliance, Evidenzketten, Sustainability Reporting und finanzielle Führung untersuchst."
-    }
-  },
-  3: {
-    zh: { en: "Three Whiteboards in the Pizza Kitchen", nl: "Drie whiteboards in de pizzakeuken", de: "Drei Whiteboards in der Pizzaküche" },
-    en: { en: "Three Whiteboards in the Pizza Kitchen · English version", nl: "Drie whiteboards in de pizzakeuken · Engelse versie", de: "Drei Whiteboards in der Pizzaküche · englische Fassung" },
-    descriptions: {
-      en: "Listen to the story before connecting profit, cash, risk and governance.",
-      nl: "Luister naar het verhaal voordat je profit, cash, risk en governance met elkaar verbindt.",
-      de: "Höre die Geschichte, bevor du Gewinn, Cash, Risiko und Governance miteinander verbindest."
-    }
-  },
-  4: {
-    zh: { en: "The Third Spoon of Chilli Oil", nl: "De derde lepel chiliolie", de: "Der dritte Löffel Chiliöl" },
-    en: { en: "Why Accurate Metrics Sabotage Your Strategy", nl: "Waarom accurate metrics je strategie saboteren", de: "Warum genaue Kennzahlen deine Strategie sabotieren" },
-    descriptions: {
-      en: "Listen to the story before connecting metrics, control, innovation and purpose in one strategic judgement.",
-      nl: "Luister naar het verhaal voordat je metrics, control, innovatie en purpose in één strategisch oordeel verbindt.",
-      de: "Höre die Geschichte, bevor du Kennzahlen, Steuerung, Innovation und Purpose in einem strategischen Urteil verbindest."
-    }
-  },
-  5: {
-    zh: { en: "The Driving School with the Highest Pass Rate", nl: "De rijschool met het hoogste slagingspercentage", de: "Die Fahrschule mit der höchsten Erfolgsquote" },
-    en: { en: "The Driving School with the Highest Pass Rate · English version", nl: "De rijschool met het hoogste slagingspercentage · Engelse versie", de: "Die Fahrschule mit der höchsten Erfolgsquote · englische Fassung" },
-    descriptions: {
-      en: "Listen to the story before comparing fund performance through sample selection, risk, cost and investor fit.",
-      nl: "Luister naar het verhaal voordat je fondsperformance vergelijkt via steekproefkeuze, risico, kosten en fit met de belegger.",
-      de: "Höre die Geschichte, bevor du Fondsperformance anhand von Stichprobenauswahl, Risiko, Kosten und Anleger-Fit vergleichst."
-    }
-  }
-});
-
-function localizePodcastMaterial(item, language = currentCfaLanguage) {
-  if (!item || item.type !== "podcast") return item;
-  const dayMatch = String(item.title || "").match(/\bDay\s+([1-5])\b/i);
-  const day = dayMatch ? Number(dayMatch[1]) : 0;
-  const copy = PODCAST_COPY[day];
-  if (!copy) return { ...item };
-  const selectedLanguage = normalizeCfaLanguage(language);
-  const dictionary = CFA_I18N[selectedLanguage] || CFA_I18N.en;
-  const audioLanguage = /Chinese audio/i.test(String(item.title || "")) ? "zh" : "en";
-  const titleCopy = copy[audioLanguage]?.[selectedLanguage] || copy[audioLanguage]?.en || item.title;
-  const prefix = selectedLanguage === "nl" ? `Podcast dag ${day}` : selectedLanguage === "de" ? `Podcast Tag ${day}` : `Day ${day} Podcast`;
-  const languageSuffix = audioLanguage === "zh" ? ` (${dictionary.chineseAudio})` : "";
-  const title = `${prefix} · ${titleCopy}${languageSuffix}`;
-  return {
-    ...item,
-    title,
-    notes: copy.descriptions[selectedLanguage] || copy.descriptions.en
-  };
-}
-
 function localizeMaterial(item, language = currentCfaLanguage) {
   if (!item) return item;
   const lookup = coreMaterialLookup(item.file);
-  if (!lookup) return localizePodcastMaterial(item, language);
+  if (!lookup) {
+    const simpleTranslation = SIMPLE_MATERIAL_TRANSLATIONS[String(item.file || "")];
+    if (simpleTranslation) {
+      const translation = simpleTranslation[normalizeCfaLanguage(language)] || simpleTranslation.en;
+      return { ...item, ...translation, sourceFile: String(item.file || "") };
+    }
+    return { ...item };
+  }
   const translation = lookup.translations[normalizeCfaLanguage(language)] || lookup.translations.en;
   return { ...item, ...translation, sourceFile: lookup.canonical };
 }
@@ -905,326 +775,22 @@ function asArray(value) {
   return Array.isArray(value) ? value : [];
 }
 
-function formatMonth(monthKey = "") {
-  const parts = String(monthKey).split("-");
-  if (parts.length < 2) return monthKey;
-  const year = parts[0];
-  const monthNames = currentCfaLanguage === "nl"
-    ? ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"]
-    : currentCfaLanguage === "de"
-      ? ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
-      : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const monthIdx = parseInt(parts[1], 10) - 1;
-  const monthName = monthNames[monthIdx] || parts[1];
-  return `${monthName} ${year}`;
-}
-
-function hasTextContent(value = "") {
-  return Boolean(String(value || "").trim());
-}
-
-function materialsForSection(month, section = "materials") {
-  const materials = asArray(month?.materials);
-  if (section === "preparation") return materials.filter((item) => PREPARATION_MATERIAL_TYPES.has(item.type));
-  if (section === "vocabulary") return materials.filter((item) => item.type === "vocabulary");
-  if (section === "podcast") return materials.filter((item) => item.type === PODCAST_MATERIAL_TYPE);
-  return materials.filter((item) => !PREPARATION_MATERIAL_TYPES.has(item.type) && item.type !== "vocabulary" && item.type !== PODCAST_MATERIAL_TYPE);
-}
-
 function courseDayNumber(item) {
   const match = String(item?.title || "").match(/\b(?:Day|Dag|Tag)\s+([1-5])\b/i);
   return match ? Number(match[1]) : 99;
-}
-
-function featuredCourseMaterials(month) {
-  const materials = asArray(month?.materials);
-  const featured = [];
-  const seen = new Set();
-  const add = (item) => {
-    if (!item || seen.has(item.file)) return;
-    seen.add(item.file);
-    featured.push(item);
-  };
-
-  add(materials.find((item) => item?.type === "case_inspiration" || /team\s*6/i.test(item?.title || "")));
-  add(materials.find((item) => item?.type === "course_overview" || /knowledge\s*map/i.test(item?.title || "")));
-  materials
-    .filter((item) => item?.type === "daily_course_intro")
-    .sort((a, b) => courseDayNumber(a) - courseDayNumber(b))
-    .forEach(add);
-  return featured;
-}
-
-function isFeaturedCourseMaterial(item, month = state.month) {
-  return FEATURED_COURSE_TYPES.has(item?.type) && featuredCourseMaterials(month).some((featured) => featured.file === item.file);
-}
-
-function supportingPreparationMaterials(month) {
-  return materialsForSection(month, "preparation").filter((item) => !isFeaturedCourseMaterial(item, month));
-}
-
-function materialHasContent(item) {
-  return Boolean(item && (item.title || item.file || item.notes));
-}
-
-function blockSummary(id, month) {
-  if (id === "memory") {
-    const count = asArray(month?.memoryMoment).length;
-    return count ? `${count} ${count === 1 ? t("photo") : t("photos")}` : t("noPhotosYet");
-  }
-  if (id === "reflection") {
-    return hasTextContent(month?.reflection) ? t("integratedReflection") : t("noReflectionYet");
-  }
-  if (id === "markdown") {
-    return hasTextContent(month?.markdown) ? t("notesSaved") : t("noClassNotesYet");
-  }
-  if (id === "material") {
-    const count = materialsForSection(month, "materials").filter(materialHasContent).length;
-    return count ? `${count} ${count === 1 ? t("material") : t("materials")}` : t("noMaterialsYet");
-  }
-  if (id === "preparation") {
-    const count = supportingPreparationMaterials(month).filter(materialHasContent).length;
-    return count ? `${count} ${t("supportingGuides")}` : t("noSupportingGuidesYet");
-  }
-  if (id === "vocabulary") {
-    const count = materialsForSection(month, "vocabulary").filter(materialHasContent).length;
-    return count ? t("vocabularyMeta") : t("noVocabularyYet");
-  }
-  if (id === "podcast") {
-    const count = materialsForSection(month, "podcast").filter(materialHasContent).length;
-    return count ? `${count} ${t("audioEpisodes")}` : t("noCourseAudio");
-  }
-  return "";
 }
 
 function team6Material(month) {
   return asArray(month?.materials).find((item) => item?.type === "case_inspiration" || /team\s*6/i.test(item?.title || ""));
 }
 
-function materialActionLabel(item) {
-  if (item?.cta) return item.cta;
-  if (item?.type === "case_inspiration" || /team\s*6/i.test(item?.title || "")) return `${t("openTeam6")} →`;
-  if (item?.type === "course_overview" || /knowledge\s*map|kenniskaart|wissenskarte/i.test(item?.title || "")) return `${t("openKnowledgeMap")} →`;
-  if (item?.type === "daily_course_intro") {
-    const day = courseDayNumber(item);
-    return day < 6 ? `${t("openDayMaterials", { day })} →` : `${t("openMaterial")} →`;
-  }
-  if (item?.type === "vocabulary") return `${t("openVocabulary")} →`;
-  if (item?.type === "course_requirements") return `${t("openSelfStudyGuide")} →`;
-  if (item?.type === "reading_learning_map") return `${t("openReadingMap")} →`;
-  if (item?.type === "case_material") return `${t("openCaseMaterials")} →`;
-  if (item?.type === "presentation_prep") return `${t("openPresentationPrep")} →`;
-  if (item?.type === "reflection_notes") return `${t("openReflection")} →`;
-  if (item?.type === "syllabus_guide") return `${t("openSyllabusGuide")} →`;
-  if (item?.type === "monthly_index") return `${t("openReadingChecklist")} →`;
-  if (item?.type === "study_guide") return `${t("openStudyCard")} →`;
-  if (item?.type === "case_study") return `${t("openCaseCard")} →`;
-  if (item?.type === "source_pdf") return `${t("openSourcePdf")} →`;
-  return isReadableMaterial(item?.file) ? `${t("openMaterial")} →` : `${t("openFile")} →`;
-}
-
-function materialOpenControl(item, className = "cfa-course-card-action") {
-  const label = materialActionLabel(item);
-  const title = item?.title || t("defaultMaterial");
-  const notes = item?.notes || "";
-  if (isReadableMaterial(item?.file)) {
-    return `<button class="${className}" type="button" data-material-open="${escapeHtml(item.file)}" data-material-title="${escapeHtml(title)}" data-material-notes="${escapeHtml(notes)}">${escapeHtml(label)}</button>`;
-  }
-  if (item?.file) {
-    return `<a class="${className}" href="${escapeHtml(resolveCfaUrl(item.file))}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
-  }
-  return `<span class="${className} is-disabled">${escapeHtml(label)}</span>`;
-}
-
-function renderTeam6Feature(month) {
-  const item = team6Material(month);
-  if (!item) return "";
-  const title = item.title || `${t("team6Title")}`;
-  const notes = item.notes || t("team6DefaultNotes");
-  const action = isReadableMaterial(item.file)
-    ? `<button class="cfa-team6-cta" type="button" data-material-open="${escapeHtml(item.file)}" data-material-title="${escapeHtml(title)}" data-material-notes="${escapeHtml(notes)}">${escapeHtml(t("openTeam6"))} <span aria-hidden="true">→</span></button>`
-    : `<a class="cfa-team6-cta" href="${escapeHtml(resolveCfaUrl(item.file || "#"))}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("openTeam6"))} <span aria-hidden="true">→</span></a>`;
-  return `
-    <section class="cfa-team6-feature" aria-labelledby="cfaTeam6Title">
-      <div class="cfa-team6-badge" aria-hidden="true">T6</div>
-      <div class="cfa-team6-copy">
-        <p class="cfa-eyebrow">${escapeHtml(t("featuredTeam6"))}</p>
-        <h3 id="cfaTeam6Title">${escapeHtml(t("team6Title"))}</h3>
-        <p>${escapeHtml(notes)}</p>
-      </div>
-      <div class="cfa-team6-cta-wrap">${action}</div>
-    </section>
-  `;
-}
-
-function renderCourseToolkit(month) {
-  const item = featuredCourseMaterials(month).find((entry) => entry?.type === "course_overview");
-  if (!item) return "";
-  return `
-    <section class="cfa-course-toolkit" aria-labelledby="cfaToolkitTitle">
-      <div class="cfa-section-heading">
-        <div>
-          <p class="cfa-eyebrow">${escapeHtml(t("courseToolkit"))}</p>
-          <h3 id="cfaToolkitTitle">${escapeHtml(t("toolkitTitle"))}</h3>
-        </div>
-        <p>${escapeHtml(t("toolkitCopy"))}</p>
-      </div>
-      <article class="cfa-toolkit-card">
-        <div class="cfa-toolkit-mark" aria-hidden="true">MAP</div>
-        <div class="cfa-toolkit-copy">
-          <span class="cfa-card-kicker">${escapeHtml(t("septemberCfa"))}</span>
-          <h4>${escapeHtml(item.title || t("knowledgeMapDefault"))}</h4>
-          <p>${escapeHtml(item.notes || t("knowledgeMapNotes"))}</p>
-        </div>
-        <div class="cfa-toolkit-action">${materialOpenControl(item, "cfa-course-card-action")}</div>
-      </article>
-    </section>
-  `;
-}
-
-function renderFiveDayJourney(month) {
-  const days = featuredCourseMaterials(month)
-    .filter((item) => item?.type === "daily_course_intro")
-    .sort((a, b) => courseDayNumber(a) - courseDayNumber(b));
-  if (!days.length) return "";
-  return `
-    <section class="cfa-course-journey" aria-labelledby="cfaJourneyTitle">
-      <div class="cfa-section-heading">
-        <div>
-          <p class="cfa-eyebrow">${escapeHtml(t("fiveDayJourney"))}</p>
-          <h3 id="cfaJourneyTitle">${escapeHtml(t("journeyTitle"))}</h3>
-        </div>
-        <p>${escapeHtml(t("journeyCopy"))}</p>
-      </div>
-      <div class="cfa-day-grid">
-        ${days.map((item) => {
-          const day = courseDayNumber(item);
-          const subject = String(item.title || `${t("dayLabel")} ${day}`).replace(/^\s*(?:Day|Dag|Tag)\s+[1-5]\s*[·|｜]\s*/i, "");
-          return `
-            <article class="cfa-day-card">
-              <div class="cfa-day-card-top"><span class="cfa-day-number">${String(day).padStart(2, "0")}</span><span class="cfa-card-kicker">${escapeHtml(t("dayLabel"))} ${day}</span></div>
-              <h4>${escapeHtml(subject)}</h4>
-              <p>${escapeHtml(item.notes || t("completeMaterial"))}</p>
-              ${materialOpenControl(item, "cfa-course-card-action")}
-            </article>
-          `;
-        }).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function blockTemplate(id, title, month) {
-  const isOpen = state.openBlockId === id;
-  const summary = blockSummary(id, month);
-  return `
-    <article class="emba-content-block${isOpen ? " open" : ""}" data-block-id="${escapeHtml(id)}" data-block-card="${escapeHtml(id)}">
-      <button class="emba-block-toggle" type="button" aria-expanded="${isOpen}" data-block-toggle="${escapeHtml(id)}">
-        <span class="emba-block-title">${escapeHtml(title)}</span>
-        <span class="emba-block-meta">${escapeHtml(summary)}</span>
-      </button>
-    </article>
-  `;
-}
-
-function renderOpenBlockPanel(month) {
-  if (!state.openBlockId) return "";
-  const content = renderBlockContent(state.openBlockId, month);
-  if (!content) return "";
-  return `
-    <article class="emba-block-panel" data-block-panel="${escapeHtml(state.openBlockId)}">
-      <div class="emba-block-panel-nav">
-        <button class="emba-panel-back" type="button" data-block-close>${escapeHtml(t("backToSections"))}</button>
-      </div>
-      <div class="emba-block-body">${content}</div>
-    </article>
-  `;
-}
-
-function renderBlockContent(id, month) {
-  if (id === "memory") return renderMemoryMoment(month);
-  if (id === "reflection") return renderReflection(month);
-  if (id === "markdown") return renderMarkdown(month);
-  if (id === "material") return renderMaterials(month);
-  if (id === "preparation") return renderPreparation(month);
-  if (id === "vocabulary") return renderMaterials(month, "vocabulary");
-  if (id === "podcast") return renderPodcasts(month);
-  return "";
-}
-
-function renderPodcasts(month) {
-  const podcasts = materialsForSection(month, "podcast");
-  if (!podcasts.length) return `<p class="emba-empty-copy">${escapeHtml(t("noCourseAudio"))}</p>`;
-  return `
-    <div class="emba-podcast-list">
-      ${podcasts.map((item) => `
-        <article class="emba-podcast-card">
-          <div class="emba-podcast-card-head">
-            <span class="emba-podcast-kicker">${escapeHtml(t("courseAudio"))}</span>
-            <h3>${escapeHtml(item.title || t("courseAudio"))}</h3>
-            ${item.notes ? `<p>${escapeHtml(item.notes)}</p>` : ""}
-          </div>
-          <audio class="emba-podcast-player" controls controlsList="nodownload" preload="metadata">
-            <source src="${escapeHtml(item.file)}" type="audio/mp4" />
-            ${escapeHtml(t("browserNoAudio"))}
-          </audio>
-        </article>
-      `).join("")}
-    </div>
-  `;
-}
-
-function renderPreparation(month) {
-  if (state.materialReader?.file) return renderMaterialReader();
-  return renderMaterialList(supportingPreparationMaterials(month));
-}
-
 function isReadableMaterial(file = "") {
   return /^\/(?:cfa|emba)\/materials\/.*\.md$/i.test(String(file || ""));
-}
-
-function isWebLearningPage(file = "") {
-  return /^\/emba\/[^?#]+\.html(?:[?#].*)?$/i.test(String(file || ""));
-}
-
-function externalMaterialLabel(file = "") {
-  return isWebLearningPage(file) ? t("openLearningPage") : t("openSourceFile");
-}
-
-function renderMaterialList(materials) {
-  return materials.length ? `
-    <ul class="emba-read-list emba-material-read-list">
-      ${materials.map((item) => `
-        <li class="emba-material-read-item">
-          ${isReadableMaterial(item.file) ? `<button class="emba-material-open" type="button" data-material-open="${escapeHtml(item.file)}" data-material-title="${escapeHtml(item.title || t("defaultMaterial"))}" data-material-notes="${escapeHtml(item.notes || "")}">` : `<div class="emba-read-copy">`}
-            <div class="emba-read-copy">
-              <span class="emba-read-title">${escapeHtml(item.title || t("defaultMaterial"))}</span>
-              ${item.notes ? `<span class="emba-read-note">${escapeHtml(item.notes)}</span>` : ""}
-            </div>
-            ${isReadableMaterial(item.file) ? `<span class="emba-read-action">${escapeHtml(materialActionLabel(item))}</span>` : ""}
-          ${isReadableMaterial(item.file) ? `</button>` : `</div>`}
-          ${item.file && !isReadableMaterial(item.file) ? `<a class="emba-file-link" href="${escapeHtml(resolveCfaUrl(item.file))}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.cta || externalMaterialLabel(item.file))}</a>` : ""}
-        </li>
-      `).join("")}
-    </ul>
-  ` : `<p class="emba-empty-copy">${escapeHtml(t("noMaterials"))}</p>`;
-}
-
-function renderMaterials(month, section = "materials") {
-  if (state.materialReader?.file) return renderMaterialReader();
-  return renderMaterialList(materialsForSection(month, section));
 }
 
 function renderMaterialReader() {
   const reader = state.materialReader;
   if (!reader) return "";
-  const canCopy = !reader.loading && !reader.error && Boolean(reader.markdown);
-  const podcast = DAY_PAGE_PODCASTS[reader.sourceFile || canonicalMaterialFile(reader.file)];
-  const podcastVersions = podcast?.versions || [];
-  const selectedPodcastBase = podcastVersions.find((version) => version.language === state.podcastLanguage) || podcastVersions[0];
-  const selectedPodcast = selectedPodcastBase
-    ? { ...selectedPodcastBase, displayLanguage: selectedPodcastBase.language === "zh" ? t("chineseAudio") : t("englishAudio") }
-    : null;
   const body = reader.loading
     ? `<p class="emba-empty-copy">${escapeHtml(t("openingMaterial"))}</p>`
     : reader.error
@@ -1232,24 +798,6 @@ function renderMaterialReader() {
       : `<div class="emba-markdown-rendered">${markdownToHtml(reader.markdown || "", reader.file)}</div>`;
   return `
     <article class="emba-material-reader">
-      ${selectedPodcast ? `
-        <section class="emba-day-page-podcast" aria-label="${escapeHtml(selectedPodcast.displayLanguage || selectedPodcast.language)} ${escapeHtml(t("courseAudio"))}">
-          <div class="emba-day-page-podcast-copy">
-            <span class="emba-day-page-podcast-kicker">${escapeHtml(t("courseAudio"))} · ${escapeHtml(selectedPodcast.displayLanguage || selectedPodcast.language)} · ${escapeHtml(t("recommendedFirstListen"))}</span>
-            <div class="emba-podcast-language-toggle" role="group" aria-label="${escapeHtml(t("podcastLanguage"))}">
-              ${podcastVersions.map((version) => `<button type="button" class="${version.language === selectedPodcast.language ? "is-active" : ""}" data-podcast-language="${escapeHtml(version.language)}" aria-pressed="${String(version.language === selectedPodcast.language)}">${escapeHtml(version.language === "zh" ? t("chineseAudio") : t("englishAudio"))}</button>`).join("")}
-            </div>
-            <strong>${escapeHtml(selectedPodcast.title)}</strong>
-            <span>${escapeHtml(selectedPodcast.description)}</span>
-          </div>
-          <div class="emba-day-page-podcast-player">
-            <audio controls controlsList="nodownload" preload="metadata">
-              <source src="${escapeHtml(selectedPodcast.file)}" type="audio/mp4" />
-              ${escapeHtml(t("browserNoAudio"))}
-            </audio>
-          </div>
-        </section>
-      ` : ""}
       <div class="emba-material-reader-head">
         <div>
           <span class="emba-month-kicker">${escapeHtml(t("fullMaterial"))}</span>
@@ -1257,11 +805,7 @@ function renderMaterialReader() {
           ${reader.notes ? `<p>${escapeHtml(reader.notes)}</p>` : ""}
         </div>
         <div class="emba-material-reader-actions">
-          <div class="emba-material-utility-actions">
-            ${canCopy ? `<button class="emba-file-link emba-material-copy" type="button" data-material-copy>${escapeHtml(t("copyForGpt"))}</button>` : ""}
-            <button class="emba-file-link" type="button" data-material-back>${escapeHtml(t("backToMaterials"))}</button>
-          </div>
-          <span class="emba-material-copy-status" data-material-copy-status role="status" aria-live="polite"></span>
+          <button class="emba-file-link" type="button" data-material-back>${escapeHtml(t("backToCourseWeek"))}</button>
         </div>
       </div>
       ${body}
@@ -1274,7 +818,6 @@ async function openMaterialReader(file, title = "", notes = "") {
   const sourceFile = canonicalMaterialFile(file);
   const sourceItem = localizeMaterial({ file: sourceFile, title, notes });
   const localizedFile = sourceItem.file || file;
-  state.podcastLanguage = "en";
   state.materialReader = {
     sourceFile,
     file: localizedFile,
@@ -1296,39 +839,7 @@ async function openMaterialReader(file, title = "", notes = "") {
     state.materialReader = { ...state.materialReader, markdown: "", loading: false, error: error?.message || t("unknownError") };
   }
   renderMonthDetail(state.month);
-  document.querySelector("[data-block-panel]")?.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function renderReflection(month) {
-  const reflection = String(month?.reflection || "").trim();
-  return reflection ? `
-    <div class="emba-reflection-display">
-      <div class="emba-markdown-rendered">${markdownToHtml(reflection)}</div>
-    </div>
-  ` : `<p class="emba-empty-copy">${escapeHtml(t("noReflectionYet"))}</p>`;
-}
-
-function renderMemoryMoment(month) {
-  const memories = asArray(month?.memoryMoment);
-  return memories.length ? `
-    <div class="emba-memory-grid">
-      ${memories.map((item) => `
-        <figure class="emba-memory-card">
-          <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.caption || t("photo"))}" />
-          ${item.caption ? `<figcaption>${escapeHtml(item.caption)}</figcaption>` : ""}
-        </figure>
-      `).join("")}
-    </div>
-  ` : `<p class="emba-empty-copy">${escapeHtml(t("noPhotosYet"))}</p>`;
-}
-
-function renderMarkdown(month) {
-  const content = String(month?.markdown || "").trim();
-  return content ? `
-    <article class="emba-note-reader">
-      <div class="emba-markdown-rendered">${markdownToHtml(content)}</div>
-    </article>
-  ` : `<p class="emba-empty-copy">${escapeHtml(t("noClassNotes"))}</p>`;
+  document.querySelector("#cfaCourseWeek")?.scrollIntoView?.({ behavior: "smooth", block: "start" });
 }
 
 function safeMarkdownLink(value = "", basePath = "") {
@@ -1519,32 +1030,93 @@ function markdownToHtml(markdown = "", basePath = "") {
   return html.join("\n");
 }
 
+function simpleMaterialAction(item, label) {
+  if (!item?.file) return "";
+  const title = item.title || t("defaultMaterial");
+  const notes = item.notes || "";
+  if (isReadableMaterial(item.file)) {
+    return `<button class="cfa-course-card-action" type="button" data-material-open="${escapeHtml(item.file)}" data-material-title="${escapeHtml(title)}" data-material-notes="${escapeHtml(notes)}">${escapeHtml(label)} <span aria-hidden="true">→</span></button>`;
+  }
+  return `<a class="cfa-course-card-action" href="${escapeHtml(resolveCfaUrl(item.file))}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)} <span aria-hidden="true">→</span></a>`;
+}
+
+function simpleDayTitle(item, day) {
+  const title = String(item?.title || `${t("dayLabel")} ${day}`);
+  return title.replace(/^\s*(?:Day|Dag|Tag)\s+[1-5]\s*[·|｜]\s*/i, "") || title;
+}
+
 function renderMonthDetail(month) {
-  const detail = $("#embaMonthDetail");
+  const detail = $("#cfaCourseWeek");
   if (!detail || !month) return;
+
+  if (state.materialReader) {
+    detail.dataset.mode = "reader";
+    detail.innerHTML = renderMaterialReader();
+    return;
+  }
+
   const viewMonth = localizeMonth(month);
-  detail.dataset.mode = "read";
+  const materials = asArray(viewMonth.materials);
+  const syllabus = materials.find((item) => item?.type === "syllabus_guide");
+  const team6 = team6Material(viewMonth);
+  const courseMap = materials.find((item) => item?.type === "course_overview");
+  const days = materials
+    .filter((item) => item?.type === "daily_course_intro")
+    .sort((a, b) => courseDayNumber(a) - courseDayNumber(b));
+
+  detail.dataset.mode = "home";
   detail.innerHTML = `
-    <div class="cfa-month-heading">
-      <div>
-        <p class="cfa-eyebrow">${escapeHtml(formatMonth(viewMonth.month))}</p>
-        <h3>${escapeHtml(t("materialsLearningTrail"))}</h3>
+    <section class="cfa-primary-grid" aria-label="${escapeHtml(t("courseSyllabus"))}">
+      <article class="cfa-syllabus-card">
+        <div>
+          <span class="cfa-card-kicker">${escapeHtml(t("courseSyllabus"))}</span>
+          <h2>${escapeHtml(t("courseSyllabus"))}</h2>
+          <p>${escapeHtml(t("courseSyllabusNotes"))}</p>
+        </div>
+        ${simpleMaterialAction(syllabus, t("openCourseSyllabus"))}
+      </article>
+      ${team6 ? `
+        <article class="cfa-team6-feature" aria-labelledby="cfaTeam6Title">
+          <span class="cfa-card-kicker">${escapeHtml(t("team6Presentation"))}</span>
+          <div class="cfa-team6-copy">
+            <p class="cfa-eyebrow">Team 6</p>
+            <h2 id="cfaTeam6Title">${escapeHtml(t("team6Title"))}</h2>
+            <p>${escapeHtml(t("team6HomepageNotes"))}</p>
+          </div>
+          <div class="cfa-team6-cta-wrap">${simpleMaterialAction(team6, t("openTeam6"))}</div>
+        </article>
+      ` : ""}
+    </section>
+
+    <section class="cfa-week-heading" aria-labelledby="cfaWeekTitle">
+      <p class="cfa-eyebrow">${escapeHtml(t("courseWeek"))}</p>
+      <h2 id="cfaWeekTitle">${escapeHtml(t("courseWeek"))}</h2>
+      <p>${escapeHtml(t("courseWeekNotes"))}</p>
+    </section>
+
+    <div class="cfa-day-grid">
+      ${days.map((item) => {
+        const day = courseDayNumber(item);
+        return `
+          <article class="cfa-day-card">
+            <div class="cfa-day-card-top"><span class="cfa-day-number">${String(day).padStart(2, "0")}</span><span class="cfa-card-kicker">${escapeHtml(t("dayLabel"))} ${day}</span></div>
+            <h3>${escapeHtml(simpleDayTitle(item, day))}</h3>
+            <p>${escapeHtml(item.notes || t("courseWeekNotes"))}</p>
+            ${simpleMaterialAction(item, t("openDay", { day }))}
+          </article>
+        `;
+      }).join("")}
+    </div>
+
+    ${courseMap ? `
+      <div class="cfa-course-map-link">
+        <div class="cfa-course-map-copy">
+          <strong>${escapeHtml(t("courseMap"))}</strong>
+          <span>${escapeHtml(t("courseMapNotes"))}</span>
+        </div>
+        ${simpleMaterialAction(courseMap, t("openCourseMap"))}
       </div>
-      <p>${escapeHtml(t("materialsLearningTrailCopy"))}</p>
-    </div>
-    ${renderTeam6Feature(viewMonth)}
-    ${renderCourseToolkit(viewMonth)}
-    ${renderFiveDayJourney(viewMonth)}
-    ${renderOpenBlockPanel(viewMonth)}
-    <div class="emba-block-grid">
-      ${supportingPreparationMaterials(viewMonth).some(materialHasContent) ? blockTemplate("preparation", t("supportingCourseToolkit"), viewMonth) : ""}
-      ${materialsForSection(viewMonth, "podcast").some(materialHasContent) ? blockTemplate("podcast", t("courseAudio"), viewMonth) : ""}
-      ${blockTemplate("material", t("materialsResources"), viewMonth)}
-      ${blockTemplate("markdown", t("integratedClassNotes"), viewMonth)}
-      ${blockTemplate("reflection", t("reflection"), viewMonth)}
-      ${blockTemplate("memory", t("photos"), viewMonth)}
-      ${materialsForSection(viewMonth, "vocabulary").some(materialHasContent) ? blockTemplate("vocabulary", t("professionalVocabulary"), viewMonth) : ""}
-    </div>
+    ` : ""}
   `;
 }
 
@@ -1552,7 +1124,7 @@ function renderMonthDetail(month) {
 document.addEventListener("DOMContentLoaded", async () => {
   initCfaLanguage();
   initCfaAccess();
-  const detail = $("#embaMonthDetail");
+  const detail = $("#cfaCourseWeek");
 
   // Render immediately with embedded month data
   if (state.month) {
@@ -1574,30 +1146,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Click delegation
-  detail.addEventListener("click", async (event) => {
-    const toggleBtn = event.target.closest("[data-block-toggle]");
-    if (toggleBtn) {
-      const id = toggleBtn.dataset.blockToggle;
-      state.openBlockId = state.openBlockId === id ? "" : id;
-      state.materialReader = null;
-      renderMonthDetail(state.month);
-      if (state.openBlockId) {
-        document.querySelector("[data-block-panel]")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-      return;
-    }
-
-    const closeBtn = event.target.closest("[data-block-close]");
-    if (closeBtn) {
-      state.openBlockId = "";
-      state.materialReader = null;
-      renderMonthDetail(state.month);
-      return;
-    }
-
+  detail.addEventListener("click", (event) => {
     const openMaterialBtn = event.target.closest("[data-material-open]");
     if (openMaterialBtn) {
-      if (!openMaterialBtn.closest("[data-block-panel]")) state.openBlockId = "material";
       const file = openMaterialBtn.dataset.materialOpen;
       const title = openMaterialBtn.dataset.materialTitle;
       const notes = openMaterialBtn.dataset.materialNotes;
@@ -1609,52 +1160,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (backMaterialBtn) {
       state.materialReader = null;
       renderMonthDetail(state.month);
-      document.querySelector("[data-block-panel]")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
-
-    const langBtn = event.target.closest("[data-podcast-language]");
-    if (langBtn) {
-      state.podcastLanguage = langBtn.dataset.podcastLanguage;
-      renderMonthDetail(state.month);
-      return;
-    }
-
-    const copyBtn = event.target.closest("[data-material-copy]");
-    if (copyBtn && state.materialReader?.markdown) {
-      try {
-        await navigator.clipboard.writeText(state.materialReader.markdown);
-        const status = detail.querySelector("[data-material-copy-status]");
-        if (status) {
-          status.textContent = t("copiedForGpt");
-          setTimeout(() => { if (status) status.textContent = ""; }, 3000);
-        }
-      } catch {
-        // Fallback
-        const ta = document.createElement("textarea");
-        ta.value = state.materialReader.markdown;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        const status = detail.querySelector("[data-material-copy-status]");
-        if (status) {
-          status.textContent = t("copiedForGpt");
-          setTimeout(() => { if (status) status.textContent = ""; }, 3000);
-        }
-      }
+      detail.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
   });
-
-  // Audio Playback: ensure only one audio plays at a time
-  document.addEventListener("play", (e) => {
-    if (e.target.tagName === "AUDIO") {
-      document.querySelectorAll("audio").forEach((other) => {
-        if (other !== e.target && !other.paused) {
-          other.pause();
-        }
-      });
-    }
-  }, true);
 });

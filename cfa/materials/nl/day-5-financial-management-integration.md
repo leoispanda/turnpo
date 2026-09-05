@@ -1,88 +1,32 @@
-# Dag 5 | Integratie van Financial Management, fondsperformance & de capstone-pitch
+# Dag 5 | Integratie van Financial Management & presentatie
 
-> **Vrijdag 11 september | 08:30–19:00**
-> **Kernvraag**: Hoe halen we uit opvallende performance-rankings en beleggingspitches survivorship bias, risk exposure en fee drag weg, zodat we kapitaal beschermen en waarde creëren?
+> **Vrijdag 11 september 2026 · 08:30–19:00**
 
-## Deel 1 | Wat we leren
+## Overzicht
 
-### Kennisfabel | De rijschool met het hoogste slagingspercentage
+Dag 5 brengt de week terug naar kapitaalmarkten en beleggingsproducten. Vergelijk fondsperformance eerlijk door benchmarks, risk-factor exposure, survivorship bias en fees te controleren en vertaal daarna de cursusinzichten naar een verdedigbare aanbeveling.
 
-Ten westen van de stad stond rijschool Direct Route drie jaar lang op nummer één. Op de poster stond: “99,2% gecombineerd slagingspercentage voor examen twee en drie — de gouden rijschool van de stad!”
+## Kernonderwerpen
 
-Veel inwoners schreven zich in. Li meldde zijn pas achttien geworden zoon aan. In de eerste week zag de zoon drie vreemde praktijken:
+- Benchmarkkeuze, market beta, size, value en momentum exposure.
+- Alpha na risk adjustment, sample selection en survivorship bias.
+- Expense ratios, management fees, carried interest en langetermijn fee drag.
+- Geïntegreerd financieel leiderschap: evidence, value, risk, controls en recommendation.
 
-1. **Actieve selectie van leerlingen**: vóór de cursus was er een reactietest; oudere of langzamere leerlingen kregen te horen dat zij “niet geschikt” waren.
-2. **Alleen vlakke afgesloten wegen**: de school reed nooit op bergwegen of in smalle drukke straten; alle routes waren gladde oefenwegen.
-3. **Fee drag**: het basistarief was normaal, maar verplichte “speciale training”, “groene examenoefening” en “gouden instructeur”-kosten maakten het totaal drie keer zo hoog.
-
-De zoon slaagde. Op een regenachtige bergweg met een vrachtwagen voor zich raakte hij in paniek en schoot bijna van de weg. Zijn vader nam het stuur over en vroeg: “Is dit wat je op de nummer-éénschool hebt geleerd?”
-
-“We haalden elke dag perfecte scores,” zei de zoon, “maar niemand leerde ons rijden in regen, ’s nachts, op steile wegen of in drukke straten.”
-
-Op een openbare bijeenkomst claimde de directeur dat de hoge pass rate, zijn “alpha”, uitzonderlijke onderwijskwaliteit bewees. De vader antwoordde:
-
-* Langzame leerlingen waren verwijderd en kwamen niet in de statistiek: **survivorship bias**.
-* Moeilijke wegen werden vermeden: de score kwam door **lower risk exposure**.
-* Na de drievoudige fee was de netto vaardigheid in de echte wereld niet beter dan bij een gewone school: **fee drag** had de winst opgegeten.
-
-### Het oordeel van vandaag
-
-In financiële markten en asset management kan aantrekkelijke alpha alleen worden beoordeeld door drie vragen:
-
-1. **Benchmark en risk-factor exposure**: komt het rendement uit echte security-selection skill of uit market-, size- (SMB), value- (HML) of momentum- (MOM-)exposure?
-2. **Survivorship bias**: databases tonen fondsen die overleefden; geliquideerde fondsen verdwijnen stilletjes.
-3. **Fee drag**: management fees en carried interest werken door de tijd heen tegen pensioen- en beleggerskapitaal.
-
-## Deel 2 | Kern theory en literatuur
+## Verplichte readings
 
 ### Otten & Schweitzer (2002)
 
-* **Titel**: *A Comparison between the European and the U.S. Mutual Fund Industry* (Managerial Finance).
-* **Auteurs**: Roger Otten en Denis Schweitzer.
-* **Belangrijkste bevindingen**:
-  1. Een systematische vergelijking van het VK, Duitsland, Frankrijk, Italië en Nederland met de VS voor omvang, structuur, fees en performance.
-  2. Een Carhart four-factor model scheidt market beta, size (SMB), book-to-market (HML) en momentum (MOM):
+- **Titel:** “A comparison between the European and the U.S. mutual fund industry,” *Managerial Finance*, 28(1), 14–36.
+- **Focus:** vergelijk marktstructuur, fees en performance; gebruik risk-factor attribution en een volledige sample voordat je schijnbare alpha als skill behandelt.
+- **Links:** [PDF van Maastricht University](https://cris.maastrichtuniversity.nl/ws/files/1740626/guid-bb9aa06f-4ab8-449c-988f-924ce20150d7-ASSET1.0.pdf) · [Open de lokale PDF](../2026-09/readings/guid-bb9aa06f-4ab8-449c-988f-924ce20150d7-ASSET1.0.pdf)
 
-     ```text
-     R_it - R_ft = alpha_i + beta_i1(R_mt - R_ft) + beta_i2 SMB_t + beta_i3 HML_t + beta_i4 MOM_t + epsilon_it
-     ```
+## Belangrijkste inzichten
 
-  3. Veel geclaimde alpha van actieve fondsen ligt na correctie voor risico rond nul of wordt negatief.
-  4. Expense ratios hangen negatief samen met netto rendement; fees worden niet vanzelf excess return.
-  5. Wie geliquideerde fondsen weglaat, kan gemiddeld rendement met ongeveer 0,5–1,5% per jaar overschatten.
+- Een rendement wordt pas een oordeel als benchmark, risk exposure, sample en kosten zichtbaar zijn.
+- De zes-vakkenmemo verbindt decision, evidence, value, risk, controls en recommendation.
+- De Team 6-presentatie moet eindigen met een aanbeveling op werkgeversniveau, het belangrijkste evidence gap en de voorwaarde die het advies kan veranderen.
 
-## Deel 3 | De executive memo in zes vakken
+## Link naar de vrijdagpresentatie
 
-De individuele final case is een echte geïntegreerde businesscase. Een sterk antwoord toont Financial Leadership Judgment op één pagina:
-
-```text
-1. Decision          2. Evidence
-Wat moet worden gekozen? Welke feiten en aannames steunen dit?
-
-3. Value             4. Risk
-Incremental FCF/NPV? Core versus non-core risk en downside?
-
-5. Controls          6. Recommendation
-Welke levers, KRIs en gates? Owner, action, metric en reviewritme?
-```
-
-Vraag bij elk vak:
-
-1. Welke concrete keuze staat voor de onderneming en welke kapitaal-, project- of governanceopties bestaan?
-2. Welke data en feiten ondersteunen de keuze en welke aannames kunnen de gevolgtrekking breken?
-3. Wat betekenen incremental cash flow, NPV, WACC, liquidity en capital structure?
-4. Welke core risks blijven binnen de organisatie, welke non-core risks kunnen worden overgedragen en wat is de extreme downside?
-5. Hoe gebruik je Simons’ vier levers en welke KRI-threshold activeert vertraging of stop?
-6. Welke actie, owner, metric en reviewritme sluiten de lus?
-
-## Deel 4 | Vrijdagmiddag: de Team 6-presentatie samenvoegen
-
-Reserveer ongeveer één uur voor redactie en repetitie.
-
-**Team 6-anker**:
-
-* **Case**: BeFrank & Impact Investing.
-* **Perspectief**: werkgever/onderneming, met als startpunt de vraag of impact investing zinvol is voor de werknemers onder de pensioenregeling.
-* **Beslisroute**: beoordeel werknemersrelevantie, werkgeversrationale en de geschiktheid van BeFrank; onderzoek een alternatief alleen als het bewijs dat nodig maakt.
-* **Presentatie**: Groepspresentatie — 25%, in de finale sessie op vrijdag, met een maximale duur van 10 minuten. Er is geen vast aantal slides voorgeschreven.
-* **Verdedigingslijn**: laat het advies volgen uit bewijs over pensioenadequaatheid, risico, kosten, transparantie, werknemersbelangen en uitvoerbaarheid. Verzin geen mogelijkheden van BeFrank en neem niet aan dat een overstap nodig is.
+Gebruik de [Team 6-opdrachtpagina](team-6-befrank-impact-investing.md) voor de bevestigde weging van 25%, vrijdagtiming, limiet van tien minuten, inleverstap en het ontbreken van een vast aantal slides.

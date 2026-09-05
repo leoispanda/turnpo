@@ -1,90 +1,32 @@
-# Day 5 | Financial Management Integration, Fund Performance & The Capstone Pitch
+# Day 5 | Financial Management Integration & Presentation
 
-> **Friday 11 September | 08:30–19:00**
-> **Core question**: When faced with dazzling performance rankings and investment pitches, how do we strip out survivorship bias, risk exposure and fee drag and make an executive decision that protects capital and creates value?
+> **Friday 11 September 2026 · 08:30–19:00**
 
-## Part 1 | What we are learning
+## Overview
 
-### Knowledge fable | The driving school with the highest pass rate
+Day 5 brings the week back to capital markets and investment products. Compare fund performance fairly by checking benchmarks, risk-factor exposure, survivorship bias and fees, then turn the course lenses into a defensible recommendation.
 
-West of the city, a driving school called Direct Route had ranked first for three consecutive years. Its poster said: “A combined 99.2% pass rate for tests two and three — the city’s gold-medal school!”
+## Key topics
 
-Many residents enrolled. An older father, Li, signed up his newly eighteen-year-old son. During the first week the son noticed three strange practices:
+- Benchmark choice, market beta, size, value and momentum exposure.
+- Alpha after risk adjustment, sample selection and survivorship bias.
+- Expense ratios, management fees, carried interest and long-term fee drag.
+- Integrated financial leadership: evidence, value, risk, controls and recommendation.
 
-1. **Active selection of students**: before the course, instructors ran a reaction test and asked slower or older learners to leave because they were “not suitable”.
-2. **Only the flattest closed roads**: the school never used the mountain roads or narrow streets in the east; every route was a smooth road built for training.
-3. **Fee drag**: the headline tuition was ordinary, but compulsory “special training”, “green test-course simulation” and “gold instructor” fees made the total three times higher than a normal school.
-
-The son passed. At the weekend his father gave him the car keys for a drive home. On a rainy mountain road, with a lorry blocking part of the lane, the son panicked and nearly left the road.
-
-The father took the wheel and asked: “At the city’s number-one school, is this what you learned?”
-
-The son replied: “We scored perfectly every day, but they never taught us how to drive in rain, at night, on steep roads or in busy streets.”
-
-At a public industry meeting, the school principal claimed that the school’s excess pass rate, its “alpha”, proved incomparable teaching quality. The father raised three objections:
-
-* Slow learners had been removed, so their outcomes never entered the statistics: **survivorship bias**.
-* Students avoided difficult roads, so the high pass rate came from **lower risk exposure**.
-* After the threefold fee, the net ability to survive in the real world was no better than at an ordinary school: **fee drag** had consumed the apparent gain.
-
-### The judgement to learn today
-
-In financial markets and asset management, no attractive alpha can be assessed without three questions:
-
-1. **Benchmark and risk-factor exposure**: does the return come from genuine security-selection skill, or from market, size (SMB), value (HML) or momentum (MOM) exposure?
-2. **Survivorship bias**: databases show funds that survived; liquidated or failed funds quietly disappear.
-3. **Fee drag**: management fees and carried interest compound against pension and investor capital over time.
-
-## Part 2 | Core theory and literature
+## Required readings
 
 ### Otten & Schweitzer (2002)
 
-* **Title**: *A Comparison between the European and the U.S. Mutual Fund Industry* (Managerial Finance).
-* **Authors**: Roger Otten and Denis Schweitzer.
-* **Main findings**:
-  1. A systematic comparison of the UK, Germany, France, Italy and Netherlands with the US in market size, structure, fees and performance.
-  2. A Carhart four-factor model separates market beta, size (SMB), book-to-market (HML) and momentum (MOM):
+- **Title:** “A comparison between the European and the U.S. mutual fund industry,” *Managerial Finance*, 28(1), 14–36.
+- **Focus:** compare market structure, fees and performance; use risk-factor attribution and a complete sample before treating apparent alpha as skill.
+- **Links:** [Maastricht University repository PDF](https://cris.maastrichtuniversity.nl/ws/files/1740626/guid-bb9aa06f-4ab8-449c-988f-924ce20150d7-ASSET1.0.pdf) · [Open the local PDF](../2026-09/readings/guid-bb9aa06f-4ab8-449c-988f-924ce20150d7-ASSET1.0.pdf)
 
-     ```text
-     R_it - R_ft = alpha_i + beta_i1(R_mt - R_ft) + beta_i2 SMB_t + beta_i3 HML_t + beta_i4 MOM_t + epsilon_it
-     ```
+## Key takeaways
 
-  3. Much of the alpha claimed by active funds approaches zero or becomes negative after risk-factor adjustment.
-  4. Expense ratios are negatively related to investors’ net returns; fees do not automatically become excess return.
-  5. Omitting liquidated funds can overstate average returns by approximately 0.5–1.5% per year.
+- A return is not a judgement until its benchmark, risk exposure, sample and cost are visible.
+- The six-box memo is a compact way to connect decision, evidence, value, risk, controls and recommendation.
+- The Team 6 presentation should end with an employer-level recommendation, the strongest evidence gap and the condition that would change it.
 
-## Part 3 | The six-box executive memo
+## Friday presentation link
 
-The individual final case is a real integrated business case. A strong answer shows Financial Leadership Judgment in a one-page memo:
-
-```text
-1. Decision          2. Evidence
-What must be chosen? Which facts and assumptions support it?
-
-3. Value             4. Risk
-Incremental FCF/NPV? Core versus non-core risk and downside?
-
-5. Controls          6. Recommendation
-Which levers, KRIs and gates? Owner, action, metric and review rhythm?
-```
-
-For each box ask:
-
-1. What specific choice faces the company, and which capital, project or governance options are on the table?
-2. Which data and facts support the choice, and which assumptions would break the inference?
-3. What are the incremental cash flow, NPV, WACC, liquidity and capital-structure implications?
-4. Which core risks must remain inside the organisation, which non-core risks can be transferred, and what is the extreme downside?
-5. How will Simons’ four levers be used, and which KRI threshold triggers a slowdown or stop?
-6. What action, owner, evaluation metric and review rhythm close the loop?
-
-## Part 4 | Friday afternoon: assemble the Team 6 presentation
-
-Reserve about one hour for final editing and rehearsal.
-
-**Team 6 anchor**:
-
-* **Case**: BeFrank & Impact Investing.
-* **Perspective**: employer/company, starting with whether impact investing makes sense for the employees covered by the pension arrangement.
-* **Decision route**: assess employee relevance, employer rationale and BeFrank’s suitability; consider an alternative arrangement only if the evidence shows it is necessary.
-* **Presentation**: Group Presentation — 25%, delivered in the Friday final session, with a maximum duration of 10 minutes. No fixed number of slides has been specified.
-* **Defence line**: make the recommendation follow from evidence about pension adequacy, risk, cost, transparency, employee interests and implementation feasibility. Do not invent BeFrank capabilities or assume that a provider switch is required.
+Use the [Team 6 assignment page](team-6-befrank-impact-investing.md) for the confirmed 25% weighting, Friday timing, ten-minute limit, submission step and no fixed slide count.
