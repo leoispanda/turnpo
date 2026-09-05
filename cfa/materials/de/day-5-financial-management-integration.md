@@ -61,11 +61,10 @@ Gehe von einer attraktiven Performance-Behauptung zu einer verteidigungsfähigen
 Nutze das Sechs-Felder-Memo für eine reale Fonds-, Projekt- oder Pensionsentscheidung:
 
 1. **Decision:** Welche konkrete Wahl trifft die Organisation?
-2. **Evidence:** Welche Fakten sind beobachtet, und welche Material Assumptions könnten den Schluss brechen?
-3. **Value:** Welche Folgen gibt es für Incremental Cashflow, NPV, Return oder Fees?
-4. **Risk:** Welche Exposures, Downside-Szenarien und Residual Risks sind relevant?
-5. **Controls:** Welcher Owner, KRI, welche Boundary und welcher Review Rhythm halten die Entscheidung auf Kurs?
-6. **Recommendation:** Was soll jetzt geschehen, und welche Evidenz würde dein Urteil ändern?
+2. **Evidence and value:** Welche Fakten und Material Assumptions sind relevant, und welche Folgen gibt es für Incremental Cashflow, NPV, Return oder Fees?
+3. **Risk:** Welche Exposures, Downside-Szenarien und Residual Risks sind relevant?
+4. **Controls:** Welcher Owner, KRI, welche Boundary und welcher Review Rhythm halten die Entscheidung auf Kurs?
+5. **Recommendation:** Was soll jetzt geschehen, und welche Evidenz würde dein Urteil ändern?
 
 ### English Learning Support
 

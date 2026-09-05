@@ -61,11 +61,10 @@ Move from an attractive performance claim to a defensible executive decision:
 Use the six-box memo for a real fund, project or pension choice:
 
 1. **Decision:** What specific choice is the organisation making?
-2. **Evidence:** Which facts are observed, and which material assumptions could break the inference?
-3. **Value:** What are the incremental cash-flow, NPV, return or fee implications?
-4. **Risk:** Which exposures, downside scenarios and residual risks matter?
-5. **Controls:** Which owner, KRI, boundary and review rhythm keep the decision on track?
-6. **Recommendation:** What should happen now, and what evidence would change your mind?
+2. **Evidence and value:** Which facts and material assumptions matter, and what are the incremental cash-flow, NPV, return or fee implications?
+3. **Risk:** Which exposures, downside scenarios and residual risks matter?
+4. **Controls:** Which owner, KRI, boundary and review rhythm keep the decision on track?
+5. **Recommendation:** What should happen now, and what evidence would change your mind?
 
 ### English Learning Support
 

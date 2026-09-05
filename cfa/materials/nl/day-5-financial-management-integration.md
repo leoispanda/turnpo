@@ -61,11 +61,10 @@ Ga van een aantrekkelijke performanceclaim naar een verdedigbare executive besli
 Gebruik de zes-vakkenmemo voor een echte fonds-, project- of pensioenkeuze:
 
 1. **Decision:** welke specifieke keuze maakt de organisatie?
-2. **Evidence:** welke feiten zijn waargenomen en welke material assumptions kunnen de conclusie breken?
-3. **Value:** wat zijn de gevolgen voor incremental cashflow, NPV, return of fees?
-4. **Risk:** welke exposures, downside-scenario’s en residual risks zijn relevant?
-5. **Controls:** welke owner, KRI, boundary en review rhythm houden de beslissing op koers?
-6. **Recommendation:** wat moet nu gebeuren en welk bewijs zou je van mening doen veranderen?
+2. **Evidence and value:** welke feiten en material assumptions zijn relevant en wat zijn de gevolgen voor incremental cashflow, NPV, return of fees?
+3. **Risk:** welke exposures, downside-scenario’s en residual risks zijn relevant?
+4. **Controls:** welke owner, KRI, boundary en review rhythm houden de beslissing op koers?
+5. **Recommendation:** wat moet nu gebeuren en welk bewijs zou je van mening doen veranderen?
 
 ### English Learning Support
 
