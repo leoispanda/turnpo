@@ -351,6 +351,23 @@ Financial Accounting 和 police visit 无指定预读。ERM 指定：
 
 课程评分重点：content/application 75%；critical reflection（包含 AI 使用）15%；structure, writing and APA form 10%。清楚、证据充分和可执行，比堆砌更多框架重要。
 
+## Team 6｜BeFrank 与 Impact Investing
+
+### 已确认的作业框架
+
+Team 6 研究 **BeFrank 与 Impact Investing**，采用公司／雇主视角。BeFrank 在本案例中应被视为商业养老金提供方或合作方，而不是养老金基金本身，也不应自行推断其当前产品、费用、指标或投资能力。
+
+### 雇主决策顺序
+
+1. Impact Investing 对公司养老金安排覆盖的员工是否具有清晰相关性？
+2. 如果有，公司是否应要求 BeFrank 在养老金方案中纳入更多 Impact Investing？
+3. 如果 BeFrank 不适配，可以考虑什么替代性养老金安排？
+4. 最后给出公司建议，并明确证据缺口、限制和仍需核验的事实。
+
+### 信息边界与展示要求
+
+页面内容明确区分：已确认的作业指导、Team 6 基于资料的分析，以及建议性的展示结构。已确认要求是周五小组展示，占 25%，最长 10 分钟，展示后通过课程系统提交；没有固定页数。判断标准是可辩护的公司建议，而不是预设的幻灯片数量。
+
 ## 可直接向 GPT 发出的学习命令
 
 粘贴本知识包后，可以继续发送以下任意一句：

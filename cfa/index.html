@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png" />
     <link rel="stylesheet" href="../styles.css?v=0.1.382" />
     <link rel="stylesheet" href="../emba/emba.css?v=0.1.382" />
-    <link rel="stylesheet" href="./cfa.css?v=0.1.384" />
+    <link rel="stylesheet" href="./cfa.css?v=0.1.385" />
   </head>
   <body>
     <header class="topbar">
@@ -21,89 +21,94 @@
       </a>
       <div class="top-actions">
         <span class="cfa-nav-context">September 2026</span>
-        <a class="ghost-btn emba-home-link" href="../">Turnpo home</a>
-        <a class="ghost-btn" href="../emba/">EMBA Archive</a>
+        <div class="cfa-language-switcher" role="group" aria-label="Language" data-i18n-aria-label="languageLabel">
+          <button type="button" data-cfa-language="en" aria-pressed="true">EN</button>
+          <button type="button" data-cfa-language="nl" aria-pressed="false">NL</button>
+          <button type="button" data-cfa-language="de" aria-pressed="false">DE</button>
+        </div>
+        <a class="ghost-btn emba-home-link" href="../" data-i18n="turnpoHome">Turnpo home</a>
+        <a class="ghost-btn" href="../emba/" data-i18n="embaArchive">EMBA Archive</a>
       </div>
     </header>
 
-    <section class="emba-access-gate cfa-access-gate" id="cfaAccessGate" aria-label="CFA access">
+    <section class="emba-access-gate cfa-access-gate" id="cfaAccessGate" aria-label="CFA access" data-i18n-aria-label="cfaAccessLabel">
       <form class="emba-access-card cfa-access-card" id="cfaAccessForm">
         <div class="cfa-access-intro">
           <span class="cfa-access-mark" aria-hidden="true">CF</span>
-          <p class="cfa-eyebrow">Private course hub</p>
-          <h1>September 2026 CFA</h1>
-          <p>This learning hub is available to Team 6 members.</p>
+          <p class="cfa-eyebrow" data-i18n="privateCourseHub">Private course hub</p>
+          <h1 data-i18n="accessTitle">September 2026 CFA</h1>
+          <p data-i18n="accessAvailability">This learning hub is available to Team 6 members.</p>
         </div>
         <label>
-          <span>Access code</span>
-          <input id="cfaPassword" type="password" autocomplete="current-password" placeholder="Enter access code" required />
+          <span data-i18n="accessCodeLabel">Access code</span>
+          <input id="cfaPassword" type="password" autocomplete="current-password" placeholder="Enter access code" data-i18n-placeholder="accessCodePlaceholder" required />
         </label>
-        <button class="gold-btn cfa-access-submit" type="submit">Open hub <span aria-hidden="true">→</span></button>
-        <p class="cfa-access-footnote">7–11 September 2026 · MaastrichtMBA / EMBA</p>
+        <button class="gold-btn cfa-access-submit" type="submit"><span data-i18n="openHub">Open hub</span> <span aria-hidden="true">→</span></button>
+        <p class="cfa-access-footnote" data-i18n="accessFootnote">7–11 September 2026 · MaastrichtMBA / EMBA</p>
         <p class="emba-access-note" id="cfaAccessNote" aria-live="polite"></p>
       </form>
     </section>
 
     <main class="emba-shell cfa-shell" id="cfaApp" hidden>
-      <section class="emba-stage cfa-stage" aria-label="September 2026 Corporate Finance and Accounting course hub">
+      <section class="emba-stage cfa-stage" aria-label="September 2026 Corporate Finance and Accounting course hub" data-i18n-aria-label="courseHubLabel">
         <section class="cfa-hero" aria-labelledby="cfaHeroTitle">
           <div class="cfa-hero-copy">
-            <p class="cfa-eyebrow">September 2026 · Executive education</p>
+            <p class="cfa-eyebrow" data-i18n="heroEyebrow">September 2026 · Executive education</p>
             <h1 id="cfaHeroTitle">Corporate Finance <span>&amp;</span> Accounting</h1>
-            <p class="cfa-hero-lede">A five-day learning journey from capital allocation and financial information to risk, control, compliance and long-term value.</p>
+            <p class="cfa-hero-lede" data-i18n="heroLede">A five-day learning journey from capital allocation and financial information to risk, control, compliance and long-term value.</p>
             <div class="cfa-hero-actions">
-              <a class="cfa-primary-link" href="#cfaCourseOverview">Explore the course hub <span aria-hidden="true">↓</span></a>
-              <span class="cfa-hero-caption">7–11 September 2026 · 6 ECTS</span>
+              <a class="cfa-primary-link" href="#cfaCourseOverview"><span data-i18n="exploreCourseHub">Explore the course hub</span> <span aria-hidden="true">↓</span></a>
+              <span class="cfa-hero-caption" data-i18n="heroCaption">7–11 September 2026 · 6 ECTS</span>
             </div>
           </div>
-          <aside class="cfa-hero-aside" aria-label="Course at a glance">
+          <aside class="cfa-hero-aside" aria-label="Course at a glance" data-i18n-aria-label="courseAtGlance">
             <p class="cfa-hero-aside-label">MaastrichtMBA / EMBA</p>
-            <p class="cfa-hero-aside-title">Financial leadership in practice.</p>
+            <p class="cfa-hero-aside-title" data-i18n="heroAsideTitle">Financial leadership in practice.</p>
             <div class="cfa-hero-stats">
-              <div><strong>5</strong><span>course days</span></div>
-              <div><strong>16</strong><span>required readings</span></div>
-              <div><strong>1</strong><span>integrated pitch</span></div>
+              <div><strong>5</strong><span data-i18n="courseDays">course days</span></div>
+              <div><strong>16</strong><span data-i18n="requiredReadings">required readings</span></div>
+              <div><strong>1</strong><span data-i18n="integratedPitch">integrated pitch</span></div>
             </div>
           </aside>
         </section>
 
         <section class="cfa-overview" id="cfaCourseOverview" aria-labelledby="cfaOverviewTitle">
           <div>
-            <p class="cfa-eyebrow">Course overview</p>
-            <h2 id="cfaOverviewTitle">One decision framework for finance, risk and value.</h2>
+            <p class="cfa-eyebrow" data-i18n="courseOverview">Course overview</p>
+            <h2 id="cfaOverviewTitle" data-i18n="overviewTitle">One decision framework for finance, risk and value.</h2>
           </div>
-          <p>The module connects investment and financing choices, accounting information, performance control, enterprise risk, compliance and ESG reporting. The aim is not to memorise isolated models, but to use evidence to make and defend a responsible recommendation.</p>
+          <p data-i18n="overviewCopy">The module connects investment and financing choices, accounting information, performance control, enterprise risk, compliance and ESG reporting. The aim is not to memorise isolated models, but to use evidence to make and defend a responsible recommendation.</p>
         </section>
 
-        <section class="cfa-route" aria-label="Course route">
+        <section class="cfa-route" aria-label="Course route" data-i18n-aria-label="courseRouteLabel">
           <article class="cfa-route-card">
             <span class="cfa-route-index">01</span>
-            <div><strong>Five-day learning journey</strong><p>Follow the sequence from financial management to integration and presentation.</p></div>
+            <div><strong data-i18n="routeJourneyTitle">Five-day learning journey</strong><p data-i18n="routeJourneyCopy">Follow the sequence from financial management to integration and presentation.</p></div>
           </article>
           <article class="cfa-route-card cfa-route-card--accent">
             <span class="cfa-route-index">02</span>
-            <div><strong>Featured · Team 6 impact investing</strong><p>Build and defend the PME Pension Fund pitch as an integrated group case.</p></div>
+            <div><strong data-i18n="routeTeam6Title">Featured · Team 6 impact investing</strong><p data-i18n="routeTeam6Copy">Assess BeFrank and Impact Investing from the employer perspective as an integrated group presentation.</p></div>
           </article>
           <article class="cfa-route-card">
             <span class="cfa-route-index">03</span>
-            <div><strong>Toolkit, notes &amp; audio</strong><p>Read the learning cards, listen to the podcasts and keep the full study trail together.</p></div>
+            <div><strong data-i18n="routeToolkitTitle">Toolkit, notes &amp; audio</strong><p data-i18n="routeToolkitCopy">Read the learning cards, listen to the podcasts and keep the full study trail together.</p></div>
           </article>
         </section>
 
         <section class="cfa-hub-intro" aria-labelledby="cfaHubTitle">
           <div>
-            <p class="cfa-eyebrow">Learning hub</p>
-            <h2 id="cfaHubTitle">Study, listen, apply.</h2>
+            <p class="cfa-eyebrow" data-i18n="learningHub">Learning hub</p>
+            <h2 id="cfaHubTitle" data-i18n="hubTitle">Study, listen, apply.</h2>
           </div>
-          <p>Open a section below to move from the course map to the daily materials, the Team 6 case, personal reflection and integrated notes.</p>
+          <p data-i18n="hubCopy">Open a section below to move from the course map to the daily materials, the Team 6 case, personal reflection and integrated notes.</p>
         </section>
 
         <section class="emba-month-detail" id="embaMonthDetail" aria-live="polite">
-          <p class="emba-empty-copy cfa-loading">Loading the September 2026 course hub…</p>
+          <p class="emba-empty-copy cfa-loading" data-i18n="loadingHub">Loading the September 2026 course hub…</p>
         </section>
       </section>
     </main>
 
-    <script src="./cfa.js?v=0.1.384"></script>
+    <script src="./cfa.js?v=0.1.385"></script>
   </body>
 </html>

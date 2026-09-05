@@ -123,15 +123,13 @@
 
 ---
 
-## 第三部分｜与 Team 6 养老金作业的深度连接
+## Part 3 | Connection to the Team 6 BeFrank assignment
 
-在周五的 **PME 养老金基金影响力投资（Impact Investing）** 答辩中，Simons 的控制杠杆是我们回答 **Question 2（投资门槛与监管治理）** 的终极理论武器：
+For the Friday **BeFrank & Impact Investing** presentation, Simons’ four levers provide a way to test the employer’s decision logic. They are an analytical lens, not evidence of any current BeFrank feature, fee, metric or investment option.
 
-1. **边界控制（Boundary System）**：
-   * 设定硬性负面清单（绝对排除烟草、争议性武器、不达标煤电）；
-   * 设定费率上限（TER Cap ≤ 1.25%）与单笔项目配置上限（防止过度集中风险）。
-2. **诊断式控制（Diagnostic System）**：
-   * 建立 GIIN IRIS+ 指标看板，定期追踪碳减排量、清洁能源发电量、受惠人次。
-3. **交互式控制（Interactive System）**：
-   * **绝不照搬 Tennessee Controls 的机械打分陷阱！** 不能因为某基金“ESG 评分高达 95 分”就盲目批准；
-   * 受托人董事会必须每季度与投资管理人（MN / Robeco）举行交互式研讨，质询：“这些项目的增量性（Additionality）是否经得起推敲？宏观利率变动对这些私募债务的再融资风险有何影响？”
+1. **Boundary system:** define the decision criteria and non-negotiable constraints for the employer, including evidence quality, employee relevance, risk, cost, liquidity and fiduciary limits.
+2. **Diagnostic system:** track only metrics that can be sourced and explained, separating financial performance, risk, cost and measurable impact rather than treating a single ESG score as proof.
+3. **Interactive system:** use management discussion to challenge assumptions, test additionality and ask what remains unverified about BeFrank or any alternative provider.
+4. **Belief system:** make the employer’s purpose explicit while keeping the recommendation accountable to employees, long-term value and evidence.
+
+The framework therefore helps Team 6 connect theory to the case without turning an unverified product claim into a fact.

@@ -382,20 +382,26 @@ Nocco & Stulz 完成今天的最后一步：一个项目不能只证明自己 NP
 
 这张表的目的，是防止 AI 把看似合理但来源不清的内容混入答案。正式作业中，每个关键判断都应能回到具体 reading、case fact 或额外可靠资料。
 
-## 今日 Assignment｜养老金基金与 Impact Investing：先完成研究底座
+## 今日 Assignment｜Team 6：BeFrank 与 Impact Investing 的研究底座
 
-你在 **Team 6**。这一周的 Financial Management 小组作业要求你从公司养老金基金 trustees 的角度，回答是否应该进行 Impact Investing、其利弊、投资门槛，以及哪个 asset class 最适合产生影响。
+你在 **Team 6**。本周小组作业的对象是 **BeFrank 与 Impact Investing**，采用公司／雇主视角，而不是养老金基金受托人视角。BeFrank 在这里应被当作商业养老金提供方或合作方；凡涉及其当前产品、费用、指标或能力，都必须以可核验的公开资料为准，不要自行补充。
+
+### 作业起点
+
+1. Impact Investing 对公司养老金安排覆盖的员工是否具有清晰、可解释的相关性？
+2. 如果有，公司是否应要求 BeFrank 在其养老金方案中纳入更多 Impact Investing？
+3. 如果 BeFrank 不是最合适的解决方案，可以考虑什么替代性养老金安排？
 
 ### 今天完成什么
 
-1. 和小组确认要研究的公司／pension fund；优先选择组员任职企业，前提是 pension arrangement 与 investment policy 有足够公开资料。
-2. 建一个一页 research sheet：基金参与者、当前资产配置、投资目标、风险承受能力、流动性需要、Responsible/Impact Investing 的现有政策与来源链接。
-3. 写出一个暂定立场：Impact Investing 不是“为了价值观牺牲回报”，而是需要与 fiduciary duty、风险调整后回报、费用、流动性和可验证影响同时成立的资本配置选择。
+1. 确认雇主／公司背景，并为以上判断建立可追溯的公开证据。
+2. 建一个一页 research sheet：员工相关性、雇主目标、养老金安排约束、Impact Investing 的回报／风险／费用／流动性／影响证据，以及 BeFrank 信息中仍待核验的部分。
+3. 写出暂定建议：先判断员工相关性，再评估雇主理由与 BeFrank 的适配度；只有在适配度不足时才展开替代方案比较。
 
 ### 带进课堂的问题
 
-> 对 pension fund 而言，什么证据足以证明一项 impact allocation 同时保护退休成员的长期利益和基金的投资能力？
+> 什么证据足以支持公司向 BeFrank 提出更强的 Impact Investing 方案，同时不把未经核验的产品能力当成事实？
 
 ### 今天的可交付物
 
-一张公司／基金背景卡，加上至少两条来自年报、基金政策或监管资料的可追溯证据。不要今天就定资产比例；先把受益人、目标和约束说清楚。
+一张公司／雇主背景卡，加上至少两条可追溯证据和一份待核验事项清单。今天先建立决策底座，不要虚构 BeFrank 的功能或预先承诺必须更换提供方。

@@ -30,8 +30,8 @@
 后来，老李去参加全市驾培行业的公开评议会。通达驾校的校长正在台上大谈成功经验：“我们的超额通过率（Alpha）说明了我们教学水平的无与伦比！”
 
 老李在台下举起了手：
-“校长先生，第一，你把学得慢的学员全部劝退了，他们的数据从来没有计入你的统计表，这叫**幸存者偏差（Survivorship Bias）**；  
-第二，你的学员只在平地大路上跑，从来不敢上陡坡和雨路，你的高通过率是用**规避所有现实复杂风险（Lower Risk Exposure）**换来的；  
+“校长先生，第一，你把学得慢的学员全部劝退了，他们的数据从来没有计入你的统计表，这叫**幸存者偏差（Survivorship Bias）**；
+第二，你的学员只在平地大路上跑，从来不敢上陡坡和雨路，你的高通过率是用**规避所有现实复杂风险（Lower Risk Exposure）**换来的；
 第三，你收了普通驾校三倍的附加费，扣除这些昂贵费用后，学员真正在真实世界里生存的能力，甚至不如普通驾校（**Fee Drag 吞噬净收益**）。”
 
 全场鸦雀无声。
@@ -87,12 +87,16 @@
 
 ---
 
-## 第四部分｜周五下午大作业终局：Team 6 汇报总装
+## Part 4 | Friday afternoon: assemble the Team 6 presentation
 
-周五下午，课堂预留约 1 小时进行最后的合稿与演练。
+Friday afternoon is reserved for final synthesis and rehearsal. The case is **BeFrank & Impact Investing**, examined from the employer/company perspective.
 
-**Team 6 答辩核心定海神针**：
-* 标的：**Stichting Pensioenfonds van de Metalektro (PME)**（涵盖 ASML 与荷兰高科技产业，管理规模约 550 亿欧元）；
-* 战略目标：**到 2030 年实现 10% 影响力投资配置**（目前已落地约 5%，超 30 亿欧元）；
-* 决胜资产类别：**私募债（Private Corporate Debt）与绿色实物基建（Real Infrastructure）**（以 PME 与 Robeco 合作的 11.5 亿欧元专项私募债为例）；
-* 答辩底线：**严守受托人市场化回报（Fiduciary Duty & Market-Rate Returns）**，拒绝无回报让步的盲目慈善。
+Use the following decision route:
+
+1. Establish why Impact Investing is relevant to the employees covered by the company’s pension arrangement.
+2. Explain the employer rationale and the trade-offs around return, risk, cost, liquidity and verifiable impact.
+3. Assess whether BeFrank is a suitable provider or partner using current, checkable information; do not invent capabilities.
+4. If suitability is insufficient, compare what alternative pension arrangement could be considered.
+5. End with a clear employer recommendation, evidence gaps and limitations.
+
+The confirmed presentation requirement is a **Friday group presentation worth 25%, with a maximum of 10 minutes, followed by submission through the course system**. There is no fixed slide count. The quality test is a defensible recommendation, not a preselected number of slides.
