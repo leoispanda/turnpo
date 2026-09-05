@@ -12,112 +12,112 @@ const EMBEDDED_SEPTEMBER_MONTH = {
   "memoryRevision": 0,
   "materials": [
     {
-      "title": "Team 6 CFA｜PME Pension Impact Investing Pitch (25% Group Case)",
+      "title": "Team 6 · PME Pension Fund Impact Investing Pitch (25% Group Case)",
       "type": "case_inspiration",
       "file": "/cfa/materials/2026-09/Team-6-PME-Pension-Impact-Investing-Pitch.md",
-      "notes": "Team 6 专属 25% 大作业答辩全案：标的为 ASML 所在的 PME 养老基金；包含 Q1–Q3 论证、10 页 PPT 分工架构及教授发难防守反击卡；支持一键复制给 GPT 或组员。"
+      "notes": "Team 6's 25% group-case brief: an impact investing pitch for the PME pension fund, using ASML as the company context. Includes the Q1–Q3 argument, a 10-slide presentation plan, and responses to likely faculty challenges."
     },
     {
-      "title": "September CFA｜Knowledge Map + GPT Copy Pack",
+      "title": "September CFA · Knowledge Map & GPT Copy Pack",
       "type": "course_overview",
       "file": "/cfa/materials/2026-09/2026-09-cfa-knowledge-map-gpt-pack.md",
-      "notes": "五天知识依赖图、16 项阅读证据状态、核心术语、integrated case 分析顺序与 GPT 教学指令；打开后可一键复制完整 Markdown。"
+      "notes": "A five-day dependency map, evidence status for 16 readings, core vocabulary, the integrated-case sequence, and GPT prompts for guided study."
     },
     {
-      "title": "Day 1｜Financial Management",
+      "title": "Day 1 · Financial Management",
       "type": "daily_course_intro",
       "file": "/cfa/materials/2026-09/days/2026-09-07-financial-management.md",
-      "notes": "严格按 Syllabus 的 Financial Management outcomes：先建地图再学习投资/融资、金融市场、risk-return、diversification、derivatives 与 financial risk management；Nocco & Stulz 只作 Day 3 ERM 的桥接。"
+      "notes": "A syllabus-aligned route through investment and financing choices, financial markets, risk-return, diversification, derivatives and financial risk management, with Nocco & Stulz used as the bridge into Day 3 ERM."
     },
     {
-      "title": "Day 2｜Compliance & Sustainability Reporting",
+      "title": "Day 2 · Compliance & Sustainability Reporting",
       "type": "daily_course_intro",
       "file": "/cfa/materials/2026-09/days/2026-09-08-compliance-sustainability.md",
-      "notes": "VW、ING、COSO、Estra 与 ESRS：从合规失效到双重重要性。"
+      "notes": "Volkswagen, ING, COSO, Estra and ESRS: from compliance breakdowns to double materiality."
     },
     {
-      "title": "Day 3｜Financial Accounting, ERM & Governance",
+      "title": "Day 3 · Financial Accounting, ERM & Governance",
       "type": "daily_course_intro",
       "file": "/cfa/materials/2026-09/days/2026-09-09-accounting-erm-governance.md",
-      "notes": "财务信息、COSO、risk framework、NFR 与 DSM 年报。"
+      "notes": "Financial information, COSO, risk frameworks, non-financial risk and the DSM annual report."
     },
     {
-      "title": "Day 4｜Management Accounting & Strategic Control",
+      "title": "Day 4 · Management Accounting & Strategic Control",
       "type": "daily_course_intro",
       "file": "/cfa/materials/2026-09/days/2026-09-10-management-control.md",
-      "notes": "Tennessee Controls、创新控制与 purpose-driven organization。"
+      "notes": "Tennessee Controls, innovation control and the purpose-driven organisation."
     },
     {
-      "title": "Day 1 Podcast｜《第二张航海表》",
+      "title": "Day 1 Podcast · The Second Navigation Chart (Chinese audio)",
       "type": "podcast",
       "file": "https://media.turnpo.com/%E5%88%A9%E6%B6%A6%E8%83%8C%E5%90%8E%E7%9A%84%E7%94%9F%E6%AD%BB%E5%B1%80.m4a",
-      "notes": "Financial Management：用一项看似高利润的投资，串起价值、现金流、机会成本与风险承担。"
+      "notes": "Financial Management: a story about how value, cash flow, opportunity cost and risk-taking shape an apparently attractive investment."
     },
     {
-      "title": "Day 1 Podcast｜English version",
+      "title": "Day 1 Podcast · English version",
       "type": "podcast",
       "file": "https://media.turnpo.com/day1-en.m4a",
       "notes": "English retelling of the Day 1 fable on investment value, cash flow, opportunity cost, and risk."
     },
     {
-      "title": "Day 2 Podcast｜《那张干净的检查表》",
+      "title": "Day 2 Podcast · The Clean Checklist (Chinese audio)",
       "type": "podcast",
       "file": "https://media.turnpo.com/%E9%82%A3%E5%BC%A0%E5%B9%B2%E5%87%80%E7%9A%84%E6%A3%80%E6%9F%A5%E8%A1%A8.m4a",
-      "notes": "Compliance & Sustainability Reporting：一张满是勾的检查表，为什么仍然可能掩盖风险与责任断点。"
+      "notes": "Compliance & Sustainability Reporting: why a checklist full of ticks can still hide risk and breaks in accountability."
     },
     {
-      "title": "Day 2 Podcast｜English version",
+      "title": "Day 2 Podcast · English version",
       "type": "podcast",
       "file": "https://media.turnpo.com/day2-en.m4a",
       "notes": "English retelling of the Day 2 fable on compliance, evidence, sustainability reporting, and leadership."
     },
     {
-      "title": "Day 3 Podcast｜《披萨店后厨的三块白板》",
+      "title": "Day 3 Podcast · Three Whiteboards in the Pizza Kitchen (Chinese audio)",
       "type": "podcast",
       "file": "https://media.turnpo.com/day-3-three-whiteboards.m4a",
-      "notes": "Financial Accounting, ERM & Governance：用披萨店的三块白板，串起利润、现金、风险与治理。"
+      "notes": "Financial Accounting, ERM & Governance: three whiteboards in a pizza kitchen connect profit, cash, risk and governance."
     },
     {
-      "title": "Day 3 Podcast｜English version",
+      "title": "Day 3 Podcast · English version",
       "type": "podcast",
       "file": "https://media.turnpo.com/day3-en.m4a",
       "notes": "English retelling of the Day 3 fable on profit, cash, risk, and governance."
     },
     {
-      "title": "Day 4 Podcast｜《第三勺红油》",
+      "title": "Day 4 Podcast · The Third Spoon of Chilli Oil (Chinese audio)",
       "type": "podcast",
       "file": "https://media.turnpo.com/day-4-data-all-green.m4a",
-      "notes": "Management Accounting & Strategic Control：当指标全绿时，为什么组织仍可能失去真正的判断与行动能力。"
+      "notes": "Management Accounting & Strategic Control: why an organisation can lose its judgement and ability to act even when every metric is green."
     },
     {
-      "title": "Day 4 Podcast｜Why Accurate Metrics Sabotage Your Strategy",
+      "title": "Day 4 Podcast · Why Accurate Metrics Sabotage Your Strategy",
       "type": "podcast",
       "file": "https://media.turnpo.com/day4-en.m4a",
       "notes": "English retelling of the Day 4 fable on metrics, control, innovation, and purpose."
     },
     {
-      "title": "Day 5 Podcast｜《通过率最高的驾校》",
+      "title": "Day 5 Podcast · The Driving School with the Highest Pass Rate (Chinese audio)",
       "type": "podcast",
       "file": "https://media.turnpo.com/%E4%B8%9A%E7%BB%A9%E6%A6%9C%E5%8D%95%E7%9A%84%E7%8C%AB%E8%85%BB.m4a",
-      "notes": "Financial Management & Mutual Fund Comparison：比较基金业绩时，怎样看见样本、风险、成本与投资者适配。"
+      "notes": "Financial Management & Mutual Fund Comparison: how to see sample selection, risk, cost and investor fit when comparing fund performance."
     },
     {
-      "title": "Day 5 Podcast｜English version",
+      "title": "Day 5 Podcast · English version",
       "type": "podcast",
       "file": "https://media.turnpo.com/day5-en.m4a",
       "notes": "English retelling of the Day 5 fable on fund-performance comparison, risk, cost, and investor fit."
     },
     {
-      "title": "Day 5｜Financial Management Integration & Presentation",
+      "title": "Day 5 · Financial Management Integration & Presentation",
       "type": "daily_course_intro",
       "file": "/cfa/materials/2026-09/days/2026-09-11-financial-management-integration.md",
-      "notes": "共同基金比较、整合判断与 group presentation 准备。"
+      "notes": "Mutual-fund comparison, integrated judgement and preparation for the group presentation."
     },
     {
-      "title": "Course Syllabus｜原始 PDF 与详细解读",
+      "title": "Course Syllabus · Original PDF & Detailed Guide",
       "type": "syllabus_guide",
       "file": "/cfa/materials/2026-09/September-26-Syllabus-Overview.md",
-      "notes": "原始 syllabus 入口，以及 6 ECTS 学习范围、五天日程、课程能力、16 项阅读、考核规则、出勤红线与高分策略。"
+      "notes": "The original syllabus, 6 ECTS scope, five-day schedule, learning outcomes, 16 readings, assessment rules, attendance requirements and high-scoring strategies."
     },
     {
       "title": "September CFA reading checklist",
@@ -126,10 +126,10 @@ const EMBEDDED_SEPTEMBER_MONTH = {
       "notes": "Complete syllabus cross-check: 16 required readings, three sessions with no preparatory reading, access routes, and local-file status."
     },
     {
-      "title": "每日指定阅读｜16 个结构化网页",
+      "title": "Required Reading · 16 Structured Learning Pages",
       "type": "study_guide",
       "file": "/emba/reading.html",
-      "notes": "按 Day 1–5 排列：结构化讲解与原文阅读完全分开；点击“开始原文阅读”进入独立页面，英文段落点击后原位切换成中文。"
+      "notes": "Organised across Days 1–5, with structured learning cards kept separate from the source texts. Open the reading workspace for the full bilingual reading flow."
     },
     {
       "title": "COSO 2017 ERM Executive Summary",
@@ -212,14 +212,14 @@ const DAY_PAGE_PODCASTS = Object.freeze({
   "/cfa/materials/2026-09/days/2026-09-07-financial-management.md": {
     versions: [
       {
-        language: "中文",
-        title: "Day 1 Podcast｜《第二张航海表》",
-        description: "先听这个故事，再进入投资价值、现金流、机会成本与风险承担的判断。",
+        language: "Chinese",
+        title: "Day 1 Podcast · The Second Navigation Chart",
+        description: "Listen to the story before exploring investment value, cash flow, opportunity cost and risk-taking.",
         file: "https://media.turnpo.com/%E5%88%A9%E6%B6%A6%E8%83%8C%E5%90%8E%E7%9A%84%E7%94%9F%E6%AD%BB%E5%B1%80.m4a"
       },
       {
         language: "English",
-        title: "Day 1 Podcast｜English version",
+        title: "Day 1 Podcast · English version",
         description: "Listen to the English retelling before exploring investment value, cash flow, opportunity cost, and risk.",
         file: "https://media.turnpo.com/day1-en.m4a"
       }
@@ -228,14 +228,14 @@ const DAY_PAGE_PODCASTS = Object.freeze({
   "/cfa/materials/2026-09/days/2026-09-08-compliance-sustainability.md": {
     versions: [
       {
-        language: "中文",
-        title: "Day 2 Podcast｜《那张干净的检查表》",
-        description: "先听这个故事，再理解合规、证据链、可持续报告与财务领导力。",
+        language: "Chinese",
+        title: "Day 2 Podcast · The Clean Checklist",
+        description: "Listen to the story before exploring compliance, evidence chains, sustainability reporting and financial leadership.",
         file: "https://media.turnpo.com/%E9%82%A3%E5%BC%A0%E5%B9%B2%E5%87%80%E7%9A%84%E6%A3%80%E6%9F%A5%E8%A1%A8.m4a"
       },
       {
         language: "English",
-        title: "Day 2 Podcast｜English version",
+        title: "Day 2 Podcast · English version",
         description: "Listen to the English retelling before exploring compliance, evidence, sustainability reporting, and financial leadership.",
         file: "https://media.turnpo.com/day2-en.m4a"
       }
@@ -244,14 +244,14 @@ const DAY_PAGE_PODCASTS = Object.freeze({
   "/cfa/materials/2026-09/days/2026-09-09-accounting-erm-governance.md": {
     versions: [
       {
-        language: "中文",
-        title: "Day 3 Podcast｜《披萨店后厨的三块白板》",
-        description: "先听完这个故事，再进入利润、现金、风险与治理之间的关系。",
+        language: "Chinese",
+        title: "Day 3 Podcast · Three Whiteboards in the Pizza Kitchen",
+        description: "Listen to the story before connecting profit, cash, risk and governance.",
         file: "https://media.turnpo.com/day-3-three-whiteboards.m4a"
       },
       {
         language: "English",
-        title: "Day 3 Podcast｜English version",
+        title: "Day 3 Podcast · English version",
         description: "Listen to the English retelling before connecting profit, cash, risk, and governance.",
         file: "https://media.turnpo.com/day3-en.m4a"
       }
@@ -260,14 +260,14 @@ const DAY_PAGE_PODCASTS = Object.freeze({
   "/cfa/materials/2026-09/days/2026-09-10-management-control.md": {
     versions: [
       {
-        language: "中文",
-        title: "Day 4 Podcast｜《第三勺红油》",
-        description: "先听这个故事，再理解指标、控制、创新与 purpose 怎样放在同一个判断里。",
+        language: "Chinese",
+        title: "Day 4 Podcast · The Third Spoon of Chilli Oil",
+        description: "Listen to the story before connecting metrics, control, innovation and purpose in one strategic judgement.",
         file: "https://media.turnpo.com/day-4-data-all-green.m4a"
       },
       {
         language: "English",
-        title: "Day 4 Podcast｜Why Accurate Metrics Sabotage Your Strategy",
+        title: "Day 4 Podcast · Why Accurate Metrics Sabotage Your Strategy",
         description: "Listen to the English retelling before exploring metrics, control, innovation, and purpose in one strategic judgment.",
         file: "https://media.turnpo.com/day4-en.m4a"
       }
@@ -276,14 +276,14 @@ const DAY_PAGE_PODCASTS = Object.freeze({
   "/cfa/materials/2026-09/days/2026-09-11-financial-management-integration.md": {
     versions: [
       {
-        language: "中文",
-        title: "Day 5 Podcast｜《通过率最高的驾校》",
-        description: "先听这个故事，再理解比较基金业绩时，怎样看见样本、风险、成本与投资者适配。",
+        language: "Chinese",
+        title: "Day 5 Podcast · The Driving School with the Highest Pass Rate",
+        description: "Listen to the story before comparing fund performance through sample selection, risk, cost and investor fit.",
         file: "https://media.turnpo.com/%E4%B8%9A%E7%BB%A9%E6%A6%9C%E5%8D%95%E7%9A%84%E7%8C%AB%E8%85%BB.m4a"
       },
       {
         language: "English",
-        title: "Day 5 Podcast｜English version",
+        title: "Day 5 Podcast · English version",
         description: "Listen to the English retelling before comparing fund performance through sample, risk, cost, and investor fit.",
         file: "https://media.turnpo.com/day5-en.m4a"
       }
@@ -295,7 +295,7 @@ const state = {
   month: EMBEDDED_SEPTEMBER_MONTH,
   openBlockId: "",
   materialReader: null,
-  podcastLanguage: "中文"
+  podcastLanguage: "Chinese"
 };
 
 function escapeHtml(value) {
@@ -305,6 +305,16 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function resolveCfaUrl(value = "") {
+  const url = String(value || "").trim();
+  if (!url || window.location.protocol !== "file:" || !url.startsWith("/")) return url;
+  if (url.startsWith("/cfa/")) return new URL(`./${url.slice(5)}`, document.baseURI).href;
+  if (url.startsWith("/emba/")) return new URL(`../emba/${url.slice(6)}`, document.baseURI).href;
+  if (url.startsWith("/assets/")) return new URL(`../assets/${url.slice(8)}`, document.baseURI).href;
+  if (url === "/favicon.ico") return new URL("../favicon.ico", document.baseURI).href;
+  return url;
 }
 
 function asArray(value) {
@@ -346,7 +356,7 @@ function blockSummary(id, month) {
     return count ? `${count} photo${count === 1 ? "" : "s"}` : "No photos yet";
   }
   if (id === "reflection") {
-    return hasTextContent(month?.reflection) ? "综合反思" : "暂无个人思考";
+    return hasTextContent(month?.reflection) ? "Integrated reflection" : "No reflection yet";
   }
   if (id === "markdown") {
     return hasTextContent(month?.markdown) ? "Notes saved" : "No class notes yet";
@@ -357,17 +367,42 @@ function blockSummary(id, month) {
   }
   if (id === "preparation") {
     const count = materialsForSection(month, "preparation").filter(materialHasContent).length;
-    return count ? `${count} 个学习入口` : "暂无课前准备";
+    return count ? `${count} learning entries` : "No preparation yet";
   }
   if (id === "vocabulary") {
     const count = materialsForSection(month, "vocabulary").filter(materialHasContent).length;
-    return count ? "30 个术语 · IPA 音标" : "暂无专业词汇";
+    return count ? "30 terms · IPA pronunciation" : "No vocabulary yet";
   }
   if (id === "podcast") {
     const count = materialsForSection(month, "podcast").filter(materialHasContent).length;
-    return count ? `${count} 集课程音频` : "暂无课程音频";
+    return count ? `${count} audio episodes` : "No course audio yet";
   }
   return "";
+}
+
+function team6Material(month) {
+  return asArray(month?.materials).find((item) => item?.type === "case_inspiration" || /team\s*6/i.test(item?.title || ""));
+}
+
+function renderTeam6Feature(month) {
+  const item = team6Material(month);
+  if (!item) return "";
+  const title = item.title || "Team 6 · PME Pension Fund Impact Investing Pitch";
+  const notes = item.notes || "The integrated 25% group case: build and defend an impact investing recommendation for the PME pension fund.";
+  const action = isReadableMaterial(item.file)
+    ? `<button class="cfa-team6-cta" type="button" data-material-open="${escapeHtml(item.file)}" data-material-title="${escapeHtml(title)}" data-material-notes="${escapeHtml(notes)}">View Team 6 Pitch <span aria-hidden="true">→</span></button>`
+    : `<a class="cfa-team6-cta" href="${escapeHtml(item.file || "#")}" target="_blank" rel="noopener noreferrer">View Team 6 Pitch <span aria-hidden="true">→</span></a>`;
+  return `
+    <section class="cfa-team6-feature" aria-labelledby="cfaTeam6Title">
+      <div class="cfa-team6-badge" aria-hidden="true">T6</div>
+      <div class="cfa-team6-copy">
+        <p class="cfa-eyebrow">Team 6 · 25% group case</p>
+        <h3 id="cfaTeam6Title">PME Pension Fund · Impact Investing Pitch</h3>
+        <p>${escapeHtml(notes)}</p>
+      </div>
+      <div class="cfa-team6-cta-wrap">${action}</div>
+    </section>
+  `;
 }
 
 function blockTemplate(id, title, month) {
@@ -390,7 +425,7 @@ function renderOpenBlockPanel(month) {
   return `
     <article class="emba-block-panel" data-block-panel="${escapeHtml(state.openBlockId)}">
       <div class="emba-block-panel-nav">
-        <button class="emba-panel-back" type="button" data-block-close>← 返回课程入口</button>
+        <button class="emba-panel-back" type="button" data-block-close>← Back to course sections</button>
       </div>
       <div class="emba-block-body">${content}</div>
     </article>
@@ -409,19 +444,19 @@ function renderBlockContent(id, month) {
 
 function renderPodcasts(month) {
   const podcasts = materialsForSection(month, "podcast");
-  if (!podcasts.length) return `<p class="emba-empty-copy">暂无课程音频。</p>`;
+  if (!podcasts.length) return `<p class="emba-empty-copy">No course audio is available yet.</p>`;
   return `
     <div class="emba-podcast-list">
       ${podcasts.map((item) => `
         <article class="emba-podcast-card">
           <div class="emba-podcast-card-head">
-            <span class="emba-podcast-kicker">课程 Podcast</span>
+            <span class="emba-podcast-kicker">Course audio</span>
             <h3>${escapeHtml(item.title || "Podcast")}</h3>
             ${item.notes ? `<p>${escapeHtml(item.notes)}</p>` : ""}
           </div>
           <audio class="emba-podcast-player" controls controlsList="nodownload" preload="metadata">
             <source src="${escapeHtml(item.file)}" type="audio/mp4" />
-            你的浏览器暂不支持音频播放。
+            Your browser does not support audio playback.
           </audio>
         </article>
       `).join("")}
@@ -434,7 +469,7 @@ function renderPreparation(month) {
 }
 
 function isReadableMaterial(file = "") {
-  return /^\/emba\/materials\/.*\.md$/i.test(String(file || ""));
+  return /^\/(?:cfa|emba)\/materials\/.*\.md$/i.test(String(file || ""));
 }
 
 function isWebLearningPage(file = "") {
@@ -442,7 +477,7 @@ function isWebLearningPage(file = "") {
 }
 
 function externalMaterialLabel(file = "") {
-  return isWebLearningPage(file) ? "进入学习页 →" : "Open file";
+  return isWebLearningPage(file) ? "Open learning page →" : "Open file";
 }
 
 function renderMaterials(month, section = "materials") {
@@ -457,13 +492,13 @@ function renderMaterials(month, section = "materials") {
               <span class="emba-read-title">${escapeHtml(item.title || "Material")}</span>
               ${item.notes ? `<span class="emba-read-note">${escapeHtml(item.notes)}</span>` : ""}
             </div>
-            ${isReadableMaterial(item.file) ? `<span class="emba-read-action">阅读介绍 →</span>` : ""}
+            ${isReadableMaterial(item.file) ? `<span class="emba-read-action">Read overview →</span>` : ""}
           ${isReadableMaterial(item.file) ? `</button>` : `</div>`}
           ${item.file && !isReadableMaterial(item.file) ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener noreferrer">${externalMaterialLabel(item.file)}</a>` : ""}
         </li>
       `).join("")}
     </ul>
-  ` : `<p class="emba-empty-copy">No material yet.</p>`;
+  ` : `<p class="emba-empty-copy">No materials are available yet.</p>`;
 }
 
 function renderMaterialReader() {
@@ -474,16 +509,16 @@ function renderMaterialReader() {
   const podcastVersions = podcast?.versions || [];
   const selectedPodcast = podcastVersions.find((version) => version.language === state.podcastLanguage) || podcastVersions[0];
   const body = reader.loading
-    ? `<p class="emba-empty-copy">正在打开课程介绍…</p>`
+    ? `<p class="emba-empty-copy">Opening course material…</p>`
     : reader.error
-      ? `<p class="emba-empty-copy">无法打开这份介绍：${escapeHtml(reader.error)}</p>`
+      ? `<p class="emba-empty-copy">Unable to open this material: ${escapeHtml(reader.error)}</p>`
       : `<div class="emba-markdown-rendered">${markdownToHtml(reader.markdown || "", reader.file)}</div>`;
   return `
     <article class="emba-material-reader">
       ${selectedPodcast ? `
         <section class="emba-day-page-podcast" aria-label="${escapeHtml(selectedPodcast.language)} Podcast">
           <div class="emba-day-page-podcast-copy">
-            <span class="emba-day-page-podcast-kicker">课程 Podcast · ${escapeHtml(selectedPodcast.language)} · 建议先听</span>
+            <span class="emba-day-page-podcast-kicker">Course audio · ${escapeHtml(selectedPodcast.language)} · Recommended first listen</span>
             <div class="emba-podcast-language-toggle" role="group" aria-label="Podcast language">
               ${podcastVersions.map((version) => `<button type="button" class="${version.language === selectedPodcast.language ? "is-active" : ""}" data-podcast-language="${escapeHtml(version.language)}" aria-pressed="${String(version.language === selectedPodcast.language)}">${escapeHtml(version.language)}</button>`).join("")}
             </div>
@@ -500,14 +535,14 @@ function renderMaterialReader() {
       ` : ""}
       <div class="emba-material-reader-head">
         <div>
-          <span class="emba-month-kicker">课程介绍</span>
+          <span class="emba-month-kicker">Course overview</span>
           <h3>${escapeHtml(reader.title || "Material")}</h3>
           ${reader.notes ? `<p>${escapeHtml(reader.notes)}</p>` : ""}
         </div>
         <div class="emba-material-reader-actions">
           <div class="emba-material-utility-actions">
-            ${canCopy ? `<button class="emba-file-link emba-material-copy" type="button" data-material-copy>复制给 GPT</button>` : ""}
-            <button class="emba-file-link" type="button" data-material-back>← 返回资料</button>
+            ${canCopy ? `<button class="emba-file-link emba-material-copy" type="button" data-material-copy>Copy for GPT</button>` : ""}
+            <button class="emba-file-link" type="button" data-material-back>← Back to materials</button>
           </div>
           <span class="emba-material-copy-status" data-material-copy-status role="status" aria-live="polite"></span>
         </div>
@@ -519,11 +554,11 @@ function renderMaterialReader() {
 
 async function openMaterialReader(file, title = "Material", notes = "") {
   if (!isReadableMaterial(file)) return;
-  state.podcastLanguage = "中文";
+  state.podcastLanguage = "Chinese";
   state.materialReader = { file, title, notes, markdown: "", loading: true, error: "" };
   renderMonthDetail(state.month);
   try {
-    const response = await fetch(file, { cache: "no-store" });
+    const response = await fetch(resolveCfaUrl(file), { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const markdown = await response.text();
     if (state.materialReader?.file !== file) return;
@@ -572,7 +607,7 @@ function safeMarkdownLink(value = "", basePath = "") {
   const url = String(value || "").trim();
   if (!url || /^javascript:/i.test(url) || /^data:/i.test(url)) return "";
   if (url.startsWith("#")) return url;
-  if (url.startsWith("/") && !url.startsWith("//") && !url.includes("..")) return url;
+  if (url.startsWith("/") && !url.startsWith("//") && !url.includes("..")) return resolveCfaUrl(url);
   if (/^https?:\/\//i.test(url)) return url;
   if (!basePath) return url;
   try {
@@ -761,16 +796,23 @@ function renderMonthDetail(month) {
   if (!detail || !month) return;
   detail.dataset.mode = "read";
   detail.innerHTML = `
-    <div class="emba-month-kicker">${escapeHtml(formatMonth(month.month))}</div>
+    <div class="cfa-month-heading">
+      <div>
+        <p class="cfa-eyebrow">${escapeHtml(formatMonth(month.month))}</p>
+        <h3>Course materials and learning trail</h3>
+      </div>
+      <p>Use each section as a deliberate step: prepare, listen, read, reflect and apply.</p>
+    </div>
+    ${renderTeam6Feature(month)}
     ${renderOpenBlockPanel(month)}
     <div class="emba-block-grid">
-      ${materialsForSection(month, "podcast").some(materialHasContent) ? blockTemplate("podcast", "Podcast（课程音频）", month) : ""}
-      ${materialsForSection(month, "preparation").some(materialHasContent) ? blockTemplate("preparation", "课前准备", month) : ""}
-      ${materialsForSection(month, "vocabulary").some(materialHasContent) ? blockTemplate("vocabulary", "专业词汇", month) : ""}
-      ${blockTemplate("reflection", "Reflection（我的思考）", month)}
-      ${blockTemplate("memory", "照片", month)}
-      ${blockTemplate("material", "资料", month)}
-      ${blockTemplate("markdown", "课堂笔记（完全内容整合版）", month)}
+      ${materialsForSection(month, "preparation").some(materialHasContent) ? blockTemplate("preparation", "Schedule & daily materials", month) : ""}
+      ${materialsForSection(month, "podcast").some(materialHasContent) ? blockTemplate("podcast", "Course audio", month) : ""}
+      ${blockTemplate("material", "Materials & resources", month)}
+      ${blockTemplate("markdown", "Integrated class notes", month)}
+      ${blockTemplate("reflection", "Reflection", month)}
+      ${blockTemplate("memory", "Photos", month)}
+      ${materialsForSection(month, "vocabulary").some(materialHasContent) ? blockTemplate("vocabulary", "Professional vocabulary", month) : ""}
     </div>
   `;
 }
@@ -787,7 +829,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Attempt live refresh from /cfa/materials.json (bypassing /emba/ password gate)
   try {
-    const response = await fetch("/cfa/materials.json", { cache: "no-store" });
+    const response = await fetch(resolveCfaUrl("/cfa/materials.json"), { cache: "no-store" });
     if (response.ok) {
       const data = await response.json();
       if (data && data.month) {
@@ -795,8 +837,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderMonthDetail(state.month);
       }
     }
-  } catch (err) {
-    console.warn("CFA live refresh error, continuing with embedded data:", err);
+  } catch {
+    // Embedded data remains available when the live refresh is unavailable.
   }
 
   // Click delegation
@@ -823,6 +865,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const openMaterialBtn = event.target.closest("[data-material-open]");
     if (openMaterialBtn) {
+      if (!openMaterialBtn.closest("[data-block-panel]")) state.openBlockId = "material";
       const file = openMaterialBtn.dataset.materialOpen;
       const title = openMaterialBtn.dataset.materialTitle;
       const notes = openMaterialBtn.dataset.materialNotes;
@@ -851,7 +894,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         await navigator.clipboard.writeText(state.materialReader.markdown);
         const status = detail.querySelector("[data-material-copy-status]");
         if (status) {
-          status.textContent = "已复制完整内容，可直接发送给 GPT。";
+          status.textContent = "Copied the full material. Ready to paste into GPT.";
           setTimeout(() => { if (status) status.textContent = ""; }, 3000);
         }
       } catch {
@@ -864,7 +907,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.body.removeChild(ta);
         const status = detail.querySelector("[data-material-copy-status]");
         if (status) {
-          status.textContent = "已复制完整内容，可直接发送给 GPT。";
+          status.textContent = "Copied the full material. Ready to paste into GPT.";
           setTimeout(() => { if (status) status.textContent = ""; }, 3000);
         }
       }

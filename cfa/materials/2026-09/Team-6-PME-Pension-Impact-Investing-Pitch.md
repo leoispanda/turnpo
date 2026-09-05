@@ -1,4 +1,4 @@
-# Team 6 CFA Presentation｜PME Pension Fund Impact Investing Pitch
+# Team 6 CFA Presentation · PME Pension Fund Impact Investing Pitch
 
 > **Module**: Corporate Finance & Accounting (CFA) — September 2026
 > **Group**: Team 6 (Birgitta Nielsen, Mariaan Kempen, Jonathan Zart, Leo Yang)
@@ -54,14 +54,14 @@ Any external asset manager (e.g. MN, Robeco) proposing an impact mandate must pa
 3. **Gate 3: Audited Impact Verification (EU SFDR Art. 9 & GIIN IRIS+)**:
    * The fund must have a legally binding sustainable investment objective (SFDR Article 9).
    * Annual third-party audits on verifiable metrics: tons of $CO_2$ avoided, MWh of renewable energy generated, or clean-tech jobs created.
-4. **Gate 4: Verifiable Additionality (增量性)**:
+4. **Gate 4: Verifiable Additionality**:
    * The investment must pass the ex-ante additionality test: *"Would this positive environmental/social outcome have happened without PME’s primary capital injection?"*
 
 ---
 
 ### Question 3: Winning Asset Class — Why Private Markets Win
 
-| Asset Class | Additionality (增量性) | Governance & Control | Net Return & Yield | Board Verdict |
+| Asset Class | Additionality | Governance & Control | Net Return & Yield | Board Verdict |
 | :--- | :--- | :--- | :--- | :--- |
 | **Public Equities (Listed ESG Shares)** | **ZERO**. Secondary market trading transfers cash between investors; zero capital reaches company budgets. | Weak. Minority proxy voting. | High volatility; exposed to market beta. | ❌ **REJECT** (This is ESG screening, not impact investing). |
 | **Green / Sustainability Bonds** | **Low to Medium**. Ring-fenced proceeds, but subject to corporate fund fungibility and negative "Greenium" yield spread. | Minimal. Standard bond covenants. | Low yields; duration risk. | ⚠️ **SUPPLEMENTARY ONLY** |
