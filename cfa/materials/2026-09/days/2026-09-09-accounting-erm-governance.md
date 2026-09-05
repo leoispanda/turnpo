@@ -166,7 +166,7 @@ Syllabus 明确标注无 preparatory reading。课前只需复习三张报表之
 #### 原文与状态
 
 - [打开 COSO Executive Summary PDF](../readings/2017-COSO-ERM-Integrating-with-Strategy-and-Performance-Executive-Summary%20%281%29.pdf)
-- [进入 COSO Executive Summary 结构化学习页](/emba/reading.html?reading=coso-executive-summary)
+- [Open the COSO Executive Summary structured study card](../readings/summaries/coso-2017-erm-executive-summary.md)
 
 #### 框架及概述
 
@@ -177,7 +177,7 @@ Syllabus 明确标注无 preparatory reading。课前只需复习三张报表之
 #### 原文与状态
 
 - [打开 Grant Thornton PDF](../readings/ERM_Grant%20Thorton_2017-Risk%20Frameworks.pdf)
-- [进入 Grant Thornton 结构化学习页](/emba/reading.html?reading=grant-thornton-risk-frameworks)
+- [Open the Grant Thornton structured study card](../readings/summaries/grant-thornton-2017-risk-frameworks.md)
 
 #### 框架及概述
 
@@ -188,7 +188,7 @@ Syllabus 明确标注无 preparatory reading。课前只需复习三张报表之
 #### 原文与状态
 
 - [打开 Deloitte PDF](../readings/lu-managing-non-financial-risk-31082017.pdf)
-- [进入 Deloitte NFR 结构化学习页](/emba/reading.html?reading=deloitte-non-financial-risk)
+- [Open the Deloitte NFR structured study card](../readings/summaries/deloitte-2017-non-financial-risk.md)
 
 #### 框架及概述
 
@@ -199,7 +199,7 @@ Non-financial risk 包括运营中断、网络安全、数据泄露、员工行�
 #### 原文与状态
 
 - [打开 DSM 2021 Annual Report PDF](../readings/dsm-integrated-annual-report-2021.pdf)
-- [进入 DSM 指定页结构化学习页](/emba/reading.html?reading=dsm-governance-risk)
+- [Open the DSM assigned-pages study card](../readings/summaries/dsm-2021-corporate-governance-risk-management.md)
 - 指定范围仅为 pp. 123–146；不要把整份 309 页报告都当作 Wednesday 必读。
 
 #### 框架及概述

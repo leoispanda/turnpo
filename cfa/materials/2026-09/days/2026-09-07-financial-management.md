@@ -168,7 +168,7 @@ Debt 带来固定偿付、到期日和 covenant；equity 缓冲更大，却会�
 
 这份路径保留了我从「项目看起来会赚钱」到「公司是否值得把未来押在这艘船上」的理解变化，也把财务判断连接到我的职业位置、EMBA 与 PDC / Orion 的承诺时机。它不是课堂笔记的重复，而是以后回顾时可以重新走一遍的思考路线。
 
-[打开 Day 1｜Leo 学习路径与 Reflection](/emba/learning-path.html)
+[Open Day 1 · Leo's learning path and reflection](../reflections/2026-09-07-day-1-financial-management-leo-learning-path.md)
 
 | 回顾时间 | 从哪里开始 | 结束时应带走什么 |
 |---|---|---|
@@ -190,7 +190,7 @@ Debt 带来固定偿付、到期日和 covenant；equity 缓冲更大，却会�
 - ISBN 9781292470047；eISBN 9781292738048。
 - **对应阅读材料已有**：[打开你提供的第四版摘要 PDF](../readings/berk-demarzo-fourth-edition-summary.pdf)。它覆盖时间价值、NPV、资本预算、风险与资本成本、债务与股权、真实期权等 Day 1 的核心逻辑。
 - **版本边界**：这不是 2025 第六版完整教材，不能替代正式页码引用；第六版指定章节仍需从 Maastricht University Library、Canvas 或 Pearson 获取。
-- [进入 Berk 指定章节结构化学习页](/emba/reading.html?reading=berk-corporate-finance)
+- [Open the Berk structured study card](../readings/summaries/berk-demarzo-harford-2025-reading-roadmap.md)
 - [Pearson 版本页面](https://www.pearson.com/en-gb/subject-catalog/p/fundamentals-of-corporate-finance-global-edition/P200000012454/9781292470030)
 
 #### Syllabus 指定范围
@@ -276,7 +276,7 @@ Berk 为今天的前半段提供基础。它先教你辨认项目真正改变的
 #### 原文与状态
 
 - **原文已有**：[打开 Stulz (1996) PDF](../readings/Rethinking-Risk-Management-1cnhar7.pdf)
-- [进入 Stulz 结构化学习页](/emba/reading.html?reading=stulz-risk-management)
+- [Open the Stulz structured study card](../readings/summaries/stulz-1996-rethinking-risk-management.md)
 - 正式引用：*Journal of Applied Corporate Finance*, 9(3), 8–24。
 
 #### 阅读框架
@@ -326,7 +326,7 @@ Stulz 接在 Berk 之后，解释为什么一个原本有价值的项目仍可�
 #### 原文与状态
 
 - **正式 journal version 已有**：[打开 Nocco & Stulz (2006) PDF](../readings/Nocco-Stulz-2006-Enterprise-Risk-Management-Journal.pdf)
-- [进入 Nocco & Stulz 结构化学习页](/emba/reading.html?reading=nocco-stulz-erm)
+- [Open the Nocco & Stulz structured study card](../readings/summaries/nocco-stulz-2006-erm-theory-practice.md)
 - 另有 author-hosted accessible version：`184_nocco-u7sc9u.pdf`。
 
 #### 阅读框架

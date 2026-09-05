@@ -15,37 +15,43 @@ const EMBEDDED_SEPTEMBER_MONTH = {
       "title": "Team 6 · PME Pension Fund Impact Investing Pitch (25% Group Case)",
       "type": "case_inspiration",
       "file": "/cfa/materials/2026-09/Team-6-PME-Pension-Impact-Investing-Pitch.md",
-      "notes": "Team 6's 25% group-case brief: an impact investing pitch for the PME pension fund, using ASML as the company context. Includes the Q1–Q3 argument, a 10-slide presentation plan, and responses to likely faculty challenges."
+      "notes": "Complete Team 6 package for the 25% group case, focused on PME, the pension fund associated with ASML. Includes the Q1–Q3 argument structure, a 10-slide presentation framework, and preparation cards for challenging faculty questions.",
+      "cta": "Open Team 6 Pitch →"
     },
     {
       "title": "September CFA · Knowledge Map & GPT Copy Pack",
       "type": "course_overview",
       "file": "/cfa/materials/2026-09/2026-09-cfa-knowledge-map-gpt-pack.md",
-      "notes": "A five-day dependency map, evidence status for 16 readings, core vocabulary, the integrated-case sequence, and GPT prompts for guided study."
+      "notes": "The five-day knowledge map, evidence status for 16 readings, core vocabulary, integrated-case sequence, and GPT prompts for guided study.",
+      "cta": "Open Knowledge Map →"
     },
     {
       "title": "Day 1 · Financial Management",
       "type": "daily_course_intro",
       "file": "/cfa/materials/2026-09/days/2026-09-07-financial-management.md",
-      "notes": "A syllabus-aligned route through investment and financing choices, financial markets, risk-return, diversification, derivatives and financial risk management, with Nocco & Stulz used as the bridge into Day 3 ERM."
+      "notes": "A syllabus-aligned route through investment and financing choices, financial markets, risk-return, diversification, derivatives and financial risk management, with Nocco & Stulz used as the bridge into Day 3 ERM.",
+      "cta": "Open Day 1 Materials →"
     },
     {
       "title": "Day 2 · Compliance & Sustainability Reporting",
       "type": "daily_course_intro",
       "file": "/cfa/materials/2026-09/days/2026-09-08-compliance-sustainability.md",
-      "notes": "Volkswagen, ING, COSO, Estra and ESRS: from compliance breakdowns to double materiality."
+      "notes": "Volkswagen, ING, COSO, Estra and ESRS: understand how compliance failures can become material financial and strategic consequences.",
+      "cta": "Open Day 2 Materials →"
     },
     {
       "title": "Day 3 · Financial Accounting, ERM & Governance",
       "type": "daily_course_intro",
       "file": "/cfa/materials/2026-09/days/2026-09-09-accounting-erm-governance.md",
-      "notes": "Financial information, COSO, risk frameworks, non-financial risk and the DSM annual report."
+      "notes": "Financial information, COSO, risk frameworks, non-financial risk and the DSM annual report, connected to governance action.",
+      "cta": "Open Day 3 Materials →"
     },
     {
       "title": "Day 4 · Management Accounting & Strategic Control",
       "type": "daily_course_intro",
       "file": "/cfa/materials/2026-09/days/2026-09-10-management-control.md",
-      "notes": "Tennessee Controls, innovation control and the purpose-driven organisation."
+      "notes": "Tennessee Controls, innovation control and purpose-driven organisations, linked to the Team 6 case.",
+      "cta": "Open Day 4 Materials →"
     },
     {
       "title": "Day 1 Podcast · The Second Navigation Chart (Chinese audio)",
@@ -111,37 +117,43 @@ const EMBEDDED_SEPTEMBER_MONTH = {
       "title": "Day 5 · Financial Management Integration & Presentation",
       "type": "daily_course_intro",
       "file": "/cfa/materials/2026-09/days/2026-09-11-financial-management-integration.md",
-      "notes": "Mutual-fund comparison, integrated judgement and preparation for the group presentation."
+      "notes": "Mutual-fund comparison, integrated judgement and preparation for the group presentation.",
+      "cta": "Open Day 5 Materials →"
     },
     {
       "title": "Course Syllabus · Original PDF & Detailed Guide",
       "type": "syllabus_guide",
       "file": "/cfa/materials/2026-09/September-26-Syllabus-Overview.md",
-      "notes": "The original syllabus, 6 ECTS scope, five-day schedule, learning outcomes, 16 readings, assessment rules, attendance requirements and high-scoring strategies."
+      "notes": "The original syllabus, 6 ECTS scope, five-day schedule, learning outcomes, 16 readings, assessment rules, attendance requirements and high-scoring strategies.",
+      "cta": "Open Syllabus Guide →"
     },
     {
       "title": "September CFA reading checklist",
       "type": "monthly_index",
       "file": "/cfa/materials/2026-09/readings/README.md",
-      "notes": "Complete syllabus cross-check: 16 required readings, three sessions with no preparatory reading, access routes, and local-file status."
+      "notes": "Complete syllabus cross-check: 16 required readings, three sessions with no preparatory reading, access routes and local-file status.",
+      "cta": "Open Reading Checklist →"
     },
     {
-      "title": "Required Reading · 16 Structured Learning Pages",
+      "title": "Required Reading · 16 Structured Study Cards",
       "type": "study_guide",
-      "file": "/emba/reading.html",
-      "notes": "Organised across Days 1–5, with structured learning cards kept separate from the source texts. Open the reading workspace for the full bilingual reading flow."
+      "file": "/cfa/materials/2026-09/readings/summaries/README.md",
+      "notes": "Sixteen structured study cards organised across Days 1–5, kept separate from the source texts and clearly marked where the original is still to be obtained.",
+      "cta": "Open Study Cards →"
     },
     {
       "title": "COSO 2017 ERM Executive Summary",
       "type": "study_guide",
-      "file": "/emba/reading.html?reading=coso-executive-summary",
-      "notes": "Required ERM executive summary; use with the COSO study card to learn the five ERM components."
+      "file": "/cfa/materials/2026-09/readings/summaries/coso-2017-erm-executive-summary.md",
+      "notes": "Required ERM executive summary; use this local study card to learn the five ERM components and their evidence boundaries.",
+      "cta": "Open COSO Study Card →"
     },
     {
       "title": "Tennessee Controls: The Strategic Ranking Problem",
       "type": "case_study",
-      "file": "/emba/reading.html?reading=tennessee-controls",
-      "notes": "Required management accounting and control case (HBS 9-191-083, revised 2010)."
+      "file": "/cfa/materials/2026-09/readings/summaries/tennessee-controls-1991-rev-2010.md",
+      "notes": "Required management accounting and control case (HBS 9-191-083, revised 2010), with a local study card and source-PDF link.",
+      "cta": "Open Tennessee Case Card →"
     }
   ],
   "reflection": "September 2026 is the first core finance week. The learning goal is financial leadership: connect investment and financing choices, accounting information, performance control, enterprise risk, compliance and ESG reporting into one decision framework. The priority is not memorising isolated models, but using them to diagnose a real company and make a well-supported recommendation.",
@@ -204,9 +216,13 @@ const PREPARATION_MATERIAL_TYPES = new Set([
   "course_requirements",
   "daily_course_intro",
   "reading_learning_map",
-  "case_inspiration"
+  "case_inspiration",
+  "case_material",
+  "syllabus_guide",
+  "presentation_prep"
 ]);
 const PODCAST_MATERIAL_TYPE = "podcast";
+const FEATURED_COURSE_TYPES = new Set(["case_inspiration", "course_overview", "daily_course_intro"]);
 
 const DAY_PAGE_PODCASTS = Object.freeze({
   "/cfa/materials/2026-09/days/2026-09-07-financial-management.md": {
@@ -346,6 +362,38 @@ function materialsForSection(month, section = "materials") {
   return materials.filter((item) => !PREPARATION_MATERIAL_TYPES.has(item.type) && item.type !== "vocabulary" && item.type !== PODCAST_MATERIAL_TYPE);
 }
 
+function courseDayNumber(item) {
+  const match = String(item?.title || "").match(/\bDay\s+([1-5])\b/i);
+  return match ? Number(match[1]) : 99;
+}
+
+function featuredCourseMaterials(month) {
+  const materials = asArray(month?.materials);
+  const featured = [];
+  const seen = new Set();
+  const add = (item) => {
+    if (!item || seen.has(item.file)) return;
+    seen.add(item.file);
+    featured.push(item);
+  };
+
+  add(materials.find((item) => item?.type === "case_inspiration" || /team\s*6/i.test(item?.title || "")));
+  add(materials.find((item) => item?.type === "course_overview" || /knowledge\s*map/i.test(item?.title || "")));
+  materials
+    .filter((item) => item?.type === "daily_course_intro")
+    .sort((a, b) => courseDayNumber(a) - courseDayNumber(b))
+    .forEach(add);
+  return featured;
+}
+
+function isFeaturedCourseMaterial(item, month = state.month) {
+  return FEATURED_COURSE_TYPES.has(item?.type) && featuredCourseMaterials(month).some((featured) => featured.file === item.file);
+}
+
+function supportingPreparationMaterials(month) {
+  return materialsForSection(month, "preparation").filter((item) => !isFeaturedCourseMaterial(item, month));
+}
+
 function materialHasContent(item) {
   return Boolean(item && (item.title || item.file || item.notes));
 }
@@ -366,8 +414,8 @@ function blockSummary(id, month) {
     return count ? `${count} material${count === 1 ? "" : "s"}` : "No materials yet";
   }
   if (id === "preparation") {
-    const count = materialsForSection(month, "preparation").filter(materialHasContent).length;
-    return count ? `${count} learning entries` : "No preparation yet";
+    const count = supportingPreparationMaterials(month).filter(materialHasContent).length;
+    return count ? `${count} supporting guides` : "No supporting guides yet";
   }
   if (id === "vocabulary") {
     const count = materialsForSection(month, "vocabulary").filter(materialHasContent).length;
@@ -384,23 +432,115 @@ function team6Material(month) {
   return asArray(month?.materials).find((item) => item?.type === "case_inspiration" || /team\s*6/i.test(item?.title || ""));
 }
 
+function materialActionLabel(item) {
+  if (item?.cta) return item.cta;
+  if (item?.type === "case_inspiration" || /team\s*6/i.test(item?.title || "")) return "Open Team 6 Pitch →";
+  if (item?.type === "course_overview" || /knowledge\s*map/i.test(item?.title || "")) return "Open Knowledge Map →";
+  if (item?.type === "daily_course_intro") {
+    const day = courseDayNumber(item);
+    return day < 6 ? `Open Day ${day} Materials →` : "Open Daily Materials →";
+  }
+  if (item?.type === "vocabulary") return "Open Vocabulary →";
+  if (item?.type === "course_requirements") return "Open Self-Study Guide →";
+  if (item?.type === "reading_learning_map") return "Open Reading Map →";
+  if (item?.type === "case_material") return "Open Case Materials →";
+  if (item?.type === "presentation_prep") return "Open Presentation Prep →";
+  if (item?.type === "reflection_notes") return "Open Reflection →";
+  if (item?.type === "syllabus_guide") return "Open Syllabus Guide →";
+  if (item?.type === "monthly_index") return "Open Reading Checklist →";
+  if (item?.type === "study_guide") return "Open Study Card →";
+  if (item?.type === "case_study") return "Open Case Card →";
+  if (item?.type === "source_pdf") return "Open Source PDF →";
+  return isReadableMaterial(item?.file) ? "Open Material →" : "Open File →";
+}
+
+function materialOpenControl(item, className = "cfa-course-card-action") {
+  const label = materialActionLabel(item);
+  const title = item?.title || "Course material";
+  const notes = item?.notes || "";
+  if (isReadableMaterial(item?.file)) {
+    return `<button class="${className}" type="button" data-material-open="${escapeHtml(item.file)}" data-material-title="${escapeHtml(title)}" data-material-notes="${escapeHtml(notes)}">${escapeHtml(label)}</button>`;
+  }
+  if (item?.file) {
+    return `<a class="${className}" href="${escapeHtml(resolveCfaUrl(item.file))}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+  }
+  return `<span class="${className} is-disabled">${escapeHtml(label)}</span>`;
+}
+
 function renderTeam6Feature(month) {
   const item = team6Material(month);
   if (!item) return "";
   const title = item.title || "Team 6 · PME Pension Fund Impact Investing Pitch";
   const notes = item.notes || "The integrated 25% group case: build and defend an impact investing recommendation for the PME pension fund.";
   const action = isReadableMaterial(item.file)
-    ? `<button class="cfa-team6-cta" type="button" data-material-open="${escapeHtml(item.file)}" data-material-title="${escapeHtml(title)}" data-material-notes="${escapeHtml(notes)}">View Team 6 Pitch <span aria-hidden="true">→</span></button>`
-    : `<a class="cfa-team6-cta" href="${escapeHtml(item.file || "#")}" target="_blank" rel="noopener noreferrer">View Team 6 Pitch <span aria-hidden="true">→</span></a>`;
+    ? `<button class="cfa-team6-cta" type="button" data-material-open="${escapeHtml(item.file)}" data-material-title="${escapeHtml(title)}" data-material-notes="${escapeHtml(notes)}">Open Team 6 Pitch <span aria-hidden="true">→</span></button>`
+    : `<a class="cfa-team6-cta" href="${escapeHtml(resolveCfaUrl(item.file || "#"))}" target="_blank" rel="noopener noreferrer">Open Team 6 Pitch <span aria-hidden="true">→</span></a>`;
   return `
     <section class="cfa-team6-feature" aria-labelledby="cfaTeam6Title">
       <div class="cfa-team6-badge" aria-hidden="true">T6</div>
       <div class="cfa-team6-copy">
-        <p class="cfa-eyebrow">Team 6 · 25% group case</p>
+        <p class="cfa-eyebrow">Featured · Team 6 · 25% group case</p>
         <h3 id="cfaTeam6Title">PME Pension Fund · Impact Investing Pitch</h3>
         <p>${escapeHtml(notes)}</p>
       </div>
       <div class="cfa-team6-cta-wrap">${action}</div>
+    </section>
+  `;
+}
+
+function renderCourseToolkit(month) {
+  const item = featuredCourseMaterials(month).find((entry) => entry?.type === "course_overview");
+  if (!item) return "";
+  return `
+    <section class="cfa-course-toolkit" aria-labelledby="cfaToolkitTitle">
+      <div class="cfa-section-heading">
+        <div>
+          <p class="cfa-eyebrow">Course toolkit</p>
+          <h3 id="cfaToolkitTitle">Build the week before you study it.</h3>
+        </div>
+        <p>Start with the dependency map, evidence status, vocabulary and GPT prompts that hold the five-day course together.</p>
+      </div>
+      <article class="cfa-toolkit-card">
+        <div class="cfa-toolkit-mark" aria-hidden="true">MAP</div>
+        <div class="cfa-toolkit-copy">
+          <span class="cfa-card-kicker">September CFA</span>
+          <h4>${escapeHtml(item.title || "Knowledge Map + GPT Copy Pack")}</h4>
+          <p>${escapeHtml(item.notes || "A five-day knowledge map and guided-study pack.")}</p>
+        </div>
+        <div class="cfa-toolkit-action">${materialOpenControl(item, "cfa-course-card-action")}</div>
+      </article>
+    </section>
+  `;
+}
+
+function renderFiveDayJourney(month) {
+  const days = featuredCourseMaterials(month)
+    .filter((item) => item?.type === "daily_course_intro")
+    .sort((a, b) => courseDayNumber(a) - courseDayNumber(b));
+  if (!days.length) return "";
+  return `
+    <section class="cfa-course-journey" aria-labelledby="cfaJourneyTitle">
+      <div class="cfa-section-heading">
+        <div>
+          <p class="cfa-eyebrow">Five-day learning journey</p>
+          <h3 id="cfaJourneyTitle">Move from the decision to the defence.</h3>
+        </div>
+        <p>Each day has its own complete learning page. Open it here and keep the course trail inside the CFA hub.</p>
+      </div>
+      <div class="cfa-day-grid">
+        ${days.map((item) => {
+          const day = courseDayNumber(item);
+          const subject = String(item.title || `Day ${day}`).replace(/^\s*Day\s+[1-5]\s*[·|｜]\s*/i, "");
+          return `
+            <article class="cfa-day-card">
+              <div class="cfa-day-card-top"><span class="cfa-day-number">${String(day).padStart(2, "0")}</span><span class="cfa-card-kicker">Day ${day}</span></div>
+              <h4>${escapeHtml(subject)}</h4>
+              <p>${escapeHtml(item.notes || "Complete course material for this session.")}</p>
+              ${materialOpenControl(item, "cfa-course-card-action")}
+            </article>
+          `;
+        }).join("")}
+      </div>
     </section>
   `;
 }
@@ -438,6 +578,7 @@ function renderBlockContent(id, month) {
   if (id === "markdown") return renderMarkdown(month);
   if (id === "material") return renderMaterials(month);
   if (id === "preparation") return renderPreparation(month);
+  if (id === "vocabulary") return renderMaterials(month, "vocabulary");
   if (id === "podcast") return renderPodcasts(month);
   return "";
 }
@@ -465,7 +606,8 @@ function renderPodcasts(month) {
 }
 
 function renderPreparation(month) {
-  return renderMaterials(month, "preparation");
+  if (state.materialReader?.file) return renderMaterialReader();
+  return renderMaterialList(supportingPreparationMaterials(month));
 }
 
 function isReadableMaterial(file = "") {
@@ -477,12 +619,10 @@ function isWebLearningPage(file = "") {
 }
 
 function externalMaterialLabel(file = "") {
-  return isWebLearningPage(file) ? "Open learning page →" : "Open file";
+  return isWebLearningPage(file) ? "Open learning page →" : "Open source file →";
 }
 
-function renderMaterials(month, section = "materials") {
-  const materials = materialsForSection(month, section);
-  if (state.materialReader?.file) return renderMaterialReader();
+function renderMaterialList(materials) {
   return materials.length ? `
     <ul class="emba-read-list emba-material-read-list">
       ${materials.map((item) => `
@@ -492,13 +632,18 @@ function renderMaterials(month, section = "materials") {
               <span class="emba-read-title">${escapeHtml(item.title || "Material")}</span>
               ${item.notes ? `<span class="emba-read-note">${escapeHtml(item.notes)}</span>` : ""}
             </div>
-            ${isReadableMaterial(item.file) ? `<span class="emba-read-action">Read overview →</span>` : ""}
+            ${isReadableMaterial(item.file) ? `<span class="emba-read-action">${escapeHtml(materialActionLabel(item))}</span>` : ""}
           ${isReadableMaterial(item.file) ? `</button>` : `</div>`}
-          ${item.file && !isReadableMaterial(item.file) ? `<a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener noreferrer">${externalMaterialLabel(item.file)}</a>` : ""}
+          ${item.file && !isReadableMaterial(item.file) ? `<a class="emba-file-link" href="${escapeHtml(resolveCfaUrl(item.file))}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.cta || externalMaterialLabel(item.file))}</a>` : ""}
         </li>
       `).join("")}
     </ul>
   ` : `<p class="emba-empty-copy">No materials are available yet.</p>`;
+}
+
+function renderMaterials(month, section = "materials") {
+  if (state.materialReader?.file) return renderMaterialReader();
+  return renderMaterialList(materialsForSection(month, section));
 }
 
 function renderMaterialReader() {
@@ -535,7 +680,7 @@ function renderMaterialReader() {
       ` : ""}
       <div class="emba-material-reader-head">
         <div>
-          <span class="emba-month-kicker">Course overview</span>
+          <span class="emba-month-kicker">September 2026 CFA · Full material</span>
           <h3>${escapeHtml(reader.title || "Material")}</h3>
           ${reader.notes ? `<p>${escapeHtml(reader.notes)}</p>` : ""}
         </div>
@@ -804,9 +949,11 @@ function renderMonthDetail(month) {
       <p>Use each section as a deliberate step: prepare, listen, read, reflect and apply.</p>
     </div>
     ${renderTeam6Feature(month)}
+    ${renderCourseToolkit(month)}
+    ${renderFiveDayJourney(month)}
     ${renderOpenBlockPanel(month)}
     <div class="emba-block-grid">
-      ${materialsForSection(month, "preparation").some(materialHasContent) ? blockTemplate("preparation", "Schedule & daily materials", month) : ""}
+      ${supportingPreparationMaterials(month).some(materialHasContent) ? blockTemplate("preparation", "Supporting course toolkit", month) : ""}
       ${materialsForSection(month, "podcast").some(materialHasContent) ? blockTemplate("podcast", "Course audio", month) : ""}
       ${blockTemplate("material", "Materials & resources", month)}
       ${blockTemplate("markdown", "Integrated class notes", month)}

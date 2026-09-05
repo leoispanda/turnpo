@@ -1,10 +1,10 @@
 {
-  "updated": "2026-07-15",
+  "updated": "2026-09-05",
   "month": {
     "id": "2026-09",
     "month": "2026-09",
     "title": "September 2026",
-    "materialsRevision": 24,
+    "materialsRevision": 25,
     "reflectionRevision": 1,
     "followUpRevision": 0,
     "markdownRevision": 1,
@@ -14,37 +14,43 @@
         "title": "Team 6 · PME Pension Fund Impact Investing Pitch (25% Group Case)",
         "type": "case_inspiration",
         "file": "/cfa/materials/2026-09/Team-6-PME-Pension-Impact-Investing-Pitch.md",
-        "notes": "Team 6's 25% group-case brief: an impact investing pitch for the PME pension fund, using ASML as the company context. Includes the Q1–Q3 argument, a 10-slide presentation plan, and responses to likely faculty challenges."
+        "notes": "Complete Team 6 package for the 25% group case, focused on PME, the pension fund associated with ASML. Includes the Q1–Q3 argument structure, a 10-slide presentation framework, and preparation cards for challenging faculty questions. It is ready to copy into GPT or share with team members.",
+        "cta": "Open Team 6 Pitch →"
       },
       {
         "title": "September CFA · Knowledge Map & GPT Copy Pack",
         "type": "course_overview",
         "file": "/cfa/materials/2026-09/2026-09-cfa-knowledge-map-gpt-pack.md",
-        "notes": "A five-day dependency map, evidence status for 16 readings, core vocabulary, the integrated-case sequence, and GPT prompts for guided study."
+        "notes": "The five-day knowledge map, evidence status for 16 readings, core vocabulary, integrated-case sequence, and GPT prompts for guided study.",
+        "cta": "Open Knowledge Map →"
       },
       {
         "title": "Day 1 · Financial Management",
         "type": "daily_course_intro",
         "file": "/cfa/materials/2026-09/days/2026-09-07-financial-management.md",
-        "notes": "A syllabus-aligned route through investment and financing choices, financial markets, risk-return, diversification, derivatives and financial risk management, with Nocco & Stulz used as the bridge into Day 3 ERM."
+        "notes": "A syllabus-aligned route through investment and financing choices, financial markets, risk-return, diversification, derivatives and financial risk management, with Nocco & Stulz used as the bridge into Day 3 ERM.",
+        "cta": "Open Day 1 Materials →"
       },
       {
         "title": "Day 2 · Compliance & Sustainability Reporting",
         "type": "daily_course_intro",
         "file": "/cfa/materials/2026-09/days/2026-09-08-compliance-sustainability.md",
-        "notes": "Volkswagen, ING, COSO, Estra and ESRS: from compliance breakdowns to double materiality."
+        "notes": "Volkswagen, ING, COSO, Estra and ESRS: understand how compliance failures can become material financial and strategic consequences.",
+        "cta": "Open Day 2 Materials →"
       },
       {
         "title": "Day 3 · Financial Accounting, ERM & Governance",
         "type": "daily_course_intro",
         "file": "/cfa/materials/2026-09/days/2026-09-09-accounting-erm-governance.md",
-        "notes": "Financial information, COSO, risk frameworks, non-financial risk and the DSM annual report."
+        "notes": "Financial information, COSO, risk frameworks, non-financial risk and the DSM annual report, connected to governance action.",
+        "cta": "Open Day 3 Materials →"
       },
       {
         "title": "Day 4 · Management Accounting & Strategic Control",
         "type": "daily_course_intro",
         "file": "/cfa/materials/2026-09/days/2026-09-10-management-control.md",
-        "notes": "Tennessee Controls, innovation control and the purpose-driven organisation."
+        "notes": "Tennessee Controls, innovation control and purpose-driven organisations, linked to the Team 6 case.",
+        "cta": "Open Day 4 Materials →"
       },
       {
         "title": "Day 1 Podcast · The Second Navigation Chart (Chinese audio)",
@@ -110,37 +116,92 @@
         "title": "Day 5 · Financial Management Integration & Presentation",
         "type": "daily_course_intro",
         "file": "/cfa/materials/2026-09/days/2026-09-11-financial-management-integration.md",
-        "notes": "Mutual-fund comparison, integrated judgement and preparation for the group presentation."
+        "notes": "Mutual-fund comparison, integrated judgement and preparation for the group presentation.",
+        "cta": "Open Day 5 Materials →"
       },
       {
         "title": "Course Syllabus · Original PDF & Detailed Guide",
         "type": "syllabus_guide",
         "file": "/cfa/materials/2026-09/September-26-Syllabus-Overview.md",
-        "notes": "The original syllabus, 6 ECTS scope, five-day schedule, learning outcomes, 16 readings, assessment rules, attendance requirements and high-scoring strategies."
+        "notes": "The original syllabus, 6 ECTS scope, five-day schedule, learning outcomes, 16 readings, assessment rules, attendance requirements and high-scoring strategies.",
+        "cta": "Open Syllabus Guide →"
       },
       {
         "title": "September CFA reading checklist",
         "type": "monthly_index",
         "file": "/cfa/materials/2026-09/readings/README.md",
-        "notes": "Complete syllabus cross-check: 16 required readings, three sessions with no preparatory reading, access routes, and local-file status."
+        "notes": "Complete syllabus cross-check: 16 required readings, three sessions with no preparatory reading, access routes and local-file status.",
+        "cta": "Open Reading Checklist →"
       },
       {
-        "title": "Required Reading · 16 Structured Learning Pages",
+        "title": "Course Requirements & Self-Study Guide",
+        "type": "course_requirements",
+        "file": "/cfa/materials/2026-09/Course-Requirements-and-Self-Study-Guide.md",
+        "notes": "The five-day self-study route: what to read, what to produce, evidence boundaries and how each reading feeds the integrated case.",
+        "cta": "Open Self-Study Guide →"
+      },
+      {
+        "title": "Reading & Learning Map",
+        "type": "reading_learning_map",
+        "file": "/cfa/materials/2026-09/Reading-Learning-Map.md",
+        "notes": "A reading-by-reading map of the 16 assigned sources, their role in the course and the question each one should help you answer.",
+        "cta": "Open Reading Map →"
+      },
+      {
+        "title": "Team 6 Case Topic Inspiration",
+        "type": "case_material",
+        "file": "/cfa/materials/2026-09/Case-Topic-Inspiration.md",
+        "notes": "Case-selection and research prompts for turning a real company and investment question into a defensible finance recommendation.",
+        "cta": "Open Case Materials →"
+      },
+      {
+        "title": "Professional Vocabulary Guide",
+        "type": "vocabulary",
+        "file": "/cfa/materials/2026-09/Professional-Vocabulary-Guide.md",
+        "notes": "Key Corporate Finance and Accounting terms with pronunciation, plain-English meaning and case-use reminders.",
+        "cta": "Open Vocabulary →"
+      },
+      {
+        "title": "Day 4 Presentation Preparation · Audio Script",
+        "type": "presentation_prep",
+        "file": "/cfa/materials/2026-09/audio-scripts/day-4-management-control-gemini-audio-script.md",
+        "notes": "Presentation-preparation script connecting management control, metrics, innovation and purpose to the Team 6 case.",
+        "cta": "Open Presentation Prep →"
+      },
+      {
+        "title": "Day 1 Learning Path & Reflection",
+        "type": "reflection_notes",
+        "file": "/cfa/materials/2026-09/reflections/2026-09-07-day-1-financial-management-leo-learning-path.md",
+        "notes": "A personal Day 1 learning path and reflection that turns the finance concepts into repeatable decision practice.",
+        "cta": "Open Day 1 Reflection →"
+      },
+      {
+        "title": "Course Syllabus · Original PDF",
+        "type": "source_pdf",
+        "file": "/cfa/materials/2026-09/September-26 Syllabus CFA (1).pdf",
+        "notes": "The original September 2026 syllabus PDF, retained inside the CFA hub as the course source document.",
+        "cta": "Open Source PDF →"
+      },
+      {
+        "title": "Required Reading · 16 Structured Study Cards",
         "type": "study_guide",
-        "file": "/emba/reading.html",
-        "notes": "Organised across Days 1–5, with structured learning cards kept separate from the source texts. Open the reading workspace for the full bilingual reading flow."
+        "file": "/cfa/materials/2026-09/readings/summaries/README.md",
+        "notes": "Sixteen structured study cards organised across Days 1–5, kept separate from the source texts and clearly marked where the original is still to be obtained.",
+        "cta": "Open Study Cards →"
       },
       {
         "title": "COSO 2017 ERM Executive Summary",
         "type": "study_guide",
-        "file": "/emba/reading.html?reading=coso-executive-summary",
-        "notes": "Required ERM executive summary; use with the COSO study card to learn the five ERM components."
+        "file": "/cfa/materials/2026-09/readings/summaries/coso-2017-erm-executive-summary.md",
+        "notes": "Required ERM executive summary; use this local study card to learn the five ERM components and their evidence boundaries.",
+        "cta": "Open COSO Study Card →"
       },
       {
         "title": "Tennessee Controls: The Strategic Ranking Problem",
         "type": "case_study",
-        "file": "/emba/reading.html?reading=tennessee-controls",
-        "notes": "Required management accounting and control case (HBS 9-191-083, revised 2010)."
+        "file": "/cfa/materials/2026-09/readings/summaries/tennessee-controls-1991-rev-2010.md",
+        "notes": "Required management accounting and control case (HBS 9-191-083, revised 2010), with a local study card and source-PDF link.",
+        "cta": "Open Tennessee Case Card →"
       }
     ],
     "reflection": "September 2026 is the first core finance week. The learning goal is financial leadership: connect investment and financing choices, accounting information, performance control, enterprise risk, compliance and ESG reporting into one decision framework. The priority is not memorising isolated models, but using them to diagnose a real company and make a well-supported recommendation.",

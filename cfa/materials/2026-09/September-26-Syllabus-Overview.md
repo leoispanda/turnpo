@@ -97,7 +97,7 @@ Management control 不只是压成本。预算、绩效指标、ranking 和 ince
 - **Day 4** 进入组织内部，研究指标、排名、purpose 和创新控制如何塑造人的行为。
 - **Day 5** 把全部观点重新拉回 capital markets、投资产品与一项可陈述、可质疑的综合建议。
 
-网站里的 [Day 1–Day 5 每日学习页面](../../../../emba/) 已按这条顺序组织；每日页面才是你的主要学习入口，syllabus 解读用于确认范围和规则。
+The CFA hub's Day 1–Day 5 learning pages follow this sequence. Use the daily pages as the main study entry points; use this syllabus guide to confirm scope and rules.
 
 ## 4. 阅读要求：哪些必须读，哪些不需要额外寻找
 
