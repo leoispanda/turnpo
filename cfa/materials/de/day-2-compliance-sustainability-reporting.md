@@ -2,6 +2,8 @@
 
 > **Dienstag, 8. September 2026 · 08:30–19:00**
 
+## Kursmaterial
+
 ## Überblick
 
 Tag 2 untersucht, wie Regeln, Anreize, Kultur und Informationen finanzielle und strategische Ergebnisse beeinflussen. Compliance-Fälle und Sustainability Reporting zeigen, ob ein Control tatsächlich funktioniert, eine Aussage belegt ist und schlechte Nachrichten die richtigen Personen erreichen.
@@ -55,3 +57,74 @@ Der Gastvortrag **Leadership in Finance** hat laut Syllabus keine gesonderte vor
 - Ein Sustainability Claim muss auf Scope, Evidenz, Metric oder Target zurückführbar sein; Berichtssprache allein ist kein Beweis.
 - Compliance-Versagen betrifft oft auch Kultur, Eskalation und Accountability, nicht nur Verfahren.
 - Frage, welche Evidenz die Entscheidung ändern würde und ob die Organisation rechtzeitig handeln kann.
+
+## Selbststudium
+
+> Dies ist eine persönliche Selbststudiumsebene. Sie unterstützt die eigenständige Wiederholung und das Englisch für den Unterricht; sie ist keine zusätzliche Syllabus-Anforderung und kein offizielles Kursmaterial.
+
+### Konzeptioneller Lernpfad
+
+Verfolge eine Ausnahme von der Erwartung bis zur Managementreaktion:
+
+1. **Regel oder Erwartung** — die rechtliche, ethische, regulatorische oder öffentliche Zusage bestimmen.
+2. **Control** — daraus einen Verantwortlichen, Evidenz, eine Grenze und einen Review-Schritt machen.
+3. **Verhalten** — fragen, welcher Umsatz-, Kosten- oder Zeitdruck das Verhalten verändern kann.
+4. **Versagen** — Overrides, Backlogs, fehlende Daten, schwache Challenge oder zu frühen Abschluss suchen.
+5. **Folge** — das Versagen mit finanziellem, rechtlichem, operativem, reputationsbezogenem oder Stakeholder-Schaden verbinden.
+6. **Disclosure und Reaktion** — bestimmen, was berichtet wird, wer handelt und welche Schwelle Aktivität verlangsamt oder stoppt.
+
+### Verbindung der readings
+
+**COSO → Volkswagen → ING → Estra → KPMG**
+
+- COSO liefert den Rahmen: Strategy, Culture, Information, Performance und Review müssen verbunden sein.
+- Volkswagen zeigt, wie unmögliche Targets und schwache Challenge technische Arbeit in Deception verwandeln können.
+- ING zeigt, wie unbearbeitete Compliance-Backlogs zu Rechtskosten und Vertrauensverlust werden können.
+- Estra zeigt Sustainability Reporting als Organisationsarbeit mit Daten, Verantwortlichen und Routinen.
+- KPMG überträgt die Frage auf die ESRS-Praxis: Scope, Value-Chain Boundaries, IROs, Metrics und Evidenz müssen zusammenpassen.
+
+### Anwenden
+
+Wähle einen Prozess oder eine Sustainability Metric, die derzeit normal aussieht, und beantworte:
+
+1. Welche Zusage hat das Unternehmen gemacht, und wem gegenüber?
+2. Welches Wachstums-, Kosten- oder Geschwindigkeitsziel könnte Verhalten verzerren?
+3. Welcher Backlog, welche Ausnahme oder Boundary-Frage könnte im Bericht fehlen?
+4. Welche Evidenz würde zeigen, dass die Control in der Praxis funktioniert?
+5. Welche Schwelle gibt jemandem die Befugnis zu eskalieren, zu verlangsamen oder zu stoppen?
+
+### English Learning Support
+
+#### Key Terms
+
+| English | Simple meaning | How it is used |
+|---|---|---|
+| **compliance** — /kəmˈplaɪəns/ | Einhaltung rechtlicher, regulatorischer, ethischer und interner Regeln. | Prüfen, ob Compliance in täglichen Entscheidungen steckt, nicht nur in Policies. |
+| **due diligence** — /ˌdjuː ˈdɪlɪdʒəns/ | Untersuchung eines Kunden, eines Risikos und laufender Veränderungen. | Bei Kunden- und Gegenparteiprüfungen verwenden. |
+| **beneficial owner** — /ˌbenɪˈfɪʃl ˈəʊnə(r)/ | Person, die eine Einheit letztlich besitzt oder kontrolliert. | Den beneficial owner vor einer High-Risk-Beziehung identifizieren. |
+| **control override** — /kənˈtrəʊl ˌəʊvəˈraɪd/ | Umgehung einer Control oder Genehmigung. | Festhalten, wer sie warum umgangen hat und welche Evidenz folgte. |
+| **operating effectiveness** — /ˈɒpəreɪtɪŋ ɪˈfektɪvnəs/ | Ob eine Control im echten Betrieb konsequent funktioniert. | Eine Policy zeigt Design; Samples und Logs testen den Betrieb. |
+| **alert backlog** — /əˈlɜːt ˈbæklɒɡ/ | Ausgelöste Alerts, die noch untersucht und geschlossen werden müssen. | Ein alternder Backlog kann ein Frühwarnsignal sein. |
+| **escalation** — /ˌeskəˈleɪʃn/ | Weitergabe eines Problems an eine höhere Instanz nach Überschreiten einer Grenze. | Schwelle, Verantwortlichen und Reaktionszeit nennen. |
+| **double materiality** — /ˈdʌbl məˌtɪəriˈælɪti/ | Außenwirkung und finanzielle Wirkung gemeinsam beurteilen. | Impact Materiality von Auswirkungen auf den Enterprise Value trennen. |
+| **IRO** — /ˌaɪ ɑːr ˈəʊ/ | Impacts, Risks and Opportunities. | Bei der Verbindung einer ESRS-Disclosure mit Evidenz verwenden. |
+| **value chain** — /ˈvæljuː tʃeɪn/ | Upstream-, interne und Downstream-Aktivitäten innerhalb des Scopes. | Erklären, wo eine Auswirkung entsteht und wo die Boundary endet. |
+| **assurance** — /əˈʃʊərəns/ | Unabhängige Prüfung, die Vertrauen in Daten oder Disclosure erhöht. | Assurance kann keine Evidenz erzeugen, die nie gespeichert wurde. |
+
+#### Useful Ways to Say It
+
+> “The policy exists, but we have not yet shown operating effectiveness.”
+
+> “The materiality assessment should distinguish impact from financial risk.”
+
+> “The backlog is not just an operational issue; it is an escalation signal.”
+
+> “I would pause the activity until the evidence trail is complete.”
+
+### Studienpfad
+
+**10 min — Wiederholen:** Überblick, Erkenntnisse und die sechsstufige Ausnahmekette lesen.
+
+**30 min — Verstehen:** einen Fall mit Regel, Control, Verhalten, Folge und Reaktion verbinden.
+
+**60 min — Anwenden:** eine fünfzeilige Evidence Chain für einen realen Compliance- oder Reportingprozess erstellen.

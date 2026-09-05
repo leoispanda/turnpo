@@ -2,6 +2,8 @@
 
 > **Thursday 10 September 2026 · 08:30–19:00**
 
+## Course Material
+
 ## Overview
 
 Day 4 asks how management accounting and control systems shape behaviour. Use Tennessee Controls, innovation research and purpose-driven organisation research to distinguish useful discipline from false precision, gaming and loss of dialogue.
@@ -42,3 +44,74 @@ Use the four levers as an analytical lens for the BeFrank & Impact Investing cas
 - A ranking score is a starting point for questions, not a substitute for judgement.
 - Diagnostic measures should monitor execution; interactive controls should challenge assumptions and strategic uncertainty.
 - Belief and boundary systems work together: purpose needs limits, evidence and accountability.
+
+## Self-Study
+
+> This is a personal self-study layer. It supports independent review and classroom English; it is not an additional syllabus requirement or official course material.
+
+### Conceptual Learning Path
+
+Use Tennessee Controls to move from a score to a better management conversation:
+
+1. **Score** — identify what the ranking or KPI appears to measure.
+2. **Assumptions** — expose the forecasts, weights, thresholds and dependencies hidden inside it.
+3. **Behaviour** — ask how managers could game the metric or optimise the measured part at the expense of the purpose.
+4. **Dialogue** — challenge whether the original assumptions and strategic uncertainties still hold.
+5. **Four levers** — combine belief, boundary, diagnostic and interactive controls.
+6. **Learning and purpose** — use measures to support innovation while keeping ethical limits, evidence and accountability visible.
+
+The key question is: **How do managers influence behaviour without destroying initiative?** A control should help people learn and decide, not only punish variance.
+
+### Cross-Reading Connection
+
+**Tennessee Controls → Simons → Davila → Quinn & Thakor**
+
+- Tennessee Controls shows false precision, gaming, ignored interdependencies and the loss of dialogue.
+- Simons provides the four-lever language for balancing direction, boundaries, measurement and strategic uncertainty.
+- Davila treats early controls as information and learning mechanisms for innovation.
+- Quinn & Thakor add purpose: values can guide decisions when rules do not specify every situation, but purpose still needs boundaries and accountability.
+
+### Apply It
+
+Choose one important metric or ranking system and answer:
+
+1. What decision does it support, and what does it fail to measure?
+2. Which assumption or weight is most fragile?
+3. How might a manager improve the score without improving the real objective?
+4. Which diagnostic limit and which interactive question should leaders add?
+5. What belief or boundary should protect innovation and responsible behaviour?
+
+### English Learning Support
+
+#### Key Terms
+
+| English | Simple meaning | How it is used |
+|---|---|---|
+| **management control system** — /ˈmænɪdʒmənt kənˈtrəʊl ˈsɪstəm/ | Targets, measures, dialogue and accountability used to guide execution. | Treat it as a system, not as one KPI. |
+| **diagnostic control** — /ˌdaɪəɡˈnɒstɪk kənˈtrəʊl/ | Monitoring results and variance against known targets. | Use it for execution while checking what it leaves out. |
+| **interactive control** — /ˌɪntərˈæktɪv kənˈtrəʊl/ | Repeated management dialogue about strategic uncertainty. | Leaders use questions, not only dashboard review. |
+| **boundary system** — /ˈbaʊndəri ˈsɪstəm/ | Explicit ethical, risk and behavioural limits. | State what must not be traded away for growth. |
+| **belief system** — /bɪˈliːf ˈsɪstəm/ | Purpose, mission and values that guide attention and commitment. | Use it when rules cannot cover every decision. |
+| **false precision** — /fɔːls prɪˈsɪʒn/ | An uncertain judgement presented as an exact number. | Ask whether 82 is meaningfully better than 79. |
+| **gaming the metric** — /ˈɡeɪmɪŋ ðə ˈmetrɪk/ | Improving a score while weakening the underlying objective. | Look for behaviour that exploits the formula. |
+| **staged funding** — /steɪdʒd ˈfʌndɪŋ/ | Releasing resources through learning or milestone gates. | Preserve flexibility when an innovation case is uncertain. |
+| **strategic uncertainty** — /strəˈtiːdʒɪk ʌnˈsɜːtənti/ | Unknowns that could change the strategy or its assumptions. | Use interactive control to revisit them. |
+| **purpose-driven organisation** — /ˈpɜːpəs ˈdrɪvn ˌɔːɡənaɪˈzeɪʃn/ | An organisation guided by a credible reason for existing. | Connect purpose to behaviour, evidence and accountability. |
+
+#### Useful Ways to Say It
+
+> “The score is a starting point for dialogue, not a substitute for judgement.”
+
+> “This measure is easy to optimise, but it may be measuring the wrong behaviour.”
+
+> “I would keep the KPI as a guardrail and add an interactive review.”
+
+> “Purpose should guide the trade-off without becoming an excuse to ignore evidence.”
+
+### Study Path
+
+**10 min — Recall:** review the four levers and the takeaways.
+
+**30 min — Understand:** test one score for assumptions, gaming, interdependencies and missing dialogue.
+
+**60 min — Apply:** redesign the decision conversation with one diagnostic limit, one interactive question and one boundary.

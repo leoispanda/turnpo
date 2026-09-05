@@ -2,6 +2,8 @@
 
 > **Tuesday 8 September 2026 · 08:30–19:00**
 
+## Course Material
+
 ## Overview
 
 Day 2 examines how rules, incentives, culture and information affect financial and strategic outcomes. Use compliance cases and sustainability reporting to test whether a control is real, whether a claim is supported and whether bad news can reach the people who must act.
@@ -55,3 +57,74 @@ The Tuesday **Leadership in Finance** guest talk has no separate preparatory rea
 - A sustainability claim must be traceable to a defined scope, evidence, metric or target; reporting language alone is not proof.
 - Compliance failures are often failures of culture, escalation and accountability as well as failures of procedure.
 - Ask what evidence would change the decision, and whether the organisation can act on that evidence in time.
+
+## Self-Study
+
+> This is a personal self-study layer. It supports independent review and classroom English; it is not an additional syllabus requirement or official course material.
+
+### Conceptual Learning Path
+
+Trace an exception all the way from an expectation to a management response:
+
+1. **Rule or expectation** — identify the legal, ethical, regulatory or public commitment.
+2. **Control** — translate it into an owner, evidence, boundary and review step.
+3. **Behaviour** — ask what sales, cost or speed pressure may change how people act.
+4. **Failure** — look for overrides, backlogs, missing data, weak challenge or early closure.
+5. **Consequence** — connect the failure to financial, legal, operational, reputational or stakeholder harm.
+6. **Disclosure and response** — define what must be reported, who acts, and which threshold slows or stops activity.
+
+### Cross-Reading Connection
+
+**COSO → Volkswagen → ING → Estra → KPMG**
+
+- COSO supplies the frame: strategy, culture, information, performance and review must connect.
+- Volkswagen shows how impossible targets and weak challenge can turn technical work into deception.
+- ING shows how untreated compliance backlogs can become legal cost and loss of trust.
+- Estra shows that sustainability reporting is organisational work involving data, owners and routines.
+- KPMG brings the question to ESRS practice: scope, value-chain boundaries, IROs, metrics and evidence must align.
+
+### Apply It
+
+Choose one process or sustainability metric that currently looks normal and answer:
+
+1. What promise has the company made, and to whom?
+2. Which growth, cost or speed target could distort behaviour?
+3. What backlog, exception or boundary issue might be missing from the report?
+4. What evidence would show that the control operates in practice?
+5. Which threshold gives someone authority to escalate, slow or stop the activity?
+
+### English Learning Support
+
+#### Key Terms
+
+| English | Simple meaning | How it is used |
+|---|---|---|
+| **compliance** — /kəmˈplaɪəns/ | Keeping legal, regulatory, ethical and internal rules. | Ask whether compliance is part of daily decisions, not only policy. |
+| **due diligence** — /ˌdjuː ˈdɪlɪdʒəns/ | Investigation of a customer, risk and continuing changes. | Use it when discussing customer and counterparty checks. |
+| **beneficial owner** — /ˌbenɪˈfɪʃl ˈəʊnə(r)/ | Person who ultimately owns or controls an entity. | Identify the beneficial owner before accepting a high-risk relationship. |
+| **control override** — /kənˈtrəʊl ˌəʊvəˈraɪd/ | Bypassing a control or approval. | Record who overrode it, why and what evidence followed. |
+| **operating effectiveness** — /ˈɒpəreɪtɪŋ ɪˈfektɪvnəs/ | Whether a control works consistently in real operations. | A policy proves design; samples and logs test operation. |
+| **alert backlog** — /əˈlɜːt ˈbæklɒɡ/ | Triggered alerts waiting to be investigated and closed. | An ageing backlog can be an early risk indicator. |
+| **escalation** — /ˌeskəˈleɪʃn/ | Passing an issue to a higher authority after a limit is crossed. | State the threshold, owner and response time. |
+| **double materiality** — /ˈdʌbl məˌtɪəriˈælɪti/ | Assessing outward impact and financial impact together. | Separate impact materiality from effects on enterprise value. |
+| **IRO** — /ˌaɪ ɑːr ˈəʊ/ | Impacts, risks and opportunities. | Use the term when mapping an ESRS disclosure to evidence. |
+| **value chain** — /ˈvæljuː tʃeɪn/ | Upstream, internal and downstream activities in scope. | Explain where an impact occurs and where the boundary ends. |
+| **assurance** — /əˈʃʊərəns/ | Independent checking that increases trust in data or disclosure. | Assurance cannot create evidence that was never retained. |
+
+#### Useful Ways to Say It
+
+> “The policy exists, but we have not yet shown operating effectiveness.”
+
+> “The materiality assessment should distinguish impact from financial risk.”
+
+> “The backlog is not just an operational issue; it is an escalation signal.”
+
+> “I would pause the activity until the evidence trail is complete.”
+
+### Study Path
+
+**10 min — Recall:** reread the overview, takeaways and six-step exception chain.
+
+**30 min — Understand:** connect one case to rule, control, behaviour, consequence and response.
+
+**60 min — Apply:** build a five-line evidence chain for one real compliance or reporting process.

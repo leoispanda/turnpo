@@ -2,6 +2,8 @@
 
 > **Woensdag 9 september 2026 · 08:30–19:00**
 
+## Cursusmateriaal
+
 ## Overzicht
 
 Dag 3 verbindt financiële informatie, enterprise risk management en governance. Lees statements met aandacht voor judgement, volg hoe risico’s doelstellingen raken en maak ownership, challenge en escalatie zichtbaar.
@@ -49,3 +51,75 @@ De sessie **Financial Accounting & Analysis** en het bezoek van **Limburg Region
 - ERM begint bij doelstellingen en beslissingen, niet bij een losse lijst met risico’s.
 - Governance is een systeem van ownership, challenge, informatie en opvolging; het belooft niet dat risico verdwijnt.
 - Een bruikbare KRI heeft een eigenaar, een drempel en een reactie.
+
+## Zelfstudie
+
+> Dit is een persoonlijke zelfstudielaag. Zij ondersteunt zelfstandig herhalen en Engels voor de les; het is geen extra syllabusvereiste of officieel cursusmateriaal.
+
+### Conceptuele leerroute
+
+Gebruik deze volgorde om van een getal in een rapport naar managementactie te gaan:
+
+1. **Informatie** — identificeer de staat, het operationele record, de schatting of de disclosure die het feit levert.
+2. **Risico-identificatie** — vraag welke onzekerheid de doelstelling van de organisatie kan raken.
+3. **Risicobeoordeling** — toets waarschijnlijkheid, impact, timing, afhankelijkheden en de kwaliteit van het bewijs.
+4. **Governance** — wijs de first-line owner, second-line challenge en third-line assurance toe.
+5. **Actie** — stel een response, threshold, bevoegdheid en deadline vast.
+6. **Monitoring** — gebruik een KRI en follow-upbewijs om te zien of de reactie werkt.
+
+De accountingbrug is belangrijk: profit kan worden verantwoord voordat cash binnenkomt en een gerapporteerde balanspost kan meer dan één operationele verklaring hebben. Lees het getal, stel de schatting ter discussie en volg het gevolg naar ownership.
+
+### Verbinding tussen de readings
+
+**COSO → Grant Thornton → Deloitte → DSM**
+
+- COSO verbindt objectives, risk appetite, performance, information en review.
+- Grant Thornton vertaalt dit naar ownership, reporting en besluitvormingsprocessen.
+- Deloitte verbreedt het perspectief naar non-financial risks zoals conduct, cyber, third parties en reputatie.
+- DSM toetst wat een bedrijfsrapport kan tonen over governance en risk design en herinnert eraan dat disclosure geen bewijs is van dagelijkse werking.
+
+### Pas het toe
+
+Kies één KPI of statement item dat management vaak ziet en beantwoord:
+
+1. Uit welke financiële staat of welk operationeel record komt het?
+2. Welke schatting, definitie, timingkwestie of eenmalige gebeurtenis beïnvloedt de interpretatie?
+3. Welke strategische doelstelling of publieke missie kan het raken?
+4. Welke KRI-threshold vereist actie?
+5. Wie bezit de response, wie daagt haar uit en wie verifieert de afsluiting?
+
+### English Learning Support
+
+#### Key Terms
+
+| English | Simple meaning | How it is used |
+|---|---|---|
+| **accrual** — /əˈkruːəl/ | Een economische gebeurtenis boeken wanneer zij plaatsvindt, niet wanneer cash beweegt. | Gebruik dit om uit te leggen waarom profit en cash kunnen verschillen. |
+| **matching** — /ˈmætʃɪŋ/ | Kosten erkennen in de periode waarvan zij de omzet helpen creëren. | Controleer of de kosten bij de gerapporteerde omzet horen. |
+| **revenue recognition** — /ˈrevənjuː ˌrekəɡˈnɪʃn/ | Bepalen wanneer en voor welk bedrag omzet wordt geboekt. | Vraag welke performance obligation en welk bewijs de boeking dragen. |
+| **working capital** — /ˈwɜːkɪŋ ˈkæpɪtl/ | Operationele cash die vastzit in receivables, inventory en payables. | Groei kan cash verbruiken wanneer working capital toeneemt. |
+| **provision** — /prəˈvɪʒn/ | Schatting voor een verplichting met onzekere timing of omvang. | Stel de basis, timing en het bewijs van de voorziening ter discussie. |
+| **impairment** — /ɪmˈpeəmənt/ | Erkennen dat de realiseerbare waarde van een asset is gedaald. | Verbind de accounting entry met de operationele realiteit. |
+| **governance** — /ˈɡʌvənəns/ | Regelingen voor oversight, besluitvorming, challenge en accountability. | Leg uit wie beslist, wie uitdaagt en wie controleert. |
+| **oversight** — /ˈəʊvəsaɪt/ | Toezicht en challenge van management. | Oversight bepaalt richting en vervangt geen dagelijkse ownership. |
+| **risk appetite** — /rɪsk ˈæpətaɪt/ | Het soort en de hoeveelheid risico die voor doelen wordt geaccepteerd. | Vertaal dit naar limits, thresholds en acties. |
+| **key risk indicator (KRI)** — /kiː rɪsk ˈɪndɪkeɪtə(r)/ | Signaal dat risico zich opstapelt vóór er verlies is. | Definieer measure, owner, threshold en response. |
+| **reasonable assurance** — /ˈriːznəbl əˈʃʊərəns/ | Risico tot een redelijk niveau verlaagd, nooit tot nul. | Vermijd de claim dat een framework failure garandeert te voorkomen. |
+
+#### Useful Ways to Say It
+
+> “The accounting number is accurate, but the operational explanation is still uncertain.”
+
+> “This KRI should trigger action before the loss appears in the financial statements.”
+
+> “The first line owns the response; the second line challenges it.”
+
+> “The report describes the control design, not yet its operating effectiveness.”
+
+### Studiepad
+
+**10 min — Herhalen:** herhaal de drie-statenbrug, inzichten en de zesstappenkete.
+
+**30 min — Begrijpen:** volg één getal van informatie naar risico, governance en actie.
+
+**60 min — Toepassen:** schrijf een korte aanbeveling met owner, KRI-threshold en closure test.

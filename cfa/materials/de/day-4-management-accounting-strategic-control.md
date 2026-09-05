@@ -2,6 +2,8 @@
 
 > **Donnerstag, 10. September 2026 · 08:30–19:00**
 
+## Kursmaterial
+
 ## Überblick
 
 Tag 4 untersucht, wie Management Accounting und Controls Verhalten prägen. Tennessee Controls sowie die Forschung zu Innovation und Purpose-driven Organisations helfen, nützliche Disziplin von False Precision, Gaming und dem Verlust des Dialogs zu unterscheiden.
@@ -42,3 +44,74 @@ Nutze die vier Levers als Analyseframe für den Fall BeFrank & Impact Investing:
 - Ein Rankingscore ist ein Ausgangspunkt für Fragen, kein Ersatz für Urteilskraft.
 - Diagnostic Measures verfolgen die Umsetzung; Interactive Controls hinterfragen Annahmen und strategische Unsicherheit.
 - Belief- und Boundary-Systems gehören zusammen: Purpose braucht Grenzen, Evidenz und Accountability.
+
+## Selbststudium
+
+> Dies ist eine persönliche Selbststudiumsebene. Sie unterstützt die eigenständige Wiederholung und das Englisch für den Unterricht; sie ist keine zusätzliche Syllabus-Anforderung und kein offizielles Kursmaterial.
+
+### Konzeptioneller Lernpfad
+
+Nutze Tennessee Controls, um von einer Kennzahl zu einem besseren Managementgespräch zu gelangen:
+
+1. **Score** — bestimmen, was die Ranking-Kennzahl oder KPI scheinbar misst.
+2. **Annahmen** — Forecasts, Gewichte, Thresholds und Abhängigkeiten sichtbar machen.
+3. **Verhalten** — fragen, wie Manager die Metric gamen oder den messbaren Teil zulasten des eigentlichen Purpose optimieren könnten.
+4. **Dialog** — hinterfragen, ob ursprüngliche Annahmen und strategische Unsicherheiten noch gelten.
+5. **Vier Levers** — Belief, Boundary, Diagnostic und Interactive Controls verbinden.
+6. **Lernen und Purpose** — Measures zur Unterstützung von Innovation nutzen und ethische Grenzen, Evidenz und Accountability sichtbar halten.
+
+Die Kernfrage lautet: **Wie beeinflussen Manager Verhalten, ohne Initiative zu zerstören?** Eine Control sollte Menschen beim Lernen und Entscheiden helfen, nicht nur Abweichungen bestrafen.
+
+### Verbindung der readings
+
+**Tennessee Controls → Simons → Davila → Quinn & Thakor**
+
+- Tennessee Controls zeigt False Precision, Gaming, ignorierte Interdependencies und den Verlust des Dialogs.
+- Simons liefert die Sprache der vier Levers, um Richtung, Grenzen, Messung und strategische Unsicherheit auszubalancieren.
+- Davila versteht frühe Controls als Informations- und Lernmechanismen für Innovation.
+- Quinn & Thakor ergänzen Purpose: Werte können dort Orientierung geben, wo Regeln nicht ausreichen, aber Purpose braucht Grenzen und Accountability.
+
+### Anwenden
+
+Wähle eine wichtige Metric oder ein Ranking System und beantworte:
+
+1. Welche Entscheidung unterstützt sie, und was misst sie nicht?
+2. Welche Annahme oder welches Gewicht ist am fragilsten?
+3. Wie kann ein Manager den Score verbessern, ohne das eigentliche Ziel zu verbessern?
+4. Welche Diagnostic Limit und welche Interactive Question sollten Führungskräfte ergänzen?
+5. Welche Belief oder Boundary schützt Innovation und verantwortliches Verhalten?
+
+### English Learning Support
+
+#### Key Terms
+
+| English | Simple meaning | How it is used |
+|---|---|---|
+| **management control system** — /ˈmænɪdʒmənt kənˈtrəʊl ˈsɪstəm/ | Ziele, Measures, Dialog und Accountability zur Steuerung der Umsetzung. | Als System betrachten, nicht als einzelne KPI. |
+| **diagnostic control** — /ˌdaɪəɡˈnɒstɪk kənˈtrəʊl/ | Ergebnisse und Abweichungen gegen bekannte Targets überwachen. | Für die Umsetzung nutzen und prüfen, was außerhalb bleibt. |
+| **interactive control** — /ˌɪntərˈæktɪv kənˈtrəʊl/ | Wiederholter Managementdialog über strategische Unsicherheit. | Führungskräfte nutzen Fragen, nicht nur Dashboard Reviews. |
+| **boundary system** — /ˈbaʊndəri ˈsɪstəm/ | Explizite ethische, Risiko- und Verhaltensgrenzen. | Benennen, was nicht für Wachstum aufgegeben werden darf. |
+| **belief system** — /bɪˈliːf ˈsɪstəm/ | Purpose, Mission und Werte, die Aufmerksamkeit und Commitment lenken. | Verwenden, wenn Regeln nicht jede Entscheidung abdecken. |
+| **false precision** — /fɔːls prɪˈsɪʒn/ | Eine unsichere Einschätzung, die als exakte Zahl erscheint. | Fragen, ob 82 wirklich aussagekräftig besser als 79 ist. |
+| **gaming the metric** — /ˈɡeɪmɪŋ ðə ˈmetrɪk/ | Einen Score verbessern und dabei das eigentliche Ziel schwächen. | Nach Verhalten suchen, das die Formel ausnutzt. |
+| **staged funding** — /steɪdʒd ˈfʌndɪŋ/ | Ressourcen über Lern- oder Meilenstein-Gates freigeben. | Flexibilität bei unsicheren Innovationsfällen erhalten. |
+| **strategic uncertainty** — /strəˈtiːdʒɪk ʌnˈsɜːtənti/ | Unbekannte Faktoren, die Strategie oder Annahmen verändern können. | Interactive Control für die erneute Prüfung nutzen. |
+| **purpose-driven organisation** — /ˈpɜːpəs ˈdrɪvn ˌɔːɡənaɪˈzeɪʃn/ | Organisation mit einer glaubwürdigen Daseinsberechtigung als Orientierung. | Purpose mit Verhalten, Evidenz und Accountability verbinden. |
+
+#### Useful Ways to Say It
+
+> “The score is a starting point for dialogue, not a substitute for judgement.”
+
+> “This measure is easy to optimise, but it may be measuring the wrong behaviour.”
+
+> “I would keep the KPI as a guardrail and add an interactive review.”
+
+> “Purpose should guide the trade-off without becoming an excuse to ignore evidence.”
+
+### Studienpfad
+
+**10 min — Wiederholen:** die vier Levers und die wichtigsten Erkenntnisse wiederholen.
+
+**30 min — Verstehen:** einen Score auf Annahmen, Gaming, Interdependencies und fehlenden Dialog prüfen.
+
+**60 min — Anwenden:** das Entscheidungsgespräch mit einem Diagnostic Limit, einer Interactive Question und einer Boundary neu gestalten.

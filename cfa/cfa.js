@@ -887,6 +887,8 @@ function markdownToHtml(markdown = "", basePath = "") {
   let codeOpen = false;
   let paragraph = [];
   let tableRows = [];
+  let selfStudyOpen = false;
+  let detailsOpen = false;
 
   const flushParagraph = () => {
     if (!paragraph.length) return;
@@ -903,6 +905,16 @@ function markdownToHtml(markdown = "", basePath = "") {
     html.push("</ol>");
     orderedListOpen = false;
   };
+  const closeDetails = () => {
+    if (!detailsOpen) return;
+    flushParagraph();
+    closeList();
+    closeOrderedList();
+    flushTable();
+    html.push("</div></details>");
+    detailsOpen = false;
+  };
+  const isSelfStudyHeading = (value) => /^(?:self-study|zelfstudie|selbststudium)$/i.test(String(value || "").trim());
   const tableCells = (line) => String(line || "")
     .trim()
     .replace(/^\|/, "")
@@ -971,20 +983,43 @@ function markdownToHtml(markdown = "", basePath = "") {
       flushParagraph();
       closeList();
       closeOrderedList();
-      html.push(`<h3>${markdownInline(trimmed.slice(4), basePath)}</h3>`);
+      flushTable();
+      if (selfStudyOpen) {
+        closeDetails();
+        html.push(`<details class="cfa-self-study-details"><summary>${markdownInline(trimmed.slice(4), basePath)}</summary><div class="cfa-self-study-detail-body">`);
+        detailsOpen = true;
+      } else {
+        html.push(`<h3>${markdownInline(trimmed.slice(4), basePath)}</h3>`);
+      }
+      return;
+    }
+    if (trimmed.startsWith("#### ")) {
+      flushParagraph();
+      closeList();
+      closeOrderedList();
+      flushTable();
+      html.push(`<h4>${markdownInline(trimmed.slice(5), basePath)}</h4>`);
       return;
     }
     if (trimmed.startsWith("## ")) {
       flushParagraph();
       closeList();
       closeOrderedList();
-      html.push(`<h2>${markdownInline(trimmed.slice(3), basePath)}</h2>`);
+      flushTable();
+      closeDetails();
+      const headingText = trimmed.slice(3).trim();
+      selfStudyOpen = isSelfStudyHeading(headingText);
+      const headingClass = selfStudyOpen ? ` class="cfa-self-study-heading"` : "";
+      html.push(`<h2${headingClass}>${markdownInline(headingText, basePath)}</h2>`);
       return;
     }
     if (trimmed.startsWith("# ")) {
       flushParagraph();
       closeList();
       closeOrderedList();
+      flushTable();
+      closeDetails();
+      selfStudyOpen = false;
       html.push(`<h1>${markdownInline(trimmed.slice(2), basePath)}</h1>`);
       return;
     }
@@ -1027,6 +1062,7 @@ function markdownToHtml(markdown = "", basePath = "") {
   closeList();
   closeOrderedList();
   flushTable();
+  closeDetails();
   return html.join("\n");
 }
 

@@ -449,9 +449,23 @@ body {
   font-size: 24px;
 }
 
+.emba-markdown-rendered h2.cfa-self-study-heading {
+  margin-top: 54px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(155, 113, 50, 0.35);
+  color: var(--cfa-gold);
+}
+
 .emba-markdown-rendered h3 {
   margin: 24px 0 8px;
   font-size: 18px;
+}
+
+.emba-markdown-rendered h4 {
+  margin: 20px 0 8px;
+  color: var(--cfa-ink);
+  font-size: 16px;
+  line-height: 1.25;
 }
 
 .emba-markdown-rendered p {
@@ -511,6 +525,51 @@ body {
   background: var(--cfa-soft);
   color: var(--cfa-ink);
   font-weight: 750;
+}
+
+.cfa-self-study-details {
+  margin: 14px 0;
+  border: 1px solid rgba(155, 113, 50, 0.2);
+  border-radius: 14px;
+  background: rgba(248, 245, 239, 0.72);
+}
+
+.cfa-self-study-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 18px;
+  color: var(--cfa-ink);
+  font-size: 18px;
+  font-weight: 750;
+}
+
+.cfa-self-study-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.cfa-self-study-details summary::after {
+  flex: 0 0 auto;
+  color: var(--cfa-gold);
+  content: "+";
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.cfa-self-study-details[open] summary::after {
+  content: "−";
+}
+
+.cfa-self-study-detail-body {
+  padding: 0 18px 18px;
+}
+
+.cfa-self-study-detail-body > h4:first-child {
+  margin-top: 6px;
 }
 
 @media (max-width: 780px) {
