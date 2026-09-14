@@ -106,7 +106,7 @@ function renderDailyTop10Panel() {
             <h3>${escapeHtml(row.name || row.ticker)}</h3>
           </div>
           <strong>${escapeHtml(Number.isFinite(row.consensusTotal) ? row.consensusTotal.toFixed(2) : "--")}</strong>
-          <p>${escapeHtml(row.sector || "未分组")} · 目标仓位 ${escapeHtml(formatValuePct(Number(row.allocation_pct), "0.00%"))}</p>
+          <p>${escapeHtml(row.sector || "未分组")} · ${row.allocationKind === "NOT_ASSIGNED_RESEARCH_ONLY" ? "仓位待复核" : `目标仓位 ${escapeHtml(formatValuePct(Number(row.allocation_pct), "0.00%"))}`}</p>
           <span class="stock-daily-top10-action">${escapeHtml(row.frontDeskInstruction || row.status || "研究观察")}</span>
         </article>
       `).join("")}
@@ -302,16 +302,21 @@ function renderStrategySummary() {
 
 function actionRows(action) {
   const rows = state.data?.actions?.rows;
-  return Array.isArray(rows) ? rows.filter((row) => row.action === action) : [];
+  return Array.isArray(rows) ? rows.filter((row) => action === "REVIEW" && state.data?.actions?.researchOnly
+    ? ["BUY", "REVIEW"].includes(row.action) : row.action === action) : [];
 }
 
 function actionCount(action) {
+  if (action === "REVIEW") return actionRows(action).length;
   const counts = state.data?.actions?.counts;
   const key = action.toLowerCase();
   return Number.isFinite(counts?.[key]) ? counts[key] : actionRows(action).length;
 }
 
 function actionDetail(row) {
+  if (row.researchOnly || state.data?.actions?.researchOnly) {
+    return row.actionLabel || row.sourceInstruction || "研究信号，待人工复核";
+  }
   if (row.sourceInstruction === "HOLD_DROPPED_UP_DAY") return "上涨不卖";
   if (row.action === "BUY") return "通过完整 PDC 买入闸门";
   if (row.action === "HOLD") return "确认持仓，趋势仍完整";
@@ -351,7 +356,9 @@ function renderActionPanel() {
     return;
   }
   const groups = [
-    { action: "BUY", title: "买入", empty: "今日没有通过完整 PDC 买入闸门的标的。" },
+    actions.researchOnly
+      ? { action: "REVIEW", title: "新增观察 / 待复核", empty: "今日没有新增观察或待补资料标的。" }
+      : { action: "BUY", title: "买入", empty: "今日没有通过完整 PDC 买入闸门的标的。" },
     { action: "HOLD", title: "保留", empty: "当前没有需要保留的确认持仓。" },
     { action: "SELL", title: "卖出复核", empty: "当前没有需要卖出复核的确认持仓。" }
   ];
@@ -418,11 +425,21 @@ function mergeDailyTop10IntoRankFlow(historical, dailyTop10) {
       });
     });
   const days = [...daysByDate.values()].sort((left, right) => String(left.date).localeCompare(String(right.date)));
+  const latestDate = days.at(-1)?.date || historical.latestDate;
+  const useDailyMetadata = dailyTop10?.latestDate === latestDate;
   return {
     ...historical,
+    ...(useDailyMetadata ? {
+      source: dailyTop10.source,
+      verification: dailyTop10.verification,
+      publication: dailyTop10.publication,
+      generatedAt: dailyTop10.generatedAt,
+      actions: dailyTop10.actions,
+      portfolioAdvice: dailyTop10.portfolioAdvice
+    } : {}),
     dates: days.map((day) => day.date),
     days,
-    latestDate: days.at(-1)?.date || historical.latestDate
+    latestDate
   };
 }
 
