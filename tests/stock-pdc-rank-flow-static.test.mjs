@@ -18,14 +18,22 @@ assert.ok(indexHtml.includes('href="/stock-pdc/"'));
 assert.ok(redirects.includes("/stock-pdc /stock-pdc/ 301"));
 assert.ok(headers.includes("/stock-pdc/*"));
 
-assert.ok(stockHtml.includes("<title>我的股票 | Turnpo</title>"));
-assert.ok(stockHtml.includes('id="stockSimpleLists"'));
-assert.ok(stockHtml.includes('id="stockDaySelect"'));
+assert.ok(stockHtml.includes("<title>股票大作手 Top 20 | Turnpo</title>"));
+assert.ok(stockHtml.includes('id="stockRankList"'));
 assert.ok(!stockHtml.includes('id="stockActionPanel"'));
-assert.ok(!stockHtml.includes('id="stockRankList"'));
+assert.ok(!stockHtml.includes('id="stockDailyTop10Panel"'));
+assert.ok(stockHtml.includes("stock-color-wall"));
+assert.ok(stockHtml.includes("stock-color-panel"));
+assert.ok(stockHtml.includes("stock-rank-matrix-wrap"));
+assert.ok(stockHtml.includes("stock-bottom-home-btn"));
+assert.ok(stockHtml.includes("回到主页"));
+assert.ok(!stockHtml.includes('id="stockDateSelect"'));
+assert.ok(!stockHtml.includes('id="stockMatrix"'));
+assert.ok(!stockHtml.includes('id="stockFilterTabs"'));
+assert.ok(!stockHtml.includes("stock-meta-strip"));
 assert.ok(stockHtml.includes("/stock-pdc/stock-pdc.js"));
 
-assert.ok(stockJs.includes('fetch("/stock-pdc/daily-top10.json"'));
+assert.ok(stockJs.includes('fetch("/stock-pdc/rank-flow.json"'));
 assert.ok(stockJs.includes('const STOCK_PASSWORD = "emba2026";'));
 assert.ok(stockJs.includes("visibleDays"));
 assert.ok(stockJs.includes(".filter((day) => Array.isArray(day.rows) && day.rows.length)"));

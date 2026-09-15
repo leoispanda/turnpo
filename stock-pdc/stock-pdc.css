@@ -1367,38 +1367,3 @@ button.stock-bottom-home-btn:disabled {
     grid-template-columns: 1fr;
   }
 }
-
-/* Compact daily lists. The research data and access gate remain unchanged. */
-body { background: #f7f8fa; }
-.stock-simple-shell { width: min(100% - 48px, 1040px); margin: 0 auto; padding: 64px 0 28px; }
-.stock-simple-shell[hidden] { display: none; }
-.stock-simple-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 32px; }
-.stock-eyebrow { margin: 0 0 9px; color: #838a93; font-size: 10px; font-weight: 700; letter-spacing: .18em; }
-.stock-simple-heading h1 { margin: 0; color: #202830; font-size: clamp(26px, 4vw, 34px); font-weight: 650; letter-spacing: -.04em; }
-.stock-date-control { display: grid; gap: 7px; color: #858c95; font-size: 11px; }
-.stock-date-control select { min-width: 156px; border: 1px solid #e1e5e9; border-radius: 9px; background: #fff; color: #313b46; padding: 10px 32px 10px 12px; font: inherit; font-size: 13px; }
-.stock-simple-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
-.stock-simple-card { background: #fff; border: 1px solid #e7eaee; border-radius: 16px; overflow: hidden; box-shadow: 0 3px 14px #24334203; }
-.stock-simple-card-head { display: flex; justify-content: space-between; align-items: center; padding: 24px 24px 17px; }
-.stock-simple-card h2 { margin: 0; font-size: 18px; letter-spacing: -.03em; font-weight: 650; }
-.stock-list-count { color: #98a0a9; font-size: 12px; font-variant-numeric: tabular-nums; }
-.stock-simple-caption { margin: 0; padding: 0 24px 18px; font-size: 11px; color: #89929d; }
-.stock-simple-card ol { list-style: none; padding: 0 24px 8px; margin: 0; }
-.stock-simple-row { display: grid; grid-template-columns: 22px minmax(0,1fr) auto; align-items: center; gap: 12px; min-height: 64px; border-top: 1px solid #f0f2f4; }
-.stock-simple-rank { color: #abb2ba; font-size: 12px; font-variant-numeric: tabular-nums; }
-.stock-simple-name { display: block; color: #28323d; font-size: 15px; font-weight: 550; }
-.stock-simple-code { display: block; margin-top: 4px; color: #929ba5; font-size: 10px; letter-spacing: .035em; }
-.stock-simple-status { color: #81908b; font-size: 10px; white-space: nowrap; }
-.stock-simple-card[data-kind="sell"] .stock-simple-status { color: #ac8c73; }
-.stock-simple-empty { margin: 0; padding: 36px 24px 48px; color: #929ba5; font-size: 13px; text-align: center; }
-.stock-simple-footer { display: flex; justify-content: space-between; gap: 16px; margin-top: 26px; color: #a0a6af; font-size: 10px; }
-.stock-simple-footer a { color: #7f8993; text-decoration: none; }
-@media (max-width: 680px) {
-  .stock-simple-shell { width: calc(100% - 32px); padding-top: 32px; }
-  .stock-simple-heading { gap: 14px; margin-bottom: 24px; }
-  .stock-date-control select { min-width: 136px; }
-  .stock-simple-grid { grid-template-columns: 1fr; gap: 16px; }
-  .stock-simple-card-head { padding: 21px 20px 14px; }
-  .stock-simple-caption { padding-left: 20px; padding-right: 20px; }
-  .stock-simple-card ol { padding-left: 20px; padding-right: 20px; }
-}

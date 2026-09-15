@@ -454,8 +454,6 @@ function renderRankList() {
   const ranks = Array.from({ length: 20 }, (_, index) => index + 1);
   const droppedSlots = Array.from({ length: 10 }, (_, index) => index);
   list.innerHTML = `
-    ${renderStrategySummary()}
-    ${renderPublishedDecisionHistory()}
       <div class="stock-rank-matrix" style="--date-count: ${days.length}">
       <div class="stock-matrix-corner" aria-hidden="true"></div>
       ${days.map((day) => `
@@ -483,65 +481,19 @@ function renderRankList() {
   `;
 }
 
-function simpleStockLists(day) {
-  const target = [...(day?.rows || [])].sort((a, b) => Number(a.rank) - Number(b.rank)).slice(0, 10);
-  const advice = day?.portfolioAdvice;
-  const seen = new Set();
-  const byWeakest = (a, b) => {
-    const score = (row) => row.score !== null && row.score !== undefined && Number.isFinite(Number(row.score)) ? Number(row.score) : Infinity;
-    return score(a) - score(b) || String(a.ticker).localeCompare(String(b.ticker));
-  };
-  const sell = [
-    ...(advice?.sell || []).slice().sort(byWeakest).map(row => ({ ...row, listStatus: "待复核" })),
-    ...(advice?.sellWatch || []).slice().sort(byWeakest).map(row => ({ ...row, listStatus: "待确认" }))
-  ].filter(row => {
-    if (!row.ticker || seen.has(row.ticker)) return false;
-    seen.add(row.ticker);
-    return true;
-  }).slice(0, 10);
-  return { target, sell, hasSellData: Boolean(advice) };
-}
-
-function renderSimpleStockLists() {
-  const panel = $("#stockSimpleLists");
-  if (!panel) return;
-  const date = $("#stockDaySelect")?.value;
-  const day = (state.dailyTop10?.days || []).find(item => item.date === date);
-  const { target, sell, hasSellData } = simpleStockLists(day);
-  const card = (kind, title, caption, rows, empty) => `
-    <section class="stock-simple-card" data-kind="${kind}" aria-label="${title}">
-      <div class="stock-simple-card-head"><h2>${title}</h2><span class="stock-list-count">${rows.length} / 10</span></div>
-      <p class="stock-simple-caption">${caption}</p>
-      ${rows.length ? `<ol>${rows.map((row, index) => `
-        <li class="stock-simple-row">
-          <span class="stock-simple-rank">${String(index + 1).padStart(2, "0")}</span>
-          <div><span class="stock-simple-name">${escapeHtml(row.name || row.ticker)}</span><span class="stock-simple-code">${escapeHtml(row.ticker)}</span></div>
-          <span class="stock-simple-status">${escapeHtml(kind === "sell" ? row.listStatus : row.isHeld === true ? "已持有" : row.isHeld === false ? "未持有" : "")}</span>
-        </li>`).join("")}</ol>` : `<p class="stock-simple-empty">${empty}</p>`}
-    </section>`;
-  panel.innerHTML = `<div class="stock-simple-grid">
-    ${card("hold", "持有 Top10", "系统目标持仓", target, "当日暂无目标名单")}
-    ${card("sell", "卖出 Top10", "卖出复核 · 观察中的股票仍待确认", sell, hasSellData ? "当日没有卖出复核股票" : "当日未记录卖出名单")}
-  </div>`;
-}
-
 function renderDashboard() {
-  const select = $("#stockDaySelect");
-  const days = [...(state.dailyTop10?.days || [])]
-    .filter(day => isTradingWeekday(day.date) && Array.isArray(day.rows))
-    .sort((a, b) => String(b.date).localeCompare(String(a.date)));
-  const selected = select.value;
-  select.innerHTML = days.map(day => `<option value="${escapeHtml(day.date)}">${escapeHtml(day.date)}</option>`).join("");
-  select.value = days.some(day => day.date === selected) ? selected : days[0]?.date || "";
-  select.onchange = renderSimpleStockLists;
-  renderSimpleStockLists();
+  renderRankList();
 }
 
 async function loadData() {
-  const response = await fetch("/stock-pdc/daily-top10.json", { cache: "no-store" });
-  if (!response.ok) throw new Error(`无法加载股票名单 (${response.status})`);
-  state.dailyTop10 = await response.json();
-  state.data = state.dailyTop10;
+  const [rankResponse, dailyResponse] = await Promise.all([
+    fetch("/stock-pdc/rank-flow.json", { cache: "no-store" }),
+    fetch("/stock-pdc/daily-top10.json", { cache: "no-store" }).catch(() => null)
+  ]);
+  if (!rankResponse.ok) throw new Error(`Could not load rank-flow.json (${rankResponse.status})`);
+  state.data = await rankResponse.json();
+  if (dailyResponse?.ok) state.dailyTop10 = await dailyResponse.json().catch(() => null);
+  if (state.dailyTop10) state.data = mergeDailyTop10IntoRankFlow(state.data, state.dailyTop10);
   renderDashboard();
 }
 
@@ -579,7 +531,7 @@ function renderAccessState() {
   if (lock) lock.hidden = !granted;
   if (granted && !state.data) {
     loadData().catch((error) => {
-      const list = $("#stockSimpleLists");
+      const list = $("#stockRankList");
       if (list) list.innerHTML = `<div class="stock-empty">${escapeHtml(error.message)}</div>`;
     });
   }
