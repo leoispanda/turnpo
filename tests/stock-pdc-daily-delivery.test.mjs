@@ -30,7 +30,7 @@ assert.ok(actionHtml.includes("新增观察 / 待复核"));
 assert.ok(!actionHtml.includes("通过完整 PDC 买入闸门"));
 assert.ok(actionHtml.includes("川投能源"));
 assert.ok(actionHtml.includes("中远海控"));
-assert.equal(vm.runInContext('actionRows("REVIEW").length', context), 8);
+assert.equal(vm.runInContext('actionRows("REVIEW").length', context), daily.actions.counts.review);
 const dailyHtml = panels.get("#stockDailyTop10Panel").innerHTML;
 assert.ok(dailyHtml.includes("DEGRADED"));
 assert.ok(dailyHtml.includes("仓位待复核"));
