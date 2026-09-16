@@ -36,7 +36,7 @@ assert.ok(stockHtml.includes("/stock-pdc/stock-pdc.js"));
 assert.ok(stockJs.includes('fetch("/stock-pdc/rank-flow.json"'));
 assert.ok(stockJs.includes('const STOCK_PASSWORD = "emba2026";'));
 assert.ok(stockJs.includes("visibleDays"));
-assert.ok(stockJs.includes(".filter((day) => Array.isArray(day.rows) && day.rows.length)"));
+assert.ok(stockJs.includes('day.rows.length || day.kind === "DAILY_TOP10"'));
 assert.ok(stockJs.includes("isTradingWeekday"));
 assert.ok(stockJs.includes("weekday !== 0 && weekday !== 6"));
 assert.ok(stockJs.includes("weekdayLabel"));

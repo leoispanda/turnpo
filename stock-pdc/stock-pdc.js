@@ -11,7 +11,7 @@ const $ = (selector) => document.querySelector(selector);
 
 function visibleDays() {
   return (state.data?.days || [])
-    .filter((day) => Array.isArray(day.rows) && day.rows.length)
+    .filter((day) => Array.isArray(day.rows) && (day.rows.length || day.kind === "DAILY_TOP10"))
     .filter((day) => isTradingWeekday(day.date))
     .slice()
     .reverse();
@@ -68,7 +68,7 @@ function formatValuePct(value, fallback = "--") {
 
 function latestDailyTop10(data) {
   const days = (data?.days || [])
-    .filter((day) => isTradingWeekday(day.date) && Array.isArray(day.rows) && day.rows.length)
+    .filter((day) => isTradingWeekday(day.date) && Array.isArray(day.rows))
     .slice()
     .sort((left, right) => String(right.date).localeCompare(String(left.date)));
   return days[0] || null;
@@ -416,7 +416,7 @@ function renderPublishedDecisionHistory() {
 function mergeDailyTop10IntoRankFlow(historical, dailyTop10) {
   const daysByDate = new Map((historical.days || []).map((day) => [String(day.date), day]));
   (dailyTop10?.days || [])
-    .filter((day) => isTradingWeekday(day.date) && Array.isArray(day.rows) && day.rows.length)
+    .filter((day) => isTradingWeekday(day.date) && Array.isArray(day.rows))
     .forEach((day) => {
       daysByDate.set(String(day.date), {
         ...day,
