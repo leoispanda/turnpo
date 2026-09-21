@@ -385,6 +385,54 @@ body::before {
   align-items: start;
 }
 
+.emba-study-module {
+  display: grid;
+  gap: 18px;
+  padding: clamp(16px, 3vw, 28px);
+  border: 1px solid rgba(177, 138, 47, 0.18);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.emba-study-module + .emba-study-module {
+  margin-top: 16px;
+}
+
+.emba-study-module-head h2 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+
+.emba-study-module-head h2 span {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6e6e73;
+}
+
+.emba-study-module-head p {
+  margin: 8px 0 0;
+  color: #6e6e73;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.emba-video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 18px;
+}
+
+.emba-video-player {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  background: #171717;
+}
+
 .emba-content-block {
   display: grid;
   align-content: start;
@@ -1979,4 +2027,12 @@ body::before {
   .emba-timeline-title {
     transition: none;
   }
+}
+
+.emba-study-module .emba-content-block[data-block-id="videos"] {
+  grid-column: 1 / -1;
+}
+
+.emba-study-module .emba-content-block[data-block-id="podcast"] {
+  grid-column: auto;
 }

@@ -54,7 +54,7 @@ After entering the access code:
 5. Open `课堂笔记（完全内容整合版）` for the reviewed monthly learning record.
 6. Turn on `Edit mode` only when changing personal notes or month content; changes save locally first and sync to D1 when available.
 
-The page intentionally keeps only these four month cards. The knowledge section intentionally keeps one search input. That input searches index metadata, the full Markdown bodies, and current D1-backed Reflection and class-note text.
+September 2026 groups its cards into two modules: **Pre Study** (MapKAI videos, course podcasts, preparation/readings, and vocabulary) and **Post Study** (class notes, reflection, other materials, and photos). MapKAI video materials use `type: "mapkai_video"` or a MapKAI-labelled video title and retain their original links. The September video card includes the 12 existing MapKAI Corporate Finance videos (overview and Day 1–5), with inline playback and links to the original lessons for subtitles. Canonical MapKAI video entries survive older cloud-library overlays. Existing material editing remains available through the Post Study materials card. Other months keep their existing cards. The knowledge section intentionally keeps one search input. That input searches index metadata, the full Markdown bodies, and current D1-backed Reflection and class-note text.
 
 Uploaded files are stored in R2 and referenced by private `/api/emba/file/...` URLs.
 

@@ -582,7 +582,7 @@ function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
   const exactMaterials = (items) => asArray(items).map(normalizeMaterial).filter(materialHasContent);
   const exactMemories = (items) => asArray(items).map((item) => normalizeMemory(item, overlayMonth.month || baseMonth.month));
   const baseCourseEntries = exactMaterials(baseMonth.materials)
-    .filter((item) => item.type === "daily_course_intro" || item.type === PODCAST_MATERIAL_TYPE);
+    .filter((item) => item.type === "daily_course_intro" || item.type === PODCAST_MATERIAL_TYPE || item.type === "mapkai_video");
   const chosenMaterials = materialsWinner
     ? exactMaterials(materialsWinner === "base" ? baseMonth.materials : overlayMonth.materials)
     : mergeMaterialLists(baseMonth.materials, overlayMonth.materials);
@@ -590,7 +590,7 @@ function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
     ...baseMonth,
     ...overlayMonth,
     title: overlayMonth.title || baseMonth.title,
-    // Daily course pages and course podcasts are shipped with the site. Keep
+    // Daily course pages, course podcasts and MapKAI videos ship with the site. Keep
     // them visible even when the cloud library has a higher revision.
     materials: mergeMaterialLists(baseCourseEntries, chosenMaterials),
     materialsRevision: Math.max(normalizeRevision(baseMonth.materialsRevision), normalizeRevision(overlayMonth.materialsRevision)),
@@ -1247,12 +1247,31 @@ function renderTimeline() {
   renderMonthDetail(selectedMonth());
 }
 
+function isSeptemberStudy(month) {
+  return month?.month === "2026-09" || month?.id === "2026-09";
+}
+
+function isMapkaiVideo(item) {
+  return item.type === "mapkai_video"
+    || (/mapkai/i.test(`${item.title || ""} ${item.notes || ""} ${item.file || ""}`)
+      && (/video|视频/i.test(`${item.type || ""} ${item.title || ""} ${item.notes || ""}`)
+        || /\.(mp4|webm|mov)(?:[?#]|$)|youtu(?:be\.com|\.be)|vimeo\.com/i.test(item.file || "")));
+}
+
+function isPreparationMaterial(item, month) {
+  return PREPARATION_MATERIAL_TYPES.has(item.type)
+    || (isSeptemberStudy(month)
+      && ["syllabus_guide", "monthly_index", "study_guide", "case_study", "course_pack"].includes(item.type));
+}
+
 function materialsForSection(month, section = "materials") {
   const materials = asArray(month?.materials);
-  if (section === "preparation") return materials.filter((item) => PREPARATION_MATERIAL_TYPES.has(item.type));
-  if (section === "vocabulary") return materials.filter((item) => item.type === "vocabulary");
-  if (section === "podcast") return materials.filter((item) => item.type === PODCAST_MATERIAL_TYPE);
-  return materials.filter((item) => !PREPARATION_MATERIAL_TYPES.has(item.type) && item.type !== "vocabulary" && item.type !== PODCAST_MATERIAL_TYPE);
+  const videos = isSeptemberStudy(month) ? materials.filter(isMapkaiVideo) : [];
+  if (section === "videos") return videos;
+  if (section === "preparation") return materials.filter((item) => !videos.includes(item) && isPreparationMaterial(item, month));
+  if (section === "vocabulary") return materials.filter((item) => !videos.includes(item) && item.type === "vocabulary");
+  if (section === "podcast") return materials.filter((item) => !videos.includes(item) && item.type === PODCAST_MATERIAL_TYPE);
+  return materials.filter((item) => !videos.includes(item) && !isPreparationMaterial(item, month) && item.type !== "vocabulary" && item.type !== PODCAST_MATERIAL_TYPE);
 }
 
 function renderMaterials(month, section = "materials") {
@@ -1329,6 +1348,32 @@ function renderPodcasts(month) {
           </audio>
         </article>
       `).join("")}
+    </div>
+  `;
+}
+
+function renderMapkaiVideos(month) {
+  const videos = materialsForSection(month, "videos");
+  if (!videos.length) return `<p class="emba-empty-copy">尚未添加 MapKAI 视频。</p>`;
+  return `
+    <p class="emba-empty-copy">按课程总览、Day 1–5 的顺序预习，选择中文或英文版本。字幕可在 MapKAI 课程原页使用。</p>
+    <div class="emba-video-grid">
+      ${videos.map((item) => {
+        const day = item.file.match(/\/day-([1-5])-/)?.[1];
+        const courseUrl = `https://www.mapkai.com/zh/learning/corporate-finance/${day ? `day-${day}/#watch-lesson` : "#course-overview-media"}`;
+        return `
+          <article class="emba-podcast-card">
+            <div class="emba-podcast-card-head">
+              <h3>${escapeHtml(item.title)}</h3>
+              ${item.notes ? `<p>${escapeHtml(item.notes)}</p>` : ""}
+            </div>
+            ${/^https:\/\/media\.mapkai\.com\/finance\/[^\s]+\.mp4(?:\?[^\s]*)?$/.test(item.file)
+              ? `<video class="emba-video-player" controls playsinline preload="none" aria-label="${escapeHtml(item.title)}" src="${escapeHtml(item.file)}"></video>` : ""}
+            <a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener noreferrer">打开视频 →</a>
+            <a class="emba-file-link" href="${courseUrl}" target="_blank" rel="noopener noreferrer">在 MapKAI 中学习（含字幕） →</a>
+          </article>
+        `;
+      }).join("")}
     </div>
   `;
 }
@@ -1647,6 +1692,10 @@ function renderMemoryMoment(month) {
 }
 
 function blockSummary(id, month) {
+  if (id === "videos") {
+    const count = materialsForSection(month, "videos").filter(materialHasContent).length;
+    return count ? `${count} 个预习视频` : "待添加视频链接";
+  }
   if (id === "memory") {
     const count = asArray(month?.memoryMoment).filter((item) => normalizeMemory(item, month?.month).image).length;
     return count ? `${count} photo${count === 1 ? "" : "s"}` : "No photos yet";
@@ -1679,6 +1728,10 @@ function blockSummary(id, month) {
 }
 
 function renderBlockContent(id, month) {
+  if (id === "videos") {
+    if (isEditMode()) return `<p class="emba-empty-copy">请在 Post Study 的“资料”入口管理文件；标注为 MapKAI 视频的资料会自动归入 Pre Study。</p>`;
+    return renderMapkaiVideos(month);
+  }
   if (id === "memory") return renderMemoryMoment(month);
   if (id === "reflection") return renderReflection(month);
   if (id === "markdown") return renderMarkdown(month);
@@ -1722,12 +1775,56 @@ function scrollToMonthTarget(selector) {
   });
 }
 
+function renderSeptemberStudyModules(month) {
+  const modules = [
+    {
+      id: "pre-study", title: "Pre Study", subtitle: "课前预习",
+      description: "先看 MapKAI 视频，再听课程音频、阅读材料，带着问题进入课堂。",
+      blocks: [
+        ["videos", "MapKAI 视频"],
+        ["podcast", "Podcast（课程音频）"],
+        ["preparation", "预习与阅读资料"],
+        ...(materialsForSection(month, "vocabulary").some(materialHasContent) ? [["vocabulary", "专业词汇"]] : [])
+      ]
+    },
+    {
+      id: "post-study", title: "Post Study", subtitle: "课后整理",
+      description: "整理课堂笔记，记录自己的思考，回顾学习资料与课堂照片。",
+      blocks: [
+        ["markdown", "课堂笔记（完全内容整合版）"],
+        ["reflection", "Reflection（我的思考）"],
+        ["material", "资料"],
+        ["memory", "照片"]
+      ]
+    }
+  ];
+  return modules.map((module) => `
+    <section class="emba-study-module" data-study-module="${module.id}" aria-labelledby="${module.id}-title">
+      <header class="emba-study-module-head">
+        <h2 id="${module.id}-title">${module.title} <span>${module.subtitle}</span></h2>
+        <p>${module.description}</p>
+      </header>
+      <div class="emba-block-grid">
+        ${module.blocks.map(([id, title]) => blockTemplate(id, title, month)).join("")}
+      </div>
+      ${module.blocks.some(([id]) => id === state.openBlockId) ? renderOpenBlockPanel(month) : ""}
+    </section>
+  `).join("");
+}
+
 function renderMonthDetail(month) {
   const detail = $("#embaMonthDetail");
   if (!detail) return;
   detail.dataset.mode = isEditMode() ? "edit" : "read";
   if (!month) {
     detail.innerHTML = "";
+    return;
+  }
+  if (isSeptemberStudy(month)) {
+    detail.innerHTML = `
+      <div class="emba-month-kicker">${escapeHtml(formatMonth(month.month))}</div>
+      ${renderSeptemberStudyModules(month)}
+    `;
     return;
   }
   detail.innerHTML = `

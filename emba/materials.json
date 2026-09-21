@@ -518,6 +518,78 @@
       "memoryRevision": 0,
       "materials": [
         {
+          "title": "MapKAI｜课程总览｜《财务领导力》课程总览",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/financial-leadership-overview-with-references.mp4?v=avc1-20260805",
+          "notes": "先用这一段总览认识这条路径：财务领导力不只关乎报表，而是关于价值、现金、风险、治理与经营判断如何连在一起。"
+        },
+        {
+          "title": "MapKAI｜Day 1｜中文｜《灰港账本：一则财务寓言》",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/day-1-zh-grey-harbor-ledger-with-references.mp4?v=avc1-20260805",
+          "notes": "价值与资本配置：一个看似有前景的计划，真的创造价值吗？它需要多少投入、何时回本、最坏会发生什么？"
+        },
+        {
+          "title": "MapKAI｜Day 1｜English｜True Cost of Capital",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/day-1-en-true-cost-of-capital-with-references.mp4?v=avc1-20260805",
+          "notes": "价值与资本配置：一个看似有前景的计划，真的创造价值吗？它需要多少投入、何时回本、最坏会发生什么？"
+        },
+        {
+          "title": "MapKAI｜Day 2｜中文｜《全绿的幻象：重新思考合规与可持续性》",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/day-2-zh-all-green-illusion-with-references.mp4?v=avc1-20260805",
+          "notes": "信任与经营资格：规则、承诺和透明度如何让客户、伙伴与市场愿意继续相信你？"
+        },
+        {
+          "title": "MapKAI｜Day 2｜English｜Credible Management",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/day-2-en-credible-management-with-references.mp4?v=avc1-20260805",
+          "notes": "信任与经营资格：规则、承诺和透明度如何让客户、伙伴与市场愿意继续相信你？"
+        },
+        {
+          "title": "MapKAI｜Day 3｜中文｜《三块白板：财务、ERM 与治理》",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/day-3-zh-finance-erm-governance-with-references.mp4?v=avc1-20260805",
+          "notes": "事实、风险与治理：怎样让关键事实和早期风险及时被看见，并在问题变大前有人行动？"
+        },
+        {
+          "title": "MapKAI｜Day 3｜中文｜《披萨店的三块白板》",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/day-3-zh-pizza-kitchen-whiteboards-with-references.mp4?v=avc1-20260805",
+          "notes": "事实、风险与治理：怎样让关键事实和早期风险及时被看见，并在问题变大前有人行动？"
+        },
+        {
+          "title": "MapKAI｜Day 3｜English｜The Corner Bistro",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/day-3-en-corner-bistro-with-references.mp4?v=avc1-20260805",
+          "notes": "事实、风险与治理：怎样让关键事实和早期风险及时被看见，并在问题变大前有人行动？"
+        },
+        {
+          "title": "MapKAI｜Day 4｜中文｜《第三勺红油：管理控制系统的寓言》",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/day-4-zh-third-spoon-chili-oil-with-references.mp4?v=avc1-20260805",
+          "notes": "战略如何变成行为：指标、预算和奖励会怎样改变人的注意力？又怎样避免数字反过来绑架真正的目标？"
+        },
+        {
+          "title": "MapKAI｜Day 4｜English｜Beyond the KPI Trap",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/day-4-en-beyond-kpi-trap-with-references.mp4?v=avc1-20260805",
+          "notes": "战略如何变成行为：指标、预算和奖励会怎样改变人的注意力？又怎样避免数字反过来绑架真正的目标？"
+        },
+        {
+          "title": "MapKAI｜Day 5｜中文｜《揭开高业绩的幻觉》",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/day-5-zh-performance-illusion-with-references.mp4?v=avc1-20260805",
+          "notes": "比较证据，形成建议：面对不完整的信息和看似漂亮的比较，怎样给出清楚、诚实、可质疑的建议？"
+        },
+        {
+          "title": "MapKAI｜Day 5｜English｜The 92 Percent Illusion",
+          "type": "mapkai_video",
+          "file": "https://media.mapkai.com/finance/day-5-en-92-percent-illusion-with-references.mp4?v=avc1-20260805",
+          "notes": "比较证据，形成建议：面对不完整的信息和看似漂亮的比较，怎样给出清楚、诚实、可质疑的建议？"
+        },
+        {
           "title": "Team 6 CFA｜PME Pension Impact Investing Pitch (25% Group Case)",
           "type": "case_inspiration",
           "file": "/emba/materials/2026-09/Team-6-PME-Pension-Impact-Investing-Pitch.md",
