@@ -582,7 +582,7 @@ function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
   const exactMaterials = (items) => asArray(items).map(normalizeMaterial).filter(materialHasContent);
   const exactMemories = (items) => asArray(items).map((item) => normalizeMemory(item, overlayMonth.month || baseMonth.month));
   const baseCourseEntries = exactMaterials(baseMonth.materials)
-    .filter((item) => item.type === "daily_course_intro" || item.type === PODCAST_MATERIAL_TYPE || item.type === "mapkai_video");
+    .filter((item) => item.type === "daily_course_intro" || item.type === PODCAST_MATERIAL_TYPE || item.type === "mapkai_video" || item.type === "post_study_source");
   const chosenMaterials = materialsWinner
     ? exactMaterials(materialsWinner === "base" ? baseMonth.materials : overlayMonth.materials)
     : mergeMaterialLists(baseMonth.materials, overlayMonth.materials);
@@ -590,7 +590,7 @@ function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
     ...baseMonth,
     ...overlayMonth,
     title: overlayMonth.title || baseMonth.title,
-    // Daily course pages, course podcasts and MapKAI videos ship with the site. Keep
+    // Course pages, podcasts, videos and post-study originals ship with the site. Keep
     // them visible even when the cloud library has a higher revision.
     materials: mergeMaterialLists(baseCourseEntries, chosenMaterials),
     materialsRevision: Math.max(normalizeRevision(baseMonth.materialsRevision), normalizeRevision(overlayMonth.materialsRevision)),
@@ -1379,7 +1379,7 @@ function renderMapkaiVideos(month) {
 }
 
 function isReadableMaterial(file = "") {
-  return /^\/emba\/materials\/.*\.md$/i.test(String(file || ""));
+  return /^\/emba\/(?:materials|content)\/.*\.md$/i.test(String(file || ""));
 }
 
 function isWebLearningPage(file = "") {
@@ -1398,15 +1398,15 @@ function renderMaterialReader() {
   const podcastVersions = podcast?.versions || [];
   const selectedPodcast = podcastVersions.find((version) => version.language === state.podcastLanguage) || podcastVersions[0];
   const body = reader.loading
-    ? `<p class="emba-empty-copy">正在打开课程介绍…</p>`
+    ? `<p class="emba-empty-copy">正在打开学习资料…</p>`
     : reader.error
-      ? `<p class="emba-empty-copy">无法打开这份介绍：${escapeHtml(reader.error)}</p>`
+      ? `<p class="emba-empty-copy">无法打开这份资料：${escapeHtml(reader.error)}</p>`
       : `<div class="emba-markdown-rendered">${markdownToHtml(reader.markdown || "", reader.file)}</div>`;
   return `
     <article class="emba-material-reader">
       <div class="emba-material-reader-head">
         <div>
-          <span class="emba-month-kicker">课程介绍</span>
+          <span class="emba-month-kicker">学习资料</span>
           <h3>${escapeHtml(reader.title || "Material")}</h3>
           ${reader.notes ? `<p>${escapeHtml(reader.notes)}</p>` : ""}
         </div>
@@ -1692,6 +1692,8 @@ function renderMemoryMoment(month) {
 }
 
 function blockSummary(id, month) {
+  const postDay = septemberPostStudyDay(id, month);
+  if (postDay) return `${postDay.date.slice(5)} · ${postDay.slides.length ? `${postDay.slides.length} 份课件` : "课件待补"} · ${postDay.thoughts.length ? `${postDay.thoughts.length} 条思考` : "笔记待补"}`;
   if (id === "videos") {
     const count = materialsForSection(month, "videos").filter(materialHasContent).length;
     return count ? `${count} 个预习视频` : "待添加视频链接";
@@ -1728,6 +1730,8 @@ function blockSummary(id, month) {
 }
 
 function renderBlockContent(id, month) {
+  const postDay = septemberPostStudyDay(id, month);
+  if (postDay) return renderSeptemberPostDay(postDay);
   if (id === "videos") {
     if (isEditMode()) return `<p class="emba-empty-copy">请在 Post Study 的“资料”入口管理文件；标注为 MapKAI 视频的资料会自动归入 Pre Study。</p>`;
     return renderMapkaiVideos(month);
@@ -1775,6 +1779,56 @@ function scrollToMonthTarget(selector) {
   });
 }
 
+function septemberPostStudyData() {
+  return typeof SEPTEMBER_POST_STUDY === "undefined" ? { days: [], sources: {} } : SEPTEMBER_POST_STUDY;
+}
+
+function septemberPostStudyDay(id, month) {
+  return isSeptemberStudy(month) ? septemberPostStudyData().days.find((day) => day.id === id) : null;
+}
+
+function postStudySourceLink(id) {
+  const source = septemberPostStudyData().sources[id];
+  if (!source) return "";
+  if (isReadableMaterial(source.file)) return `<button class="emba-post-source" type="button" data-material-open="${escapeHtml(source.file)}" data-material-title="${escapeHtml(source.title)}"><span>${escapeHtml(source.title)}</span><span aria-hidden="true">→</span></button>`;
+  return `<a class="emba-post-source" href="${escapeHtml(source.file)}" target="_blank" rel="noopener noreferrer"><span>${escapeHtml(source.title)}</span><span aria-hidden="true">↗</span></a>`;
+}
+
+function renderSeptemberAssignmentOverview() {
+  const assignment = septemberPostStudyData().assignment;
+  if (!assignment) return "";
+  return `<aside class="emba-post-assignment" aria-label="九月作业总览">
+    <h3>Assignment · 提交要求</h3>
+    <p><strong>${escapeHtml(assignment.deadline)}</strong></p>
+    <p>${escapeHtml(assignment.rules)}</p>
+    <details><summary>题数待确认 · 原文件存在三题 / 四题冲突</summary><p>${escapeHtml(assignment.conflict)}</p><p>${escapeHtml(assignment.format)}</p><p>${escapeHtml(assignment.note)}</p></details>
+    <div class="emba-post-source-grid">${postStudySourceLink("assignment")}${postStudySourceLink("syllabus")}</div>
+  </aside>`;
+}
+
+function renderSeptemberPostDay(day) {
+  const data = septemberPostStudyData();
+  const list = (items) => `<ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+  return `<div class="emba-post-day" data-post-day="${escapeHtml(day.date)}">
+    <header><span class="emba-month-kicker">${escapeHtml(day.date)} · ${escapeHtml(day.day)}</span><h3>${escapeHtml(day.title)}</h3><p>${escapeHtml(day.lecturers)}</p><p class="emba-post-context">${escapeHtml(day.schedule)}</p></header>
+    <section><h4>01 · 老师课件</h4>${day.slides.length ? `<div class="emba-post-source-grid">${day.slides.map(postStudySourceLink).join("")}</div>` : `<p class="emba-post-missing">尚未找到当天老师的独立课件，待补。</p>`}</section>
+    <section><h4>02 · Assignment 与资料</h4>${list(day.tasks)}<p class="emba-post-output"><strong>建议整理产出</strong><br>${escapeHtml(day.output)}</p><div class="emba-post-source-grid">${[...day.resources, "assignment"].map(postStudySourceLink).join("")}</div></section>
+    <section><h4>03 · 我的笔记与思考</h4><p class="emba-post-context">引文保留你的原话；上下文归纳和补充分析由 Codex 于 2026-09-21 整理，不代表你当时已经得出的结论。</p>
+    ${day.missing ? `<p class="emba-post-missing">${escapeHtml(day.missing)}</p>` : ""}
+    ${day.thoughts.map((thought, index) => `<details class="emba-post-thought"${index === 0 ? " open" : ""}><summary>${escapeHtml(thought.title)}</summary>
+      <h5>我的原话</h5>${thought.quotes.map((quote) => `<blockquote>${escapeHtml(quote.text)}</blockquote><p class="emba-post-provenance">${escapeHtml(new Date(quote.date).toLocaleString("zh-CN", {timeZone:"Europe/Amsterdam",hour12:false}))} · Amsterdam · 规划Day 1后续学习 (5)</p>`).join("")}
+      <h5>当时在想什么 · 上下文归纳</h5><p>${escapeHtml(thought.context)}</p>
+      <h5>把思考补齐 · Codex 分析</h5><p>${escapeHtml(thought.analysis)}</p>
+      <h5>下一步如何验证</h5><p>${escapeHtml(thought.next)}</p>
+      <a href="${escapeHtml(data.sources[thought.source].file)}#page=${escapeHtml(thought.pages.match(/\d+/)?.[0] || "1")}" target="_blank" rel="noopener noreferrer">对照老师课件 · 第 ${escapeHtml(thought.pages)} 页 ↗</a>
+    </details>`).join("")}
+    ${day.prompts.length ? `<div class="emba-post-prompts"><h5>待补方向 · 以下不是个人原话</h5>${list(day.prompts)}</div>` : ""}
+    <button class="emba-panel-back" type="button" data-material-open="${escapeHtml(day.archive)}" data-material-title="${escapeHtml(`${day.day} · 完整笔记与来源`)}">阅读 / 复制完整笔记与原文来源 →</button>
+    </section>
+    ${renderMaterialReader()}
+  </div>`;
+}
+
 function renderSeptemberStudyModules(month) {
   const modules = [
     {
@@ -1789,11 +1843,12 @@ function renderSeptemberStudyModules(month) {
     },
     {
       id: "post-study", title: "Post Study", subtitle: "课后整理",
-      description: "整理课堂笔记，记录自己的思考，回顾学习资料与课堂照片。",
+      description: "按周一至周五整理：老师课件 → 作业要求与资料 → 我的原话 → 思考补充。",
       blocks: [
-        ["markdown", "课堂笔记（完全内容整合版）"],
-        ["reflection", "Reflection（我的思考）"],
-        ["material", "资料"],
+        ...septemberPostStudyData().days.map((day) => [day.id, `${day.day} · ${day.title}`]),
+        ["markdown", "已有月度笔记 · 继续编辑"],
+        ["reflection", "已有个人思考 · 继续编辑"],
+        ["material", "全部资料 · 上传与管理"],
         ["memory", "照片"]
       ]
     }
@@ -1804,6 +1859,7 @@ function renderSeptemberStudyModules(month) {
         <h2 id="${module.id}-title">${module.title} <span>${module.subtitle}</span></h2>
         <p>${module.description}</p>
       </header>
+      ${module.id === "post-study" ? renderSeptemberAssignmentOverview() : ""}
       <div class="emba-block-grid">
         ${module.blocks.map(([id, title]) => blockTemplate(id, title, month)).join("")}
       </div>

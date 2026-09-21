@@ -1,5 +1,5 @@
 {
-  "version": "2026-08-22",
+  "version": "2026-09-21",
   "program": "EMBA",
   "school": "Maastricht University",
   "source_root": "/emba/content",
@@ -164,10 +164,27 @@
       "md_file": "/emba/content/2026/06_June/converted-md/source-documents/2026-06-offer-of-admission.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "admission", "offer", "administration", "maastricht"],
-      "keywords": ["offer of admission", "signed acceptance", "Executive MBA", "part-time on-campus", "September 2026", "EUR 34500"],
+      "tags": [
+        "emba",
+        "admission",
+        "offer",
+        "administration",
+        "maastricht"
+      ],
+      "keywords": [
+        "offer of admission",
+        "signed acceptance",
+        "Executive MBA",
+        "part-time on-campus",
+        "September 2026",
+        "EUR 34500"
+      ],
       "summary": "Official MaastrichtMBA admission offer and signed acceptance for the part-time on-campus Executive MBA starting in September 2026.",
-      "related_topics": ["finance", "decision-making", "personal-growth"],
+      "related_topics": [
+        "finance",
+        "decision-making",
+        "personal-growth"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "MaastrichtMBA offer admission signed acceptance Executive MBA MSc part-time on-campus September 2026 EUR 34500 six instalments Leading Learning accreditation EQF NLQF 2026-09-11 2026-09-12 录取通知书 签署接受 学费 开学时间."
@@ -188,10 +205,24 @@
       "md_file": "/emba/content/2026/06_June/converted-md/source-documents/2026-06-um-certificate-of-enrolment.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "enrolment", "administration", "certificate", "maastricht"],
-      "keywords": ["certificate of enrolment", "EMBA On-Campus", "academic year 2026/27", "part-time", "ISAT 75143"],
+      "tags": [
+        "emba",
+        "enrolment",
+        "administration",
+        "certificate",
+        "maastricht"
+      ],
+      "keywords": [
+        "certificate of enrolment",
+        "EMBA On-Campus",
+        "academic year 2026/27",
+        "part-time",
+        "ISAT 75143"
+      ],
       "summary": "Official enrolment proof for Maastricht University EMBA On-Campus in academic year 2026/27.",
-      "related_topics": ["personal-growth"],
+      "related_topics": [
+        "personal-growth"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "certificate of enrolment EMBA On-Campus Maastricht University academic year 2026/27 part-time ISAT 75143 valid until 2027-08-31 注册证明 入学证明 在读证明."
@@ -212,10 +243,26 @@
       "md_file": "/emba/content/2026/06_June/converted-md/source-documents/2026-06-onboarding-guideline.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "onboarding", "canvas", "teams", "mfa", "access"],
-      "keywords": ["UM password", "student I-number", "Microsoft Authenticator", "Canvas", "UM email", "Teams notifications"],
+      "tags": [
+        "emba",
+        "onboarding",
+        "canvas",
+        "teams",
+        "mfa",
+        "access"
+      ],
+      "keywords": [
+        "UM password",
+        "student I-number",
+        "Microsoft Authenticator",
+        "Canvas",
+        "UM email",
+        "Teams notifications"
+      ],
       "summary": "Operational access checklist for UM password, MFA, Canvas, UM email, Teams, and channel notifications.",
-      "related_topics": ["personal-growth"],
+      "related_topics": [
+        "personal-growth"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "onboarding guideline UM password student I-number Microsoft Authenticator MFA Canvas UM email Teams notifications General Electives On-campus 入学准备 系统接入 邮箱 团队通知."
@@ -236,10 +283,27 @@
       "md_file": "/emba/content/2026/06_June/converted-md/source-documents/2026-06-study-fees-policies-procedures.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "fees", "finance", "policy", "cancellation"],
-      "keywords": ["application fee", "EUR 34500", "EUR 29500", "instalments", "payment term", "cancellation fee", "continuation fee"],
+      "tags": [
+        "emba",
+        "fees",
+        "finance",
+        "policy",
+        "cancellation"
+      ],
+      "keywords": [
+        "application fee",
+        "EUR 34500",
+        "EUR 29500",
+        "instalments",
+        "payment term",
+        "cancellation fee",
+        "continuation fee"
+      ],
       "summary": "Financial rule mirror for application fee, tuition, instalments, payment term, cancellation, premature termination, and continuation fees.",
-      "related_topics": ["finance", "decision-making"],
+      "related_topics": [
+        "finance",
+        "decision-making"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "study fees policies procedures application fee EUR 34500 on-campus EUR 29500 online six instalments payment term 30 days cancellation fee EUR 500 premature termination 25 percent continuation fee EUR 3200 学费 分期 付款 取消费 延期费."
@@ -260,10 +324,28 @@
       "md_file": "/emba/content/2026/06_June/converted-md/source-documents/2026-06-maastricht-on-campus-programme-outline.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "programme-outline", "on-campus", "calendar", "electives"],
-      "keywords": ["Leading in Learning", "core modules", "face-to-face", "elective weeks", "Digital Business", "Responsible Leadership", "Sustainable Innovation"],
+      "tags": [
+        "emba",
+        "programme-outline",
+        "on-campus",
+        "calendar",
+        "electives"
+      ],
+      "keywords": [
+        "Leading in Learning",
+        "core modules",
+        "face-to-face",
+        "elective weeks",
+        "Digital Business",
+        "Responsible Leadership",
+        "Sustainable Innovation"
+      ],
       "summary": "Active on-campus programme calendar source for Leading in Learning, core modules, elective weeks, and elective constraints.",
-      "related_topics": ["leadership", "strategy", "decision-making"],
+      "related_topics": [
+        "leadership",
+        "strategy",
+        "decision-making"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "on-campus programme outline 2026 2027 Leading in Learning five core modules three elective weeks Digital Business Responsible Leadership Sustainable Innovation D1 D2 D3 L1 L2 L3 S1 S2 S3 课程安排 校园课程 选修."
@@ -284,10 +366,27 @@
       "md_file": "/emba/content/2026/06_June/converted-md/source-documents/2026-06-maastricht-online-programme-outline.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "programme-outline", "online", "comparison", "electives"],
-      "keywords": ["Executive Online MBA", "online courses", "elective weeks", "track comparison", "Digital Business", "Responsible Leadership", "Sustainable Innovation"],
+      "tags": [
+        "emba",
+        "programme-outline",
+        "online",
+        "comparison",
+        "electives"
+      ],
+      "keywords": [
+        "Executive Online MBA",
+        "online courses",
+        "elective weeks",
+        "track comparison",
+        "Digital Business",
+        "Responsible Leadership",
+        "Sustainable Innovation"
+      ],
       "summary": "Online track comparison mirror for understanding online-course rhythm and shared elective rules.",
-      "related_topics": ["strategy", "decision-making"],
+      "related_topics": [
+        "strategy",
+        "decision-making"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "online programme outline Executive Online MBA ten online courses six-week journeys track comparison elective weeks Digital Business Responsible Leadership Sustainable Innovation 在线 MBA 对照 课程结构."
@@ -308,10 +407,29 @@
       "md_file": "/emba/content/2026/06_June/converted-md/source-documents/2026-06-maastricht-curriculum-elective-modules.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "electives", "digital-business", "responsible-leadership", "sustainable-innovation"],
-      "keywords": ["Digital Management", "Digital Strategy", "Perspectives on Digital Business", "Leading Strategic Change", "Personal Leadership", "Sustainability and Business Ethics", "Future-Proof Business Models"],
+      "tags": [
+        "emba",
+        "electives",
+        "digital-business",
+        "responsible-leadership",
+        "sustainable-innovation"
+      ],
+      "keywords": [
+        "Digital Management",
+        "Digital Strategy",
+        "Perspectives on Digital Business",
+        "Leading Strategic Change",
+        "Personal Leadership",
+        "Sustainability and Business Ethics",
+        "Future-Proof Business Models"
+      ],
       "summary": "Elective curriculum mirror covering Digital Business, Responsible Leadership, and Sustainable Innovation modules.",
-      "related_topics": ["leadership", "strategy", "ai-and-digital-transformation", "personal-growth"],
+      "related_topics": [
+        "leadership",
+        "strategy",
+        "ai-and-digital-transformation",
+        "personal-growth"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "curriculum elective modules Digital Management Digital Strategy Perspectives on Digital Business Leading Strategic Change Personal Leadership Perspectives on Leadership Sustainability and Business Ethics Future-Proof Business Models Perspectives on Sustainability 选修 数字商业 负责任领导 可持续创新."
@@ -332,10 +450,27 @@
       "md_file": "/emba/content/2026/06_June/converted-md/source-documents/2026-06-lost-art-of-thinking-large-organizations.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "reading", "strategy", "leadership", "reflection"],
-      "keywords": ["strategic thinking", "execution bias", "use case", "hypotheticals", "delegation", "Think Week"],
+      "tags": [
+        "emba",
+        "reading",
+        "strategy",
+        "leadership",
+        "reflection"
+      ],
+      "keywords": [
+        "strategic thinking",
+        "execution bias",
+        "use case",
+        "hypotheticals",
+        "delegation",
+        "Think Week"
+      ],
       "summary": "Pre-EMBA strategy reading about rebuilding strategic thinking capacity through protected thinking time, use-case reasoning, and delegation.",
-      "related_topics": ["strategy", "leadership", "decision-making"],
+      "related_topics": [
+        "strategy",
+        "leadership",
+        "decision-making"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "The Lost Art of Thinking in Large Organizations Duncan Simester MIT Sloan strategic thinking execution bias use case hypotheticals delegation Think Week protected thinking time 战略思考 执行偏差 授权 思考时间."
@@ -356,10 +491,29 @@
       "md_file": "/emba/content/2026/06_June/converted-md/source-documents/2026-06-nyenrode-impact-mba-executive-brochure.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["mba", "comparison", "nyenrode", "impact", "leadership", "sustainability"],
-      "keywords": ["Impact MBA Executive", "sustainability", "digitalization", "global immersion", "Meet the CEO", "Personal Leadership Development Journey", "final thesis"],
+      "tags": [
+        "mba",
+        "comparison",
+        "nyenrode",
+        "impact",
+        "leadership",
+        "sustainability"
+      ],
+      "keywords": [
+        "Impact MBA Executive",
+        "sustainability",
+        "digitalization",
+        "global immersion",
+        "Meet the CEO",
+        "Personal Leadership Development Journey",
+        "final thesis"
+      ],
       "summary": "Comparison mirror for Nyenrode's Impact MBA Executive, useful for impact, sustainability, career, and leadership positioning against Maastricht.",
-      "related_topics": ["leadership", "strategy", "personal-growth"],
+      "related_topics": [
+        "leadership",
+        "strategy",
+        "personal-growth"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "Nyenrode Impact MBA Executive sustainability digitalization global immersion Meet the CEO Personal Leadership Development Journey final thesis career community MBA comparison 影响力 可持续 数字化 领导力 选校对照."
@@ -425,10 +579,29 @@
       "md_file": "/emba/content/2026/07_July/converted-md/source-documents/2026-07-leading-in-learning-programme.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "lead-in-learning", "programme", "leadership", "onboarding", "inclusion"],
-      "keywords": ["Leading in Learning", "July 2026", "Leadership Development Trajectory", "Unlock your leadership potential", "Learning and Development in Organisations", "Visualisation and Prototyping", "Inclusion and Diversity"],
+      "tags": [
+        "emba",
+        "lead-in-learning",
+        "programme",
+        "leadership",
+        "onboarding",
+        "inclusion"
+      ],
+      "keywords": [
+        "Leading in Learning",
+        "July 2026",
+        "Leadership Development Trajectory",
+        "Unlock your leadership potential",
+        "Learning and Development in Organisations",
+        "Visualisation and Prototyping",
+        "Inclusion and Diversity"
+      ],
       "summary": "Official July 2026 Leading in Learning schedule and session overview, including times, rooms, speakers, location, travel notes, and contact point.",
-      "related_topics": ["leadership", "personal-growth", "strategy"],
+      "related_topics": [
+        "leadership",
+        "personal-growth",
+        "strategy"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "MaastrichtMBA Leading in Learning Programme July 2026 September intake schedule room speaker location Tapijnkazerne Ron Jacobs Jesca Rijpkema Chantal van Wissem Diana Berdun Mingo Micole Smits Sonja Zaar Dominique Meyers Floor Oosterlee Kai-Yin Or Leadership Development Trajectory Unlock your leadership potential Learning and Development in Organisations Visualisation Prototyping Inclusion Diversity 日程 课程安排 领导力 包容."
@@ -450,10 +623,32 @@
       "md_file": "/emba/content/2026/07_July/converted-md/source-documents/2026-07-leadership-development-trajectory.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "leadership-development", "self-awareness", "coaching", "reflection", "listening"],
-      "keywords": ["Leadership Development Trajectory", "ownership", "Kolb learning cycle", "360 feedback", "individual coaching", "buddy coaching", "mutual learning groups", "Inner Development Goals", "Theory U", "levels of listening"],
+      "tags": [
+        "emba",
+        "leadership-development",
+        "self-awareness",
+        "coaching",
+        "reflection",
+        "listening"
+      ],
+      "keywords": [
+        "Leadership Development Trajectory",
+        "ownership",
+        "Kolb learning cycle",
+        "360 feedback",
+        "individual coaching",
+        "buddy coaching",
+        "mutual learning groups",
+        "Inner Development Goals",
+        "Theory U",
+        "levels of listening"
+      ],
       "summary": "LDT introduction covering personal ownership, experiential learning, feedback and coaching support, inner development, listening, and reflective leadership practice.",
-      "related_topics": ["leadership", "personal-growth", "decision-making"],
+      "related_topics": [
+        "leadership",
+        "personal-growth",
+        "decision-making"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "Leadership Development Trajectory Micole Smits ownership Kolb experiential learning cycle 360 feedback individual coaching buddy coaching mutual learning groups Inner Development Goals Theory U levels listening judgment cynicism fear 领导力发展 体验式学习 倾听层级."
@@ -475,10 +670,26 @@
       "md_file": "/emba/content/2026/07_July/converted-md/source-documents/2026-07-team-building.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "team-building", "cohort", "communication", "future-self"],
-      "keywords": ["name juggling", "birthday timeline", "non-verbal communication", "musical questions", "future self", "MBA impact"],
+      "tags": [
+        "emba",
+        "team-building",
+        "cohort",
+        "communication",
+        "future-self"
+      ],
+      "keywords": [
+        "name juggling",
+        "birthday timeline",
+        "non-verbal communication",
+        "musical questions",
+        "future self",
+        "MBA impact"
+      ],
       "summary": "July team-building session covering cohort bonding, non-verbal communication, personal exchange, and the future-self reflection exercise.",
-      "related_topics": ["leadership", "personal-growth"],
+      "related_topics": [
+        "leadership",
+        "personal-growth"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "Team Building Diana Mingo Berdun name juggling birthday timeline no talking non-verbal communication musical questions M&M future self MBA impact 团队建设 非语言沟通 写给未来的自己."
@@ -500,10 +711,29 @@
       "md_file": "/emba/content/2026/07_July/converted-md/source-documents/2026-07-welcome-mba.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "welcome", "problem-based-learning", "diversity", "umio", "programme-context"],
-      "keywords": ["MaastrichtMBA", "Problem Based Learning", "learning through diversity", "student body", "Tapijn Campus", "Leading in Learning", "learning pyramid"],
+      "tags": [
+        "emba",
+        "welcome",
+        "problem-based-learning",
+        "diversity",
+        "umio",
+        "programme-context"
+      ],
+      "keywords": [
+        "MaastrichtMBA",
+        "Problem Based Learning",
+        "learning through diversity",
+        "student body",
+        "Tapijn Campus",
+        "Leading in Learning",
+        "learning pyramid"
+      ],
       "summary": "MBA welcome deck covering programme community, diversity, Maastricht University and UMIO context, problem-based learning, and the three-day introduction.",
-      "related_topics": ["leadership", "personal-growth", "decision-making"],
+      "related_topics": [
+        "leadership",
+        "personal-growth",
+        "decision-making"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "Welcome MBA Ron Jacobs MaastrichtMBA Problem Based Learning PBL learning through diversity delay judgment student body UMIO Tapijn Campus Leading in Learning learning pyramid evidence boundary 问题导向学习 多元化学习 延迟判断."
@@ -525,10 +755,27 @@
       "md_file": "/emba/content/2026/07_July/converted-md/source-documents/2026-07-alumni-forum.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "alumni", "network", "lifelong-learning", "professional-impact"],
-      "keywords": ["Alumni Forum", "MMBA Alumni Association", "networking", "lifelong learning", "MBA experience", "professional impact"],
+      "tags": [
+        "emba",
+        "alumni",
+        "network",
+        "lifelong-learning",
+        "professional-impact"
+      ],
+      "keywords": [
+        "Alumni Forum",
+        "MMBA Alumni Association",
+        "networking",
+        "lifelong learning",
+        "MBA experience",
+        "professional impact"
+      ],
       "summary": "Alumni forum deck covering alumni channels, the association, alumni speakers, professional impact, networking effects, and advice to students.",
-      "related_topics": ["leadership", "personal-growth", "strategy"],
+      "related_topics": [
+        "leadership",
+        "personal-growth",
+        "strategy"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "Alumni Forum Jeroen Duijsinx MMBA Alumni Association networking lifelong learning MBA experience professional impact networking effects advice 校友网络 职业影响 终身学习."
@@ -550,10 +797,32 @@
       "md_file": "/emba/content/2026/07_July/converted-md/source-documents/2026-07-mba-need-to-knows.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "administration", "assignments", "canvas", "electives", "bcp", "ldt"],
-      "keywords": ["onboarding guideline", "Canvas", "class registration", "assignments and examinations", "resit", "Business Consulting Project", "Leadership Development Trajectory", "elective weeks", "Studielink"],
+      "tags": [
+        "emba",
+        "administration",
+        "assignments",
+        "canvas",
+        "electives",
+        "bcp",
+        "ldt"
+      ],
+      "keywords": [
+        "onboarding guideline",
+        "Canvas",
+        "class registration",
+        "assignments and examinations",
+        "resit",
+        "Business Consulting Project",
+        "Leadership Development Trajectory",
+        "elective weeks",
+        "Studielink"
+      ],
       "summary": "MBA need-to-knows deck covering onboarding, registration, assessment rules, BCP and LDT timing, programme contacts, tracks, electives, and student platforms.",
-      "related_topics": ["personal-growth", "decision-making", "strategy"],
+      "related_topics": [
+        "personal-growth",
+        "decision-making",
+        "strategy"
+      ],
       "language": "en",
       "rag_include": true,
       "search_text": "MBA Need To Knows Jesca Rijpkema onboarding Canvas class registration assignments examinations PDF resit Cum Laude Business Consulting Project BCP Leadership Development Trajectory LDT elective weeks Teams Qualtrics Studielink 入学须知 作业考试补考 选修课注册."
@@ -1469,10 +1738,29 @@
       "md_file": "/emba/content/2026/09_September/2026-09_EMBA_Corporate_Finance_Accounting_Index.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["emba", "corporate-finance", "accounting", "governance", "assignments"],
-      "keywords": ["financial leadership", "ASML", "Heineken", "pension fund", "Impact Investing", "double materiality", "Tennessee Controls"],
+      "tags": [
+        "emba",
+        "corporate-finance",
+        "accounting",
+        "governance",
+        "assignments"
+      ],
+      "keywords": [
+        "financial leadership",
+        "ASML",
+        "Heineken",
+        "pension fund",
+        "Impact Investing",
+        "double materiality",
+        "Tennessee Controls"
+      ],
       "summary": "September 2026 develops financial leadership through five linked learning-and-assignment streams: financial management, compliance, sustainability reporting, financial accounting and analysis, and management accounting and control.",
-      "related_topics": ["finance", "strategy", "decision-making", "leadership"],
+      "related_topics": [
+        "finance",
+        "strategy",
+        "decision-making",
+        "leadership"
+      ],
       "rag_include": true,
       "search_text": "September 2026 Corporate Finance and Accounting financial leadership ASML Heineken pension fund Impact Investing Team 6 double materiality DMA compliance financial ratios Tennessee Controls Simons Levers of Control 管理会计 财务会计 财务管理 合规 可持续性报告 双重重要性 养老金 影响力投资 作业准备."
     },
@@ -1492,10 +1780,32 @@
       "md_file": "/emba/content/2026/09_September/assignments/2026-09-five-stream-assignment-readiness-plan.md",
       "visibility": "private",
       "status": "active",
-      "tags": ["assignments", "preparation", "finance", "accounting", "compliance", "sustainability", "management-control"],
-      "keywords": ["Team 6", "Impact Investing", "pension fund", "ASML", "Heineken", "DMA", "ratios", "Tennessee Controls"],
+      "tags": [
+        "assignments",
+        "preparation",
+        "finance",
+        "accounting",
+        "compliance",
+        "sustainability",
+        "management-control"
+      ],
+      "keywords": [
+        "Team 6",
+        "Impact Investing",
+        "pension fund",
+        "ASML",
+        "Heineken",
+        "DMA",
+        "ratios",
+        "Tennessee Controls"
+      ],
       "summary": "A focused preparation system that connects five September EMBA learning streams to concrete outputs, evidence standards, class questions and post-class consolidation.",
-      "related_topics": ["finance", "strategy", "decision-making", "leadership"],
+      "related_topics": [
+        "finance",
+        "strategy",
+        "decision-making",
+        "leadership"
+      ],
       "rag_include": true,
       "search_text": "EMBA assignment readiness Team 6 Impact Investing pension fund ASML Heineken compliance sustainability reporting double materiality DMA debt ratio current ratio quick ratio return on equity Tennessee Controls Simons strategic control five-day learning plan 学习优化 作业准备 养老金 影响力投资 财务比率 双重重要性."
     },
@@ -1531,6 +1841,524 @@
       ],
       "rag_include": true,
       "search_text": "Personal growth reflection self-observation founder development protected thinking time learning system weekly practice Turnpo MapKAI DishKAI 个人成长 反思 自我觉察 创始人成长 学习系统."
+    },
+    {
+      "id": "emba-2026-09-source-rodrigues",
+      "title": "Paulo Rodrigues · Corporate Finance（PPT，103 页）",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-rodrigues-6181f616bcd0.pptx",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-rodrigues.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Paulo Rodrigues · Corporate Finance（PPT，103 页）",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-bams",
+      "title": "Dennis Bams · Corporate Financial Risk（PDF，167 页）",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-bams-7891c600d996.pdf",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-bams.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Dennis Bams · Corporate Financial Risk（PDF，167 页）",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-compliance",
+      "title": "Ton van Bree · Compliance（PPT，28 页）",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-compliance-234746b5a51d.pptx",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-compliance.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Ton van Bree · Compliance（PPT，28 页）",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-sustainability",
+      "title": "Ton van Bree · Sustainability Reporting（PPT，35 页）",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-sustainability-da59ad47d4ce.pptx",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-sustainability.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Ton van Bree · Sustainability Reporting（PPT，35 页）",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-control",
+      "title": "Philip Vergauwen · SMAC（PDF，171 页）",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-control-d5569bb9efa1.pdf",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-control.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Philip Vergauwen · SMAC（PDF，171 页）",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-assignment",
+      "title": "Final Assessment · 原始要求（7 页）",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-assignment-c6e414c7a282.pdf",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-assignment.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Final Assessment · 原始要求（7 页）",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-syllabus",
+      "title": "Syllabus · 课程安排与指定阅读",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-syllabus-65814bdace6e.pdf",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-syllabus.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Syllabus · 课程安排与指定阅读",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-asml",
+      "title": "ASML 2025 年报 · US GAAP",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-asml-add58be9d982.pdf",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-asml.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "ASML 2025 年报 · US GAAP",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-heineken",
+      "title": "Heineken 2025 年报",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-heineken-2dee3a7ac141.pdf",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-heineken.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Heineken 2025 年报",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-volkswagen",
+      "title": "Volkswagen 排放事件 · 案例原文",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-volkswagen-e65f70f91208.docx",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-volkswagen.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Volkswagen 排放事件 · 案例原文",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-ing",
+      "title": "ING Wwft · 案例原文",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-ing-2349496c2064.docx",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-ing.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "ING Wwft · 案例原文",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-maersk-model",
+      "title": "Maersk_risk_model.xlsx",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-maersk-model-3ef4575b69fa.xlsx",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-maersk-model.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Maersk_risk_model.xlsx",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-heineken-model",
+      "title": "Heineken_risk_model.xlsx",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-heineken-model-3680203ed0ce.xlsx",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-heineken-model.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Heineken_risk_model.xlsx",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-vestas-model",
+      "title": "Vestas_risk_model.xlsx",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-vestas-model-0a044a7a3df8.xlsx",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-vestas-model.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Vestas_risk_model.xlsx",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-atlantia-model",
+      "title": "Atlantia_risk_model.xlsx",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-atlantia-model-0655358e1ff3.xlsx",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-atlantia-model.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Atlantia_risk_model.xlsx",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-tennessee",
+      "title": "Tennessee Controls · 案例原文",
+      "type": "source_mirror",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "source_mirror",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-tennessee-b333a1e2bd27.pdf",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-tennessee.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "Tennessee Controls · 案例原文",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-post-day-1",
+      "title": "周一 Post Study · Financial Management · 价值与风险",
+      "type": "course_notes",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "course_notes",
+      "source_file": "",
+      "md_file": "/emba/content/2026/09_September/course-notes/2026-09-07-post-study.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "周一 Post Study · Financial Management · 价值与风险",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-post-day-2",
+      "title": "周二 Post Study · Compliance · Sustainability · 财务领导力",
+      "type": "course_notes",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "course_notes",
+      "source_file": "",
+      "md_file": "/emba/content/2026/09_September/course-notes/2026-09-08-post-study.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "周二 Post Study · Compliance · Sustainability · 财务领导力",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-post-day-3",
+      "title": "周三 Post Study · Financial Accounting · ERM · 非营利组织",
+      "type": "course_notes",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "course_notes",
+      "source_file": "",
+      "md_file": "/emba/content/2026/09_September/course-notes/2026-09-09-post-study.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "周三 Post Study · Financial Accounting · ERM · 非营利组织",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-post-day-4",
+      "title": "周四 Post Study · Management Accounting · Strategic Control",
+      "type": "course_notes",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "course_notes",
+      "source_file": "",
+      "md_file": "/emba/content/2026/09_September/course-notes/2026-09-10-post-study.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "周四 Post Study · Management Accounting · Strategic Control",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-post-day-5",
+      "title": "周五 Post Study · Financial Management · Team 6 Impact Investing",
+      "type": "course_notes",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "course_notes",
+      "source_file": "",
+      "md_file": "/emba/content/2026/09_September/course-notes/2026-09-11-post-study.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "周五 Post Study · Financial Management · Team 6 Impact Investing",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-post-study-requirements",
+      "title": "九月作业要求与资料核对",
+      "type": "assignment_plan",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "year": 2026,
+      "month": "2026-09",
+      "date": "2026-09-21",
+      "source_type": "assignment_plan",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-assignment-c6e414c7a282.pdf",
+      "md_file": "/emba/content/2026/09_September/assignments/2026-09-post-study-requirements.md",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "september",
+        "post-study"
+      ],
+      "summary": "九月作业要求与资料核对",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-draft-team-pme",
+      "title": "Team-6-PME-Pension-Impact-Investing-Pitch · 历史准备稿，未核实最终选择",
+      "type": "historical_draft",
+      "month": "2026-09",
+      "year": 2026,
+      "date": "2026-09-21",
+      "md_file": "/emba/content/2026/09_September/assignments/Team-6-PME-Pension-Impact-Investing-Pitch.md",
+      "source_file": "",
+      "visibility": "private",
+      "status": "draft",
+      "rag_include": false,
+      "summary": "历史准备稿，事实与最终选择未核实。"
+    },
+    {
+      "id": "emba-2026-09-draft-team-befrank",
+      "title": "Team-6-BeFrank-Impact-Investing · 历史准备稿，未核实最终选择",
+      "type": "historical_draft",
+      "month": "2026-09",
+      "year": 2026,
+      "date": "2026-09-21",
+      "md_file": "/emba/content/2026/09_September/assignments/Team-6-BeFrank-Impact-Investing.md",
+      "source_file": "",
+      "visibility": "private",
+      "status": "draft",
+      "rag_include": false,
+      "summary": "历史准备稿，事实与最终选择未核实。"
+    },
+    {
+      "id": "emba-2026-09-day1-review-historical",
+      "title": "周一课堂知识回顾 · 历史整理稿",
+      "type": "historical_summary",
+      "month": "2026-09",
+      "year": 2026,
+      "date": "2026-09-21",
+      "md_file": "/emba/content/2026/09_September/course-notes/day1-review-historical.md",
+      "source_file": "",
+      "visibility": "private",
+      "status": "archive",
+      "rag_include": false,
+      "summary": "历史助理整理稿，不作为逐字用户原话。"
+    },
+    {
+      "id": "emba-2026-09-day1-reflection-historical",
+      "title": "周一学习路径 · 历史思考整理稿",
+      "type": "historical_summary",
+      "month": "2026-09",
+      "year": 2026,
+      "date": "2026-09-21",
+      "md_file": "/emba/content/2026/09_September/course-notes/day1-reflection-historical.md",
+      "source_file": "",
+      "visibility": "private",
+      "status": "archive",
+      "rag_include": false,
+      "summary": "历史助理整理稿，不作为逐字用户原话。"
     }
   ]
 }

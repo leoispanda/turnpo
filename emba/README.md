@@ -106,3 +106,7 @@ For every new PDF or PPT:
 3. Add the original and mirror link to `emba/materials.json`.
 4. Add the Markdown exactly once to `knowledge-index.json`.
 5. Update the monthly index and run `tests/emba-cloud-static.test.mjs`.
+
+## September Post Study (2026-09-21)
+
+`september-post-study.js` supplies five weekday views with protected original slides, assignment requirements and evidence-bound notes. Sixteen originals live in R2; source mirrors, daily archives and the assignment checklist are indexed under `content/2026/09_September/`. Day 1 contains seven thought chains traced to user turns; context and Codex analysis are explicitly distinct from original quotes. Days 2–5 identify missing records instead of inventing reflections. The assignment overview flags the original three-versus-four-question inconsistency. Historical drafts are labelled as drafts, not submitted work. Existing D1 month notes, reflections and photo editing remain available. The daily source layer is shipped independently of D1 so existing cloud edits cannot erase it.

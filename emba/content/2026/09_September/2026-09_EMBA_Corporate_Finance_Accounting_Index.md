@@ -108,3 +108,15 @@ If an argument does not identify the decision owner, material evidence, trade-of
 ## Retrieval notes
 
 For course schedule, reading sequence or detailed theory, use the September materials folder. For deliverables, deadlines, team allocation, case prompts and a practical weekly workflow, start with the Assignment Readiness Plan.
+
+
+## Post Study · 周一至周五
+
+- [周一 · Financial Management · 价值与风险](/emba/content/2026/09_September/course-notes/2026-09-07-post-study.md)
+- [周二 · Compliance · Sustainability · 财务领导力](/emba/content/2026/09_September/course-notes/2026-09-08-post-study.md)
+- [周三 · Financial Accounting · ERM · 非营利组织](/emba/content/2026/09_September/course-notes/2026-09-09-post-study.md)
+- [周四 · Management Accounting · Strategic Control](/emba/content/2026/09_September/course-notes/2026-09-10-post-study.md)
+- [周五 · Financial Management · Team 6 Impact Investing](/emba/content/2026/09_September/course-notes/2026-09-11-post-study.md)
+- [当前作业要求与核对事项](/emba/content/2026/09_September/assignments/2026-09-post-study-requirements.md)
+
+个人原话与 Codex 补充分析分别标注。尚无原始记录的日期保持待补；已有月度笔记、反思和照片在原入口继续保留。

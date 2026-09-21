@@ -2,6 +2,40 @@
   color-scheme: light;
 }
 
+.emba-post-assignment {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #dbe5eb;
+  border-radius: 18px;
+  background: #f4f8fa;
+  line-height: 1.65;
+}
+.emba-post-assignment h3, .emba-post-day h3 { margin: 0 0 10px; }
+.emba-post-assignment summary { cursor: pointer; color: #795020; font-weight: 600; }
+.emba-post-source-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.emba-post-source { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; background: #fff; border: 1px solid #dce2e6; border-radius: 12px; color: #244d65; text-decoration: none; overflow-wrap: anywhere; }
+.emba-post-source:hover { background: #edf5fa; border-color: #9ebacb; }
+button.emba-post-source { font: inherit; text-align: left; cursor: pointer; }
+.emba-post-day { line-height: 1.8; }
+.emba-post-day header { padding-bottom: 12px; }
+.emba-post-day section { margin-top: 26px; padding-top: 20px; border-top: 1px solid #e1e5e8; }
+.emba-post-day h4 { font-size: 18px; margin: 0 0 14px; }
+.emba-post-day h5 { font-size: 14px; margin: 22px 0 6px; color: #496071; }
+.emba-post-day li + li { margin-top: 10px; }
+.emba-post-context, .emba-post-provenance { color: #66727c; font-size: 13px; }
+.emba-post-output, .emba-post-prompts { background: #f4f7f8; border-radius: 12px; padding: 16px 20px; }
+.emba-post-missing { background: #fbf7ee; color: #745e38; border-radius: 12px; padding: 16px; }
+.emba-post-thought { border: 1px solid #dce2e6; border-radius: 14px; padding: 18px 20px; margin: 14px 0; }
+.emba-post-thought summary { cursor: pointer; font-weight: 650; }
+.emba-post-thought blockquote { margin: 12px 0 6px; padding: 10px 16px; border-left: 3px solid #698ea5; background: #f3f7fa; white-space: pre-wrap; }
+.emba-post-thought .emba-post-provenance { margin-top: 4px; font-size: 11px; }
+.emba-study-module [data-block-id^="post-day-"] { min-height: 110px; }
+@media (max-width: 640px) {
+  .emba-post-source-grid { grid-template-columns: 1fr; }
+  .emba-post-assignment, .emba-post-thought { padding: 16px; }
+  .emba-post-day h3 { font-size: 21px; }
+}
+
 body {
   background: #f5f5f7;
   color: #1d1d1f;

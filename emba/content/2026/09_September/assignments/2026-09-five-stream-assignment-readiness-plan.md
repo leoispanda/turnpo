@@ -43,6 +43,8 @@ updated_at: 2026-08-22
 
 # Five-Stream Assignment Readiness Plan
 
+> 2026-09-21 核对：本页是历史准备计划。最终题目、截止日期及三题 / 四题冲突请查看[九月作业要求与资料核对](/emba/content/2026/09_September/assignments/2026-09-post-study-requirements.md)；不要据此推断五个学习主题都要单独提交。
+
 ## Operating principle
 
 Treat each day as a small executive work cycle, not as a reading marathon:
