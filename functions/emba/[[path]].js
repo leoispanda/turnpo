@@ -46,57 +46,66 @@ function clearUiCookie() {
 
 function accessPage(error = "") {
   return html(`<!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EMBA Access | Turnpo</title>
+    <title>进入学习空间 | EMBA · Turnpo</title>
     <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#f6f5f0" />
     <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="/styles.css" />
     <style>
       :root { color-scheme: light; }
-      body { margin: 0; background: #f5f5f7; color: #1d1d1f; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Inter, "Segoe UI", sans-serif; }
-      body::before { display: none; }
-      .topbar { grid-template-columns: auto 1fr auto; border-bottom: 1px solid rgba(0,0,0,.08); background: rgba(245,245,247,.78); backdrop-filter: blur(28px) saturate(1.6); }
-      .brand { color: #1d1d1f; }
-      .brand-mark { border-color: rgba(0,0,0,.08); background-color: #fff; box-shadow: 0 10px 24px rgba(0,0,0,.08); }
-      .top-actions .ghost-btn { min-height: 36px; border-color: rgba(0,0,0,.1); border-radius: 999px; background: rgba(255,255,255,.62); color: #1d1d1f; font-size: 13px; font-weight: 600; box-shadow: 0 10px 28px rgba(0,0,0,.06); }
-      .emba-gate { width: min(720px,100%); min-height: calc(100vh - 73px); display: grid; place-items: center; margin: 0 auto; padding: clamp(28px,5vw,56px) clamp(18px,5vw,72px); }
-      .emba-card { width: min(480px,100%); display: grid; gap: 18px; padding: clamp(24px,4vw,36px); border: 1px solid rgba(0,0,0,.08); border-radius: 28px; background: rgba(255,255,255,.72); box-shadow: 0 34px 90px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.82); backdrop-filter: blur(24px) saturate(1.35); }
-      .emba-card h1 { margin: 0; color: #1d1d1f; font-size: clamp(38px,7vw,64px); line-height: .96; letter-spacing: 0; }
-      .emba-card p { margin: 14px 0 0; color: #6e6e73; line-height: 1.5; }
-      .emba-card label { display: grid; gap: 8px; }
-      .emba-card label span { color: #6e6e73; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-      .emba-card input { min-height: 48px; width: 100%; border: 1px solid rgba(0,0,0,.12); border-radius: 14px; outline: none; background: rgba(255,255,255,.72); color: #1d1d1f; padding: 0 14px; }
-      .emba-card input:focus { border-color: #0071e3; box-shadow: 0 0 0 4px rgba(0,113,227,.14); }
-      .emba-card button { min-height: 46px; border: 0; border-radius: 999px; background: #0071e3; color: #fff; font-weight: 700; }
-      .emba-error { min-height: 22px; margin: 0 !important; color: #b42318 !important; font-size: 13px; }
+      * { box-sizing: border-box; }
+      body { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; margin: 0; background: #f6f5f0; color: #283c34; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; -webkit-font-smoothing: antialiased; }
+      a, button, input { -webkit-tap-highlight-color: transparent; }
+      a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid #304f43; outline-offset: 4px; }
+      .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; padding: 12px clamp(20px, 5vw, 64px); border-bottom: 1px solid #e6e6dd; }
+      .brand { min-height: 44px; display: inline-flex; align-items: center; gap: 11px; color: #283c34; font-size: 16px; font-weight: 650; text-decoration: none; }
+      .brand-mark { width: 32px; height: 32px; border-radius: 8px; background: #252520 url("/assets/icons/favicon-48.png") center / cover no-repeat; }
+      .top-actions .ghost-btn { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 4px; border-radius: 4px; color: #536359; font-size: 14px; text-decoration: none; }
+      .top-actions .ghost-btn:hover { color: #283c34; text-decoration: underline; text-underline-offset: 5px; }
+      .emba-gate { width: 100%; flex: 1; display: grid; place-items: center; margin: 0 auto; padding: 48px 20px 72px; }
+      .emba-card { width: min(460px, 100%); min-width: 0; display: grid; gap: 26px; margin: 0; padding: clamp(28px, 5vw, 44px); border: 1px solid #e5e7df; border-radius: 24px; background: #fff; box-shadow: 0 12px 44px -20px rgba(40, 60, 52, .2), 0 2px 5px rgba(40, 60, 52, .025); }
+      .emba-eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 23px; color: #5d6d62; font-size: 10px; font-weight: 600; letter-spacing: .14em; line-height: 1.5; }
+      .emba-eyebrow span { color: #8a958c; }
+      .emba-card h1 { margin: 0; color: #283c34; font-size: clamp(28px, 6vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: -.04em; }
+      .emba-card p { margin: 12px 0 0; color: #647269; font-size: 14px; line-height: 1.8; }
+      .emba-card label { min-width: 0; display: grid; gap: 10px; }
+      .emba-card label span { color: #465a4f; font-size: 13px; font-weight: 550; }
+      .emba-card input { min-width: 0; min-height: 52px; width: 100%; border: 1px solid #d7ded6; border-radius: 10px; background: #fafbf8; color: #283c34; padding: 12px 14px; font: inherit; font-size: 16px; }
+      .emba-card input::placeholder { color: #747e76; }
+      .emba-card input:focus { border-color: #304f43; background: #fff; }
+      .emba-card button { min-height: 50px; width: 100%; border: 1px solid #304f43; border-radius: 10px; background: #304f43; color: #fff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+      .emba-card button:hover { background: #263f35; border-color: #263f35; }
+      .emba-card button:active { background: #20372e; }
+      .emba-error { min-height: 20px; margin: -12px 0 0 !important; color: #a43c31 !important; font-size: 13px !important; overflow-wrap: anywhere; }
+      @media (max-width: 480px) { .topbar { min-height: 68px; } .emba-gate { padding: 32px 18px 52px; } .emba-card { gap: 24px; border-radius: 20px; } }
     </style>
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="/" aria-label="Turnpo home">
+      <a class="brand" href="/" aria-label="Turnpo 首页">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Turnpo</span>
       </a>
-      <div></div>
       <div class="top-actions">
-        <a class="ghost-btn" href="/">Turnpo home</a>
+        <a class="ghost-btn" href="/"><span aria-hidden="true">←</span> 返回首页</a>
       </div>
     </header>
     <main class="emba-gate">
       <form class="emba-card" method="post">
         <div>
-          <h1>EMBA Timeline</h1>
-          <p>Enter the access code to open the learning timeline.</p>
+          <div class="emba-eyebrow">PRIVATE LEARNING <span aria-hidden="true">/</span> EMBA</div>
+          <h1>进入学习空间</h1>
+          <p>输入访问密码，继续你的预习、复习与思考。</p>
         </div>
         <label>
-          <span>Access code</span>
-          <input name="accessCode" type="password" autocomplete="current-password" required autofocus />
+          <span>访问密码</span>
+          <input name="accessCode" type="password" autocomplete="current-password" placeholder="请输入密码" aria-describedby="embaAccessError" required autofocus />
         </label>
-        <button type="submit">Enter</button>
-        <p class="emba-error">${error}</p>
+        <button type="submit">进入学习空间 <span aria-hidden="true">→</span></button>
+        <p class="emba-error" id="embaAccessError" role="status">${error}</p>
       </form>
     </main>
   </body>

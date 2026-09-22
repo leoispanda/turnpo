@@ -1851,7 +1851,7 @@ function renderStudyStep(key, number, title, hint, body) {
 function renderSeptemberDayHeader(day) {
   const plan = septemberPlanMeta(day);
   return `<header class="emba-plan-heading"><span class="emba-month-kicker">${escapeHtml(day.day)} · ${escapeHtml(day.date.replaceAll("-", "."))}</span><h3>${escapeHtml(plan.title)}</h3><p>${escapeHtml(day.lecturers)}</p></header>
-    <p class="emba-plan-goal">${escapeHtml(plan.goal)}</p>`;
+    <p class="emba-plan-goal"><span class="emba-plan-goal-label">本日目标</span>${escapeHtml(plan.goal)}</p>`;
 }
 
 function renderSeptemberAssignmentOverview() {
@@ -1949,9 +1949,9 @@ function renderSeptemberStudyModules(month) {
     : [["videos", "全部视频与课程总览"], ["podcast", "全部课程音频"], ["preparation", "预习与指定阅读"], ...(materialsForSection(month, "vocabulary").some(materialHasContent) ? [["vocabulary", "专业词汇"]] : [])];
   const auxiliary = extras.some(([id]) => id === state.openBlockId);
   return `<div class="emba-study-planner">
-    <header class="emba-study-heading"><h2>9 月学习计划</h2><p>一次专注一天，按顺序完成三步。</p></header>
+    <header class="emba-study-heading"><span class="emba-study-eyebrow">SEPTEMBER / 2026</span><h2>9 月学习计划</h2><p>一次专注一天，按顺序完成三步。</p><span class="emba-study-month-mark" aria-hidden="true">09</span></header>
     <div class="emba-study-tabs" role="tablist" aria-label="学习阶段">
-      ${[["pre-study", "Pre Study · 课前预习"], ["post-study", "Post Study · 课后复习"]].map(([id, title]) => `<button type="button" role="tab" id="study-tab-${id}" aria-controls="study-module-panel" aria-selected="${module === id}" tabindex="${module === id ? 0 : -1}" data-study-module-select="${id}">${title}</button>`).join("")}
+      ${[["pre-study", "Pre Study", "课前预习"], ["post-study", "Post Study", "课后复习"]].map(([id, title, subtitle]) => `<button type="button" role="tab" id="study-tab-${id}" aria-controls="study-module-panel" aria-selected="${module === id}" tabindex="${module === id ? 0 : -1}" data-study-module-select="${id}"><span>${title}</span><small>${subtitle}</small></button>`).join("")}
     </div>
     <section id="study-module-panel" role="tabpanel" aria-labelledby="study-tab-${module}" data-study-module="${module}">
       ${post ? renderSeptemberAssignmentOverview() : ""}

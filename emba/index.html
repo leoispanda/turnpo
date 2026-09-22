@@ -12,7 +12,7 @@
     <meta property="og:description" content="A private EMBA learning timeline." />
     <meta property="og:url" content="https://www.turnpo.com/emba/" />
     <meta property="og:image" content="https://www.turnpo.com/assets/turnpo-og-image.png" />
-    <meta name="theme-color" content="#f5f5f7" />
+    <meta name="theme-color" content="#f6f5f0" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon-48.png" />
@@ -20,6 +20,7 @@
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/styles.css?v=0.1.431" />
     <link rel="stylesheet" href="/emba/emba.css?v=0.1.431&amp;layout=20260922-simple-plan" />
+    <link rel="stylesheet" href="/emba/study-theme.css?v=20260922-refined" />
   </head>
   <body class="emba-learning-page">
     <header class="topbar">
@@ -38,14 +39,15 @@
     <section class="emba-access-gate" id="embaAccessGate" aria-label="EMBA access">
       <form class="emba-access-card" id="embaAccessForm" method="post">
         <div>
-          <h1>EMBA 学习计划</h1>
-          <p>Enter the access password to open the learning timeline.</p>
+          <span class="emba-access-eyebrow">PRIVATE LEARNING</span>
+          <h1>进入学习空间</h1>
+          <p>从一日的专注，开始更深入的思考。</p>
         </div>
         <label>
-          <span>Password</span>
-          <input id="embaPassword" name="accessCode" type="password" autocomplete="current-password" placeholder="Enter password" required />
+          <span>访问密码</span>
+          <input id="embaPassword" name="accessCode" type="password" autocomplete="current-password" placeholder="请输入密码" required />
         </label>
-        <button class="gold-btn" type="submit">Enter</button>
+        <button class="gold-btn" type="submit">进入学习计划 →</button>
         <p class="emba-access-note" id="embaAccessNote" aria-live="polite"></p>
       </form>
     </section>
@@ -53,7 +55,7 @@
     <main class="emba-shell" id="embaApp" hidden>
       <section class="emba-stage" aria-label="EMBA horizontal timeline">
         <div class="emba-heading">
-          <h1>EMBA 学习</h1>
+          <h1>EMBA <span class="emba-heading-divider" aria-hidden="true">/</span> 学习空间</h1>
           <span aria-hidden="true"></span>
           <p class="emba-sync-status" id="embaSyncStatus" aria-live="polite"></p>
         </div>
@@ -87,6 +89,6 @@
     </div>
 
     <script src="/emba/september-post-study.js?v=20260922-simple-plan"></script>
-    <script src="/emba/emba.js?v=0.1.431&amp;layout=20260922-simple-plan"></script>
+    <script src="/emba/emba.js?v=0.1.431&amp;layout=20260922-refined"></script>
   </body>
 </html>
