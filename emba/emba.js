@@ -133,6 +133,13 @@ const state = {
   podcastLanguage: "中文",
   libraryLoaded: false,
   accessGranted: false,
+  septemberThoughts: {},
+  septemberThoughtsLoaded: false,
+  septemberThoughtsLoading: false,
+  septemberThoughtsError: "",
+  septemberModule: "post-study",
+  septemberDay: 0,
+  septemberDisclosures: {},
   editMode: false,
   cloudReady: false,
   cloudSaveTimer: 0,
@@ -646,7 +653,7 @@ function updateEditModeControl() {
   const granted = hasEmbaAccess();
   button.hidden = !granted;
   button.setAttribute("aria-pressed", String(isEditMode()));
-  button.textContent = isEditMode() ? "Editing" : "Edit mode";
+  button.textContent = isEditMode() ? "完成编辑" : "编辑";
   button.setAttribute("aria-label", isEditMode() ? "Turn off EMBA editing" : "Turn on EMBA editing");
   document.body.classList.toggle("emba-editing", isEditMode());
 }
@@ -1379,7 +1386,8 @@ function renderMapkaiVideos(month) {
 }
 
 function isReadableMaterial(file = "") {
-  return /^\/emba\/(?:materials|content)\/.*\.md$/i.test(String(file || ""));
+  return /^\/emba\/(?:materials|content)\/.*\.md$/i.test(String(file || ""))
+    || /^\/api\/emba\/file\/emba\/[^?#]+\.md$/i.test(String(file || ""));
 }
 
 function isWebLearningPage(file = "") {
@@ -1693,7 +1701,10 @@ function renderMemoryMoment(month) {
 
 function blockSummary(id, month) {
   const postDay = septemberPostStudyDay(id, month);
-  if (postDay) return `${postDay.date.slice(5)} · ${postDay.slides.length ? `${postDay.slides.length} 份课件` : "课件待补"} · ${postDay.thoughts.length ? `${postDay.thoughts.length} 条思考` : "笔记待补"}`;
+  if (postDay) {
+    const thoughts = state.septemberThoughts[postDay.id] || [];
+    return `${postDay.date.slice(5)} · ${postDay.slides.length ? `${postDay.slides.length} 份课件` : "课件待补"} · ${state.septemberThoughtsLoaded ? (thoughts.length ? `${thoughts.length} 条思考` : "笔记待补") : "笔记载入中"}`;
+  }
   if (id === "videos") {
     const count = materialsForSection(month, "videos").filter(materialHasContent).length;
     return count ? `${count} 个预习视频` : "待添加视频链接";
@@ -1732,6 +1743,7 @@ function blockSummary(id, month) {
 function renderBlockContent(id, month) {
   const postDay = septemberPostStudyDay(id, month);
   if (postDay) return renderSeptemberPostDay(postDay);
+  if (id === "handwritten") return state.materialReader ? renderMaterialReader() : renderHandwrittenArchive();
   if (id === "videos") {
     if (isEditMode()) return `<p class="emba-empty-copy">请在 Post Study 的“资料”入口管理文件；标注为 MapKAI 视频的资料会自动归入 Pre Study。</p>`;
     return renderMapkaiVideos(month);
@@ -1766,7 +1778,7 @@ function renderOpenBlockPanel(month) {
   return `
     <article class="emba-block-panel" data-block-panel="${escapeHtml(state.openBlockId)}">
       <div class="emba-block-panel-nav">
-        <button class="emba-panel-back" type="button" data-block-close>← 返回课程入口</button>
+        <button class="emba-panel-back" type="button" data-block-close>${isSeptemberStudy(month) ? "← 返回学习计划" : "← 返回课程入口"}</button>
       </div>
       <div class="emba-block-body">${content}</div>
     </article>
@@ -1794,79 +1806,168 @@ function postStudySourceLink(id) {
   return `<a class="emba-post-source" href="${escapeHtml(source.file)}" target="_blank" rel="noopener noreferrer"><span>${escapeHtml(source.title)}</span><span aria-hidden="true">↗</span></a>`;
 }
 
+function renderHandwrittenArchive() {
+  const sources = Object.entries(septemberPostStudyData().sources)
+    .filter(([id]) => id.startsWith("handwritten-") && id !== "handwritten-review")
+    .sort(([left], [right]) => left.localeCompare(right));
+  if (!sources.length) return "";
+  return `<section class="emba-post-handwritten-archive" aria-labelledby="handwritten-archive-title">
+    <h3 id="handwritten-archive-title">手写原页 · 14 张照片</h3>
+    <p class="emba-post-context">按上传顺序保存；照片已转正便于阅读。除第 4 页有明确课程日期外，其余按主题归类，日期未确认。点开缩略图可看完整原页。</p>
+    <div class="emba-post-handwritten-grid">${sources.map(([id, source]) => {
+      const label = id.replace("handwritten-", "");
+      const thumbnail = source.thumbnail || source.file;
+      return `<a class="emba-post-handwritten-card" href="${escapeHtml(source.file)}" target="_blank" rel="noopener noreferrer">
+        <img src="${escapeHtml(thumbnail)}" alt="手写原页 ${escapeHtml(label)}" loading="lazy" decoding="async">
+        <span>手写原页 ${escapeHtml(label)}</span><small>${escapeHtml(source.title.split("·").slice(1).join("·").trim())}</small>
+      </a>`;
+    }).join("")}</div>
+    <div class="emba-post-handwritten-review">${postStudySourceLink("handwritten-review")}</div>
+  </section>`;
+}
+
+function septemberDisclosureAttrs(key) {
+  return `data-plan-disclosure="${escapeHtml(key)}"${state.septemberDisclosures[key] ? " open" : ""}`;
+}
+
+function septemberPlanMeta(day) {
+  const plans = [
+    { title: "价值与风险", goal: "用现金流和风险判断一项投资是否值得。", question: "为什么利润增长，不一定意味着企业更有价值？", task: "核对风险模型", hint: "检查 Excel 的输入、单位与假设" },
+    { title: "合规与可持续", goal: "把风险披露、管理行动和可验证的证据连起来。", question: "一份看起来完善的报告，怎样证明风险真的被控制？", task: "准备公司比较", hint: "合规 / 可持续报告二选一" },
+    { title: "财务分析与治理", goal: "从财务比率回到企业的经营与风险。", question: "一个比率变好，可能有哪些不同的原因？", task: "完成财务比率分析", hint: "ASML 年报、计算口径与解释" },
+    { title: "管理会计与控制", goal: "让指标、激励和控制服务于公司的战略。", question: "当指标都达标时，为什么战略仍可能失败？", task: "分析 Tennessee Controls", hint: "把控制方法对应到案例中的问题" },
+    { title: "投资整合与展示", goal: "形成有证据、有条件的 Impact Investing 董事会建议。", question: "一项投资的财务回报和社会影响，分别怎样证明？", task: "准备 Team 6 展示", hint: "Impact Investing · 建议与 Q&A" }
+  ];
+  return plans[Number(day.id.replace("post-day-", "")) - 1] || plans[0];
+}
+
+function renderStudyStep(key, number, title, hint, body) {
+  return `<details class="emba-plan-step" ${septemberDisclosureAttrs(key)}>
+    <summary><span class="emba-plan-step-index">${number}</span><span class="emba-plan-step-copy"><strong>${escapeHtml(title)}</strong><small>${escapeHtml(hint)}</small></span><span class="emba-plan-step-arrow" aria-hidden="true">+</span></summary>
+    <div class="emba-plan-step-body">${body}</div>
+  </details>`;
+}
+
+function renderSeptemberDayHeader(day) {
+  const plan = septemberPlanMeta(day);
+  return `<header class="emba-plan-heading"><span class="emba-month-kicker">${escapeHtml(day.day)} · ${escapeHtml(day.date.replaceAll("-", "."))}</span><h3>${escapeHtml(plan.title)}</h3><p>${escapeHtml(day.lecturers)}</p></header>
+    <p class="emba-plan-goal">${escapeHtml(plan.goal)}</p>`;
+}
+
 function renderSeptemberAssignmentOverview() {
   const assignment = septemberPostStudyData().assignment;
   if (!assignment) return "";
-  return `<aside class="emba-post-assignment" aria-label="九月作业总览">
-    <h3>Assignment · 提交要求</h3>
-    <p><strong>${escapeHtml(assignment.deadline)}</strong></p>
-    <p>${escapeHtml(assignment.rules)}</p>
-    <details><summary>题数待确认 · 原文件存在三题 / 四题冲突</summary><p>${escapeHtml(assignment.conflict)}</p><p>${escapeHtml(assignment.format)}</p><p>${escapeHtml(assignment.note)}</p></details>
-    <div class="emba-post-source-grid">${postStudySourceLink("assignment")}${postStudySourceLink("syllabus")}</div>
-  </aside>`;
+  return `<details class="emba-study-deadline" ${septemberDisclosureAttrs("assignment")}>
+    <summary><strong>作业截止 · 10 月 25 日 23:59</strong><span>Canvas 时区为准 · 题数待确认</span></summary>
+    <div class="emba-plan-step-body"><p>${escapeHtml(assignment.deadline)}</p><p>${escapeHtml(assignment.rules)}</p>
+      <p class="emba-post-missing"><strong>题数待确认：</strong>${escapeHtml(assignment.conflict)}</p><p>${escapeHtml(assignment.format)}</p><p>${escapeHtml(assignment.note)}</p>
+      <div class="emba-post-source-grid">${postStudySourceLink("assignment")}${postStudySourceLink("syllabus")}</div>
+    </div>
+  </details>`;
 }
 
-function renderSeptemberPostDay(day) {
+function renderSeptemberThoughts(day) {
   const data = septemberPostStudyData();
-  const list = (items) => `<ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
-  return `<div class="emba-post-day" data-post-day="${escapeHtml(day.date)}">
-    <header><span class="emba-month-kicker">${escapeHtml(day.date)} · ${escapeHtml(day.day)}</span><h3>${escapeHtml(day.title)}</h3><p>${escapeHtml(day.lecturers)}</p><p class="emba-post-context">${escapeHtml(day.schedule)}</p></header>
-    <section><h4>01 · 老师课件</h4>${day.slides.length ? `<div class="emba-post-source-grid">${day.slides.map(postStudySourceLink).join("")}</div>` : `<p class="emba-post-missing">尚未找到当天老师的独立课件，待补。</p>`}</section>
-    <section><h4>02 · Assignment 与资料</h4>${list(day.tasks)}<p class="emba-post-output"><strong>建议整理产出</strong><br>${escapeHtml(day.output)}</p><div class="emba-post-source-grid">${[...day.resources, "assignment"].map(postStudySourceLink).join("")}</div></section>
-    <section><h4>03 · 我的笔记与思考</h4><p class="emba-post-context">引文保留你的原话；上下文归纳和补充分析由 Codex 于 2026-09-21 整理，不代表你当时已经得出的结论。</p>
-    ${day.missing ? `<p class="emba-post-missing">${escapeHtml(day.missing)}</p>` : ""}
-    ${day.thoughts.map((thought, index) => `<details class="emba-post-thought"${index === 0 ? " open" : ""}><summary>${escapeHtml(thought.title)}</summary>
-      <h5>我的原话</h5>${thought.quotes.map((quote) => `<blockquote>${escapeHtml(quote.text)}</blockquote><p class="emba-post-provenance">${escapeHtml(new Date(quote.date).toLocaleString("zh-CN", {timeZone:"Europe/Amsterdam",hour12:false}))} · Amsterdam · 规划Day 1后续学习 (5)</p>`).join("")}
+  const thoughts = state.septemberThoughts[day.id] || [];
+  const renderQuote = (quote) => {
+    const imageSource = quote.image ? data.sources[quote.image] : null;
+    const dateStatus = imageSource?.title.includes("含 9/10") ? " · 原页标注 9/10" : " · 日期未确认";
+    return imageSource
+      ? `<p class="emba-post-provenance"><a href="${escapeHtml(imageSource.file)}" target="_blank" rel="noopener noreferrer">${escapeHtml(imageSource.title.split("·")[0].trim())} · 查看原页 ↗</a>${quote.confidence === "low" ? " · 低置信读数" : dateStatus}</p>`
+      : `<p class="emba-post-provenance">${escapeHtml(new Date(quote.date).toLocaleString("zh-CN", { timeZone: "Europe/Amsterdam", hour12: false }))} · Amsterdam · 规划Day 1后续学习 (5)</p>`;
+  };
+  const content = state.septemberThoughtsLoaded
+    ? (thoughts.length ? thoughts.map((thought, index) => `<details class="emba-post-thought" ${septemberDisclosureAttrs(`${day.id}-thought-${index}`)}><summary>${escapeHtml(thought.title)}</summary>
+      <h5>${thought.handwritten ? "手写摘录 · 可辨原文" : "我的原话"}</h5>${thought.quotes.map((quote) => `<blockquote>${escapeHtml(quote.text)}</blockquote>${renderQuote(quote)}`).join("")}
       <h5>当时在想什么 · 上下文归纳</h5><p>${escapeHtml(thought.context)}</p>
       <h5>把思考补齐 · Codex 分析</h5><p>${escapeHtml(thought.analysis)}</p>
       <h5>下一步如何验证</h5><p>${escapeHtml(thought.next)}</p>
-      <a href="${escapeHtml(data.sources[thought.source].file)}#page=${escapeHtml(thought.pages.match(/\d+/)?.[0] || "1")}" target="_blank" rel="noopener noreferrer">对照老师课件 · 第 ${escapeHtml(thought.pages)} 页 ↗</a>
-    </details>`).join("")}
-    ${day.prompts.length ? `<div class="emba-post-prompts"><h5>待补方向 · 以下不是个人原话</h5>${list(day.prompts)}</div>` : ""}
-    <button class="emba-panel-back" type="button" data-material-open="${escapeHtml(day.archive)}" data-material-title="${escapeHtml(`${day.day} · 完整笔记与来源`)}">阅读 / 复制完整笔记与原文来源 →</button>
-    </section>
-    ${renderMaterialReader()}
+      ${thought.source && data.sources[thought.source] ? `<a href="${escapeHtml(data.sources[thought.source].file)}${thought.pages ? `#page=${escapeHtml(thought.pages.match(/\d+/)?.[0] || "1")}` : ""}" target="_blank" rel="noopener noreferrer">${thought.pages ? `对照老师课件 · 第 ${escapeHtml(thought.pages)} 页` : "对照相关老师课件"} ↗</a>` : ""}
+      ${thought.images?.length ? `<div class="emba-post-handwritten-links">${thought.images.map((id) => {
+        const source = data.sources[id];
+        return source ? `<a href="${escapeHtml(source.file)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.title.split("·")[0].trim())} ↗</a>` : "";
+      }).join("")}</div>` : ""}
+      ${thought.references?.length ? `<div class="emba-post-references"><h5>事实核对 · 官方来源</h5><ul>${thought.references.map((reference) => `<li><a href="${escapeHtml(reference.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(reference.label)} ↗</a></li>`).join("")}</ul></div>` : ""}
+    </details>`).join("") : `<p class="emba-post-context">目前还没有归档到这一天的个人笔记。</p>`)
+    : state.septemberThoughtsError
+      ? `<p class="emba-post-context" role="status">笔记暂时未能加载。<button class="emba-file-link" type="button" data-notes-retry>重新读取</button></p>`
+      : `<p class="emba-post-context" role="status">正在读取学习笔记…</p>`;
+  return `<p class="emba-post-context">原话保留原文；上下文归纳和补充分析由 Codex 整理。</p>
+    ${day.missing ? `<p class="emba-post-context">${escapeHtml(day.missing)}</p>` : ""}${content}
+    ${day.prompts.length ? `<details ${septemberDisclosureAttrs(`${day.id}-prompts`)}><summary>继续思考 · Codex 补充问题</summary><ul>${day.prompts.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></details>` : ""}
+    <div class="emba-post-source-grid">${postStudySourceLink("handwritten-review")}</div>`;
+}
+
+function renderSeptemberPostDay(day) {
+  if (state.materialReader) return renderMaterialReader();
+  const plan = septemberPlanMeta(day);
+  const thoughts = state.septemberThoughts[day.id] || [];
+  const slides = day.slides.length ? `<div class="emba-post-source-grid">${day.slides.map(postStudySourceLink).join("")}</div>` : `<p class="emba-post-context">老师的独立课件待补；可以先从作业资料开始。</p>`;
+  const tasks = `<ul>${day.tasks.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul><p class="emba-post-output"><strong>建议产出</strong><br>${escapeHtml(day.output)}</p><div class="emba-post-source-grid">${[...day.resources, "assignment"].map(postStudySourceLink).join("")}</div>`;
+  return `<div class="emba-daily-plan emba-post-day" data-post-day="${escapeHtml(day.date)}">
+    ${renderSeptemberDayHeader(day)}
+    <div class="emba-plan-steps">
+      ${renderStudyStep(`${day.id}-slides`, "01", "回顾老师课件", day.slides.length ? `${day.slides.length} 份课件 · 查看原始 PPT / PDF` : "课件待补 · 可先看作业资料", slides)}
+      ${renderStudyStep(`${day.id}-tasks`, "02", plan.task, plan.hint, tasks)}
+      ${renderStudyStep(`${day.id}-notes`, "03", "整理笔记与思考", state.septemberThoughtsLoaded ? (thoughts.length ? `${thoughts.length} 条思考 · 原文、分析与下一步` : "暂无可确认的个人记录") : "原文、分析与下一步", renderSeptemberThoughts(day))}
+    </div>
+    <details class="emba-plan-schedule" ${septemberDisclosureAttrs(`${day.id}-schedule`)}><summary>本日课程安排与清单</summary><p>${escapeHtml(day.schedule)}</p><button class="emba-file-link" type="button" data-material-open="${escapeHtml(day.archive)}" data-material-title="${escapeHtml(`${day.day} · 课件与作业清单`)}">打开课件与作业清单 →</button></details>
+  </div>`;
+}
+
+function renderSeptemberPreDay(day, month) {
+  if (state.materialReader) return renderMaterialReader();
+  const number = Number(day.id.replace("post-day-", ""));
+  const plan = septemberPlanMeta(day);
+  const videos = materialsForSection(month, "videos").filter((item) => item.file.includes(`/day-${number}-`));
+  const podcasts = materialsForSection(month, "podcast").filter((item) => new RegExp(`^Day ${number} Podcast`).test(item.title));
+  const lesson = asArray(month.materials).find((item) => item.type === "daily_course_intro" && item.file.includes(`/days/${day.date}-`));
+  const media = videos.length ? videos.map((item, index) => `<details class="emba-pre-media" ${septemberDisclosureAttrs(`pre-${number}-video-${index}`)}><summary>${escapeHtml(item.title.replace(/^MapKAI｜Day \d｜/, ""))}</summary>
+      ${/^https:\/\/media\.mapkai\.com\/finance\/[^\s]+\.mp4(?:\?[^\s]*)?$/.test(item.file) ? `<video class="emba-video-player" controls playsinline preload="none" aria-label="${escapeHtml(item.title)}" src="${escapeHtml(item.file)}"></video>` : ""}
+      <a class="emba-file-link" href="https://www.mapkai.com/zh/learning/corporate-finance/day-${number}/#watch-lesson" target="_blank" rel="noopener noreferrer">在 MapKAI 中学习（含字幕） ↗</a>
+      <a class="emba-file-link" href="${escapeHtml(item.file)}" target="_blank" rel="noopener noreferrer">打开视频 ↗</a>
+    </details>`).join("") : `<p class="emba-empty-copy">本日视频待补。</p>`;
+  const audio = podcasts.length ? `<details class="emba-pre-media" ${septemberDisclosureAttrs(`pre-${number}-audio`)}><summary>也可以听本日课程音频</summary>${renderPodcasts({ ...month, materials: podcasts })}</details>` : "";
+  const reading = lesson ? `<button class="emba-post-source" type="button" data-material-open="${escapeHtml(lesson.file)}" data-material-title="${escapeHtml(lesson.title)}"><span>${escapeHtml(lesson.title)}</span><span aria-hidden="true">→</span></button>` : `<p class="emba-empty-copy">本日阅读材料待补。</p>`;
+  return `<div class="emba-daily-plan" data-pre-day="${escapeHtml(day.date)}">${renderSeptemberDayHeader(day)}
+    <div class="emba-plan-steps">
+      ${renderStudyStep(`pre-${number}-watch`, "01", "看 MapKAI 视频", "选择中文或英文，先理解这一天的主题", media + audio)}
+      ${renderStudyStep(`pre-${number}-read`, "02", "阅读课程要点", "概念、指定阅读与课堂问题", reading)}
+      ${renderStudyStep(`pre-${number}-question`, "03", "带着问题进课堂", plan.question, `<p class="emba-plan-question">${escapeHtml(plan.question)}</p><p>记下你的初步答案，以及一个想在课堂核实的问题。</p>`)}
+    </div>
   </div>`;
 }
 
 function renderSeptemberStudyModules(month) {
-  const modules = [
-    {
-      id: "pre-study", title: "Pre Study", subtitle: "课前预习",
-      description: "先看 MapKAI 视频，再听课程音频、阅读材料，带着问题进入课堂。",
-      blocks: [
-        ["videos", "MapKAI 视频"],
-        ["podcast", "Podcast（课程音频）"],
-        ["preparation", "预习与阅读资料"],
-        ...(materialsForSection(month, "vocabulary").some(materialHasContent) ? [["vocabulary", "专业词汇"]] : [])
-      ]
-    },
-    {
-      id: "post-study", title: "Post Study", subtitle: "课后整理",
-      description: "按周一至周五整理：老师课件 → 作业要求与资料 → 我的原话 → 思考补充。",
-      blocks: [
-        ...septemberPostStudyData().days.map((day) => [day.id, `${day.day} · ${day.title}`]),
-        ["markdown", "已有月度笔记 · 继续编辑"],
-        ["reflection", "已有个人思考 · 继续编辑"],
-        ["material", "全部资料 · 上传与管理"],
-        ["memory", "照片"]
-      ]
-    }
-  ];
-  return modules.map((module) => `
-    <section class="emba-study-module" data-study-module="${module.id}" aria-labelledby="${module.id}-title">
-      <header class="emba-study-module-head">
-        <h2 id="${module.id}-title">${module.title} <span>${module.subtitle}</span></h2>
-        <p>${module.description}</p>
-      </header>
-      ${module.id === "post-study" ? renderSeptemberAssignmentOverview() : ""}
-      <div class="emba-block-grid">
-        ${module.blocks.map(([id, title]) => blockTemplate(id, title, month)).join("")}
+  const days = septemberPostStudyData().days;
+  const day = days[state.septemberDay] || days[0];
+  if (!day) return `<p class="emba-empty-copy">学习计划正在整理。</p>`;
+  const module = state.septemberModule;
+  const post = module === "post-study";
+  const extras = post
+    ? [["handwritten", "手写原页与完整复核"], ["markdown", "月度笔记"], ["reflection", "个人思考"], ["material", "全部资料与上传"], ["memory", "课堂照片"]]
+    : [["videos", "全部视频与课程总览"], ["podcast", "全部课程音频"], ["preparation", "预习与指定阅读"], ...(materialsForSection(month, "vocabulary").some(materialHasContent) ? [["vocabulary", "专业词汇"]] : [])];
+  const auxiliary = extras.some(([id]) => id === state.openBlockId);
+  return `<div class="emba-study-planner">
+    <header class="emba-study-heading"><h2>9 月学习计划</h2><p>一次专注一天，按顺序完成三步。</p></header>
+    <div class="emba-study-tabs" role="tablist" aria-label="学习阶段">
+      ${[["pre-study", "Pre Study · 课前预习"], ["post-study", "Post Study · 课后复习"]].map(([id, title]) => `<button type="button" role="tab" id="study-tab-${id}" aria-controls="study-module-panel" aria-selected="${module === id}" tabindex="${module === id ? 0 : -1}" data-study-module-select="${id}">${title}</button>`).join("")}
+    </div>
+    <section id="study-module-panel" role="tabpanel" aria-labelledby="study-tab-${module}" data-study-module="${module}">
+      ${post ? renderSeptemberAssignmentOverview() : ""}
+      <div class="emba-study-layout">
+        <div class="emba-weekdays" role="tablist" aria-label="学习日">
+          ${days.map((item, index) => `<button type="button" role="tab" id="study-day-${index}" aria-controls="study-day-panel" aria-selected="${day.id === item.id}" tabindex="${day.id === item.id ? 0 : -1}" data-study-day-select="${index}"><span class="emba-weekday-label"><strong>${escapeHtml(item.day)}</strong><small>9.${Number(item.date.slice(-2))}</small></span><span class="emba-weekday-topic">${escapeHtml(septemberPlanMeta(item).title)}</span></button>`).join("")}
+        </div>
+        <div class="emba-study-workspace" id="study-day-panel" role="tabpanel" aria-labelledby="study-day-${days.indexOf(day)}">
+          ${auxiliary ? renderOpenBlockPanel(month) : `<div data-block-panel="${escapeHtml(day.id)}">${post ? renderSeptemberPostDay(day) : renderSeptemberPreDay(day, month)}</div>`}
+        </div>
       </div>
-      ${module.blocks.some(([id]) => id === state.openBlockId) ? renderOpenBlockPanel(month) : ""}
+      <details class="emba-study-resources" ${septemberDisclosureAttrs(`${module}-extras`)}><summary>${post ? "资料与笔记归档" : "更多预习资料"}</summary><div class="emba-study-utility-links">${extras.map(([id, title]) => `<button class="emba-file-link" type="button" data-block-toggle="${id}">${title} →</button>`).join("")}</div></details>
     </section>
-  `).join("");
+  </div>`;
 }
+
 
 function renderMonthDetail(month) {
   const detail = $("#embaMonthDetail");
@@ -1877,10 +1978,7 @@ function renderMonthDetail(month) {
     return;
   }
   if (isSeptemberStudy(month)) {
-    detail.innerHTML = `
-      <div class="emba-month-kicker">${escapeHtml(formatMonth(month.month))}</div>
-      ${renderSeptemberStudyModules(month)}
-    `;
+    detail.innerHTML = renderSeptemberStudyModules(month);
     return;
   }
   detail.innerHTML = `
@@ -1945,9 +2043,41 @@ function renderAccessState() {
   if (gate) gate.hidden = granted;
   if (app) app.hidden = !granted;
   if (lock) lock.hidden = !granted;
+  if (!granted) {
+    state.septemberThoughts = {};
+    state.septemberThoughtsLoaded = false;
+    state.septemberThoughtsLoading = false;
+    state.septemberThoughtsError = "";
+  }
   updateEditModeControl();
   if (granted && !state.libraryLoaded) loadLibrary();
   if (granted && !state.knowledge.loaded) loadKnowledgeBase();
+  if (granted && !state.septemberThoughtsLoaded) loadSeptemberPrivateThoughts();
+}
+
+async function loadSeptemberPrivateThoughts() {
+  if (state.septemberThoughtsLoading || state.septemberThoughtsLoaded || !hasEmbaAccess()) return;
+  state.septemberThoughtsLoading = true;
+  state.septemberThoughtsError = "";
+  try {
+    const response = await fetch("/api/emba/file/emba/2026-09/handwritten/september-post-study-thoughts.json", {
+      cache: "no-store",
+      credentials: "same-origin"
+    });
+    if (!response.ok) throw new Error(`Could not load private study notes (${response.status})`);
+    const payload = await response.json();
+    if (!hasEmbaAccess()) return;
+    state.septemberThoughts = payload.days && typeof payload.days === "object" ? payload.days : {};
+    state.septemberThoughtsLoaded = true;
+  } catch (error) {
+    state.septemberThoughtsLoaded = false;
+    state.septemberThoughtsError = error.message;
+    console.error(error);
+  } finally {
+    state.septemberThoughtsLoading = false;
+    const month = selectedMonth();
+    if (hasEmbaAccess() && isSeptemberStudy(month) && state.septemberModule === "post-study" && !state.materialReader) renderMonthDetail(month);
+  }
 }
 
 async function loadLibrary() {
@@ -1970,7 +2100,7 @@ async function loadLibrary() {
     } else {
       state.library = mergeLibrary(baseLibrary, localLibrary);
     }
-    state.selectedMonthId = timelineMonths()[0] ? monthId(timelineMonths()[0]) : "";
+    state.selectedMonthId = monthId(timelineMonths().find(isSeptemberStudy) || timelineMonths()[0] || {});
     renderTimeline();
     if (state.knowledge.notes.length) renderKnowledgeBase();
   } catch (error) {
@@ -2031,6 +2161,32 @@ $("#embaTimeline")?.addEventListener("click", (event) => {
 });
 
 $("#embaMonthDetail")?.addEventListener("click", async (event) => {
+  const moduleTab = event.target.closest("[data-study-module-select]");
+  const dayTab = event.target.closest("[data-study-day-select]");
+  if (moduleTab || dayTab) {
+    if (moduleTab) {
+      const module = moduleTab.dataset.studyModuleSelect;
+      if (!["pre-study", "post-study"].includes(module)) return;
+      state.septemberModule = module;
+    } else {
+      const index = Number(dayTab.dataset.studyDaySelect);
+      if (!Number.isInteger(index) || !septemberPostStudyData().days[index]) return;
+      state.septemberDay = index;
+    }
+    state.openBlockId = "";
+    state.materialReader = null;
+    const focusId = (moduleTab || dayTab).id;
+    renderMonthDetail(selectedMonth());
+    document.getElementById(focusId)?.focus({ preventScroll: true });
+    return;
+  }
+
+  if (event.target.closest("[data-notes-retry]")) {
+    loadSeptemberPrivateThoughts();
+    renderMonthDetail(selectedMonth());
+    return;
+  }
+
   const podcastLanguage = event.target.closest("[data-podcast-language]");
   if (podcastLanguage) {
     state.podcastLanguage = podcastLanguage.dataset.podcastLanguage || "中文";
@@ -2119,6 +2275,25 @@ $("#embaMonthDetail")?.addEventListener("click", async (event) => {
   state.materialReader = null;
   renderMonthDetail(selectedMonth());
   scrollToMonthTarget("[data-block-panel]");
+});
+
+$("#embaMonthDetail")?.addEventListener("toggle", (event) => {
+  const detail = event.target;
+  if (detail.isConnected && detail.matches("details[data-plan-disclosure]")) {
+    state.septemberDisclosures[detail.dataset.planDisclosure] = detail.open;
+  }
+}, true);
+
+$("#embaMonthDetail")?.addEventListener("keydown", (event) => {
+  const tab = event.target.closest('[role="tab"]');
+  const tablist = tab?.closest('[role="tablist"]');
+  if (!tablist || !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) return;
+  const tabs = [...tablist.querySelectorAll('[role="tab"]')];
+  const current = tabs.indexOf(tab);
+  const next = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1
+    : (current + (["ArrowRight", "ArrowDown"].includes(event.key) ? 1 : -1) + tabs.length) % tabs.length;
+  event.preventDefault();
+  tabs[next].click();
 });
 
 $("#embaMonthDetail")?.addEventListener("change", async (event) => {

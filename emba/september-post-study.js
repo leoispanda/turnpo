@@ -1,6 +1,6 @@
 /* September post-study sources and evidence-bound learning records. */
 const SEPTEMBER_POST_STUDY = {
-  "version": "2026-09-21",
+  "version": "2026-09-21-handwritten-review",
   "thread": "01a07cc6-14e6-7943-afd1-d01e724ed8bf",
   "sources": {
     "rodrigues": {
@@ -116,6 +116,123 @@ const SEPTEMBER_POST_STUDY = {
     "day1-reflection": {
       "title": "周一学习路径 · 历史思考整理稿",
       "file": "/emba/content/2026/09_September/course-notes/day1-reflection-historical.md"
+    },
+    "handwritten-01": {
+      "title": "手写原页 01 · Financial Management · 利率、风险与现值（日期未确认）",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-01.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-01-thumb.jpg",
+      "name": "2026-09-handwritten-page-01.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 1
+    },
+    "handwritten-02": {
+      "title": "手写原页 02 · Sustainability Reporting · ESG",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-02.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-02-thumb.jpg",
+      "name": "2026-09-handwritten-page-02.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 2
+    },
+    "handwritten-03": {
+      "title": "手写原页 03 · Financial Management · CAPM",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-03.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-03-thumb.jpg",
+      "name": "2026-09-handwritten-page-03.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 3
+    },
+    "handwritten-04": {
+      "title": "手写原页 04 · Management Accounting & Control · 手写页含 9/10",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-04.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-04-thumb.jpg",
+      "name": "2026-09-handwritten-page-04.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 4
+    },
+    "handwritten-05": {
+      "title": "手写原页 05 · Financial Accounting / Risk · 日期未确认",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-05.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-05-thumb.jpg",
+      "name": "2026-09-handwritten-page-05.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 5
+    },
+    "handwritten-06": {
+      "title": "手写原页 06 · Financial Management · FCFF / WACC",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-06.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-06-thumb.jpg",
+      "name": "2026-09-handwritten-page-06.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 6
+    },
+    "handwritten-07": {
+      "title": "手写原页 07 · Financial Accounting · 日期未确认",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-07.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-07-thumb.jpg",
+      "name": "2026-09-handwritten-page-07.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 7
+    },
+    "handwritten-08": {
+      "title": "手写原页 08 · Supply & Demand · 价格与数量图（日期未确认）",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-08.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-08-thumb.jpg",
+      "name": "2026-09-handwritten-page-08.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 8
+    },
+    "handwritten-09": {
+      "title": "手写原页 09 · Financial Accounting · 比率（日期未确认）",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-09.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-09-thumb.jpg",
+      "name": "2026-09-handwritten-page-09.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 9
+    },
+    "handwritten-10": {
+      "title": "手写原页 10 · Management Accounting · 报表与责任中心",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-10.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-10-thumb.jpg",
+      "name": "2026-09-handwritten-page-10.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 10
+    },
+    "handwritten-11": {
+      "title": "手写原页 11 · Management Accounting · 激励与控制",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-11.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-11-thumb.jpg",
+      "name": "2026-09-handwritten-page-11.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 11
+    },
+    "handwritten-12": {
+      "title": "手写原页 12 · Management Accounting · 转移定价与成本决策",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-12.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-12-thumb.jpg",
+      "name": "2026-09-handwritten-page-12.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 12
+    },
+    "handwritten-13": {
+      "title": "手写原页 13 · Venture Capital · 风险与等待时机（日期未确认）",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-13.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-13-thumb.jpg",
+      "name": "2026-09-handwritten-page-13.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 13
+    },
+    "handwritten-14": {
+      "title": "手写原页 14 · Financial Management · 养老金、主动与被动投资（日期未确认）",
+      "file": "/api/emba/file/emba/2026-09/handwritten/2026-09-handwritten-page-14.jpg",
+      "thumbnail": "/api/emba/file/emba/2026-09/handwritten/thumbs/2026-09-handwritten-page-14-thumb.jpg",
+      "name": "2026-09-handwritten-page-14.jpg",
+      "visibility": "private",
+      "originalUploadOrder": 14
+    },
+    "handwritten-review": {
+      "title": "手写笔记复核 · 原话、主题归类与补充分析",
+      "file": "/api/emba/file/emba/2026-09/handwritten/handwritten-notes-review.md",
+      "name": "handwritten-notes-review.md"
     }
   },
   "days": [
@@ -143,158 +260,7 @@ const SEPTEMBER_POST_STUDY = {
         "用原始 Excel 对照 Scorecard 和 Merton 的输入、单位、时点与输出；不把课堂困境代理指标直接改名为真实违约。"
       ],
       "output": "一页“价值 / 现金流 / 风险 / 生存能力”对照表，加一张模型输入与验证清单。",
-      "thoughts": [
-        {
-          "title": "权重从哪里来：从像模型，走到有证据的模型",
-          "quotes": [
-            {
-              "text": "常数咋定的",
-              "date": "2026-09-07T15:16:47.000Z",
-              "turn": "01a07c71-7bf6-7292-bca0-e97f1934ba8e"
-            },
-            {
-              "text": "这个和我的sus pdc很像啊",
-              "date": "2026-09-07T15:17:29.000Z",
-              "turn": "01a07c72-1f97-7833-a958-45131af5e09f"
-            },
-            {
-              "text": "怎么就成了分数了",
-              "date": "2026-09-07T15:19:28.000Z",
-              "turn": "01a07c73-f303-7711-a143-0efbc458a441"
-            }
-          ],
-          "context": "你在 Altman → Ohlson → 课堂 Scorecard 这一段，把老师的方法联系到自己的 SUS / PDC。",
-          "analysis": "你的问题指向模型的依据：指标为什么入选、权重如何估计、最终分数代表什么。课件第 61–65 页区分了 Altman 判别分数与 Ohlson 的逻辑回归概率。把指标加权成一个数，只完成了表达；用已知结果估计参数、在未见过的数据上检验，才开始建立预测证据。老师的 0–100 分也有特定定义，不能直接当成 PDC 的上涨概率。",
-          "next": "为每个 PDC 维度补一行：目标、可观察指标、数据日期、权重依据、缺失值处理；再把“人工设定权重”和“经样本估计的权重”分开。",
-          "source": "bams",
-          "pages": "61–65"
-        },
-        {
-          "title": "ROA 的分母：数字变好，经营是否真的变好？",
-          "quotes": [
-            {
-              "text": "为啥重资产公司反而高啊",
-              "date": "2026-09-07T15:30:17.000Z",
-              "turn": "01a07c7d-d8b5-7152-a9f2-6a45e33f1758"
-            },
-            {
-              "text": "就是利润管理 比如10年后折旧完了 我可以依然算账吗",
-              "date": "2026-09-07T15:33:40.000Z",
-              "turn": "01a07c80-f196-7d01-ba3b-39dd6d6d24e9"
-            },
-            {
-              "text": "岂不是可能0资产 巨额收益啊",
-              "date": "2026-09-07T15:34:43.000Z",
-              "turn": "01a07c81-e8d3-7b81-9d6e-a83ff28a9ac7"
-            }
-          ],
-          "context": "在第 72–75 页财务比率讨论中，你追问了重资产公司、折旧和资产分母。",
-          "analysis": "你抓住的是“会计计量能否代表经济效率”。单台设备折旧至零仍可能继续生产，但这不代表公司总资产为零；现金、应收、存货等仍在。分母很小会放大 ROA，分母为零时比率无定义，不能解释为无限优秀。比较公司时，要同时看资产年龄、折旧政策、资本支出、利润率和现金流。仅凭某年 ROA 高，不能认定原因就是折旧，也不能为美化比率随意改会计估计。",
-          "next": "做 ASML 比率表时给每个数字标注口径和年份；对看似很好的比率，补问“是否由分母变化造成”。需要判断折旧政策时回到年报附注。",
-          "source": "bams",
-          "pages": "72–75"
-        },
-        {
-          "title": "预测什么：财务困境与股价上涨是两个目标",
-          "quotes": [
-            {
-              "text": "和我们学的altman 和ohlson有啥区别啊。我们的差在哪里还是他们的差",
-              "date": "2026-09-07T15:48:00.000Z",
-              "turn": "01a07c8e-0fb3-7fb2-abdb-abff1cf3b950"
-            },
-            {
-              "text": "我们如何改变成判断怎么上涨啊",
-              "date": "2026-09-07T15:49:06.000Z",
-              "turn": "01a07c8f-12ec-7fd3-8f5b-ece091e0de2d"
-            },
-            {
-              "text": "他们那个是事后去判断吗 还是预测y偶没有问题啊",
-              "date": "2026-09-07T15:51:19.000Z",
-              "turn": "01a07c91-1b2c-7903-99f4-ca7f0e0b2e6a"
-            }
-          ],
-          "context": "你从比较 Altman/Ohlson 与自己的系统，进一步问到事后解释和事前预测。",
-          "analysis": "核心不是把风险分数反过来就变成上涨分数，而是重新定义要预测的结果。课件第 65 页的课堂 Scorecard 把“未来十二个月账面权益转负”作为困境代理标签；它并不等同于实际法律违约事件。上涨研究还要定义持有期、比较基准、交易成本和最大回撤。低困境概率不保证高收益，因为估值与市场预期可能已反映安全性。",
-          "next": "先固定一个可检验问题，例如“未来六个月是否跑赢指定基准”；保存当时可获得的数据，按时间划分训练与测试，禁止使用预测日之后的信息。",
-          "source": "bams",
-          "pages": "63–65"
-        },
-        {
-          "title": "你对 AI 分数的质疑：共识并不能代替实证",
-          "quotes": [
-            {
-              "text": "这些的打分其实都是盲估没有实际依据是不是 ai主动性很高",
-              "date": "2026-09-07T16:25:54.000Z",
-              "turn": "01a07cb0-c5d8-77d3-9dba-b86ee844c224"
-            },
-            {
-              "text": "我的缺点是啥 帮我算一下 老师讲的课 对我的帮助是啥 给我说一下",
-              "date": "2026-09-07T16:27:20.000Z",
-              "turn": "01a07cb2-14fe-7f21-bb02-855c9d70c761"
-            }
-          ],
-          "context": "把课堂模型接入九维框架时，你主动质疑 AI 是否在缺乏依据的情况下给出分数。",
-          "analysis": "这条质疑比继续增加维度更有价值：分数必须能追溯到事实、规则和误差。多个模型看同一份不完整材料，可能一致地犯错；不同模型也不意味着统计独立。可先把每一项拆成事实证据、解释、评分规则与不确定性，再用历史结果评价。不能仅从这段对话给你个人能力打分，也不能把此前 AI 给出的系统成熟度百分比当成测量结果。",
-          "next": "抽取少量历史样本做盲评，锁定评分规则后再揭晓结果；记录分数稳定性、错误类型和缺失证据，再决定是否扩大回测。",
-          "source": "bams",
-          "pages": "59–65、75"
-        },
-        {
-          "title": "两个模型同意，是核对，不是完整验证",
-          "quotes": [
-            {
-              "text": "116 验证了一次 咋样啊",
-              "date": "2026-09-07T16:30:26.000Z",
-              "turn": "01a07cb4-ea2a-7ba2-8231-243ddef75acb"
-            }
-          ],
-          "context": "你看到第 116 页 Maersk 的 Scorecard 与 Merton 对照，问“验证了一次”效果如何。",
-          "analysis": "第 116 页展示两个模型在 Maersk 上结论接近，却有更新频率和危机时点反应的差异。一个公司上的一致性是交叉核对，不能证明总体准确率。完整验证要覆盖困境与非困境公司，考察区分能力、概率校准和提前量；如果目标标签不同，还应先说明两者到底在比较什么。模型出现分歧时，先查数据时点、账面与市场口径、债务定义，再解释差异。",
-          "next": "给 PDC 加一张验证表：样本外时间段、基准、真实结果、误报、漏报和各分数段的实际发生率。",
-          "source": "bams",
-          "pages": "116"
-        },
-        {
-          "title": "恒大与 BYD：先有可复算输入，再谈 PD",
-          "quotes": [
-            {
-              "text": "帮我用我的老师的方式 算一下中国的某一个公司 恒大集团吧 给我看看pd",
-              "date": "2026-09-07T16:31:48.000Z",
-              "turn": "01a07cb6-2b40-75b0-b2be-f76e8deaf6b2"
-            },
-            {
-              "text": "恒大是从啥时候看出来已经高危 了啊",
-              "date": "2026-09-07T16:47:02.000Z",
-              "turn": "01a07cc4-1d62-7010-a4c8-bc6fbb65798e"
-            },
-            {
-              "text": "135页这个可以帮我算一下byd和恒大吗",
-              "date": "2026-09-07T16:49:26.000Z",
-              "turn": "01a07cc6-4ed7-7161-bc74-3d90b7925ebc"
-            }
-          ],
-          "context": "你想把老师的方法迁移到中国公司，接着追问高危信号出现的时间，以及第 135 页图形的应用。",
-          "analysis": "这一步从理解走向应用，但要先区分两个问题：Merton 信用风险模型与第 135 页的期权薪酬收益不对称图。后者不是 PD 计算器。复算某公司某日的模型结果，需要同日市值、股权波动率、债务门槛、期限及明确的模型假设；不能直接把股权波动率当成资产波动率，也不能把市场定价概率与真实世界违约频率混为一谈。此前讨论中的示意参数或假设概率尚无完整输入证据，不能作为恒大或 BYD 的实测结果归档。",
-          "next": "保留这个案例任务；先选定历史观察日并建立有来源的输入表。画图时标“教学情景”或“历史数据估计”，再与当时公开信息及后续结果分开比较。",
-          "source": "bams",
-          "pages": "100–106、135"
-        },
-        {
-          "title": "把兴趣变成研究问题：向老师追问 paper",
-          "quotes": [
-            {
-              "text": "我找了老师 回头我要给他发邮件让他介绍我他的paper",
-              "date": "2026-09-07T15:59:15.000Z",
-              "turn": "01a07c98-5d68-77f3-9077-a440bef0f23d"
-            }
-          ],
-          "context": "你说已经找了老师，希望之后通过邮件了解他的 paper；9 月 8 日又继续修改介绍自己模型的邮件草稿。",
-          "analysis": "这段记录说明你的问题已从“公式怎么用”走向“研究是怎么做出来的”。目前尚未核实具体论文题目，因此不把课堂 Scorecard 自动归属于某篇 paper。与 Dennis Bams 讨论时，可以聚焦目标标签、样本筛选、时间外验证和可迁移性，这比泛泛询问模型好不好更容易获得有效反馈。",
-          "next": "保存待问问题：课堂模型对应哪篇研究？权益转负与法律违约如何区分？如何检验新行业、新市场和新时期的适用性？这里仅归档，未发送邮件。",
-          "source": "bams",
-          "pages": "59–65"
-        }
-      ],
+      "thoughts": [],
       "missing": "",
       "prompts": [],
       "archive": "/emba/content/2026/09_September/course-notes/2026-09-07-post-study.md"
@@ -323,7 +289,7 @@ const SEPTEMBER_POST_STUDY = {
       ],
       "output": "先选题；建立“公司 / 年报页码 / 原始证据 / 比较 / 原因 / 局限”表，最后压缩成最多两页的答案。",
       "thoughts": [],
-      "missing": "已找到 9 月 8 日继续修改周一模型邮件的记录，尚未找到可核实的当天 Compliance、Sustainability 或 guest talk 个人笔记。该邮件跟进归在周一，不冒充周二课堂记录。",
+      "missing": "照片中可确认的个人记录集中在 Sustainability Reporting。没有把任何一页仅凭主题相近就标成 Compliance 原话；Compliance 的作业要求和老师课件仍保留在本日资料区。",
       "prompts": [
         "补充分析方向：把“披露了风险”与“风险真的被控制”分开；逐项找责任人、流程、监测指标和证据。",
         "补充分析方向：比较 DMA 时分别检查影响重要性与财务重要性、利益相关方参与、阈值与结果解释；不要以报告篇幅直接判定透明度。"
@@ -348,7 +314,7 @@ const SEPTEMBER_POST_STUDY = {
       ],
       "output": "比率工作表 + 最多两页分析。先核对合并口径、币种和年报标准，再讨论杠杆；不要仅靠单一比率下结论。",
       "thoughts": [],
-      "missing": "暂未找到 Harold Hassink 当天的独立 PPT，也未找到周三原始个人笔记。这里提供已找到的作业年报；不能把年报或预习稿标成老师 PPT。",
+      "missing": "已收到比率与财务会计主题的手写页；因多数页没有清晰日期，按内容整理在本日，不把主题归类说成课堂日期证明。Harold Hassink 当天独立 PPT 仍未找到。",
       "prompts": [
         "延伸自周一的问题（不是周三原话）：ROA / ROE 变好可能来自分母变化，先查原因再评价经营。",
         "补充分析方向：用“风险事件 → 现金流影响 → 责任人 → 应对 → 残余风险”把 ERM 与财务分析连接起来。",
@@ -376,7 +342,7 @@ const SEPTEMBER_POST_STUDY = {
       ],
       "output": "两部分论证：先指出案例中的决策缺口，再将每一项控制安排对应到该缺口、实施行为与潜在代价。",
       "thoughts": [],
-      "missing": "已找到老师 SMAC 原始 PDF 与 Tennessee Controls 案例；尚未找到周四个人课堂原文。",
+      "missing": "已收到第 4 页有明确日期的课堂笔记，以及第 10–12 页相关主题笔记；日期不明的页按主题归类。周四原始 SMAC PDF 与 Tennessee Controls 案例已在资料区。",
       "prompts": [
         "延伸自周一“分数依据”的问题（不是周四原话）：一个综合分数可能隐藏战略冲突。哪些因素应做底线约束，哪些可权衡，哪些需要讨论而非机械加权？",
         "补充分析方向：为四类控制分别写一个案例中的具体动作，避免只定义术语；再说明可能出现的指标博弈与管理成本。"
@@ -403,7 +369,7 @@ const SEPTEMBER_POST_STUDY = {
       ],
       "output": "有来源的董事会建议 PPT + Q&A 清单。保留选择、权衡、最低条件、监测与退出标准；不把已有草稿当成最终提交。",
       "thoughts": [],
-      "missing": "暂未找到 Roger Otten 原始 PPT、你们最终展示文件或周五个人课堂笔记。现有两份小组草稿作为资料保留。",
+      "missing": "这 14 页里没有找到可以可靠标为 9 月 11 日 Impact Investing 小组课的手写记录。日期不清的财务 / 估值页没有硬归到周五；本日仍保留 Team 6 作业要求和现有准备资料。",
       "prompts": [
         "补充分析方向：区分投资的财务回报与可证明的社会 / 环境结果；同时讨论受益人利益、费用、流动性及信息透明度。",
         "连接周一风险框架：即使项目有吸引力，也应说明最坏情形、资金承受能力、监测和退出机制。"

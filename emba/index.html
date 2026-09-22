@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EMBA Timeline | Turnpo</title>
-    <meta name="description" content="A private EMBA learning timeline." />
+    <title>EMBA 学习计划 | Turnpo</title>
+    <meta name="description" content="按周一到周五安排预习与复习的 EMBA 学习计划。" />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href="https://www.turnpo.com/emba/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="EMBA Timeline | Turnpo" />
+    <meta property="og:title" content="EMBA 学习计划 | Turnpo" />
     <meta property="og:description" content="A private EMBA learning timeline." />
     <meta property="og:url" content="https://www.turnpo.com/emba/" />
     <meta property="og:image" content="https://www.turnpo.com/assets/turnpo-og-image.png" />
@@ -18,10 +18,10 @@
     <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon-48.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="stylesheet" href="/styles.css?v=0.1.382" />
-    <link rel="stylesheet" href="/emba/emba.css?v=20260921-weekday-study" />
+    <link rel="stylesheet" href="/styles.css?v=0.1.431" />
+    <link rel="stylesheet" href="/emba/emba.css?v=0.1.431&amp;layout=20260922-simple-plan" />
   </head>
-  <body>
+  <body class="emba-learning-page">
     <header class="topbar">
       <a class="brand" href="/" aria-label="Turnpo home">
         <span class="brand-mark" aria-hidden="true"></span>
@@ -29,21 +29,21 @@
       </a>
       <div></div>
       <div class="top-actions">
-        <a class="ghost-btn emba-home-link" href="/">Turnpo home</a>
-        <button class="ghost-btn emba-edit-toggle" id="embaEditToggle" type="button" aria-pressed="false" hidden>Edit mode</button>
-        <button class="ghost-btn emba-lock-btn" id="embaLock" type="button" hidden>Lock</button>
+        <a class="ghost-btn emba-home-link" href="/">首页</a>
+        <button class="ghost-btn emba-edit-toggle" id="embaEditToggle" type="button" aria-pressed="false" hidden>编辑</button>
+        <button class="ghost-btn emba-lock-btn" id="embaLock" type="button" hidden>退出</button>
       </div>
     </header>
 
     <section class="emba-access-gate" id="embaAccessGate" aria-label="EMBA access">
       <form class="emba-access-card" id="embaAccessForm" method="post">
         <div>
-          <h1>EMBA Timeline</h1>
+          <h1>EMBA 学习计划</h1>
           <p>Enter the access password to open the learning timeline.</p>
         </div>
         <label>
           <span>Password</span>
-          <input id="embaPassword" type="password" autocomplete="current-password" placeholder="Enter password" required />
+          <input id="embaPassword" name="accessCode" type="password" autocomplete="current-password" placeholder="Enter password" required />
         </label>
         <button class="gold-btn" type="submit">Enter</button>
         <p class="emba-access-note" id="embaAccessNote" aria-live="polite"></p>
@@ -53,7 +53,7 @@
     <main class="emba-shell" id="embaApp" hidden>
       <section class="emba-stage" aria-label="EMBA horizontal timeline">
         <div class="emba-heading">
-          <h1>EMBA Timeline</h1>
+          <h1>EMBA 学习</h1>
           <span aria-hidden="true"></span>
           <p class="emba-sync-status" id="embaSyncStatus" aria-live="polite"></p>
         </div>
@@ -74,8 +74,7 @@
         <div class="emba-knowledge-results" id="embaKnowledgeResults" aria-label="Knowledge base search results" hidden></div>
       </section>
       <section class="emba-private-tools" aria-label="Private EMBA tools">
-        <a class="emba-classmate-tool-link" href="./linkedin-class-connect.html">Classmate detailed list</a>
-        <a class="emba-classmate-tool-link" href="/cfa/">September 2026 CFA Master Hub</a>
+        <a class="emba-classmate-tool-link" href="./linkedin-class-connect.html">同学通讯录</a>
       </section>
     </main>
 
@@ -87,7 +86,7 @@
       </figure>
     </div>
 
-    <script src="/emba/september-post-study.js?v=20260921-weekday-study"></script>
-    <script src="/emba/emba.js?v=20260921-weekday-study"></script>
+    <script src="/emba/september-post-study.js?v=20260922-simple-plan"></script>
+    <script src="/emba/emba.js?v=0.1.431&amp;layout=20260922-simple-plan"></script>
   </body>
 </html>

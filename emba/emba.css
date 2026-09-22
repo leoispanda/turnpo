@@ -29,9 +29,26 @@ button.emba-post-source { font: inherit; text-align: left; cursor: pointer; }
 .emba-post-thought summary { cursor: pointer; font-weight: 650; }
 .emba-post-thought blockquote { margin: 12px 0 6px; padding: 10px 16px; border-left: 3px solid #698ea5; background: #f3f7fa; white-space: pre-wrap; }
 .emba-post-thought .emba-post-provenance { margin-top: 4px; font-size: 11px; }
+.emba-post-thought .emba-post-provenance a { color: #42657b; }
+.emba-post-handwritten-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.emba-post-handwritten-links a { padding: 7px 10px; border: 1px solid #dce2e6; border-radius: 999px; color: #244d65; text-decoration: none; font-size: 12px; }
+.emba-post-references { margin-top: 18px; padding: 12px 16px; border-radius: 12px; background: #f4f8fa; }
+.emba-post-references h5 { margin-top: 0; }
+.emba-post-references ul { margin-bottom: 0; }
+.emba-post-handwritten-archive { margin-top: 28px; padding-top: 24px; border-top: 1px solid #e1e5e8; }
+.emba-post-handwritten-archive h3 { margin: 0 0 8px; }
+.emba-post-handwritten-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.emba-post-handwritten-card { display: flex; flex-direction: column; gap: 6px; padding: 10px; border: 1px solid #dce2e6; border-radius: 12px; background: #fff; color: #244d65; text-decoration: none; overflow: hidden; }
+.emba-post-handwritten-card:hover { background: #edf5fa; border-color: #9ebacb; }
+.emba-post-handwritten-card img { width: 100%; height: 190px; object-fit: contain; border-radius: 8px; background: #f2f2f0; }
+.emba-post-handwritten-card span { font-weight: 650; }
+.emba-post-handwritten-card small { color: #66727c; line-height: 1.4; }
+.emba-post-handwritten-review { max-width: 620px; margin-top: 14px; }
 .emba-study-module [data-block-id^="post-day-"] { min-height: 110px; }
 @media (max-width: 640px) {
   .emba-post-source-grid { grid-template-columns: 1fr; }
+  .emba-post-handwritten-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .emba-post-handwritten-card img { height: 145px; }
   .emba-post-assignment, .emba-post-thought { padding: 16px; }
   .emba-post-day h3 { font-size: 21px; }
 }
@@ -2069,4 +2086,920 @@ body::before {
 
 .emba-study-module .emba-content-block[data-block-id="podcast"] {
   grid-column: auto;
+}
+
+/* September learning planner: a quiet, source-first layout. */
+body.emba-learning-page {
+  --emba-study-ink: #18343a;
+  --emba-study-muted: #6b7d80;
+  --emba-study-soft: #f5f8f7;
+  --emba-study-panel: #ffffff;
+  --emba-study-line: #dce8e7;
+  --emba-study-accent: #2f7775;
+  --emba-study-accent-dark: #205c5a;
+  --emba-study-accent-soft: #e7f2f0;
+  background: var(--emba-study-soft);
+  color: var(--emba-study-ink);
+}
+
+body.emba-learning-page [hidden] {
+  display: none !important;
+}
+
+body.emba-learning-page .emba-shell {
+  width: min(1080px, 100%);
+  min-height: calc(100dvh - 73px);
+  padding: clamp(28px, 5vw, 54px) clamp(14px, 4vw, 36px) 48px;
+}
+
+body.emba-learning-page .emba-stage {
+  gap: 22px;
+}
+
+body.emba-learning-page .emba-heading {
+  justify-items: start;
+  gap: 6px;
+}
+
+body.emba-learning-page .emba-heading h1 {
+  color: var(--emba-study-ink);
+  font-size: 20px;
+  font-weight: 680;
+  line-height: 1.12;
+}
+
+body.emba-learning-page .emba-heading span {
+  display: none;
+}
+
+body.emba-learning-page .emba-sync-status {
+  min-height: 16px;
+  margin: 0;
+  color: var(--emba-study-muted);
+}
+
+body.emba-learning-page:not(.emba-editing) .emba-sync-status {
+  display: none;
+}
+
+body.emba-learning-page .top-actions .ghost-btn {
+  min-height: 44px;
+  box-shadow: none;
+}
+
+/* Turn the old decorative rail into a row of simple month controls. */
+body.emba-learning-page .emba-dock {
+  position: static;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+body.emba-learning-page .emba-dock::before,
+body.emba-learning-page .emba-dock::after,
+body.emba-learning-page .emba-track,
+body.emba-learning-page .emba-timeline::before,
+body.emba-learning-page .emba-timeline::after {
+  content: none !important;
+  display: none !important;
+}
+
+body.emba-learning-page .emba-timeline {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  padding: 4px;
+  border: 1px solid var(--emba-study-line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.64);
+}
+
+body.emba-learning-page .emba-timeline-item,
+body.emba-learning-page .emba-timeline-item.active,
+body.emba-learning-page .emba-timeline-item:hover,
+body.emba-learning-page .emba-timeline-item:focus-visible {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--emba-study-muted);
+  padding: 7px 10px;
+  text-align: center;
+  transform: none;
+  box-shadow: none;
+}
+
+body.emba-learning-page .emba-timeline-item::before,
+body.emba-learning-page .emba-timeline-item::after {
+  content: none !important;
+  display: none !important;
+}
+
+body.emba-learning-page .emba-timeline-item.active,
+body.emba-learning-page .emba-timeline-item[aria-pressed="true"] {
+  background: var(--emba-study-accent-soft);
+  color: var(--emba-study-accent-dark);
+}
+
+body.emba-learning-page .emba-timeline-item:focus-visible {
+  outline: 3px solid rgba(47, 119, 117, 0.34);
+  outline-offset: 2px;
+}
+
+body.emba-learning-page .emba-timeline-title {
+  min-height: 0;
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  color: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.15;
+  opacity: 1;
+  transform: none;
+  white-space: normal;
+}
+
+body.emba-learning-page .emba-timeline-title span:last-child {
+  color: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.78;
+}
+
+body.emba-learning-page .emba-timeline-item.active .emba-timeline-title {
+  color: var(--emba-study-accent-dark);
+}
+
+body.emba-learning-page .emba-month-detail {
+  width: 100%;
+  gap: 16px;
+  margin: 0;
+}
+
+body.emba-learning-page .emba-month-kicker {
+  min-height: 0;
+  color: var(--emba-study-muted);
+  font-size: 11px;
+  font-weight: 720;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+/* Planner header and module tabs. */
+body.emba-learning-page .emba-study-planner {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  gap: 16px;
+}
+
+body.emba-learning-page .emba-study-heading {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+body.emba-learning-page .emba-study-heading .emba-study-kicker,
+body.emba-learning-page .emba-study-heading > small,
+body.emba-learning-page .emba-study-heading > .emba-month-kicker {
+  color: var(--emba-study-accent);
+  font-size: 11px;
+  font-weight: 780;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+body.emba-learning-page .emba-study-heading h2 {
+  margin: 0;
+  color: var(--emba-study-ink);
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.16;
+}
+
+body.emba-learning-page .emba-study-heading p {
+  max-width: 720px;
+  margin: 0;
+  color: var(--emba-study-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+body.emba-learning-page .emba-study-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body.emba-learning-page .emba-study-tabs button,
+body.emba-learning-page .emba-study-tabs a,
+body.emba-learning-page .emba-study-tabs [role="tab"] {
+  min-width: 96px;
+  min-height: 44px;
+  border: 1px solid var(--emba-study-line);
+  border-radius: 10px;
+  background: var(--emba-study-panel);
+  color: var(--emba-study-muted);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 720;
+  line-height: 1.2;
+  padding: 8px 14px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+body.emba-learning-page .emba-study-tabs button:hover,
+body.emba-learning-page .emba-study-tabs a:hover,
+body.emba-learning-page .emba-study-tabs [role="tab"]:hover,
+body.emba-learning-page .emba-study-tabs button[aria-selected="true"],
+body.emba-learning-page .emba-study-tabs a[aria-selected="true"],
+body.emba-learning-page .emba-study-tabs [role="tab"][aria-selected="true"],
+body.emba-learning-page .emba-study-tabs .active {
+  border-color: var(--emba-study-accent);
+  background: var(--emba-study-accent);
+  color: #ffffff;
+}
+
+body.emba-learning-page .emba-study-tabs button:focus-visible,
+body.emba-learning-page .emba-study-tabs a:focus-visible,
+body.emba-learning-page .emba-study-tabs [role="tab"]:focus-visible {
+  outline: 3px solid rgba(47, 119, 117, 0.34);
+  outline-offset: 2px;
+}
+
+/* Weekday navigation and the single daily workspace panel. */
+body.emba-learning-page .emba-study-layout {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+body.emba-learning-page .emba-weekdays {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+}
+
+body.emba-learning-page .emba-weekdays button,
+body.emba-learning-page .emba-weekdays a,
+body.emba-learning-page .emba-weekdays [role="tab"] {
+  width: 100%;
+  min-width: 0;
+  min-height: 54px;
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  border: 1px solid var(--emba-study-line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--emba-study-muted);
+  font: inherit;
+  padding: 9px 12px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+body.emba-learning-page .emba-weekdays button:hover,
+body.emba-learning-page .emba-weekdays a:hover,
+body.emba-learning-page .emba-weekdays [role="tab"]:hover,
+body.emba-learning-page .emba-weekdays button[aria-selected="true"],
+body.emba-learning-page .emba-weekdays a[aria-selected="true"],
+body.emba-learning-page .emba-weekdays [role="tab"][aria-selected="true"],
+body.emba-learning-page .emba-weekdays .active,
+body.emba-learning-page .emba-weekdays [aria-current="date"] {
+  border-color: var(--emba-study-accent);
+  background: var(--emba-study-accent-soft);
+  color: var(--emba-study-accent-dark);
+}
+
+body.emba-learning-page .emba-weekdays button:focus-visible,
+body.emba-learning-page .emba-weekdays a:focus-visible,
+body.emba-learning-page .emba-weekdays [role="tab"]:focus-visible {
+  outline: 3px solid rgba(47, 119, 117, 0.34);
+  outline-offset: 2px;
+}
+
+body.emba-learning-page .emba-weekday-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: inherit;
+  font-size: 13px;
+  font-weight: 760;
+  line-height: 1.2;
+}
+
+body.emba-learning-page .emba-weekday-topic {
+  overflow: hidden;
+  color: inherit;
+  font-size: 11px;
+  font-weight: 560;
+  line-height: 1.25;
+  opacity: 0.84;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body.emba-learning-page .emba-study-workspace {
+  min-width: 0;
+  border: 1px solid var(--emba-study-line);
+  border-radius: 16px;
+  background: var(--emba-study-panel);
+  padding: clamp(18px, 3vw, 30px);
+}
+
+body.emba-learning-page .emba-daily-plan {
+  min-width: 0;
+  display: grid;
+  gap: 0;
+}
+
+body.emba-learning-page .emba-plan-heading {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+  padding-bottom: 17px;
+  border-bottom: 1px solid var(--emba-study-line);
+}
+
+body.emba-learning-page .emba-plan-heading .emba-plan-date,
+body.emba-learning-page .emba-plan-heading .emba-plan-kicker,
+body.emba-learning-page .emba-plan-heading .emba-month-kicker {
+  color: var(--emba-study-accent);
+  font-size: 11px;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+body.emba-learning-page .emba-plan-heading h3 {
+  margin: 0;
+  color: var(--emba-study-ink);
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 720;
+  line-height: 1.18;
+}
+
+body.emba-learning-page .emba-plan-heading p {
+  margin: 0;
+  color: var(--emba-study-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.emba-learning-page .emba-plan-goal {
+  margin: 16px 0 0 !important;
+  border-left: 3px solid var(--emba-study-accent);
+  border-radius: 0 8px 8px 0;
+  background: var(--emba-study-accent-soft);
+  color: var(--emba-study-accent-dark) !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  padding: 10px 12px;
+}
+
+body.emba-learning-page .emba-plan-steps {
+  display: grid;
+  gap: 0;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.emba-learning-page .emba-plan-step {
+  min-width: 0;
+  border-top: 1px solid var(--emba-study-line);
+}
+
+body.emba-learning-page .emba-plan-step > summary {
+  min-width: 0;
+  min-height: 68px;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 24px;
+  gap: 12px;
+  align-items: center;
+  border-radius: 8px;
+  color: var(--emba-study-ink);
+  cursor: pointer;
+  list-style: none;
+  padding: 10px 2px;
+}
+
+body.emba-learning-page .emba-plan-step > summary::-webkit-details-marker {
+  display: none;
+}
+
+body.emba-learning-page .emba-plan-step > summary:focus-visible {
+  outline: 3px solid rgba(47, 119, 117, 0.34);
+  outline-offset: -2px;
+}
+
+body.emba-learning-page .emba-plan-step[open] > summary {
+  background: var(--emba-study-soft);
+}
+
+body.emba-learning-page .emba-plan-step-index {
+  color: var(--emba-study-accent);
+  font-size: 12px;
+  font-weight: 780;
+  letter-spacing: 0.06em;
+}
+
+body.emba-learning-page .emba-plan-step-copy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+body.emba-learning-page .emba-plan-step-copy strong {
+  color: var(--emba-study-ink);
+  font-size: 14px;
+  font-weight: 740;
+  line-height: 1.35;
+}
+
+body.emba-learning-page .emba-plan-step-copy small {
+  overflow-wrap: anywhere;
+  color: var(--emba-study-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+body.emba-learning-page .emba-plan-step-arrow {
+  display: grid;
+  min-width: 24px;
+  min-height: 24px;
+  place-items: center;
+  color: var(--emba-study-accent);
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1;
+  transition: transform 150ms ease;
+}
+
+body.emba-learning-page .emba-plan-step[open] .emba-plan-step-arrow {
+  transform: rotate(45deg);
+}
+
+body.emba-learning-page .emba-plan-step-body {
+  min-width: 0;
+  border-top: 1px solid var(--emba-study-line);
+  color: var(--emba-study-ink);
+  padding: 17px 2px 22px 46px;
+}
+
+body.emba-learning-page .emba-plan-step-body > :first-child {
+  margin-top: 0;
+}
+
+body.emba-learning-page .emba-plan-step-body > :last-child {
+  margin-bottom: 0;
+}
+
+body.emba-learning-page .emba-plan-step-body .emba-post-source-grid,
+body.emba-learning-page .emba-plan-step-body .emba-post-handwritten-grid,
+body.emba-learning-page .emba-plan-step-body .emba-video-grid,
+body.emba-learning-page .emba-plan-step-body .emba-study-source-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+body.emba-learning-page .emba-plan-step-body a,
+body.emba-learning-page .emba-plan-step-body button,
+body.emba-learning-page .emba-plan-step-body p,
+body.emba-learning-page .emba-plan-step-body li,
+body.emba-learning-page .emba-plan-step-body h4,
+body.emba-learning-page .emba-plan-step-body h5 {
+  overflow-wrap: anywhere;
+}
+
+body.emba-learning-page .emba-plan-step-body .emba-post-day {
+  line-height: 1.65;
+}
+
+body.emba-learning-page .emba-plan-step-body .emba-post-day section {
+  margin-top: 20px;
+  padding-top: 16px;
+}
+
+body.emba-learning-page .emba-plan-step-body .emba-post-thought,
+body.emba-learning-page .emba-plan-step-body .emba-post-assignment,
+body.emba-learning-page .emba-plan-step-body .emba-post-output,
+body.emba-learning-page .emba-plan-step-body .emba-post-prompts,
+body.emba-learning-page .emba-plan-step-body .emba-post-missing {
+  box-shadow: none;
+}
+
+body.emba-learning-page .emba-pre-media {
+  min-width: 0;
+  margin: 14px 0 0;
+  border: 1px solid var(--emba-study-line);
+  border-radius: 10px;
+  background: var(--emba-study-soft);
+  padding: 10px 12px;
+}
+
+body.emba-learning-page .emba-pre-media > summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--emba-study-accent-dark);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 720;
+}
+
+body.emba-learning-page .emba-pre-media > summary:focus-visible,
+body.emba-learning-page .emba-plan-schedule > summary:focus-visible,
+body.emba-learning-page .emba-study-resources > summary:focus-visible,
+body.emba-learning-page .emba-study-deadline > summary:focus-visible {
+  outline: 3px solid rgba(47, 119, 117, 0.34);
+  outline-offset: 2px;
+}
+
+body.emba-learning-page .emba-pre-media video,
+body.emba-learning-page .emba-pre-media iframe,
+body.emba-learning-page .emba-pre-media .emba-video-player {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: #163238;
+}
+
+body.emba-learning-page .emba-plan-question {
+  margin: 18px 0 0;
+  border-left: 3px solid var(--emba-study-accent);
+  color: var(--emba-study-muted);
+  padding-left: 12px;
+}
+
+body.emba-learning-page .emba-plan-question p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Supporting details stay available without competing with the daily plan. */
+body.emba-learning-page .emba-plan-schedule,
+body.emba-learning-page .emba-study-resources,
+body.emba-learning-page .emba-study-deadline {
+  min-width: 0;
+  margin-top: 18px;
+  border-top: 1px solid var(--emba-study-line);
+  padding-top: 12px;
+}
+
+body.emba-learning-page .emba-plan-schedule > summary,
+body.emba-learning-page .emba-study-resources > summary,
+body.emba-learning-page .emba-study-deadline > summary,
+body.emba-learning-page .emba-plan-schedule details > summary,
+body.emba-learning-page .emba-study-resources details > summary,
+body.emba-learning-page .emba-study-deadline details > summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--emba-study-accent-dark);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 720;
+  line-height: 1.4;
+}
+
+body.emba-learning-page .emba-plan-schedule > summary::marker,
+body.emba-learning-page .emba-study-resources > summary::marker,
+body.emba-learning-page .emba-study-deadline > summary::marker,
+body.emba-learning-page .emba-plan-schedule details > summary::marker,
+body.emba-learning-page .emba-study-resources details > summary::marker,
+body.emba-learning-page .emba-study-deadline details > summary::marker {
+  color: var(--emba-study-accent);
+}
+
+body.emba-learning-page .emba-plan-schedule-body,
+body.emba-learning-page .emba-study-resources-body,
+body.emba-learning-page .emba-study-deadline-body,
+body.emba-learning-page .emba-plan-schedule > :not(summary),
+body.emba-learning-page .emba-study-resources > :not(summary),
+body.emba-learning-page .emba-study-deadline > :not(summary) {
+  min-width: 0;
+  padding-top: 10px;
+}
+
+body.emba-learning-page .emba-study-utility-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body.emba-learning-page .emba-study-utility-links a,
+body.emba-learning-page .emba-study-utility-links button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--emba-study-line);
+  border-radius: 8px;
+  background: var(--emba-study-panel);
+  color: var(--emba-study-accent-dark);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 12px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+body.emba-learning-page .emba-study-utility-links a:hover,
+body.emba-learning-page .emba-study-utility-links button:hover {
+  border-color: var(--emba-study-accent);
+  background: var(--emba-study-accent-soft);
+}
+
+body.emba-learning-page .emba-study-deadline > summary {
+  color: var(--emba-study-muted);
+  font-weight: 650;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 20px;
+}
+
+body.emba-learning-page .emba-study-deadline > summary span {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+body.emba-learning-page .emba-pre-media > summary::after,
+body.emba-learning-page .emba-plan-schedule > summary::after,
+body.emba-learning-page .emba-study-resources > summary::after,
+body.emba-learning-page .emba-study-deadline > summary::after {
+  content: "⌄";
+  margin-left: auto;
+  font-size: 18px;
+}
+
+body.emba-learning-page .emba-pre-media[open] > summary::after,
+body.emba-learning-page .emba-plan-schedule[open] > summary::after,
+body.emba-learning-page .emba-study-resources[open] > summary::after,
+body.emba-learning-page .emba-study-deadline[open] > summary::after {
+  transform: rotate(180deg);
+}
+
+body.emba-learning-page .emba-study-workspace .emba-block-panel {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body.emba-learning-page .emba-study-deadline .emba-post-assignment,
+body.emba-learning-page .emba-study-deadline .emba-post-source-grid {
+  margin-top: 10px;
+}
+
+body.emba-learning-page .emba-knowledge {
+  width: min(1080px, 100%);
+  gap: 8px;
+  margin: 22px auto 0;
+}
+
+body.emba-learning-page .emba-knowledge-controls {
+  display: block;
+}
+
+body.emba-learning-page .emba-knowledge-controls input {
+  min-height: 44px;
+  border-color: var(--emba-study-line);
+  border-radius: 10px;
+  background: var(--emba-study-panel);
+  box-shadow: none;
+}
+
+body.emba-learning-page .emba-knowledge-controls input:focus {
+  border-color: var(--emba-study-accent);
+  box-shadow: 0 0 0 3px rgba(47, 119, 117, 0.14);
+}
+
+body.emba-learning-page .emba-knowledge-results {
+  box-shadow: none;
+}
+
+body.emba-learning-page .emba-private-tools {
+  width: min(1080px, 100%);
+  justify-content: flex-start;
+  padding: 2px 0 0;
+}
+
+body.emba-learning-page .emba-classmate-tool-link {
+  min-height: 44px;
+  border-color: var(--emba-study-line);
+  background: transparent;
+  color: var(--emba-study-muted);
+  box-shadow: none;
+  font-size: 12px;
+  font-weight: 620;
+}
+
+body.emba-learning-page .emba-classmate-tool-link:hover,
+body.emba-learning-page .emba-classmate-tool-link:focus-visible {
+  border-color: var(--emba-study-accent);
+  background: var(--emba-study-panel);
+  color: var(--emba-study-accent-dark);
+  transform: none;
+}
+
+body.emba-learning-page .emba-study-planner img,
+body.emba-learning-page .emba-study-planner video,
+body.emba-learning-page .emba-study-planner iframe,
+body.emba-learning-page .emba-study-planner table {
+  max-width: 100%;
+}
+
+body.emba-learning-page .emba-study-planner table {
+  min-width: 0 !important;
+  table-layout: fixed;
+  overflow-wrap: anywhere;
+}
+
+body.emba-learning-page .emba-study-planner pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+body.emba-learning-page .emba-study-planner :focus-visible {
+  outline: 3px solid rgba(47, 119, 117, 0.34);
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  body.emba-learning-page .topbar {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 8px;
+    padding: 10px 14px;
+  }
+
+  body.emba-learning-page .topbar > div:empty {
+    display: none;
+  }
+
+  body.emba-learning-page .top-actions {
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  body.emba-learning-page .top-actions .ghost-btn::before {
+    display: none;
+  }
+
+  body.emba-learning-page .emba-study-deadline > summary {
+    grid-template-columns: minmax(0, 1fr) 20px;
+    gap: 3px 8px;
+  }
+
+  body.emba-learning-page .emba-study-deadline > summary strong,
+  body.emba-learning-page .emba-study-deadline > summary span {
+    grid-column: 1;
+  }
+
+  body.emba-learning-page .emba-study-deadline > summary::after {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+
+  body.emba-learning-page .emba-shell {
+    padding-top: 24px;
+  }
+
+  body.emba-learning-page .emba-study-layout {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  body.emba-learning-page .emba-weekdays {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  body.emba-learning-page .emba-weekdays button,
+  body.emba-learning-page .emba-weekdays a,
+  body.emba-learning-page .emba-weekdays [role="tab"] {
+    min-height: 48px;
+    align-items: center;
+    justify-items: center;
+    padding: 7px 4px;
+    text-align: center;
+  }
+
+  body.emba-learning-page .emba-weekday-topic {
+    display: none;
+  }
+
+  body.emba-learning-page .emba-weekday-label {
+    display: grid;
+    gap: 3px;
+    justify-items: center;
+  }
+
+  body.emba-learning-page .emba-study-workspace {
+    padding: 18px 16px;
+  }
+
+  body.emba-learning-page .emba-plan-step-body {
+    padding-left: 2px;
+  }
+
+  body.emba-learning-page .emba-plan-step-body .emba-post-source-grid,
+  body.emba-learning-page .emba-plan-step-body .emba-post-handwritten-grid,
+  body.emba-learning-page .emba-plan-step-body .emba-video-grid,
+  body.emba-learning-page .emba-plan-step-body .emba-study-source-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.emba-learning-page .emba-post-handwritten-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  body.emba-learning-page .emba-shell {
+    padding-inline: 10px;
+  }
+
+  body.emba-learning-page .emba-timeline {
+    gap: 3px;
+    padding: 3px;
+  }
+
+  body.emba-learning-page .emba-timeline-item,
+  body.emba-learning-page .emba-timeline-item.active,
+  body.emba-learning-page .emba-timeline-item:hover,
+  body.emba-learning-page .emba-timeline-item:focus-visible {
+    padding-inline: 4px;
+  }
+
+  body.emba-learning-page .emba-timeline-title {
+    font-size: 11px;
+  }
+
+  body.emba-learning-page .emba-timeline-title span:last-child {
+    font-size: 9px;
+  }
+
+  body.emba-learning-page .emba-study-workspace {
+    padding-inline: 13px;
+  }
+
+  body.emba-learning-page .emba-plan-step > summary {
+    grid-template-columns: 28px minmax(0, 1fr) 20px;
+    gap: 8px;
+    padding-inline: 0;
+  }
+
+  body.emba-learning-page .emba-plan-step-index {
+    font-size: 11px;
+  }
+
+  body.emba-learning-page .emba-plan-step-copy strong {
+    font-size: 13px;
+  }
+
+  body.emba-learning-page .emba-plan-step-copy small {
+    font-size: 11px;
+  }
+
+  body.emba-learning-page .emba-plan-step-body {
+    padding-inline: 0;
+  }
+
+  body.emba-learning-page .emba-post-handwritten-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.emba-learning-page .emba-study-utility-links {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  body.emba-learning-page .emba-study-utility-links a,
+  body.emba-learning-page .emba-study-utility-links button {
+    width: 100%;
+  }
 }
