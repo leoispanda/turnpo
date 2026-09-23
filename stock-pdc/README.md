@@ -1,56 +1,46 @@
-# Stock PDC v2
+# Stock PDC display
 
-## Rule
+The main `/stock-pdc/` page displays the published SUS PDC research artifact
+`daily-top10.json`, merged with historical `rank-flow.json`. The website does
+not score securities, approve decisions, or place trades. Current production
+research is run in the separate `stock-pdc-local` project through
+`scripts/run_sus_pdc.py` with the SUSTAINABLE profile.
 
-Stock PDC now follows a strict three-step flow:
+## Latest portfolio advice
 
-1. `Hawkeye Radar` filters the A-share universe down to a candidate pool.
-2. `PDC` scores and ranks only those radar-selected candidates.
-3. `Top 20` is the target portfolio.
+The action panel reads `portfolioAdvice` for `latestDate`:
 
-The system does not use `final_status` to decide whether to buy. Status and action-style labels are retained only as research metadata.
+- Buy: a new candidate explicitly marked `BUY`, with `entryReadiness=REVIEWED`
+  and `scenarioStatus=SCENARIO_PASS`. Ranking alone never creates a buy.
+- Continue holding: `hold` plus `sellWatch`. Watch positions remain held and
+  are visibly marked as awaiting an exit signal.
+- Sell: only the `sell` group, shown as requiring manual confirmation.
+- Candidate watch: new candidates that have not met the buy conditions.
+- Data review: holdings whose information still needs verification.
 
-## Portfolio Decision
+Counts are derived from these groups. Legacy `actions.counts.sell` can include
+watch positions and must not be used to infer confirmed exits. Missing advice
+for the latest date is shown as unavailable; older advice is not substituted.
 
-- Buy: names that enter today's Top 20.
-- Hold: names that remain in today's Top 20.
-- Review for exit: names that drop out of today's Top 20.
-- Exception: if a dropped name is up on the signal day, mark `HOLD_DROPPED_UP_DAY / 上涨不卖`.
+## Ranking badges
 
-The intended portfolio behavior is to stay aligned with the highest-ranked 20 names.
+`NEW` means `changeType=NEW`: absent from the preceding published list. It is
+independent of the holding badge, which represents `isHeld=true` in that
+date's frozen snapshot. A row may display both badges. Historical badges do
+not assert the user's current holdings.
 
-## Research Retention
+The page displays existing research decisions. It does not change holding
+periods, signal confirmation rules, fees, frozen rankings, or manual gates.
 
-Even though Top 20 is the only decision output, all factor information is preserved for later analysis:
+## Verification
 
-- market regime
-- trend
-- Livermore breakout
-- volume-price
-- candlestick
-- overheat
-- risk
-- Zhuge Orion
-- final chair
-
-Reasons, warnings, main risk, and historical rank changes remain in the exported data so the model can be reweighted later based on actual outcomes.
-
-## Local generation runtime
-
-The public Turnpo site is display-only. To run the real manual generation flow
-on the operator's computer, copy `.env.local.example` to `.env.local`, add the
-same model-provider API keys used by the PDC, then start:
+Run the delivery and rank-flow checks after display changes:
 
 ```bash
-node scripts/local-stock-pdc-server.mjs
+node tests/stock-pdc-daily-delivery.test.mjs
+node tests/stock-pdc-rank-flow-static.test.mjs
 ```
 
-Open `http://127.0.0.1:8788/stock-pdc/decision/`. The existing **刷新市场数据**
-button then runs `行情 API → 全市场 A 股 → Hawkeye` locally, and both Mini and
-formal PDC pages call the same local PDC API. It never dispatches GitHub Actions
-and does not use Cloudflare secrets. The local audit store is in
-`.local-stock-pdc/` and is intentionally excluded from Git.
-
-When the local run is complete and reviewed, commit and push the generated
-`stock-pdc/hawkeye/latest.json` and other public data packets manually to update
-the public display site.
+Inspect the rendered page, then verify the Cloudflare Pages deployment for
+the exact published Git commit. Legacy local-server and Top 20 flows in this
+repository are not the current SUS production entrypoint.

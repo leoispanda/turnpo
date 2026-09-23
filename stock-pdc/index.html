@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>股票大作手 Top 20 | Turnpo</title>
-    <meta name="description" content="股票大作手 Top 20 榜单时间流。" />
+    <title>股票大作手 · 持仓与每日榜单 | Turnpo</title>
+    <meta name="description" content="查看每日买入、继续持有、卖出建议与 NEW 上榜标记。" />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href="https://www.turnpo.com/stock-pdc/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="股票大作手 Top 20 | Turnpo" />
-    <meta property="og:description" content="股票大作手 Top 20 榜单时间流。" />
+    <meta property="og:title" content="股票大作手 · 持仓与每日榜单 | Turnpo" />
+    <meta property="og:description" content="每日持仓建议与榜单变化。" />
     <meta property="og:url" content="https://www.turnpo.com/stock-pdc/" />
     <meta property="og:image" content="https://www.turnpo.com/assets/turnpo-og-image.png" />
     <meta name="theme-color" content="#f5f6f8" />
@@ -19,7 +19,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/styles.css?v=0.1.223" />
-    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css?v=20260915-rank-table" />
+    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css?v=20260923-actions" />
   </head>
   <body>
     <header class="topbar">
@@ -38,7 +38,7 @@
       <form class="stock-access-card" id="stockAccessForm">
         <div>
           <h1>股票大作手</h1>
-          <p>Enter the access password to open the Top 20 rank flow.</p>
+          <p>输入密码，查看持仓建议与每日榜单。</p>
         </div>
         <label>
           <span>Password</span>
@@ -50,7 +50,9 @@
     </section>
 
     <main class="stock-shell stock-color-wall" id="stockApp" hidden>
-      <section class="stock-flow-panel stock-color-panel" aria-label="股票大作手 Top 20 颜色榜单">
+      <section class="stock-action-panel" id="stockActionPanel" aria-label="最新持仓与买卖建议" aria-live="polite"></section>
+      <section class="stock-flow-panel stock-color-panel" aria-label="股票大作手每日榜单">
+        <p class="stock-rank-legend"><span class="stock-new-badge">NEW</span> 相比上一期新上榜 · <span class="stock-held-badge">持仓</span> 该期已确认持仓 · 最新买卖建议见上方</p>
         <div class="stock-rank-matrix-wrap" id="stockRankList"></div>
       </section>
       <nav class="stock-bottom-home" aria-label="Stock PDC navigation">
@@ -58,6 +60,6 @@
       </nav>
     </main>
 
-    <script src="/stock-pdc/stock-pdc.js?v=20260915-rank-table"></script>
+    <script src="/stock-pdc/stock-pdc.js?v=20260923-actions"></script>
   </body>
 </html>

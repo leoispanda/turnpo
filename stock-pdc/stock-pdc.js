@@ -188,6 +188,10 @@ function rankMoveClass(changeType) {
   return `stock-rank-${String(changeType || "UNCHANGED").toLowerCase()}`;
 }
 
+function membershipBadges(row) {
+  return `${row.changeType === "NEW" ? '<span class="stock-new-badge">NEW</span>' : ""}${row.isHeld === true ? '<span class="stock-held-badge">持仓</span>' : ""}`;
+}
+
 function renderRankCell(day, rank) {
   const row = rowByRank(day, rank);
   if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} #${rank} empty"></div>`;
@@ -197,6 +201,7 @@ function renderRankCell(day, rank) {
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
+        <span class="stock-membership-badges">${membershipBadges(row)}</span>
       </div>
       ${renderDayChange(row)}
       <span class="stock-change stock-rank-move ${rankMoveClass(row.changeType)}" role="img" aria-label="${escapeHtml(movementPath(row))}">
@@ -331,56 +336,80 @@ function renderActionRows(rows, emptyText) {
       ${rows.map((row) => `
         <li class="stock-action-row">
           <div>
-            <strong>${escapeHtml(row.name || row.ticker)}</strong>
+            <strong>${escapeHtml(row.name || row.ticker)} ${membershipBadges(row)}</strong>
             <span>${escapeHtml(row.ticker)}</span>
           </div>
-          <small>${escapeHtml(actionDetail(row))}</small>
+          <small>${escapeHtml(row.displayDetail || actionDetail(row))}</small>
         </li>
       `).join("")}
     </ul>
   `;
 }
 
+function portfolioActionGroups() {
+  const latestDate = state.data?.latestDate;
+  const day = (state.data?.days || []).find((entry) => entry.date === latestDate);
+  const advice = day?.portfolioAdvice || (state.data?.actions?.latestDate === latestDate ? state.data?.portfolioAdvice : null);
+  if (!advice || !["hold", "new", "sell", "sellWatch"].every((key) => Array.isArray(advice[key]))) return null;
+  const ranked = new Map((day?.rows || []).map((row) => [row.ticker, row]));
+  const decorate = (row, detail) => ({ ...row, changeType: ranked.get(row.ticker)?.changeType, displayDetail: detail });
+  // A ranking/new-membership label is never sufficient evidence of a buy.
+  const ready = (row) => row.action === "BUY" && row.entryReadiness === "REVIEWED" && row.scenarioStatus === "SCENARIO_PASS";
+  return {
+    buy: advice.new.filter(ready).map((row) => decorate(row, "买入建议 · 执行前确认价格与仓位")),
+    hold: [
+      ...advice.hold.map((row) => decorate(row, "继续持有")),
+      ...advice.sellWatch.map((row) => decorate(row, "继续持有 · 卖出信号待确认"))
+    ],
+    sell: advice.sell.map((row) => decorate(row, "已触发退出复核 · 确认后卖出")),
+    watch: advice.new.filter((row) => !ready(row)).map((row) => decorate(row, "候选观察 · 尚未满足买入条件")),
+    dataReview: (advice.dataReview || []).map((row) => decorate(row, "持仓资料待核对 · 暂无买卖结论")),
+    sellWatchCount: advice.sellWatch.length,
+    latestDate
+  };
+}
+
 function renderActionPanel() {
   const panel = $("#stockActionPanel");
   if (!panel) return;
-  const actions = state.data?.actions;
-  const latestDate = actions?.latestDate || state.data?.latestDate || "--";
-  if (!actions || !Array.isArray(actions.rows)) {
+  const advice = portfolioActionGroups();
+  const latestDate = state.data?.latestDate || "--";
+  if (!advice) {
     panel.innerHTML = `
       <div class="stock-action-header">
-        <div><h2>最新 PDC 行动</h2><p>行动数据尚未生成；排名仅供研究。</p></div>
+        <div><h2>下一交易日持仓建议</h2><p>完整持仓建议尚未生成；暂不能从排名推定买卖。</p></div>
         <time>${escapeHtml(latestDate)}</time>
       </div>
     `;
     return;
   }
   const groups = [
-    actions.researchOnly
-      ? { action: "REVIEW", title: "新增观察 / 待复核", empty: "今日没有新增观察或待补资料标的。" }
-      : { action: "BUY", title: "买入", empty: "今日没有通过完整 PDC 买入闸门的标的。" },
-    { action: "HOLD", title: "保留", empty: "当前没有需要保留的确认持仓。" },
-    { action: "SELL", title: "卖出复核", empty: "当前没有需要卖出复核的确认持仓。" }
+    { key: "buy", title: "买入", empty: "暂无满足买入条件的股票，先不新增。" },
+    { key: "hold", title: "继续持有", empty: "暂无继续持有建议。" },
+    { key: "sell", title: "卖出", empty: "暂无已确认退出信号，先不卖出。" }
   ];
   panel.innerHTML = `
     <div class="stock-action-header">
       <div>
-        <h2>最新 PDC 行动</h2>
-        <p>每个已验证收盘日都会显示；即使结果与昨天相同。研究排名不会自动变成买卖行动。</p>
+        <h2>下一交易日持仓建议</h2>
+        <p>依据 ${escapeHtml(latestDate)} 收盘结果。NEW 表示新上榜，买入需满足入场条件。建议待你确认后手动执行。</p>
       </div>
       <time datetime="${escapeHtml(latestDate)}">${escapeHtml(latestDate)}</time>
     </div>
     <div class="stock-action-counts" aria-label="最新行动数量">
-      ${groups.map((group) => `<span class="stock-action-count stock-action-${group.action.toLowerCase()}">${escapeHtml(group.title)} <strong>${actionCount(group.action)}</strong></span>`).join("")}
+      ${groups.map((group) => `<span class="stock-action-count stock-action-${group.key}">${escapeHtml(group.title)} <strong>${advice[group.key].length}</strong></span>`).join("")}
     </div>
     <div class="stock-action-grid">
       ${groups.map((group) => `
-        <section class="stock-action-group stock-action-${group.action.toLowerCase()}" aria-label="${escapeHtml(group.title)}">
-          <h3>${escapeHtml(group.title)} <span>${actionCount(group.action)}</span></h3>
-          ${renderActionRows(actionRows(group.action), group.empty)}
+        <section class="stock-action-group stock-action-${group.key}" aria-label="${escapeHtml(group.title)}">
+          <h3>${escapeHtml(group.title)} <span>${advice[group.key].length}</span></h3>
+          ${group.key === "hold" && advice.sellWatchCount ? `<p class="stock-action-empty">含 ${advice.sellWatchCount} 只卖出观察，目前仍持有。</p>` : ""}
+          ${renderActionRows(advice[group.key], group.empty)}
         </section>
       `).join("")}
     </div>
+    ${advice.watch.length ? `<details class="stock-candidate-watch" open><summary>候选观察 · ${advice.watch.length} 只，暂不买入</summary>${renderActionRows(advice.watch, "")}</details>` : ""}
+    ${advice.dataReview.length ? `<section class="stock-candidate-watch"><h3>持仓待核对 · ${advice.dataReview.length} 只</h3>${renderActionRows(advice.dataReview, "")}</section>` : ""}
   `;
 }
 
@@ -482,6 +511,7 @@ function renderRankList() {
 }
 
 function renderDashboard() {
+  renderActionPanel();
   renderRankList();
 }
 

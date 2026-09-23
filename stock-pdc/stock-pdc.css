@@ -433,6 +433,30 @@ body::before {
   margin: 10px 0 0;
 }
 
+.stock-new-badge,
+.stock-held-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.stock-new-badge { background: #e5f4ee; color: #166344; }
+.stock-held-badge { background: #e7effa; color: #235c91; }
+.stock-membership-badges { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; }
+.stock-membership-badges:empty { display: none; }
+.stock-rank-legend { margin: 2px 8px 12px; color: #65707a; font-size: 12px; line-height: 1.6; }
+.stock-action-panel { max-width: 1320px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+.stock-candidate-watch { border-top: 1px solid #dce3e9; padding-top: 14px; }
+.stock-candidate-watch summary { cursor: pointer; color: #46505a; font-size: 13px; font-weight: 700; }
+.stock-candidate-watch .stock-action-list { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px 20px; }
+.stock-action-row strong .stock-new-badge { color: #166344; font-size: 9px; }
+
 .stock-command {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
