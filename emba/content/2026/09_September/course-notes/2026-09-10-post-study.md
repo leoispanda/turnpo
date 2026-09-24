@@ -19,6 +19,7 @@ Philip Vergauwen
 
 - [Philip Vergauwen · SMAC（PDF，171 页）](/api/emba/file/emba/2026-09/material/post-study-control-d5569bb9efa1.pdf)
 - [Tennessee Controls · 案例原文](/api/emba/file/emba/2026-09/material/post-study-tennessee-b333a1e2bd27.pdf)
+- [Managerial Accounting & Control · Canvas 作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174659)
 - [Final Assessment · 原始要求（7 页）](/api/emba/file/emba/2026-09/material/post-study-assignment-c6e414c7a282.pdf)
 - [Syllabus · 课程安排与指定阅读](/api/emba/file/emba/2026-09/material/post-study-syllabus-65814bdace6e.pdf)
 

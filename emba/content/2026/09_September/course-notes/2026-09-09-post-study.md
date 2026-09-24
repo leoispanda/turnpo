@@ -17,7 +17,9 @@ Harold Hassink · Enno Soeren
 
 ## 课件和资料
 
+- [Harold Hassink · Financial Accounting（Canvas 原课件）](https://canvas.maastrichtuniversity.nl/courses/28817/files/6660939)
 - [ASML 2025 年报 · US GAAP](/api/emba/file/emba/2026-09/material/post-study-asml-add58be9d982.pdf)
+- [Financial Accounting & Analysis · Canvas 作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174660)
 - [Final Assessment · 原始要求（7 页）](/api/emba/file/emba/2026-09/material/post-study-assignment-c6e414c7a282.pdf)
 - [Syllabus · 课程安排与指定阅读](/api/emba/file/emba/2026-09/material/post-study-syllabus-65814bdace6e.pdf)
 

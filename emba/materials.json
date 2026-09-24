@@ -816,6 +816,90 @@
           "type": "post_study_source",
           "file": "/api/emba/file/emba/2026-09/material/post-study-tennessee-b333a1e2bd27.pdf",
           "notes": "Post Study 原始资料；按周一至周五归档。文本镜像：/emba/content/2026/09_September/converted-md/post-study-tennessee.md"
+        },
+        {
+          "title": "Dennis Bams · 45 个风险案例（HTML 原文件下载）",
+          "type": "post_study_source",
+          "file": "/api/emba/file/emba/2026-09/material/post-study-bams-cases-c145ae9cbb21.html",
+          "notes": "2026-09-24 Canvas 目录核对。已补入私有学习资料。"
+        },
+        {
+          "title": "Dennis Bams · 15 场危机（HTML 原文件下载）",
+          "type": "post_study_source",
+          "file": "/api/emba/file/emba/2026-09/material/post-study-bams-crises-65ed799caae6.html",
+          "notes": "2026-09-24 Canvas 目录核对。已补入私有学习资料。"
+        },
+        {
+          "title": "Dennis Bams · 文献原包（ZIP）",
+          "type": "post_study_source",
+          "file": "/api/emba/file/emba/2026-09/material/post-study-bams-literature-dd9af4530ae9.zip",
+          "notes": "2026-09-24 Canvas 目录核对。已补入私有学习资料。"
+        },
+        {
+          "title": "课程分组 · Groups CFA（原始 PDF）",
+          "type": "post_study_source",
+          "file": "/api/emba/file/emba/2026-09/material/post-study-groups-37cc658c006c.pdf",
+          "notes": "2026-09-24 Canvas 目录核对。已补入私有学习资料。 来源索引：/emba/content/2026/09_September/converted-md/post-study-groups.md"
+        },
+        {
+          "title": "Dennis Bams · 文献阅读目录",
+          "type": "post_study_source",
+          "file": "/api/emba/file/emba/2026-09/material/post-study-bams-reading-list-cea53294d2a6.md",
+          "notes": "2026-09-24 Canvas 目录核对。已补入私有学习资料。"
+        },
+        {
+          "title": "Harold Hassink · Financial Accounting（Canvas 原课件）",
+          "type": "post_study_source",
+          "file": "https://canvas.maastrichtuniversity.nl/courses/28817/files/6660939",
+          "notes": "2026-09-24 Canvas 目录核对。官方入口，需 Canvas 登录；不是本站 PDF 副本。"
+        },
+        {
+          "title": "Roger Otten · Financial Management（Canvas 原课件）",
+          "type": "post_study_source",
+          "file": "https://canvas.maastrichtuniversity.nl/courses/28817/files/6687135",
+          "notes": "2026-09-24 Canvas 目录核对。官方入口，需 Canvas 登录；不是本站 PDF 副本。"
+        },
+        {
+          "title": "Dennis Bams · ASML 风险分析（Canvas 公告附件）",
+          "type": "post_study_source",
+          "file": "https://canvas.maastrichtuniversity.nl/courses/28817/discussion_topics/435863",
+          "notes": "2026-09-24 Canvas 目录核对。官方入口，需 Canvas 登录；不是本站 PDF 副本。"
+        },
+        {
+          "title": "Compliance · Canvas 作业入口",
+          "type": "post_study_source",
+          "file": "https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174658",
+          "notes": "2026-09-24 Canvas 目录核对。官方入口，需 Canvas 登录；不是本站 PDF 副本。"
+        },
+        {
+          "title": "Sustainability Reporting · Canvas 作业入口",
+          "type": "post_study_source",
+          "file": "https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174652",
+          "notes": "2026-09-24 Canvas 目录核对。官方入口，需 Canvas 登录；不是本站 PDF 副本。"
+        },
+        {
+          "title": "Financial Accounting & Analysis · Canvas 作业入口",
+          "type": "post_study_source",
+          "file": "https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174660",
+          "notes": "2026-09-24 Canvas 目录核对。官方入口，需 Canvas 登录；不是本站 PDF 副本。"
+        },
+        {
+          "title": "Managerial Accounting & Control · Canvas 作业入口",
+          "type": "post_study_source",
+          "file": "https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174659",
+          "notes": "2026-09-24 Canvas 目录核对。官方入口，需 Canvas 登录；不是本站 PDF 副本。"
+        },
+        {
+          "title": "Financial Management · Canvas 小组作业入口",
+          "type": "post_study_source",
+          "file": "https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174657",
+          "notes": "2026-09-24 Canvas 目录核对。官方入口，需 Canvas 登录；不是本站 PDF 副本。"
+        },
+        {
+          "title": "Canvas 资料核对 · 2026.09.24",
+          "type": "post_study_source",
+          "file": "/emba/content/2026/09_September/assignments/2026-09-24-canvas-material-check.md",
+          "notes": "2026-09-24 Canvas 目录核对。已补入私有学习资料。"
         }
       ],
       "reflection": "September 2026 is the first core finance week. The learning goal is financial leadership: connect investment and financing choices, accounting information, performance control, enterprise risk, compliance and ESG reporting into one decision framework. The priority is not memorising isolated models, but using them to diagnose a real company and make a well-supported recommendation.",

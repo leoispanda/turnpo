@@ -17,8 +17,11 @@ Roger Otten
 
 ## 课件和资料
 
+- [Roger Otten · Financial Management（Canvas 原课件）](https://canvas.maastrichtuniversity.nl/courses/28817/files/6687135)
 - [Team-6-PME-Pension-Impact-Investing-Pitch · 历史准备稿，未核实最终选择](/emba/content/2026/09_September/assignments/Team-6-PME-Pension-Impact-Investing-Pitch.md)
 - [Team-6-BeFrank-Impact-Investing · 历史准备稿，未核实最终选择](/emba/content/2026/09_September/assignments/Team-6-BeFrank-Impact-Investing.md)
+- [课程分组 · Groups CFA（原始 PDF）](/api/emba/file/emba/2026-09/material/post-study-groups-37cc658c006c.pdf)
+- [Financial Management · Canvas 小组作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174657)
 - [Final Assessment · 原始要求（7 页）](/api/emba/file/emba/2026-09/material/post-study-assignment-c6e414c7a282.pdf)
 - [Syllabus · 课程安排与指定阅读](/api/emba/file/emba/2026-09/material/post-study-syllabus-65814bdace6e.pdf)
 

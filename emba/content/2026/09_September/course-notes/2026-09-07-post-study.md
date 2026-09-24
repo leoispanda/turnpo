@@ -23,6 +23,13 @@ Paulo Rodrigues · Dennis Bams
 - [Heineken_risk_model.xlsx](/api/emba/file/emba/2026-09/material/post-study-heineken-model-3680203ed0ce.xlsx)
 - [Vestas_risk_model.xlsx](/api/emba/file/emba/2026-09/material/post-study-vestas-model-0a044a7a3df8.xlsx)
 - [Atlantia_risk_model.xlsx](/api/emba/file/emba/2026-09/material/post-study-atlantia-model-0655358e1ff3.xlsx)
+- [周一课堂知识回顾 · 历史整理稿](/emba/content/2026/09_September/course-notes/day1-review-historical.md)
+- [周一学习路径 · 历史思考整理稿](/emba/content/2026/09_September/course-notes/day1-reflection-historical.md)
+- [Dennis Bams · 45 个风险案例（HTML 原文件下载）](/api/emba/file/emba/2026-09/material/post-study-bams-cases-c145ae9cbb21.html)
+- [Dennis Bams · 15 场危机（HTML 原文件下载）](/api/emba/file/emba/2026-09/material/post-study-bams-crises-65ed799caae6.html)
+- [Dennis Bams · 文献阅读目录](/api/emba/file/emba/2026-09/material/post-study-bams-reading-list-cea53294d2a6.md)
+- [Dennis Bams · 文献原包（ZIP）](/api/emba/file/emba/2026-09/material/post-study-bams-literature-dd9af4530ae9.zip)
+- [Dennis Bams · ASML 风险分析（Canvas 公告附件）](https://canvas.maastrichtuniversity.nl/courses/28817/discussion_topics/435863)
 - [Final Assessment · 原始要求（7 页）](/api/emba/file/emba/2026-09/material/post-study-assignment-c6e414c7a282.pdf)
 - [Syllabus · 课程安排与指定阅读](/api/emba/file/emba/2026-09/material/post-study-syllabus-65814bdace6e.pdf)
 

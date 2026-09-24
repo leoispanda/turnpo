@@ -2359,6 +2359,32 @@
       "status": "archive",
       "rag_include": false,
       "summary": "历史助理整理稿，不作为逐字用户原话。"
+    },
+    {
+      "id": "emba-2026-09-24-canvas-material-check",
+      "title": "Canvas 资料核对 · 2026-09-24",
+      "type": "source_inventory",
+      "month": "2026-09",
+      "date": "2026-09-24",
+      "md_file": "/emba/content/2026/09_September/assignments/2026-09-24-canvas-material-check.md",
+      "visibility": "private",
+      "status": "active",
+      "summary": "九月 Canvas 课件、补充案例、文献和作业入口的核对记录；明确私有副本与尚未镜像的官方入口。",
+      "rag_include": true
+    },
+    {
+      "id": "emba-2026-09-source-groups",
+      "title": "课程分组 · Groups CFA",
+      "type": "source_index",
+      "source_type": "pdf",
+      "source_file": "/api/emba/file/emba/2026-09/material/post-study-groups-37cc658c006c.pdf",
+      "md_file": "/emba/content/2026/09_September/converted-md/post-study-groups.md",
+      "month": "2026-09",
+      "date": "2026-09-24",
+      "visibility": "private",
+      "status": "active",
+      "summary": "原始分组来源索引，Leo (Zhen) Yang 属于 Team 6；不转录其他同学名单。",
+      "rag_include": true
     }
   ]
 }

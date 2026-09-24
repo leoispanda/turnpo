@@ -1858,10 +1858,10 @@ function renderSeptemberAssignmentOverview() {
   const assignment = septemberPostStudyData().assignment;
   if (!assignment) return "";
   return `<details class="emba-study-deadline" ${septemberDisclosureAttrs("assignment")}>
-    <summary><strong>作业截止 · 10 月 25 日 23:59</strong><span>Canvas 时区为准 · 题数待确认</span></summary>
+    <summary><strong>作业截止 · 10 月 25 日 23:59</strong><span>Canvas 已核对 · 题数原文有冲突</span></summary>
     <div class="emba-plan-step-body"><p>${escapeHtml(assignment.deadline)}</p><p>${escapeHtml(assignment.rules)}</p>
       <p class="emba-post-missing"><strong>题数待确认：</strong>${escapeHtml(assignment.conflict)}</p><p>${escapeHtml(assignment.format)}</p><p>${escapeHtml(assignment.note)}</p>
-      <div class="emba-post-source-grid">${postStudySourceLink("assignment")}${postStudySourceLink("syllabus")}</div>
+      <div class="emba-post-source-grid">${postStudySourceLink("assignment")}${postStudySourceLink("syllabus")}${postStudySourceLink("canvas-material-check")}</div>
     </div>
   </details>`;
 }
@@ -1902,12 +1902,13 @@ function renderSeptemberPostDay(day) {
   if (state.materialReader) return renderMaterialReader();
   const plan = septemberPlanMeta(day);
   const thoughts = state.septemberThoughts[day.id] || [];
+  const canvasSlides = day.slides.some((id) => septemberPostStudyData().sources[id]?.storage === "canvas");
   const slides = day.slides.length ? `<div class="emba-post-source-grid">${day.slides.map(postStudySourceLink).join("")}</div>` : `<p class="emba-post-context">老师的独立课件待补；可以先从作业资料开始。</p>`;
   const tasks = `<ul>${day.tasks.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul><p class="emba-post-output"><strong>建议产出</strong><br>${escapeHtml(day.output)}</p><div class="emba-post-source-grid">${[...day.resources, "assignment"].map(postStudySourceLink).join("")}</div>`;
   return `<div class="emba-daily-plan emba-post-day" data-post-day="${escapeHtml(day.date)}">
     ${renderSeptemberDayHeader(day)}
     <div class="emba-plan-steps">
-      ${renderStudyStep(`${day.id}-slides`, "01", "回顾老师课件", day.slides.length ? `${day.slides.length} 份课件 · 查看原始 PPT / PDF` : "课件待补 · 可先看作业资料", slides)}
+      ${renderStudyStep(`${day.id}-slides`, "01", "回顾老师课件", day.slides.length ? `${day.slides.length} 份课件 · ${canvasSlides ? "在 Canvas 中打开原课件" : "查看原始 PPT / PDF"}` : "课件待补 · 可先看作业资料", slides)}
       ${renderStudyStep(`${day.id}-tasks`, "02", plan.task, plan.hint, tasks)}
       ${renderStudyStep(`${day.id}-notes`, "03", "整理笔记与思考", state.septemberThoughtsLoaded ? (thoughts.length ? `${thoughts.length} 条思考 · 原文、分析与下一步` : "暂无可确认的个人记录") : "原文、分析与下一步", renderSeptemberThoughts(day))}
     </div>

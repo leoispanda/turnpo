@@ -11,11 +11,11 @@ rag_include: true
 
 # 九月作业要求与资料核对
 
-2026 年 10 月 25 日（周日）23:59 · Canvas（文件未注明时区，以 Canvas 为准）
+2026 年 10 月 25 日（周日）23:59 · 2026-09-24 已核对 Canvas 显示时间
 
 书面部分 75%：MAC + Financial Accounting & Analysis + Compliance / Sustainability 二选一；每题最多两页，各自提交 PDF。
 
-原作业第 2–3 页明确要求三题，且 Compliance 与 Sustainability 不可同选；第 4 页 General Requirements 又写“Answer all four written questions.”。先按前三页准备，并向老师或 Canvas 核实最终题数。
+2026-09-24 已核对 Canvas 作业目录、Financial Accounting & Analysis 正文及课程公告。正文明确写选四题中的三题，Compliance 与 Sustainability 不可同选；同页 General requirements 仍写“Answer all four written questions.”，未找到更正公告。三题与四题的原文冲突仍需老师确认。
 
 LastName_FirstName_StudentID_QuestionX.pdf · APA 引用；书面 rubric：内容 75%、批判反思 15%、表达 10%。
 
@@ -64,3 +64,13 @@ Groups CFA 原文件已确认 Leo (Zhen) Yang 属于 Team 6；你们与 Team 3 �
 [原始作业文件](/api/emba/file/emba/2026-09/material/post-study-assignment-c6e414c7a282.pdf)
 
 小组分配依据本地 Groups CFA.pdf（仅引用自己的 Team 6 信息）。最终公司、PPT 与完成状态待核实。
+
+
+## Canvas 官方入口 · 2026-09-24 已核对
+
+- [Compliance · Canvas 作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174658)
+- [Sustainability Reporting · Canvas 作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174652)
+- [Financial Accounting & Analysis · Canvas 作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174660)
+- [Managerial Accounting & Control · Canvas 作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174659)
+- [Financial Management · Canvas 小组作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174657)
+- [Canvas 资料核对 · 2026.09.24](/emba/content/2026/09_September/assignments/2026-09-24-canvas-material-check.md)

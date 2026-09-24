@@ -23,6 +23,8 @@ Ton van Bree · Eric Lodder
 - [Heineken 2025 年报](/api/emba/file/emba/2026-09/material/post-study-heineken-2dee3a7ac141.pdf)
 - [Volkswagen 排放事件 · 案例原文](/api/emba/file/emba/2026-09/material/post-study-volkswagen-e65f70f91208.docx)
 - [ING Wwft · 案例原文](/api/emba/file/emba/2026-09/material/post-study-ing-2349496c2064.docx)
+- [Compliance · Canvas 作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174658)
+- [Sustainability Reporting · Canvas 作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174652)
 - [Final Assessment · 原始要求（7 页）](/api/emba/file/emba/2026-09/material/post-study-assignment-c6e414c7a282.pdf)
 - [Syllabus · 课程安排与指定阅读](/api/emba/file/emba/2026-09/material/post-study-syllabus-65814bdace6e.pdf)
 

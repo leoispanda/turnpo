@@ -1,6 +1,6 @@
 /* September post-study sources and evidence-bound learning records. */
 const SEPTEMBER_POST_STUDY = {
-  "version": "2026-09-21-handwritten-review",
+  "version": "2026-09-24-canvas-material-check",
   "thread": "01a07cc6-14e6-7943-afd1-d01e724ed8bf",
   "sources": {
     "rodrigues": {
@@ -233,6 +233,107 @@ const SEPTEMBER_POST_STUDY = {
       "title": "手写笔记复核 · 原话、主题归类与补充分析",
       "file": "/api/emba/file/emba/2026-09/handwritten/handwritten-notes-review.md",
       "name": "handwritten-notes-review.md"
+    },
+    "bams-cases": {
+      "title": "Dennis Bams · 45 个风险案例（HTML 原文件下载）",
+      "name": "MBA_2026_cases.html",
+      "file": "/api/emba/file/emba/2026-09/material/post-study-bams-cases-c145ae9cbb21.html",
+      "storage": "private-copy",
+      "checkedAt": "2026-09-24",
+      "provenance": "既有本地下载原件；文件名与 Canvas 课程 Modules 目录核对一致，未声称重新下载或版本字节一致。"
+    },
+    "bams-crises": {
+      "title": "Dennis Bams · 15 场危机（HTML 原文件下载）",
+      "name": "MBA_2026_crises.html",
+      "file": "/api/emba/file/emba/2026-09/material/post-study-bams-crises-65ed799caae6.html",
+      "storage": "private-copy",
+      "checkedAt": "2026-09-24",
+      "provenance": "既有本地下载原件；文件名与 Canvas 课程 Modules 目录核对一致，未声称重新下载或版本字节一致。"
+    },
+    "bams-literature": {
+      "title": "Dennis Bams · 文献原包（ZIP）",
+      "name": "Literature.zip",
+      "file": "/api/emba/file/emba/2026-09/material/post-study-bams-literature-dd9af4530ae9.zip",
+      "storage": "private-copy",
+      "checkedAt": "2026-09-24",
+      "provenance": "既有本地下载原件；文件名与 Canvas 课程 Modules 目录核对一致，未声称重新下载或版本字节一致。"
+    },
+    "groups": {
+      "title": "课程分组 · Groups CFA（原始 PDF）",
+      "name": "Groups CFA.pdf",
+      "file": "/api/emba/file/emba/2026-09/material/post-study-groups-37cc658c006c.pdf",
+      "storage": "private-copy",
+      "checkedAt": "2026-09-24",
+      "provenance": "既有本地下载原件；文件名与 Canvas 课程 Modules 目录核对一致，未声称重新下载或版本字节一致。",
+      "mirror": "/emba/content/2026/09_September/converted-md/post-study-groups.md"
+    },
+    "bams-reading-list": {
+      "title": "Dennis Bams · 文献阅读目录",
+      "file": "/api/emba/file/emba/2026-09/material/post-study-bams-reading-list-cea53294d2a6.md",
+      "name": "bams-literature-reading-list.md",
+      "storage": "private-copy",
+      "checkedAt": "2026-09-24"
+    },
+    "hassink": {
+      "title": "Harold Hassink · Financial Accounting（Canvas 原课件）",
+      "name": "MBA_09-09-26 PM2 Financial Accounting.pdf",
+      "file": "https://canvas.maastrichtuniversity.nl/courses/28817/files/6660939",
+      "storage": "canvas",
+      "checkedAt": "2026-09-24",
+      "downloadStatus": "not-mirrored",
+      "notes": "已确认 Canvas 原文件入口；未复制 PDF 到本站。浏览器对文件下载域名显示 ERR_BLOCKED_BY_CLIENT。"
+    },
+    "otten": {
+      "title": "Roger Otten · Financial Management（Canvas 原课件）",
+      "name": "MBA 2026 OTTEN.pdf",
+      "file": "https://canvas.maastrichtuniversity.nl/courses/28817/files/6687135",
+      "storage": "canvas",
+      "checkedAt": "2026-09-24",
+      "downloadStatus": "not-mirrored",
+      "notes": "已确认 Canvas 原文件入口；未复制 PDF 到本站。浏览器对文件下载域名显示 ERR_BLOCKED_BY_CLIENT。"
+    },
+    "asml-risk": {
+      "title": "Dennis Bams · ASML 风险分析（Canvas 公告附件）",
+      "name": "ASML_report.pdf",
+      "file": "https://canvas.maastrichtuniversity.nl/courses/28817/discussion_topics/435863",
+      "storage": "canvas",
+      "checkedAt": "2026-09-24",
+      "downloadStatus": "not-mirrored",
+      "notes": "已确认 Canvas 原文件入口；未复制 PDF 到本站。浏览器对文件下载域名显示 ERR_BLOCKED_BY_CLIENT。"
+    },
+    "canvas-compliance": {
+      "title": "Compliance · Canvas 作业入口",
+      "file": "https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174658",
+      "storage": "canvas",
+      "checkedAt": "2026-09-24"
+    },
+    "canvas-sustainability": {
+      "title": "Sustainability Reporting · Canvas 作业入口",
+      "file": "https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174652",
+      "storage": "canvas",
+      "checkedAt": "2026-09-24"
+    },
+    "canvas-accounting": {
+      "title": "Financial Accounting & Analysis · Canvas 作业入口",
+      "file": "https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174660",
+      "storage": "canvas",
+      "checkedAt": "2026-09-24"
+    },
+    "canvas-control": {
+      "title": "Managerial Accounting & Control · Canvas 作业入口",
+      "file": "https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174659",
+      "storage": "canvas",
+      "checkedAt": "2026-09-24"
+    },
+    "canvas-group": {
+      "title": "Financial Management · Canvas 小组作业入口",
+      "file": "https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174657",
+      "storage": "canvas",
+      "checkedAt": "2026-09-24"
+    },
+    "canvas-material-check": {
+      "title": "Canvas 资料核对 · 2026.09.24",
+      "file": "/emba/content/2026/09_September/assignments/2026-09-24-canvas-material-check.md"
     }
   },
   "days": [
@@ -253,7 +354,12 @@ const SEPTEMBER_POST_STUDY = {
         "vestas-model",
         "atlantia-model",
         "day1-review",
-        "day1-reflection"
+        "day1-reflection",
+        "bams-cases",
+        "bams-crises",
+        "bams-reading-list",
+        "bams-literature",
+        "asml-risk"
       ],
       "tasks": [
         "本日没有独立的书面题；价值、风险与资本结构的内容为周三比率解释及周五小组作业提供基础。",
@@ -280,7 +386,9 @@ const SEPTEMBER_POST_STUDY = {
         "asml",
         "heineken",
         "volkswagen",
-        "ing"
+        "ing",
+        "canvas-compliance",
+        "canvas-sustainability"
       ],
       "tasks": [
         "Compliance 与 Sustainability Reporting 二选一，不能同时选择；按原文件第 2–3 页，所选题占模块成绩 25%。",
@@ -303,9 +411,12 @@ const SEPTEMBER_POST_STUDY = {
       "title": "Financial Accounting · ERM · 非营利组织",
       "lecturers": "Harold Hassink · Enno Soeren",
       "schedule": "08:30–11:30 Financial Accounting and Analysis；12:30–15:30 ERM；16:00–19:00 非营利组织访问与 guest talk。依据 syllabus 第 9 页。",
-      "slides": [],
+      "slides": [
+        "hassink"
+      ],
       "resources": [
-        "asml"
+        "asml",
+        "canvas-accounting"
       ],
       "tasks": [
         "Financial Accounting & Analysis 为书面必选模块，占 25%；使用 ASML 2025 合并财务报表，并在适当处比较 2024。",
@@ -314,7 +425,7 @@ const SEPTEMBER_POST_STUDY = {
       ],
       "output": "比率工作表 + 最多两页分析。先核对合并口径、币种和年报标准，再讨论杠杆；不要仅靠单一比率下结论。",
       "thoughts": [],
-      "missing": "已收到比率与财务会计主题的手写页；因多数页没有清晰日期，按内容整理在本日，不把主题归类说成课堂日期证明。Harold Hassink 当天独立 PPT 仍未找到。",
+      "missing": "已收到比率与财务会计主题的手写页；因多数页没有清晰日期，按内容整理在本日，不把主题归类说成课堂日期证明。Harold Hassink 的原始 PDF 已在 Canvas 找到，入口已补入本日课件。",
       "prompts": [
         "延伸自周一的问题（不是周三原话）：ROA / ROE 变好可能来自分母变化，先查原因再评价经营。",
         "补充分析方向：用“风险事件 → 现金流影响 → 责任人 → 应对 → 残余风险”把 ERM 与财务分析连接起来。",
@@ -333,7 +444,8 @@ const SEPTEMBER_POST_STUDY = {
         "control"
       ],
       "resources": [
-        "tennessee"
+        "tennessee",
+        "canvas-control"
       ],
       "tasks": [
         "Managerial Accounting & Control 为书面必选模块，占 25%，最多两页。",
@@ -356,10 +468,14 @@ const SEPTEMBER_POST_STUDY = {
       "title": "Financial Management · Team 6 Impact Investing",
       "lecturers": "Roger Otten",
       "schedule": "08:30–11:30、12:30–15:00 Financial Management。作业第 5 页说明周五下午约有一小时完成小组准备；不据此推断你们已经完成展示。",
-      "slides": [],
+      "slides": [
+        "otten"
+      ],
       "resources": [
         "team-pme",
-        "team-befrank"
+        "team-befrank",
+        "groups",
+        "canvas-group"
       ],
       "tasks": [
         "Groups CFA 原文件已确认 Leo (Zhen) Yang 属于 Team 6；你们与 Team 3 的分题是 Impact Investing，整体小组作业占模块成绩 25%。",
@@ -378,10 +494,11 @@ const SEPTEMBER_POST_STUDY = {
     }
   ],
   "assignment": {
-    "deadline": "2026 年 10 月 25 日（周日）23:59 · Canvas（文件未注明时区，以 Canvas 为准）",
+    "deadline": "2026 年 10 月 25 日（周日）23:59 · 2026-09-24 已核对 Canvas 显示时间",
     "rules": "书面部分 75%：MAC + Financial Accounting & Analysis + Compliance / Sustainability 二选一；每题最多两页，各自提交 PDF。",
-    "conflict": "原作业第 2–3 页明确要求三题，且 Compliance 与 Sustainability 不可同选；第 4 页 General Requirements 又写“Answer all four written questions.”。先按前三页准备，并向老师或 Canvas 核实最终题数。",
+    "conflict": "2026-09-24 已核对 Canvas 作业目录、Financial Accounting & Analysis 正文及课程公告。正文明确写选四题中的三题，Compliance 与 Sustainability 不可同选；同页 General requirements 仍写“Answer all four written questions.”，未找到更正公告。三题与四题的原文冲突仍需老师确认。",
     "format": "LastName_FirstName_StudentID_QuestionX.pdf · APA 引用；书面 rubric：内容 75%、批判反思 15%、表达 10%。",
-    "note": "以下是作业要求与准备清单，不是已完成或已提交的答案。"
+    "note": "以下是作业要求与准备清单，不是已完成或已提交的答案。",
+    "checkedAt": "2026-09-24"
   }
 };
