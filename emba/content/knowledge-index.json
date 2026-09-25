@@ -2361,15 +2361,15 @@
       "summary": "历史助理整理稿，不作为逐字用户原话。"
     },
     {
-      "id": "emba-2026-09-24-canvas-material-check",
-      "title": "Canvas 资料核对 · 2026-09-24",
+      "id": "emba-2026-09-25-canvas-material-check",
+      "title": "Canvas 资料核对 · 2026-09-25",
       "type": "source_inventory",
       "month": "2026-09",
-      "date": "2026-09-24",
-      "md_file": "/emba/content/2026/09_September/assignments/2026-09-24-canvas-material-check.md",
+      "date": "2026-09-25",
+      "md_file": "/emba/content/2026/09_September/assignments/2026-09-25-canvas-material-check.md",
       "visibility": "private",
       "status": "active",
-      "summary": "九月 Canvas 课件、补充案例、文献和作业入口的核对记录；明确私有副本与尚未镜像的官方入口。",
+      "summary": "九月 Canvas 课件、补充案例、文献和作业入口的核对记录；三份原始 PDF 已保存到私有资料库。",
       "rag_include": true
     },
     {

@@ -73,4 +73,4 @@ Groups CFA 原文件已确认 Leo (Zhen) Yang 属于 Team 6；你们与 Team 3 �
 - [Financial Accounting & Analysis · Canvas 作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174660)
 - [Managerial Accounting & Control · Canvas 作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174659)
 - [Financial Management · Canvas 小组作业入口](https://canvas.maastrichtuniversity.nl/courses/28817/assignments/174657)
-- [Canvas 资料核对 · 2026.09.24](/emba/content/2026/09_September/assignments/2026-09-24-canvas-material-check.md)
+- [Canvas 资料核对 · 2026.09.25](/emba/content/2026/09_September/assignments/2026-09-25-canvas-material-check.md)

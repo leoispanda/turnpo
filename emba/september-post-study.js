@@ -1,6 +1,6 @@
 /* September post-study sources and evidence-bound learning records. */
 const SEPTEMBER_POST_STUDY = {
-  "version": "2026-09-24-canvas-material-check",
+  "version": "2026-09-25-canvas-pdf-mirror",
   "thread": "01a07cc6-14e6-7943-afd1-d01e724ed8bf",
   "sources": {
     "rodrigues": {
@@ -277,29 +277,29 @@ const SEPTEMBER_POST_STUDY = {
     "hassink": {
       "title": "Harold Hassink · Financial Accounting（Canvas 原课件）",
       "name": "MBA_09-09-26 PM2 Financial Accounting.pdf",
-      "file": "https://canvas.maastrichtuniversity.nl/courses/28817/files/6660939",
-      "storage": "canvas",
-      "checkedAt": "2026-09-24",
-      "downloadStatus": "not-mirrored",
-      "notes": "已确认 Canvas 原文件入口；未复制 PDF 到本站。浏览器对文件下载域名显示 ERR_BLOCKED_BY_CLIENT。"
+      "file": "/api/emba/file/emba/2026-09/material/post-study-hassink-financial-accounting-2182133703b2.pdf",
+      "storage": "private-copy",
+      "checkedAt": "2026-09-25",
+      "downloadStatus": "downloaded",
+      "provenance": "2026-09-25 通过 Canvas 原始下载入口取得，PDF 共 23 页；已存入私有课程资料库。"
     },
     "otten": {
       "title": "Roger Otten · Financial Management（Canvas 原课件）",
       "name": "MBA 2026 OTTEN.pdf",
-      "file": "https://canvas.maastrichtuniversity.nl/courses/28817/files/6687135",
-      "storage": "canvas",
-      "checkedAt": "2026-09-24",
-      "downloadStatus": "not-mirrored",
-      "notes": "已确认 Canvas 原文件入口；未复制 PDF 到本站。浏览器对文件下载域名显示 ERR_BLOCKED_BY_CLIENT。"
+      "file": "/api/emba/file/emba/2026-09/material/post-study-otten-financial-management-7d2d756bfb57.pdf",
+      "storage": "private-copy",
+      "checkedAt": "2026-09-25",
+      "downloadStatus": "downloaded",
+      "provenance": "2026-09-25 通过 Canvas 原始下载入口取得，PDF 共 45 页；已存入私有课程资料库。"
     },
     "asml-risk": {
       "title": "Dennis Bams · ASML 风险分析（Canvas 公告附件）",
       "name": "ASML_report.pdf",
-      "file": "https://canvas.maastrichtuniversity.nl/courses/28817/discussion_topics/435863",
-      "storage": "canvas",
-      "checkedAt": "2026-09-24",
-      "downloadStatus": "not-mirrored",
-      "notes": "已确认 Canvas 原文件入口；未复制 PDF 到本站。浏览器对文件下载域名显示 ERR_BLOCKED_BY_CLIENT。"
+      "file": "/api/emba/file/emba/2026-09/material/post-study-asml-risk-0eda6eceaf20.pdf",
+      "storage": "private-copy",
+      "checkedAt": "2026-09-25",
+      "downloadStatus": "downloaded",
+      "provenance": "2026-09-25 从 Dennis Bams 的 Canvas 公告附件下载，PDF 共 9 页；已存入私有课程资料库。"
     },
     "canvas-compliance": {
       "title": "Compliance · Canvas 作业入口",
@@ -332,8 +332,8 @@ const SEPTEMBER_POST_STUDY = {
       "checkedAt": "2026-09-24"
     },
     "canvas-material-check": {
-      "title": "Canvas 资料核对 · 2026.09.24",
-      "file": "/emba/content/2026/09_September/assignments/2026-09-24-canvas-material-check.md"
+      "title": "Canvas 资料核对 · 2026.09.25",
+      "file": "/emba/content/2026/09_September/assignments/2026-09-25-canvas-material-check.md"
     }
   },
   "days": [
