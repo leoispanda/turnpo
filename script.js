@@ -2405,6 +2405,8 @@ let userSessionScopes = [];
 let ownerTimelineView = "published";
 let activeCategoryFilter = "all";
 let activeTimelineYear = "";
+let timelineNavigationVersion = 0;
+const timelineInteractedProfiles = new Set();
 let activeJobId = "";
 let activeJobFilter = "active";
 let activePotentialId = "";
@@ -2859,12 +2861,16 @@ async function loadPublishedProfileOnline(username = activeUsername) {
   try {
     const data = await profileApi(`/api/profiles/${encodeURIComponent(username)}`);
     if (!data.profile) return false;
+    const timelineViewport = !ownerMode && activeUsername === username && body.classList.contains("profile-open")
+      ? captureTimelineViewport() : null;
     profiles[username] = normalizeProfile(data.profile, { remote: true });
     onlinePublishedAvailable = true;
     lastOnlinePublishedAt = data.publishedAt || data.updatedAt || "";
     if (!ownerMode && activeUsername === username) {
-      if (body.classList.contains("profile-open")) renderProfile();
-      else if (isJobsWorkspaceOpen()) renderJobsModule();
+      if (body.classList.contains("profile-open")) {
+        renderProfile();
+        restoreTimelineViewport(timelineViewport);
+      } else if (isJobsWorkspaceOpen()) renderJobsModule();
     }
     return true;
   } catch {
@@ -4666,25 +4672,101 @@ function syncDefaultCollapsedYears(years) {
   const defaults = defaultCollapsedYears(years);
   const signature = JSON.stringify([...defaults]);
   if (localStorage.getItem(collapsedYearsDefaultKey()) !== signature) {
-    saveCollapsedYears(defaults);
     localStorage.setItem(collapsedYearsDefaultKey(), signature);
+    // A delayed published profile must not undo years the visitor already opened.
+    if (timelineInteractedProfiles.has(activeUsername)) return loadCollapsedYears();
+    saveCollapsedYears(defaults);
     return defaults;
   }
   return loadCollapsedYears();
 }
 
+function captureTimelineViewport() {
+  const list = $("#timelineList");
+  if (!list) return null;
+  const headerBottom = $(".topbar")?.getBoundingClientRect().bottom || 0;
+  const anchor = [...list.querySelectorAll("[data-toggle-year], [data-content-id]")].find((element) => {
+    const rect = element.getBoundingClientRect();
+    return rect.bottom > headerBottom && rect.top < window.innerHeight;
+  });
+  if (!anchor) return null;
+  const focused = document.activeElement;
+  return {
+    year: anchor.dataset.toggleYear,
+    contentId: anchor.dataset.contentId,
+    top: anchor.getBoundingClientRect().top,
+    focusedYear: focused?.dataset.yearBlock || focused?.dataset.toggleYear,
+    focusedToggle: focused?.dataset.toggleYear !== undefined,
+    focusedContentId: focused?.dataset.contentId
+  };
+}
+
+function restoreTimelineViewport(snapshot) {
+  if (!snapshot) return;
+  const list = $("#timelineList");
+  const anchor = snapshot.year !== undefined
+    ? [...list.querySelectorAll("[data-toggle-year]")].find((element) => element.dataset.toggleYear === snapshot.year)
+    : [...list.querySelectorAll("[data-content-id]")].find((element) => element.dataset.contentId === snapshot.contentId);
+  if (!anchor) return;
+  const focusedYear = snapshot.focusedYear && document.getElementById(`timeline-year-${snapshot.focusedYear}`);
+  const focusedCard = snapshot.focusedContentId && [...list.querySelectorAll("[data-content-id]")].find((element) => element.dataset.contentId === snapshot.focusedContentId);
+  const focusTarget = snapshot.focusedToggle ? focusedYear?.querySelector("[data-toggle-year]") : focusedYear || focusedCard;
+  if (focusTarget) {
+    if (focusTarget === focusedCard) focusTarget.tabIndex = -1;
+    focusTarget.focus({ preventScroll: true });
+  }
+  const delta = anchor.getBoundingClientRect().top - snapshot.top;
+  if (Math.abs(delta) > 1) window.scrollTo({ top: window.scrollY + delta, behavior: "instant" });
+}
+
+function updateTimelineYearCollapsed(year, collapsed) {
+  const block = document.getElementById(`timeline-year-${year}`);
+  const toggle = block?.querySelector("[data-toggle-year]");
+  const stack = block?.querySelector(".event-stack");
+  const stories = groupedStories()[year];
+  if (!toggle || !stack || !stories) return false;
+  if (block.classList.contains("is-collapsed") === collapsed) return true;
+  // Keep neighboring years, focus, and open photo galleries in place.
+  stack.innerHTML = collapsed ? "" : renderTimelineYearItems(stories);
+  block.classList.toggle("is-collapsed", collapsed);
+  toggle.setAttribute("aria-expanded", String(!collapsed));
+  if (!collapsed) refreshImageLoadingStates(stack);
+  return true;
+}
+
 function setTimelineYearCollapsed(year, collapsed) {
-  const collapsedYears = loadCollapsedYears();
+  timelineNavigationVersion += 1;
+  const years = Object.keys(groupedStories()).sort((a, b) => yearSortValue(b) - yearSortValue(a));
+  const collapsedYears = syncDefaultCollapsedYears(years);
+  timelineInteractedProfiles.add(activeUsername);
+  const toggle = document.getElementById(`timeline-year-${year}`)?.querySelector("[data-toggle-year]");
+  const previousTop = toggle?.getBoundingClientRect().top;
   if (collapsed) collapsedYears.add(year);
   else collapsedYears.delete(year);
   saveCollapsedYears(collapsedYears);
-  renderTimeline();
+  if (!updateTimelineYearCollapsed(year, collapsed)) renderTimeline();
+  const nextToggle = document.getElementById(`timeline-year-${year}`)?.querySelector("[data-toggle-year]");
+  if (Number.isFinite(previousTop) && nextToggle) {
+    const delta = nextToggle.getBoundingClientRect().top - previousTop;
+    if (Math.abs(delta) > 1) {
+      // Apply browser anchoring compensation immediately despite CSS smooth scrolling.
+      window.scrollTo({ top: window.scrollY + delta, behavior: "instant" });
+    }
+  }
 }
 
 function setAllTimelineYearsCollapsed(collapsed) {
+  timelineNavigationVersion += 1;
   const years = Object.keys(groupedStories()).sort((a, b) => yearSortValue(b) - yearSortValue(a));
+  // Initialize the public defaults before saving an explicit user choice.
+  syncDefaultCollapsedYears(years);
+  timelineInteractedProfiles.add(activeUsername);
   saveCollapsedYears(collapsed ? new Set(years) : new Set());
-  renderTimeline();
+  let needsRender = false;
+  years.forEach((year) => {
+    if (!updateTimelineYearCollapsed(year, collapsed)) needsRender = true;
+  });
+  if (needsRender) renderTimeline();
 }
 
 function renderTimelineYearControls(years) {
@@ -4724,7 +4806,17 @@ function syncTimelineYearControls() {
 }
 
 function jumpToTimelineYear(year) {
+  timelineNavigationVersion += 1;
   activeTimelineYear = String(year || "");
+  if (activeTimelineYear) {
+    const years = Object.keys(groupedStories()).sort((a, b) => yearSortValue(b) - yearSortValue(a));
+    if (!years.includes(activeTimelineYear)) return;
+    const collapsedYears = syncDefaultCollapsedYears(years);
+    timelineInteractedProfiles.add(activeUsername);
+    collapsedYears.delete(activeTimelineYear);
+    saveCollapsedYears(collapsedYears);
+    if (!updateTimelineYearCollapsed(activeTimelineYear, false)) renderTimeline();
+  }
   const select = document.querySelector("#timelineYearSelect");
   if (select) select.value = activeTimelineYear;
   syncTimelineYearControls();
@@ -4732,8 +4824,14 @@ function jumpToTimelineYear(year) {
     ? document.getElementById(`timeline-year-${activeTimelineYear}`)
     : $("#timelineList");
   if (!target) return;
-  target.scrollIntoView({ behavior: "smooth", block: "start" });
   if (activeTimelineYear) target.focus({ preventScroll: true });
+  const focusedElement = document.activeElement;
+  const navigationVersion = timelineNavigationVersion;
+  requestAnimationFrame(() => {
+    if (navigationVersion === timelineNavigationVersion && target.isConnected && document.activeElement === focusedElement) {
+      target.scrollIntoView({ behavior: "instant", block: "start" });
+    }
+  });
 }
 
 function stepTimelineYear(direction) {
@@ -5214,7 +5312,40 @@ function renderPublicPhotoButton(image, alt, imageClass = "") {
   </button>`;
 }
 
+function renderTimelineYearItems(stories) {
+  return stories.map((story) => {
+    const itemType = typeForContent(story);
+    const category = story.category || "life";
+    const categoryLabel = CATEGORY_LABELS[category] || "Life";
+    const storyImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
+    const coverImage = storyImages[0] || "";
+    const extraImages = storyImages.slice(1);
+    const coverAlt = story.title;
+    const summary = ownerMode ? story.publicSummary : publicStorySummary(story);
+    return `
+        <article class="event-card ${coverImage ? "has-media" : "no-media"} ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-content-id="${escapeHtml(story.id)}" data-content-type="${escapeHtml(itemType)}">
+          <div class="event-media">${coverImage ? (ownerMode ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(coverAlt)}" ${loadingImageAttributes()} />` : renderPublicPhotoButton(coverImage, coverAlt, "event-main-image")) : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
+          <div>
+            <div class="event-card-head">
+              <div class="event-date">${escapeHtml([categoryLabel, story.date, story.location].filter(Boolean).join(" - "))}</div>
+              <div class="event-actions owner-only">${itemType === "work" ? workActions(story) : storyActions(story)}</div>
+            </div>
+            <h3>${escapeHtml(story.title)}</h3>
+            ${summary ? `<p>${escapeHtml(summary)}</p>` : ""}
+            ${extraImages.length ? `<details class="event-gallery"><summary>View ${extraImages.length} more photo${extraImages.length === 1 ? "" : "s"}</summary><div>${extraImages.map((image, index) => {
+              const photoAlt = `${story.title} photo ${index + 2}`;
+              return ownerMode ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(photoAlt)}" ${loadingImageAttributes()} />` : renderPublicPhotoButton(image, photoAlt);
+            }).join("")}</div></details>` : ""}
+            ${story.link ? `<a class="source-link" href="${escapeHtml(story.link)}" target="_blank" rel="noopener">Open link</a>` : ""}
+            ${story.tags?.length ? `<div class="tag-row">${story.tags.slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
+          </div>
+        </article>
+      `;
+  }).join("");
+}
+
 function renderTimeline() {
+  timelineNavigationVersion += 1;
   renderCategoryControls();
   renderOwnerContentControls();
   const groups = groupedStories();
@@ -5224,35 +5355,7 @@ function renderTimeline() {
   const viewLabel = ownerMode ? ownerTimelineView : "published";
   $("#timelineList").innerHTML = years.length ? years.map((year) => {
     const isCollapsed = collapsedYears.has(year);
-    const itemsHtml = isCollapsed ? "" : groups[year].map((story) => {
-      const itemType = typeForContent(story);
-      const category = story.category || "life";
-      const categoryLabel = CATEGORY_LABELS[category] || "Life";
-      const storyImages = story.images?.length ? story.images : (story.image ? [story.image] : []);
-      const coverImage = storyImages[0] || "";
-      const extraImages = storyImages.slice(1);
-      const coverAlt = story.title;
-      const summary = ownerMode ? story.publicSummary : publicStorySummary(story);
-      return `
-          <article class="event-card ${coverImage ? "has-media" : "no-media"} ${story.status !== "published" ? "private-card" : ""} status-${escapeHtml(story.status)}" data-content-id="${escapeHtml(story.id)}" data-content-type="${escapeHtml(itemType)}">
-            <div class="event-media">${coverImage ? (ownerMode ? `<img class="event-main-image" src="${escapeHtml(coverImage)}" alt="${escapeHtml(coverAlt)}" ${loadingImageAttributes()} />` : renderPublicPhotoButton(coverImage, coverAlt, "event-main-image")) : `<div class="empty-media" aria-label="No image yet"></div>`}</div>
-            <div>
-              <div class="event-card-head">
-                <div class="event-date">${escapeHtml([categoryLabel, story.date, story.location].filter(Boolean).join(" - "))}</div>
-                <div class="event-actions owner-only">${itemType === "work" ? workActions(story) : storyActions(story)}</div>
-              </div>
-              <h3>${escapeHtml(story.title)}</h3>
-              ${summary ? `<p>${escapeHtml(summary)}</p>` : ""}
-              ${extraImages.length ? `<details class="event-gallery"><summary>View ${extraImages.length} more photo${extraImages.length === 1 ? "" : "s"}</summary><div>${extraImages.map((image, index) => {
-                const photoAlt = `${story.title} photo ${index + 2}`;
-                return ownerMode ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(photoAlt)}" ${loadingImageAttributes()} />` : renderPublicPhotoButton(image, photoAlt);
-              }).join("")}</div></details>` : ""}
-              ${story.link ? `<a class="source-link" href="${escapeHtml(story.link)}" target="_blank" rel="noopener">Open link</a>` : ""}
-              ${story.tags?.length ? `<div class="tag-row">${story.tags.slice(0, 3).map((tag) => `<span class="timeline-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
-            </div>
-          </article>
-        `;
-    }).join("");
+    const itemsHtml = isCollapsed ? "" : renderTimelineYearItems(groups[year]);
     return `
     <article class="year-block ${isCollapsed ? "is-collapsed" : ""}" id="timeline-year-${escapeHtml(year)}" tabindex="-1" data-year-block="${escapeHtml(year)}">
       <div class="year-label">${escapeHtml(year)}</div>
