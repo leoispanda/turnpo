@@ -90,6 +90,7 @@ function harness() {
     let html = "";
     return {
       id, dataset, hidden: false, isConnected: true, children: [], textContent: "", options: [], documentTop: 0, height: 44,
+      style: { scrollMarginTop: "", setProperty(name, value) { this[name] = String(value); }, getPropertyValue(name) { return this[name] || ""; } },
       get innerHTML() { return html; },
       set innerHTML(value) {
         this.children.forEach(disconnect);
@@ -433,4 +434,64 @@ test("interacting with one profile does not suppress another profile's updated d
   assert.equal(h.get("#timeline-year-2026").classList.contains("is-collapsed"), false);
   assert.equal(h.get("#timeline-year-2025").classList.contains("is-collapsed"), false);
   assert.equal(h.get("#timeline-year-2024").classList.contains("is-collapsed"), true);
+});
+
+test("year navigation reserves the measured sticky header height and sixteen pixels of space", () => {
+  const h = harness();
+  h.run(fixture);
+  h.run("renderTimeline()");
+  const topbar = h.get(".topbar");
+  for (const headerHeight of [80, 179, 260]) {
+    topbar.height = headerHeight;
+    h.run('jumpToTimelineYear("2025")');
+    const target = h.get("#timeline-year-2025");
+    const margin = target.style.scrollMarginTop || target.style.getPropertyValue("scroll-margin-top");
+    assert.match(margin, /px$/, `header height ${headerHeight}`);
+    assert.ok(parseFloat(margin) >= topbar.getBoundingClientRect().bottom + 16, `header height ${headerHeight}`);
+    h.flushFrames();
+    assert.equal(target.scrolled.behavior, "instant");
+  }
+});
+
+test("a delayed profile preserves the containing year's position when its visible reading card disappears", async () => {
+  for (const change of ["removed", "replaced"]) {
+    const h = harness();
+    h.run(fixture);
+    h.run('fixture.lifeStories.push(item("surviving-year-neighbor", "2025")); renderTimeline();');
+    const delayed = delayedPublicProfile(h);
+    h.run('jumpToTimelineYear("2025")');
+    h.flushFrames();
+    h.get(".topbar").height = 179;
+    h.window.scrollY = 1390;
+    const year = h.get("#timeline-year-2025");
+    const title = year.querySelector("[data-toggle-year]");
+    const oldCard = year.querySelector("[data-content-id]");
+    const previousTitleTop = title.getBoundingClientRect().top;
+    assert.equal(previousTitleTop, 110);
+    assert.ok(title.getBoundingClientRect().bottom < h.get(".topbar").getBoundingClientRect().bottom);
+    const snapshot = h.run("captureTimelineViewport()");
+    assert.equal(snapshot.contentId, oldCard.dataset.contentId, change);
+    h.context.readingCardId = oldCard.dataset.contentId;
+    h.context.remoteChange = change;
+    shiftTimelineAfterRender(h, 180);
+    const remote = h.run(`
+      const remote = structuredClone(fixture);
+      remote.lifeStories = remote.lifeStories.filter((story) => story.id !== readingCardId);
+      if (remoteChange === "replaced") remote.lifeStories.push(item("remote-replacement", "2025"));
+      remote.publicState.collapsedYears = ["2026", "2025", "2024"];
+      remote;
+    `);
+    delayed.release({ profile: remote });
+    assert.equal(await delayed.request, true, change);
+    const updatedYear = h.get("#timeline-year-2025");
+    const updatedTitle = updatedYear.querySelector("[data-toggle-year]");
+    assert.equal(oldCard.isConnected, false, change);
+    assert.equal(updatedYear.querySelectorAll("[data-content-id]").some((card) => card.dataset.contentId === h.context.readingCardId), false, change);
+    assert.equal(updatedTitle.getBoundingClientRect().top, previousTitleTop, change);
+    assert.equal(updatedYear.classList.contains("is-collapsed"), false, change);
+    assert.equal(h.run("activeTimelineYear"), "2025", change);
+    assert.equal(h.document.activeElement, updatedYear, change);
+    assert.equal(h.scrolls.length, 1, change);
+    assert.equal(h.scrolls[0].behavior, "instant", change);
+  }
 });

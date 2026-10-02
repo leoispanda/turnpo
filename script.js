@@ -4691,10 +4691,14 @@ function captureTimelineViewport() {
   });
   if (!anchor) return null;
   const focused = document.activeElement;
+  const yearBlock = anchor.closest("[data-year-block]");
+  const yearToggle = yearBlock?.querySelector("[data-toggle-year]");
   return {
     year: anchor.dataset.toggleYear,
     contentId: anchor.dataset.contentId,
     top: anchor.getBoundingClientRect().top,
+    fallbackYear: yearBlock?.dataset.yearBlock,
+    fallbackYearTop: yearToggle?.getBoundingClientRect().top,
     focusedYear: focused?.dataset.yearBlock || focused?.dataset.toggleYear,
     focusedToggle: focused?.dataset.toggleYear !== undefined,
     focusedContentId: focused?.dataset.contentId
@@ -4704,10 +4708,15 @@ function captureTimelineViewport() {
 function restoreTimelineViewport(snapshot) {
   if (!snapshot) return;
   const list = $("#timelineList");
-  const anchor = snapshot.year !== undefined
+  let anchor = snapshot.year !== undefined
     ? [...list.querySelectorAll("[data-toggle-year]")].find((element) => element.dataset.toggleYear === snapshot.year)
     : [...list.querySelectorAll("[data-content-id]")].find((element) => element.dataset.contentId === snapshot.contentId);
-  if (!anchor) return;
+  let previousTop = snapshot.top;
+  if (!anchor && snapshot.fallbackYear) {
+    anchor = document.getElementById(`timeline-year-${snapshot.fallbackYear}`)?.querySelector("[data-toggle-year]");
+    previousTop = snapshot.fallbackYearTop;
+  }
+  if (!anchor || !Number.isFinite(previousTop)) return;
   const focusedYear = snapshot.focusedYear && document.getElementById(`timeline-year-${snapshot.focusedYear}`);
   const focusedCard = snapshot.focusedContentId && [...list.querySelectorAll("[data-content-id]")].find((element) => element.dataset.contentId === snapshot.focusedContentId);
   const focusTarget = snapshot.focusedToggle ? focusedYear?.querySelector("[data-toggle-year]") : focusedYear || focusedCard;
@@ -4715,7 +4724,7 @@ function restoreTimelineViewport(snapshot) {
     if (focusTarget === focusedCard) focusTarget.tabIndex = -1;
     focusTarget.focus({ preventScroll: true });
   }
-  const delta = anchor.getBoundingClientRect().top - snapshot.top;
+  const delta = anchor.getBoundingClientRect().top - previousTop;
   if (Math.abs(delta) > 1) window.scrollTo({ top: window.scrollY + delta, behavior: "instant" });
 }
 
@@ -4824,6 +4833,8 @@ function jumpToTimelineYear(year) {
     ? document.getElementById(`timeline-year-${activeTimelineYear}`)
     : $("#timelineList");
   if (!target) return;
+  const headerBottom = $(".topbar")?.getBoundingClientRect().bottom || 0;
+  target.style.scrollMarginTop = `${Math.max(110, headerBottom + 16)}px`;
   if (activeTimelineYear) target.focus({ preventScroll: true });
   const focusedElement = document.activeElement;
   const navigationVersion = timelineNavigationVersion;
