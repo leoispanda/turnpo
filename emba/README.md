@@ -110,3 +110,12 @@ For every new PDF or PPT:
 ## September Post Study (2026-09-21)
 
 `september-post-study.js` supplies five weekday views with protected original slides, assignment requirements and evidence-bound notes. Sixteen originals live in R2; source mirrors, daily archives and the assignment checklist are indexed under `content/2026/09_September/`. Day 1 contains seven thought chains traced to user turns; context and Codex analysis are explicitly distinct from original quotes. Days 2–5 identify missing records instead of inventing reflections. The assignment overview flags the original three-versus-four-question inconsistency. Historical drafts are labelled as drafts, not submitted work. Existing D1 month notes, reflections and photo editing remain available. The daily source layer is shipped independently of D1 so existing cloud edits cannot erase it.
+
+
+## September learning events
+
+The September 2026 timeline includes an Events card for the October 9–10 UCPAE / VCWI Europe Forum. The event keeps its actual October dates.
+
+`/emba/events/europe-forum-2026/` serves the personal route and colocated PDF, PNG and offline ZIP through the existing EMBA password gate. The handler reads four allowlisted files from the private `EMBA_BUCKET` prefix `emba/2026-09/events/europe-forum-2026/20261006/`. Personal route contents and exports are stored in R2 rather than this public source repository. Preserve these R2 objects when publishing future website changes.
+
+Edits, attendance records and networking checkboxes are saved in the current browser. The route can export an edited HTML copy; these edits do not sync through the EMBA library database.

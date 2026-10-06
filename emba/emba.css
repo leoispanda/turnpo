@@ -3003,3 +3003,100 @@ body.emba-learning-page .emba-study-planner :focus-visible {
     width: 100%;
   }
 }
+
+/* Add to emba/emba.css; independent of uncommitted September study modules. */
+.emba-event-module {
+  display: grid;
+  gap: 18px;
+  margin-top: 16px;
+  padding: clamp(16px, 3vw, 28px);
+  border: 1px solid rgba(177, 138, 47, 0.18);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.emba-event-module-head h2 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+
+.emba-event-module-head h2 span {
+  display: inline-block;
+  margin-left: 8px;
+  color: #6e6e73;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.emba-event-module-head p {
+  margin: 8px 0 0;
+  color: #6e6e73;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.emba-event-card {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: clamp(18px, 2.2vw, 24px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.055);
+  color: #1d1d1f;
+  text-decoration: none;
+  transition: background 180ms ease, border-color 180ms ease;
+}
+
+.emba-event-card:hover {
+  border-color: rgba(177, 138, 47, 0.28);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.emba-event-card:focus-visible {
+  outline: 3px solid rgba(177, 138, 47, 0.6);
+  outline-offset: 3px;
+}
+
+.emba-event-date {
+  color: #926e20;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.emba-event-title {
+  font-size: clamp(19px, 2.2vw, 24px);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.emba-event-description {
+  color: #6e6e73;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.emba-event-action {
+  margin-top: 4px;
+  color: #926e20;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.emba-event-archive-note {
+  margin: 0;
+  color: #86868b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .emba-event-card { transition: none; }
+}
+
+.emba-event-module { scroll-margin-top: 90px; }
+.emba-event-jump { display: inline-block; margin-top: 10px; color: #926e20; font-size: 13px; font-weight: 650; text-decoration: none; }
+.emba-event-jump:hover { text-decoration: underline; }
+.emba-event-jump:focus-visible { outline: 2px solid #926e20; outline-offset: 4px; }

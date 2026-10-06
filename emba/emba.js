@@ -1950,7 +1950,7 @@ function renderSeptemberStudyModules(month) {
     : [["videos", "全部视频与课程总览"], ["podcast", "全部课程音频"], ["preparation", "预习与指定阅读"], ...(materialsForSection(month, "vocabulary").some(materialHasContent) ? [["vocabulary", "专业词汇"]] : [])];
   const auxiliary = extras.some(([id]) => id === state.openBlockId);
   return `<div class="emba-study-planner">
-    <header class="emba-study-heading"><span class="emba-study-eyebrow">SEPTEMBER / 2026</span><h2>9 月学习计划</h2><p>一次专注一天，按顺序完成三步。</p><span class="emba-study-month-mark" aria-hidden="true">09</span></header>
+    <header class="emba-study-heading"><span class="emba-study-eyebrow">SEPTEMBER / 2026</span><h2>9 月学习计划</h2><p>一次专注一天，按顺序完成三步。</p><a class="emba-event-jump" href="#emba-september-events">Events · 行业交流 →</a><span class="emba-study-month-mark" aria-hidden="true">09</span></header>
     <div class="emba-study-tabs" role="tablist" aria-label="学习阶段">
       ${[["pre-study", "Pre Study", "课前预习"], ["post-study", "Post Study", "课后复习"]].map(([id, title, subtitle]) => `<button type="button" role="tab" id="study-tab-${id}" aria-controls="study-module-panel" aria-selected="${module === id}" tabindex="${module === id ? 0 : -1}" data-study-module-select="${id}"><span>${title}</span><small>${subtitle}</small></button>`).join("")}
     </div>
@@ -1970,6 +1970,41 @@ function renderSeptemberStudyModules(month) {
 }
 
 
+/* Insert immediately before renderMonthDetail(month) in emba/emba.js. */
+function renderMonthEvents(month) {
+  if (month?.month !== "2026-09" && month?.id !== "2026-09") return "";
+  return `
+    <section class="emba-event-module" id="emba-september-events" aria-labelledby="emba-events-title">
+      <header class="emba-event-module-head">
+        <h2 id="emba-events-title">Events <span>学习延伸活动</span></h2>
+        <p>从课堂走向行业：工业 AI、组织采用、商业转型与创新交流。</p>
+      </header>
+      <a class="emba-event-card" href="/emba/events/europe-forum-2026/" aria-label="打开 UCPAE / VCWI Europe Forum 2026 个人参会路线图">
+        <span class="emba-event-date"><time datetime="2026-10-09">10月9日</time>–<time datetime="2026-10-10">10日</time> · Eindhoven</span>
+        <strong class="emba-event-title">UCPAE / VCWI Europe Forum 2026</strong>
+        <span class="emba-event-description">Leo 的个人参会路线图：Track A 主线、完整日程对照、嘉宾官方介绍与详细总结。</span>
+        <span class="emba-event-action">打开参会路线图 <span aria-hidden="true">→</span></span>
+      </a>
+      <p class="emba-event-archive-note">归入九月学习延伸；活动实际日期为 2026年10月9–10日。</p>
+    </section>
+  `;
+}
+
+/* Insert before loadLibrary() in emba/emba.js. */
+function initialMonthId(months) {
+  let requestedMonth = "";
+  try {
+    requestedMonth = new URL(window.location.href).searchParams.get("month") || "";
+  } catch {
+    // A malformed location must not prevent the timeline from opening.
+  }
+  const requested = /^\d{4}-(0[1-9]|1[0-2])$/.test(requestedMonth)
+    ? months.find((month) => month.month === requestedMonth || monthId(month) === requestedMonth)
+    : null;
+  const fallback = months.find(isSeptemberStudy) || months[0];
+  return requested ? monthId(requested) : fallback ? monthId(fallback) : "";
+}
+
 function renderMonthDetail(month) {
   const detail = $("#embaMonthDetail");
   if (!detail) return;
@@ -1979,7 +2014,7 @@ function renderMonthDetail(month) {
     return;
   }
   if (isSeptemberStudy(month)) {
-    detail.innerHTML = renderSeptemberStudyModules(month);
+    detail.innerHTML = renderSeptemberStudyModules(month) + renderMonthEvents(month);
     return;
   }
   detail.innerHTML = `
@@ -2101,8 +2136,11 @@ async function loadLibrary() {
     } else {
       state.library = mergeLibrary(baseLibrary, localLibrary);
     }
-    state.selectedMonthId = monthId(timelineMonths().find(isSeptemberStudy) || timelineMonths()[0] || {});
+    state.selectedMonthId = initialMonthId(timelineMonths());
     renderTimeline();
+    if (window.location.hash === "#emba-september-events") {
+      requestAnimationFrame(() => document.getElementById("emba-september-events")?.scrollIntoView({ block: "start" }));
+    }
     if (state.knowledge.notes.length) renderKnowledgeBase();
   } catch (error) {
     state.libraryLoaded = false;
