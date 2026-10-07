@@ -1,3 +1,4 @@
+import { wrapR2Bucket, costResponse } from "../../../_shared/cost-guard.js";
 import { onRequestGet as embaAccessGet, onRequestPost as embaAccessPost } from "../../[[path]].js";
 
 const EVENT_PATH = "/emba/events/europe-forum-2026/";
@@ -21,7 +22,14 @@ export async function onRequestGet(context) {
       const filename = pathname.startsWith(EVENT_PATH) ? pathname.slice(EVENT_PATH.length) || "index.html" : "";
       if (!Object.hasOwn(FILE_TYPES, filename)) return new Response("Event file not found.", { status: 404 });
       if (!context.env.EMBA_BUCKET) return new Response("Event storage is unavailable.", { status: 503 });
-      const object = await context.env.EMBA_BUCKET.get(R2_PREFIX + filename);
+      let object;
+      try {
+        object = await wrapR2Bucket(context.env.EMBA_BUCKET, context.env).get(R2_PREFIX + filename);
+      } catch (error) {
+        const limited = costResponse(error);
+        if (limited) return limited;
+        throw error;
+      }
       if (!object) return new Response("Event file not found.", { status: 404 });
       const headers = new Headers();
       object.writeHttpMetadata(headers);

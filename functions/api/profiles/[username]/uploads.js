@@ -1,3 +1,4 @@
+import { wrapR2Bucket, costResponse } from "../../../_shared/cost-guard.js";
 import {
   assertOwnerProfile,
   json,
@@ -39,16 +40,22 @@ export async function onRequestPost({ request, env, params }) {
 
   const mediaId = randomId();
   const key = `profiles/${username}/${mediaId}`;
-  await mediaStore(env).put(key, parsed.bytes, {
-    httpMetadata: {
-      contentType: parsed.contentType,
-      cacheControl: "public, max-age=31536000, immutable"
-    },
-    customMetadata: {
-      profile: username,
-      originalFilename: safeFilename(body.filename || "")
-    }
-  });
+  try {
+    await wrapR2Bucket(mediaStore(env), env).put(key, parsed.bytes, {
+      httpMetadata: {
+        contentType: parsed.contentType,
+        cacheControl: "public, max-age=31536000, immutable"
+      },
+      customMetadata: {
+        profile: username,
+        originalFilename: safeFilename(body.filename || "")
+      }
+    });
+  } catch (error) {
+    const limited = costResponse(error);
+    if (limited) return limited;
+    throw error;
+  }
 
   return json({
     url: `/api/profiles/${encodeURIComponent(username)}/media/${mediaId}`,

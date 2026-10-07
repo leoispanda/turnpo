@@ -1,3 +1,4 @@
+import { wrapR2Bucket, costResponse } from "../../_shared/cost-guard.js";
 import {
   MAX_UPLOAD_BYTES,
   cleanMonthKey,
@@ -62,19 +63,25 @@ export async function onRequestPost({ request, env }) {
     return json({ error: "EMBA upload is too large." }, { status: 413 });
   }
 
-  await env.EMBA_BUCKET.put(key, data, {
-    httpMetadata: {
-      contentType,
-      contentDisposition: contentDispositionFor(contentType, safeName),
-      cacheControl: "private, no-store"
-    },
-    customMetadata: {
-      month,
-      kind,
-      originalName: safeName,
-      uploadedAt: new Date().toISOString()
-    }
-  });
+  try {
+    await wrapR2Bucket(env.EMBA_BUCKET, env).put(key, data, {
+      httpMetadata: {
+        contentType,
+        contentDisposition: contentDispositionFor(contentType, safeName),
+        cacheControl: "private, no-store"
+      },
+      customMetadata: {
+        month,
+        kind,
+        originalName: safeName,
+        uploadedAt: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    const limited = costResponse(error);
+    if (limited) return limited;
+    throw error;
+  }
 
   return json({
     ok: true,

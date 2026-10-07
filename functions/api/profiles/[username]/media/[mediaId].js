@@ -1,3 +1,4 @@
+import { wrapR2Bucket, costResponse } from "../../../../_shared/cost-guard.js";
 import {
   json,
   mediaStore,
@@ -13,7 +14,14 @@ export async function onRequestGet({ env, params }) {
   const mediaId = String(params.mediaId || "").trim();
   if (!mediaId || /[^a-f0-9]/.test(mediaId)) return json({ error: "Invalid media id." }, { status: 400 });
 
-  const object = await mediaStore(env).get(`profiles/${username}/${mediaId}`);
+  let object;
+  try {
+    object = await wrapR2Bucket(mediaStore(env), env).get(`profiles/${username}/${mediaId}`);
+  } catch (error) {
+    const limited = costResponse(error);
+    if (limited) return limited;
+    throw error;
+  }
   if (!object) return json({ error: "Image not found." }, { status: 404 });
 
   const headers = new Headers();

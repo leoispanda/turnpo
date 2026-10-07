@@ -1,3 +1,4 @@
+import { wrapR2Bucket, costResponse } from "../../../_shared/cost-guard.js";
 import {
   json,
   requireEmbaAccess,
@@ -25,7 +26,14 @@ export async function onRequestGet({ request, env, params }) {
   const key = keyFromParams(params);
   if (!validR2Key(key)) return json({ error: "Invalid EMBA file key." }, { status: 400 });
 
-  const object = await env.EMBA_BUCKET.get(key);
+  let object;
+  try {
+    object = await wrapR2Bucket(env.EMBA_BUCKET, env).get(key);
+  } catch (error) {
+    const limited = costResponse(error);
+    if (limited) return limited;
+    throw error;
+  }
   if (!object) return json({ error: "EMBA file not found." }, { status: 404 });
 
   const headers = new Headers({

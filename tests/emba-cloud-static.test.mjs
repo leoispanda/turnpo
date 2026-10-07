@@ -263,7 +263,7 @@ assert.ok(embaUploadApi.includes("env.EMBA_BUCKET"));
 assert.ok(embaUploadApi.includes("request.formData()"));
 assert.ok(embaUploadApi.includes("fileUrlFromKey(key)"));
 
-assert.ok(embaFileApi.includes("env.EMBA_BUCKET.get(key)"));
+assert.ok(embaFileApi.includes("wrapR2Bucket(env.EMBA_BUCKET, env).get(key)"));
 assert.ok(embaFileApi.includes("requireEmbaAccess"));
 assert.ok(embaFileApi.includes("writeHttpMetadata"));
 
