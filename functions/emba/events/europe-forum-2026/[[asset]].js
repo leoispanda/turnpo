@@ -5,6 +5,7 @@ const R2_PREFIX = "emba/2026-09/events/europe-forum-2026/20261006/";
 const FILE_TYPES = {
   "index.html": "text/html; charset=utf-8",
   "leo-forum-route.pdf": "application/pdf",
+  "leo-forum-speakers.pdf": "application/pdf",
   "leo-forum-route-mobile.png": "image/png",
   "leo-forum-route-pack.zip": "application/zip"
 };
