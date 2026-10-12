@@ -32,4 +32,39 @@ vm.runInContext("state.data.portfolio={method:'equal_weight_top20_next_trading_d
 assert.ok(vm.runInContext('renderRankCell(legacy,1)',ctx).includes('88.00%'));
 ctx.legacy.portfolio.returnDate='2026-10-09';
 assert.ok(!vm.runInContext('renderRankCell(legacy,1)',ctx).includes('88.00%'));
-console.log('Stock PDC forward observations checks passed');
+const canonical=JSON.parse(fs.readFileSync(new URL('../stock-pdc/daily-top10.json',import.meta.url),'utf8'));
+const historical=JSON.parse(fs.readFileSync(new URL('../stock-pdc/rank-flow.json',import.meta.url),'utf8'));
+ctx.canonical=canonical;ctx.historical=historical;
+vm.runInContext('state.data=mergeDailyTop10IntoRankFlow(historical,canonical);',ctx);
+const actual=JSON.parse(vm.runInContext('JSON.stringify(selectionHistorySummary(state.data.days))',ctx));
+if(canonical.selectionHistoryFollowUp?.historySummary){
+  for(const expected of canonical.selectionHistoryFollowUp.historySummary.groups){
+    const group=actual.find(item=>item.group===expected.group);
+    assert.equal(group.complete,expected.completeDates);
+    assert.equal(group.dates,expected.totalDates);
+    assert.equal(group.paired,expected.benchmarkPairedDates);
+    assert.equal(group.outperform,expected.outperformDates);
+    assert.equal(group.selections,expected.observedSelections);
+    assert.ok(Math.abs(group.mean-expected.meanNextSessionPct)<0.000001);
+  }
+  vm.runInContext('renderSelectionHistoryPanel()',ctx);
+  const historyPanel=panels.get('#stockSelectionHistoryPanel').innerHTML;
+  assert.equal((historyPanel.match(/<tr>/g)||[]).length,stateDays(canonical,historical)+1);
+  assert.ok(historyPanel.includes('未拼接成连续复利收益'));
+  assert.ok(historyPanel.includes('发布早于验证日尚未逐期核实'));
+}
+function stateDays(canonical,historical){return new Set([...canonical.days,...historical.days].map(day=>day.date)).size;}
+
+// A one-stock winning day and a twenty-stock losing day get equal weight.
+const fixtureDays=['2026-09-28','2026-09-29','2026-09-30'].map(date=>({date,sourceFile:'local-v3/fixture/07_portfolio_review/portfolio_shortlist.csv',rows:[{ticker:'AAA',rank:1}]}));
+fixtureDays[1].rows=Array.from({length:20},(_,i)=>({ticker:`T${i}`,rank:i+1}));
+ctx.fixtureDays=fixtureDays;
+vm.runInContext(`state.data={latestDate:'2026-10-12',days:fixtureDays,selectionFollowUp:{methodId:'signal_close_to_next_market_session_close_v1',cohorts:{}}};
+for (const [i,day] of fixtureDays.entries()) state.data.selectionFollowUp.cohorts[day.date]={signalDate:day.date,returnDate:'2026-10-09',status:i===2?'INCOMPLETE':'OBSERVED',rows:day.rows.map(row=>({...row,status:i===2?'MISSING_PRICE':'OBSERVED',closeToClosePct:i===0?10:-10})),summary:{selectedCount:day.rows.length,equalWeightMeanPct:i===0?10:-10,benchmarkPct:i===0?2:null,excessPctPoints:i===0?8:null,positiveCount:i===0?1:0}};`,ctx);
+const fixtureSummary=JSON.parse(vm.runInContext('JSON.stringify(selectionHistorySummary(fixtureDays)[0])',ctx));
+assert.equal(fixtureSummary.mean,0);
+assert.equal(fixtureSummary.excess,8);
+assert.equal(fixtureSummary.complete,2);
+assert.equal(fixtureSummary.incomplete,1);
+assert.equal(fixtureSummary.paired,1);
+console.log('Stock PDC forward observations and historical summary checks passed');

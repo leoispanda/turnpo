@@ -167,8 +167,10 @@ function rowByRank(day, rank) {
 }
 
 function followUpForDay(day) {
-  const feed = state.data?.selectionFollowUp;
-  if (feed?.methodId !== "signal_close_to_next_market_session_close_v1") return null;
+  const paired = state.data?.selectionHistoryFollowUp;
+  const feed = paired?.methodId === "same_frozen_snapshot_signal_close_to_next_market_session_close_v1"
+    && paired.cohorts?.[day.date] ? paired : state.data?.selectionFollowUp;
+  if (!["signal_close_to_next_market_session_close_v1", "same_frozen_snapshot_signal_close_to_next_market_session_close_v1"].includes(feed?.methodId)) return null;
   const cohort = feed.cohorts?.[day.date];
   if (!cohort || cohort.signalDate !== day.date) return null;
   const identity = (rows) => rows.map(row => `${String(row.ticker).toUpperCase()}:${Number(row.rank)}`).sort().join("|");
@@ -235,6 +237,75 @@ function renderSelectionFollowUpPanel() {
     <p>按原名单比较选入日收盘与下一交易日收盘，亏损与缺失项均保留。${complete ? `次日开盘至收盘的均值为 ${formatPct(summary.openToCloseMeanPct)}。` : "资料不齐时不计算全名单均值。"}这是价格跟踪，未扣费用，也不代表实际账户收益。</p>`;
 }
 
+function historyGroup(day) {
+  return state.data?.selectionHistoryFollowUp?.historySummary?.groupBySignalDate?.[day.date]
+    || (String(day.sourceFile || "").startsWith("local-v") ? "SUS_PDC" : "LEGACY_HISTORY");
+}
+
+function selectionHistorySummary(days) {
+  const mean = values => values.length ? values.reduce((a, b) => a + b, 0) / values.length : null;
+  return ["SUS_PDC", "LEGACY_HISTORY"].map(group => {
+    const selected = days.filter(day => historyGroup(day) === group);
+    const completed = selected.map(day => followUpForDay(day)).filter(cohort => cohort?.status === "OBSERVED"
+      && cohort.returnDate > cohort.signalDate && cohort.returnDate <= state.data.latestDate
+      && cohort.rows.length === cohort.summary?.selectedCount
+      && cohort.rows.every(row => row.status === "OBSERVED" && Number.isFinite(row.closeToClosePct))
+      && Number.isFinite(cohort.summary.equalWeightMeanPct));
+    const paired = completed.filter(cohort => Number.isFinite(cohort.summary.benchmarkPct) && Number.isFinite(cohort.summary.excessPctPoints));
+    const selections = completed.reduce((sum, cohort) => sum + cohort.summary.selectedCount, 0);
+    const positives = completed.reduce((sum, cohort) => sum + cohort.summary.positiveCount, 0);
+    const pending = selected.filter(day => followUpForDay(day)?.status === "PENDING_NEXT_SESSION").length;
+    return { group, dates: selected.length, complete: completed.length, pending, incomplete: selected.length - completed.length - pending,
+      mean: mean(completed.map(cohort => cohort.summary.equalWeightMeanPct)),
+      openMean: mean(completed.map(cohort => cohort.summary.openToCloseMeanPct).filter(Number.isFinite)),
+      excess: mean(paired.map(cohort => cohort.summary.excessPctPoints)), paired: paired.length,
+      outperform: paired.filter(cohort => cohort.summary.excessPctPoints > 0).length,
+      selections, positives, upRate: selections ? 100 * positives / selections : null };
+  }).filter(group => group.dates > 0);
+}
+
+function renderSelectionHistoryPanel() {
+  const panel = $("#stockSelectionHistoryPanel");
+  if (!panel) return;
+  const days = (state.data?.days || []).slice().sort((a, b) => b.date.localeCompare(a.date));
+  const groups = selectionHistorySummary(days);
+  if (!groups.length) { panel.innerHTML = ""; return; }
+  const label = group => group === "SUS_PDC" ? "SUS PDC 名单" : "旧版历史名单";
+  const points = value => Number.isFinite(value) ? `${value > 0 ? "+" : ""}${value.toFixed(2)} 个百分点` : "--";
+  const number = value => Number.isFinite(value) ? `${value.toFixed(1)}%` : "--";
+  const completeCount = groups.reduce((sum, group) => sum + group.complete, 0);
+  panel.innerHTML = `
+    <div class="stock-follow-up-heading"><h2>历史选股整体表现</h2><span>${completeCount} / ${days.length} 期完整验证 · 截至 ${escapeHtml(state.data.latestDate)}</span></div>
+    <p>每期保留原名单，按选入日收盘 → 下一交易日收盘计算；两端价格取自同一份冻结行情，避免混用复权口径。各期等权；缺一只就不计入该期均值。两版分别统计。</p>
+    <div class="stock-history-groups">${groups.map(group => `
+      <article class="stock-history-group">
+        <h3>${label(group.group)} <small>${group.complete} / ${group.dates} 期完整</small></h3>
+        <div class="stock-follow-up-metrics">
+          <div><small>平均次日涨跌</small><strong class="${pctClass(group.mean)}">${formatPct(group.mean)}</strong></div>
+          <div><small>平均超出基准</small><strong class="${pctClass(group.excess)}">${points(group.excess)}</strong></div>
+          <div><small>跑赢基准期数</small><strong>${group.outperform} / ${group.paired}</strong></div>
+          <div><small>股票上涨比例</small><strong>${number(group.upRate)}</strong></div>
+        </div>
+        <p>${group.incomplete} 期数据未齐 · ${group.pending} 期待验证。上涨 ${group.positives} / ${group.selections} 个“股票 × 期”记录；重复入选重复计数。次日开盘至收盘均值 ${formatPct(group.openMean)}。</p>
+      </article>`).join("")}</div>
+    <details class="stock-history-details" open><summary>逐日表现与缺失原因（${days.length} 期）</summary>
+      <div class="stock-history-table-wrap"><table class="stock-history-table">
+        <thead><tr><th>选入日 → 验证日</th><th>版本</th><th>完整行情</th><th>原名单均值</th><th>同期基准</th><th>超出基准</th><th>上涨</th><th>状态 / 缺失原因</th></tr></thead>
+        <tbody>${days.map(day => {
+          const cohort = followUpForDay(day), summary = cohort?.summary || {};
+          const complete = cohort?.status === "OBSERVED" && cohort.returnDate > day.date && cohort.returnDate <= state.data.latestDate;
+          const reasons = [...new Set((cohort?.rows || []).filter(row => row.status !== "OBSERVED").map(row =>
+            ({ PRICE_BASIS_MISMATCH: "价格口径待核", MISSING_BENCHMARK_PRICE: "基准价格缺失", SUSPENDED: "停牌", MISSING_PRICE: "价格缺失", PENDING_NEXT_SESSION: "待下一交易日", CALENDAR_UNVERIFIED: "日历待核" })[row.status] || "资料待核"))];
+          return `<tr><td>${escapeHtml(day.date)}<small>→ ${escapeHtml(cohort?.returnDate || "待验证")}</small></td><td>${label(historyGroup(day))}</td>
+            <td>${summary.observedCount || 0} / ${day.rows.length}</td><td class="${pctClass(summary.equalWeightMeanPct)}">${complete ? formatPct(summary.equalWeightMeanPct) : "--"}</td>
+            <td class="${pctClass(summary.benchmarkPct)}">${formatPct(summary.benchmarkPct)}</td><td class="${pctClass(summary.excessPctPoints)}">${complete ? points(summary.excessPctPoints) : "--"}</td>
+            <td>${complete ? `${summary.positiveCount} / ${summary.selectedCount}` : "--"}</td><td>${complete ? "完整验证" : escapeHtml(reasons.join("、") || "资料待核")}</td></tr>`;
+        }).join("")}</tbody>
+      </table></div>
+    </details>
+    <p>历史名单中有补录记录，发布早于验证日尚未逐期核实；以上统计说明这些名单的价格表现。期间选股规则有调整，缺失期会影响代表性。未扣费用，不代表实际账户收益，也未拼接成连续复利收益。</p>`;
+}
+
 function priceMoveClass(value) {
   return `stock-price-${pctClass(value)}`;
 }
@@ -287,7 +358,7 @@ function renderDroppedCell(day, index) {
 }
 
 function renderPortfolioCell(day) {
-  if (isDailyTop10Day(day)) {
+  if (followUpForDay(day) || isDailyTop10Day(day)) {
     const cohort = followUpForDay(day);
     const value = cohort?.status === "OBSERVED" ? cohort.summary?.equalWeightMeanPct : null;
     return `<article class="stock-rank-cell stock-portfolio-cell ${priceMoveClass(value)}"><div class="stock-name"><h3>${formatPct(value)}</h3><small>原名单等权 · ${escapeHtml(cohort?.returnDate || "待验证")}</small></div></article>`;
@@ -313,7 +384,7 @@ function renderPortfolioCell(day) {
 }
 
 function renderBenchmarkCell(day) {
-  if (isDailyTop10Day(day)) {
+  if (followUpForDay(day) || isDailyTop10Day(day)) {
     const cohort = followUpForDay(day);
     const value = cohort?.summary?.benchmarkPct;
     return `<article class="stock-rank-cell stock-portfolio-cell ${priceMoveClass(value)}"><div class="stock-name"><h3>${formatPct(value)}</h3><small>沪深300 ETF · ${escapeHtml(cohort?.returnDate || "待验证")}</small></div></article>`;
@@ -532,7 +603,8 @@ function mergeDailyTop10IntoRankFlow(historical, dailyTop10) {
       generatedAt: dailyTop10.generatedAt,
       actions: dailyTop10.actions,
       portfolioAdvice: dailyTop10.portfolioAdvice,
-      selectionFollowUp: dailyTop10.selectionFollowUp
+      selectionFollowUp: dailyTop10.selectionFollowUp,
+      selectionHistoryFollowUp: dailyTop10.selectionHistoryFollowUp
     } : {}),
     dates: days.map((day) => day.date),
     days,
@@ -582,6 +654,7 @@ function renderRankList() {
 function renderDashboard() {
   renderActionPanel();
   renderSelectionFollowUpPanel();
+  renderSelectionHistoryPanel();
   renderRankList();
 }
 

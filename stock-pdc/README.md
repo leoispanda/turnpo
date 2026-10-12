@@ -63,3 +63,13 @@ outcome date establish a next-session observation. The old cumulative series
 is not presented as the current SUS performance summary.
 
 Also run `node tests/stock-pdc-forward-observations.test.mjs`.
+
+Historical backfill is carried in the separate `selectionHistoryFollowUp`
+version (`same_frozen_snapshot_signal_close_to_next_market_session_close_v1`).
+Both price endpoints come from one verified frozen observation snapshot; the
+original signal facts and `selectionFollowUp` version remain unchanged. The
+renderer joins original dates/tickers/ranks and prefers this paired-price feed.
+The history panel calculates complete daily list means, benchmark-paired excess,
+coverage and rising-stock counts separately for SUS and legacy records. It never
+pools incomplete lists or presents sampled dates as a continuous account return.
+Historical publication timing and rule changes remain explicit limitations.
