@@ -184012,7 +184012,7 @@
       }
     }
   ],
-  "generatedAt": "2026-10-12T19:31:29Z",
+  "generatedAt": "2026-10-12T19:50:50Z",
   "latestDate": "2026-10-12",
   "portfolioAdvice": {
     "dataReview": [],
@@ -216350,6 +216350,934 @@
     "reviewMode": "DISABLED",
     "round2Status": "DISABLED",
     "scoreKind": "OPPORTUNITY_PROVISIONAL"
+  },
+  "selectionFollowUp": {
+    "actualAccountReturn": false,
+    "cohorts": {
+      "2026-09-01": {
+        "observationDataHash": "6c55aa36505a24e80d7710900e2c59202ecb645d9a12d2b0a7a56dcb3da4fc39",
+        "observationRunId": "ashare-2026-10-12-sus-01",
+        "observationSnapshotId": "full-a-share-20261012_182741",
+        "returnDate": "2026-09-02",
+        "rows": [
+          {
+            "closeToClosePct": null,
+            "name": "雅戈尔",
+            "openToClosePct": null,
+            "rank": 1,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600177.SH"
+          },
+          {
+            "closeToClosePct": -0.406835,
+            "name": "江苏银行",
+            "openToClosePct": -0.487805,
+            "rank": 2,
+            "status": "OBSERVED",
+            "ticker": "600919.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "中国移动",
+            "openToClosePct": null,
+            "rank": 3,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600941.SH"
+          },
+          {
+            "closeToClosePct": -3.948288,
+            "name": "卫星化学",
+            "openToClosePct": -5.206897,
+            "rank": 4,
+            "status": "OBSERVED",
+            "ticker": "002648.SZ"
+          },
+          {
+            "closeToClosePct": -0.419463,
+            "name": "南京银行",
+            "openToClosePct": -0.669456,
+            "rank": 5,
+            "status": "OBSERVED",
+            "ticker": "601009.SH"
+          },
+          {
+            "closeToClosePct": -0.582924,
+            "name": "美的集团",
+            "openToClosePct": -0.446377,
+            "rank": 6,
+            "status": "OBSERVED",
+            "ticker": "000333.SZ"
+          },
+          {
+            "closeToClosePct": 3.250478,
+            "name": "国电电力",
+            "openToClosePct": 3.053435,
+            "rank": 7,
+            "status": "OBSERVED",
+            "ticker": "600795.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "中国石化",
+            "openToClosePct": null,
+            "rank": 8,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600028.SH"
+          },
+          {
+            "closeToClosePct": -0.181582,
+            "name": "格力电器",
+            "openToClosePct": -0.388299,
+            "rank": 9,
+            "status": "OBSERVED",
+            "ticker": "000651.SZ"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "中国石油",
+            "openToClosePct": null,
+            "rank": 10,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "601857.SH"
+          }
+        ],
+        "selectionSha256": "4406d8e77019b151725f4de58d60cc09dab68472dbf5957b99ad6f9c26eb32ba",
+        "signalDate": "2026-09-01",
+        "signalRunId": "ashare-2026-09-01-sus-02",
+        "signalSelectionSha256": "bfa11fb4ab2627c208da8bd40464e9b457cc25fa0eddbab765979b24401b8d07",
+        "status": "INCOMPLETE",
+        "summary": {
+          "benchmarkPct": -1.366354,
+          "benchmarkTicker": "CSI300ETF",
+          "equalWeightMeanPct": null,
+          "excessPctPoints": null,
+          "observedCount": 6,
+          "openToCloseMeanPct": null,
+          "positiveCount": null,
+          "selectedCount": 10
+        }
+      },
+      "2026-09-02": {
+        "observationDataHash": "6c55aa36505a24e80d7710900e2c59202ecb645d9a12d2b0a7a56dcb3da4fc39",
+        "observationRunId": "ashare-2026-10-12-sus-01",
+        "observationSnapshotId": "full-a-share-20261012_182741",
+        "returnDate": "2026-09-03",
+        "rows": [
+          {
+            "closeToClosePct": null,
+            "name": "雅戈尔",
+            "openToClosePct": null,
+            "rank": 1,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600177.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "中国移动",
+            "openToClosePct": null,
+            "rank": 2,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600941.SH"
+          },
+          {
+            "closeToClosePct": 0.0,
+            "name": "国电电力",
+            "openToClosePct": 0.558659,
+            "rank": 3,
+            "status": "OBSERVED",
+            "ticker": "600795.SH"
+          },
+          {
+            "closeToClosePct": 0.086881,
+            "name": "中航西飞",
+            "openToClosePct": -1.073422,
+            "rank": 4,
+            "status": "OBSERVED",
+            "ticker": "000768.SZ"
+          },
+          {
+            "closeToClosePct": -0.980392,
+            "name": "江苏银行",
+            "openToClosePct": -0.818331,
+            "rank": 5,
+            "status": "OBSERVED",
+            "ticker": "600919.SH"
+          },
+          {
+            "closeToClosePct": 0.310416,
+            "name": "美的集团",
+            "openToClosePct": 0.0,
+            "rank": 6,
+            "status": "OBSERVED",
+            "ticker": "000333.SZ"
+          },
+          {
+            "closeToClosePct": -0.168492,
+            "name": "南京银行",
+            "openToClosePct": 0.0,
+            "rank": 7,
+            "status": "OBSERVED",
+            "ticker": "601009.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "平安银行",
+            "openToClosePct": null,
+            "rank": 8,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "000001.SZ"
+          },
+          {
+            "closeToClosePct": 0.31746,
+            "name": "青岛银行",
+            "openToClosePct": 0.958466,
+            "rank": 9,
+            "status": "OBSERVED",
+            "ticker": "002948.SZ"
+          },
+          {
+            "closeToClosePct": 0.118963,
+            "name": "牧原股份",
+            "openToClosePct": 0.238209,
+            "rank": 10,
+            "status": "OBSERVED",
+            "ticker": "002714.SZ"
+          }
+        ],
+        "selectionSha256": "982ce5b2643ffe463103ff6be5d522c47924ae904fd1601ea24cca9841cbace5",
+        "signalDate": "2026-09-02",
+        "signalRunId": "ashare-2026-09-02-sus-01",
+        "signalSelectionSha256": "af4d1f4b290802f515d77b8c5fb6df732528b436fd8c1e2cfb17c54e3d608955",
+        "status": "INCOMPLETE",
+        "summary": {
+          "benchmarkPct": 0.021645,
+          "benchmarkTicker": "CSI300ETF",
+          "equalWeightMeanPct": null,
+          "excessPctPoints": null,
+          "observedCount": 7,
+          "openToCloseMeanPct": null,
+          "positiveCount": null,
+          "selectedCount": 10
+        }
+      },
+      "2026-09-21": {
+        "observationDataHash": "6c55aa36505a24e80d7710900e2c59202ecb645d9a12d2b0a7a56dcb3da4fc39",
+        "observationRunId": "ashare-2026-10-12-sus-01",
+        "observationSnapshotId": "full-a-share-20261012_182741",
+        "returnDate": "2026-09-22",
+        "rows": [
+          {
+            "closeToClosePct": 0.0,
+            "name": "交通银行",
+            "openToClosePct": 0.398936,
+            "rank": 1,
+            "status": "OBSERVED",
+            "ticker": "601328.SH"
+          },
+          {
+            "closeToClosePct": -0.536062,
+            "name": "招商银行",
+            "openToClosePct": -0.366122,
+            "rank": 2,
+            "status": "OBSERVED",
+            "ticker": "600036.SH"
+          },
+          {
+            "closeToClosePct": -0.734394,
+            "name": "雅戈尔",
+            "openToClosePct": 0.0,
+            "rank": 3,
+            "status": "OBSERVED",
+            "ticker": "600177.SH"
+          },
+          {
+            "closeToClosePct": -1.289134,
+            "name": "上港集团",
+            "openToClosePct": -1.107011,
+            "rank": 4,
+            "status": "OBSERVED",
+            "ticker": "600018.SH"
+          },
+          {
+            "closeToClosePct": 0.125707,
+            "name": "川投能源",
+            "openToClosePct": 0.568182,
+            "rank": 5,
+            "status": "OBSERVED",
+            "ticker": "600674.SH"
+          },
+          {
+            "closeToClosePct": 1.204819,
+            "name": "华阳股份",
+            "openToClosePct": 1.874311,
+            "rank": 6,
+            "status": "OBSERVED",
+            "ticker": "600348.SH"
+          },
+          {
+            "closeToClosePct": 0.450281,
+            "name": "伊利股份",
+            "openToClosePct": 0.714823,
+            "rank": 7,
+            "status": "OBSERVED",
+            "ticker": "600887.SH"
+          },
+          {
+            "closeToClosePct": 0.723938,
+            "name": "亿联网络",
+            "openToClosePct": 0.74825,
+            "rank": 8,
+            "status": "OBSERVED",
+            "ticker": "300628.SZ"
+          },
+          {
+            "closeToClosePct": -3.487592,
+            "name": "隆鑫通用",
+            "openToClosePct": -2.901484,
+            "rank": 9,
+            "status": "OBSERVED",
+            "ticker": "603766.SH"
+          },
+          {
+            "closeToClosePct": -1.226994,
+            "name": "牧原股份",
+            "openToClosePct": -0.876154,
+            "rank": 10,
+            "status": "OBSERVED",
+            "ticker": "002714.SZ"
+          }
+        ],
+        "selectionSha256": "597703a8e1f531ff2cc662833ac0e531bb16b734916c41f6c93288bbb2bae82e",
+        "signalDate": "2026-09-21",
+        "signalRunId": "ashare-2026-09-21-sus-01",
+        "signalSelectionSha256": "67c6c15eb217376718e63bfb84ee00941026a50ff2320d78d98c7ab7f752d54d",
+        "status": "OBSERVED",
+        "summary": {
+          "benchmarkPct": 0.108507,
+          "benchmarkTicker": "CSI300ETF",
+          "equalWeightMeanPct": -0.476943,
+          "excessPctPoints": -0.58545,
+          "observedCount": 10,
+          "openToCloseMeanPct": -0.094627,
+          "positiveCount": 4,
+          "selectedCount": 10
+        }
+      },
+      "2026-09-23": {
+        "observationDataHash": "6c55aa36505a24e80d7710900e2c59202ecb645d9a12d2b0a7a56dcb3da4fc39",
+        "observationRunId": "ashare-2026-10-12-sus-01",
+        "observationSnapshotId": "full-a-share-20261012_182741",
+        "returnDate": "2026-09-24",
+        "rows": [
+          {
+            "closeToClosePct": 1.370717,
+            "name": "川投能源",
+            "openToClosePct": 1.370717,
+            "rank": 1,
+            "status": "OBSERVED",
+            "ticker": "600674.SH"
+          },
+          {
+            "closeToClosePct": 1.221001,
+            "name": "雅戈尔",
+            "openToClosePct": 1.717791,
+            "rank": 2,
+            "status": "OBSERVED",
+            "ticker": "600177.SH"
+          },
+          {
+            "closeToClosePct": -0.074294,
+            "name": "伊利股份",
+            "openToClosePct": 0.0,
+            "rank": 3,
+            "status": "OBSERVED",
+            "ticker": "600887.SH"
+          },
+          {
+            "closeToClosePct": 1.990391,
+            "name": "国投电力",
+            "openToClosePct": 1.433447,
+            "rank": 4,
+            "status": "OBSERVED",
+            "ticker": "600886.SH"
+          },
+          {
+            "closeToClosePct": -1.348748,
+            "name": "亿联网络",
+            "openToClosePct": -0.70303,
+            "rank": 5,
+            "status": "OBSERVED",
+            "ticker": "300628.SZ"
+          },
+          {
+            "closeToClosePct": 1.510334,
+            "name": "宁沪高速",
+            "openToClosePct": 1.429706,
+            "rank": 6,
+            "status": "OBSERVED",
+            "ticker": "600377.SH"
+          },
+          {
+            "closeToClosePct": 0.20284,
+            "name": "招商公路",
+            "openToClosePct": 0.101317,
+            "rank": 7,
+            "status": "OBSERVED",
+            "ticker": "001965.SZ"
+          },
+          {
+            "closeToClosePct": 0.531915,
+            "name": "交通银行",
+            "openToClosePct": 0.13245,
+            "rank": 8,
+            "status": "OBSERVED",
+            "ticker": "601328.SH"
+          },
+          {
+            "closeToClosePct": -2.08589,
+            "name": "歌尔股份",
+            "openToClosePct": -1.92544,
+            "rank": 9,
+            "status": "OBSERVED",
+            "ticker": "002241.SZ"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "云南白药",
+            "openToClosePct": null,
+            "rank": 10,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "000538.SZ"
+          }
+        ],
+        "selectionSha256": "fe72f77507ac7258278447c86791c4d03f25d59b0ee521afe099ee3519bd7fe4",
+        "signalDate": "2026-09-23",
+        "signalRunId": "ashare-2026-09-23-sus-02",
+        "signalSelectionSha256": "b2334510674e2d2091e238ae7c8f3ed5af24a421b24d9503366afa4f37d993c3",
+        "status": "INCOMPLETE",
+        "summary": {
+          "benchmarkPct": -1.633987,
+          "benchmarkTicker": "CSI300ETF",
+          "equalWeightMeanPct": null,
+          "excessPctPoints": null,
+          "observedCount": 9,
+          "openToCloseMeanPct": null,
+          "positiveCount": null,
+          "selectedCount": 10
+        }
+      },
+      "2026-09-24": {
+        "observationDataHash": "6c55aa36505a24e80d7710900e2c59202ecb645d9a12d2b0a7a56dcb3da4fc39",
+        "observationRunId": "ashare-2026-10-12-sus-01",
+        "observationSnapshotId": "full-a-share-20261012_182741",
+        "returnDate": "2026-09-28",
+        "rows": [
+          {
+            "closeToClosePct": 0.736377,
+            "name": "江苏金租",
+            "openToClosePct": 0.884956,
+            "rank": 1,
+            "status": "OBSERVED",
+            "ticker": "600901.SH"
+          },
+          {
+            "closeToClosePct": 1.782422,
+            "name": "川投能源",
+            "openToClosePct": 1.970443,
+            "rank": 2,
+            "status": "OBSERVED",
+            "ticker": "600674.SH"
+          },
+          {
+            "closeToClosePct": 0.704777,
+            "name": "宁沪高速",
+            "openToClosePct": 1.259843,
+            "rank": 3,
+            "status": "OBSERVED",
+            "ticker": "600377.SH"
+          },
+          {
+            "closeToClosePct": 0.749532,
+            "name": "中国神华",
+            "openToClosePct": 1.255493,
+            "rank": 4,
+            "status": "OBSERVED",
+            "ticker": "601088.SH"
+          },
+          {
+            "closeToClosePct": 0.396825,
+            "name": "交通银行",
+            "openToClosePct": 0.264201,
+            "rank": 5,
+            "status": "OBSERVED",
+            "ticker": "601328.SH"
+          },
+          {
+            "closeToClosePct": 0.483271,
+            "name": "伊利股份",
+            "openToClosePct": 0.820589,
+            "rank": 6,
+            "status": "OBSERVED",
+            "ticker": "600887.SH"
+          },
+          {
+            "closeToClosePct": 0.0,
+            "name": "雅戈尔",
+            "openToClosePct": 0.484848,
+            "rank": 7,
+            "status": "OBSERVED",
+            "ticker": "600177.SH"
+          },
+          {
+            "closeToClosePct": 0.708061,
+            "name": "甘李药业",
+            "openToClosePct": 0.708061,
+            "rank": 8,
+            "status": "OBSERVED",
+            "ticker": "603087.SH"
+          },
+          {
+            "closeToClosePct": 3.162853,
+            "name": "国投电力",
+            "openToClosePct": 3.301887,
+            "rank": 9,
+            "status": "OBSERVED",
+            "ticker": "600886.SH"
+          },
+          {
+            "closeToClosePct": -0.303644,
+            "name": "招商公路",
+            "openToClosePct": 0.305499,
+            "rank": 10,
+            "status": "OBSERVED",
+            "ticker": "001965.SZ"
+          }
+        ],
+        "selectionSha256": "0d31ddf99a443e241d4a75f4a35ae5cf466d6fa5e47b45aead179c2c2e67d87a",
+        "signalDate": "2026-09-24",
+        "signalRunId": "ashare-2026-09-24-sus-01",
+        "signalSelectionSha256": "c629206a37a0c39e9735835077be566f814a2f38e30973381af0f15f313fcdff",
+        "status": "OBSERVED",
+        "summary": {
+          "benchmarkPct": -2.170543,
+          "benchmarkTicker": "CSI300ETF",
+          "equalWeightMeanPct": 0.842047,
+          "excessPctPoints": 3.01259,
+          "observedCount": 10,
+          "openToCloseMeanPct": 1.125582,
+          "positiveCount": 8,
+          "selectedCount": 10
+        }
+      },
+      "2026-09-29": {
+        "observationDataHash": "6c55aa36505a24e80d7710900e2c59202ecb645d9a12d2b0a7a56dcb3da4fc39",
+        "observationRunId": "ashare-2026-10-12-sus-01",
+        "observationSnapshotId": "full-a-share-20261012_182741",
+        "returnDate": "2026-09-30",
+        "rows": [
+          {
+            "closeToClosePct": null,
+            "name": "招商公路",
+            "openToClosePct": null,
+            "rank": 1,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "001965.SZ"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "伊利股份",
+            "openToClosePct": null,
+            "rank": 2,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600887.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "国电电力",
+            "openToClosePct": null,
+            "rank": 3,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600795.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "江苏金租",
+            "openToClosePct": null,
+            "rank": 4,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600901.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "中国石油",
+            "openToClosePct": null,
+            "rank": 5,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "601857.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "甘李药业",
+            "openToClosePct": null,
+            "rank": 6,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "603087.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "上海莱士",
+            "openToClosePct": null,
+            "rank": 7,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "002252.SZ"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "招商港口",
+            "openToClosePct": null,
+            "rank": 8,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "001872.SZ"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "温氏股份",
+            "openToClosePct": null,
+            "rank": 9,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "300498.SZ"
+          }
+        ],
+        "selectionSha256": "3836b55cccda0a33c9ec1f408a5aa9998455d702fbae4590fef274b02435c64a",
+        "signalDate": "2026-09-29",
+        "signalRunId": "ashare-2026-09-29-sus-01",
+        "signalSelectionSha256": "c4b199d4e2c40c55c7d9b62c33e0c21321a9c3e8ce45220eb770b3cbb2f6b5e5",
+        "status": "INCOMPLETE",
+        "summary": {
+          "benchmarkPct": null,
+          "benchmarkTicker": "CSI300ETF",
+          "equalWeightMeanPct": null,
+          "excessPctPoints": null,
+          "observedCount": 0,
+          "openToCloseMeanPct": null,
+          "positiveCount": null,
+          "selectedCount": 9
+        }
+      },
+      "2026-09-30": {
+        "observationDataHash": "6c55aa36505a24e80d7710900e2c59202ecb645d9a12d2b0a7a56dcb3da4fc39",
+        "observationRunId": "ashare-2026-10-12-sus-01",
+        "observationSnapshotId": "full-a-share-20261012_182741",
+        "returnDate": "2026-10-08",
+        "rows": [
+          {
+            "closeToClosePct": null,
+            "name": "江苏金租",
+            "openToClosePct": null,
+            "rank": 1,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600901.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "招商港口",
+            "openToClosePct": null,
+            "rank": 2,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "001872.SZ"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "招商银行",
+            "openToClosePct": null,
+            "rank": 3,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600036.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "中国石油",
+            "openToClosePct": null,
+            "rank": 4,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "601857.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "国电电力",
+            "openToClosePct": null,
+            "rank": 5,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600795.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "雅戈尔",
+            "openToClosePct": null,
+            "rank": 6,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600177.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "上港集团",
+            "openToClosePct": null,
+            "rank": 7,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600018.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "伊利股份",
+            "openToClosePct": null,
+            "rank": 8,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600887.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "新奥股份",
+            "openToClosePct": null,
+            "rank": 9,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "600803.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "上海莱士",
+            "openToClosePct": null,
+            "rank": 10,
+            "status": "PRICE_BASIS_MISMATCH",
+            "ticker": "002252.SZ"
+          }
+        ],
+        "selectionSha256": "c878e4d5dc9ced692b36bfd423cfd1c107c708aaf0a07940543dd0e76c091be9",
+        "signalDate": "2026-09-30",
+        "signalRunId": "ashare-2026-09-30-sus-01",
+        "signalSelectionSha256": "876245614f331f4b60c5841f937d2f7db276ff5f8e5c35984a18ae13ed25950b",
+        "status": "INCOMPLETE",
+        "summary": {
+          "benchmarkPct": null,
+          "benchmarkTicker": "CSI300ETF",
+          "equalWeightMeanPct": null,
+          "excessPctPoints": null,
+          "observedCount": 0,
+          "openToCloseMeanPct": null,
+          "positiveCount": null,
+          "selectedCount": 10
+        }
+      },
+      "2026-10-09": {
+        "observationDataHash": "6c55aa36505a24e80d7710900e2c59202ecb645d9a12d2b0a7a56dcb3da4fc39",
+        "observationRunId": "ashare-2026-10-12-sus-01",
+        "observationSnapshotId": "full-a-share-20261012_182741",
+        "returnDate": "2026-10-12",
+        "rows": [
+          {
+            "closeToClosePct": -0.770713,
+            "name": "华电国际",
+            "openToClosePct": -0.770713,
+            "rank": 1,
+            "status": "OBSERVED",
+            "ticker": "600027.SH"
+          },
+          {
+            "closeToClosePct": -2.028986,
+            "name": "中国外运",
+            "openToClosePct": -2.028986,
+            "rank": 2,
+            "status": "OBSERVED",
+            "ticker": "601598.SH"
+          },
+          {
+            "closeToClosePct": 1.096224,
+            "name": "招商港口",
+            "openToClosePct": 0.606061,
+            "rank": 3,
+            "status": "OBSERVED",
+            "ticker": "001872.SZ"
+          },
+          {
+            "closeToClosePct": 1.078582,
+            "name": "中国电信",
+            "openToClosePct": 0.923077,
+            "rank": 4,
+            "status": "OBSERVED",
+            "ticker": "601728.SH"
+          },
+          {
+            "closeToClosePct": 1.413882,
+            "name": "交通银行",
+            "openToClosePct": 1.153846,
+            "rank": 5,
+            "status": "OBSERVED",
+            "ticker": "601328.SH"
+          },
+          {
+            "closeToClosePct": 1.084599,
+            "name": "伊利股份",
+            "openToClosePct": 1.084599,
+            "rank": 6,
+            "status": "OBSERVED",
+            "ticker": "600887.SH"
+          },
+          {
+            "closeToClosePct": 2.586207,
+            "name": "中国石油",
+            "openToClosePct": 2.586207,
+            "rank": 7,
+            "status": "OBSERVED",
+            "ticker": "601857.SH"
+          },
+          {
+            "closeToClosePct": 1.075269,
+            "name": "雅戈尔",
+            "openToClosePct": 0.954654,
+            "rank": 8,
+            "status": "OBSERVED",
+            "ticker": "600177.SH"
+          },
+          {
+            "closeToClosePct": 1.714286,
+            "name": "江苏金租",
+            "openToClosePct": 1.714286,
+            "rank": 9,
+            "status": "OBSERVED",
+            "ticker": "600901.SH"
+          },
+          {
+            "closeToClosePct": 3.235152,
+            "name": "招商银行",
+            "openToClosePct": 2.887392,
+            "rank": 10,
+            "status": "OBSERVED",
+            "ticker": "600036.SH"
+          }
+        ],
+        "selectionSha256": "a9b337333e64a3dade72cee0959982f04a3a60da9cf3a20927723115c6b85cf4",
+        "signalDate": "2026-10-09",
+        "signalRunId": "ashare-2026-10-09-sus-01",
+        "signalSelectionSha256": "3b9667b2627eee653a46b9ab5f77340bdf822c094a3e5a454516f1f92a658b86",
+        "status": "OBSERVED",
+        "summary": {
+          "benchmarkPct": -0.570125,
+          "benchmarkTicker": "CSI300ETF",
+          "equalWeightMeanPct": 1.04845,
+          "excessPctPoints": 1.618575,
+          "observedCount": 10,
+          "openToCloseMeanPct": 0.911042,
+          "positiveCount": 8,
+          "selectedCount": 10
+        }
+      },
+      "2026-10-12": {
+        "observationDataHash": "6c55aa36505a24e80d7710900e2c59202ecb645d9a12d2b0a7a56dcb3da4fc39",
+        "observationRunId": "ashare-2026-10-12-sus-01",
+        "observationSnapshotId": "full-a-share-20261012_182741",
+        "returnDate": null,
+        "rows": [
+          {
+            "closeToClosePct": null,
+            "name": "招商银行",
+            "openToClosePct": null,
+            "rank": 1,
+            "status": "PENDING_NEXT_SESSION",
+            "ticker": "600036.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "宁波港",
+            "openToClosePct": null,
+            "rank": 2,
+            "status": "PENDING_NEXT_SESSION",
+            "ticker": "601018.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "江苏金租",
+            "openToClosePct": null,
+            "rank": 3,
+            "status": "PENDING_NEXT_SESSION",
+            "ticker": "600901.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "中国电信",
+            "openToClosePct": null,
+            "rank": 4,
+            "status": "PENDING_NEXT_SESSION",
+            "ticker": "601728.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "中国中车",
+            "openToClosePct": null,
+            "rank": 5,
+            "status": "PENDING_NEXT_SESSION",
+            "ticker": "601766.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "伊利股份",
+            "openToClosePct": null,
+            "rank": 6,
+            "status": "PENDING_NEXT_SESSION",
+            "ticker": "600887.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "交通银行",
+            "openToClosePct": null,
+            "rank": 7,
+            "status": "PENDING_NEXT_SESSION",
+            "ticker": "601328.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "中国核电",
+            "openToClosePct": null,
+            "rank": 8,
+            "status": "PENDING_NEXT_SESSION",
+            "ticker": "601985.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "雅戈尔",
+            "openToClosePct": null,
+            "rank": 9,
+            "status": "PENDING_NEXT_SESSION",
+            "ticker": "600177.SH"
+          },
+          {
+            "closeToClosePct": null,
+            "name": "招商公路",
+            "openToClosePct": null,
+            "rank": 10,
+            "status": "PENDING_NEXT_SESSION",
+            "ticker": "001965.SZ"
+          }
+        ],
+        "selectionSha256": "104a0115cabd7b068fac9a0358ed8e9835c59412e72abaee570cf94a9971d45d",
+        "signalDate": "2026-10-12",
+        "signalRunId": "ashare-2026-10-12-sus-01",
+        "signalSelectionSha256": "9ab3ce4f3d9fa9cf3f6717a99e13d73fbe381d8a49272ba2fe9cf3fbaaf633d8",
+        "status": "PENDING_NEXT_SESSION",
+        "summary": {
+          "benchmarkPct": null,
+          "benchmarkTicker": "CSI300ETF",
+          "equalWeightMeanPct": null,
+          "excessPctPoints": null,
+          "observedCount": 0,
+          "openToCloseMeanPct": null,
+          "positiveCount": null,
+          "selectedCount": 10
+        }
+      }
+    },
+    "formalSettlement": false,
+    "kind": "PUBLIC_PRICE_OBSERVATIONS",
+    "methodId": "signal_close_to_next_market_session_close_v1",
+    "schemaVersion": "selection-follow-up-v1"
   },
   "source": {
     "holdingsFile": "local-v3/ashare-2026-10-12-sus-01/01_snapshot/holdings/holdings_snapshot.csv",

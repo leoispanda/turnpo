@@ -19,7 +19,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/styles.css?v=0.1.223" />
-    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css?v=20260923-actions" />
+    <link rel="stylesheet" href="/stock-pdc/stock-pdc.css?v=20261012-forward-observations" />
   </head>
   <body>
     <header class="topbar">
@@ -51,8 +51,9 @@
 
     <main class="stock-shell stock-color-wall" id="stockApp" hidden>
       <section class="stock-action-panel" id="stockActionPanel" aria-label="最新持仓与买卖建议" aria-live="polite"></section>
+      <section class="stock-selection-follow-up-panel" id="stockSelectionFollowUpPanel" aria-label="上一期选股表现" aria-live="polite"></section>
       <section class="stock-flow-panel stock-color-panel" aria-label="股票大作手每日榜单">
-        <p class="stock-rank-legend"><span class="stock-new-badge">NEW</span> 相比上一期新上榜 · <span class="stock-held-badge">持仓</span> 该期已确认持仓 · 最新买卖建议见上方</p>
+        <p class="stock-rank-legend"><span class="stock-new-badge">NEW</span> 相比上一期新上榜 · <span class="stock-held-badge">持仓</span> 该期已确认持仓 · 色块与百分比显示选入后的下一交易日涨跌 · 新名单待验证 · 最新买卖建议见上方</p>
         <div class="stock-rank-matrix-wrap" id="stockRankList"></div>
       </section>
       <nav class="stock-bottom-home" aria-label="Stock PDC navigation">
@@ -60,6 +61,6 @@
       </nav>
     </main>
 
-    <script src="/stock-pdc/stock-pdc.js?v=20260923-actions"></script>
+    <script src="/stock-pdc/stock-pdc.js?v=20261012-forward-observations"></script>
   </body>
 </html>

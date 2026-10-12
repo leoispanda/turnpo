@@ -44,3 +44,22 @@ node tests/stock-pdc-rank-flow-static.test.mjs
 Inspect the rendered page, then verify the Cloudflare Pages deployment for
 the exact published Git commit. Legacy local-server and Top 20 flows in this
 repository are not the current SUS production entrypoint.
+
+## Selection follow-up
+
+The price colors and percentages show the next market session after selection.
+New lists show pending. `signalDayChangePct` is never used as a performance
+fallback. The canonical `selectionFollowUp` feed joins the frozen list by
+signal date, ticker and original rank; it keeps losses and missing prices.
+The previous-list panel shows the equal-weight price change, frozen benchmark,
+excess percentage points and rising-name count. Its main measure is signal
+close to next-session close; next open to close is shown separately. These
+observations exclude fees and are not account returns or trade approvals.
+Completed cohorts are immutable. Missing prices or a changed price basis stay
+explicitly unavailable; an incomplete cohort has no whole-list mean.
+
+Legacy rank-flow values are shown only when their declared forward method and
+outcome date establish a next-session observation. The old cumulative series
+is not presented as the current SUS performance summary.
+
+Also run `node tests/stock-pdc-forward-observations.test.mjs`.

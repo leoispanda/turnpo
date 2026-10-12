@@ -49,7 +49,7 @@ assert.ok(stockJs.includes("formatValuePct"));
 assert.ok(stockJs.includes("stock-day-change"));
 assert.ok(stockJs.includes("stock-price-"));
 assert.ok(stockJs.includes("stock-rank-move"));
-assert.ok(stockJs.includes("signalDayChangeValue"));
+assert.ok(stockJs.includes("nextSessionObservation"));
 assert.ok(!stockJs.includes("function changeLabel"));
 assert.ok(stockJs.includes("renderPortfolioCell"));
 assert.ok(stockJs.includes("stock-portfolio-summary"));

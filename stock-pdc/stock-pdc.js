@@ -166,18 +166,73 @@ function rowByRank(day, rank) {
   return (day.rows || []).find((row) => Number(row.rank) === rank) || null;
 }
 
-function renderDayChange(row) {
-  const value = signalDayChangeValue(row);
-  return `<span class="stock-day-change ${pctClass(value)}">${formatPct(value)}</span>`;
+function followUpForDay(day) {
+  const feed = state.data?.selectionFollowUp;
+  if (feed?.methodId !== "signal_close_to_next_market_session_close_v1") return null;
+  const cohort = feed.cohorts?.[day.date];
+  if (!cohort || cohort.signalDate !== day.date) return null;
+  const identity = (rows) => rows.map(row => `${String(row.ticker).toUpperCase()}:${Number(row.rank)}`).sort().join("|");
+  if (identity(cohort.rows || []) !== identity(day.rows || [])) return null;
+  return cohort;
 }
 
-function renderDroppedDayChange(row) {
-  const value = signalDayChangeValue(row);
-  return `<span class="stock-day-change ${pctClass(value)}">${formatPct(value)}</span>`;
+function nextSessionObservation(day, row, dropped = false) {
+  const cohort = followUpForDay(day);
+  const observed = !dropped && cohort?.rows?.find(item => item.ticker === String(row.ticker).toUpperCase() && item.rank === Number(row.rank));
+  if (cohort) {
+    const validDate = cohort.returnDate && cohort.returnDate > day.date && cohort.returnDate <= state.data.latestDate;
+    return { value: validDate && observed?.status === "OBSERVED" && Number.isFinite(observed.closeToClosePct) ? observed.closeToClosePct : null,
+      date: validDate ? cohort.returnDate : null, status: observed?.status || cohort.status,
+      openToClosePct: validDate && observed?.status === "OBSERVED" ? observed.openToClosePct : null };
+  }
+  // Legacy rank-flow declares its forward return method and outcome date.
+  // Never substitute signalDayChangePct or an undated daily price change.
+  const returnDate = row.returnDate || day.portfolio?.returnDate;
+  const legacy = !isDailyTop10Day(day) && state.data?.portfolio?.method === "equal_weight_top20_next_trading_day_close_to_close"
+    && returnDate > day.date && returnDate <= state.data.latestDate;
+  return { value: legacy && Number.isFinite(row.dayChangePct) ? row.dayChangePct : null,
+    date: legacy ? returnDate : null, status: day.date === state.data?.latestDate ? "PENDING_NEXT_SESSION" : "MISSING_PRICE" };
 }
 
-function signalDayChangeValue(row) {
-  return Number.isFinite(row.signalDayChangePct) ? row.signalDayChangePct : row.dayChangePct;
+function observationLabel(observation) {
+  if (Number.isFinite(observation.value)) return formatPct(observation.value);
+  if (observation.status === "PENDING_NEXT_SESSION") return "待验证";
+  if (observation.status === "PRICE_BASIS_MISMATCH") return "口径待核";
+  if (observation.status === "SUSPENDED") return "停牌";
+  return "数据缺失";
+}
+
+function renderDayChange(day, row, dropped = false) {
+  const observation = nextSessionObservation(day, row, dropped);
+  const title = observation.date ? `下一交易日 ${observation.date}；信号日收盘至次日收盘${Number.isFinite(observation.openToClosePct) ? `；次日开盘至收盘 ${formatPct(observation.openToClosePct)}` : ""}` : (observation.status === "PENDING_NEXT_SESSION" ? "待下一交易日验证" : "后续行情缺失或口径待核");
+  return `<span class="stock-day-change ${pctClass(observation.value)}" title="${escapeHtml(title)}">${escapeHtml(observationLabel(observation))}</span>`;
+}
+
+function dayObservationCaption(day) {
+  const date = followUpForDay(day)?.returnDate
+    || (!isDailyTop10Day(day) && state.data?.portfolio?.method === "equal_weight_top20_next_trading_day_close_to_close" ? day.portfolio?.returnDate : null);
+  if (date > day.date && date <= state.data.latestDate) return `${shortDate(date)} 验证`;
+  return day.date === state.data.latestDate ? "次日待验证" : "后续数据缺失";
+}
+
+function renderSelectionFollowUpPanel() {
+  const panel = $("#stockSelectionFollowUpPanel");
+  if (!panel) return;
+  const previous = (state.dailyTop10?.days || []).filter(day => day.date < state.data?.latestDate)
+    .sort((a, b) => b.date.localeCompare(a.date))[0];
+  if (!previous) { panel.innerHTML = ""; return; }
+  const cohort = followUpForDay(previous);
+  const summary = cohort?.summary || {};
+  const complete = cohort?.status === "OBSERVED" && cohort.returnDate > previous.date && cohort.returnDate <= state.data.latestDate;
+  panel.innerHTML = `
+    <div class="stock-follow-up-heading"><h2>上一期名单的次日表现</h2><span>${escapeHtml(previous.date)} 选入 → ${escapeHtml(cohort?.returnDate || "待下一交易日")} 验证</span></div>
+    <div class="stock-follow-up-metrics">
+      <div><small>原名单等权平均</small><strong class="${pctClass(summary.equalWeightMeanPct)}">${complete ? formatPct(summary.equalWeightMeanPct) : "待核完整数据"}</strong></div>
+      <div><small>同期沪深 300 ETF</small><strong class="${pctClass(summary.benchmarkPct)}">${formatPct(summary.benchmarkPct)}</strong></div>
+      <div><small>超出基准</small><strong class="${pctClass(summary.excessPctPoints)}">${complete && Number.isFinite(summary.excessPctPoints) ? `${summary.excessPctPoints > 0 ? "+" : ""}${summary.excessPctPoints.toFixed(2)} 个百分点` : "--"}</strong></div>
+      <div><small>上涨股票</small><strong>${complete ? `${summary.positiveCount} / ${summary.selectedCount}` : `${summary.observedCount || 0} / ${previous.rows.length} 已验证`}</strong></div>
+    </div>
+    <p>按原名单比较选入日收盘与下一交易日收盘，亏损与缺失项均保留。${complete ? `次日开盘至收盘的均值为 ${formatPct(summary.openToCloseMeanPct)}。` : "资料不齐时不计算全名单均值。"}这是价格跟踪，未扣费用，也不代表实际账户收益。</p>`;
 }
 
 function priceMoveClass(value) {
@@ -195,15 +250,16 @@ function membershipBadges(row) {
 function renderRankCell(day, rank) {
   const row = rowByRank(day, rank);
   if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} #${rank} empty"></div>`;
-  const dayChange = signalDayChangeValue(row);
+  const observation = nextSessionObservation(day, row);
+  const dayChange = observation.value;
   return `
-    <article class="stock-rank-cell ${priceMoveClass(dayChange)}" aria-label="${escapeHtml(day.date)} #${rank} ${escapeHtml(row.name)} ${escapeHtml(movementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(dayChange, "unknown"))}">
+    <article class="stock-rank-cell ${priceMoveClass(dayChange)}" aria-label="${escapeHtml(day.date)} #${rank} ${escapeHtml(row.name)} ${escapeHtml(movementPath(row))} 下一交易日 ${escapeHtml(observation.date || "待验证")} ${escapeHtml(observationLabel(observation))}">
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
         <span class="stock-membership-badges">${membershipBadges(row)}</span>
       </div>
-      ${renderDayChange(row)}
+      ${renderDayChange(day, row)}
       <span class="stock-change stock-rank-move ${rankMoveClass(row.changeType)}" role="img" aria-label="${escapeHtml(movementPath(row))}">
         <span class="stock-change-arrow" aria-hidden="true"></span>
       </span>
@@ -214,14 +270,15 @@ function renderRankCell(day, rank) {
 function renderDroppedCell(day, index) {
   const row = (day.dropped || [])[index] || null;
   if (!row) return `<div class="stock-rank-cell stock-rank-cell-empty" aria-label="${escapeHtml(day.date)} dropped ${index + 1} empty"></div>`;
-  const dayChange = signalDayChangeValue(row);
+  const observation = nextSessionObservation(day, row, true);
+  const dayChange = observation.value;
   return `
-    <article class="stock-rank-cell ${priceMoveClass(dayChange)}" aria-label="${escapeHtml(day.date)} dropped ${index + 1} ${escapeHtml(row.name)} ${escapeHtml(droppedMovementPath(row))} 当日涨跌幅 ${escapeHtml(formatPct(dayChange, "unknown"))}">
+    <article class="stock-rank-cell ${priceMoveClass(dayChange)}" aria-label="${escapeHtml(day.date)} dropped ${index + 1} ${escapeHtml(row.name)} ${escapeHtml(droppedMovementPath(row))} 下一交易日 ${escapeHtml(observation.date || "待验证")} ${escapeHtml(observationLabel(observation))}">
       <div class="stock-name">
         <h3>${escapeHtml(row.name)}</h3>
         <small>${escapeHtml(row.ticker)}</small>
       </div>
-      ${renderDroppedDayChange(row)}
+      ${renderDayChange(day, row, true)}
       <span class="stock-change stock-rank-move stock-rank-dropped" role="img" aria-label="${escapeHtml(droppedMovementPath(row))}">
         <span class="stock-change-arrow" aria-hidden="true"></span>
       </span>
@@ -230,6 +287,11 @@ function renderDroppedCell(day, index) {
 }
 
 function renderPortfolioCell(day) {
+  if (isDailyTop10Day(day)) {
+    const cohort = followUpForDay(day);
+    const value = cohort?.status === "OBSERVED" ? cohort.summary?.equalWeightMeanPct : null;
+    return `<article class="stock-rank-cell stock-portfolio-cell ${priceMoveClass(value)}"><div class="stock-name"><h3>${formatPct(value)}</h3><small>原名单等权 · ${escapeHtml(cohort?.returnDate || "待验证")}</small></div></article>`;
+  }
   const portfolio = day.portfolio || {};
   const cumulative = portfolio.cumulativeReturnPct;
   const daily = portfolio.dailyReturnPct;
@@ -251,6 +313,11 @@ function renderPortfolioCell(day) {
 }
 
 function renderBenchmarkCell(day) {
+  if (isDailyTop10Day(day)) {
+    const cohort = followUpForDay(day);
+    const value = cohort?.summary?.benchmarkPct;
+    return `<article class="stock-rank-cell stock-portfolio-cell ${priceMoveClass(value)}"><div class="stock-name"><h3>${formatPct(value)}</h3><small>沪深300 ETF · ${escapeHtml(cohort?.returnDate || "待验证")}</small></div></article>`;
+  }
   const benchmark = day.benchmark || {};
   const cumulative = benchmark.cumulativeReturnPct;
   const daily = benchmark.dailyReturnPct;
@@ -464,7 +531,8 @@ function mergeDailyTop10IntoRankFlow(historical, dailyTop10) {
       publication: dailyTop10.publication,
       generatedAt: dailyTop10.generatedAt,
       actions: dailyTop10.actions,
-      portfolioAdvice: dailyTop10.portfolioAdvice
+      portfolioAdvice: dailyTop10.portfolioAdvice,
+      selectionFollowUp: dailyTop10.selectionFollowUp
     } : {}),
     dates: days.map((day) => day.date),
     days,
@@ -489,6 +557,7 @@ function renderRankList() {
         <time class="stock-date-head" datetime="${escapeHtml(day.date)}" title="${escapeHtml(`${day.date}${dayRunTimestamp(day) ? ` · 记录 ${dayRunTimestamp(day)}` : ""}`)}">
           <span>${escapeHtml(shortDate(day.date))}</span>
           <small>${escapeHtml([dayModeLabel(day), weekdayLabel(day.date)].filter(Boolean).join(" · "))}</small>
+          <small class="stock-observation-date">${escapeHtml(dayObservationCaption(day))}</small>
           ${dayRunTimestamp(day) ? `<small class="stock-date-timestamp">${escapeHtml(dayRunTimestamp(day))}</small>` : ""}
           ${dayFlowUrl(day) ? `<a class="stock-date-flow-link" href="${escapeHtml(dayFlowUrl(day))}" target="_blank" rel="noreferrer">查看流程</a>` : ""}
         </time>
@@ -501,17 +570,18 @@ function renderRankList() {
         <div class="stock-rank-axis stock-rank-axis-dropped">出${index + 1}</div>
         ${days.map((day) => renderDroppedCell(day, index)).join("")}
       `).join("")}
-      <div class="stock-rank-axis stock-rank-axis-return">收益</div>
+      <div class="stock-rank-axis stock-rank-axis-return">次日</div>
       ${days.map((day) => renderPortfolioCell(day)).join("")}
       <div class="stock-rank-axis stock-rank-axis-return">大盘</div>
       ${days.map((day) => renderBenchmarkCell(day)).join("")}
     </div>
-    ${latestPortfolioSummary(days)}
+
   `;
 }
 
 function renderDashboard() {
   renderActionPanel();
+  renderSelectionFollowUpPanel();
   renderRankList();
 }
 
