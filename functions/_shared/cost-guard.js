@@ -4,7 +4,7 @@
 export const COST_GUARD_LIMITS = Object.freeze({
   classA: 100_000,
   classB: 8_000_000,
-  uploadBytes: 512 * 1024 * 1024,
+  uploadBytes: 4 * 1024 * 1024 * 1024,
   storageBytes: 8 * 1024 * 1024 * 1024,
   initialStorageBytes: 3 * 1024 * 1024 * 1024,
   cycleDayUTC: 7,
