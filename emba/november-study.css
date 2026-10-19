@@ -1,0 +1,127 @@
+.emba-november-source {
+  min-width: 0;
+}
+
+.emba-november-source .emba-post-source {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.emba-november-file-meta {
+  display: block;
+  margin-top: 6px;
+  color: var(--emba-study-muted, #667773);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.emba-november-provenance {
+  display: inline-block;
+  margin-top: 5px;
+  color: var(--emba-study-muted, #667773);
+  font-size: 11px;
+}
+
+.emba-november-pdf-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.emba-november-pdf-heading h3 {
+  margin: 8px 0 0;
+  overflow-wrap: anywhere;
+}
+
+.emba-november-pdf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.emba-november-pdf-frame {
+  display: block;
+  width: 100%;
+  height: 78vh;
+  min-height: 540px;
+  border: 1px solid var(--emba-study-line, #dbe2df);
+  border-radius: 8px;
+  background: #fff;
+}
+
+@media (max-width: 640px) {
+  .emba-november-pdf-frame {
+    height: 72vh;
+    min-height: 420px;
+  }
+
+  .emba-november-pdf-actions {
+    gap: 10px 16px;
+  }
+}
+.emba-study-planner[data-november-planner] [data-block-panel] {
+  scroll-margin-top: 96px;
+}
+
+.emba-november-learning-guide {
+  margin: 1.25rem 0;
+  padding: 1.25rem;
+  border: 1px solid rgba(55, 83, 66, .16);
+  border-radius: 16px;
+  background: #f2f5ef;
+}
+
+.emba-november-learning-guide h4 {
+  margin: .4rem 0 .6rem;
+  color: #2f4839;
+  font-size: 1.05rem;
+}
+
+.emba-november-learning-guide p {
+  margin: 0 0 .85rem;
+  line-height: 1.7;
+}
+
+.emba-november-levels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.emba-november-level-link {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  padding: 16px;
+  border: 1px solid #d4ddd2;
+  border-radius: 12px;
+  background: #fff;
+  color: #2f4839;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.emba-november-level-link strong {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 14px;
+}
+.emba-november-level-link > span {
+  font-size: 12px;
+  line-height: 1.65;
+  color: #5e6e63;
+}
+.emba-november-level-link:hover { background: #f7faf4; border-color: #718c76; }
+.emba-november-level-link:focus-visible { outline: 2px solid #375e46; outline-offset: 3px; }
+.emba-november-learning-directory > div + div { border-top: 1px solid #dce4d7; padding-top: 10px; margin-top: 10px; }
+.emba-november-learning-directory h5 { margin: 0 0 8px; font-size: 13px; }
+.emba-november-learning-directory .emba-study-utility-links { margin: 0; }
+@media (max-width: 720px) {
+  .emba-november-levels { grid-template-columns: 1fr; }
+  .emba-november-level-link { gap: 5px; padding: 14px; }
+}

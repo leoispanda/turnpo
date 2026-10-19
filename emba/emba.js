@@ -8,7 +8,12 @@ const DEFAULT_END_MONTH = "2028-12";
 const CLOUD_SAVE_DELAY_MS = 700;
 const THINKING_REVIEW_STATUSES = ["pending", "keep", "rewrite", "action", "complete"];
 const HIDDEN_MATERIAL_FILES = new Set([
-  "/emba/materials/2026-07/handwritten-notes/leadership-learning-notes-analysis.md"
+  "/emba/materials/2026-07/handwritten-notes/leadership-learning-notes-analysis.md",
+  "/emba/content/2026/11_November/pre-study/2026-11-02-fable-learning.md",
+  "/emba/content/2026/11_November/pre-study/2026-11-03-fable-learning.md",
+  "/emba/content/2026/11_November/pre-study/2026-11-04-fable-learning.md",
+  "/emba/content/2026/11_November/pre-study/2026-11-05-fable-learning.md",
+  "/emba/content/2026/11_November/pre-study/2026-11-06-fable-learning.md"
 ]);
 const PREPARATION_MATERIAL_TYPES = new Set([
   "course_overview",
@@ -2011,6 +2016,10 @@ function renderMonthDetail(month) {
   detail.dataset.mode = isEditMode() ? "edit" : "read";
   if (!month) {
     detail.innerHTML = "";
+    return;
+  }
+  if (typeof isNovemberStudy === "function" && isNovemberStudy(month)) {
+    detail.innerHTML = renderNovemberStudyModules(month);
     return;
   }
   if (isSeptemberStudy(month)) {

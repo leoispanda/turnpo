@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-15",
+  "updated": "2026-10-18",
   "timeline": {
     "startMonth": "2026-06",
     "endMonth": "2028-12"
@@ -904,6 +904,269 @@
       ],
       "reflection": "September 2026 is the first core finance week. The learning goal is financial leadership: connect investment and financing choices, accounting information, performance control, enterprise risk, compliance and ESG reporting into one decision framework. The priority is not memorising isolated models, but using them to diagnose a real company and make a well-supported recommendation.",
       "markdown": "# Corporate Finance and Accounting - September 2026\n\n## Course week\n\n7-11 September 2026. The module covers Financial Management, Compliance, Sustainability Reporting, Financial Accounting and Analysis, Enterprise Risk Management, and Management Accounting and Control.\n\n## What I need to master\n\n1. Make investment, financing and risk decisions using risk-return, discounting and downside-protection logic.\n2. Read financial statements and use accounting information, ratios and KPIs for decisions.\n3. Design management controls that support strategy without creating false precision or harmful incentives.\n4. Apply COSO ERM: governance and culture, strategy/objectives, performance, review/revision, and information/reporting.\n5. Diagnose compliance failure through controls, culture, accountability, data and escalation.\n6. Assess sustainability reporting through double materiality, IROs, value-chain coverage, metrics, targets and assurance.\n\n## Assessment focus\n\nThe individual final assignment is a real-life integrated case. Content and application carry 75%; critical reflection on choices, assumptions, limitations and AI use carries 15%; form, concise writing and APA references carry 10%. Use the study cards to turn each reading into evidence for a recommendation, rather than a standalone summary."
+    },
+    {
+      "id": "2026-11",
+      "month": "2026-11",
+      "title": "November 2026",
+      "materialsRevision": 2,
+      "reflectionRevision": 0,
+      "followUpRevision": 0,
+      "markdownRevision": 0,
+      "memoryRevision": 0,
+      "materials": [
+        {
+          "title": "11 月学习计划 · Future-proof Business Models",
+          "type": "course_overview",
+          "file": "/emba/content/2026/11_November/2026-11_EMBA_Future_Proof_Business_Models_Index.md",
+          "notes": "课程周 11 月 2–6 日；四项预习、资料链接、建议准备节奏与课后记录框架。"
+        },
+        {
+          "title": "Canvas · Preparation materials",
+          "type": "course_requirements",
+          "file": "https://canvas.maastrichtuniversity.nl/courses/28848/pages/preparation-materials",
+          "notes": "开课前完成四项活动；视频原题提前准备，阅读级别以 syllabus 为准。"
+        },
+        {
+          "title": "Corporate Innovator Assessment · 创新者自测",
+          "type": "assessment",
+          "file": "https://docs.google.com/forms/d/e/1FAIpQLScRdOiYv5JCW-AN0b33QLAxMtKgdGYuAiNzbQWd8RvVvlM4jg/viewform?usp=sf_link",
+          "notes": "Canvas 要求在课程周开始前完成。"
+        },
+        {
+          "title": "Day 1 · Customer-centric Design",
+          "type": "video",
+          "file": "https://youtu.be/j6zYQfcZNIs",
+          "notes": "观看并准备视频提出的问题。"
+        },
+        {
+          "title": "Day 4 · Strategic Planning and Doing",
+          "type": "video",
+          "file": "https://youtu.be/lHeWfmICMnQ",
+          "notes": "观看并准备视频提出的问题。"
+        },
+        {
+          "title": "Day 4 · Building Future-proof Business Models",
+          "type": "video",
+          "file": "https://youtu.be/V4K_dueWn8o",
+          "notes": "观看并准备视频提出的问题。"
+        },
+        {
+          "title": "FD Mediagroep · 案例准备总入口",
+          "type": "case_study",
+          "file": "https://canvas.maastrichtuniversity.nl/courses/28848/pages/preparation-business-challenge-fd-mediagroep",
+          "notes": "案例、六份背景报告、四份信息图、三个人物画像；内部资料在 Canvas 查看。"
+        },
+        {
+          "title": "Canvas · 小组与个人作业",
+          "type": "course_requirements",
+          "file": "https://canvas.maastrichtuniversity.nl/courses/28848/assignments",
+          "notes": "查看小组 PowerPoint、展示和个人作业的原始要求；提交规则以 Canvas 为准。"
+        },
+        {
+          "title": "Spark Innovation Through Empathic Design",
+          "type": "reading",
+          "file": "/api/emba/file/emba/2026-11/material/6794064-spark-innovation-through-empathic-design.pdf",
+          "notes": "PDF 原文件 · 15 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6794064?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6794064-spark-innovation-through-empathic-design.md"
+        },
+        {
+          "title": "Why Design Thinking Works",
+          "type": "reading",
+          "file": "/api/emba/file/emba/2026-11/material/6794094-why-design-thinking-works.pdf",
+          "notes": "PDF 原文件 · 9 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6794094?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6794094-why-design-thinking-works.md"
+        },
+        {
+          "title": "Design Thinking Comes of Age",
+          "type": "reading",
+          "file": "/api/emba/file/emba/2026-11/material/6794098-design-thinking-comes-of-age.pdf",
+          "notes": "PDF 原文件 · 7 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6794098?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6794098-design-thinking-comes-of-age.md"
+        },
+        {
+          "title": "How storytelling can drive strategic change",
+          "type": "reading",
+          "file": "/api/emba/file/emba/2026-11/material/6794219-how-storytelling-can-drive-strategic-change.pdf",
+          "notes": "PDF 原文件 · 6 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6794219?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6794219-how-storytelling-can-drive-strategic-change.md"
+        },
+        {
+          "title": "FD Mediagroep · Business Challenge",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749932-fd-mediagroep-business-challenge.pdf",
+          "notes": "PDF 原文件 · 1 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749932?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749932-fd-mediagroep-business-challenge.md"
+        },
+        {
+          "title": "Who will monetize truth",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749945-who-will-monetize-truth.pdf",
+          "notes": "PDF 原文件 · 31 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749945?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749945-who-will-monetize-truth.md"
+        },
+        {
+          "title": "McKinsey · AI-data readiness: the key to scaling impact",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749946-mckinsey-ai-data-readiness-the-key-to-scaling-impact.pdf",
+          "notes": "PDF 原文件 · 12 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749946?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749946-mckinsey-ai-data-readiness-the-key-to-scaling-impact.md"
+        },
+        {
+          "title": "Reuters · Digital News Report 2026",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749955-reuters-digital-news-report-2026.pdf",
+          "notes": "PDF 原文件 · 178 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749955?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749955-reuters-digital-news-report-2026.md"
+        },
+        {
+          "title": "Reuters · Trends and Predictions 2026",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749949-reuters-trends-and-predictions-2026.pdf",
+          "notes": "PDF 原文件 · 47 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749949?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749949-reuters-trends-and-predictions-2026.md"
+        },
+        {
+          "title": "WAN-IFRA · World Press Trends 2025–26",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749951-wan-ifra-world-press-trends-2025-26.pdf",
+          "notes": "PDF 原文件 · 70 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749951?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749951-wan-ifra-world-press-trends-2025-26.md"
+        },
+        {
+          "title": "WEF · Chief Sustainability Officers Outlook, September 2026",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749947-wef-chief-sustainability-officers-outlook-september-2026.pdf",
+          "notes": "PDF 原文件 · 25 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749947?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749947-wef-chief-sustainability-officers-outlook-september-2026.md"
+        },
+        {
+          "title": "FD Mediagroep · Infographic BNR-nl",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749958-fd-mediagroep-infographic-bnr-nl.pdf",
+          "notes": "PDF 原文件 · 1 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749958?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749958-fd-mediagroep-infographic-bnr-nl.md"
+        },
+        {
+          "title": "FD Mediagroep · Infographic DMS-2026-nl",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749961-fd-mediagroep-infographic-dms-2026-nl.pdf",
+          "notes": "PDF 原文件 · 1 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749961?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749961-fd-mediagroep-infographic-dms-2026-nl.md"
+        },
+        {
+          "title": "FD Mediagroep · Infographic FDP-nl",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749964-fd-mediagroep-infographic-fdp-nl.pdf",
+          "notes": "PDF 原文件 · 1 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749964?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749964-fd-mediagroep-infographic-fdp-nl.md"
+        },
+        {
+          "title": "FD Mediagroep · Infographic FD-nl",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749965-fd-mediagroep-infographic-fd-nl.pdf",
+          "notes": "PDF 原文件 · 1 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749965?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749965-fd-mediagroep-infographic-fd-nl.md"
+        },
+        {
+          "title": "FD Mediagroep · Persona Rick",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749970-fd-mediagroep-persona-rick.pdf",
+          "notes": "PDF 原文件 · 1 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749970?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749970-fd-mediagroep-persona-rick.md"
+        },
+        {
+          "title": "FD Mediagroep · Persona Wendy",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749972-fd-mediagroep-persona-wendy.pdf",
+          "notes": "PDF 原文件 · 1 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749972?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749972-fd-mediagroep-persona-wendy.md"
+        },
+        {
+          "title": "FD Mediagroep · Persona Tess",
+          "type": "case_study",
+          "file": "/api/emba/file/emba/2026-11/material/6749973-fd-mediagroep-persona-tess.pdf",
+          "notes": "PDF 原文件 · 1 页 · 已导入私人 EMBA。Canvas 来源：https://canvas.maastrichtuniversity.nl/courses/28848/files/6749973?wrap=1 · 文本镜像：/emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749973-fd-mediagroep-persona-tess.md"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 1 · 客户洞察与客户导向 · 零基础白话",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-02-foundation.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 1 · 客户洞察与客户导向 · 详细讲解",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-02-detailed.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 1 · 客户洞察与客户导向 · 专家研讨",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-02-seminar.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 2 · 设计思维与战略沟通 · 零基础白话",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-03-foundation.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 2 · 设计思维与战略沟通 · 详细讲解",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-03-detailed.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 2 · 设计思维与战略沟通 · 专家研讨",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-03-seminar.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 3 · 客户是谁，他现在要办什么｜零基础版",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-04-foundation.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 3 · 客户是谁，他现在要办什么｜详细版",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-04-detailed.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 3 · 客户是谁，他现在要办什么｜专家研讨版",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-04-seminar.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 4 · 商业模式怎样创造、交付和获取价值｜零基础版",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-05-foundation.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 4 · 商业模式怎样创造、交付和获取价值｜详细版",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-05-detailed.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 4 · 商业模式怎样创造、交付和获取价值｜专家研讨版",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-05-seminar.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 5 · 从证据与假设走向战略行动｜零基础版",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-06-foundation.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 5 · 从证据与假设走向战略行动｜详细版",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-06-detailed.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "type": "daily_course_intro",
+          "title": "Day 5 · 从证据与假设走向战略行动｜专家研讨版",
+          "file": "/emba/content/2026/11_November/pre-study/2026-11-06-seminar.md",
+          "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        }
+      ],
+      "reflection": "",
+      "thinkingQuestions": [],
+      "followUpPoints": [],
+      "markdown": "",
+      "memoryMoment": []
     }
   ]
 }
