@@ -2,6 +2,31 @@
   min-width: 0;
 }
 
+.emba-november-video {
+  margin: 1.25rem 0;
+  padding: clamp(16px, 3vw, 24px);
+  border: 1px solid var(--emba-study-line, #dbe2df);
+  border-radius: 16px;
+  background: #fff;
+  scroll-margin-top: 96px;
+}
+.emba-november-video-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-bottom: 16px;
+}
+.emba-november-video h4 { margin: 6px 0 0; font-size: 1.05rem; }
+.emba-november-video-duration { color: #667773; font-size: 13px; white-space: nowrap; }
+.emba-november-video video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; background: #15221c; }
+.emba-november-video p { margin: 12px 0 8px; color: #667773; font-size: 13px; line-height: 1.6; }
+.emba-november-video a { color: #365c46; font-size: 12px; }
+.emba-november-video-directory { display: grid; gap: 8px; }
+.emba-november-video-directory button { display: flex; justify-content: space-between; gap: 12px; text-align: left; }
+.emba-november-video-directory small { white-space: nowrap; color: #667773; }
+
 .emba-november-source .emba-post-source {
   width: 100%;
   text-align: left;

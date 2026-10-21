@@ -58,6 +58,31 @@ const NOVEMBER_LEARNING_LEVELS = [
   { id: "seminar", title: "专家研讨版", hint: "分析证据、争议、替代解释与战略取舍。" }
 ];
 
+const NOVEMBER_STUDY_VIDEOS = [
+  { duration: "6:16", notebook: "87aa25ce-43a2-4676-bd60-6e800421dadf" },
+  { duration: "6:31", notebook: "dfbbc6fe-4a66-4d67-b62c-7856d7609118" },
+  { duration: "8:11", notebook: "a8a6fc68-84a2-4e71-8e21-29ed3c9a9330" },
+  { duration: "9:12", notebook: "2ca5b90b-b5f7-4e14-aaa7-737820baa9e6" },
+  { duration: "7:56", notebook: "fce541fc-d91f-46bd-9546-d710fa8aa583" }
+];
+
+function renderNovemberLearningVideo(index) {
+  const day = NOVEMBER_STUDY_DAYS[index];
+  const video = NOVEMBER_STUDY_VIDEOS[index];
+  if (!day || !video) return "";
+  const title = `第 ${index + 1} 天 · ${day.title}`;
+  return `<section class="emba-november-video" aria-labelledby="november-video-heading-${index}" tabindex="-1">
+    <div class="emba-november-video-heading"><div><span class="emba-month-kicker">本日学习视频</span><h4 id="november-video-heading-${index}">${escapeHtml(title)}</h4></div><span class="emba-november-video-duration">中文 · ${video.duration}</span></div>
+    <video controls playsinline preload="metadata" aria-label="${escapeHtml(title)} · 中文学习视频" src="/api/emba/video/${day.date}">你的浏览器暂不支持页内视频，请使用下方链接观看。</video>
+    <p>白话入门 → 机制与应用 → 研讨问题 → 五步学习法</p>
+    <a href="https://notebook.google.com/notebook/${video.notebook}" target="_blank" rel="noopener noreferrer">在 NotebookLM 查看视频与来源 ↗</a>
+  </section>`;
+}
+
+function renderNovemberVideoDirectory() {
+  return `<section class="emba-november-learning-guide" aria-labelledby="november-video-directory"><span class="emba-month-kicker">NotebookLM · 中文讲解</span><h4 id="november-video-directory">五天学习视频 · 共约 38 分钟</h4><div class="emba-november-video-directory">${NOVEMBER_STUDY_DAYS.map((day, index) => `<button class="emba-file-link" type="button" data-november-video-index="${index}"><span>第 ${index + 1} 天 · ${escapeHtml(day.title)}</span><small>${NOVEMBER_STUDY_VIDEOS[index].duration} · 播放 →</small></button>`).join("")}</div></section>`;
+}
+
 function novemberLearningButton(index, level, compact = false) {
   const day = NOVEMBER_STUDY_DAYS[index];
   const file = `/emba/content/2026/11_November/pre-study/${day.date}-${level.id}.md`;
@@ -231,12 +256,13 @@ function renderNovemberPreDay(day, index) {
       ["准备讨论与课堂问题", "建议产出 · 一页预习摘要", `<p class="emba-plan-question">${escapeHtml(day.question)}</p><p>带上一页摘要：最有用的洞察、FD 案例的关键证据、尚未验证的假设，以及想请教老师或小组的问题。</p>`]
     ]
   ][index];
-  return `<div class="emba-daily-plan" data-november-pre-day="${escapeHtml(day.date)}">${renderNovemberDayHeader(day, false)}${renderNovemberLearningGuide(index)}<div class="emba-plan-steps">${steps.map(([title, hint, body], step) => renderNovemberStep(`pre-${index + 1}-${step + 1}`, String(step + 1).padStart(2, "0"), title, hint, body)).join("")}</div></div>`;
+  return `<div class="emba-daily-plan" data-november-pre-day="${escapeHtml(day.date)}">${renderNovemberDayHeader(day, false)}${renderNovemberLearningVideo(index)}${renderNovemberLearningGuide(index)}<div class="emba-plan-steps">${steps.map(([title, hint, body], step) => renderNovemberStep(`pre-${index + 1}-${step + 1}`, String(step + 1).padStart(2, "0"), title, hint, body)).join("")}</div></div>`;
 }
 
 function renderNovemberPostDay(day, index) {
   if (state.materialReader) return renderMaterialReader();
   return `<div class="emba-daily-plan emba-post-day" data-november-post-day="${escapeHtml(day.date)}">${renderNovemberDayHeader(day, true)}
+    ${renderNovemberLearningVideo(index)}
     <div class="emba-plan-steps">
       ${renderNovemberStep(`post-${index + 1}-sources`, "01", "回顾真实课堂材料", "课后补充 · 按老师实际授课内容整理", `<p>本日课件与课堂记录可在课后归档。在资料库上传，并在月度笔记中标注日期与来源。</p>${novemberArchiveButtons([["material", "课程资料与上传"]])}`)}
       ${renderNovemberStep(`post-${index + 1}-tasks`, "02", "核对作业与后续行动", "以 Canvas 最新要求为准", `<p>课后对照实际作业说明，记录待办、疑问与小组分工。</p>${novemberSourceGrid(["assignments"])}${novemberArchiveButtons([["markdown", "月度笔记"]])}`)}
@@ -260,7 +286,7 @@ function renderNovemberResources(month) {
     <div class="emba-daily-plan">
       <header class="emba-plan-heading"><span class="emba-month-kicker">FUTURE-PROOF BUSINESS MODELS</span><h3>课程文件 · 18 份资料</h3><p role="status">${novemberPrivateFilesStatus()}</p></header>
       <div class="emba-study-utility-links"><button class="emba-file-link" type="button" data-material-open="${escapeHtml(planFile)}" data-material-title="11 月完整学习计划">打开完整学习计划 →</button></div>
-      ${renderNovemberLearningDirectory()}
+      ${renderNovemberVideoDirectory()}${renderNovemberLearningDirectory()}
       <div class="emba-plan-steps" data-november-files>
         ${groups.map(([id, title, sources]) => `<section class="emba-plan-step" aria-labelledby="november-files-${id}"><div class="emba-plan-step-body"><h4 id="november-files-${id}">${escapeHtml(title)}</h4>${novemberSourceGrid(sources)}</div></section>`).join("")}
       </div>
@@ -304,6 +330,22 @@ function renderNovemberStudyModules(month) {
 const novemberDetail = document.getElementById("embaMonthDetail");
 
 novemberDetail?.addEventListener("click", (event) => {
+  const videoLink = event.target.closest("[data-november-video-index]");
+  if (videoLink) {
+    const index = Number(videoLink.dataset.novemberVideoIndex);
+    if (!isNovemberStudy(selectedMonth()) || !Number.isInteger(index) || !NOVEMBER_STUDY_DAYS[index]) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    NOVEMBER_STUDY_UI.module = "pre-study";
+    NOVEMBER_STUDY_UI.day = index;
+    NOVEMBER_STUDY_UI.pdf = "";
+    state.openBlockId = "";
+    state.materialReader = null;
+    renderMonthDetail(selectedMonth());
+    document.querySelector(".emba-november-video")?.focus({ preventScroll: true });
+    if (typeof scrollToMonthTarget === "function") scrollToMonthTarget(".emba-november-video");
+    return;
+  }
   const pdfOpen = event.target.closest("[data-november-pdf-open]");
   const pdfClose = event.target.closest("[data-november-pdf-close]");
   const filesRetry = event.target.closest("[data-november-files-retry]");
