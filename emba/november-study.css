@@ -150,3 +150,13 @@
   .emba-november-levels { grid-template-columns: 1fr; }
   .emba-november-level-link { gap: 5px; padding: 14px; }
 }
+.emba-november-case-guide { border-color: #bac9bb; background: #f4f7ef; }
+.emba-november-case-open { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 20px; border: 1px solid #bdcdbd; border-radius: 12px; background: #fff; color: #284b38; text-align: left; cursor: pointer; font: inherit; line-height: 1.6; }
+.emba-november-case-open span { flex-shrink: 0; font-size: 13px; color: #536b58; }
+.emba-november-case-open:hover { border-color: #4d7253; background: #fbfdf7; }
+.emba-november-case-open:focus-visible { outline: 3px solid #4d7253; outline-offset: 4px; }
+.emba-november-case-focus { font-size: 13px; color: #60705e; }
+.emba-november-case-guide .emba-file-link { gap: 12px; justify-content: space-between; }
+.emba-november-case-guide .emba-file-link span { font-size: 12px; white-space: nowrap; }
+.emba-november-learning-guide > summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+@media (max-width: 600px) { .emba-november-case-open { align-items: flex-start; flex-direction: column; gap: 6px; padding: 16px; } .emba-november-case-guide .emba-file-link { align-items: flex-start; flex-direction: column; gap: 3px; } }

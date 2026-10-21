@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-18",
+  "version": "2026-10-21",
   "program": "EMBA",
   "school": "Maastricht University",
   "source_root": "/emba/content",
@@ -2421,7 +2421,7 @@
         "page-aligned source mirrors",
         "Canvas source provenance"
       ],
-      "summary": "11月Future-proof Business Models预习：五天各有零基础、详细讲解、专家研讨三版，共15篇；包含18份私有原PDF、逐页镜像、视频问题、五步学习与课后复盘框架。",
+      "summary": "新版五天案例教材面向有工作经验、非专业读者，详解四篇paper和FD案例，连接原PDF、应用练习与五步学习法；原三层讲解保留参考。",
       "related_topics": [
         "strategy",
         "leadership",
@@ -2429,7 +2429,7 @@
         "ai-and-digital-transformation"
       ],
       "rag_include": true,
-      "search_text": "November 2026 Future-proof Business Models Corporate Innovator Assessment customer-centric design empathic design design thinking strategic planning and doing storytelling FD Mediagroep Business Challenge Reuters Digital News Report AI-data readiness Rick Wendy Tess 十一月 11月 学习计划 预习 自测 视频 阅读 商业模式 客户需求 设计思维 战略故事 小组案例 课后复盘. 18 source PDF originals 408 pages authenticated original file viewer page-aligned source mirrors 原件 PDF 逐页文本 来源核验 五天分层讲解 零基础 详细讲解 专家研讨 三种深度 五步学习 白话概念 理清机制 核来源 复述 应用"
+      "search_text": "November 2026 Future-proof Business Models Corporate Innovator Assessment customer-centric design empathic design design thinking strategic planning and doing storytelling FD Mediagroep Business Challenge Reuters Digital News Report AI-data readiness Rick Wendy Tess 十一月 11月 学习计划 预习 自测 视频 阅读 商业模式 客户需求 设计思维 战略故事 小组案例 课后复盘. 18 source PDF originals 408 pages authenticated original file viewer page-aligned source mirrors 原件 PDF 逐页文本 来源核验 五天分层讲解 零基础 详细讲解 专家研讨 三种深度 五步学习 白话概念 理清机制 核来源 复述 应用 新版案例教材 新模板 43609字 真实案例 工作应用"
     },
     {
       "id": "emba-2026-11-source-6794064",
@@ -3908,6 +3908,214 @@
       ],
       "rag_include": true,
       "search_text": "\n\n  Day 5 · 从证据与假设走向战略行动｜专家研讨版\n\n本课程以媒体与商业信息服务企业 FD Mediagroep 为案例，讨论它面向 2030 年的负责任经营战略。\n\n本页是个人建议预习，Day 1–5 是学习顺序，日期用于归档，不代表学校正式每日课表或新增提交要求。案例事实以原文为准，个人推断与说明例另行标明。\n\n   命题：高质量的战略判断，不以所有未知都消失为前提，但必须说明推理和改变判断的条件\n\nFD 的讨论面向 2030 年，涉及负责任经营、韧性以及社会和商业价值。完整战略包含长期风险、组织能力和规范责任，一项小实验无法证明全部方向。今天的分析任务是把选择拆成可审查的论证，并识别哪些未知能用局部研究处理，哪些需要多源证据、持续监测或先确立边界。\n\n   从事实到行动的分析链\n\n先明确要作哪一个资源配置选择，再列与它有关的来源事实，解释这些事实为何支持某种机制，写出机制成立需要的条件，比较最强替代解释，最后决定行动范围与复查方式。链条中的每一次跨越都需要理由：题面要求不等于方案有效，采用不等于获得结果，局部结果不等于组织能持续获取价值。\n\n因此，战略陈述应同时给出“当前最合理的选择”和“我仍不知道什么”。过度确定会掩盖风险，无限等资料齐全又会造成机会成本。有限、可逆的下一步可以与长期方向并存，但不可逆承诺应要求相称的论证和责任安排。\n\n   证据层级与识别问题\n\nFD 题面明确四项责任与期望输出，是任务和价值边界。画像提供用户角色假设，信息图提供来源口径下的覆盖描述，报告分别提供作者论点、管理建议、调查与预期；这些不能互相替代。课堂观察、访谈、实际使用、付费和决策结果也各有不同局限，不能机械排成一条必然升级的证据阶梯。\n\n例如，付费能支持在特定条件下发生过交易，却不能证明信息改善了判断。若结果改善，可能来自参与者更有经验、同期业务好转、额外人工辅助或样本退出。若自报愿意购买，真实采购还可能受预算、批准与替代办法影响。研究问题应说明要识别哪种变化，而非笼统收集“成功证据”。\n\n   最强反解释必须能够改变行动\n\n对“用户因可靠性而采用”的主张，最强另一种解释可能是方便或品牌熟悉。对“自动化降低成本”的主张，另一种解释可能是把工作转给用户或未计入核验、更正和维护。对“项目没有出错”的主张，可能根本没有遇到有风险的情境。\n\n相应研究要记录原有流程、任务难度和全部投入，主动接触退出与拒绝者，拆开捆绑的价值主张，并根据目标考虑合适的比较。未出现关键条件时，应说明未检验；指标方向不一致时，需解释取舍。研究设计不足以区分解释，就不应给出强归因。\n\n   四项责任如何约束和充实战略\n\n独立高质新闻、负责任数据和信息、好雇主、减少碳足迹，既可能保护已有价值，也可能创造新价值。进一步区分经营许可、风险缓解、战略差异与价值创造，有助于解释为什么某议题必须做、另一些值得试，但这些类别不是互斥，也不能用一次总分掩盖不同后果。\n\n客户支付只是部分商业证据。新闻使命、权利、工作条件与资源外部影响涉及更广的利益相关者，不能仅由付费者偏好决定。短期回报不足不必然否定长期责任投入；同样，贴上责任标签也不能免除比较效果、成本和机会成本。优先级必须说明对谁有价值、谁承担负担、哪些影响不可接受。\n\n   可检验假设与指标怎样匹配\n\n选择一项最影响当前决策、且可在责任边界内研究的局部假设。若假设是“减少核查工作且维持判断质量”，就同时观察同类任务的工时、错误、更正、原文追溯以及人工辅助；若假设是经济上可持续，还要观察支付、续用、采购成本、固定投入与单位交付费用。不要用访问次数替代决策质量。\n\n有些价值需要长期观察或无法单独归因，应采用多种证据互相检查，并明确残余不确定性。实验可检验局部行为关系，不能裁决全部规范责任，也不能把短期无损害当长期安全。资源或样本有限时，先降低最关键的未知，不把一个小试承担不了的证明任务压上去。\n\n   行动规则和治理责任\n\n开始前明确对象、时限、比较方式、指标、负责人、费用上限与停止条件。阈值应依据基线与实际后果制定，不从导读中照抄任意数字。若发现价值主张不成立，允许换问题；若交付不足，考虑缩范围；若证据仅支持特定任务，限制扩展。对收集和使用资料、员工工作及资源消耗，要说明谁有权决定、谁能提出异议、何时复查。\n\n最后形成带条件的建议：为什么当前选择优于一个真实备选，依据哪些材料，哪些是假设，继续或放弃会损失什么，以及新证据将怎样改变行动。这种陈述可被追问，也能在未来修订，价值高于罗列大量活动却没有选择。\n\n   研讨题与正式作业边界\n\n哪项未知最可能改变你的资源配置，值得优先花钱研究？如果局部试验有收益但员工或新闻独立承受代价，怎样调整方案？如果关键情境短期不会出现，应如何作有限决策并监测？请用材料与自己的经历形成回答。\n\n这是一份个人研讨准备框架，没有替你确定 FD 的战略答案。学校正式输出、评分、截止日期及小组分工要回到原题核对；自测、视频个人题和实际学习记录仍由你补充。\n\n   来源核对点\n\n以下页码按 PDF 文件顺序，不是印刷页码；图表和文本提取乱序处应查看原件。\n\nFD Business Challenge：核对 PDF 第 1 页：2030 主问、四项责任与优先战略输出。 打开原 PDF  /api/emba/file/emba/2026-11/material/6749932-fd-mediagroep-business-challenge.pdf page=1  ·  逐页文本  /emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749932-fd-mediagroep-business-challenge.md 。\n\nWhy Design Thinking Works：核对 PDF 第 5–7 页：使关键假设明确、原型与行动中学习。 打开原 PDF  /api/emba/file/emba/2026-11/material/6794094-why-design-thinking-works.pdf page=5  ·  逐页文本  /emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6794094-why-design-thinking-works.md 。\n\nEmpathic Design：核对 PDF 第 10–13 页：观察、解释、隐私、方案与原型。 打开原 PDF  /api/emba/file/emba/2026-11/material/6794064-spark-innovation-through-empathic-design.pdf page=10  ·  逐页文本  /emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6794064-spark-innovation-through-empathic-design.md 。\n\nMcKinsey AI data readiness：核对 PDF 第 5、9–11 页：按用例确定门槛及保留治理责任。 打开原 PDF  /api/emba/file/emba/2026-11/material/6749946-mckinsey-ai-data-readiness-the-key-to-scaling-impact.pdf page=5  ·  逐页文本  /emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749946-mckinsey-ai-data-readiness-the-key-to-scaling-impact.md 。\n\nWEF CSO Outlook：核对 PDF 第 11–12、16–17 页：责任整合、能力与资源取舍。 打开原 PDF  /api/emba/file/emba/2026-11/material/6749947-wef-chief-sustainability-officers-outlook-september-2026.pdf page=11  ·  逐页文本  /emba/content/2026/11_November/converted-md/source-documents/2026-11-canvas-6749947-wef-chief-sustainability-officers-outlook-september-2026.md 。\n\n   视频与任务入口核对点\n\n 战略视频 part 1 · 39:58–42:23  https://youtu.be/lHeWfmICMnQ?t=2398  讨论客户、问题、受益、研究、体验和严格检验； part 2 · 24:36–25:54  https://youtu.be/V4K_dueWn8o?t=1476  要求整理停止、开始、继续做的领导行动。这里依据已读取的自动字幕，未核对画面；字幕可能误识别，不据此确认品牌案例数字。\n\n 本月学习与四项预习总索引  /emba/content/2026/11_November/2026-11_EMBA_Future_Proof_Business_Models_Index.md  保留自测、三视频、四文章和 FD 案例入口； Canvas 案例准备页  https://canvas.maastrichtuniversity.nl/courses/28848/pages/preparation-business-challenge-fd-mediagroep  用于核对最新正式要求。已导入 PDF 可在 EMBA 页面阅读。\n\n   五步学习法\n\n以下约 65 分钟只是一轮导读练习；完整阅读、全长视频、个人问题与正式作业另计，不表示已经完成学校任务。\n\n  第 1 步：白话概念｜5 分钟  。重述选择、证据、未知和行动的关系；产出：一段无术语说明。\n\n  第 2 步：理清机制｜15 分钟  。拆开必要条件、替代解释与识别问题；产出：一条可审查论证。\n\n  第 3 步：核来源｜20 分钟  。核题面、关键证据层级及正式任务；产出：来源记录与残余不确定性。\n\n  第 4 步：复述｜5 分钟  。闭卷说明为什么一个小试不能决定全部战略；产出：一段有边界的判断。\n\n  第 5 步：应用｜20 分钟  。比较备选、成本、责任和改变选择的条件；产出：一页研讨建议与一个核心问题。\n\n次日先用两分钟无提示回忆关键判断和边界，再打开来源修正。\n"
+    },
+    {
+      "id": "emba-2026-11-case-learning-index",
+      "title": "11月新版案例教材 · 总览与学习模板",
+      "type": "learning_index",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "date": "2026-10-21",
+      "year": 2026,
+      "month": "2026-11",
+      "source_type": "learning_index",
+      "source_file": "",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "emba",
+        "case-learning",
+        "pre-study"
+      ],
+      "keywords": [
+        "新模板",
+        "案例教学",
+        "学习方法"
+      ],
+      "summary": "五章共43609正文汉字，连接四篇paper、FD案例、每日练习与五步学习法。",
+      "related_topics": [
+        "strategy",
+        "decision-making",
+        "innovation"
+      ],
+      "rag_include": true,
+      "md_file": "/emba/content/2026/11_November/case-learning/index.md",
+      "search_text": "11月新版案例教材 · 总览与学习模板 五章共43609正文汉字，连接四篇paper、FD案例、每日练习与五步学习法。 新模板 案例教学 学习方法 新模板 案例教学 五步学习法"
+    },
+    {
+      "id": "emba-2026-11-case-day-1",
+      "title": "第1天｜客户洞察与同理心：看见客户没有说出来的工作",
+      "type": "case_learning_guide",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "course": "Future-proof Business Models",
+      "date": "2026-11-02",
+      "year": 2026,
+      "month": "2026-11",
+      "source_type": "source_based_case_teaching",
+      "source_file": "/api/emba/file/emba/2026-11/material/6794064-spark-innovation-through-empathic-design.pdf",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "emba",
+        "future-proof-business-models",
+        "case-learning",
+        "pre-study"
+      ],
+      "keywords": [
+        "第1天｜客户洞察与同理心：看见客户没有说出来的工作",
+        "案例详解",
+        "五步学习法"
+      ],
+      "summary": "从Quicken、HP、Weyerhaeuser、Nissan、Lifeline与Thermos理解客户真实任务、额外劳动与可验证需求。",
+      "related_topics": [
+        "strategy",
+        "decision-making",
+        "innovation"
+      ],
+      "rag_include": true,
+      "md_file": "/emba/content/2026/11_November/case-learning/2026-11-02.md",
+      "search_text": "第1天｜客户洞察与同理心：看见客户没有说出来的工作 从Quicken、HP、Weyerhaeuser、Nissan、Lifeline与Thermos理解客户真实任务、额外劳动与可验证需求。 第1天｜客户洞察与同理心：看见客户没有说出来的工作 案例详解 五步学习法 新模板 案例教学 五步学习法"
+    },
+    {
+      "id": "emba-2026-11-case-day-2",
+      "title": "第2天｜设计思维：让不同部门一起找到值得做的改变",
+      "type": "case_learning_guide",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "course": "Future-proof Business Models",
+      "date": "2026-11-03",
+      "year": 2026,
+      "month": "2026-11",
+      "source_type": "source_based_case_teaching",
+      "source_file": "/api/emba/file/emba/2026-11/material/6794094-why-design-thinking-works.pdf",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "emba",
+        "future-proof-business-models",
+        "case-learning",
+        "pre-study"
+      ],
+      "keywords": [
+        "第2天｜设计思维：让不同部门一起找到值得做的改变",
+        "案例详解",
+        "五步学习法"
+      ],
+      "summary": "从Kingwood、Tom、Whiteriver与Monash Watch理解共同证据、设计标准、关键假设、原型和团队试验。",
+      "related_topics": [
+        "strategy",
+        "decision-making",
+        "innovation"
+      ],
+      "rag_include": true,
+      "md_file": "/emba/content/2026/11_November/case-learning/2026-11-03.md",
+      "search_text": "第2天｜设计思维：让不同部门一起找到值得做的改变 从Kingwood、Tom、Whiteriver与Monash Watch理解共同证据、设计标准、关键假设、原型和团队试验。 第2天｜设计思维：让不同部门一起找到值得做的改变 案例详解 五步学习法 新模板 案例教学 五步学习法"
+    },
+    {
+      "id": "emba-2026-11-case-day-3",
+      "title": "第3天｜FD案例：读者要的是更好的决定，不只是更多信息",
+      "type": "case_learning_guide",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "course": "Future-proof Business Models",
+      "date": "2026-11-04",
+      "year": 2026,
+      "month": "2026-11",
+      "source_type": "source_based_case_teaching",
+      "source_file": "/api/emba/file/emba/2026-11/material/6749932-fd-mediagroep-business-challenge.pdf",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "emba",
+        "future-proof-business-models",
+        "case-learning",
+        "pre-study"
+      ],
+      "keywords": [
+        "第3天｜FD案例：读者要的是更好的决定，不只是更多信息",
+        "案例详解",
+        "五步学习法"
+      ],
+      "summary": "细读FD业务挑战与Rick、Wendy、Tess画像，把信息产品的任务、可信度、责任与研究问题连接起来。",
+      "related_topics": [
+        "strategy",
+        "decision-making",
+        "innovation"
+      ],
+      "rag_include": true,
+      "md_file": "/emba/content/2026/11_November/case-learning/2026-11-04.md",
+      "search_text": "第3天｜FD案例：读者要的是更好的决定，不只是更多信息 细读FD业务挑战与Rick、Wendy、Tess画像，把信息产品的任务、可信度、责任与研究问题连接起来。 第3天｜FD案例：读者要的是更好的决定，不只是更多信息 案例详解 五步学习法 新模板 案例教学 五步学习法"
+    },
+    {
+      "id": "emba-2026-11-case-day-4",
+      "title": "第4天｜战略与商业模式：好体验怎样成为可持续的生意",
+      "type": "case_learning_guide",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "course": "Future-proof Business Models",
+      "date": "2026-11-05",
+      "year": 2026,
+      "month": "2026-11",
+      "source_type": "source_based_case_teaching",
+      "source_file": "/api/emba/file/emba/2026-11/material/6794098-design-thinking-comes-of-age.pdf",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "emba",
+        "future-proof-business-models",
+        "case-learning",
+        "pre-study"
+      ],
+      "keywords": [
+        "第4天｜战略与商业模式：好体验怎样成为可持续的生意",
+        "案例详解",
+        "五步学习法"
+      ],
+      "summary": "从VA、Nest、Cash、IBM、GE和匿名娱乐公司理解设计文化，并用教学计算连接体验、战略、收入与成本。",
+      "related_topics": [
+        "strategy",
+        "decision-making",
+        "innovation"
+      ],
+      "rag_include": true,
+      "md_file": "/emba/content/2026/11_November/case-learning/2026-11-05.md",
+      "search_text": "第4天｜战略与商业模式：好体验怎样成为可持续的生意 从VA、Nest、Cash、IBM、GE和匿名娱乐公司理解设计文化，并用教学计算连接体验、战略、收入与成本。 第4天｜战略与商业模式：好体验怎样成为可持续的生意 案例详解 五步学习法 新模板 案例教学 五步学习法"
+    },
+    {
+      "id": "emba-2026-11-case-day-5",
+      "title": "第5天｜战略沟通：让别人看懂改变，也能参与改变",
+      "type": "case_learning_guide",
+      "program": "EMBA",
+      "school": "Maastricht University",
+      "course": "Future-proof Business Models",
+      "date": "2026-11-06",
+      "year": 2026,
+      "month": "2026-11",
+      "source_type": "source_based_case_teaching",
+      "source_file": "/api/emba/file/emba/2026-11/material/6794219-how-storytelling-can-drive-strategic-change.pdf",
+      "visibility": "private",
+      "status": "active",
+      "tags": [
+        "emba",
+        "future-proof-business-models",
+        "case-learning",
+        "pre-study"
+      ],
+      "keywords": [
+        "第5天｜战略沟通：让别人看懂改变，也能参与改变",
+        "案例详解",
+        "五步学习法"
+      ],
+      "summary": "详细读San Juan医院两轮战略沟通活动，区分参与、实施与结果，把一周方法转为研究与行动。",
+      "related_topics": [
+        "strategy",
+        "decision-making",
+        "innovation"
+      ],
+      "rag_include": true,
+      "md_file": "/emba/content/2026/11_November/case-learning/2026-11-06.md",
+      "search_text": "第5天｜战略沟通：让别人看懂改变，也能参与改变 详细读San Juan医院两轮战略沟通活动，区分参与、实施与结果，把一周方法转为研究与行动。 第5天｜战略沟通：让别人看懂改变，也能参与改变 案例详解 五步学习法 新模板 案例教学 五步学习法"
     }
   ]
 }

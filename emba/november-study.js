@@ -46,10 +46,10 @@ const NOVEMBER_STUDY_SOURCES = {
 
 const NOVEMBER_STUDY_DAYS = [
   { day: "周一", date: "2026-11-02", title: "客户洞察与同理心", goal: "从客户的真实处境出发，区分观察、假设与需求。", question: "我认为客户需要的，和客户实际遇到的困难，有什么差别？" },
-  { day: "周二", date: "2026-11-03", title: "设计思维与战略沟通", goal: "先把问题定义清楚，再把改变的理由、证据与行动讲清楚。", question: "如果换一种问题定义，我们的解决方向会怎样改变？" },
+  { day: "周二", date: "2026-11-03", title: "设计思维与团队协作", goal: "共享证据、明确设计标准，再用低成本试验检验方案。", question: "哪个关键假设不成立，就应该改变或放弃这个方案？" },
   { day: "周三", date: "2026-11-04", title: "FD 案例与人物画像", goal: "把行业材料与人物画像连接起来，为案例讨论准备证据。", question: "哪些判断已有材料支持，哪些还只是我们对读者的猜测？" },
   { day: "周四", date: "2026-11-05", title: "战略与商业模式", goal: "把客户价值、战略选择与商业模式中的关键假设连起来。", question: "这个商业模式最依赖哪条尚未验证的假设？" },
-  { day: "周五", date: "2026-11-06", title: "整合、讨论与作业准备", goal: "整理预习中的证据、问题与初步想法，准备课堂和小组讨论。", question: "哪一个问题最值得带到课堂，让老师或小组帮助验证？" }
+  { day: "周五", date: "2026-11-06", title: "战略沟通与整合应用", goal: "连接改变的理由、证据、行动与反馈，准备课堂和小组讨论。", question: "别人能否说清为何改变、如何参与，以及哪些判断还需要验证？" }
 ];
 
 const NOVEMBER_LEARNING_LEVELS = [
@@ -59,11 +59,11 @@ const NOVEMBER_LEARNING_LEVELS = [
 ];
 
 const NOVEMBER_STUDY_VIDEOS = [
-  { duration: "6:16", notebook: "87aa25ce-43a2-4676-bd60-6e800421dadf" },
-  { duration: "6:31", notebook: "dfbbc6fe-4a66-4d67-b62c-7856d7609118" },
-  { duration: "8:11", notebook: "a8a6fc68-84a2-4e71-8e21-29ed3c9a9330" },
-  { duration: "9:12", notebook: "2ca5b90b-b5f7-4e14-aaa7-737820baa9e6" },
-  { duration: "7:56", notebook: "fce541fc-d91f-46bd-9546-d710fa8aa583" }
+  {"duration": "10:49", "notebook": "d129227b-4a67-411b-9a48-58876199a36b"},
+  {"duration": "12:33", "notebook": "ba1346bc-db5c-4229-85e1-7a56cd3ac593"},
+  {"duration": "10:24", "notebook": "08abef10-b590-48d8-bf1e-c7463b33c231"},
+  {"duration": "9:22", "notebook": "5472b2f0-3cbf-42f3-8ba6-faa238ef2e12"},
+  {"duration": "10:03", "notebook": "89842ebf-1270-4841-a1ec-1742394bbedc"}
 ];
 
 function renderNovemberLearningVideo(index) {
@@ -72,15 +72,16 @@ function renderNovemberLearningVideo(index) {
   if (!day || !video) return "";
   const title = `第 ${index + 1} 天 · ${day.title}`;
   return `<section class="emba-november-video" aria-labelledby="november-video-heading-${index}" tabindex="-1">
-    <div class="emba-november-video-heading"><div><span class="emba-month-kicker">本日学习视频</span><h4 id="november-video-heading-${index}">${escapeHtml(title)}</h4></div><span class="emba-november-video-duration">中文 · ${video.duration}</span></div>
+    <div class="emba-november-video-heading"><div><span class="emba-month-kicker">新版 · 本日案例视频</span><h4 id="november-video-heading-${index}">${escapeHtml(title)}</h4></div><span class="emba-november-video-duration">中文 · ${video.duration}</span></div>
     <video controls playsinline preload="metadata" aria-label="${escapeHtml(title)} · 中文学习视频" src="/api/emba/video/${day.date}">你的浏览器暂不支持页内视频，请使用下方链接观看。</video>
-    <p>白话入门 → 机制与应用 → 研讨问题 → 五步学习法</p>
+    <p>工作困境 → 真实案例 → 原理与应用 → 五步学习法</p>
     <a href="https://notebook.google.com/notebook/${video.notebook}" target="_blank" rel="noopener noreferrer">在 NotebookLM 查看视频与来源 ↗</a>
   </section>`;
 }
 
 function renderNovemberVideoDirectory() {
-  return `<section class="emba-november-learning-guide" aria-labelledby="november-video-directory"><span class="emba-month-kicker">NotebookLM · 中文讲解</span><h4 id="november-video-directory">五天学习视频 · 共约 38 分钟</h4><div class="emba-november-video-directory">${NOVEMBER_STUDY_DAYS.map((day, index) => `<button class="emba-file-link" type="button" data-november-video-index="${index}"><span>第 ${index + 1} 天 · ${escapeHtml(day.title)}</span><small>${NOVEMBER_STUDY_VIDEOS[index].duration} · 播放 →</small></button>`).join("")}</div></section>`;
+  const minutes = Math.round(NOVEMBER_STUDY_VIDEOS.reduce((sum, video) => { const [m, s] = video.duration.split(":").map(Number); return sum + m * 60 + s; }, 0) / 60);
+  return `<section class="emba-november-learning-guide" aria-labelledby="november-video-directory"><span class="emba-month-kicker">NotebookLM · 中文讲解</span><h4 id="november-video-directory">新版五天案例视频 · 共约 ${minutes} 分钟</h4><div class="emba-november-video-directory">${NOVEMBER_STUDY_DAYS.map((day, index) => `<button class="emba-file-link" type="button" data-november-video-index="${index}"><span>第 ${index + 1} 天 · ${escapeHtml(day.title)}</span><small>${NOVEMBER_STUDY_VIDEOS[index].duration} · 播放 →</small></button>`).join("")}</div></section>`;
 }
 
 function novemberLearningButton(index, level, compact = false) {
@@ -91,7 +92,33 @@ function novemberLearningButton(index, level, compact = false) {
 }
 
 function renderNovemberLearningGuide(index) {
-  return `<section class="emba-november-learning-guide" aria-labelledby="november-learning-heading-${index}"><span class="emba-month-kicker">三种讲解深度</span><h4 id="november-learning-heading-${index}">选择适合你的版本</h4><p><strong>今天的问题：</strong>${escapeHtml(NOVEMBER_STUDY_DAYS[index].question)}</p><p>完全陌生，从零基础版开始；略懂一点，读详细讲解；已有经验，进入专家研讨。三个版本都能独立阅读，最后附五步学习与当天练习。</p><div class="emba-november-levels">${NOVEMBER_LEARNING_LEVELS.map(level => novemberLearningButton(index, level)).join("")}</div></section>`;
+  return `<details class="emba-november-learning-guide"><summary>原三层讲解 · 保留参考</summary><p>原来的零基础、详细讲解与专家研讨版本仍可阅读；本次新教材请从上方的案例教学进入。</p><div class="emba-november-levels">${NOVEMBER_LEARNING_LEVELS.map(level => novemberLearningButton(index, level)).join("")}</div></details>`;
+}
+
+const NOVEMBER_CASE_LESSONS = [
+  { title: "看见客户没有说出来的工作", focus: "Quicken、HP、Weyerhaeuser、Nissan、Lifeline 与 Thermos", characters: 8916 },
+  { title: "让不同部门一起找到值得做的改变", focus: "Kingwood、Tom 的照护旅程、Whiteriver 与 Monash Watch", characters: 8913 },
+  { title: "读者要的是更好的决定", focus: "FD 业务挑战与 Rick、Wendy、Tess 三种工作任务", characters: 8443 },
+  { title: "好体验怎样成为可持续的生意", focus: "VA、Nest、Cash、IBM、GE 与商业模式测算", characters: 8642 },
+  { title: "让别人看懂改变，也能参与改变", focus: "San Juan 医院完整案例、战略沟通与整合练习", characters: 8695 }
+];
+
+function novemberCaseLessonButton(index, compact = false) {
+  const lesson = NOVEMBER_CASE_LESSONS[index];
+  const day = NOVEMBER_STUDY_DAYS[index];
+  const title = `第 ${index + 1} 天 · ${lesson.title}`;
+  const file = `/emba/content/2026/11_November/case-learning/${day.date}.md`;
+  return `<button class="${compact ? "emba-file-link" : "emba-november-case-open"}" type="button" data-material-open="${escapeHtml(file)}" data-material-title="${escapeHtml(title)}"><strong>${escapeHtml(title)}</strong><span>${lesson.characters.toLocaleString("zh-CN")} 字 · 阅读教材 →</span></button>`;
+}
+
+function renderNovemberCaseLesson(index) {
+  const lesson = NOVEMBER_CASE_LESSONS[index];
+  return `<section class="emba-november-learning-guide emba-november-case-guide" aria-labelledby="november-case-heading-${index}"><span class="emba-month-kicker">新版 · 案例教学</span><h4 id="november-case-heading-${index}">从工作问题读懂论文</h4><p>适合有一些工作经验、没有专业背景的读者。沿着真实案例理解原因，再用练习把方法带回工作。</p>${novemberCaseLessonButton(index)}<p class="emba-november-case-focus">${escapeHtml(lesson.focus)}</p><p>工作困境 → 案例经过 → 原理与取舍 → 应用练习 → 五步学习法</p></section>`;
+}
+
+function renderNovemberCaseDirectory() {
+  const count = NOVEMBER_CASE_LESSONS.reduce((sum, lesson) => sum + lesson.characters, 0).toLocaleString("zh-CN");
+  return `<section class="emba-november-learning-guide emba-november-case-guide"><span class="emba-month-kicker">新版 · 五天案例教材</span><h4>论文案例详解 · 共 ${count} 字</h4><p>正文汉字数，不含链接、来源清单和编辑记录。五天为个人建议预习顺序。</p><div class="emba-november-video-directory">${NOVEMBER_CASE_LESSONS.map((_, index) => novemberCaseLessonButton(index, true)).join("")}</div><button class="emba-file-link" type="button" data-material-open="/emba/content/2026/11_November/case-learning/index.md" data-material-title="新版案例教材 · 总览与学习模板">总览、案例导航与新模板 →</button></section>`;
 }
 
 function renderNovemberLearningDirectory() {
@@ -256,7 +283,7 @@ function renderNovemberPreDay(day, index) {
       ["准备讨论与课堂问题", "建议产出 · 一页预习摘要", `<p class="emba-plan-question">${escapeHtml(day.question)}</p><p>带上一页摘要：最有用的洞察、FD 案例的关键证据、尚未验证的假设，以及想请教老师或小组的问题。</p>`]
     ]
   ][index];
-  return `<div class="emba-daily-plan" data-november-pre-day="${escapeHtml(day.date)}">${renderNovemberDayHeader(day, false)}${renderNovemberLearningVideo(index)}${renderNovemberLearningGuide(index)}<div class="emba-plan-steps">${steps.map(([title, hint, body], step) => renderNovemberStep(`pre-${index + 1}-${step + 1}`, String(step + 1).padStart(2, "0"), title, hint, body)).join("")}</div></div>`;
+  return `<div class="emba-daily-plan" data-november-pre-day="${escapeHtml(day.date)}">${renderNovemberDayHeader(day, false)}${renderNovemberCaseLesson(index)}${renderNovemberLearningVideo(index)}${renderNovemberLearningGuide(index)}<div class="emba-plan-steps">${steps.map(([title, hint, body], step) => renderNovemberStep(`pre-${index + 1}-${step + 1}`, String(step + 1).padStart(2, "0"), title, hint, body)).join("")}</div></div>`;
 }
 
 function renderNovemberPostDay(day, index) {
@@ -286,7 +313,7 @@ function renderNovemberResources(month) {
     <div class="emba-daily-plan">
       <header class="emba-plan-heading"><span class="emba-month-kicker">FUTURE-PROOF BUSINESS MODELS</span><h3>课程文件 · 18 份资料</h3><p role="status">${novemberPrivateFilesStatus()}</p></header>
       <div class="emba-study-utility-links"><button class="emba-file-link" type="button" data-material-open="${escapeHtml(planFile)}" data-material-title="11 月完整学习计划">打开完整学习计划 →</button></div>
-      ${renderNovemberVideoDirectory()}${renderNovemberLearningDirectory()}
+      ${renderNovemberCaseDirectory()}${renderNovemberVideoDirectory()}${renderNovemberLearningDirectory()}
       <div class="emba-plan-steps" data-november-files>
         ${groups.map(([id, title, sources]) => `<section class="emba-plan-step" aria-labelledby="november-files-${id}"><div class="emba-plan-step-body"><h4 id="november-files-${id}">${escapeHtml(title)}</h4>${novemberSourceGrid(sources)}</div></section>`).join("")}
       </div>
@@ -330,6 +357,16 @@ function renderNovemberStudyModules(month) {
 const novemberDetail = document.getElementById("embaMonthDetail");
 
 novemberDetail?.addEventListener("click", (event) => {
+  const chapterLink = event.target.closest('a[href^="/emba/content/2026/11_November/case-learning/"]');
+  if (chapterLink && isNovemberStudy(selectedMonth())) {
+    const file = chapterLink.getAttribute("href") || "";
+    if (/^\/emba\/content\/2026\/11_November\/case-learning\/(?:index|2026-11-0[2-6])\.md$/.test(file)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      openMaterialReader(file, chapterLink.textContent?.trim() || "案例教材");
+      return;
+    }
+  }
   const videoLink = event.target.closest("[data-november-video-index]");
   if (videoLink) {
     const index = Number(videoLink.dataset.novemberVideoIndex);

@@ -3,11 +3,11 @@ import { json, requireEmbaAccess } from "../_utils.js";
 
 // Immutable, verified NotebookLM exports; arbitrary bucket keys are never accepted.
 const VIDEOS = Object.freeze({
-  "2026-11-02": "emba/2026-11/video/2026-11-02-bb77d20d3de6.mp4",
-  "2026-11-03": "emba/2026-11/video/2026-11-03-58ea1d1049b5.mp4",
-  "2026-11-04": "emba/2026-11/video/2026-11-04-814e91c63148.mp4",
-  "2026-11-05": "emba/2026-11/video/2026-11-05-9662d443d0c1.mp4",
-  "2026-11-06": "emba/2026-11/video/2026-11-06-78b858ea703e.mp4"
+  "2026-11-02": "emba/2026-11/video/2026-11-02-15b331397161.mp4",
+  "2026-11-03": "emba/2026-11/video/2026-11-03-c62bf17dfd4e.mp4",
+  "2026-11-04": "emba/2026-11/video/2026-11-04-e09526d5ca89.mp4",
+  "2026-11-05": "emba/2026-11/video/2026-11-05-c214cf26e719.mp4",
+  "2026-11-06": "emba/2026-11/video/2026-11-06-56ce85628ac5.mp4"
 });
 
 function byteRange(value, size) {

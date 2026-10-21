@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-18",
+  "updated": "2026-10-21",
   "timeline": {
     "startMonth": "2026-06",
     "endMonth": "2028-12"
@@ -1160,6 +1160,42 @@
           "title": "Day 5 · 从证据与假设走向战略行动｜专家研讨版",
           "file": "/emba/content/2026/11_November/pre-study/2026-11-06-seminar.md",
           "notes": "直接讲解；零基础、详细讲解与专家研讨三种深度。含原文核对点、适用边界与五步练习；建议预习顺序。"
+        },
+        {
+          "title": "11 月新版案例教材 · 总览与学习模板",
+          "type": "case_learning_index",
+          "file": "/emba/content/2026/11_November/case-learning/index.md",
+          "notes": "五天共43,609正文汉字；真实案例、机制解释、应用练习与五步学习法。"
+        },
+        {
+          "title": "第1天｜客户洞察与同理心：看见客户没有说出来的工作",
+          "type": "case_learning_guide",
+          "file": "/emba/content/2026/11_November/case-learning/2026-11-02.md",
+          "notes": "新版中等难度案例教材；正文8,916汉字。从Quicken、HP、Weyerhaeuser、Nissan、Lifeline与Thermos理解客户真实任务、额外劳动与可验证需求。"
+        },
+        {
+          "title": "第2天｜设计思维：让不同部门一起找到值得做的改变",
+          "type": "case_learning_guide",
+          "file": "/emba/content/2026/11_November/case-learning/2026-11-03.md",
+          "notes": "新版中等难度案例教材；正文8,913汉字。从Kingwood、Tom、Whiteriver与Monash Watch理解共同证据、设计标准、关键假设、原型和团队试验。"
+        },
+        {
+          "title": "第3天｜FD案例：读者要的是更好的决定，不只是更多信息",
+          "type": "case_learning_guide",
+          "file": "/emba/content/2026/11_November/case-learning/2026-11-04.md",
+          "notes": "新版中等难度案例教材；正文8,443汉字。细读FD业务挑战与Rick、Wendy、Tess画像，把信息产品的任务、可信度、责任与研究问题连接起来。"
+        },
+        {
+          "title": "第4天｜战略与商业模式：好体验怎样成为可持续的生意",
+          "type": "case_learning_guide",
+          "file": "/emba/content/2026/11_November/case-learning/2026-11-05.md",
+          "notes": "新版中等难度案例教材；正文8,642汉字。从VA、Nest、Cash、IBM、GE和匿名娱乐公司理解设计文化，并用教学计算连接体验、战略、收入与成本。"
+        },
+        {
+          "title": "第5天｜战略沟通：让别人看懂改变，也能参与改变",
+          "type": "case_learning_guide",
+          "file": "/emba/content/2026/11_November/case-learning/2026-11-06.md",
+          "notes": "新版中等难度案例教材；正文8,695汉字。详细读San Juan医院两轮战略沟通活动，区分参与、实施与结果，把一周方法转为研究与行动。"
         }
       ],
       "reflection": "",

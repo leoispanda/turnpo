@@ -131,3 +131,11 @@ The November planner also has a prominent **课程文件 · 18 份资料** tab. 
 ### November tiered learning guides
 
 Each Pre Study day offers three independent Chinese explanations under `content/2026/11_November/pre-study/`: foundation (plain language and concrete examples), detailed (mechanisms and application), and seminar (evidence, alternatives and strategic trade-offs). All fifteen pages use the existing in-page Markdown reader and retain original PDF/timestamp references plus a practical five-step routine. These are suggested preparation guides, not an official daily timetable or completed student assignment. Retired generated story pages are removed from the active materials/search corpus; exact paths are hidden by the existing material filter so older cloud overlays cannot reintroduce them. Earlier drafts remain in local editorial records outside the deployment.
+
+### November case teaching edition (2026-10-21)
+
+`case-learning/` contains five substantial Chinese teaching chapters for readers with work experience and no specialist design/strategy background. Each chapter develops paper cases, explains mechanisms and limits, then supplies work exercises and a five-step study routine. `index.md` provides the new case template, source/page navigation and study sequence. These are suggested preparation days, not the official timetable or completed assignment answers. Actual ChatGPT dialogue was used for language editing; the editor checked the original available source text and retained local prompts, outputs and review records.
+
+The five canonical chapters and overview appear once each in the knowledge index. Their static `case_learning_guide` and `case_learning_index` material entries survive older D1 overlays while cloud-edited notes, reflections, photos and user uploads remain intact. No material revision is raised to overwrite an edited cloud list. New daily entries use the existing in-page Markdown reader; original three-level guides remain under a collapsed reference section.
+
+The current five inline NotebookLM videos use this case edition and total about 53 minutes (10:49, 12:33, 10:24, 9:22, 10:03). New immutable private R2 keys replace the published date allowlist. Earlier video objects and source notebooks are retained. The existing authenticated Range-capable video endpoint and account-wide quota guard are unchanged.

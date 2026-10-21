@@ -28,7 +28,7 @@ keywords:
   - strategic planning and doing
   - storytelling
   - FD Mediagroep
-summary: "五天预习按零基础、详细讲解和专家研讨提供15篇独立讲解，连接原PDF、视频问题、五步学习与FD2030责任战略。"
+summary: "新版五天案例教材面向有工作经验、非专业读者，详解四篇paper和FD案例，连接原PDF、应用练习与五步学习法；原三层讲解保留参考。"
 related_topics:
   - strategy
   - leadership
@@ -36,7 +36,7 @@ related_topics:
   - ai-and-digital-transformation
 rag_include: true
 created_at: 2026-10-18
-updated_at: 2026-10-18
+updated_at: 2026-10-21
 ---
 
 # EMBA Monthly Learning Index - Future-proof Business Models
@@ -49,7 +49,19 @@ updated_at: 2026-10-18
 
 **课程周：2026 年 11 月 2 日至 6 日。** 日期来自 [MaastrichtMBA On-Campus Programme Outline](../06_June/converted-md/source-documents/2026-06-maastricht-on-campus-programme-outline.md) 的 elective window；每日具体安排以课程 syllabus 与 Canvas 最新通知为准。
 
-## 分层讲解 · 五天学习
+## 新版案例教材 · 2026-10-21
+
+面向有工作经验、非专业读者，五章正文共 **43,609 个汉字**。按工作困境、论文案例、原理与取舍、应用练习、五步学习法阅读。五天仍是个人建议顺序。
+
+[教材总览与新模板](./case-learning/index.md)
+
+- [第 1 天 · 客户洞察与同理心：看见客户没有说出来的工作](./case-learning/2026-11-02.md)
+- [第 2 天 · 设计思维：让不同部门一起找到值得做的改变](./case-learning/2026-11-03.md)
+- [第 3 天 · FD案例：读者要的是更好的决定，不只是更多信息](./case-learning/2026-11-04.md)
+- [第 4 天 · 战略与商业模式：好体验怎样成为可持续的生意](./case-learning/2026-11-05.md)
+- [第 5 天 · 战略沟通：让别人看懂改变，也能参与改变](./case-learning/2026-11-06.md)
+
+## 原分层讲解 · 保留参考
 
 每天提供三篇可以独立阅读的直接讲解。零基础版从具体问题和普通例子讲起；详细讲解版连接概念、机制、步骤与边界；专家研讨版分析证据、替代解释、权衡与可检验判断。可按已有理解选择，也可以依次读；不要求读完前一版才进入后一版。
 

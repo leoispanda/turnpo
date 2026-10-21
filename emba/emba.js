@@ -594,7 +594,7 @@ function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
   const exactMaterials = (items) => asArray(items).map(normalizeMaterial).filter(materialHasContent);
   const exactMemories = (items) => asArray(items).map((item) => normalizeMemory(item, overlayMonth.month || baseMonth.month));
   const baseCourseEntries = exactMaterials(baseMonth.materials)
-    .filter((item) => item.type === "daily_course_intro" || item.type === PODCAST_MATERIAL_TYPE || item.type === "mapkai_video" || item.type === "post_study_source");
+    .filter((item) => item.type === "daily_course_intro" || item.type === PODCAST_MATERIAL_TYPE || item.type === "mapkai_video" || item.type === "post_study_source" || item.type === "case_learning_guide" || item.type === "case_learning_index");
   const chosenMaterials = materialsWinner
     ? exactMaterials(materialsWinner === "base" ? baseMonth.materials : overlayMonth.materials)
     : mergeMaterialLists(baseMonth.materials, overlayMonth.materials);
