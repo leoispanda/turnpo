@@ -128,7 +128,9 @@ The twenty-one previous case/tiered notes remain archived with `rag_include: fal
 
 ### Facts video edition
 
-`november-facts-videos.json` is shared by the browser and the private video API. Keep `published: false` until all five NotebookLM exports have been uploaded and verified. A published manifest must contain the five dates in order, valid durations and notebook URLs, complete SHA-256 values, byte counts within the existing 64 MiB upload limit, and immutable `emba/2026-11/video/facts/<date>-<hash12>.mp4` keys. Incomplete metadata does not expose a new player or fall back to a case video.
+`november-facts-videos.json` is the sole canonical metadata source. The browser fetches it directly; the private video API imports the generated plain-ESM companion `functions/_shared/november-facts-videos.js`. Cloudflare's hosted Wrangler 3.114.17 cannot parse JSON import attributes (`with`), so regenerate the companion after editing JSON with `node scripts/generate-emba-november-facts-videos.mjs`. Run the same command with `--check` to detect a stale companion; the video tests also assert semantic equality with the canonical JSON.
+
+Keep `published: false` until all five NotebookLM exports have been uploaded and verified. A published manifest must contain the five dates in order, valid durations and notebook URLs, complete SHA-256 values, byte counts within the existing 64 MiB upload limit, and immutable `emba/2026-11/video/facts/<date>-<hash12>.mp4` keys. Incomplete metadata does not expose a new player or fall back to a case video.
 
 On publication, each Pre Study day adds its facts video alongside the unchanged source introduction. Resources offers separate facts and older case video directories. Facts links select Pre Study; case links select Post Study. The five default `/api/emba/video/<date>` keys and Post Study case players remain unchanged. Only the new `?edition=facts` parameter selects the new allowlist; unknown, empty or duplicate edition parameters return 404. Both editions retain EMBA authentication, private responses, Range/HEAD support and the account-wide cost guard. No old video object or notebook is deleted.
 

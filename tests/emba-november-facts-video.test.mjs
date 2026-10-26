@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import factsManifest from '../emba/november-facts-videos.json' with { type: 'json' };
+import factsManifest from '../functions/_shared/november-facts-videos.js';
 import { factsVideoKey, onRequestGet, onRequestHead } from '../functions/api/emba/video/[date].js';
 import { hmacHex } from '../functions/_shared/security.js';
 import { COST_GUARD_KEY, COST_GUARD_LIMITS } from '../functions/_shared/cost-guard.js';
@@ -70,6 +70,16 @@ function planner() {
       ? { dataset: { novemberVideoIndex: String(index), novemberVideoEdition: edition } } : null }, preventDefault() {}, stopImmediatePropagation() {} });
   } };
 }
+
+test('the API companion has exactly the canonical facts video metadata without JSON import attributes', () => {
+  assert.deepEqual(factsManifest, JSON.parse(read('emba/november-facts-videos.json')));
+  const companion = read('functions/_shared/november-facts-videos.js');
+  assert.match(companion, /^\/\/ Generated[^\n]*\nexport default /);
+  assert.doesNotMatch(companion, /\bimport\b/);
+  const endpoint = read('functions/api/emba/video/[date].js');
+  assert.match(endpoint, /import factsManifest from "\.\.\/\.\.\/\.\.\/_shared\/november-facts-videos\.js";/);
+  assert.doesNotMatch(endpoint, /\b(?:with|assert)\s*\{\s*type\s*:/);
+});
 
 test('facts edition remains unavailable until a complete verified manifest is published', () => {
   const valid = readyManifest();

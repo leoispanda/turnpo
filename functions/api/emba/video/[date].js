@@ -1,6 +1,6 @@
 import { wrapR2Bucket, costResponse } from "../../../_shared/cost-guard.js";
 import { json, requireEmbaAccess } from "../_utils.js";
-import factsManifest from "../../../../emba/november-facts-videos.json" with { type: "json" };
+import factsManifest from "../../../_shared/november-facts-videos.js";
 
 // Immutable, verified NotebookLM exports; arbitrary bucket keys are never accepted.
 const VIDEOS = Object.freeze({
