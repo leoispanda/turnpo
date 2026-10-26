@@ -1,0 +1,187 @@
+{
+  "owner": "leo",
+  "title": "My paintings",
+  "description": "A collection of my paintings and drawings.",
+  "works": [
+    {
+      "id": "artwork-01",
+      "title": "",
+      "alt": "White and pink almond blossoms on branching trees against a turquoise sky.",
+      "image": "/assets/artworks/leo/artwork-01.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-01-thumb.webp",
+      "width": 2800,
+      "height": 2100,
+      "featured": true
+    },
+    {
+      "id": "artwork-02",
+      "title": "",
+      "alt": "An expressive composition of a horse and figures in blue, orange and red.",
+      "image": "/assets/artworks/leo/artwork-02.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-02-thumb.webp",
+      "width": 2800,
+      "height": 2221,
+      "featured": false
+    },
+    {
+      "id": "artwork-03",
+      "title": "",
+      "alt": "A flowering branch with pale blossoms against a bright blue background.",
+      "image": "/assets/artworks/leo/artwork-03.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-03-thumb.webp",
+      "width": 2800,
+      "height": 2229,
+      "featured": false
+    },
+    {
+      "id": "artwork-04",
+      "title": "",
+      "alt": "A spreading tree with small pale blossoms against a turquoise background.",
+      "image": "/assets/artworks/leo/artwork-04.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-04-thumb.webp",
+      "width": 2800,
+      "height": 2100,
+      "featured": false
+    },
+    {
+      "id": "artwork-05",
+      "title": "",
+      "alt": "A colourful figure holding scales and a sword against four bright colour fields.",
+      "image": "/assets/artworks/leo/artwork-05.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-05-thumb.webp",
+      "width": 2100,
+      "height": 2800,
+      "featured": false
+    },
+    {
+      "id": "artwork-06",
+      "title": "",
+      "alt": "A small figure on rolling green hills beneath a large golden sun.",
+      "image": "/assets/artworks/leo/artwork-06.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-06-thumb.webp",
+      "width": 2224,
+      "height": 2800,
+      "featured": false
+    },
+    {
+      "id": "artwork-07",
+      "title": "",
+      "alt": "Multiple moons above a village at night, painted in blue, white and grey.",
+      "image": "/assets/artworks/leo/artwork-07.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-07-thumb.webp",
+      "width": 2800,
+      "height": 2100,
+      "featured": false
+    },
+    {
+      "id": "artwork-08",
+      "title": "",
+      "alt": "A red and pink flamingo against a warm orange background.",
+      "image": "/assets/artworks/leo/artwork-08.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-08-thumb.webp",
+      "width": 2100,
+      "height": 2800,
+      "featured": true
+    },
+    {
+      "id": "artwork-09",
+      "title": "",
+      "alt": "A cartoon lion wearing sunglasses and a blue jacket on a red background.",
+      "image": "/assets/artworks/leo/artwork-09.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-09-thumb.webp",
+      "width": 2800,
+      "height": 2226,
+      "featured": false
+    },
+    {
+      "id": "artwork-10",
+      "title": "",
+      "alt": "Swirling blue and yellow stars above a dark village and cypress tree.",
+      "image": "/assets/artworks/leo/artwork-10.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-10-thumb.webp",
+      "width": 2800,
+      "height": 2269,
+      "featured": true
+    },
+    {
+      "id": "artwork-11",
+      "title": "",
+      "alt": "A portrait of a young woman wearing a blue and yellow headscarf and a pearl earring.",
+      "image": "/assets/artworks/leo/artwork-11.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-11-thumb.webp",
+      "width": 2100,
+      "height": 2800,
+      "featured": true
+    },
+    {
+      "id": "artwork-12",
+      "title": "",
+      "alt": "A woman standing in a cobbled city square surrounded by historic buildings.",
+      "image": "/assets/artworks/leo/artwork-12.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-12-thumb.webp",
+      "width": 2100,
+      "height": 2800,
+      "featured": true
+    },
+    {
+      "id": "artwork-13",
+      "title": "",
+      "alt": "Bands of blue, green and yellow suggesting sea, sky and a sandy shore.",
+      "image": "/assets/artworks/leo/artwork-13.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-13-thumb.webp",
+      "width": 2800,
+      "height": 2276,
+      "featured": false
+    },
+    {
+      "id": "artwork-14",
+      "title": "",
+      "alt": "A pencil drawing of a cat in profile, with a detailed eye and whiskers.",
+      "image": "/assets/artworks/leo/artwork-14.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-14-thumb.webp",
+      "width": 1980,
+      "height": 2800,
+      "featured": false
+    },
+    {
+      "id": "artwork-15",
+      "title": "",
+      "alt": "A small penguin on ice against a pink background.",
+      "image": "/assets/artworks/leo/artwork-15.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-15-thumb.webp",
+      "width": 2100,
+      "height": 2800,
+      "featured": false
+    },
+    {
+      "id": "artwork-16",
+      "title": "",
+      "alt": "Three pale and blue bottles arranged against a dark rectangular background.",
+      "image": "/assets/artworks/leo/artwork-16.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-16-thumb.webp",
+      "width": 2800,
+      "height": 1866,
+      "featured": false
+    },
+    {
+      "id": "artwork-17",
+      "title": "",
+      "alt": "A white swan on dark, textured water.",
+      "image": "/assets/artworks/leo/artwork-17.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-17-thumb.webp",
+      "width": 1976,
+      "height": 2800,
+      "featured": false
+    },
+    {
+      "id": "artwork-18",
+      "title": "",
+      "alt": "A road leading past wind turbines under a vivid blue sky with white clouds.",
+      "image": "/assets/artworks/leo/artwork-18.jpg",
+      "thumbnail": "/assets/artworks/leo/artwork-18-thumb.webp",
+      "width": 1999,
+      "height": 2800,
+      "featured": true
+    }
+  ]
+}

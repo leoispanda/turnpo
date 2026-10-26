@@ -2421,6 +2421,12 @@ let publishConfirmationResolver = null;
 let lifeAtlasGlobeState = null;
 let lifeAtlasThreeModulePromise = null;
 let lifeAtlasFocusPlaceId = "";
+let artworkGalleryRequestVersion = 0;
+let artworkGalleryWorks = [];
+let artworkGalleryExpanded = false;
+let artworkGalleryLoading = false;
+let imageLightboxGalleryIndex = -1;
+let imageLightboxReturnFocus = null;
 
 const $ = (selector) => document.querySelector(selector);
 const body = document.body;
@@ -3035,7 +3041,7 @@ function hideProfileContent() {
 
 function showProfileContent() {
   document.querySelectorAll(".profile-content").forEach((node) => {
-    node.hidden = node.id === "turnpoJobs";
+    node.hidden = node.id === "turnpoJobs" || node.id === "artGallery";
   });
 }
 
@@ -4301,6 +4307,7 @@ function renderHomeJsonLd() {
 }
 
 function setRoute(route) {
+  resetArtworkGallery();
   if (route === "home") {
     body.classList.remove("profile-open");
     body.classList.remove("admin-open");
@@ -4499,9 +4506,100 @@ function renderProfile() {
   renderTravelMap();
   renderTimeline();
   renderWorkProjects();
+  renderArtworkGallery(profile);
   renderJobsModule();
   renderJsonLd(profile);
   refreshImageLoadingStates(document);
+}
+
+function canShowArtworkGallery(profile = currentProfile()) {
+  return activeUsername === "leo" && profile?.username === "leo"
+    && body.classList.contains("profile-open")
+    && !body.classList.contains("jobs-open")
+    && !$(".profile-shell")?.hidden;
+}
+
+function resetArtworkGallery() {
+  artworkGalleryRequestVersion += 1;
+  artworkGalleryWorks = [];
+  artworkGalleryExpanded = false;
+  artworkGalleryLoading = false;
+  if ($("#artGallery")) $("#artGallery").hidden = true;
+  if ($("#profileGalleryLink")) $("#profileGalleryLink").hidden = true;
+  if ($("#artGalleryGrid")) $("#artGalleryGrid").innerHTML = "";
+  if (imageLightboxGalleryIndex >= 0) closeImageLightbox(false);
+}
+
+async function renderArtworkGallery(profile) {
+  const section = $("#artGallery");
+  if (!section) return;
+  if (!canShowArtworkGallery(profile)) {
+    resetArtworkGallery();
+    return;
+  }
+  if (artworkGalleryWorks.length) {
+    renderArtworkGalleryWorks();
+    return;
+  }
+  if (artworkGalleryLoading) return;
+  artworkGalleryLoading = true;
+  const requestVersion = artworkGalleryRequestVersion;
+  try {
+    const response = await fetch("/assets/artworks/leo/gallery.json");
+    if (!response.ok) throw new Error("Gallery unavailable");
+    const gallery = await response.json();
+    if (requestVersion !== artworkGalleryRequestVersion || !canShowArtworkGallery(profile)) return;
+    if (gallery.owner !== "leo" || !Array.isArray(gallery.works)) return;
+    artworkGalleryWorks = gallery.works.map((work, index) => ({
+      ...work,
+      label: String(work.title || "").trim() || `Artwork ${String(index + 1).padStart(2, "0")}`,
+      image: safeImageSrc(work.image),
+      thumbnail: safeImageSrc(work.thumbnail || work.image),
+      alt: String(work.alt || "").trim() || `Artwork ${String(index + 1).padStart(2, "0")}`,
+      width: Math.max(1, Math.min(10000, Number(work.width) || 1)),
+      height: Math.max(1, Math.min(10000, Number(work.height) || 1))
+    })).filter((work) => work.image && work.thumbnail)
+      .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
+    if (!artworkGalleryWorks.length) return;
+    $("#artGalleryTitle").textContent = gallery.title || "My paintings";
+    $("#artGalleryDescription").textContent = gallery.description || "A collection of my paintings and drawings.";
+    renderArtworkGalleryWorks();
+  } catch {
+    // The gallery is optional; unavailable artwork must not interrupt the profile.
+    if (requestVersion === artworkGalleryRequestVersion) section.hidden = true;
+  } finally {
+    if (requestVersion === artworkGalleryRequestVersion) artworkGalleryLoading = false;
+  }
+}
+
+function renderArtworkGalleryWorks() {
+  if (!canShowArtworkGallery() || !artworkGalleryWorks.length) return;
+  const works = artworkGalleryExpanded ? artworkGalleryWorks : artworkGalleryWorks.slice(0, 6);
+  $("#artGalleryGrid").innerHTML = works.map((work, index) => `
+    <figure class="artwork-card">
+      <button class="artwork-preview" type="button" data-artwork-index="${index}" aria-label="Open ${escapeHtml(work.label)}: ${escapeHtml(work.alt)}">
+        <span class="artwork-image-frame"><img src="${escapeHtml(work.thumbnail)}" alt="${escapeHtml(work.alt)}" width="${work.width}" height="${work.height}" loading="lazy" decoding="async" data-loading-image="true" /></span>
+        <span class="artwork-open-hint" aria-hidden="true">View artwork ↗</span>
+      </button>
+      <figcaption>${escapeHtml(work.label)}</figcaption>
+    </figure>
+  `).join("");
+  $("#artGalleryCount").textContent = `${artworkGalleryWorks.length} works`;
+  const toggle = $("#artGalleryToggle");
+  toggle.hidden = artworkGalleryWorks.length <= 6;
+  toggle.textContent = artworkGalleryExpanded ? "Show fewer works" : `View all ${artworkGalleryWorks.length} works`;
+  toggle.setAttribute("aria-expanded", String(artworkGalleryExpanded));
+  $("#artGallery").hidden = false;
+  $("#profileGalleryLink").hidden = false;
+  refreshImageLoadingStates($("#artGalleryGrid"));
+}
+
+function openArtworkLightbox(index) {
+  if (!canShowArtworkGallery() || !artworkGalleryWorks.length) return;
+  const wrappedIndex = (index + artworkGalleryWorks.length) % artworkGalleryWorks.length;
+  const work = artworkGalleryWorks[wrappedIndex];
+  openImageLightbox(work.image, work.alt, wrappedIndex);
+  $("#imageLightboxCaption").textContent = work.label;
 }
 
 function buildPublicAiPreview(profile) {
@@ -6796,7 +6894,10 @@ function setAiImportDrawer(open) {
   if (open) $("#aiImportSource").focus();
 }
 
-function openImageLightbox(src, alt = "Turnpo photo") {
+function openImageLightbox(src, alt = "Turnpo photo", galleryIndex = -1) {
+  const wasOpen = $("#imageLightbox").classList.contains("open");
+  if (!wasOpen) imageLightboxReturnFocus = document.activeElement;
+  imageLightboxGalleryIndex = galleryIndex;
   const photo = $("#imageLightboxPhoto");
   photo.classList.remove("is-loaded", "is-broken");
   photo.dataset.loadingImage = "true";
@@ -6808,15 +6909,23 @@ function openImageLightbox(src, alt = "Turnpo photo") {
   $("#imageLightboxCaption").textContent = alt;
   $("#imageLightbox").classList.add("open");
   $("#imageLightbox").setAttribute("aria-hidden", "false");
-  $("#closeImageLightbox").focus();
+  $("#imageLightbox").setAttribute("aria-label", galleryIndex >= 0 ? "Artwork preview" : "Photo preview");
+  const navigation = $("#imageLightboxNavigation");
+  if (navigation) navigation.hidden = galleryIndex < 0 || artworkGalleryWorks.length < 2;
+  if ($("#imageLightboxPosition")) $("#imageLightboxPosition").textContent = galleryIndex < 0 ? "" : `${galleryIndex + 1} of ${artworkGalleryWorks.length}`;
+  if (!wasOpen) $("#closeImageLightbox").focus();
 }
 
-function closeImageLightbox() {
+function closeImageLightbox(restoreFocus = true) {
   $("#imageLightbox").classList.remove("open");
   $("#imageLightbox").setAttribute("aria-hidden", "true");
   $("#imageLightboxPhoto").removeAttribute("src");
   $("#imageLightboxPhoto").classList.remove("is-loaded", "is-broken");
   $("#imageLightboxCaption").textContent = "";
+  if ($("#imageLightboxNavigation")) $("#imageLightboxNavigation").hidden = true;
+  imageLightboxGalleryIndex = -1;
+  if (restoreFocus && imageLightboxReturnFocus?.isConnected) imageLightboxReturnFocus.focus({ preventScroll: true });
+  imageLightboxReturnFocus = null;
 }
 
 function closePublishConfirmation(confirmed = false) {
@@ -7577,6 +7686,24 @@ $("#closeAiImport").addEventListener("click", () => setAiImportDrawer(false));
 $("#aiImportBackdrop").addEventListener("click", () => setAiImportDrawer(false));
 $("#closeImageLightbox").addEventListener("click", closeImageLightbox);
 $("#imageLightboxBackdrop").addEventListener("click", closeImageLightbox);
+$("#profileGalleryLink")?.addEventListener("click", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  const gallery = $("#artGallery");
+  if (!canShowArtworkGallery() || gallery?.hidden) return;
+  $("#artGalleryTitle").focus({ preventScroll: true });
+  gallery.scrollIntoView({ block: "start", behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+});
+$("#artGalleryGrid")?.addEventListener("click", (event) => {
+  const artwork = event.target.closest("[data-artwork-index]");
+  if (artwork) openArtworkLightbox(Number(artwork.dataset.artworkIndex));
+});
+$("#artGalleryToggle")?.addEventListener("click", () => {
+  artworkGalleryExpanded = !artworkGalleryExpanded;
+  renderArtworkGalleryWorks();
+});
+$("#previousArtwork")?.addEventListener("click", () => openArtworkLightbox(imageLightboxGalleryIndex - 1));
+$("#nextArtwork")?.addEventListener("click", () => openArtworkLightbox(imageLightboxGalleryIndex + 1));
 $("#saveProfileState").addEventListener("click", saveCurrentProfileState);
 $("#publishProfileOnline").addEventListener("click", async () => {
   if (!(await requestPublishConfirmation())) return;
@@ -7678,7 +7805,24 @@ $("#printJobResume").addEventListener("click", printJobResumePdf);
 
 window.addEventListener("popstate", () => setRoute(routeFromLocation()));
 window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && $("#imageLightbox").classList.contains("open")) closeImageLightbox();
+  if (!$("#imageLightbox").classList.contains("open")) return;
+  if (event.key === "Escape") closeImageLightbox();
+  if (imageLightboxGalleryIndex >= 0 && ["ArrowLeft", "ArrowRight"].includes(event.key)) {
+    event.preventDefault();
+    openArtworkLightbox(imageLightboxGalleryIndex + (event.key === "ArrowRight" ? 1 : -1));
+  }
+  if (event.key === "Tab") {
+    const controls = [$("#closeImageLightbox"), ...(!$("#imageLightboxNavigation")?.hidden ? [$("#previousArtwork"), $("#nextArtwork")] : [])].filter(Boolean);
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
 });
 document.addEventListener("load", (event) => updateImageLoadingState(event.target), true);
 document.addEventListener("error", (event) => updateImageLoadingState(event.target), true);
