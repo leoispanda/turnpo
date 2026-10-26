@@ -56,7 +56,9 @@ function harness(fetch) {
     renderMaterialReader: () => '<existing-markdown-reader/>',
     renderOpenBlockPanel: () => '<existing-month-archive/>',
     scrollToMonthTarget: selector => scrolled.push(selector),
-    ...(fetch ? { fetch } : {})
+    ...(fetch ? { fetch: (url, options) => url === '/emba/november-facts-videos.json'
+      ? Promise.resolve({ ok: true, json: async () => ({ edition: 'facts', published: false, videos: [] }) })
+      : fetch(url, options) } : {})
   });
   vm.runInContext(source, context);
   const run = expression => vm.runInContext(expression, context);

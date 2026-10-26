@@ -95,7 +95,7 @@ test('shared quota guard fails closed and missing videos return 404', async () =
   assert.equal((await onRequestGet(missing.request())).status, 404);
 });
 
-test('Post Study keeps each private player while facts-only Pre Study and resources omit the old video directory', () => {
+test('Post Study keeps each private player while pending facts videos are not shown in Pre Study', () => {
   const listeners = {};
   const month = { month: '2026-11', markdown: 'saved notes', reflection: 'saved reflection', materials: [] };
   const before = JSON.stringify(month);
@@ -118,7 +118,10 @@ test('Post Study keeps each private player while facts-only Pre Study and resour
     }
   }
   run('NOVEMBER_STUDY_UI.module="resources"');
-  assert.equal((run('renderNovemberStudyModules(selectedMonth())').match(/data-november-video-index=/g) || []).length, 0);
+  const directory = run('renderNovemberStudyModules(selectedMonth())');
+  assert.equal((directory.match(/data-november-video-index=/g) || []).length, 5);
+  assert.match(directory, /旧案例版/);
+  assert.doesNotMatch(directory, /<video\b|data-november-video-edition="facts"/);
   listeners.click({ target: { closest: selector => selector === '[data-november-video-index]' ? { dataset: { novemberVideoIndex: '3' } } : null }, preventDefault() {}, stopImmediatePropagation() {} });
   assert.equal(run('NOVEMBER_STUDY_UI.module'), 'post-study');
   assert.equal(run('NOVEMBER_STUDY_UI.day'), 3);

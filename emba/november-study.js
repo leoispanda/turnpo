@@ -7,6 +7,7 @@ const NOVEMBER_STUDY_UI = {
 };
 
 const NOVEMBER_PRIVATE_FILES = { status: "idle", entries: {}, promise: null };
+const NOVEMBER_FACTS_VIDEO_STATE = { status: "idle", videos: [], promise: null };
 
 function novemberInitialModule() {
   const requested = typeof window === "undefined" ? "" : new URLSearchParams(window.location?.search || "").get("study");
@@ -59,29 +60,79 @@ const NOVEMBER_LEARNING_LEVELS = [
 ];
 
 const NOVEMBER_STUDY_VIDEOS = [
-  {"duration": "10:49", "notebook": "d129227b-4a67-411b-9a48-58876199a36b"},
-  {"duration": "12:33", "notebook": "ba1346bc-db5c-4229-85e1-7a56cd3ac593"},
-  {"duration": "10:24", "notebook": "08abef10-b590-48d8-bf1e-c7463b33c231"},
-  {"duration": "9:22", "notebook": "5472b2f0-3cbf-42f3-8ba6-faa238ef2e12"},
-  {"duration": "10:03", "notebook": "89842ebf-1270-4841-a1ec-1742394bbedc"}
+  {"title": "客户洞察与同理心", "duration": "10:49", "notebook": "d129227b-4a67-411b-9a48-58876199a36b"},
+  {"title": "设计思维与团队协作", "duration": "12:33", "notebook": "ba1346bc-db5c-4229-85e1-7a56cd3ac593"},
+  {"title": "FD案例与人物画像", "duration": "10:24", "notebook": "08abef10-b590-48d8-bf1e-c7463b33c231"},
+  {"title": "战略与商业模式", "duration": "9:22", "notebook": "5472b2f0-3cbf-42f3-8ba6-faa238ef2e12"},
+  {"title": "战略沟通与整合应用", "duration": "10:03", "notebook": "89842ebf-1270-4841-a1ec-1742394bbedc"}
 ];
 
 function renderNovemberLearningVideo(index) {
   const day = NOVEMBER_STUDY_DAYS[index];
   const video = NOVEMBER_STUDY_VIDEOS[index];
   if (!day || !video) return "";
-  const title = `第 ${index + 1} 天 · ${day.title}`;
+  const title = `第 ${index + 1} 天 · ${video.title}`;
   return `<section class="emba-november-video" aria-labelledby="november-video-heading-${index}" tabindex="-1">
-    <div class="emba-november-video-heading"><div><span class="emba-month-kicker">已有案例讲解视频</span><h4 id="november-video-heading-${index}">${escapeHtml(title)}</h4></div><span class="emba-november-video-duration">中文 · ${video.duration}</span></div>
+    <div class="emba-november-video-heading"><div><span class="emba-month-kicker">旧案例版 · 案例讲解视频</span><h4 id="november-video-heading-${index}">${escapeHtml(title)}</h4></div><span class="emba-november-video-duration">中文 · ${video.duration}</span></div>
     <video controls playsinline preload="metadata" aria-label="${escapeHtml(title)} · 中文学习视频" src="/api/emba/video/${day.date}">你的浏览器暂不支持页内视频，请使用下方链接观看。</video>
     <p>2026 年 10 月 21 日制作的案例讲解。</p>
     <a href="https://notebook.google.com/notebook/${video.notebook}" target="_blank" rel="noopener noreferrer">在 NotebookLM 查看视频与来源 ↗</a>
   </section>`;
 }
 
-function renderNovemberVideoDirectory() {
-  const minutes = Math.round(NOVEMBER_STUDY_VIDEOS.reduce((sum, video) => { const [m, s] = video.duration.split(":").map(Number); return sum + m * 60 + s; }, 0) / 60);
-  return `<section class="emba-november-learning-guide" aria-labelledby="november-video-directory"><span class="emba-month-kicker">NotebookLM · 中文讲解</span><h4 id="november-video-directory">新版五天案例视频 · 共约 ${minutes} 分钟</h4><div class="emba-november-video-directory">${NOVEMBER_STUDY_DAYS.map((day, index) => `<button class="emba-file-link" type="button" data-november-video-index="${index}"><span>第 ${index + 1} 天 · ${escapeHtml(day.title)}</span><small>${NOVEMBER_STUDY_VIDEOS[index].duration} · 播放 →</small></button>`).join("")}</div></section>`;
+function normalizeNovemberFactsVideos(manifest) {
+  if (manifest?.edition !== "facts" || manifest.published !== true
+      || !Array.isArray(manifest.videos) || manifest.videos.length !== 5) return [];
+  for (let index = 0; index < 5; index++) {
+    const video = manifest.videos[index];
+    const date = NOVEMBER_STUDY_DAYS[index].date;
+    if (!video || video.date !== date || typeof video.sha256 !== "string" || !/^[a-f0-9]{64}$/.test(video.sha256)
+        || video.r2Key !== `emba/2026-11/video/facts/${date}-${video.sha256.slice(0, 12)}.mp4`
+        || typeof video.title !== "string" || !video.title.trim()
+        || typeof video.duration !== "string" || !/^\d{1,2}:[0-5]\d$/.test(video.duration) || video.duration === "0:00" || video.duration === "00:00"
+        || typeof video.notebookUrl !== "string" || !/^https:\/\/notebook(?:lm)?\.google\.com\/notebook\/[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(video.notebookUrl)
+        || !Number.isSafeInteger(video.bytes) || video.bytes <= 0 || video.bytes > 64 * 1024 * 1024) return [];
+  }
+  return manifest.videos.map(({ date, title, duration, notebookUrl }) => ({ date, title, duration, notebookUrl }));
+}
+
+function loadNovemberFactsVideos() {
+  if (NOVEMBER_FACTS_VIDEO_STATE.promise) return NOVEMBER_FACTS_VIDEO_STATE.promise;
+  NOVEMBER_FACTS_VIDEO_STATE.status = "loading";
+  NOVEMBER_FACTS_VIDEO_STATE.promise = (async () => {
+    try {
+      const response = await fetch("/emba/november-facts-videos.json", { credentials: "same-origin", cache: "no-store" });
+      if (!response.ok) throw new Error("Video information unavailable");
+      NOVEMBER_FACTS_VIDEO_STATE.videos = normalizeNovemberFactsVideos(await response.json());
+      NOVEMBER_FACTS_VIDEO_STATE.status = "loaded";
+    } catch {
+      NOVEMBER_FACTS_VIDEO_STATE.videos = [];
+      NOVEMBER_FACTS_VIDEO_STATE.status = "error";
+    }
+    refreshNovemberStudy();
+  })();
+  return NOVEMBER_FACTS_VIDEO_STATE.promise;
+}
+
+function renderNovemberFactsVideo(index) {
+  const video = NOVEMBER_FACTS_VIDEO_STATE.videos[index];
+  if (!video) return "";
+  const title = `第 ${index + 1} 天 · ${video.title}`;
+  return `<section class="emba-november-video" aria-labelledby="november-facts-video-heading-${index}" data-november-video-edition="facts" tabindex="-1">
+    <div class="emba-november-video-heading"><div><span class="emba-month-kicker">Facts 版 · 客观导读视频</span><h4 id="november-facts-video-heading-${index}">${escapeHtml(title)}</h4></div><span class="emba-november-video-duration">中文 · ${escapeHtml(video.duration)}</span></div>
+    <video controls playsinline preload="metadata" aria-label="${escapeHtml(title)} · 客观导读视频" src="/api/emba/video/${video.date}?edition=facts">你的浏览器暂不支持页内视频，请使用下方链接观看。</video>
+    <p>依据当前客观导读，介绍原文内容、论述方式和作者结论。</p>
+    <a href="${escapeHtml(video.notebookUrl)}" target="_blank" rel="noopener noreferrer">在 NotebookLM 查看生成记录与来源 ↗</a>
+  </section>`;
+}
+
+function renderNovemberVideoDirectory(edition = "case") {
+  const facts = edition === "facts";
+  const videos = facts ? NOVEMBER_FACTS_VIDEO_STATE.videos : NOVEMBER_STUDY_VIDEOS;
+  if (videos.length !== 5) return "";
+  const minutes = Math.round(videos.reduce((sum, video) => { const [m, s] = video.duration.split(":").map(Number); return sum + m * 60 + s; }, 0) / 60);
+  const label = facts ? "Facts 版 · 客观导读视频" : "旧案例版 · 2026年10月21日";
+  return `<section class="emba-november-learning-guide" aria-labelledby="november-${edition}-video-directory"><span class="emba-month-kicker">NotebookLM · 中文讲解</span><h4 id="november-${edition}-video-directory">${label} · 共约 ${minutes} 分钟</h4><div class="emba-november-video-directory">${videos.map((video, index) => `<button class="emba-file-link" type="button" data-november-video-index="${index}" data-november-video-edition="${edition}"><span>第 ${index + 1} 天 · ${escapeHtml(video.title)}</span><small>${escapeHtml(video.duration)} · 播放 →</small></button>`).join("")}</div></section>`;
 }
 
 function novemberLearningButton(index, level, compact = false) {
@@ -285,6 +336,7 @@ function renderNovemberPreDay(day, index) {
   const recapSources = facts.sourceKeys ? `<div class="emba-november-recap-sources">${facts.sourceKeys.map(key => novemberFactSource(NOVEMBER_READING_FACTS.articles[key])).join("")}</div>` : "";
   return `<article class="emba-daily-plan emba-november-facts" data-november-pre-day="${escapeHtml(day.date)}" data-november-facts>
     <header class="emba-plan-heading"><span class="emba-month-kicker">${escapeHtml(day.day)} · ${escapeHtml(day.date.replaceAll("-", "."))}</span><h3>${escapeHtml(facts.title)}</h3><p>${escapeHtml(facts.intro)}</p></header>
+    ${renderNovemberFactsVideo(index)}
     ${facts.articles.map(renderNovemberFactualArticle).join("")}
     ${(facts.paragraphs || []).map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join("")}${recapSources}${extra}
   </article>`;
@@ -318,6 +370,7 @@ function renderNovemberResources(month) {
       <header class="emba-plan-heading"><span class="emba-month-kicker">FUTURE-PROOF BUSINESS MODELS</span><h3>课程文件 · 18 份资料</h3><p role="status">${novemberPrivateFilesStatus()}</p></header>
       <div class="emba-study-utility-links"><button class="emba-file-link" type="button" data-material-open="${escapeHtml(planFile)}" data-material-title="11 月完整学习计划">查看原始材料目录 →</button></div>
       ${renderNovemberFactsDirectory()}
+      ${renderNovemberVideoDirectory("facts")}${renderNovemberVideoDirectory("case")}
       <div class="emba-plan-steps" data-november-files>
         ${groups.map(([id, title, sources]) => `<section class="emba-plan-step" aria-labelledby="november-files-${id}"><div class="emba-plan-step-body"><h4 id="november-files-${id}">${escapeHtml(title)}</h4>${novemberSourceGrid(sources)}</div></section>`).join("")}
       </div>
@@ -374,10 +427,13 @@ novemberDetail?.addEventListener("click", (event) => {
   const videoLink = event.target.closest("[data-november-video-index]");
   if (videoLink) {
     const index = Number(videoLink.dataset.novemberVideoIndex);
-    if (!isNovemberStudy(selectedMonth()) || !Number.isInteger(index) || !NOVEMBER_STUDY_DAYS[index]) return;
+    const edition = videoLink.dataset.novemberVideoEdition || "case";
+    if (!isNovemberStudy(selectedMonth()) || !Number.isInteger(index) || !NOVEMBER_STUDY_DAYS[index]
+        || !["case", "facts"].includes(edition)
+        || (edition === "facts" && !NOVEMBER_FACTS_VIDEO_STATE.videos[index])) return;
     event.preventDefault();
     event.stopImmediatePropagation();
-    NOVEMBER_STUDY_UI.module = "post-study";
+    NOVEMBER_STUDY_UI.module = edition === "facts" ? "pre-study" : "post-study";
     NOVEMBER_STUDY_UI.day = index;
     NOVEMBER_STUDY_UI.pdf = "";
     state.openBlockId = "";
@@ -456,4 +512,7 @@ novemberDetail?.addEventListener("keydown", (event) => {
   tabs[next]?.click();
 });
 
-if (typeof fetch === "function") loadNovemberPrivateFiles();
+if (typeof fetch === "function") {
+  loadNovemberPrivateFiles();
+  loadNovemberFactsVideos();
+}

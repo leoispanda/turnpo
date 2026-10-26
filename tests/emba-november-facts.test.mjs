@@ -68,7 +68,9 @@ test('all five Pre Study days render plain introductions with every original PDF
   const resources = app.run('renderNovemberResources({materials: []})');
   assert.equal((resources.match(/data-november-pdf-open=/g) || []).length, 18);
   assert.equal((resources.match(/data-material-open="[^\"]*pre-study-facts/g) || []).length, 5);
-  assert.doesNotMatch(resources, /case-learning\/|pre-study\/2026|data-november-video-index|原三层讲解/);
+  assert.doesNotMatch(resources, /case-learning\/|pre-study\/2026|原三层讲解|<video\b/);
+  assert.equal((resources.match(/data-november-video-index=/g) || []).length, 5);
+  assert.match(resources, /旧案例版/);
 });
 
 test('daily reader notes and on-page introductions share the same prose and unique active metadata', () => {
