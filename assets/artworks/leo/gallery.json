@@ -1,7 +1,7 @@
 {
   "owner": "leo",
-  "title": "My paintings",
-  "description": "A collection of my paintings and drawings.",
+  "title": "My artwork",
+  "description": "Paintings and drawings.",
   "works": [
     {
       "id": "artwork-01",

@@ -2423,7 +2423,6 @@ let lifeAtlasThreeModulePromise = null;
 let lifeAtlasFocusPlaceId = "";
 let artworkGalleryRequestVersion = 0;
 let artworkGalleryWorks = [];
-let artworkGalleryExpanded = false;
 let artworkGalleryLoading = false;
 let imageLightboxGalleryIndex = -1;
 let imageLightboxReturnFocus = null;
@@ -3041,7 +3040,7 @@ function hideProfileContent() {
 
 function showProfileContent() {
   document.querySelectorAll(".profile-content").forEach((node) => {
-    node.hidden = node.id === "turnpoJobs" || node.id === "artGallery";
+    node.hidden = node.id === "turnpoJobs";
   });
 }
 
@@ -4522,26 +4521,17 @@ function canShowArtworkGallery(profile = currentProfile()) {
 function resetArtworkGallery() {
   artworkGalleryRequestVersion += 1;
   artworkGalleryWorks = [];
-  artworkGalleryExpanded = false;
   artworkGalleryLoading = false;
-  if ($("#artGallery")) $("#artGallery").hidden = true;
-  if ($("#profileGalleryLink")) $("#profileGalleryLink").hidden = true;
-  if ($("#artGalleryGrid")) $("#artGalleryGrid").innerHTML = "";
+  if ($("#artworkWorkCard")) $("#artworkWorkCard").hidden = true;
   if (imageLightboxGalleryIndex >= 0) closeImageLightbox(false);
 }
 
 async function renderArtworkGallery(profile) {
-  const section = $("#artGallery");
-  if (!section) return;
   if (!canShowArtworkGallery(profile)) {
     resetArtworkGallery();
     return;
   }
-  if (artworkGalleryWorks.length) {
-    renderArtworkGalleryWorks();
-    return;
-  }
-  if (artworkGalleryLoading) return;
+  if (artworkGalleryWorks.length || artworkGalleryLoading) return;
   artworkGalleryLoading = true;
   const requestVersion = artworkGalleryRequestVersion;
   try {
@@ -4561,37 +4551,12 @@ async function renderArtworkGallery(profile) {
     })).filter((work) => work.image && work.thumbnail)
       .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
     if (!artworkGalleryWorks.length) return;
-    $("#artGalleryTitle").textContent = gallery.title || "My paintings";
-    $("#artGalleryDescription").textContent = gallery.description || "A collection of my paintings and drawings.";
-    renderArtworkGalleryWorks();
+    renderWorkProjects();
   } catch {
-    // The gallery is optional; unavailable artwork must not interrupt the profile.
-    if (requestVersion === artworkGalleryRequestVersion) section.hidden = true;
+    // Unavailable artwork must not interrupt the other profile projects.
   } finally {
     if (requestVersion === artworkGalleryRequestVersion) artworkGalleryLoading = false;
   }
-}
-
-function renderArtworkGalleryWorks() {
-  if (!canShowArtworkGallery() || !artworkGalleryWorks.length) return;
-  const works = artworkGalleryExpanded ? artworkGalleryWorks : artworkGalleryWorks.slice(0, 6);
-  $("#artGalleryGrid").innerHTML = works.map((work, index) => `
-    <figure class="artwork-card">
-      <button class="artwork-preview" type="button" data-artwork-index="${index}" aria-label="Open ${escapeHtml(work.label)}: ${escapeHtml(work.alt)}">
-        <span class="artwork-image-frame"><img src="${escapeHtml(work.thumbnail)}" alt="${escapeHtml(work.alt)}" width="${work.width}" height="${work.height}" loading="lazy" decoding="async" data-loading-image="true" /></span>
-        <span class="artwork-open-hint" aria-hidden="true">View artwork ↗</span>
-      </button>
-      <figcaption>${escapeHtml(work.label)}</figcaption>
-    </figure>
-  `).join("");
-  $("#artGalleryCount").textContent = `${artworkGalleryWorks.length} works`;
-  const toggle = $("#artGalleryToggle");
-  toggle.hidden = artworkGalleryWorks.length <= 6;
-  toggle.textContent = artworkGalleryExpanded ? "Show fewer works" : `View all ${artworkGalleryWorks.length} works`;
-  toggle.setAttribute("aria-expanded", String(artworkGalleryExpanded));
-  $("#artGallery").hidden = false;
-  $("#profileGalleryLink").hidden = false;
-  refreshImageLoadingStates($("#artGalleryGrid"));
 }
 
 function openArtworkLightbox(index) {
@@ -5483,8 +5448,15 @@ function renderTimeline() {
 
 function renderWorkProjects() {
   const projects = ownerMode ? currentProfile().aiWorks : publicWorks();
-  $("#ai-works").hidden = !ownerMode && !projects.length;
-  $("#aiWorksList").innerHTML = projects.length ? projects.map((work) => `
+  const artworkCard = canShowArtworkGallery() && artworkGalleryWorks.length ? `
+    <article class="work-card" id="artworkWorkCard">
+      <div class="work-card-head"><div><h3>My artwork</h3></div></div>
+      <p>${artworkGalleryWorks.length} paintings and drawings.</p>
+      <button class="work-link-action" type="button" data-open-artwork aria-haspopup="dialog">View artwork</button>
+    </article>
+  ` : "";
+  $("#ai-works").hidden = !ownerMode && !projects.length && !artworkCard;
+  const projectCards = projects.map((work) => `
     <article class="work-card ${work.status !== "published" ? "private-card" : ""}">
       <div class="work-card-head">
         <div><h3>${escapeHtml(work.title)}</h3></div>
@@ -5493,7 +5465,8 @@ function renderWorkProjects() {
       <p>${escapeHtml(work.publicSummary)}</p>
       ${work.link ? `<a class="work-link-action" href="${escapeHtml(work.link)}" target="_blank" rel="noopener">Open link</a>` : ""}
     </article>
-  `).join("") : `<p class="empty-result">No Work / Projects yet</p>`;
+  `).join("");
+  $("#aiWorksList").innerHTML = projectCards + artworkCard || `<p class="empty-result">No Work / Projects yet</p>`;
 }
 
 function generateAiProfile(profile) {
@@ -7686,21 +7659,11 @@ $("#closeAiImport").addEventListener("click", () => setAiImportDrawer(false));
 $("#aiImportBackdrop").addEventListener("click", () => setAiImportDrawer(false));
 $("#closeImageLightbox").addEventListener("click", closeImageLightbox);
 $("#imageLightboxBackdrop").addEventListener("click", closeImageLightbox);
-$("#profileGalleryLink")?.addEventListener("click", (event) => {
+$("#aiWorksList").addEventListener("click", (event) => {
+  if (!event.target.closest("[data-open-artwork]")) return;
   event.preventDefault();
   event.stopPropagation();
-  const gallery = $("#artGallery");
-  if (!canShowArtworkGallery() || gallery?.hidden) return;
-  $("#artGalleryTitle").focus({ preventScroll: true });
-  gallery.scrollIntoView({ block: "start", behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-});
-$("#artGalleryGrid")?.addEventListener("click", (event) => {
-  const artwork = event.target.closest("[data-artwork-index]");
-  if (artwork) openArtworkLightbox(Number(artwork.dataset.artworkIndex));
-});
-$("#artGalleryToggle")?.addEventListener("click", () => {
-  artworkGalleryExpanded = !artworkGalleryExpanded;
-  renderArtworkGalleryWorks();
+  openArtworkLightbox(0);
 });
 $("#previousArtwork")?.addEventListener("click", () => openArtworkLightbox(imageLightboxGalleryIndex - 1));
 $("#nextArtwork")?.addEventListener("click", () => openArtworkLightbox(imageLightboxGalleryIndex + 1));
