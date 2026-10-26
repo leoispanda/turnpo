@@ -95,7 +95,7 @@ test('shared quota guard fails closed and missing videos return 404', async () =
   assert.equal((await onRequestGet(missing.request())).status, 404);
 });
 
-test('each daily view embeds its own private player and directory navigation preserves saved content', () => {
+test('Post Study keeps each private player while facts-only Pre Study and resources omit the old video directory', () => {
   const listeners = {};
   const month = { month: '2026-11', markdown: 'saved notes', reflection: 'saved reflection', materials: [] };
   const before = JSON.stringify(month);
@@ -106,20 +106,21 @@ test('each daily view embeds its own private player and directory navigation pre
     renderMonthDetail() {}, renderOpenBlockPanel: () => '', renderMaterialReader: () => ''
   });
   const run = code => vm.runInContext(code, context);
+  run(fs.readFileSync(new URL('../emba/november-reading-facts.js', import.meta.url), 'utf8'));
   run(fs.readFileSync(new URL('../emba/november-study.js', import.meta.url), 'utf8'));
   for (let i = 0; i < 5; i++) {
     for (const module of ['pre-study', 'post-study']) {
       run(`NOVEMBER_STUDY_UI.day=${i}; NOVEMBER_STUDY_UI.module='${module}'`);
       const html = run('renderNovemberStudyModules(selectedMonth())');
-      assert.equal((html.match(/<video\b/g) || []).length, 1);
-      assert.match(html, new RegExp(`src="/api/emba/video/2026-11-0${i + 2}"`));
+      assert.equal((html.match(/<video\b/g) || []).length, module === 'post-study' ? 1 : 0);
+      if (module === 'post-study') assert.match(html, new RegExp(`src="/api/emba/video/2026-11-0${i + 2}"`));
       assert.doesNotMatch(html, /<video[^>]*autoplay/);
     }
   }
   run('NOVEMBER_STUDY_UI.module="resources"');
-  assert.equal((run('renderNovemberStudyModules(selectedMonth())').match(/data-november-video-index=/g) || []).length, 5);
+  assert.equal((run('renderNovemberStudyModules(selectedMonth())').match(/data-november-video-index=/g) || []).length, 0);
   listeners.click({ target: { closest: selector => selector === '[data-november-video-index]' ? { dataset: { novemberVideoIndex: '3' } } : null }, preventDefault() {}, stopImmediatePropagation() {} });
-  assert.equal(run('NOVEMBER_STUDY_UI.module'), 'pre-study');
+  assert.equal(run('NOVEMBER_STUDY_UI.module'), 'post-study');
   assert.equal(run('NOVEMBER_STUDY_UI.day'), 3);
   assert.equal(JSON.stringify(month), before);
 });

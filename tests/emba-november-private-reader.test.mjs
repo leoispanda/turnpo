@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import test from 'node:test';
 import vm from 'node:vm';
 
-const source = fs.readFileSync(new URL('../emba/november-study.js', import.meta.url), 'utf8');
+const source = fs.readFileSync(new URL('../emba/november-reading-facts.js', import.meta.url), 'utf8') + '\n' + fs.readFileSync(new URL('../emba/november-study.js', import.meta.url), 'utf8');
 const canvasIds = [
   '6794064', '6794094', '6794098', '6794219',
   '6749932',

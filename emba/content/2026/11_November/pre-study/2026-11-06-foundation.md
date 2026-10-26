@@ -14,12 +14,12 @@ month: 2026-11
 source_type: source_based_tiered_guide
 source_file: /api/emba/file/emba/2026-11/material/6749932-fd-mediagroep-business-challenge.pdf
 visibility: private
-status: active
+status: archived
 tags: [emba, future-proof-business-models, preparation, learning-guide, foundation]
 keywords: ["负责任经营", "FD Mediagroep", "证据", "战略选择", "五步学习"]
 summary: "分清夸赞、行为和结果，把一个判断写成能检查、有成本上限的学习行动。"
 related_topics: [strategy, decision-making, responsible-business, innovation]
-rag_include: true
+rag_include: false
 created_at: 2026-10-18
 updated_at: 2026-10-18
 ---

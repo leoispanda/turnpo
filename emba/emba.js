@@ -419,8 +419,12 @@ function hasTextContent(value) {
   return String(value || "").trim().length > 0;
 }
 
+function isArchivedNovemberGuide(file = "") {
+  return /^\/emba\/content\/2026\/11_November\/(?:case-learning\/(?:index|2026-11-0[2-6])\.md|pre-study\/2026-11-0[2-6]-(?:foundation|detailed|seminar)\.md)$/.test(String(file));
+}
+
 function materialHasContent(item = {}) {
-  if (HIDDEN_MATERIAL_FILES.has(String(item.file || ""))) return false;
+  if (HIDDEN_MATERIAL_FILES.has(String(item.file || "")) || isArchivedNovemberGuide(item.file)) return false;
   return hasTextContent(item.file)
     || hasTextContent(item.notes)
     || (hasTextContent(item.title) && item.title !== "Material");
@@ -594,7 +598,7 @@ function mergeMonthData(baseMonth = {}, overlayMonth = {}) {
   const exactMaterials = (items) => asArray(items).map(normalizeMaterial).filter(materialHasContent);
   const exactMemories = (items) => asArray(items).map((item) => normalizeMemory(item, overlayMonth.month || baseMonth.month));
   const baseCourseEntries = exactMaterials(baseMonth.materials)
-    .filter((item) => item.type === "daily_course_intro" || item.type === PODCAST_MATERIAL_TYPE || item.type === "mapkai_video" || item.type === "post_study_source" || item.type === "case_learning_guide" || item.type === "case_learning_index");
+    .filter((item) => item.type === "daily_course_intro" || item.type === PODCAST_MATERIAL_TYPE || item.type === "mapkai_video" || item.type === "post_study_source" || item.type === "case_learning_guide" || item.type === "case_learning_index" || item.type === "pre_study_facts" || item.type === "pre_study_facts_index");
   const chosenMaterials = materialsWinner
     ? exactMaterials(materialsWinner === "base" ? baseMonth.materials : overlayMonth.materials)
     : mergeMaterialLists(baseMonth.materials, overlayMonth.materials);
@@ -853,7 +857,7 @@ function filteredKnowledgeNotes() {
   if (!normalize(state.knowledge.filters.query)) return [];
   return state.knowledge.notes
     .filter((note) => note.visibility !== "public" ? true : note.status !== "deleted")
-    .filter((note) => note.status !== "deleted")
+    .filter((note) => note.status !== "deleted" && note.status !== "archived")
     .filter(noteMatchesKnowledgeFilters)
     .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")) || a.title.localeCompare(b.title));
 }

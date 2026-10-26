@@ -16,6 +16,7 @@ const context = vm.createContext({
   renderMaterialReader: () => '<reader/>',
   renderOpenBlockPanel: () => '<saved-archive/>'
 });
+vm.runInContext(fs.readFileSync(new URL('../emba/november-reading-facts.js', import.meta.url), 'utf8'), context);
 vm.runInContext(fs.readFileSync(new URL('../emba/november-study.js', import.meta.url), 'utf8'), context);
 const run = expression => vm.runInContext(expression, context);
 const select = dataset => listeners.click({
@@ -67,10 +68,10 @@ context.state.materialReader = { file: 'november-plan.md' };
 assert.match(run('renderNovemberStudyModules(selectedMonth())'), /<reader\/>/);
 context.state.materialReader = null;
 // A disclosure survives a tab switch without turning into stored study content.
-listeners.toggle({ target: { isConnected: true, matches: () => true, dataset: { novemberDisclosure: 'pre-1-1' }, open: true } });
-select({ novemberModuleSelect: 'pre-study' });
+listeners.toggle({ target: { isConnected: true, matches: () => true, dataset: { novemberDisclosure: 'post-1-sources' }, open: true } });
+select({ novemberModuleSelect: 'post-study' });
 select({ novemberDaySelect: '0' });
-assert.match(run('renderNovemberStudyModules(selectedMonth())'), /data-november-disclosure="pre-1-1" open/);
+assert.match(run('renderNovemberStudyModules(selectedMonth())'), /data-november-disclosure="post-1-sources" open/);
 assert.equal(JSON.stringify(month), snapshot);
 const materials = JSON.parse(fs.readFileSync(new URL('../emba/materials.json', import.meta.url), 'utf8'));
 const november = materials.months.filter(item => item.month === '2026-11');

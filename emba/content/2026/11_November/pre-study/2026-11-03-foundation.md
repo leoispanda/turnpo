@@ -28,12 +28,12 @@ sources:
     mirror: ../converted-md/source-documents/2026-11-canvas-6794219-how-storytelling-can-drive-strategic-change.md
     pdf_pages: "1–6"
 visibility: private
-status: active
+status: archived
 tags: [emba, future-proof-business-models, pre-study, tiered-learning]
 keywords: ["设计思维与战略沟通", "零基础白话", "五步学习法"]
 summary: "理解为何先写清问题再小规模试用，识别原型、使用结果与同伴支持的不同作用。"
 related_topics: [strategy, decision-making, innovation]
-rag_include: true
+rag_include: false
 created_at: 2026-10-18
 updated_at: 2026-10-18
 ---

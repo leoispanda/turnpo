@@ -160,3 +160,16 @@
 .emba-november-case-guide .emba-file-link span { font-size: 12px; white-space: nowrap; }
 .emba-november-learning-guide > summary { cursor: pointer; font-size: 14px; font-weight: 600; }
 @media (max-width: 600px) { .emba-november-case-open { align-items: flex-start; flex-direction: column; gap: 6px; padding: 16px; } .emba-november-case-guide .emba-file-link { align-items: flex-start; flex-direction: column; gap: 3px; } }
+
+/* Plain source introductions, October 2026 edition. */
+.emba-november-facts { padding: clamp(20px, 3vw, 36px); }
+.emba-november-fact-article { padding: 26px 0; border-bottom: 1px solid #e3e7df; }
+.emba-november-fact-article:first-of-type { padding-top: 12px; }
+.emba-november-fact-article:last-of-type { border-bottom: 0; }
+.emba-november-fact-article h4 { margin: 0 0 16px; color: #283c34; font-size: clamp(19px, 2vw, 23px); line-height: 1.5; overflow-wrap: anywhere; }
+.emba-november-facts > p, .emba-november-fact-article p { max-width: 74ch; margin: 0 0 16px; color: #35463a; font-size: 16px; line-height: 1.95; }
+.emba-november-fact-sources { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 18px; }
+.emba-november-fact-sources > span { color: #718074; font-size: 12px; line-height: 1.7; }
+.emba-november-facts-directory { margin: 16px 0 28px; padding: 0 0 20px; border-bottom: 1px solid #e3e7df; }
+.emba-november-facts-directory h4 { margin: 0 0 14px; }
+.emba-november-recap-sources .emba-november-fact-sources { margin: 8px 0; }

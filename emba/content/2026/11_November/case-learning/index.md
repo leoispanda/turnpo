@@ -10,12 +10,12 @@ month: "2026-11"
 source_type: "learning_index"
 source_file: ""
 visibility: "private"
-status: "active"
+status: archived
 tags: ["emba", "case-learning", "pre-study"]
 keywords: ["新模板", "案例教学", "学习方法"]
 summary: "五章共43609正文汉字，连接四篇paper、FD案例、每日练习与五步学习法。"
 related_topics: ["strategy", "decision-making", "innovation"]
-rag_include: true
+rag_include: false
 ---
 
 # 11 月新版案例教材：从工作问题读懂论文

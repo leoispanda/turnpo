@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-21",
+  "updated": "2026-10-26",
   "timeline": {
     "startMonth": "2026-06",
     "endMonth": "2028-12"
@@ -1196,6 +1196,42 @@
           "type": "case_learning_guide",
           "file": "/emba/content/2026/11_November/case-learning/2026-11-06.md",
           "notes": "新版中等难度案例教材；正文8,695汉字。详细读San Juan医院两轮战略沟通活动，区分参与、实施与结果，把一周方法转为研究与行动。"
+        },
+        {
+          "title": "第 1 天 · 客户洞察与同理心 · 客观导读",
+          "type": "pre_study_facts",
+          "file": "/emba/content/2026/11_November/pre-study-facts/2026-11-02.md",
+          "notes": "本日的核心阅读是 Leonard 与 Rayport 的同理心设计文章。"
+        },
+        {
+          "title": "第 2 天 · 设计思维与战略沟通 · 客观导读",
+          "type": "pre_study_facts",
+          "file": "/emba/content/2026/11_November/pre-study-facts/2026-11-03.md",
+          "notes": "本日阅读两篇设计思维文章和一篇战略沟通文章。"
+        },
+        {
+          "title": "第 3 天 · FD 案例及背景资料 · 客观导读",
+          "type": "pre_study_facts",
+          "file": "/emba/content/2026/11_November/pre-study-facts/2026-11-04.md",
+          "notes": "本日材料包括案例任务书、六份背景报告、四张品牌或受众信息图，以及三张人物画像。各份材料的性质和论证依据不同。"
+        },
+        {
+          "title": "第 4 天 · 战略与商业模式 · 客观导读",
+          "type": "pre_study_facts",
+          "file": "/emba/content/2026/11_November/pre-study-facts/2026-11-05.md",
+          "notes": "原页面将这一天安排为两段课程视频，没有另列新的核心文章。以下介绍视频本身的内容。"
+        },
+        {
+          "title": "第 5 天 · 预习阅读回顾 · 客观导读",
+          "type": "pre_study_facts",
+          "file": "/emba/content/2026/11_November/pre-study-facts/2026-11-06.md",
+          "notes": "原页面第五天用于汇总预习与查看作业入口，现有阅读清单没有另列第五篇核心文章。四篇文章的结论可概括如下。"
+        },
+        {
+          "title": "11 月 Pre Study · 客观文章导读",
+          "type": "pre_study_facts_index",
+          "file": "/emba/content/2026/11_November/pre-study-facts/index.md",
+          "notes": "按五天建议顺序介绍四篇核心文章、FD材料与课程视频。"
         }
       ],
       "reflection": "",

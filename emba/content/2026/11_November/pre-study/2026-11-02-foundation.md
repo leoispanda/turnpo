@@ -26,12 +26,12 @@ video_sources:
     accessed_content: complete_english_auto_generated_captions
     visual_content_checked: false
 visibility: private
-status: active
+status: archived
 tags: [emba, future-proof-business-models, pre-study, tiered-learning]
 keywords: ["客户洞察与客户导向", "零基础白话", "五步学习法"]
 summary: "理解客户为何习惯麻烦而不主动表达，练习分开现场事实、可能原因与待核对问题。"
 related_topics: [strategy, decision-making, innovation]
-rag_include: true
+rag_include: false
 created_at: 2026-10-18
 updated_at: 2026-10-18
 ---
