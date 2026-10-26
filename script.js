@@ -4545,6 +4545,7 @@ async function renderArtworkGallery(profile) {
       label: String(work.title || "").trim() || `Artwork ${String(index + 1).padStart(2, "0")}`,
       image: safeImageSrc(work.image),
       thumbnail: safeImageSrc(work.thumbnail || work.image),
+      preview: safeImageSrc(work.preview) || safeImageSrc(work.thumbnail || work.image),
       alt: String(work.alt || "").trim() || `Artwork ${String(index + 1).padStart(2, "0")}`,
       width: Math.max(1, Math.min(10000, Number(work.width) || 1)),
       height: Math.max(1, Math.min(10000, Number(work.height) || 1))
@@ -5452,6 +5453,13 @@ function renderWorkProjects() {
     <article class="work-card" id="artworkWorkCard">
       <div class="work-card-head"><div><h3>My artwork</h3></div></div>
       <p>${artworkGalleryWorks.length} paintings and drawings.</p>
+      <div class="artwork-thumbnails" aria-label="Artwork previews">
+        ${artworkGalleryWorks.slice(0, 3).map((work, index) => `
+          <button class="artwork-thumbnail" type="button" data-open-artwork="${index}" aria-label="View ${escapeHtml(work.label)}" aria-haspopup="dialog">
+            <img src="${escapeHtml(work.preview)}" alt="${escapeHtml(work.alt)}" width="${work.width}" height="${work.height}" loading="lazy" decoding="async" data-loading-image="true" />
+          </button>
+        `).join("")}
+      </div>
       <button class="work-link-action" type="button" data-open-artwork aria-haspopup="dialog">View artwork</button>
     </article>
   ` : "";
@@ -7660,10 +7668,11 @@ $("#aiImportBackdrop").addEventListener("click", () => setAiImportDrawer(false))
 $("#closeImageLightbox").addEventListener("click", closeImageLightbox);
 $("#imageLightboxBackdrop").addEventListener("click", closeImageLightbox);
 $("#aiWorksList").addEventListener("click", (event) => {
-  if (!event.target.closest("[data-open-artwork]")) return;
+  const opener = event.target.closest("[data-open-artwork]");
+  if (!opener) return;
   event.preventDefault();
   event.stopPropagation();
-  openArtworkLightbox(0);
+  openArtworkLightbox(Number(opener.dataset.openArtwork) || 0);
 });
 $("#previousArtwork")?.addEventListener("click", () => openArtworkLightbox(imageLightboxGalleryIndex - 1));
 $("#nextArtwork")?.addEventListener("click", () => openArtworkLightbox(imageLightboxGalleryIndex + 1));

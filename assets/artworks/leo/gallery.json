@@ -11,7 +11,8 @@
       "thumbnail": "/assets/artworks/leo/artwork-01-thumb.webp",
       "width": 2800,
       "height": 2100,
-      "featured": true
+      "featured": true,
+      "preview": "/assets/artworks/leo/artwork-01-preview.webp"
     },
     {
       "id": "artwork-02",
@@ -81,7 +82,8 @@
       "thumbnail": "/assets/artworks/leo/artwork-08-thumb.webp",
       "width": 2100,
       "height": 2800,
-      "featured": true
+      "featured": true,
+      "preview": "/assets/artworks/leo/artwork-08-preview.webp"
     },
     {
       "id": "artwork-09",
@@ -101,7 +103,8 @@
       "thumbnail": "/assets/artworks/leo/artwork-10-thumb.webp",
       "width": 2800,
       "height": 2269,
-      "featured": true
+      "featured": true,
+      "preview": "/assets/artworks/leo/artwork-10-preview.webp"
     },
     {
       "id": "artwork-11",
