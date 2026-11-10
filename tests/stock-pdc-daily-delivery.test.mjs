@@ -1,16 +1,25 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import vm from "node:vm";
+import { gzipSync } from "node:zlib";
 
 const source = fs.readFileSync(new URL("../stock-pdc/stock-pdc.js", import.meta.url), "utf8");
-const daily = JSON.parse(fs.readFileSync(new URL("../stock-pdc/daily-top10.json", import.meta.url), "utf8"));
+const dailyRaw = fs.readFileSync(new URL("../stock-pdc/daily-top10.json", import.meta.url), "utf8");
 const historic = JSON.parse(fs.readFileSync(new URL("../stock-pdc/rank-flow.json", import.meta.url), "utf8"));
 const panels = new Map();
-const context = vm.createContext({ document: { querySelector: (key) => {
+const context = vm.createContext({ atob, Blob, DecompressionStream, Response, document: { querySelector: (key) => {
   if (!panels.has(key)) panels.set(key, { innerHTML: "" });
   return panels.get(key);
 } } });
 vm.runInContext(source.replace(/initAccessGate\(\);\s*$/, ""), context);
+context.dailyResponse = new Response(dailyRaw);
+const daily = await vm.runInContext("readDailyTop10(dailyResponse)", context);
+const fixture = { days: [{ date: "2026-11-10", rows: [{ name: "测试", score: 8.1 }] }] };
+context.compressedFixture = new Response(JSON.stringify({
+  publicationFormat: "gzip_base64_json_v1",
+  data: gzipSync(JSON.stringify(fixture)).toString("base64"),
+}));
+assert.deepEqual(await vm.runInContext("readDailyTop10(compressedFixture)", context), fixture);
 context.daily = daily;
 context.historic = historic;
 vm.runInContext(`

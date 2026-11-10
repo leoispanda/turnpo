@@ -658,15 +658,26 @@ function renderDashboard() {
   renderRankList();
 }
 
+async function readDailyTop10(response) {
+  const payload = await response.json();
+  if (!payload?.publicationFormat) return payload;
+  if (payload.publicationFormat !== "gzip_base64_json_v1" || typeof payload.data !== "string") {
+    throw new Error("Unknown daily Top10 publication format");
+  }
+  const bytes = Uint8Array.from(atob(payload.data), (character) => character.charCodeAt(0));
+  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+  return new Response(stream).json();
+}
+
 async function loadData() {
   const [rankResponse, dailyResponse] = await Promise.all([
     fetch("/stock-pdc/rank-flow.json", { cache: "no-store" }),
     fetch("/stock-pdc/daily-top10.json", { cache: "no-store" }).catch(() => null)
   ]);
   if (!rankResponse.ok) throw new Error(`Could not load rank-flow.json (${rankResponse.status})`);
-  state.data = await rankResponse.json();
-  if (dailyResponse?.ok) state.dailyTop10 = await dailyResponse.json().catch(() => null);
-  if (state.dailyTop10) state.data = mergeDailyTop10IntoRankFlow(state.data, state.dailyTop10);
+  const rankData = await rankResponse.json();
+  state.dailyTop10 = dailyResponse?.ok ? await readDailyTop10(dailyResponse) : null;
+  state.data = state.dailyTop10 ? mergeDailyTop10IntoRankFlow(rankData, state.dailyTop10) : rankData;
   renderDashboard();
 }
 

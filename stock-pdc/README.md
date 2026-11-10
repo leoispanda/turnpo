@@ -1,7 +1,9 @@
 # Stock PDC display
 
 The main `/stock-pdc/` page displays the published SUS PDC research artifact
-`daily-top10.json`, merged with historical `rank-flow.json`. The website does
+`daily-top10.json`, merged with historical `rank-flow.json`. For large releases
+that file can contain a `gzip_base64_json_v1` envelope. The page decodes it to
+the same complete JSON payload before merging dates. The website does
 not score securities, approve decisions, or place trades. Current production
 research is run in the separate `stock-pdc-local` project through
 `scripts/run_sus_pdc.py` with the SUSTAINABLE profile.

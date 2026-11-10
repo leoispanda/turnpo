@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 const source = fs.readFileSync(new URL('../stock-pdc/stock-pdc.js', import.meta.url), 'utf8');
 const panels = new Map();
-const ctx = vm.createContext({document:{querySelector:key=>{if(!panels.has(key))panels.set(key,{innerHTML:''});return panels.get(key);}}});
+const ctx = vm.createContext({atob, Blob, DecompressionStream, Response, document:{querySelector:key=>{if(!panels.has(key))panels.set(key,{innerHTML:''});return panels.get(key);}}});
 vm.runInContext(source.replace(/initAccessGate\(\);\s*$/, ''), ctx);
 ctx.day = {date:'2026-10-09',kind:'DAILY_TOP10',rows:[{ticker:'AAA',name:'原股票',rank:1,signalDayChangePct:99,dayChangePct:88,changeType:'NEW'}]};
 ctx.feed = {methodId:'signal_close_to_next_market_session_close_v1',cohorts:{'2026-10-09':{signalDate:'2026-10-09',returnDate:'2026-10-12',status:'OBSERVED',rows:[{ticker:'AAA',rank:1,status:'OBSERVED',closeToClosePct:-2,openToClosePct:-1}],summary:{selectedCount:1,observedCount:1,equalWeightMeanPct:-2,benchmarkPct:1,excessPctPoints:-3,positiveCount:0,openToCloseMeanPct:-1}}}};
@@ -32,7 +32,8 @@ vm.runInContext("state.data.portfolio={method:'equal_weight_top20_next_trading_d
 assert.ok(vm.runInContext('renderRankCell(legacy,1)',ctx).includes('88.00%'));
 ctx.legacy.portfolio.returnDate='2026-10-09';
 assert.ok(!vm.runInContext('renderRankCell(legacy,1)',ctx).includes('88.00%'));
-const canonical=JSON.parse(fs.readFileSync(new URL('../stock-pdc/daily-top10.json',import.meta.url),'utf8'));
+ctx.dailyResponse = new Response(fs.readFileSync(new URL('../stock-pdc/daily-top10.json', import.meta.url), 'utf8'));
+const canonical = await vm.runInContext('readDailyTop10(dailyResponse)', ctx);
 const historical=JSON.parse(fs.readFileSync(new URL('../stock-pdc/rank-flow.json',import.meta.url),'utf8'));
 ctx.canonical=canonical;ctx.historical=historical;
 vm.runInContext('state.data=mergeDailyTop10IntoRankFlow(historical,canonical);',ctx);
